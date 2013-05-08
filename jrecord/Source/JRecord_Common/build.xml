@@ -1,0 +1,49 @@
+<!--
+/*************************************************************
+ * This file is part of RecordEditor.
+ * See the file "LICENSE" for copyright information and the
+ * terms and conditions for copying, distribution and
+ * modification of RecordEditor.
+ *************************************************************
+ */
+-->
+
+<project name="JRecord_Common_097" default="build">
+
+	<property name="src.dir" location="src" />
+	<property name="build.dir" location="build" />
+	<property name="outputLib.dir" location="lib" />
+	<property name="docs.dir" location="docs" />
+	<property name="javadoc.dir" location="${docs.dir}/api" />
+	<property name="JRecord.jar" location="${outputLib.dir}/JRecord.jar" />
+	<property name="inputLib.dir" location="../../lib" />
+
+	<target name="cb2xml" description="compile JRecord code" >
+		<ant dir="../cb2xml" antfile="build.xml" output="buildout.txt" inheritall="false" />
+	</target>
+
+
+	<target name="build" description="compile code" depends="cb2xml">
+	<echo file="${inputLib.dir}/SmallEditorFiles.txt"/>
+
+		<mkdir dir="${build.dir}" />
+		<javac srcdir="${src.dir}" destdir="${build.dir}" optimize="false" target="1.5" debug="true">
+			<classpath>
+				<filelist dir="../cb2xml/lib">
+					<file name="cb2xml.jar"/>
+				</filelist>
+			</classpath>
+		</javac>
+	</target>
+
+
+	<target name="clean" description="clean">
+		<delete file="${JRecord.jar}" />
+		<delete dir="${build.dir}" />
+		<delete dir="${outputLib.dir}" />
+		<delete dir="${javadoc.dir}" />
+	</target>
+
+
+
+</project>

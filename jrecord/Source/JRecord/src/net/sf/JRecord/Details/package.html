@@ -1,0 +1,52 @@
+<html>
+<head><title>net.sf.JRecord.Details</title>
+<body>
+
+<p>This package holds Classes that describe a Files Structure <b>RecordLayout</b> 
++ the lines (<b>Line, XmlLine</b>) in the File. It also hold Description-Classes
+used by the RecordEditor.
+
+<p>The important classes / interfaces are<ol compact>
+	<li><b>LayoutDetail</b> Class that describes a file (and its lines) Structure -i.e. the various records
+and where the fields start / end.
+<pre>
+     LayoutDetail  - Describes a file
+       |
+       +----- RecordDetail (1 or More) - Describes one record in the file
+                |
+                +------  FieldDetail (1 or More)  - Describes one field in the file 
+</pre>
+	<li><b>AbstractLine</b> description of a Line Class that holds one line in a file.
+	<li><b>Line</b> Normal implementation of a Line
+	<li><b>XmlLine</b> Implementation of a Line for Xml files,
+    <li><b>FieldValue</b> - Class to get/set a fields value - it is a reference to one field in a line.
+</ol>
+
+<pre>
+The following example demonstrates getting a field value:
+	            <font color="brown"><b>long</b></font> sku = saleRecord.getFieldValue("<font color="blue"><b>KEYCODE-NO</b></font>").asLong();
+
+
+The following example demonstrates creating a line and writing it to a File:
+
+
+	            <font color="brown"><b>int</b></font> fileStructure = Constants.IO_FIXED_LENGTH;
+	            CopybookLoader loader = <font color="brown"><b>new</b></font> RecordEditorXmlLoader();
+	            ExternalRecord extlayout = loader.loadCopyBook(copybookName, 0, 0, "", 0, 0, <font color="brown"><b>null</b></font>);
+	        
+	            LayoutDetail layout = extlayout.asLayoutDetail();
+	            AbstractLine saleRecord = <font color="brown"><b>new</b></font> Line(layout);
+	            AbstractLineWriter writer  = LineIOProvider.getInstance().getLineWriter(fileStructure);
+	            
+	            writer.open(salesFileOut);
+
+	            saleRecord.getFieldValue("<font color="blue"><b>KEYCODE-NO</b></font>").set(1331);
+	            saleRecord.getFieldValue("<font color="blue"><b>STORE-NO</b></font>").set(1);
+	            saleRecord.getFieldValue("<font color="blue"><b>DATE</b></font>").set(80921);
+	            saleRecord.getFieldValue("<font color="blue"><b>DEPT-NO</b></font>").set(100);
+	            saleRecord.getFieldValue("<font color="blue"><b>QTY-SOLD</b></font>").set(7);
+	            saleRecord.getFieldValue("<font color="blue"><b>SALE-PRICE</b></font>").set(7.00);
+	            writer.write(saleRecord);
+</pre>
+</body>
+</html>

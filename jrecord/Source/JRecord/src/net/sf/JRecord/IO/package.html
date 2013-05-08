@@ -1,0 +1,69 @@
+<html>
+<head><title>net.sf.JRecord.io Record IO</title>
+<body>
+
+<p>This package holds all <b>Record-Oriented IO</b> routines.</p> 
+The classes in this package read / write AbstractLines from files in a variety of formats formats. You access
+the classes in this package via either <b>CobolIOProvider</b> or <b>LineIOProvider</b>.
+
+<p>Important Classes:
+    <ul compact>
+      <li><b>AbstractLineReader</b> Abstract Class for reading AbstractLine's from a file. 
+          All Reader's extend this class.
+      <li><b>AbstractLineReader</b> Abstract Class for writing AbstractLine's to a file. 
+          All Writer's extend this class.
+      <li><b>CobolIOProvider</b> - Will create / provide a class's to read / write a Cobol file.
+      <li><b>LineIOProvider</b> provide classes to read write files of a specified structure.
+      (Methods getLineReader, getLineWriter).
+    </ul>
+
+
+<p><B>Note:</b>
+<p>All Line (or Record) Input Readers must extend <b>AbstractLineReader</b>.
+<p>All Line (or Record) Output Writers must extend <b>AbstractLineWriter</b>.
+
+<p>Following is an example of reading & writing a file using a REcordEditor-XML copybook
+<pre>
+           LayoutDetail layout = CopybookLoaderFactory.getInstance().getLayoutRecordEditXml(copybookName, <font color="brown"><b>null</b></font>);
+ 
+           <font color="brown"><b>int</b></font> fileStructure = layout.getFileStructure();
+	            
+           AbstractLineReader reader  = LineIOProvider.getInstance().getLineReader(fileStructure);
+           AbstractLineWriter writer  = LineIOProvider.getInstance().getLineWriter(fileStructure);
+      
+           reader.open(salesFile, layout);
+           writer.open(salesFileOut);
+
+           <font color="brown"><b>while</b></font> ((saleRecord = reader.read()) != <font color="brown"><b>null</b></font>) {
+               writer.write(saleRecord);
+           }
+
+           reader.close();
+           writer.close();
+</pre>
+
+<pre>
+The following example deminstrates creating a line and writing it to a File:
+
+           <font color="brown"><b>int</b></font> fileStructure = Constants.IO_FIXED_LENGTH;
+           CopybookLoader loader = <font color="brown"><b>new</b></font> RecordEditorXmlLoader();
+           ExternalRecord extlayout = loader.loadCopyBook(copybookName, 0, 0, "", 0, 0, <font color="brown"><b>null</b></font>);
+	        
+           LayoutDetail layout = extlayout.asLayoutDetail();
+           AbstractLine saleRecord = <font color="brown"><b>new</b></font> Line(layout);
+           AbstractLineWriter writer  = LineIOProvider.getInstance().getLineWriter(fileStructure);
+	            
+           writer.open(salesFileOut);
+
+           saleRecord.getFieldValue("<font color="blue"><b>KEYCODE-NO</b></font>").set(1331);
+           saleRecord.getFieldValue("<font color="blue"><b>STORE-NO</b></font>").set(1);
+           saleRecord.getFieldValue("<font color="blue"><b>DATE</b></font>").set(80921);
+           saleRecord.getFieldValue("<font color="blue"><b>DEPT-NO</b></font>").set(100);
+           saleRecord.getFieldValue("<font color="blue"><b>QTY-SOLD</b></font>").set(7);
+           saleRecord.getFieldValue("<font color="blue"><b>SALE-PRICE</b></font>").set(7.00);
+           writer.write(saleRecord);
+</pre>
+
+
+</body>
+</html>
