@@ -88,8 +88,6 @@ public interface Type {
 	public static final int ftNumRightJustCommaDpPN = 43;
 
 
-	public static final int ftMultiLineChar      = 51;
-
 	public static final int ftDate               = 71;
 	public static final int ftDateYMD            = 72;
 	public static final int ftDateYYMD           = 73;
@@ -114,6 +112,9 @@ public interface Type {
 	public static final int ftCsvArray           = 115;
 	public static final int ftXmlNameTag         = 116;
 	public static final int ftMultiLineEdit      = 117;
+	public static final int ftMultiLineChar      = 118; /* used in PO / Tip Files */
+	public static final int ftHtmlField          = 119;
+
 
 	public static final int NT_TEXT              = 1;
 	public static final int NT_DATE              = 11;

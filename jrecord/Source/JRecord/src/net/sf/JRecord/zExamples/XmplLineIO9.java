@@ -44,7 +44,7 @@ public final class XmplLineIO9 {
 	        super();
 
 		    String installDir    = TstConstants.SAMPLE_DIRECTORY;
-		    String xmlDir        = TstConstants.RECORD_EDITOR_XML_DIRECTORY;
+		    String xmlDir        = TstConstants.RE_XML_DIRECTORY;
 
 		    String salesFile1    = installDir + "DTAR020.bin";
 		    String salesFile2    = installDir + "DTAR020.csv";

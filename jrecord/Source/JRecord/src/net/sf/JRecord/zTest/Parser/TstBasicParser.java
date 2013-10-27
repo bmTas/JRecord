@@ -1,7 +1,7 @@
 package net.sf.JRecord.zTest.Parser;
 
 import junit.framework.TestCase;
-import net.sf.JRecord.CsvParser.BasicParser;
+import net.sf.JRecord.CsvParser.BasicCsvLineParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 
 public class TstBasicParser extends TestCase {
@@ -25,7 +25,7 @@ public class TstBasicParser extends TestCase {
 
 
 	public void testGetFieldCount() {
-		BasicParser p = BasicParser.getInstance();
+		BasicCsvLineParser p = BasicCsvLineParser.getInstance();
 		int c;
 
 		for (int i = 0; i < lines1.length; i++) {
@@ -39,7 +39,7 @@ public class TstBasicParser extends TestCase {
 	}
 
 	public void testGetField() {
-		BasicParser p = BasicParser.getInstance();
+		BasicCsvLineParser p = BasicCsvLineParser.getInstance();
 		String s;
 
 		for (int i = 1; i < lines1.length; i++) {
@@ -77,7 +77,7 @@ public class TstBasicParser extends TestCase {
 	}
 
 	public void testSetField() {
-		BasicParser p = BasicParser.getInstance();
+		BasicCsvLineParser p = BasicCsvLineParser.getInstance();
 		int j;
 		String s;
 

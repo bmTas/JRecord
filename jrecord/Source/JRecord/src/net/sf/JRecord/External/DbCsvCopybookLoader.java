@@ -10,7 +10,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
-import net.sf.JRecord.CsvParser.BasicParser;
+import net.sf.JRecord.CsvParser.BasicCsvLineParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.CsvParser.ParserManager;
 import net.sf.JRecord.External.Def.ExternalField;
@@ -84,7 +84,7 @@ public class DbCsvCopybookLoader implements CopybookLoader {
 	private void insertFields(ExternalRecord parentRec, String copyBookFile,
 			int dbIdx, String font) {
 		String s, name, typeStr, system, lastSystem, lastCopybookName, CopybookName;
-		BasicParser t = BasicParser.getInstance();
+		BasicCsvLineParser t = BasicCsvLineParser.getInstance();
 		String[] fields = new String[7];
 		ExternalField field;
 		int pos, len, decimal, type, j, idx;

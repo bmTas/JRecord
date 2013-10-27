@@ -18,8 +18,7 @@ import java.io.InputStream;
  * @author Bruce Martin
  *
  */
-public abstract class AbstractByteReader {
-
+public abstract class AbstractByteReader implements IByteReader {
 
     public static final String NOT_OPEN_MESSAGE = "File has not been opened";
 	public static final int BUFFER_SIZE = 16384;
@@ -36,46 +35,15 @@ public abstract class AbstractByteReader {
 
 
 
-    /**
-     * Open file for input
-     *
-     * @param fileName filename to be opened
-     *
-     * @throws IOException any IOerror
-     */
-    public void open(String fileName) throws IOException {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.ByteIO.AbstractBByteReader#open(java.lang.String)
+	 */
+    @Override
+	public void open(String fileName) throws IOException {
         open(new FileInputStream(fileName));
     }
 
 
-    /**
-     * Open file for input
-     *
-     * @param inputStream input stream to be read
-     *
-     * @throws IOException any IOerror
-     */
-    public abstract void open(InputStream inputStream)
-    throws IOException;
-
-
-
-    /**
-     * Read one line from the input file
-     *
-     * @return line read in
-     *
-     * @throws IOException io error
-     */
-    public abstract byte[] read() throws IOException;
-
-
-    /**
-     * Closes the file
-     *
-     * @throws IOException io error
-     */
-    public abstract void close() throws IOException;
 
 
 
@@ -91,32 +59,67 @@ public abstract class AbstractByteReader {
 	protected final int readBuffer(final InputStream in,
 	        					   final byte[] buf)
 				throws IOException {
-	    int num = in.read(buf);
-	    int total = num;
-
-	    while (num >= 0 && total < buf.length) {
-	        num = in.read(buf, total, buf.length - total);
-	        total += Math.max(0, num);
-	    }
-
-	    bytesRead += total;
-	    
-	    return total;
+		return readBuffer(in, buf, 0);
+//	    int num = in.read(buf);
+//	    int total = num;
+//
+//	    while (num >= 0 && total < buf.length) {
+//	        num = in.read(buf, total, buf.length - total);
+//	        total += Math.max(0, num);
+//	    }
+//
+//	    bytesRead += total;
+//
+//	    return total;
 	}
 
-    /**
-     * @param lineLength The lineLength to set.
-     */
-    public void setLineLength(int lineLength) {
+
+	protected final int readBuffer(InputStream in, final byte[] buf, int inTotal)
+	throws IOException {
+
+		int total = inTotal;
+		int num = in.read(buf, total, buf.length - total);
+
+		while (num >= 0 && total + num < buf.length) {
+			total += num;
+			num = in.read(buf, total, buf.length - total);
+		}
+
+		if (num > 0) {
+			total += num;
+		}
+
+		incBytesRead(total - inTotal);
+
+		return total;
+	}
+
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.ByteIO.AbstractBByteReader#setLineLength(int)
+	 */
+    @Override
+	public void setLineLength(int lineLength) {
     }
 
-    
-    public boolean canWrite() {
+
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.ByteIO.AbstractBByteReader#canWrite()
+	 */
+    @Override
+	public boolean canWrite() {
     	return true;
     }
 
 
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.ByteIO.AbstractBByteReader#getBytesRead()
+	 */
+	@Override
 	public long getBytesRead() {
 		return bytesRead;
+	}
+
+	protected final void incBytesRead(long amount) {
+		bytesRead += amount;
 	}
 }

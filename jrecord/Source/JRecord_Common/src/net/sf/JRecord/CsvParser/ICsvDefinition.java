@@ -30,4 +30,18 @@ public interface ICsvDefinition {
 	 * @return number of fields
 	 */
 	public int getFieldCount();
+
+	/**
+	 * Get character set
+	 * @return
+	 */
+	public String getFontName();
+
+	/**
+	 * Wether is is a single byte font being used
+	 * @return Wether is is a single byte font being used
+	 */
+	public boolean isSingleByteFont();
+
+	public abstract boolean isEmbeddedNewLine();
 }

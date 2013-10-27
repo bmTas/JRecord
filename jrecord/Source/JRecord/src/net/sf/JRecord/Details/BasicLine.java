@@ -1,17 +1,14 @@
 package net.sf.JRecord.Details;
 
-
-import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Types.Type;
 
-public abstract class BasicLine implements AbstractLine {
+public abstract class BasicLine extends BaseLine implements AbstractLine {
 
 	protected static final byte[] NULL_RECORD = new byte[0];
 	protected LineProvider lineProvider;
-	protected LayoutDetail layout;
 	protected int preferredLayoutAlt = Constants.NULL_INTEGER;
 	protected int preferredLayout = Constants.NULL_INTEGER;
 	protected int writeLayout = Constants.NULL_INTEGER;
@@ -53,14 +50,6 @@ public abstract class BasicLine implements AbstractLine {
 	public void setLayout(final LayoutDetail pLayout) {
 		this.layout = pLayout;
 		preferredLayoutAlt = Constants.NULL_INTEGER;
-	}
-
-	/**
-	 * Get the Layout
-	 * @return Returns the layouts.
-	 */
-	public LayoutDetail getLayout() {
-	    return layout;
 	}
 
 
@@ -159,21 +148,6 @@ public abstract class BasicLine implements AbstractLine {
 	   	return getField(fld);
 	}
 
-//	@Override
-	public AbstractFieldValue getFieldValue(IFieldDetail field) {
-		return new FieldValue(this, field);
-	}
-
-	@Override
-	public AbstractFieldValue getFieldValue(int recordIdx, int fieldIdx) {
-		return new FieldValue(this, recordIdx, fieldIdx);
-	}
-
-	@Override
-	public AbstractFieldValue getFieldValue(String fieldName) {
-		return  getFieldValue(layout.getFieldFromName(fieldName));
-	}
-
 
     /**
      * Test if Tree rebuild is required
@@ -225,7 +199,4 @@ public abstract class BasicLine implements AbstractLine {
     public void setLineProvider(LineProvider pLineProvider) {
         this.lineProvider = pLineProvider;
     }
-
-
-	public abstract Object clone();
 }

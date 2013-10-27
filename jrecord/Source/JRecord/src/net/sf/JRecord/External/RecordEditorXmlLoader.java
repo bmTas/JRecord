@@ -126,6 +126,9 @@ public class RecordEditorXmlLoader implements CopybookLoader {
 					line.getFieldValue(Constants.RE_XML_STYLE).asString()));
 			childRec.setRecordType(ExternalConversion.getRecordType(dbIdx,
 					line.getFieldValue(Constants.RE_XML_RECORDTYPE).asString()));
+			childRec.setEmbeddedCr(
+					"Y".equalsIgnoreCase(
+							line.getFieldValue(Constants.RE_XML_EMBEDDED_CR).asString()));
 			//rec.setSystem((int) line.getFieldValue(Constants.RE_XML_COPYBOOK).asLong());
 
 
@@ -194,17 +197,20 @@ public class RecordEditorXmlLoader implements CopybookLoader {
 
 		if (Constants.RE_XML_FIELDS.equalsIgnoreCase(line.getFieldValue(XmlConstants.XML_NAME).asString())) {
 			ExternalField fld;
-			String fldName, s;
+			String fldName, s, cobolName;
 			int decimal, len;
 			line = reader.read();
 			while (line != null && ! line.getFieldValue(XmlConstants.XML_NAME).asString().startsWith("/")) {
 				s = null;
+				cobolName = "";
 				try {
 					decimal = getIntFld(line, Constants.RE_XML_DECIMAL, 0);
 					len     = getIntFld(line, Constants.RE_XML_LENGTH, Constants.NULL_INTEGER);
 					fldName = line.getFieldValue(Constants.RE_XML_NAME).asString();
-					try {s = line.getFieldValue(Constants.RE_XML_DEFAULT).asString();}
-					catch (Exception e) {}
+					try {
+						s =line.getFieldValue(Constants.RE_XML_DEFAULT).asString();
+						cobolName =line.getFieldValue(Constants.RE_XML_COBOLNAME).asString();
+					} catch (Exception e) {}
 					fld = new ExternalField(
 						getIntFld(line, Constants.RE_XML_POS),
 						len,
@@ -217,7 +223,7 @@ public class RecordEditorXmlLoader implements CopybookLoader {
 								line.getFieldValue(Constants.RE_XML_CELLFORMAT).asString()),
 						line.getFieldValue(Constants.RE_XML_PARAMETER).asString(),
 						line.getFieldValue(Constants.RE_XML_DEFAULT).asString(),
-		                "",
+		                cobolName,
 		                0
 					);
 
@@ -323,7 +329,7 @@ public class RecordEditorXmlLoader implements CopybookLoader {
 		AbstractFieldValue value = line.getFieldValue(fldName);
 		if (value != null && !"".equals(value.asString())) {
 			try {
-				ret = line.getFieldValue(fldName).asInt();
+				ret = value.asInt();
 			} catch (Exception e) {
 			}
 		}

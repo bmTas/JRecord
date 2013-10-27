@@ -85,21 +85,21 @@ public class LineIOProvider implements AbstractManager {
 
 		int i = 0;
 
-		keys[i] = Constants.IO_DEFAULT;						externalNames[i] = "Default";               		names[i++] = rdDefault;
-		keys[i] = Constants.IO_TEXT_LINE;					externalNames[i] = "Text";                  		names[i++] = "Text IO";
-	   	keys[i] = Constants.IO_BIN_TEXT;					externalNames[i] = "Byte_Text";             		names[i++] = "Text IO (byte Based)";
-	   	keys[i] = Constants.IO_UNICODE_TEXT;					externalNames[i] = "Text_Unicode";             		names[i++] = "Text IO (Unicode)";
-	   	keys[i] = Constants.IO_FIXED_LENGTH;			externalNames[i] = "Fixed_Length";          	names[i++] = rdFixed;
-		keys[i] = Constants.IO_BINARY; 						externalNames[i] = "Binary";                		names[i++] = rdLineBin;
-		keys[i] = Constants.IO_VB;								externalNames[i] = "Mainframe_VB";          	names[i++] = rdVb;
-		keys[i] = Constants.IO_VB_DUMP;					externalNames[i] = "Mainframe_VB_As_RECFMU";	names[i++] = rdVbDump;
-		keys[i] = Constants.IO_VB_FUJITSU;					externalNames[i] = "FUJITSU_VB";            	names[i++] = "Fujitsu Variable Binary";
-		keys[i] = Constants.IO_VB_OPEN_COBOL;			externalNames[i] = "Open_Cobol_VB";        names[i++] = rdOcVb;
-		keys[i] = Constants.IO_NAME_1ST_LINE;			externalNames[i] = "CSV_NAME_1ST_LINE";  names[i++] = "Delimited, names first line";
-		keys[i] = Constants.IO_GENERIC_CSV;				externalNames[i] = "CSV_GENERIC";			names[i++] = "Generic CSV (Choose details at run time)";
-		keys[i] = Constants.IO_XML_USE_LAYOUT;		externalNames[i] = "XML_Use_Layout";       	names[i++] = "XML - Existing Layout";
-		keys[i] = Constants.IO_XML_BUILD_LAYOUT;		externalNames[i] = "XML_Build_Layout";      names[i++] = "XML - Build Layout";
-		keys[i] = Constants.NULL_INTEGER;					externalNames[i] = null;                    			names[i++] = null;
+		keys[i] = Constants.IO_DEFAULT;				externalNames[i] = "Default";           		names[i++] = rdDefault;
+		keys[i] = Constants.IO_TEXT_LINE;			externalNames[i] = "Text";              		names[i++] = "Text IO";
+	   	keys[i] = Constants.IO_BIN_TEXT;			externalNames[i] = "Byte_Text";         		names[i++] = "Text IO (byte Based)";
+	   	keys[i] = Constants.IO_UNICODE_TEXT;		externalNames[i] = "Text_Unicode";      		names[i++] = "Text IO (Unicode)";
+	   	keys[i] = Constants.IO_FIXED_LENGTH;		externalNames[i] = "Fixed_Length";          	names[i++] = rdFixed;
+		keys[i] = Constants.IO_BINARY; 				externalNames[i] = "Binary";             		names[i++] = rdLineBin;
+		keys[i] = Constants.IO_VB;					externalNames[i] = "Mainframe_VB";				names[i++] = rdVb;
+		keys[i] = Constants.IO_VB_DUMP;				externalNames[i] = "Mainframe_VB_As_RECFMU";	names[i++] = rdVbDump;
+		keys[i] = Constants.IO_VB_FUJITSU;			externalNames[i] = "FUJITSU_VB";            	names[i++] = "Fujitsu Variable Binary";
+		keys[i] = Constants.IO_VB_OPEN_COBOL;		externalNames[i] = "Open_Cobol_VB"; 			names[i++] = rdOcVb;
+		keys[i] = Constants.IO_NAME_1ST_LINE;		externalNames[i] = "CSV_NAME_1ST_LINE";  		names[i++] = "Delimited, names first line";
+		keys[i] = Constants.IO_GENERIC_CSV;			externalNames[i] = "CSV_GENERIC";				names[i++] = "Generic CSV (Choose details at run time)";
+		keys[i] = Constants.IO_XML_USE_LAYOUT;		externalNames[i] = "XML_Use_Layout"; 			names[i++] = "XML - Existing Layout";
+		keys[i] = Constants.IO_XML_BUILD_LAYOUT;	externalNames[i] = "XML_Build_Layout";			names[i++] = "XML - Build Layout";
+		keys[i] = Constants.NULL_INTEGER;			externalNames[i] = null;        				names[i++] = null;
 
 		numberOfEntries = i;
     }
@@ -190,7 +190,7 @@ public class LineIOProvider implements AbstractManager {
        	case(Constants.IO_BIN_NAME_1ST_LINE):		return new BinTextReader(lLineProvider, true);
        	case(Constants.IO_UNICODE_TEXT):			return new TextLineReader(new CharLineProvider(), false);
        	default:
-            AbstractByteReader byteReader
+       		AbstractByteReader byteReader
         	= ByteIOProvider.getInstance().getByteReader(fileStructure);
 
 	        if (byteReader != null) {
@@ -211,18 +211,30 @@ public class LineIOProvider implements AbstractManager {
      * @return record reader
      */
     public AbstractLineWriter getLineWriter(int fileStructure) {
+    	return getLineWriter(fileStructure, null);
+    }
+
+
+    /**
+     * Gets a Record Reader Class
+     * @param fileStructure file structure
+     * @param charset character set
+     * @return
+     */
+    public AbstractLineWriter getLineWriter(int fileStructure, String charset) {
+
 
     	switch (fileStructure) {
     	case(Constants.IO_BINARY):
-    	case(Constants.IO_FIXED_LENGTH):				return new BinaryLineWriter();
+    	case(Constants.IO_FIXED_LENGTH):			return new BinaryLineWriter();
 
     	case(Constants.IO_XML_BUILD_LAYOUT):
        	case(Constants.IO_XML_USE_LAYOUT):			return new XmlLineWriter();
 
-       	case(Constants.IO_BIN_TEXT):						return new BinTextWriter(false);
+       	case(Constants.IO_BIN_TEXT):				return new BinTextWriter(false);
        	case(Constants.IO_BIN_NAME_1ST_LINE):		return new BinTextWriter(true);
        	default:
-            AbstractByteWriter byteWriter = ByteIOProvider.getInstance().getByteWriter(fileStructure);
+            AbstractByteWriter byteWriter = ByteIOProvider.getInstance().getByteWriter(fileStructure, charset);
 
 	        if (byteWriter != null) {
 	            return new LineWriterWrapper(byteWriter);

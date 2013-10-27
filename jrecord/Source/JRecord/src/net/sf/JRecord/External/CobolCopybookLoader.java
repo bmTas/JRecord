@@ -29,7 +29,8 @@ import org.w3c.dom.Document;
  */
 public class CobolCopybookLoader implements CopybookLoader {
 
-    private static boolean available = true;
+    private static final String PROBLEM_LOADING_COPYBOOK = "Problem loading Copybook: {0}    Message: {1}";
+	private static boolean available = true;
     private static boolean toCheck = true;
 
     private XmlCopybookLoader xmlLoader;
@@ -91,8 +92,10 @@ public class CobolCopybookLoader implements CopybookLoader {
             log.logMsg(AbsSSLogger.ERROR, e.getMessage());
             log.logException(AbsSSLogger.ERROR, e);
             e.printStackTrace();
-            throw new RecordException("problem loading Copybook: " + copyBookFile
-                    		  + "    Message: " + e.getMessage(), e);
+            throw new RecordException(
+            				PROBLEM_LOADING_COPYBOOK,
+            				new Object[] {copyBookFile, e.getMessage()},
+            				e);
         }
 
         return ret;
@@ -113,13 +116,13 @@ public class CobolCopybookLoader implements CopybookLoader {
      * @throws RecordException General Error
      */
     public final ExternalRecord loadCopyBook(InputStream inputStream, //Document copyBookXml,
-    		                             String copyBookName,
-            						  		int splitCopybook,
-            						  		int dbIdx,
-                  						  final String font,
-                						  final int binaryFormat,
-                						  final int systemId,
-                						  final AbsSSLogger log)
+										 String copyBookName,
+											int splitCopybook,
+											int dbIdx,
+										  final String font,
+										  final int binaryFormat,
+										  final int systemId,
+										  final AbsSSLogger log)
     				throws RecordException {
         ExternalRecord ret = null;
         //System.out.println("load Copybook (Cobol)");
@@ -139,8 +142,10 @@ public class CobolCopybookLoader implements CopybookLoader {
             log.logMsg(AbsSSLogger.ERROR, e.getMessage());
             log.logException(AbsSSLogger.ERROR, e);
             e.printStackTrace();
-            throw new RecordException("problem loading Copybook: " + copyBookName
-                    		  + "    Message: " + e.getMessage(), e);
+            throw new RecordException(
+            					PROBLEM_LOADING_COPYBOOK,
+                    			new Object[] {copyBookName, e.getMessage()},
+                    			e);
         }
 
         return ret;

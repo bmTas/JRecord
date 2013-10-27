@@ -9,24 +9,22 @@ import net.sf.JRecord.Types.Type;
  * @author Bruce Martin
  *
  */
-public class StandardParser extends BaseCsvParser implements AbstractParser {
+public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLineParser {
 
 	private boolean textFieldsInQuotes = false;
-
-
 	/**
 	 * Standard CSV line parser
 	 */
-	public StandardParser() {
-		super(false);
+	public StandardCsvLineParser() {
+		super(false, false);
 	}
 
 	/**
 	 * Standard CSV line parser
 	 * @param putTextFieldsInQuotes put Quotes around Text Fields
 	 */
-	public StandardParser(boolean putTextFieldsInQuotes) {
-		super(false);
+	public StandardCsvLineParser(boolean putTextFieldsInQuotes) {
+		super(false, false);
 		textFieldsInQuotes = putTextFieldsInQuotes;
 	}
 
@@ -35,15 +33,18 @@ public class StandardParser extends BaseCsvParser implements AbstractParser {
 	 * Standard CSV line parser
 	 * @param putTextFieldsInQuotes put Quotes around Text Fields
 	 */
-	public StandardParser(boolean putTextFieldsInQuotes, boolean quoteInColumnNames) {
-		super(quoteInColumnNames);
+	public StandardCsvLineParser(boolean putTextFieldsInQuotes, boolean quoteInColumnNames) {
+		this(putTextFieldsInQuotes, quoteInColumnNames, false);
+	}
+
+	public StandardCsvLineParser(boolean putTextFieldsInQuotes, boolean quoteInColumnNames, boolean imbeddedCr) {
+		super(quoteInColumnNames, imbeddedCr);
 		textFieldsInQuotes = putTextFieldsInQuotes;
 	}
 
 
-
 	/**
-	 * @see net.sf.JRecord.CsvParser.AbstractParser#getField(int, java.lang.String, java.lang.String, java.lang.String)
+	 * @see net.sf.JRecord.CsvParser.ICsvLineParser#getField(int, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public String getField(int fieldNumber, String line, ICsvDefinition lineDef) {
 		String[] lineVals = split(fieldNumber, line, lineDef);
@@ -63,7 +64,7 @@ public class StandardParser extends BaseCsvParser implements AbstractParser {
 	}
 
 	/**
-	 * @see net.sf.JRecord.CsvParser.AbstractParser#setField(int, int, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 * @see net.sf.JRecord.CsvParser.ICsvLineParser#setField(int, int, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public String setField(int fieldNumber, int fieldType, String line, ICsvDefinition lineDef, String newValue) {
 		String[] lineVals = split(fieldNumber, line, lineDef);
@@ -73,20 +74,25 @@ public class StandardParser extends BaseCsvParser implements AbstractParser {
 		}
 		String delimiter = lineDef.getDelimiter();
 		String quote = lineDef.getQuote();
+		int quoteLength = 1;
+		if (quote != null && ! "".equals(quote)) {
+			quoteLength = quote.length();
+		}
 
 //		if (textFieldsInQuotes) {
 //			System.out.print("--> " + fieldType + " " + Type.NT_NUMBER + " " + s + " --> ");
 //		}
-		if (s.indexOf(delimiter) >= 0
-		|| (quote != null && ! "".equals(quote) && s.indexOf(quote) >= 0)
-		|| (textFieldsInQuotes & (fieldType != Type.NT_NUMBER))) {
+		if (quote != null && ! "".equals(quote)
+		&& (	s.indexOf(delimiter) >= 0 || s.indexOf('\n') >= 0 || s.indexOf('\r') >= 0
+			||  s.indexOf(quote) >= 0
+			|| (textFieldsInQuotes & (fieldType != Type.NT_NUMBER)))) {
 			StringBuffer b = new StringBuffer(s);
 			int pos;
 			int i = 0;
 
 			while ((pos = b.indexOf(quote, i)) >= 0) {
 				b.insert(pos, quote);
-				i = pos + 2;
+				i = pos + quoteLength * 2;
 			}
 			s = quote + b.toString() + quote;
 		}
@@ -113,7 +119,7 @@ public class StandardParser extends BaseCsvParser implements AbstractParser {
 		String[] ret = new String[]{null, null, ""};
 		StringBuilder pre   = new StringBuilder("");
 		StringBuilder field = null;
-		String s;
+		String s, sCh;
 		boolean inQuotes = false;
 		boolean lastCharDelim = true;
 		boolean lastCharQuote = false;
@@ -121,59 +127,76 @@ public class StandardParser extends BaseCsvParser implements AbstractParser {
 		int i = 0;
 		String delimiter = lineDef.getDelimiter();
 		String quote = lineDef.getQuote();
-
+		int quoteLength = 1;
+		if (quote != null && ! "".equals(quote)) {
+			quoteLength = quote.length();
+		}
 
 		while (i < line.length() && currFieldNumber < fieldNumber) {
-			s = line.substring(i, i + 1);
-			pre.append(s);
-			if (s.equals(delimiter)
-			&& ((! inQuotes) || (inQuotes && lastCharQuote))) {
-				lastCharDelim = true;
-			 	currFieldNumber += 1;
-			 	lastCharQuote = false;
-			 	inQuotes = false;
-			} else {
-				if (s.equals(quote) && lastCharDelim) {
+			s = line.substring(i, Math.min(i + quoteLength, line.length()));
+			sCh = line.substring(i, i + 1);
+			//pre.append(sCh);
+			if (s.equals(quote)) {
+				if (lastCharDelim) {
 					inQuotes = true;
 					lastCharQuote = false;
-				} else if (s.equals(quote)) {
+				} else  {
 					lastCharQuote = ! lastCharQuote;
 				}
 
+				i += quoteLength;
+				pre.append(quote);
 				lastCharDelim = false;
+			} else {
+				pre.append(sCh);
+				lastCharDelim = false;
+
+				if (sCh.equals(delimiter)
+				&& ((! inQuotes) || (inQuotes && lastCharQuote))) {
+					lastCharDelim = true;
+				 	currFieldNumber += 1;
+				 	lastCharQuote = false;
+				 	inQuotes = false;
+				}
+				i += 1;
 			}
-			i += 1;
 		}
 
 		if (i < line.length()) {
 			field = new StringBuilder("");
 			lastCharDelim = true;
 			while (i < line.length()) {
-				s = line.substring(i, i + 1);
+				s = line.substring(i, Math.min(i + quoteLength, line.length()));
+				sCh = line.substring(i, i + 1);
 
 				//System.out.println("~ :" + quote + ": " + field + " ->" + s + "<- " + inQuotes
 				//		+ " " + lastCharQuote + " " + lastCharDelim);
 
-				if (s.equals(delimiter)
+				if (sCh.equals(delimiter)
 				&& ((! inQuotes) || (inQuotes && lastCharQuote))) {
 					break;
-				} else if (s.equals(quote) && lastCharDelim) {
-					inQuotes = true;
-					lastCharQuote = false;
-				} else if (s.equals(quote) && lastCharQuote) {
-					lastCharQuote = false;
-					field.append(quote);
 				} else if (s.equals(quote)) {
-					lastCharQuote = true;
-				} else if (lastCharQuote) {
-					field.append(quote).append(s);
-					lastCharQuote = false;
+					if (lastCharDelim) {
+						inQuotes = true;
+						lastCharQuote = false;
+					} else if (lastCharQuote) {
+						lastCharQuote = false;
+						field.append(quote);
+					} else  {
+						lastCharQuote = true;
+					}
+					i += quoteLength;
 				} else {
-					field.append(s);
+					if (lastCharQuote) {
+						field.append(quote);
+						lastCharQuote = false;
+					}
+
+					field.append(sCh);
 					lastCharQuote = false;
+					i += 1;
 				}
 				lastCharDelim = false;
-				i += 1;
 			}
 			ret[0] = pre.toString();
 			ret[1] = field.toString();

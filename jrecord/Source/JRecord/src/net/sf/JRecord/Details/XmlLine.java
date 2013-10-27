@@ -8,7 +8,6 @@ package net.sf.JRecord.Details;
 
 import java.util.ArrayList;
 
-import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
@@ -38,13 +37,13 @@ import net.sf.JRecord.Common.XmlConstants;
  * @author Bruce Martin
  *
  */
-public class XmlLine implements AbstractLine {
+public class XmlLine extends BaseLine {
 
     private ArrayList<Object> fields = new ArrayList<Object>();
 
 	//private static LineProvider defaultProvider = new DefaultLineProvider();
 
-	private LayoutDetail layout;
+	//private LayoutDetail layout;
 
 	private int preferredLayout = Constants.NULL_INTEGER;
 	private boolean newRecord;
@@ -152,24 +151,6 @@ public class XmlLine implements AbstractLine {
 			return null;
 		}
     }
-
-    @Override
-	public AbstractFieldValue getFieldValue(IFieldDetail field) {
-		return new FieldValue(this, field);
-	}
-
-
-
-	@Override
-	public AbstractFieldValue getFieldValue(int recordIdx, int fieldIdx) {
-		return new FieldValue(this, recordIdx, fieldIdx);
-	}
-
-
-	@Override
-	public AbstractFieldValue getFieldValue(String fieldName) {
-		return  getFieldValue(getFieldFromName(fieldName));
-	}
 
 
     /**
@@ -345,14 +326,6 @@ public class XmlLine implements AbstractLine {
 
 
     /**
-     * @see net.sf.JRecord.Details.AbstractLine#getLayout()
-     */
-    public LayoutDetail getLayout() {
-        return layout;
-    }
-
-
-    /**
      * Set the line provider
      *
      * @param pLineProvider The lineProvider to set.
@@ -383,6 +356,5 @@ public class XmlLine implements AbstractLine {
 			fldDef = layout.getRecord(preferredLayout).getField(fieldName);
 		}
 		return fldDef;
-
 	}
 }

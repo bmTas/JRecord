@@ -325,6 +325,7 @@ public final class ExternalConversion {
     			fld = new BasicKeyedField();
     			fld.key = t;
     			fld.name = s;
+    			fld.valid = Boolean.valueOf(conv.isValid(idx, t));
     			ret.add(fld);
     		}
     	}

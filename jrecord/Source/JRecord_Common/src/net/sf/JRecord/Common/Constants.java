@@ -58,6 +58,14 @@ public interface Constants {
 
     public static final int IO_MICROFOCUS = 31;
 
+    public static final int IO_CSV              = 44;
+    public static final int IO_BIN_CSV          = 45;
+    public static final int IO_UNICODE_CSV      = 46;
+
+    public static final int IO_CSV_NAME_1ST_LINE              = 47;
+    public static final int IO_BIN_CSV_NAME_1ST_LINE          = 48;
+    public static final int IO_UNICODE_CSV_NAME_1ST_LINE      = 49;
+
     public static final int IO_NAME_1ST_LINE    = 51;
     public static final int IO_GENERIC_CSV      = 52 /* RecordEditor Format */;
 //    public static final int IO_GENERIC_CSV_UNICODE = 53 /* RecordEditor Format */;
@@ -68,13 +76,14 @@ public interface Constants {
     public static final int IO_UNICODE_NAME_1ST_LINE = 55;
 
 
+
     public static final int IO_XML_USE_LAYOUT   = 61;
     public static final int IO_XML_BUILD_LAYOUT = 62;
 
-    public static final int IO_EVALUATE_DEFAULT_BINARY    = 80;
-    public static final int IO_EVALUATE_DEFAULT_FIXED     = 81;
-    public static final int IO_EVALUATE_DEFAULT_BIN_TEXT  = 82;
-    public static final int IO_EVALUATE_DEFAULT_TEXT      = 83;
+//    public static final int IO_EVALUATE_DEFAULT_BINARY    = 80;
+//    public static final int IO_EVALUATE_DEFAULT_FIXED     = 81;
+//    public static final int IO_EVALUATE_DEFAULT_BIN_TEXT  = 82;
+//    public static final int IO_EVALUATE_DEFAULT_TEXT      = 83;
 
     public static final int IO_UNICODE_TEXT = 90;
 
@@ -131,6 +140,7 @@ public interface Constants {
 	public static final String RE_XML_QUOTE       = "QUOTE";
 	public static final String RE_XML_RECORDNAME  = "RECORDNAME";
 	public static final String RE_XML_RECORDTYPE  = "RECORDTYPE";
+	public static final String RE_XML_EMBEDDED_CR = "EMBEDDEDCR";
 	public static final String RE_XML_RECORDSEP   = "RecSep";
 	public static final String RE_XML_STYLE       = "STYLE";
 	public static final String RE_XML_SYSTEMNAME  = "SYSTEMNAME";

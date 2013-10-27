@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import net.sf.JRecord.ByteIO.AbstractByteReader;
+import net.sf.JRecord.ByteIO.AbstractByteReader;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;

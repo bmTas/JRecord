@@ -60,11 +60,11 @@ import net.sf.JRecord.zTest.Common.TstConstants;
 public final class XmplLineIO4 {
 
     private static final double GST_CONVERSION
-    								   = 1.1;
-    private String installDir          = TstConstants.SAMPLE_DIRECTORY;
-    private String salesFile           = installDir + "DTAR020.bin";
-    private String salesFileOut        = installDir + "DTAR020out.bin";
-    private String copybookName          = TstConstants.COBOL_DIRECTORY
+    								= 1.1;
+    private String installDir       = TstConstants.SAMPLE_DIRECTORY;
+    private String salesFile        = installDir + "DTAR020.bin";
+    private String salesFileOut     = installDir + "DTAR020out.bin";
+    private String copybookName     = TstConstants.COBOL_DIRECTORY
 	   + "DTAR020.cbl";
 
     /**
@@ -85,7 +85,7 @@ public final class XmplLineIO4 {
                     CopybookLoader.SPLIT_NONE, copybookName, salesFile,
                     new DTAR0020provider()
             );
- 
+
             AbstractLineWriter writer  = ioProvider.getLineWriter(fileStructure, salesFileOut);
 
             while ((saleRecord = (LineDTAR0020) reader.read()) != null) {

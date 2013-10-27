@@ -31,7 +31,7 @@ public final class XmplLineIO7 {
 		    String installDir     = TstConstants.SAMPLE_DIRECTORY;
 		    String salesFile      = installDir + "DTAR020.bin";
 		    String salesFileOut   = installDir + "DTAR020out.bin";
-		    String copybookName   = TstConstants.RECORD_EDITOR_XML_DIRECTORY
+		    String copybookName   = TstConstants.RE_XML_DIRECTORY
 	    					+ "DTAR020.Xml";
 	        int lineNum = 0;
 	        double gstExclusive;

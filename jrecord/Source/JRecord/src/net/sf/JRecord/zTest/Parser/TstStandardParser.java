@@ -2,7 +2,7 @@ package net.sf.JRecord.zTest.Parser;
 
 import junit.framework.TestCase;
 import net.sf.JRecord.CsvParser.CsvDefinition;
-import net.sf.JRecord.CsvParser.StandardParser;
+import net.sf.JRecord.CsvParser.StandardCsvLineParser;
 import net.sf.JRecord.Types.Type;
 
 public class TstStandardParser extends TestCase {
@@ -39,7 +39,7 @@ public class TstStandardParser extends TestCase {
 
 
 	public void testGetField1() {
-		StandardParser p = new StandardParser();
+		StandardCsvLineParser p = new StandardCsvLineParser();
 		String s;
 
 		for (int i = 1; i < lines1.length; i++) {
@@ -61,7 +61,7 @@ public class TstStandardParser extends TestCase {
 	}
 
 	public void testGetField2() {
-		StandardParser p = new StandardParser();
+		StandardCsvLineParser p = new StandardCsvLineParser();
 		String s;
 
 		s = p.getField(1, lines1[1], new CsvDefinition("," , "'"));
@@ -103,7 +103,7 @@ public class TstStandardParser extends TestCase {
 	}
 
 	public void testSetField() {
-		StandardParser p = new StandardParser();
+		StandardCsvLineParser p = new StandardCsvLineParser();
 		int j;
 		String s;
 		//StringBuffer comment = new StringBuffer("12345");
@@ -129,7 +129,7 @@ public class TstStandardParser extends TestCase {
 
 
 	public void testSetField2() {
-		StandardParser p = new StandardParser(true);
+		StandardCsvLineParser p = new StandardCsvLineParser(true);
 		int j;
 		String s;
 		//StringBuffer comment = new StringBuffer("12345");
@@ -155,7 +155,7 @@ public class TstStandardParser extends TestCase {
 
 
 	public void testSetField3() {
-			StandardParser p = new StandardParser(true);
+			StandardCsvLineParser p = new StandardCsvLineParser(true);
 			int j;
 			String s, before, after;
 			//StringBuffer comment = new StringBuffer("12345");

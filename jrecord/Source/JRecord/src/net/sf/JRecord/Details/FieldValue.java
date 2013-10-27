@@ -6,7 +6,9 @@ import java.math.BigInteger;
 import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
+import net.sf.JRecord.External.ExternalConversion;
 import net.sf.JRecord.Types.Type;
+import net.sf.JRecord.Types.TypeManager;
 
 /**
  * Reference to one field in a line.
@@ -190,7 +192,6 @@ public final class FieldValue implements AbstractFieldValue {
 	 * Get The fields value
 	 * @return fields value
 	 */
-	@SuppressWarnings("deprecation")
 	private Object getValue() {
 		if (recordNum >= 0) {
 			return theLine.getField(recordNum, fieldNum);
@@ -259,4 +260,46 @@ public final class FieldValue implements AbstractFieldValue {
 		theLine.setField(field, value);
 	}
 
+	/**
+	 * Get the Type name
+	 * @return Type name
+	 */
+	@Override
+	public String getTypeName() {
+		return ExternalConversion.getTypeAsString(0, getFieldDetail().getType());
+	}
+
+	/**
+	 * Wether it is a Numeric field
+	 * @return is a Numeric field
+	 */
+	@Override
+	public boolean isNumeric() {
+		return getType().isNumeric();
+	}
+
+	/**
+	 * Wether it is a binary Field
+	 * @return is a binary field
+	 */
+	@Override
+	public boolean isBinary() {
+		return getType().isBinary();
+	}
+
+	private Type getType() {
+		return TypeManager.getInstance().getType(getFieldDetail().getType());
+	}
+
+	/**
+	 * Get The field Definition
+	 * @return Field Definition
+	 */
+	@Override
+	public IFieldDetail getFieldDetail() {
+		if (field != null) {
+			return field;
+		}
+		return theLine.getLayout().getRecord(recordNum).getField(fieldNum);
+	}
 }

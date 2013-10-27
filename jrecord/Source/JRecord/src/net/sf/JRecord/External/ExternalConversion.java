@@ -380,6 +380,18 @@ public final class ExternalConversion {
 		return ret;
 	}
 
+	public final static String fixFileName(String filename) {
+		String ret = filename;
+
+		if (ret != null &&! ("".equals(ret))) {
+			StringBuilder b = new StringBuilder(filename);
+			Conversion.replace(b, ":", " ");
+			Conversion.replace(b, "*", " ");
+			ret = b.toString();
+		}
+		return ret;
+	}
+
 	/**
 	 * Get the Conversion class
 	 * @return Conversion class

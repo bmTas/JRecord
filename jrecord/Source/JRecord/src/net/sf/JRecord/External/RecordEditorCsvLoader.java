@@ -18,7 +18,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
-import net.sf.JRecord.CsvParser.BasicParser;
+import net.sf.JRecord.CsvParser.BasicCsvLineParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
@@ -110,7 +110,7 @@ public class RecordEditorCsvLoader implements CopybookLoader {
 
         String s, name, typeStr, description, formatStr, param;
         String directory = null;
-        BasicParser t = BasicParser.getInstance();
+        BasicCsvLineParser t = BasicCsvLineParser.getInstance();
         String[] fields = new String[8];
         ExternalRecord sr;
         ExternalField field;

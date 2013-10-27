@@ -8,6 +8,13 @@ import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.Log.TextLog;
 import net.sf.JRecord.Numeric.Convert;
 
+/**
+ * This is not intended to be run, it shows you how to read a cobol copybook
+ * and use it to create  Lines
+ *
+ * @author Bruce Martin
+ *
+ */
 public class XmplBldLine01 {
 
 	private XmplBldLine01() {
@@ -40,7 +47,7 @@ public class XmplBldLine01 {
 		}
 	}
 
-    public static void main(String[] args) {
-        new XmplBldLine01();
-    }
+//    public static void main(String[] args) {
+//        new XmplBldLine01();
+//    }
 }

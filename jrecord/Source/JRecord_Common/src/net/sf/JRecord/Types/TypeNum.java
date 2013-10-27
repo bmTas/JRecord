@@ -246,6 +246,11 @@ public class TypeNum extends TypeChar {
 	    } else if (typeIdentifier == Type.ftNumLeftJustified) {
 			System.arraycopy(getBytes(val, font), 0, record, pos, val.length());
 			padWith(record, pos + val.length(), len - val.length(), " ", font);
+	    } else if (padChar.equals(" ") && usePositiveSign) {
+	    	if (!(val.startsWith("+") || val.startsWith("-"))) {
+	    		val = "+" + val;
+	    	}
+	        copyRightJust(record, val, pos, len, " ", font);
 	    } else {
 	        copyRightJust(record, val, pos, len, padChar, font);
 	    }
@@ -268,9 +273,13 @@ public class TypeNum extends TypeChar {
 
 	    if (field.getDecimal() == 0 && couldBeLong) {
 	        try {
+	        	int p;
 	            val = val.trim();
 	            if (val.startsWith("+")) {
 	                val = val.substring(1);
+	            }
+	            if ((p = val.lastIndexOf('.')) >= 0) {
+	            	val = val.substring(0, p);
 	            }
 	            new BigInteger(val);
 	        } catch (final Exception ex) {

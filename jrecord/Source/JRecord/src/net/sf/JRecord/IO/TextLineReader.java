@@ -20,7 +20,7 @@ import java.util.List;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.RecordException;
-import net.sf.JRecord.CsvParser.AbstractParser;
+import net.sf.JRecord.CsvParser.ICsvLineParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.CsvParser.ParserManager;
 import net.sf.JRecord.Details.AbstractLine;
@@ -160,6 +160,9 @@ public class TextLineReader extends AbstractLineReader {
 	        }
 	        recordSep = getLayout().getRecordSep();
 	        font      = getLayout().getFontName();
+	        if (recordSep == Constants.SYSTEM_EOL_BYTES) {
+	        	recordSep = null;
+	        }
 	    } catch (Exception e) {
         }
 
@@ -204,7 +207,7 @@ public class TextLineReader extends AbstractLineReader {
         FieldDetail fldDetail;
 
         if (line != null) {
-        	AbstractParser parser = ParserManager.getInstance().get(style);
+        	ICsvLineParser parser = ParserManager.getInstance().get(style);
         	List<String> colNames = parser.getColumnNames(line, new CsvDefinition(delimiter, quote));
 
 

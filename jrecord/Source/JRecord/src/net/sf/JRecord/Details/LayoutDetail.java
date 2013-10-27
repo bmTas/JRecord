@@ -21,7 +21,7 @@ import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
-import net.sf.JRecord.CsvParser.AbstractParser;
+import net.sf.JRecord.CsvParser.ICsvLineParser;
 import net.sf.JRecord.CsvParser.BinaryCsvParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.CsvParser.ParserManager;
@@ -127,7 +127,7 @@ public class LayoutDetail {
 
         int i, j;
         boolean first = true;
-        int lastSize = -1;
+        //int lastSize = -1;
 
 
 	    this.layoutName    = pLayoutName;
@@ -187,7 +187,7 @@ public class LayoutDetail {
 //	    				== Type.ftCharRestOfRecord )){
 //	    			fixedLength = false;
 //	    		}
-	    		lastSize = pRecords[j].getLength();
+	    		//lastSize = pRecords[j].getLength();
 
 		    	treeStructure = treeStructure || (pRecords[j].getParentRecordIndex() >= 0);
 		        if ((pRecords[j].getRecordType() == Constants.rtDelimitedAndQuote
@@ -477,7 +477,7 @@ public class LayoutDetail {
     }
 
     public final Object formatCsvField(IFieldDetail field,  int type, String value) {
-        AbstractParser parser = ParserManager.getInstance().get(field.getRecord().getRecordStyle());
+        ICsvLineParser parser = ParserManager.getInstance().get(field.getRecord().getRecordStyle());
         String val = parser.getField(field.getPos() - 1,
         		value,
         		new CsvDefinition(delimiter, field.getQuote()));
@@ -551,7 +551,7 @@ public class LayoutDetail {
 				.setField(record, field.getPos(), field, value);
         } else  {
             String font = field.getFontName();
-            AbstractParser parser = ParserManager.getInstance().get(field.getRecord().getRecordStyle());
+            ICsvLineParser parser = ParserManager.getInstance().get(field.getRecord().getRecordStyle());
 
             Type typeVal = TypeManager.getSystemTypeManager().getType(type);
             String s = typeVal.formatValueForRecord(field, value.toString());
@@ -595,8 +595,9 @@ public class LayoutDetail {
     private void buildFieldNameMap() {
 
     	if (fieldNameMap == null) {
-    		int i, j, size;
+    		int i, j, k, size;
     		IFieldDetail fld;
+    		String name, nameTmp;
 
     		size = 0;
     		for (i = 0; i < recordCount; i++) {
@@ -611,9 +612,16 @@ public class LayoutDetail {
     			//FieldDetail[] flds = records[i].getFields();
     			for (j = 0; j < records[i].getFieldCount(); j++) {
     			    fld = records[i].getField(j);
-    				fieldNameMap.put(fld.getName().toUpperCase(), fld);
+    			    nameTmp = fld.getName();
+    			    name = nameTmp;
+    			    nameTmp = nameTmp + "~";
+    			    k = 1;
+    			    while (fieldNameMap.containsKey(name)) {
+    			    	name = nameTmp + k++;
+    			    }
+					fieldNameMap.put(name.toUpperCase(), fld);
     				recordFieldNameMap.put(
-    						records[i].getRecordName() + "." + fld.getName().toUpperCase(),
+    						records[i].getRecordName() + "." + name.toUpperCase(),
     						fld);
     			}
     			records[i].setNumberOfFieldsAdded(0);

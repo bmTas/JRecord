@@ -1,5 +1,11 @@
 package net.sf.JRecord.Common;
 
+/**
+ * Description of one field in a Record (Line)
+ *
+ * @author Bruce Martin
+ *
+ */
 public interface IFieldDetail {
 
 	public abstract IFieldDetail setPosLen(final int pPosition, final int pLength);

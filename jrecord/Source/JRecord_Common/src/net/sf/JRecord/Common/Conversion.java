@@ -11,6 +11,7 @@
 package net.sf.JRecord.Common;
 
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Locale;
@@ -771,6 +772,17 @@ public final class Conversion {
     /**
      * Replaces on string with another in a String bugffer
      *
+     * @param in String  to be updated
+     * @param from search string
+     * @param to replacement string
+     */
+    public static final StringBuilder replace(String in, String from, String to) {
+    	return replace(new StringBuilder(in), from, to);
+    }
+
+    /**
+     * Replaces on string with another in a String bugffer
+     *
      * @param in String buffer to be updated
      * @param from search string
      * @param to replacement string
@@ -786,6 +798,37 @@ public final class Conversion {
         }
 
         return in;
+    }
+
+    public static boolean isSingleByte(String fontName) {
+    	return ! isMultiByte(fontName);
+    }
+
+    public static boolean isMultiByte(String fontName) {
+		float f = 2;
+
+		if (fontName == null || "".equals(fontName)) {
+			f = Charset.defaultCharset().newEncoder().maxBytesPerChar() ;
+		} else if (Charset.isSupported(fontName)) {
+			f = Charset.forName(fontName).newEncoder().maxBytesPerChar();
+		}
+
+		return (f > 1.0f);
+
+    }
+
+
+    public static byte[] getCsvDelimBytes(String s, String font) {
+    	byte[] ret = null;
+
+    	if (s != null) {
+			if (s.startsWith("x'")) {
+				ret = new byte[] {Conversion.getByteFromHexString(s)};
+			} else {
+				ret = Conversion.getBytes(s, font);
+			}
+    	}
+		return ret;
     }
 
     public static byte getByteFromHexString(String s) {
@@ -813,7 +856,20 @@ public final class Conversion {
 
 	public static boolean isHtml(String s) {
 		//return (s.indexOf('<') >= 0 && s.indexOf("/>") > 0) || (s.indexOf("</") >= 0 && s.indexOf('>') > 0);
-		return s != null && s.trim().toLowerCase().startsWith("<html>");
+		if (s == null) {
+			return false;
+		}
+		String field2check = s.trim().toLowerCase();
+
+		return  field2check.indexOf('<') >= 0
+			&&	(	field2check.startsWith("<html>")
+				||  field2check.indexOf("<h1>") >= 0
+				||  field2check.indexOf("<h0>") >= 0
+				||  field2check.indexOf("<h2>") >= 0
+				||  field2check.indexOf("<b>") >= 0
+				||  field2check.indexOf("<i>") >= 0
+				||  field2check.indexOf("<em>") >= 0
+				||  field2check.indexOf("<li>") >= 0);
 	}
 
     /**

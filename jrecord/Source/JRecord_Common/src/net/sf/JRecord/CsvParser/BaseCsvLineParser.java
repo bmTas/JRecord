@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import net.sf.JRecord.Common.Constants;
+
 /**
  * Class contains comon code for use in other CSV parser's
  *
@@ -11,13 +13,15 @@ import java.util.StringTokenizer;
  * @author Bruce Martin
  *
  */
-public abstract class BaseCsvParser  {
+public abstract class BaseCsvLineParser  {
 
 
-    private boolean quoteInColNames;
+    private final boolean quoteInColNames;
+	private final boolean allowReturnInFields;
 
-    public BaseCsvParser(boolean quoteInColumnNames) {
+    public BaseCsvLineParser(boolean quoteInColumnNames, boolean allowReturnInFields) {
     	quoteInColNames = quoteInColumnNames;
+    	this.allowReturnInFields = allowReturnInFields;
     }
 
     /**
@@ -85,5 +89,26 @@ public abstract class BaseCsvParser  {
 		}
 
 		return buf.toString();
+	}
+
+
+	public int getFileStructure(ICsvDefinition csvDefinition, boolean namesOnFirstLine, boolean bin) {
+		int ret = Constants.NULL_INTEGER;
+		String quote = csvDefinition.getQuote();
+
+		if ((csvDefinition.isEmbeddedNewLine() || allowReturnInFields)
+		&& quote != null && ! "".equals(quote)) {
+			ret = Constants.IO_CSV;
+			if (bin) {
+				ret = Constants.IO_BIN_CSV;
+			} else if (! csvDefinition.isSingleByteFont()) {
+				ret = Constants.IO_UNICODE_CSV;
+			}
+
+			if (namesOnFirstLine) {
+				ret += 3;
+			}
+		}
+		return ret;
 	}
 }

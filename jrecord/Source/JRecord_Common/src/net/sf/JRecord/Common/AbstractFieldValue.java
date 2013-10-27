@@ -114,4 +114,12 @@ public interface AbstractFieldValue {
 	 */
 	public void set(boolean value) throws RecordException;
 
+	public abstract IFieldDetail getFieldDetail();
+
+	public abstract boolean isBinary();
+
+	public abstract boolean isNumeric();
+
+	public abstract String getTypeName();
+
 }

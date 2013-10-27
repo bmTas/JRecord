@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.util.StringTokenizer;
 
 import junit.framework.TestCase;
-import net.sf.JRecord.CsvParser.AbstractParser;
+import net.sf.JRecord.CsvParser.ICsvLineParser;
 import net.sf.JRecord.CsvParser.ParserManager;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.Line;
@@ -147,7 +147,7 @@ public class TstCsvWrite  extends TestCase {
 		
 		if (namesFirstLine) {
 			RecordDetail rec = layout.getRecord(0);
-			AbstractParser parser = ParserManager.getInstance().get(rec.getRecordStyle());
+			ICsvLineParser parser = ParserManager.getInstance().get(rec.getRecordStyle());
 			String quote = "";
 			String name, name1;
 			tok = new StringTokenizer(reader.readLine(), "\t");

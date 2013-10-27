@@ -17,25 +17,27 @@ import java.util.StringTokenizer;
  * @author Bruce Martin
  *
  */
-public class BasicParser extends BaseCsvParser implements AbstractParser {
+public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLineParser {
 
-    private static BasicParser instance = new BasicParser(false);
+    private static BasicCsvLineParser instance = new BasicCsvLineParser(false);
 	public final int delimiterOrganisation;
 
 
-
-
-    public BasicParser(boolean quoteInColumnNames) {
-    	this(quoteInColumnNames, ICsvDefinition.NORMAL_SPLIT);
+    public BasicCsvLineParser(boolean quoteInColumnNames) {
+    	this(quoteInColumnNames, ICsvDefinition.NORMAL_SPLIT, false);
     }
 
 
 
-	public BasicParser(boolean quoteInColumnNames, int delimiterOrganisation) {
-		super(quoteInColumnNames);
-		this.delimiterOrganisation = delimiterOrganisation;
+	public BasicCsvLineParser(boolean quoteInColumnNames, int delimiterOrganisation) {
+		this(quoteInColumnNames, delimiterOrganisation, false);
 	}
 
+
+	public BasicCsvLineParser(boolean quoteInColumnNames, int delimiterOrganisation, boolean allowReturnInFields) {
+		super(quoteInColumnNames, allowReturnInFields);
+		this.delimiterOrganisation = delimiterOrganisation;
+	}
 
 
 	/**
@@ -58,7 +60,7 @@ public class BasicParser extends BaseCsvParser implements AbstractParser {
     /**
      * Get a specific field from a line
      *
-     * @see AbstractParser#getField(int, String, String, String)
+     * @see ICsvLineParser#getField(int, String, String, String)
      */
     public String getField(int fieldNumber, String line, ICsvDefinition lineDef) {
         String[] fields = split(line, lineDef, fieldNumber);
@@ -71,14 +73,22 @@ public class BasicParser extends BaseCsvParser implements AbstractParser {
         if (isQuote(quote)
         && fields[fieldNumber].startsWith(quote)
         && fields[fieldNumber].endsWith(quote)) {
-            fields[fieldNumber] = fields[fieldNumber].substring(1, fields[fieldNumber].length() - 1);
+        	String v = "";
+
+        	if (fields[fieldNumber].length() >= quote.length() * 2) {
+	            int quoteLength = quote.length();
+				v = fields[fieldNumber].substring(
+						quoteLength, fields[fieldNumber].length() - quoteLength
+				);
+	        }
+        	fields[fieldNumber] = v;
         }
 
         return fields[fieldNumber];
     }
 
     /**
-     * @see AbstractParser#setField(int, int, String, String, String, String)
+     * @see ICsvLineParser#setField(int, int, String, String, String, String)
      */
     public String setField(int fieldNumber, int fieldType, String line, ICsvDefinition lineDef,
             String newValue) {
@@ -107,8 +117,11 @@ public class BasicParser extends BaseCsvParser implements AbstractParser {
         		+ "  > " + s.indexOf(delimiter));
         }*/
         if (quote != null && ! "".equals(quote)
-        && ! (s.startsWith(quote) && (s.endsWith(quote)))
-        && (s.indexOf(lineDef.getDelimiter()) >= 0) || s.startsWith(quote)) {
+//        && ! (s.startsWith(quote) && (s.endsWith(quote)))
+        && (   s.indexOf(lineDef.getDelimiter()) >= 0)
+//        	|| s.indexOf(quote) >= 0
+        	|| s.startsWith(quote)
+        	|| s.indexOf('\n') >= 0 || s.indexOf('\r') >= 0) {
             s = quote + s + quote;
         }
 
@@ -222,7 +235,7 @@ public class BasicParser extends BaseCsvParser implements AbstractParser {
 		            }
 		            keep = true;
 		        } else if (s.startsWith(quote)
-		        	   && (! s.endsWith(quote) || s.length() == 1)) {
+		        	   && (! s.endsWith(quote) || s.length() == quote.length())) {
 		            buf = new StringBuffer(s);
 		            building = true;
 		        } else {
@@ -269,7 +282,7 @@ public class BasicParser extends BaseCsvParser implements AbstractParser {
      * Return a basic CSV line parser
      * @return Returns the instance.
      */
-    public static BasicParser getInstance() {
+    public static BasicCsvLineParser getInstance() {
         return instance;
     }
 }

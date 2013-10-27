@@ -11,6 +11,7 @@ package net.sf.JRecord.External;
 
 
 import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.External.Def.AbstractConversion;
 import net.sf.JRecord.Log.AbsSSLogger;
 
 
@@ -225,7 +226,7 @@ public class CopybookLoaderFactory {
 	throws Exception {
 		return ToLayoutDetail.getInstance().getLayout(
 				getLoader(loaderId).loadCopyBook(copyBookFile, splitCopybookOption,
-				0, font, binFormat, 0, log)
+				AbstractConversion.USE_DEFAULT_IDX, font, binFormat, 0, log)
 		);
 	}
 

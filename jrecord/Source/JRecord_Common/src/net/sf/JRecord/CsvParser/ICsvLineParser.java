@@ -15,7 +15,7 @@ import java.util.List;
  * @author Bruce Martin
  *
  */
-public interface AbstractParser {
+public interface ICsvLineParser {
 
 	/**
 	 * Controls wether Column names on the first line are in Quotes
@@ -63,4 +63,12 @@ public interface AbstractParser {
      * @return column name line
      */
     public String getColumnNameLine(List<String> names, ICsvDefinition csvDefinition);
+
+    /**
+     * Get The file Structure (i.e. Reader / Writer for the CSV file)
+     * @param csvDefinition Csv Definition details.
+     * @param namesOnFirstLine wether names are on the first line
+     * @return
+     */
+    public int getFileStructure(ICsvDefinition csvDefinition, boolean namesOnFirstLine, boolean binary) ;
 }

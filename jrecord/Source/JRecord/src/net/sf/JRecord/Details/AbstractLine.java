@@ -112,11 +112,6 @@ public interface AbstractLine extends AbstractIndexedLine {
     public abstract void setData(String newVal);
 
     /**
-     * @see java.lang.Object#clone()
-     */
-    public abstract Object clone();
-
-    /**
      * Set the record Layout - Description of the Line
      * @param pLayout The layouts to set.
      */
@@ -253,4 +248,18 @@ public interface AbstractLine extends AbstractIndexedLine {
      * Test if Tree rebuild is required
      */
     public abstract boolean isRebuildTreeRequired();
+
+    /**
+     * Get all fields for a Record (by name)
+     * @param recordName name of the Record
+     * @return iterator over fields
+     */
+    public abstract FieldIterator getFieldIterator(String recordName);
+
+    /**
+     * Get all fields for a Record (by record-index)
+     * @param recordNumber index of the Record
+     * @return iterator over fields
+     */
+    public abstract FieldIterator getFieldIterator(int recordNumber);
 }

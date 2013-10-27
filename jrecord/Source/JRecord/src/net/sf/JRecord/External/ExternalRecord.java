@@ -78,7 +78,7 @@ public class ExternalRecord extends AbstractUpdatableRecord {
   private ExternalSelection recSelect;
   //private ArrayList<TstField> tstFields = null;
   private boolean defaultRecord = false;
-  //private String tstField = "";
+  private boolean embeddedCr    = false;  //private String tstField = "";
   //private String tstFieldValue = "";
 
 
@@ -648,9 +648,7 @@ public class ExternalRecord extends AbstractUpdatableRecord {
 	 * @return Sub records
 	 */
 	public ExternalRecord[] toArray() {
-	    ExternalRecord[] r = new ExternalRecord[subRecords.size()];
-	    subRecords.toArray(r);
-	    return r;
+	    return subRecords.toArray(new ExternalRecord[subRecords.size()]);
 	}
 
 	/**
@@ -878,7 +876,7 @@ public class ExternalRecord extends AbstractUpdatableRecord {
 
 		if (fields != null) {
 			for (i = 0; i < fields.size(); i++) {
-				if (! "filler".equalsIgnoreCase(fields.get(i).getName())) {
+				if (! isFiller(fields.get(i).getName())) {
 					count += 1;
 				}
 
@@ -890,7 +888,7 @@ public class ExternalRecord extends AbstractUpdatableRecord {
 				fld = fields.get(i);
 				endPos = fld.getPos() + fld.getLen();
 
-				if ((endPos == maxPos) || (! "filler".equalsIgnoreCase(fld.getName()))) {
+				if ((endPos == maxPos) || (! isFiller(fld.getName()))) {
 					tmpFields.add(fld);
 				}
 			}
@@ -902,6 +900,10 @@ public class ExternalRecord extends AbstractUpdatableRecord {
 				subRecords.get(i).dropFiller();
 			}
 		}
+	}
+
+	private boolean isFiller(String s) {
+		return s == null || "".equals(s.trim()) || "filler".equalsIgnoreCase(s);
 	}
 
 	/**
@@ -998,6 +1000,20 @@ public class ExternalRecord extends AbstractUpdatableRecord {
 	 */
 	public void setRecordSelection(ExternalSelection recSelect) {
 		this.recSelect = StreamLine.getExternalStreamLine().streamLine(recSelect);
+	}
+
+	/**
+	 * @return the embeddedCr
+	 */
+	public boolean isEmbeddedCr() {
+		return embeddedCr;
+	}
+
+	/**
+	 * @param embeddedCr the embeddedCr to set
+	 */
+	public void setEmbeddedCr(boolean embeddedCr) {
+		this.embeddedCr = embeddedCr;
 	}
 
 

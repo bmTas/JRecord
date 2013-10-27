@@ -74,7 +74,7 @@ public class ConversionManager implements AbstractManager {
 
         for (int i = 0; i < 32; i++) {
         	if ((conv = loader.getConversion(i)) != null) {
-        		System.out.println("Registering " + conv.getIdentifier() + " " + conv.getName());
+//        		System.out.println("Registering " + conv.getIdentifier() + " " + conv.getName());
         		registerConverter(conv);
         	}
         }
