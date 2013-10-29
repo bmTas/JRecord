@@ -31,7 +31,7 @@ public class TstFieldNameDuplicates extends TestCase {
 			+ "         05 STATE            PIC XX.\n"
 			+ "         05 ZIP              PIC 9(5).\n";
 
-	String[] fieldNames = {
+	private String[] fieldNames = {
 			"ADDRESS",
 			"CITY",
 			"COMPANY-NAME",

@@ -8,6 +8,9 @@
  */
 package net.sf.JRecord.Details;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sf.JRecord.Common.AbstractRecordX;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
@@ -528,4 +531,48 @@ public class RecordDetail implements AbstractRecordX<FieldDetail> {
 		this.parentRecordIndex = parentRecordIndex;
 	}
 
+	public final List<FieldDetail> getFields(String fieldName, String... levelNames) {
+
+		ArrayList<FieldDetail> ret = new ArrayList<FieldDetail>();
+		boolean ok;
+		String groupName;
+		int numLevelNames = levelNames == null ? 0 : levelNames.length;
+		ArrayList<String> ln = new ArrayList<String>(numLevelNames);
+
+		for (int i = 0; i < numLevelNames; i++) {
+			if (levelNames[i] != null && ! "".equals(levelNames[i])) {
+				ln.add("." + levelNames[i].toUpperCase() + ".");
+			}
+		}
+
+		for (FieldDetail f : fields) {
+			if (f.getName().equals(fieldName)) {
+				groupName = f.getGroupName().toUpperCase();
+				ok = true;
+				for (String n : ln) {
+					if (groupName.indexOf(n) < 0) {
+						ok = false;
+						break;
+					}
+				}
+
+				if (ok) {
+					ret.add(f);
+				}
+			}
+		}
+
+		return ret;
+	}
+
+	public final FieldDetail getUniqueField(String fieldName, String... levelNames) {
+		List<FieldDetail> flds = getFields(fieldName, levelNames);
+
+		switch (flds.size()) {
+		case 0: throw new RuntimeException("No Field Found");
+		case 1: return flds.get(0);
+		}
+
+		throw new RuntimeException("Found " + flds.size() + " fields; should be only one");
+	}
 }

@@ -57,7 +57,7 @@ public class RecordEditorXmlWriter implements CopybookWriter {
 
        writer = f.createXMLStreamWriter(new OutputStreamWriter(outStream, STANDARD_FONT));
 
-       writer.writeStartDocument(STANDARD_FONT, "");
+       writer.writeStartDocument(STANDARD_FONT, "1.0");
 
        writeRecord(writer, null, copybook);
 

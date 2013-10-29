@@ -67,6 +67,7 @@ public class FieldDetail implements IFieldDetail {
 	//private String quote;
 	private AbstractRecord record = DEFAULT_RECORD;
 	private Object defaultValue = null;
+	private String groupName = "";
 
 
 	/**
@@ -338,5 +339,21 @@ public class FieldDetail implements IFieldDetail {
 	@Override
 	public void setDefaultValue(Object defaultValue) {
 		this.defaultValue = defaultValue;
+	}
+
+
+	/**
+	 * @return the groupName
+	 */
+	public final String getGroupName() {
+		return groupName;
+	}
+
+
+	/**
+	 * @param groupName the groupName to set
+	 */
+	public final void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
  }

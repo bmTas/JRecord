@@ -107,6 +107,8 @@ public class ToLayoutDetail {
 	        	fields[i].setPosLen(fieldRec.getPos(), fieldRec.getLen());
 	        }
 
+	        fields[i].setGroupName(fieldRec.getGroup());
+
 		    String s = fieldRec.getDefault();
 		    if (s != null && ! "".equals(s)) {
 		    	fields[i].setDefaultValue(s);

@@ -102,6 +102,9 @@ public class XmlCopybookLoader implements CopybookLoader {
 
     private int redefLevel = Integer.MAX_VALUE;
 
+    private int level;
+    private ArrayList<String> groupName;
+
     /**
      * Load a File as a DOM Document
      *
@@ -203,13 +206,13 @@ public class XmlCopybookLoader implements CopybookLoader {
         case SPLIT_NONE:   /* split copybook on first redefine*/
             createRecord(pCopyBook, pCopyBook, STR_YES);
 
-            insertXMLcopybook(lCopyBookPref, element, 0, "");
+            insertXMLcopybook(lCopyBookPref, element);
             break;
         case SPLIT_REDEFINE:
         	scanCopybook4RedefLevel(element);
         	// Deliberate Fall through
         default:
-            insertXMLcopybook(lCopyBookPref, element, 0, "");
+            insertXMLcopybook(lCopyBookPref, element);
 
             //System.out.println(" ->> " + foundRedefine + " " + commonDetails.size());
             if ((! foundRedefine) && (commonDetails.size() > 0)) {
@@ -266,7 +269,6 @@ public class XmlCopybookLoader implements CopybookLoader {
 
     private int getRecLength(ExternalRecord rec) {
     	int ret = 0;
-    	TypeManager m = TypeManager.getInstance();
 
     	try {
 	    	for (int i = 0; i < rec.getNumberOfRecordFields(); i++) {
@@ -322,16 +324,36 @@ public class XmlCopybookLoader implements CopybookLoader {
 
        if (element.hasAttribute(ATTR_NAME))  {
     	   try {
-    		   int level = getIntAttribute(element, ATTR_LEVEL);
-	    	   if (level > 0
-	    	   &&  level < redefLevel
+    		   int levelNum = getIntAttribute(element, ATTR_LEVEL);
+	    	   if (levelNum > 0
+	    	   &&  levelNum < redefLevel
 	    	   &&  getStringAttribute(element, ATTR_REDEFINED).equals("true")) {
-		           redefLevel = level;
+		           redefLevel = levelNum;
 		       }
     	   } catch (Exception e) {
     	   }
        }
     }
+
+
+    /**
+     * Insert XML Copybook into Record Fields
+     *
+     * @param copyBookPref copy book name
+     * @param element XML element source
+     * @param basePosition base position
+     * @param nameSuffix Name suffix
+     */
+    private void insertXMLcopybook(final String copyBookPref,
+    							   final Element element) {
+    	level = 0;
+    	groupName = new ArrayList<String>();
+    	groupName.add(".");
+
+    	insertXMLcopybook(copyBookPref, element, 0, "");
+    }
+
+
     /**
      * Insert XML Copybook into Record Fields
      *
@@ -347,6 +369,7 @@ public class XmlCopybookLoader implements CopybookLoader {
 
         String newSuffix;
         NodeList lNodeList = element.getChildNodes();
+        level += 1;
 
         for (int i = 0; i < lNodeList.getLength(); i++) {
             org.w3c.dom.Node node = lNodeList.item(i);
@@ -374,6 +397,8 @@ public class XmlCopybookLoader implements CopybookLoader {
                 }
             }
         }
+
+        level -= 1;
     }
 
     /**
@@ -384,10 +409,10 @@ public class XmlCopybookLoader implements CopybookLoader {
      * @param nameSuffix suffix to be used on field names
      * @param posBase base posisition
      */
-    private void insertElement(Element element,
-            						  String copyBookPref,
-            						  String nameSuffix,
-            						  int posBase) {
+    private void insertElement(	Element element,
+            					 String copyBookPref,
+            					 String nameSuffix,
+            					 	int posBase) {
 
        boolean print;
        int opt;
@@ -442,6 +467,16 @@ public class XmlCopybookLoader implements CopybookLoader {
               default:
            }
 
+           if (! print && level > 0) {
+        	   String s = groupName.get(level - 1) + lName + ".";
+
+        	   if (groupName.size() > level) {
+        		   groupName.set(level, s);
+        	   } else {
+        		   groupName.add(s);
+        	   }
+           }
+
            switch (opt) {
               case OPT_WRITE_ELEMENT:
                   if (print) {
@@ -470,7 +505,7 @@ public class XmlCopybookLoader implements CopybookLoader {
           	  break;
            	  default:
            }
-       }
+        }
     }
 
 
@@ -509,7 +544,8 @@ public class XmlCopybookLoader implements CopybookLoader {
         }
 
 
-        name = copyBookPref.trim() + recordName.trim();
+//        name = copyBookPref.trim() + recordName.trim();
+        name = recordName.trim();
         if (!copyBookPref.endsWith("-") && !copyBookPref.endsWith("_")) {
             name = copyBookPref + " " + recordName;
         }
@@ -660,7 +696,7 @@ public class XmlCopybookLoader implements CopybookLoader {
             iType = Type.ftCharRightJust;
         }
 
-        return new ExternalField(
+        ExternalField externalField = new ExternalField(
         	        getIntAttribute(element, ATTR_POSITION) + base,
         	        getIntAttribute(element, ATTR_STORAGE_LENGTH),
         	        name,
@@ -673,6 +709,11 @@ public class XmlCopybookLoader implements CopybookLoader {
         	        getStringAttribute(element, ATTR_NAME),
         	        fieldNum++
         	  	 );
+
+        if (level > 1) {
+        	externalField.setGroup(groupName.get(level - 1));
+        }
+		return externalField;
     }
 
 

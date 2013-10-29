@@ -23,6 +23,8 @@ public class ExternalField extends AbstractUpdatableRecord {
   private String cobolName;
   private int subKey;
 
+  private String group = "";
+
 
 
   /**
@@ -44,9 +46,9 @@ public class ExternalField extends AbstractUpdatableRecord {
       cobolName = "";
       subKey = 0;
   }
-  
-  
-  
+
+
+
 
   /**
    * External (ie read from a file/ DB) Field definition
@@ -386,4 +388,24 @@ public class ExternalField extends AbstractUpdatableRecord {
            updateStatus = UPDATED;
       }
   }
+
+
+
+
+/**
+ * @return the group
+ */
+public final String getGroup() {
+	return group;
+}
+
+
+
+
+/**
+ * @param group the group to set
+ */
+public final void setGroup(String group) {
+	this.group = group;
+}
 }
