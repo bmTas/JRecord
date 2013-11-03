@@ -531,17 +531,45 @@ public class RecordDetail implements AbstractRecordX<FieldDetail> {
 		this.parentRecordIndex = parentRecordIndex;
 	}
 
-	public final List<FieldDetail> getFields(String fieldName, String... levelNames) {
+	/**
+	 * Find all fields with supplied Field name / Group (or level) name.
+	 * The Group names can be supplied in any sequence
+	 *
+	 * <pre>
+	 *  For:
+	 *
+	 *    01 Group-1.
+	 *       05 Group-2.
+	 *          10 Group-3
+	 *             15 Field-1         Pic X(5).
+	 *
+	 * you could code any of the following:
+	 *
+	 *   flds = line.getFields("Field-1", "Group-1", "Group-2", "Group-3");
+	 *   flds = line.getFields("Field-1", "Group-3", "Group-2", "Group-1");
+	 *   flds = line.getFields("Field-1", "Group-3", "Group-1", "Group-2");
+	 *   flds = line.getFields("Field-1", "Group-2", "Group-1", "Group-3");
+	 *   flds = line.getFields("Field-1", "Group-3",");
+	 *   flds = line.getFields("Field-1", "Group-3", "Group-1");
+	 *   flds = line.getFields("Field-1", "Group-1", "Group-3");
+	 *
+	 * </pre>
+	 *
+	 * @param fieldName field name to search for
+	 * @param groupNames group names to search for
+	 * @return requested fields
+	 */
+	public final List<IFieldDetail> getFields(String fieldName, String... groupNames) {
 
-		ArrayList<FieldDetail> ret = new ArrayList<FieldDetail>();
+		ArrayList<IFieldDetail> ret = new ArrayList<IFieldDetail>();
 		boolean ok;
 		String groupName;
-		int numLevelNames = levelNames == null ? 0 : levelNames.length;
+		int numLevelNames = groupNames == null ? 0 : groupNames.length;
 		ArrayList<String> ln = new ArrayList<String>(numLevelNames);
 
 		for (int i = 0; i < numLevelNames; i++) {
-			if (levelNames[i] != null && ! "".equals(levelNames[i])) {
-				ln.add("." + levelNames[i].toUpperCase() + ".");
+			if (groupNames[i] != null && ! "".equals(groupNames[i])) {
+				ln.add("." + groupNames[i].toUpperCase() + ".");
 			}
 		}
 
@@ -565,8 +593,104 @@ public class RecordDetail implements AbstractRecordX<FieldDetail> {
 		return ret;
 	}
 
-	public final FieldDetail getUniqueField(String fieldName, String... levelNames) {
-		List<FieldDetail> flds = getFields(fieldName, levelNames);
+
+	/**
+	 * Find all fields with supplied Field name / Group (or level) name.
+	 * The Group names must be supplied in any sequence they appears in the copybook
+	 *
+	 * <pre>
+	 *  For:
+	 *
+	 *    01 Group-1.
+	 *       05 Group-2.
+	 *          10 Group-3
+	 *             15 Field-1         Pic X(5).
+	 *
+	 * you would code:
+	 *
+	 *   flds = line.getFieldsGroupsInSequence("Field-1", "Group-1", "Group-2", "Group-3");
+	 *
+	 * or
+	 *
+	 *   flds = line.getFieldsGroupsInSequence("Field-1", "Group-1", "Group-3");
+	 *   flds = line.getFieldsGroupsInSequence("Field-1", "Group-3");
+	 *   flds = line.getFieldsGroupsInSequence("Field-1", "Group-1");
+	 *
+	 * </pre>
+	 *
+	 * @param fieldName field name to search for
+	 * @param groupNames group names to search for
+	 * @return requested fields
+	 */
+	public final List<IFieldDetail> getFieldsGroupsInSequence(String fieldName, String... groupNames) {
+
+		ArrayList<IFieldDetail> ret = new ArrayList<IFieldDetail>();
+		boolean ok;
+		String groupName;
+		int st;
+		int numLevelNames = groupNames == null ? 0 : groupNames.length;
+		ArrayList<String> ln = new ArrayList<String>(numLevelNames);
+
+		for (int i = 0; i < numLevelNames; i++) {
+			if (groupNames[i] != null && ! "".equals(groupNames[i])) {
+				ln.add("." + groupNames[i].toUpperCase() + ".");
+			}
+		}
+
+		for (FieldDetail f : fields) {
+			if (f.getName().equals(fieldName)) {
+				groupName = f.getGroupName().toUpperCase();
+				ok = true;
+				st = 0;
+				for (String n : ln) {
+					if ((st = groupName.indexOf(n, st)) < 0) {
+						ok = false;
+						break;
+					}
+				}
+
+				if (ok) {
+					ret.add(f);
+				}
+			}
+		}
+
+		return ret;
+	}
+
+
+	/**
+	 * Retrieve a single field that match's the supplied Field-Name Group-Names.
+	 * The Group names can be supplied in any sequence
+	 *
+	 * <pre>
+	 *  For:
+	 *
+	 *    01 Group-1.
+	 *       05 Group-2.
+	 *          10 Group-3
+	 *             15 Field-1         Pic X(5).
+	 *
+	 * you could code any of the following:
+	 *
+	 *   fld = line.getUniqueField("Field-1", "Group-1", "Group-2", "Group-3");
+	 *   fld = line.getUniqueField("Field-1", "Group-3", "Group-2", "Group-1");
+	 *   fld = line.getUniqueField("Field-1", "Group-3", "Group-1", "Group-2");
+	 *   fld = line.getUniqueField("Field-1", "Group-2", "Group-1", "Group-3");
+	 *   fld = line.getUniqueField("Field-1", "Group-3",");
+	 *   fld = line.getUniqueField("Field-1", "Group-3", "Group-1");
+	 *   fld = line.getUniqueField("Field-1", "Group-1", "Group-3");
+	 *
+	 * </pre>
+	 *
+	 *
+	 * @param fieldName field name to search for
+	 * @param groupNames group names to search for
+	 *
+	 * @return Requested Field
+	 */
+	public final IFieldDetail getUniqueField(String fieldName, String... groupNames) {
+		List<IFieldDetail> flds = getFields(fieldName, groupNames);
 
 		switch (flds.size()) {
 		case 0: throw new RuntimeException("No Field Found");
@@ -575,4 +699,44 @@ public class RecordDetail implements AbstractRecordX<FieldDetail> {
 
 		throw new RuntimeException("Found " + flds.size() + " fields; should be only one");
 	}
+
+
+	/**
+	 * Find requested Field with supplied Field name / Group (or level) name.
+	 * The Group names must be supplied in any sequence they appears in the copybook
+	 *
+	 * <pre>
+	 *  For:
+	 *
+	 *    01 Group-1.
+	 *       05 Group-2.
+	 *          10 Group-3
+	 *             15 Field-1         Pic X(5).
+	 *
+	 * you would code:
+	 *
+	 *   fld = line.getFieldsGroupsInSequence("Field-1", "Group-1", "Group-2", "Group-3");
+	 *
+	 * or
+	 *
+	 *   fld = line.getUniqueFieldGroupsInSequence("Field-1", "Group-1", "Group-3");
+	 *   fld = line.getFieldsGroupsInSequence("Field-1", "Group-3");
+	 *
+	 * </pre>
+	 *
+	 * @param fieldName field name to search for
+	 * @param groupNames group names to search for
+	 * @return requested fields
+	 */
+	public final IFieldDetail getUniqueFieldGroupsInSequence(String fieldName, String... groupNames) {
+		List<IFieldDetail> flds = getFieldsGroupsInSequence(fieldName, groupNames);
+
+		switch (flds.size()) {
+		case 0: throw new RuntimeException("No Field Found");
+		case 1: return flds.get(0);
+		}
+
+		throw new RuntimeException("Found " + flds.size() + " fields; should be only one");
+	}
+
 }

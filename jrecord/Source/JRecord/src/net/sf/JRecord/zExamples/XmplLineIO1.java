@@ -43,7 +43,7 @@ public final class XmplLineIO1 {
         CobolIoProvider ioProvider = CobolIoProvider.getInstance();
         AbstractLine line;
         int lineNumber = 0;
-        
+
         try {
         	AbstractLineReader reader  = ioProvider.getLineReader(
                     Constants.IO_TEXT_LINE, Convert.FMT_INTEL,

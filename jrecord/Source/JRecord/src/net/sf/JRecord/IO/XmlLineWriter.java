@@ -41,16 +41,16 @@ public class XmlLineWriter extends AbstractLineWriter {
     public void open(OutputStream outputStream) throws IOException {
 
     	XMLOutputFactory f ;
-    	
+
     	os = outputStream;
     	try {
-    		 f = XMLOutputFactory.newInstance();	
+    		 f = XMLOutputFactory.newInstance();
     	} catch (Exception e) {
-    		 Object o =  XMLOutputFactory.newInstance("javax.xml.stream.XMLOutputFactory", 
+    		 Object o =  XMLOutputFactory.newInstance("javax.xml.stream.XMLOutputFactory",
 					  this.getClass().getClassLoader());
     		 f = (XMLOutputFactory) o;
 		}
-  
+
         try {
             writer = f.createXMLStreamWriter(outputStream);
         } catch (XMLStreamException e) {
@@ -97,11 +97,14 @@ public class XmlLineWriter extends AbstractLineWriter {
         String encoding = line.getFieldValue(XmlConstants.ENCODING).asString();
         String version  = line.getFieldValue(XmlConstants.VERSION).asString();
 
-        if ("".equals(encoding) && "".equals(version)) {
+        if ("".equals(encoding) && (version == null || "".equals(version))) {
             writer.writeStartDocument();
         } else if ("".equals(encoding)) {
             writer.writeStartDocument(version);
         } else {
+        	if (version == null || "".equals(version)) {
+        		version = "1.0";
+        	}
             writer.writeStartDocument(encoding, version);
         }
 
@@ -174,27 +177,27 @@ public class XmlLineWriter extends AbstractLineWriter {
         }
     }
 
-    
+
     private String fixComment(Object o) {
     	StringBuilder comment = new StringBuilder(toString(o));
     	int l;
-    	
+
     	replace(comment, "--", "==");
-    	
+
     	l = comment.length() - 1;
     	while (" ".equals(comment.substring(l, l + 1))) {
     		l -= 1;
     	}
-//    	System.out.print("fix -- " + comment + "< " + l + " >> >" + (comment.substring(l, l + 1)) 
+//    	System.out.print("fix -- " + comment + "< " + l + " >> >" + (comment.substring(l, l + 1))
 //    			+ "< --> ");
     	if ("-".equals(comment.substring(l, l + 1))) {
     		comment.replace(l, l + 1, "=");
     	}
 //    	System.out.println(comment + "<--");
-    	
+
     	return comment.toString();
     }
-    
+
     /**
      * Replaces on string with another in a String bugffer
      *
@@ -206,7 +209,7 @@ public class XmlLineWriter extends AbstractLineWriter {
         Conversion.replace(in, from, to);
     }
 
-    
+
     /**
      * Convert object to String
      * @param o object to be converted

@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import net.sf.JRecord.Common.Conversion;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.CopybookWriterManager;
@@ -15,6 +14,13 @@ import net.sf.JRecord.Log.TextLog;
 import net.sf.JRecord.Numeric.Convert;
 
 
+/**
+ * Purpose: This program demonstrates converting a Cobol Copybook to a
+ *     Xml copybook.
+ *
+ * @author Bruce Martin
+ *
+ */
 public class ConvertCbl2RecordEditorXml {
 
 	private static byte[] copyBookBytes
@@ -28,7 +34,7 @@ public class ConvertCbl2RecordEditorXml {
 				+ "              03  DTAR020-SALE-PRICE         PIC S9(9)V99 COMP-3.\n"
 			).getBytes();
 
-    public static void main(String[] args) throws FileNotFoundException, Exception {
+    public static void main(String[] args) throws Exception {
     	CobolCopybookLoader loaderCBL = new CobolCopybookLoader();
     	ExternalRecord extlayoutCBL = loaderCBL.loadCopyBook(
     	    new ByteArrayInputStream(copyBookBytes),
@@ -37,7 +43,7 @@ public class ConvertCbl2RecordEditorXml {
     	CopybookWriterManager writerManager = CopybookWriterManager.getInstance();
     	RecordEditorXmlWriter writer
     			= (RecordEditorXmlWriter) writerManager.get(CopybookWriterManager.RECORD_EDITOR_XML_WRITER);
-    	writer.writeCopyBook(new FileOutputStream("c:\\Temp\\XML_DTAR020.Xml"), extlayoutCBL, null);
 
+    	writer.writeCopyBook(new FileOutputStream("c:\\Temp\\XML_DTAR020.Xml"), extlayoutCBL, null);
     }
 }

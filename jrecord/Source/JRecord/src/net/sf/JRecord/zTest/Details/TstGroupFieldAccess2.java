@@ -2,7 +2,6 @@ package net.sf.JRecord.zTest.Details;
 
 import java.util.List;
 
-import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDetail;
@@ -71,13 +70,13 @@ public class TstGroupFieldAccess2 extends TestCase {
 		};
 		recordIdx = schema.getRecordIndex("COMPANY-RECORD");
 		RecordDetail record = schema.getRecord(recordIdx);
-		List<FieldDetail> flds1 = record.getFields("FIRST-NAME");
-		List<FieldDetail> flds2 = record.getFields("FIRST-NAME", "EMPLOYEE-LIST");
-		List<FieldDetail> flds3 = record.getFields("FIRST-NAME", "EMPLOYEE-LIST", "OTHERS");
+		List<IFieldDetail> flds1 = record.getFields("FIRST-NAME");
+		List<IFieldDetail> flds2 = record.getFields("FIRST-NAME", "EMPLOYEE-LIST");
+		List<IFieldDetail> flds3 = record.getFields("FIRST-NAME", "EMPLOYEE-LIST", "OTHERS");
 
-		FieldDetail presidentFirstNameFld = record.getUniqueField("FIRST-NAME", "PRESIDENT");
-		FieldDetail vicePresidentFirstNameFld = record.getUniqueField("FIRST-NAME", "VICE-PRESIDENT");
-		FieldDetail otherFirstNameFld = record.getUniqueField("FIRST-NAME", "OTHERS");
+		IFieldDetail presidentFirstNameFld = record.getUniqueField("FIRST-NAME", "PRESIDENT");
+		IFieldDetail vicePresidentFirstNameFld = record.getUniqueField("FIRST-NAME", "VICE-PRESIDENT");
+		IFieldDetail otherFirstNameFld = record.getUniqueField("FIRST-NAME", "OTHERS");
 
 		assertEquals("Fields Retrieved 1", 3, flds1.size());
 		assertEquals("Fields Retrieved 2", 3, flds2.size());
@@ -120,13 +119,13 @@ public class TstGroupFieldAccess2 extends TestCase {
 				{87, 15, 0},
 		};
 		RecordDetail record = schema.getRecord(recordIdx);
-		List<FieldDetail> flds1 = record.getFields("LAST-NAME");
-		List<FieldDetail> flds2 = record.getFields("LAST-NAME", "EMPLOYEE-LIST");
-		List<FieldDetail> flds3 = record.getFields("LAST-NAME", "EMPLOYEE-LIST", "OTHERS");
+		List<IFieldDetail> flds1 = record.getFields("LAST-NAME");
+		List<IFieldDetail> flds2 = record.getFields("LAST-NAME", "EMPLOYEE-LIST");
+		List<IFieldDetail> flds3 = record.getFields("LAST-NAME", "EMPLOYEE-LIST", "OTHERS");
 
-		FieldDetail presidentFirstNameFld = record.getUniqueField("LAST-NAME", "PRESIDENT");
-		FieldDetail vicePresidentFirstNameFld = record.getUniqueField("LAST-NAME", "VICE-PRESIDENT");
-		FieldDetail otherFirstNameFld = record.getUniqueField("LAST-NAME", "OTHERS");
+		IFieldDetail presidentFirstNameFld = record.getUniqueField("LAST-NAME", "PRESIDENT");
+		IFieldDetail vicePresidentFirstNameFld = record.getUniqueField("LAST-NAME", "VICE-PRESIDENT");
+		IFieldDetail otherFirstNameFld = record.getUniqueField("LAST-NAME", "OTHERS");
 
 		assertEquals("Fields Retrieved 1", 3, flds1.size());
 		assertEquals("Fields Retrieved 2", 3, flds2.size());
@@ -160,7 +159,8 @@ public class TstGroupFieldAccess2 extends TestCase {
 			assertEquals("No Field Found", e.getMessage());
 		}
 	}
-	private void chkFields(String id, List<FieldDetail> flds, FieldDetail fld1, FieldDetail fld2, FieldDetail fld3) {
+
+	private void chkFields(String id, List<IFieldDetail> flds, IFieldDetail fld1, IFieldDetail fld2, IFieldDetail fld3) {
 		assertTrue(id + "1", flds.get(0) == fld1);
 		assertTrue(id + "2", flds.get(1) == fld2);
 		assertTrue(id + "3", flds.get(2) == fld3);
