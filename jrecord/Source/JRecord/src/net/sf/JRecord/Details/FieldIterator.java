@@ -4,6 +4,13 @@ import java.util.Iterator;
 
 import net.sf.JRecord.Common.AbstractFieldValue;
 
+
+/**
+ * Class to iterate over all fields for a Record
+ *
+ * @author Bruce Martin
+ *
+ */
 public class FieldIterator implements Iterable<AbstractFieldValue>, Iterator<AbstractFieldValue> {
 
 	private final AbstractLine line;

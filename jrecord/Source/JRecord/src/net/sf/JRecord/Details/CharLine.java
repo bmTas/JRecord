@@ -9,6 +9,7 @@ import net.sf.JRecord.CsvParser.ICsvLineParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.CsvParser.ParserManager;
 import net.sf.JRecord.Types.Type;
+import net.sf.JRecord.Types.TypeChar;
 import net.sf.JRecord.Types.TypeManager;
 
 public class CharLine extends BasicLine implements AbstractLine {
@@ -61,7 +62,8 @@ public class CharLine extends BasicLine implements AbstractLine {
 		if (field.isFixedFormat()) {
 			if (field.getType() == Type.ftChar
 			||  field.getType() == Type.ftCharRightJust
-			||  field.getType() == Type.ftCharRestOfRecord) {
+			||  field.getType() == Type.ftCharRestOfRecord 
+			||  TypeManager.getInstance().getType(field.getType()) == TypeManager.getInstance().getType(Type.ftChar)) {
 				return getFieldText(field);
 			}
 
@@ -71,7 +73,7 @@ public class CharLine extends BasicLine implements AbstractLine {
 					field.getType(), field.getDecimal() ,field.getFontName(), field.getFormat(), field.getParamater());
 			tmpField.setPosLen(1, bytes.length);
 
-			return type.getField(bytes, 1, field);
+			return type.getField(bytes, 1, tmpField);
 		} else {
 			return layout.formatCsvField(field, field.getType(), data.toString());
 		}
@@ -174,7 +176,12 @@ public class CharLine extends BasicLine implements AbstractLine {
 
 			s = type.formatValueForRecord(field, s);
 
+			if (s.length() < field.getLen()
+			&&	type instanceof TypeChar && ! ((TypeChar) type).isLeftJustified()) {
+				s = Conversion.padFront(s, field.getLen() - s.length(), ' ');
+			} 
 			updateData(field.getPos(), field.getLen(), s);
+			
 		} else {
 	        ICsvLineParser parser = ParserManager.getInstance().get(field.getRecord().getRecordStyle());
 	        Type typeVal = TypeManager.getSystemTypeManager().getType(field.getType());

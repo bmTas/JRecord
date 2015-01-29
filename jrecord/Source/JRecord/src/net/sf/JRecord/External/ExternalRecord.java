@@ -54,7 +54,7 @@ import net.sf.JRecord.ExternalRecordSelection.StreamLine;
  *       LayoutDetail layout = externalLayout.asLayoutDetail();
  * </pre>
  */
-public class ExternalRecord extends AbstractUpdatableRecord {
+public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 
   private int recordId;
   private int initRecordId;
@@ -119,6 +119,26 @@ public class ExternalRecord extends AbstractUpdatableRecord {
   }
 
   public ExternalRecord (
+          final int pRecordId
+        , final String pRecordName
+        , final String pDescription
+        , final int pRecordType
+        , final int pSystem
+        , final String pListChar
+        , final String pCopyBook
+        , final String pDelimiter
+        , final String pQuote
+        , final int pPosRecInd
+        , final String pRecSepList
+        , final byte[] pRecordSep
+        , final String pFontName
+        , final int precordStyle
+        , final int pfileStructure
+		  ) {
+	  this(pRecordId, pRecordName, pDescription, pRecordType, pSystem, pListChar, pCopyBook, pDelimiter, pQuote, pPosRecInd, pRecSepList, pRecordSep, pFontName, precordStyle, pfileStructure, false);
+  }
+  
+  public ExternalRecord (
                     final int pRecordId
                   , final String pRecordName
                   , final String pDescription
@@ -134,6 +154,7 @@ public class ExternalRecord extends AbstractUpdatableRecord {
                   , final String pFontName
                   , final int precordStyle
                   , final int pfileStructure
+                  , final boolean pEmbeddedCr
                   ) {
       super(false);
 
@@ -152,6 +173,7 @@ public class ExternalRecord extends AbstractUpdatableRecord {
       fontName = pFontName;
       recordStyle = precordStyle;
       fileStructure = pfileStructure;
+      embeddedCr = pEmbeddedCr;
 
       setKeys();
   }
@@ -202,6 +224,7 @@ public class ExternalRecord extends AbstractUpdatableRecord {
                   , fontName
                   , recordStyle
                   , fileStructure
+                  , false
           );
       }
       return ret;
@@ -542,12 +565,18 @@ public class ExternalRecord extends AbstractUpdatableRecord {
    *
    * @param val value to be assigned to RecordStyle
    */
-  public void setRecordStyle(int val) {
+  public ExternalRecord setRecordStyle(int val) {
 
       if ((val != recordStyle) || (updateStatus == NULL_INT_VALUE)) {
            recordStyle = val;
            updateStatus = UPDATED;
       }
+      if (subRecords != null && subRecords.size() > 0) {
+    	  for (ExternalRecord r : subRecords) {
+    		  r.setRecordStyle(val);
+    	  }
+      }
+      return this;
   }
 
   /**
@@ -611,7 +640,7 @@ public class ExternalRecord extends AbstractUpdatableRecord {
 	        									final String fontName) {
 
 	    return new ExternalRecord(-1, pRecordName, "", recordType, 0, "N",
-			"", "<Tab>", "", 0, Constants.DEFAULT_STRING, Constants.SYSTEM_EOL_BYTES, fontName, 0, -1);
+			"", "<Tab>", "", 0, Constants.DEFAULT_STRING, Constants.SYSTEM_EOL_BYTES, fontName, 0, -1, false);
 	}
 	/**
 	 * Get the initial record id (before any updates where made.
@@ -661,6 +690,103 @@ public class ExternalRecord extends AbstractUpdatableRecord {
 	    return fields.add(o);
 	}
 
+	/**
+	 * Add a Csv field to the Record
+	 * 
+	 * @param name Field name
+	 * @param type Field Type
+	 * @param decimal number of decimal places
+	 * 
+	 * @return This Record.
+	 */
+	@Override
+	public ExternalRecord addCsvField(String name, int type, int decimal) {
+		addRecordField(new ExternalField(fields.size() + 1, Constants.NULL_INTEGER, name, "", type, decimal, 0, "", "", "", 0));
+		return this;
+	}
+
+	/**
+	 * Add a field to the Record
+	 * 
+	 * @param name Field name
+	 * @param type Field Type
+	 * @param pos Fields position in the record
+	 * @param length Field length
+	 * @param decimal number of decimal places
+	 * 
+	 * @return This Record.
+	 */
+	@Override
+	public ExternalRecord addField(String name, int type, int pos, int length, int decimal) {
+		addRecordField(new ExternalField(pos, length, name, "", type, decimal, 0, "", "", "", 0));
+		return this;
+	}
+
+
+	/**
+	 * Add a field to the Record with the field length (and calculate the position)
+	 * 
+	 * @param name Field name
+	 * @param type Field Type
+	 * @param length Field length
+	 * @param decimal number of decimal places
+	 * 
+	 * @return This Record.
+	 */
+	@Override
+	public ExternalRecord addFieldByLength(String name, int type, int length, int decimal) {
+		int pos = 1;
+		if (fields.size() > 0) {
+			ExternalField lf = fields.get(fields.size() - 1);
+			pos = lf.getPos() + lf.getLen();
+		}
+		addRecordField(new ExternalField(pos, length, name, "", type, decimal, 0, "", "", "", 0));
+		return this;
+	}
+	
+	/**
+	 * Add a field to the Record using the Field position and calculating lengths
+	 * 
+	 * @param name Field name
+	 * @param type Field Type
+	 * @param pos Fields position in the record
+	 * @param decimal number of decimal places
+	 * 
+	 * @return This Record.
+	 */
+	@Override
+	public ExternalRecord addFieldByPosition(String name, int type, int pos, int decimal) {
+		int length = 1;
+		if (fields.size() > 0) {
+			ExternalField lf = fields.get(fields.size() - 1);
+			lf.setLen(pos -  lf.getPos());
+		}
+		addRecordField(new ExternalField(pos, length, name, "", type, decimal, 0, "", "", "", 0));
+		return this;
+	}
+
+	/**
+	 * Add a field to the Record using the Field position and calculating lengths
+	 * 
+	 * @param name Field name
+	 * @param type Field Type
+	 * @param pos Fields position in the record
+	 * @param length Field length
+	 * @param decimal number of decimal places
+	 * 
+	 * @return This Record.
+	 */
+	@Override
+	public ExternalRecord addFieldByPosition(String name, int type, int pos, int length, int decimal) {
+
+		if (fields.size() > 0) {
+			ExternalField lf = fields.get(fields.size() - 1);
+			lf.setLen(pos -  lf.getPos());
+		}
+		addRecordField(new ExternalField(pos, length, name, "", type, decimal, 0, "", "", "", 0));
+		return this;
+	}
+
 
 	/**
 	 * Get a field (via its index)
@@ -690,9 +816,7 @@ public class ExternalRecord extends AbstractUpdatableRecord {
 	 * @return Fields array
 	 */
 	public ExternalField[] getRecordFields() {
-	    ExternalField[] r = new ExternalField[fields.size()];
-	    fields.toArray(r);
-	    return r;
+	    return fields.toArray(new ExternalField[fields.size()]);
 	}
 
 	/**
@@ -751,13 +875,17 @@ public class ExternalRecord extends AbstractUpdatableRecord {
 	 * @param value Value to compare field to
 	 */
 	public void addTstField(String tstField, String value) {
+		addTstField(tstField, ExternalFieldSelection.EQUALS_OPERATOR, value);
+	}
+
+	public void addTstField(String tstField, String op, String value) {
 
 		if (recSelect == null) {
 			recSelect = new ExternalGroupSelection(1);
-		}
+		}	
 		if (recSelect instanceof ExternalGroupSelection) {
 			ExternalGroupSelection g = (ExternalGroupSelection) recSelect;
-			g.add(new ExternalFieldSelection(tstField, value));
+			g.add(new ExternalFieldSelection(tstField, value, op));
 			return;
 		}
 		//System.out.println();
@@ -765,13 +893,14 @@ public class ExternalRecord extends AbstractUpdatableRecord {
 		//System.out.println("-->" + recSelect.getClass().getName());
 		throw new RuntimeException("Can not add Test Field");
 	}
-
+	
 	/**
 	 * Get the value the TestField should be compared to
 	 *
 	 * @return the tstFieldValue
 	 * @Deprecated Use getTstFields
-	 */@Deprecated
+	 */
+	@Deprecated
 	public String getTstFieldValue() {
 			ExternalFieldSelection f = getFirstSelection(recSelect);
 			if (f == null) {
@@ -882,6 +1011,7 @@ public class ExternalRecord extends AbstractUpdatableRecord {
 
 				maxPos = Math.max(maxPos, fields.get(i).getPos() + fields.get(i).getLen());
 			}
+
 			tmpFields = new ArrayList<ExternalField>(count);
 
 			for (i = 0; i < fields.size(); i++) {
@@ -944,6 +1074,14 @@ public class ExternalRecord extends AbstractUpdatableRecord {
 		return ToLayoutDetail.getInstance().getLayout(this);
 	}
 
+	/**
+	 * Used in interface to convert back to ExternalRecord
+	 * @return this ExternalRecord
+	 */
+	public final ExternalRecord asExternalRecord() {
+		return this;
+	}
+	
 //	/**
 //	 * For internal use - Get parent record name (may not be set)
 //	 * @return parent name
@@ -1017,4 +1155,18 @@ public class ExternalRecord extends AbstractUpdatableRecord {
 	}
 
 
+	public static IFixedWidthSchemaBuilder newFixedWidthRecord(String name, int fileStructure, String fontName) {
+		ExternalRecord r =  getNullRecord(name, Constants.rtRecordLayout, fontName);
+		r.setFileStructure(fileStructure);
+		
+		return r;
+	}
+	
+
+	public static ICsvSchemaBuilder newCsvRecord(String name, int fileStructure, String fontName, String delimeter, String quote) {
+		ExternalRecord r =  new ExternalRecord(-1, name, "", Constants.rtDelimited, 0, "N",
+				"", delimeter, quote, 0, Constants.DEFAULT_STRING, Constants.SYSTEM_EOL_BYTES, fontName, 0, fileStructure, false);
+		
+		return r;
+	}
 }

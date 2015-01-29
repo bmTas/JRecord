@@ -28,6 +28,7 @@ public interface CopybookLoader {
     public static final int SPLIT_NONE     = 0;
     public static final int SPLIT_REDEFINE = 1;
     public static final int SPLIT_01_LEVEL = 2;
+    public static final int SPLIT_HIGHEST_REPEATING = 3;
 
     /**
      * Read an Copybook from a file into the internal exchange format (ExternalRecord)
@@ -50,5 +51,13 @@ public interface CopybookLoader {
             final int binFormat,
             final int systemId,
             final AbsSSLogger log) throws Exception;
+    
+    public abstract ExternalRecord loadCopyBook(final String copyBookFile,
+            final int splitCopybookOption, final int dbIdx, final String font,
+            final int copybookFormat,
+            final int binFormat,
+            final int systemId,
+            final AbsSSLogger log) throws Exception;
+
     //        SAXException, ParserConfigurationException, RecordException;
 }

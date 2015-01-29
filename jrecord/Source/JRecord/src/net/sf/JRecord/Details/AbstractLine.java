@@ -244,10 +244,12 @@ public interface AbstractLine extends AbstractIndexedLine {
     public abstract String setFieldHex(final int recordIdx, final int fieldIdx,
             String val) throws RecordException;
 
-    /**
-     * Test if Tree rebuild is required
-     */
-    public abstract boolean isRebuildTreeRequired();
+//     was RecordEditor related but The RecordEditor has its own AbstractLine
+//    
+//    /**
+//     * Test if Tree rebuild is required
+//     */
+//    public abstract boolean isRebuildTreeRequired();
 
     /**
      * Get all fields for a Record (by name)

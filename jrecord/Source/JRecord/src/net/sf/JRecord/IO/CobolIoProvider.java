@@ -8,6 +8,8 @@ package net.sf.JRecord.IO;
 
 import java.io.IOException;
 
+import net.sf.JRecord.Common.CommonBits;
+import net.sf.JRecord.Common.IBasicFileSchema;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
 import net.sf.JRecord.External.CobolCopybookLoader;
@@ -56,14 +58,24 @@ public class CobolIoProvider {
      * @throws Exception
      */
     public AbstractLineReader getLineReader(int fileStructure,
-			   int numericType, int splitOption,
+			   int numericType, int splitOption, int copybookFormat,
 			   String copybookName, String filename)
     throws Exception {
         return getLineReader(fileStructure,
- 			   numericType, splitOption,
+ 			   numericType, splitOption, copybookFormat,
 			   copybookName, filename,
-			   LineIOProvider.getInstance().getLineProvider(fileStructure));
+			   null);
     }
+
+    public AbstractLineReader getLineReader(int fileStructure,
+			   int numericType, int splitOption,
+			   String copybookName, String filename)
+					   throws Exception {
+     return getLineReader(fileStructure,
+			   numericType, splitOption,
+			   copybookName, filename,
+			   null);
+ }
 
     /**
      * Creates a line reader for a Cobol file
@@ -86,6 +98,31 @@ public class CobolIoProvider {
  			   String copybookName, String filename,
  			   LineProvider provider)
      throws Exception {
+    	return getLineReader(fileStructure, numericType, splitOption, CommonBits.getDefaultCobolTextFormat(), copybookName, filename, provider);
+    }
+    
+    /**
+     * Creates a line reader for a Cobol file
+     * 
+     * @param fileStructure Structure of the input file
+     * @param numericType Numeric Format data (is mainframe, Fujitu PC compiler etc)
+     * @param splitOption Option to split the copybook up <ul>
+     *  <li>No Split
+     *  <li>Split on  redefine
+     *  <li>Split on 01 level
+     * </ul>
+     * @param copybookFormat format of the copybook e.g. Cb2xmlConstants.USE_*
+     * @param copybookName Copybook (or Layout) name
+     * @param filename input file name
+     * @param provider line provider (to build your own lines)
+     * @return requested Line Reader
+     * @throws Exception
+     */
+    public AbstractLineReader getLineReader(int fileStructure,
+			   int numericType, int splitOption, int copybookFormat,
+			   String copybookName, String filename,
+			   LineProvider provider)
+    throws Exception {
         AbstractLineReader ret;
         String font = "";
         if (numericType == Convert.FMT_MAINFRAME) {
@@ -95,11 +132,15 @@ public class CobolIoProvider {
        	     copybookInt.loadCopyBook(
                         copybookName,
                         splitOption, 0, font,
+                        copybookFormat,
                         numericType, 0, null
                 ));
 
+//       	if (provider == null) {
+//       		provider = LineIOProvider.getInstance().getLineProvider(fileStructure, font);
+//       	}
        	ret = LineIOProvider.getInstance()
-       				.getLineReader(fileStructure, provider);
+       				.getLineReader(copyBook, provider);
        	ret.open(filename, copyBook);
 
        	return ret;
@@ -112,7 +153,7 @@ public class CobolIoProvider {
      * 
      * @param fileStructure structure of the output file
      * @return Line writer for the file
-     */
+     */ @Deprecated
     public AbstractLineWriter getLineWriter(int fileStructure, String outputFileName)
     throws IOException {
         AbstractLineWriter ret = LineIOProvider.getInstance()
@@ -120,6 +161,22 @@ public class CobolIoProvider {
         ret.open(outputFileName);
         return ret;
     }
+
+ 
+
+     /**
+      * Create a line writer for a Cobol File
+      * 
+      * @param fileStructure structure of the output file
+      * @return Line writer for the file
+      */
+     public AbstractLineWriter getLineWriter(IBasicFileSchema schema, String outputFileName)
+     throws IOException {
+         AbstractLineWriter ret = LineIOProvider.getInstance()
+         			.getLineWriter(schema);
+         ret.open(outputFileName);
+         return ret;
+     }
 
 
     /**

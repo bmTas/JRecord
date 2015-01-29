@@ -33,7 +33,7 @@ import net.sf.JRecord.Numeric.Convert;
  * @author Bruce Martin
  *
  */
-public class RecordEditorXmlLoader implements CopybookLoader {
+public class RecordEditorXmlLoader extends BaseCopybookLoader {
 
 	/**
 	 * Load the Copybook
@@ -41,7 +41,7 @@ public class RecordEditorXmlLoader implements CopybookLoader {
 	 */
 	@Override
 	public ExternalRecord loadCopyBook(String copyBookFile,
-		int splitCopybookOption, int dbIdx, String font, int binFormat,
+		int splitCopybookOption, int dbIdx, String font, int copybookFormat, int binFormat,
 		int systemId, AbsSSLogger log) throws Exception {
 
         int rt = Constants.rtRecordLayout;
@@ -99,7 +99,8 @@ public class RecordEditorXmlLoader implements CopybookLoader {
 	throws Exception {
 
 		AbstractLine line = reader.read();
-		String name;
+		String name, s;
+		log = TextLog.getLog(log);
 
 		if (line == null || (name= line.getFieldValue(XmlConstants.XML_NAME).asString()).startsWith("/")) {
 			//System.out.println("Exit Found " + name);
@@ -116,19 +117,31 @@ public class RecordEditorXmlLoader implements CopybookLoader {
 			childRec.setCopyBook(line.getFieldValue(Constants.RE_XML_COPYBOOK).asString());
 			childRec.setDelimiter(line.getFieldValue(Constants.RE_XML_DELIMITER).asString());
 			childRec.setDescription(line.getFieldValue(Constants.RE_XML_DESCRIPTION).asString());
-			childRec.setFileStructure(ExternalConversion.getFileStructure(dbIdx,
-					line.getFieldValue(Constants.RE_XML_FILESTRUCTURE).asString()));
+			childRec.setFileStructure(
+					ExternalConversion.getFileStructure(
+							dbIdx, line.getFieldValue(Constants.RE_XML_FILESTRUCTURE).asString()));
 			childRec.setFontName(line.getFieldValue(Constants.RE_XML_FONTNAME).asString());
 			childRec.setListChar(line.getFieldValue(Constants.RE_XML_LISTCHAR).asString());
 			childRec.setParentName(line.getFieldValue(Constants.RE_XML_PARENT).asString());
 			childRec.setQuote(line.getFieldValue(Constants.RE_XML_QUOTE).asString());
-			childRec.setRecordStyle(ExternalConversion.getRecordStyle(dbIdx,
-					line.getFieldValue(Constants.RE_XML_STYLE).asString()));
-			childRec.setRecordType(ExternalConversion.getRecordType(dbIdx,
-					line.getFieldValue(Constants.RE_XML_RECORDTYPE).asString()));
+			childRec.setRecordStyle(
+					ExternalConversion.getRecordStyle(
+							dbIdx, line.getFieldValue(Constants.RE_XML_STYLE).asString()));
+			childRec.setRecordType(
+					ExternalConversion.getRecordType(
+							dbIdx, line.getFieldValue(Constants.RE_XML_RECORDTYPE).asString()));
 			childRec.setEmbeddedCr(
 					"Y".equalsIgnoreCase(
 							line.getFieldValue(Constants.RE_XML_EMBEDDED_CR).asString()));
+			
+			s = line.getFieldValue(Constants.RE_XML_RECORDSEP).asString();
+			if (s != null && ! "".equals(s)) {
+				childRec.setRecSepList(s);
+			}
+			s = line.getFieldValue(Constants.RE_XML_SYSTEMNAME).asString();
+			if (s != null && ! "".equals(s)) {
+				childRec.setSystemName(s);
+			}
 			//rec.setSystem((int) line.getFieldValue(Constants.RE_XML_COPYBOOK).asLong());
 
 
@@ -156,36 +169,41 @@ public class RecordEditorXmlLoader implements CopybookLoader {
 				parentRec.addRecord(childRec);
 			}
 		} else {
-			String s = "Error loading copybook; Expected " + Constants.RE_XML_RECORD + " Tag, but got " + name;
+			s = "Error loading copybook; Expected " + Constants.RE_XML_RECORD + " Tag, but got " + name;
 			log.logMsg(AbsSSLogger.ERROR, s);
 			throw new RuntimeException(s);
 		}
 
 		line = reader.read();
 
-		if (Constants.RE_XML_RECORDS.equalsIgnoreCase(line.getFieldValue(XmlConstants.XML_NAME).asString())) {
-			ExternalRecord newRec;
-			childRec.setRecordType(Constants.rtGroupOfRecords);
-
-			do {
-				newRec = ExternalRecord.getNullRecord(
-		        		"",
-		        		Constants.rtRecordLayout,
-		                childRec.getFontName());
-				newRec.setNew(true);
-				//rec.addRecord(newRec);
-			} while (insertRecord(log, childRec, newRec, reader, dbIdx));
-			childRec.setParentsFromName();
-
-			line = reader.read();
+		if (line != null) {
+			if (Constants.RE_XML_RECORDS.equalsIgnoreCase(line.getFieldValue(XmlConstants.XML_NAME).asString())) {
+				ExternalRecord newRec;
+				if (childRec.getRecordType() != Constants.rtGroupOfBinaryRecords) {
+					childRec.setRecordType(Constants.rtGroupOfRecords);
+				}
+	
+				do {
+					newRec = ExternalRecord.getNullRecord(
+			        		"",
+			        		Constants.rtRecordLayout,
+			                childRec.getFontName());
+					newRec.setNew(true);
+					//rec.addRecord(newRec);
+				} while (insertRecord(log, childRec, newRec, reader, dbIdx));
+				childRec.setParentsFromName();
+	
+				line = reader.read();
+			}
+	
+			line = addFieldTsts(childRec, reader, line, dbIdx);
+			line = addFields(childRec, reader, line, dbIdx);
+			line = addFieldTsts(childRec, reader, line, dbIdx);
 		}
-
-		line = addFieldTsts(childRec, reader, line, dbIdx);
-		line = addFields(childRec, reader, line, dbIdx);
-		line = addFieldTsts(childRec, reader, line, dbIdx);
-
 		return true;
 	}
+
+
 
 
 	private AbstractLine addFields(
@@ -200,6 +218,7 @@ public class RecordEditorXmlLoader implements CopybookLoader {
 			String fldName, s, cobolName;
 			int decimal, len;
 			line = reader.read();
+
 			while (line != null && ! line.getFieldValue(XmlConstants.XML_NAME).asString().startsWith("/")) {
 				s = null;
 				cobolName = "";
@@ -231,7 +250,9 @@ public class RecordEditorXmlLoader implements CopybookLoader {
 						fld.setDefault(s);
 					}
 					childRec.addRecordField(fld);
-				} catch (Exception e) { }
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
 				line = reader.read();
 			}
@@ -335,6 +356,7 @@ public class RecordEditorXmlLoader implements CopybookLoader {
 		}
 		return ret;
 	}
+
 
 	public static ExternalRecord getExternalRecord(String xml, String name) throws Exception {
 		ByteArrayInputStream bs = new ByteArrayInputStream(xml.getBytes());

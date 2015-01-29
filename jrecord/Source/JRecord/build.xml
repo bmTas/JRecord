@@ -12,22 +12,29 @@
 
 	<property name="src.dir" location="src" />
 	<property name="build.dir" location="build" />
+	<property name="buildExample.dir" location="buildExample" />
 	<property name="outputLib.dir" location="lib" />
 	<property name="docs.dir" location="docs" />
 	<property name="javadoc.dir" location="${docs.dir}/api" />
 	<property name="JRecord.jar" location="${outputLib.dir}/JRecord.jar" />
+	<property name="JRecordCb2xml.jar" location="${outputLib.dir}/JRecordCb2xml.jar" />
+	<property name="JRecordTest.jar" location="${outputLib.dir}/JRecordTest.jar" />
+	<property name="Cobol2Csv.jar" location="${outputLib.dir}/Cobol2Csv.jar" />
+	<property name="Csv2Cobol.jar" location="${outputLib.dir}/Csv2Cobol.jar" />
+	<property name="Cobol2Cobol.jar" location="${outputLib.dir}/Cobol2Cobol.jar" />
 	<property name="inputLib.dir" location="../../lib" />
-	<property name="JRecordCommon.dir" location="../Jrecord_Common_097/build" />
+	<property name="JRecordCommon.dir" location="../JRecord_Common/build" />
 
-	<target name="cb2xml" description="compile JRecord code" >
-		<ant dir="../cb2xml" antfile="build.xml" output="buildout.txt" inheritall="false" />
+	<target name="JRecord_Common" description="compile JRecord code" >
+		<ant dir="../JRecord_Common" antfile="build.xml" output="buildout.txt" inheritall="false" />
 	</target>
 
 
-	<target name="compile" description="compile code" depends="cb2xml">
-	<echo file="${inputLib.dir}/SmallEditorFiles.txt"/>
+	<target name="compile" description="compile code" depends="JRecord_Common">
+	<!--echo file="${inputLib.dir}/SmallEditorFiles.txt"/-->
 
 		<mkdir dir="${build.dir}" />
+		<mkdir dir="${buildExample.dir}" />
 		<javac srcdir="${src.dir}" destdir="${build.dir}" optimize="false" target="1.5" source="1.5" debug="true">
 			<exclude name="net/sf/JRecord/zExamples/**"/>
 			<exclude name="net/sf/JRecord/zTest/**"/>
@@ -38,6 +45,20 @@
 				<pathelement path="${JRecordCommon.dir}"/>
 			</classpath>
 		</javac>
+
+		<javac srcdir="${src.dir}" destdir="${buildExample.dir}" optimize="false" target="1.5" source="1.5" debug="true">
+			<!--include name="net/sf/JRecord/zExamples/LineDTAR0020*"/!-->
+			<include name="net/sf/JRecord/zExamples/cobol/readWrite/XmplLineIOD*"/>
+			<include name="net/sf/JRecord/zExamples/cobol/toCsv/*"/>
+			<include name="net/sf/JRecord/zExamples/copy/*"/>
+			<classpath>
+				<filelist dir="../cb2xml/lib">
+					<file name="cb2xml.jar"/>
+				</filelist>
+				<pathelement path="${JRecordCommon.dir}"/>
+				<pathelement path="${build.dir}"/>
+			</classpath>
+		</javac>
 	</target>
 
 	<target name="build" depends="compile" description="build jar">
@@ -45,6 +66,52 @@
 		<jar destfile="${JRecord.jar}" filesonly="true">
 			<fileset dir="${build.dir}"/>
 			<fileset dir="${JRecordCommon.dir}"/>
+		</jar>
+		<jar destfile="${JRecordTest.jar}" filesonly="true">
+			<fileset dir="${buildExample.dir}">
+				<include name="net/sf/JRecord/zExamples/cobol/readWrite/*"/>
+			</fileset>
+		</jar>
+		<!--jar destfile="${JRecordCb2xml.jar}" filesonly="true">
+			<zipfileset src="../cb2xml/lib/cb2xml.jar"/>
+			<fileset dir="${build.dir}"/>
+			<fileset dir="${JRecordCommon.dir}"/>
+		</jar!-->
+		<jar destfile="${Cobol2Csv.jar}" filesonly="true">
+			<manifest>
+				<attribute name="Class-Path" value="cb2xml.jar JRecord.jar" />
+			    <attribute name="Main-Class" value="net.sf.JRecord.zExamples.cobol.toCsv.Cobol2Csv"/>
+			</manifest>
+			<fileset dir="${buildExample.dir}">
+				<exclude name="net/sf/JRecord/zExamples/cobol/readWrite/*"/>
+				<exclude name="net/sf/JRecord/zExamples/copy/*"/>
+				<!--exclude name="net/sf/JRecord/zExamples/sharedUtilities/*"/!-->
+				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Cobol2CsvA*"/>
+				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Csv2Cobol*"/>
+				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Fixed2Csv*"/>
+			</fileset>
+		</jar>
+		<jar destfile="${Csv2Cobol.jar}" filesonly="true">
+			<manifest>
+				<attribute name="Class-Path" value="cb2xml.jar JRecord.jar" />
+			    <attribute name="Main-Class" value="net.sf.JRecord.zExamples.cobol.toCsv.Csv2Cobol"/>
+			</manifest>
+			<fileset dir="${buildExample.dir}">
+				<exclude name="net/sf/JRecord/zExamples/cobol/readWrite/*"/>
+				<exclude name="net/sf/JRecord/zExamples/copy/*"/>
+				<!--exclude name="net/sf/JRecord/zExamples/sharedUtilities/*"/!-->
+				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Cobol2Csv*"/>
+				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Fixed2Csv*"/>
+			</fileset>
+		</jar>
+		<jar destfile="${Cobol2Cobol.jar}" filesonly="true">
+			<manifest>
+				<attribute name="Class-Path" value="cb2xml.jar JRecord.jar" />
+			    <attribute name="Main-Class" value="net.sf.JRecord.zExamples.copy.Cobol2Cobol"/>
+			</manifest>
+			<fileset dir="${buildExample.dir}">
+				<include name="net/sf/JRecord/zExamples/copy/*"/>
+			</fileset>
 		</jar>
 	</target>
 

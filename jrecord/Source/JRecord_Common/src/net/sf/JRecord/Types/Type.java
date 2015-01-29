@@ -86,6 +86,12 @@ public interface Type {
 	public static final int ftFjZonedNumeric     = 41;
 	public static final int ftNumRightJustCommaDp   = 42;
 	public static final int ftNumRightJustCommaDpPN = 43;
+	
+	/**
+	 * Use ftMultiLineChar instead
+	 */
+	@Deprecated 
+	public static final int ftCharMultiLine      = 51;
 
 
 	public static final int ftDate               = 71;
@@ -114,7 +120,6 @@ public interface Type {
 	public static final int ftMultiLineEdit      = 117;
 	public static final int ftMultiLineChar      = 118; /* used in PO / Tip Files */
 	public static final int ftHtmlField          = 119;
-
 
 	public static final int NT_TEXT              = 1;
 	public static final int NT_DATE              = 11;

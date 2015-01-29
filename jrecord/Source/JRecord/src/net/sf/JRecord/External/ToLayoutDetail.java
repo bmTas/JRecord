@@ -7,7 +7,9 @@
  */
 package net.sf.JRecord.External;
 
+import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -43,19 +45,12 @@ public class ToLayoutDetail {
 	    LayoutDetail ret = null;
 
 	    RecordDetail[] layouts;
-	    byte[] recordSep   = recordDefinition.getRecordSep();
 	    String recordSepString = recordDefinition.getRecSepList();
 
-	    if (Constants.CRLF_STRING.equals(recordSepString)) {
-	        recordSep = Constants.LFCR_BYTES;
-	    } else if ( Constants.DEFAULT_STRING.equals(recordSepString)) {
-	    	recordSep = Constants.SYSTEM_EOL_BYTES;
-	    } else if (Constants.CR_STRING.equals(recordSepString)) {
-	        recordSep = Constants.CR_BYTES;
-	    } else if (Constants.LF_STRING.equals(recordSepString)) {
-	        recordSep = Constants.LF_BYTES;
-	    }
+	    String fontName = recordDefinition.getFontName();
+	    byte[] recordSep = CommonBits.getEolBytes( recordDefinition.getRecordSep(), recordSepString, fontName);
 
+		
 	    if (recordDefinition.getNumberOfRecords() == 0) {
 	        layouts = new RecordDetail[1];
 	        layouts[0] = toRecordDetail(recordDefinition);

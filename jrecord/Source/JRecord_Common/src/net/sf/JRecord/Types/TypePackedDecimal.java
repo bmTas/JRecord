@@ -41,11 +41,11 @@ public class TypePackedDecimal extends TypeNum {
      * fields.
      */
     public TypePackedDecimal() {
-        super(false, true, true, false, true);
+        super(false, true, true, false, true, false);
     }
 
     public TypePackedDecimal(boolean positive) {
-        super(false, true, true, positive, true);
+        super(false, true, true, positive, true, false);
     }
 
     /**
@@ -69,6 +69,7 @@ public class TypePackedDecimal extends TypeNum {
     /**
      * @see net.sf.JRecord.Types.Type#setField(byte[], int, net.sf.JRecord.Common.FieldDetail, java.lang.Object)
      */
+    @Override
     public byte[] setField(byte[] record,
             final int position,
 			final IFieldDetail field,
@@ -78,9 +79,11 @@ public class TypePackedDecimal extends TypeNum {
 		int pos = position - 1;
 		int len = field.getLen();
 
-        String val = formatValueForRecord(field, value.toString());
+        String val = checkValue(field, toNumberString(value));
 	    if (val.startsWith("-")) {
 	        val = val.substring(1) + "D";
+	    } else if (isPositive()) {
+	    	val += "F";
 	    } else {
 	        val += "C";
 	    }

@@ -24,7 +24,7 @@
 
 
 	<target name="build" description="compile code" depends="cb2xml">
-	<echo file="${inputLib.dir}/SmallEditorFiles.txt"/>
+	<!--echo file="${inputLib.dir}/SmallEditorFiles.txt"/-->
 
 		<mkdir dir="${build.dir}" />
 		<javac srcdir="${src.dir}" destdir="${build.dir}" optimize="false" target="1.5" debug="true">

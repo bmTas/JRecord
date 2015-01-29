@@ -23,6 +23,7 @@ import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.Log.AbsSSLogger;
+import net.sf.JRecord.Log.TextLog;
 import net.sf.JRecord.Numeric.Convert;
 import net.sf.JRecord.Types.Type;
 
@@ -50,7 +51,7 @@ import org.xml.sax.SAXException;
  * @author Bruce Martin
  *
  */
-public class RecordEditorCsvLoader implements CopybookLoader {
+public class RecordEditorCsvLoader extends BaseCopybookLoader {
 
     //private static HashMap typeConv = new HashMap();
 
@@ -67,11 +68,13 @@ public class RecordEditorCsvLoader implements CopybookLoader {
      * load a copybook
      */
     public ExternalRecord loadCopyBook(String copyBookFile,
-            int splitCopybookOption, int dbIdx, String font, int binFormat,
+            int splitCopybookOption, int dbIdx, String font, int copybookFormat, int binFormat,
             int systemId, AbsSSLogger log) throws IOException, SAXException,
             ParserConfigurationException, RecordException {
 
         int rt = Constants.rtRecordLayout;
+        log = TextLog.getLog(log);
+        
         if (binFormat == Convert.FMT_MAINFRAME) {
             rt = Constants.rtBinaryRecord;
         }
@@ -118,6 +121,8 @@ public class RecordEditorCsvLoader implements CopybookLoader {
         int idx = 0;
         int i = 1;
         int inputLine = 1;
+        log = TextLog.getLog(log);
+        
         try {
             BufferedReader r = new BufferedReader(in);
             while ((s = r.readLine()) != null) {

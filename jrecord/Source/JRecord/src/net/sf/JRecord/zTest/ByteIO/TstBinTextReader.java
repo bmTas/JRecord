@@ -62,7 +62,7 @@ public class TstBinTextReader  extends TestCase {
 
     public void testWindows() throws IOException {
        	System.out.println("--- Testing Windows File ");
-    	tstAFile(new String(Constants.LFCR_BYTES));
+    	tstAFile(new String(Constants.CRLF_BYTES));
     }
 
 	private void tstAFile(String eol) throws IOException {

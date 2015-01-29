@@ -18,7 +18,7 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 
 	protected byte[] crBytes = Constants.CR_BYTES;
 	protected byte[] lfBytes = Constants.LF_BYTES;
-	protected byte[] lfcrBytes = Constants.LFCR_BYTES;
+	protected byte[] lfcrBytes = Constants.CRLF_BYTES;
 
 	protected byte byteLF = Constants.BYTE_LF;
 	protected byte byteCR = Constants.BYTE_CR;
@@ -213,7 +213,7 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 	}
 
 
-	protected void setLfCr(String charSet) {
+	protected final void setLfCr(String charSet) {
 
 		byte[] b = Conversion.getBytes("\r\n", charSet);
 
@@ -223,7 +223,7 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 
 			crBytes = new byte[] {byteCR};
 			lfBytes = new byte[] {byteLF};
-			lfcrBytes = new byte[] {byteLF, byteCR};
+			lfcrBytes = b; //new byte[] {byteLF, byteCR};
 		}
 	}
 

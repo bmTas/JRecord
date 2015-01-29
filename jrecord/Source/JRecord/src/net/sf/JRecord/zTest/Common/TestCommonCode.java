@@ -95,7 +95,7 @@ public class TestCommonCode {
 			+ "	</FIELDS>"
 			+ "</RECORD>";
 
-		System.out.println("Generated Xml: " +xml);
+//		System.out.println("Generated Xml: " +xml);
 
 		return RecordEditorXmlLoader.getExternalRecord(xml, "CsvNamesFirstLine");
 	}

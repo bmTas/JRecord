@@ -11,23 +11,23 @@
  */
 package net.sf.JRecord.IO;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.List;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
+import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.CsvParser.ICsvLineParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.CsvParser.ParserManager;
-import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.Types.Type;
+import net.sf.JRecord.charIO.ICharReader;
+import net.sf.JRecord.charIO.StandardCharReader;
 
 
 /**
@@ -36,15 +36,14 @@ import net.sf.JRecord.Types.Type;
  * @author Bruce Martin
  *
  */
-public class TextLineReader extends AbstractLineReader {
+public class TextLineReader extends BasicTextLineReader {
 
-    private InputStream inStream;
-	private InputStreamReader stdReader;
-	private BufferedReader reader = null;
+    private static final StandardCharReader STANDARD_CHAR_READER = new StandardCharReader();
 	private boolean namesInFile = false;
 
     private String defaultDelim  = ",";
     private String defaultQuote  = "'";
+    private ICharReader reader = STANDARD_CHAR_READER;
 
 
 
@@ -80,36 +79,40 @@ public class TextLineReader extends AbstractLineReader {
 	 */
 	public TextLineReader(final LineProvider provider,
 	        			  final boolean namesOn1stLine) {
-	    super(provider);
+	    this(provider, namesOn1stLine, STANDARD_CHAR_READER);
+	}
 
-	    namesInFile = namesOn1stLine;
+	/**
+	 * Get Text-Line-Reader for a supplied CharReader 
+	 * @param provider Line provider
+	 * @param namesOn1stLine wether the file has names on the first line
+	 * @param r reader
+	 */
+	public TextLineReader(final LineProvider provider,
+			  final boolean namesOn1stLine,
+			  ICharReader r) {
+		super(provider);
+		
+		reader = r;
+		namesInFile = namesOn1stLine;
+
 	}
 
 
     /**
-     * @see net.sf.JRecord.IO.AbstractLineReader#open(java.io.InputStream, net.sf.JRecord.Details.LayoutDetail)
+     * @see net.sf.JRecord.IO.StandardLineReader#open(java.io.InputStream, net.sf.JRecord.Details.LayoutDetail)
      */
     public void open(InputStream inputStream, LayoutDetail layout)
     throws IOException, RecordException {
     	String font = "";
-        inStream = inputStream;
-        setLayout(layout);
-
-		if (layout == null || "".equals(layout.getFontName())) {
-		    stdReader = new InputStreamReader(inputStream);
-		} else {
-		    try {
-		    	font = layout.getFontName();
-		        stdReader = new InputStreamReader(inputStream, font);
-		    } catch (Exception e) {
- 		        stdReader = new InputStreamReader(inputStream);
-		    }
+		if (layout != null) {
+			font = layout.getFontName();
 		}
-
-		reader = new BufferedReader(stdReader);
+    	
+    	super.open(reader, inputStream, layout, font);
 
 		if (namesInFile) {
-		    createLayout(reader, inputStream, font);
+			createLayout(getReader(), inputStream, font);
 		}
     }
 
@@ -121,7 +124,7 @@ public class TextLineReader extends AbstractLineReader {
      *
      * @throws IOException sny IO error that occurs
      */
-    protected void createLayout(BufferedReader pReader, InputStream inputStream, String font) throws IOException, RecordException {
+    protected void createLayout(ICharReader pReader, InputStream inputStream, String font) throws IOException, RecordException {
         LayoutDetail layout;
 
         RecordDetail rec = null;
@@ -135,6 +138,7 @@ public class TextLineReader extends AbstractLineReader {
         String quote  = defaultQuote;
 
         byte[] recordSep = Constants.SYSTEM_EOL_BYTES;
+        boolean embeddedCr = false;
 
 	    try {
 	    	int ts = getLayout().getFileStructure();
@@ -160,17 +164,18 @@ public class TextLineReader extends AbstractLineReader {
 	        }
 	        recordSep = getLayout().getRecordSep();
 	        font      = getLayout().getFontName();
-	        if (recordSep == Constants.SYSTEM_EOL_BYTES) {
-	        	recordSep = null;
+
+	        if (rec instanceof RecordDetail) {
+	        	embeddedCr = ((RecordDetail) rec).isEmbeddedNewLine();
 	        }
 	    } catch (Exception e) {
         }
 
 	    //System.out.println(" Quote  ->" + quote + " " + (getLayout() == null));
 
-	    layout = createLayout(pReader.readLine(), rec,
+	    layout = createLayout(pReader.read(), rec,
 	    		recordSep, structure, font,  delim,
-                quote, parser, fieldType, decimal, format, param);
+                quote, parser, fieldType, decimal, format, param, embeddedCr);
 	    //System.out.println(" Quote  ->");
 
 	    if (layout != null) {
@@ -197,14 +202,15 @@ public class TextLineReader extends AbstractLineReader {
     		byte[] recordSep,
     		int structure,
             String fontName, String delimiter, String quote, int style,
-            int defaultFieldType, int defaultDecimal, int defaultFormat, String defaultParam) throws IOException {
+            int defaultFieldType, int defaultDecimal, int defaultFormat, String defaultParam,
+            boolean embeddedCr) throws IOException {
 
     	int fldType, idx;
         //int i = 0;
         LayoutDetail ret = null;
         String s;
         int decimal; int format; String param;
-        FieldDetail fldDetail;
+        IFieldDetail fldDetail;
 
         if (line != null) {
         	ICsvLineParser parser = ParserManager.getInstance().get(style);
@@ -238,8 +244,8 @@ public class TextLineReader extends AbstractLineReader {
                 flds[i].setPosOnly(i + 1);
             }
 
-            recs[0] = new RecordDetail("", "", "", Constants.rtDelimited,
-                    delimiter, quote, fontName, flds, style);
+            recs[0] = new RecordDetail("", Constants.rtDelimited,
+                    delimiter, quote, fontName, flds, style, null, embeddedCr); 
 
             try {
                 ret =
@@ -253,42 +259,6 @@ public class TextLineReader extends AbstractLineReader {
             }
         }
         return ret;
-    }
-
-
-    /**
-     * @see net.sf.JRecord.IO.AbstractLineReader#read()
-     */
-    public AbstractLine read()  throws IOException {
-        AbstractLine ret = null;
-
-        if (reader == null) {
-            throw new IOException(AbstractLineReader.NOT_OPEN_MESSAGE);
-        }
-        String s = reader.readLine();
-
-        if (s != null) {
-            ret = getLine(s);
-        }
-
-        return ret;
-    }
-
-
-    /**
-     * @see net.sf.JRecord.IO.AbstractLineReader#close()
-     */
-    public void close() throws IOException {
-
-        if (reader != null) {
-            reader.close();
-    		stdReader.close();
-    		inStream.close();
-        }
-
-    	reader    = null;
-    	stdReader = null;
-    	inStream  = null;
     }
 
 

@@ -49,7 +49,7 @@ public class BinaryLineReader extends AbstractLineReader {
 
 	//private ArrayList lineBuffer = new ArrayList();
 
-	private int lineNumber = 0;
+//	private int lineNumber = 0;
 
 
 
@@ -155,8 +155,8 @@ public class BinaryLineReader extends AbstractLineReader {
 		boolean search;
 
 		search = true;
-		lineNumber += 1;
-		//System.out.print("Line " + lineNumber + " " + start);
+//		lineNumber += 1;
+//		//System.out.print("Line " + lineNumber + " " + start);
 
 		tmpLine.replace(buffer, start, maxLength);
 		pref = tmpLine.getPreferredLayoutIdx();

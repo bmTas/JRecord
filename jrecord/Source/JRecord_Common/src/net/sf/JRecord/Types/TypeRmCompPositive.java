@@ -9,7 +9,7 @@ import net.sf.JRecord.Common.RecordException;
 public class TypeRmCompPositive extends TypeNum {
 
 	public TypeRmCompPositive() {
-		super(false, true, true, true, true);
+		super(false, true, true, true, true, true);
 	}
 
 
@@ -33,9 +33,9 @@ public class TypeRmCompPositive extends TypeNum {
 			Object value) throws RecordException {
 
 		
-		String val = value.toString();
+		String val = toNumberString(value);
 			
-		formatValueForRecord(field, val);
+		checkValue(field, val);
 		
 		return setRmComp(record, position, field.getLen(), Math.abs(getBigDecimal(field, val).longValue()));
 	}

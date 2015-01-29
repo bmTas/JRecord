@@ -20,7 +20,7 @@ public class CsvParser {
 	 */
 	public List<String> getLine(int fieldNumber, ICharIterator dataSource, ICsvDefinition lineDef) {
 		List<String> ret = new ArrayList<String>();
-		StringBuilder pre   = new StringBuilder("");
+//		StringBuilder pre   = new StringBuilder("");
 		StringBuilder field = null;
 		//String s, sCh;
 		char ch, delim;
@@ -28,14 +28,14 @@ public class CsvParser {
 		boolean inQuotes = false;
 		boolean lastCharDelim = true;
 		boolean lastCharQuote = false;
-		int currFieldNumber = 0;
+//		int currFieldNumber = 0;
 		//int i = 0;
 		String delimiter = lineDef.getDelimiter();
 		String quote = lineDef.getQuote();
-		int quoteLength = 1;
-		if (quote != null && ! "".equals(quote)) {
-			quoteLength = quote.length();
-		}
+//		int quoteLength = 1;
+//		if (quote != null && quote.length() > 0) {
+//			quoteLength = quote.length();
+//		}
 
 		if (delimiter == null || delimiter.length() != 1) {
 			throw new RuntimeException("Invalid field delimiter: " + delimiter);

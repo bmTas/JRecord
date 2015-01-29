@@ -1,12 +1,12 @@
 package net.sf.JRecord.External;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import net.sf.JRecord.Common.BasicKeyedField;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.External.Def.AbstractConversion;
+import net.sf.JRecord.External.Def.BasicConversion;
 import net.sf.JRecord.IO.LineIOProvider;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
@@ -147,7 +147,7 @@ public final class ExternalConversion {
 	 * @return Type name
 	 */
 	public final static String getTypeAsString(int dbIdx, int type) {
-		String typeStr = "";
+		String typeStr = Integer.toString(type);
 
 		try {
 			typeStr = getStandardConversion().getTypeAsString(dbIdx, type);
@@ -313,7 +313,7 @@ public final class ExternalConversion {
     public final static ArrayList<BasicKeyedField> getTypes(int idx) {
 		TypeManager manager = TypeManager.getInstance();
     	AbstractConversion conv = getStandardConversion();
-    	ArrayList<BasicKeyedField> ret = new ArrayList<BasicKeyedField>(40);
+    	ArrayList<BasicKeyedField> ret = new ArrayList<BasicKeyedField>(manager.getNumberOfTypes());
     	BasicKeyedField fld;
     	int t;
     	String s;
@@ -391,6 +391,25 @@ public final class ExternalConversion {
 		}
 		return ret;
 	}
+	
+	/**
+	 * Get Dialect Name for a dialect code
+	 * @param key dialect-code
+	 * @return Dialect name
+	 */
+	public static String getDialectName(int key) {
+		return getStandardConversion().getDialectName(key);
+	}
+
+	/**
+	 * Get Dialect Code from a dialect name
+	 * @param name dialect name
+	 * @return Dialect Code
+	 */
+	public static int getDialect(String name) {
+		return getStandardConversion().getDialect(name);
+	}
+
 
 	/**
 	 * Get the Conversion class
@@ -402,141 +421,5 @@ public final class ExternalConversion {
 			standardConversion = new BasicConversion();
 		}
 		return standardConversion;
-	}
-
-
-	/**
-	 * Basic conversion class for use by JRecord
-	 * @author Bruce Martin
-	 *
-	 */
-	private static class BasicConversion implements AbstractConversion {
-
-		private String[] typeNames ;
-		private HashMap<String, Integer> typeNumbers;
-
-		/**
-		 * Basic Type / Format conversion (for use in JRecord; RecordEditor has
-		 * its own (database based conversion).
-		 */
-		public BasicConversion() {
-			TypeManager manager = TypeManager.getInstance();
-			typeNames = new String[manager.getNumberOfTypes()];
-			typeNumbers = new HashMap<String, Integer>(manager.getNumberOfTypes() * 2);
-
-			for (int i=0; i < typeNames.length; i++) {
-				typeNames[i] = "";
-			}
-
-			setName(Type.ftChar  , "Char");
-			setName(Type.ftNumAnyDecimal  , "NumAnyDecimal");
-			setName(Type.ftPositiveNumAnyDecimal  , "PositiveNumAnyDecimal");
-			setName(Type.ftCharRightJust      , "Char (right justified)");
-			setName(Type.ftCharNullTerminated , "Char Null terminated");
-			setName(Type.ftCharNullPadded     , "Char Null padded");
-			setName(Type.ftHex                , "Hex Field");
-			setName(Type.ftNumLeftJustified   , "Num (Left Justified)");
-			setName(Type.ftNumRightJustified  , "Num (Right Justified space padded)");
-			setName(Type.ftNumRightJustifiedPN, "Num (Right Justified space padded) +/- sign");
-			setName(Type.ftNumRightJustCommaDp, "Num (Right Just space padded, \",\" Decimal)");
-			setName(Type.ftNumRightJustCommaDpPN, "Num (Right Just space padded, \",\" Decimal) +/- sign");
-			setName(Type.ftNumZeroPadded      , "Num (Right Justified zero padded)");
-			setName(Type.ftNumZeroPaddedPN    , "Num (Right Justified zero padded +/- sign)");
-			setName(Type.ftAssumedDecimal         , "Num Assumed Decimal (Zero padded)");
-			setName(Type.ftAssumedDecimalPositive , "Num Assumed Decimal (+ve)");
-			setName(Type.ftNumZeroPaddedPositive  , "Num (Right Justified zero padded positive)");
-			setName(Type.ftNumCommaDecimal        , "Zero Padded Number decimal=\",\"");
-			setName(Type.ftNumCommaDecimalPN      , "Zero Padded Number decimal=\",\" sign=+/-");
-			setName(Type.ftNumCommaDecimalPositive, "Num (Right Justified zero padded positive)");
-
-
-			setName(Type.ftSignSeparateLead   , "Num Sign Separate Leading");
-			setName(Type.ftSignSeparateTrail  , "Num Sign Separate Trailing");
-			setName(Type.ftDecimal            , "Decimal");
-			setName(Type.ftBinaryInt          , "Binary Integer");
-			setName(Type.ftBinaryIntPositive  , "Binary Integer (only +ve)");
-			setName(Type.ftPostiveBinaryInt   , "Postive Binary Integer");
-			setName(Type.ftFloat              , "Float");
-			setName(Type.ftDouble             , "Double");
-			setName(Type.ftBit  , "Bit");
-			setName(Type.ftPackedDecimal         , "Mainframe Packed Decimal (comp-3)");
-			setName(Type.ftPackedDecimalPostive  , "Mainframe Packed Decimal (+ve)");
-			setName(Type.ftZonedNumeric  , "Mainframe Zoned Numeric");
-			typeNumbers.put("Binary Integer Big Edian (Mainframe, AIX etc)".toLowerCase(), Integer.valueOf(Type.ftBinaryBigEndian ));
-			setName(Type.ftBinaryBigEndian  , "Binary Integer Big Endian (Mainframe, AIX etc)");
-			setName(Type.ftBinaryBigEndianPositive  , "Binary Integer Big Endian (only +ve)");
-			setName(Type.ftPositiveBinaryBigEndian  , "Positive Integer Big Endian");
-			setName(Type.ftFjZonedNumeric  , "Fujitsu Zoned Numeric");
-
-			setName(Type.ftRmComp, "Rm Cobol Comp");
-			setName(Type.ftRmCompPositive  , "Rm Cobol Comp (+ve)");
-			setName(Type.ftCheckBoxBoolean , "Check Box (Boolean)");
-
-			setName(Type.ftDate  , "Date - Format in Parameter field");
-			setName(Type.ftDateYMD  , "Date - YYMMDD");
-			setName(Type.ftDateYYMD  , "Date - YYYYMMDD");
-			setName(Type.ftDateDMY  , "Date - DDMMYY");
-			setName(Type.ftDateDMYY  , "Date - DDMMYYYY");
-			setName(Type.ftCheckBoxTrue  , "Check Box True / Space");
-			setName(Type.ftCheckBoxYN  , "Checkbox Y/N");
-			setName(Type.ftCheckBoxTF  , "Checkbox T/F");
-			setName(Type.ftCsvArray  , "CSV array");
-			setName(Type.ftXmlNameTag  , "XML Name Tag");
-			setName(Type.ftMultiLineEdit  , "Edit Multi Line field");
-
-			setName(Type.ftCharRestOfFixedRecord  , "Char Rest of Fixed Length");
-			setName(Type.ftCharRestOfRecord  , "Char Rest of Record");
-
-		}
-
-		/**
-		 * Set The type name
-		 * @param type type Id
-		 * @param name Type Name
-		 */
-		private void setName(int type, String name) {
-			typeNames[TypeManager.getInstance().getIndex(type)] = name;
-			typeNumbers.put(name.toLowerCase(), Integer.valueOf(type));
-		}
-
-
-		@Override
-		public int getFormat(int idx, String format) {
-			return 0;
-		}
-
-		@Override
-		public String getFormatAsString(int idx, int format) {
-			// TODO Auto-generated method stub
-			return Integer.toString(format);
-		}
-
-		@Override
-		public int getType(int idx, String type) {
-			String key = type.toLowerCase();
-			if (typeNumbers.containsKey(key)) {
-				return (typeNumbers.get(key)).intValue();
-			}
-			return 0;
-		}
-
-		@Override
-		public String getTypeAsString(int idx, int type) {
-			String s = typeNames[TypeManager.getInstance().getIndex(type)];
-			if (s == null || "".equals(s)) {
-				s = Integer.toString(type);
-			}
-			return s;
-		}
-
-		/* (non-Javadoc)
-		 * @see net.sf.JRecord.External.Def.AbstractConversion#isValid(int, int)
-		 */
-		@Override
-		public boolean isValid(int idx, int type) {
-			String s = typeNames[TypeManager.getInstance().getIndex(type)];
-			return s != null && ! "".equals(s);
-		}
-
 	}
 }

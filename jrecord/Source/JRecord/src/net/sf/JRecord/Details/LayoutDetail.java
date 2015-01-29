@@ -16,9 +16,11 @@ package net.sf.JRecord.Details;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
+import net.sf.JRecord.Common.IBasicFileSchema;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.CsvParser.ICsvLineParser;
@@ -75,14 +77,14 @@ import net.sf.JRecord.Types.TypeManager;
  * @version 0.55
  *
  */
-public class LayoutDetail {
+public class LayoutDetail implements IBasicFileSchema {
 
 	private String layoutName;
 	private String description;
 	private byte[] recordSep;
 	private int layoutType;
 	private RecordDetail[] records;
-	private boolean binary = false;
+	private boolean binary = false, binaryField=false;
 	private String fontName = "";
 	private String eolString;
 	//private TypeManager typeManager;
@@ -97,6 +99,7 @@ public class LayoutDetail {
 
 	private boolean treeStructure = false;
 
+	private final boolean multiByteCharset, csvLayout;
 
 	/**
 	 * This class holds a one or more records
@@ -140,24 +143,44 @@ public class LayoutDetail {
 		this.fileStructure = pFileStructure;
 		this.recordCount   = pRecords.length;
 
+		if (fontName == null) {
+		    fontName = "";
+		}
+		this.multiByteCharset = Conversion.isMultiByte(fontName);
+
 		while (recordCount > 0 && pRecords[recordCount - 1] == null) {
 		    recordCount -= 1;
 		}
 
 		if (recordSep == null) {
-		    recordSep = Constants.SYSTEM_EOL_BYTES;;
+			if (fontName == null || "".equals(fontName)) {
+				recordSep = Constants.SYSTEM_EOL_BYTES;
+			} else {
+				recordSep = CommonBits.getEolBytes(null, "", fontName);
+			}
+			
+			recordSep = CommonBits.getEolBytes(recordSep, pEolIndicator, fontName);
 		}
 
 		if (Constants.DEFAULT_STRING.equals(pEolIndicator)
 		||  pRecordSep == null) {
 		    eolString = System.getProperty("line.separator");
+		    if (recordSep != null && recordSep.length < eolString.length()) {
+		    	eolString = Conversion.toString(recordSep, pFontName);
+		    }
 		} else {
-		    eolString = new String(pRecordSep);
+		    eolString = Conversion.toString(pRecordSep, pFontName);
 		}
 
-		if (fontName == null) {
-		    fontName = "";
-		}
+	    if (recordCount >= 1) {
+	        int numFields;
+	        for (j = 0; (! binaryField) && j < recordCount; j++) {
+	            numFields =  pRecords[j].getFieldCount();
+	            for (i = 0; (! binaryField) && i < numFields; i++) {
+	            	binaryField = pRecords[j].isBinary(i);
+	            }
+	        }
+	    }
 
 		switch (pLayoutType) {
 			case Constants.rtGroupOfBinaryRecords:
@@ -167,48 +190,46 @@ public class LayoutDetail {
 			break;
             case Constants.rtGroupOfRecords:
 			case Constants.rtRecordLayout:
-			    if (recordCount >= 1) {
-			        int numFields;
-			        for (j = 0; (! binary) && j < recordCount; j++) {
-			            numFields =  pRecords[j].getFieldCount();
-			            for (i = 0; (! binary) && i < numFields; i++) {
-			                binary = pRecords[j].isBinary(i);
-			            }
-			        }
-			    }
+				binary = binaryField;
 			break;
 			default:
 		}
 
+		boolean csv = false;
 	    for (j = 0; j < recordCount; j++) {
-	    	if (pRecords[j] != null && pRecords[j].getFieldCount() > 0) {
-//	    		if ((lastSize >= 0 && lastSize != pRecords[j].getLength())
-//	    		||  (pRecords[j].getField(pRecords[j].getFieldCount() - 1).getType()
+	    	RecordDetail record =  pRecords[j];
+	    	if ((record.getRecordType() == Constants.rtDelimitedAndQuote
+			          || record.getRecordType() == Constants.rtDelimited)) {
+	    		csv = true;
+	    	}
+	    	if (record != null && record.getFieldCount() > 0) {
+//	    		if ((lastSize >= 0 && lastSize != record.getLength())
+//	    		||  (record.getField(record.getFieldCount() - 1).getType()
 //	    				== Type.ftCharRestOfRecord )){
 //	    			fixedLength = false;
 //	    		}
-	    		//lastSize = pRecords[j].getLength();
+	    		//lastSize = record.getLength();
 
-		    	treeStructure = treeStructure || (pRecords[j].getParentRecordIndex() >= 0);
-		        if ((pRecords[j].getRecordType() == Constants.rtDelimitedAndQuote
-		          || pRecords[j].getRecordType() == Constants.rtDelimited)
-		        &&  (!delimiter.equals(pRecords[j].getDelimiter()))) {
+		    	treeStructure = treeStructure || (record.getParentRecordIndex() >= 0);
+		        if ((record.getRecordType() == Constants.rtDelimitedAndQuote
+		          || record.getRecordType() == Constants.rtDelimited)
+		        &&  (!delimiter.equals(record.getDelimiter()))) {
 //		        	fixedLength = false;
 		            if (first) {
-		                delimiter = pRecords[j].getDelimiter();
+		                delimiter = record.getDelimiter();
 		                first = false;
-		            } else {
+		            } else if (! delimiter.equals(record.getDelimiter())) {
 		                throw new RuntimeException(
 		                        	"only one field delimiter may be used in a Detail-Group "
 		                        +   "you have used \'" + delimiter
 		                        +   "\' and \'"
-		                        +  pRecords[j].getDelimiter() + "\'"
+		                        +  record.getDelimiter() + "\'"
 		                );
 		            }
 		        }
 	    	}
 	    }
-
+	    csvLayout = csv;
 	}
 
 
@@ -351,17 +372,31 @@ public class LayoutDetail {
     }
 
 
+	/**
+	 * @return the binaryField
+	 */
+    public final boolean hasBinaryField() {
+		return binaryField;
+	}
+
     /**
-     * Get the Canonical Name (ie Font name)
+     * Get the Charset Name (ie Font name)
      *
-     * @return Canonical Name (ie Font name)
+     * @return Charset Name (ie Font name)
      */
     public String getFontName() {
         return fontName;
     }
 
+    
 
-    /**
+    @Override
+	public String getQuote() {
+		return records[0].getQuote();
+	}
+
+
+	/**
      * Get the seperator String
      *
      * @return end of line string
@@ -393,12 +428,13 @@ public class LayoutDetail {
      * @return file structure
      */
     public int getFileStructure() {
-        int ret;
+        int ret = fileStructure;
 
-         if (fileStructure == Constants.IO_NAME_1ST_LINE &&  isBinCSV()) {
+        if (fileStructure == Constants.IO_NAME_1ST_LINE &&  isBinCSV()) {
         	ret = Constants.IO_BIN_NAME_1ST_LINE;
         } else if (fileStructure > Constants.IO_TEXT_LINE) {
-            ret = fileStructure;
+        } else if (fileStructure == Constants.IO_TEXT_LINE) {
+			ret = checkTextType();
         } else if (getLayoutType() == Constants.rtGroupOfBinaryRecords
                &&  recordCount > 1) {
 		    ret = Constants.IO_BINARY;
@@ -409,14 +445,27 @@ public class LayoutDetail {
 		} else if (fontName != null && ! "".equals(fontName)){
 		    ret = Constants.IO_TEXT_LINE;
 		} else {
-			ret = Constants.IO_BIN_TEXT;
+			ret = checkTextType();
 		}
        //System.out.println(" ~~ getFileStructure " + fileStructure + " " + ret);
 
 		return ret;
     }
 
+    private int checkTextType() {
+    	int ret = fileStructure;
+    	if ( isBinCSV()) {
+			ret = Constants.IO_BIN_TEXT;
+		} else if (multiByteCharset) {
+    		return Constants.IO_UNICODE_TEXT;
+		} else if (fontName != null && ! "".equals(fontName)){
+		    ret = Constants.IO_TEXT_LINE;
+		} else {
+			ret = Constants.IO_BIN_TEXT;
+		}
 
+    	return ret;
+	}
     /**
      * Get the Index of a specific record (base on name)
      *
@@ -616,9 +665,10 @@ public class LayoutDetail {
     			    name = nameTmp;
     			    nameTmp = nameTmp + "~";
     			    k = 1;
-    			    while (fieldNameMap.containsKey(name)) {
+    			    while (fieldNameMap.containsKey(name.toUpperCase())) {
     			    	name = nameTmp + k++;
     			    }
+    			    fld.setLookupName(name);
 					fieldNameMap.put(name.toUpperCase(), fld);
     				recordFieldNameMap.put(
     						records[i].getRecordName() + "." + name.toUpperCase(),
@@ -773,6 +823,11 @@ public class LayoutDetail {
 	}
 
 
+	public final boolean isCsvLayout() {
+		return csvLayout;
+	}
+
+
 	/**
      * Wether this is an XML Layout
      * @return is it an XML layout
@@ -810,11 +865,11 @@ public class LayoutDetail {
 	}
 
 	public boolean isBinCSV() {
-		boolean ret = false;
-		if (delimiter != null && delimiter.length() > 1) {
-			ret = delimiter.toLowerCase().startsWith("x'");
-		}
-		return ret;
+		return	   delimiter != null 
+				&& delimiter.length() > 3
+				&& delimiter.toLowerCase().startsWith("x'");
 	}
+
+
 }
 

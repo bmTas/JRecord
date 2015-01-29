@@ -87,6 +87,8 @@ public abstract class BasicLine extends BaseLine implements AbstractLine {
 				case YES:
 					preferredLayoutAlt = i;
 					break;
+					
+				case NO:
 				}
 
 				i += 1;

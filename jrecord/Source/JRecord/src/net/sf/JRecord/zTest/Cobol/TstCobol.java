@@ -79,6 +79,7 @@ public class TstCobol extends TestCase {
 	
 	
 	private void checkFiles(String dir, String pref, int binFormat) throws Exception {
+		dir =  TstConstants.COBOL_DIRECTORY2 + dir;
 		checkFile(Constants.IO_FIXED_LENGTH, dir, pref + "Comp.cbl",   pref + "Comp.bin", binFormat, false);
 		//checkFile(Constants.IO_FIXED_LENGTH, dir, pref + "Comp3.cbl",  pref + "Comp3.bin", binFormat, false);
 		//checkFile(Constants.IO_FIXED_LENGTH, dir, pref + "Comp4.cbl",  pref + "Comp4.bin", binFormat, false);

@@ -8,6 +8,8 @@ import java.util.StringTokenizer;
 import junit.framework.TestCase;
 import net.sf.JRecord.CsvParser.ICsvLineParser;
 import net.sf.JRecord.CsvParser.ParserManager;
+import net.sf.JRecord.Details.AbstractLine;
+import net.sf.JRecord.Details.CsvLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.Line;
 import net.sf.JRecord.Details.RecordDetail;
@@ -18,6 +20,9 @@ import net.sf.JRecord.zTest.Common.TstConstants;
 
 
 public class TstCsvWrite  extends TestCase {
+	
+	private boolean useLine = true;
+	
 	String[][] lines = {
 			{"69684558","20","40118","280","1","19.00"},
 			{"69684558","20","40118","280","-1","-19.00"},
@@ -87,6 +92,62 @@ public class TstCsvWrite  extends TestCase {
 				"Num (Right Justified zero padded)", true);
 	}
 
+	public void testCsvParser10()  throws Exception{
+		useLine = false;
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile0.txt", "0", "Char", false);
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile0n.txt", "0", "Char", true);
+	}
+	
+	
+	public void testCsvParser11()  throws Exception{
+		useLine = false;
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile1.txt", "1", "Char", false);
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile1n.txt", "1", "Char", true);
+	}
+	
+	
+	public void testCsvParser12()  throws Exception{
+		useLine = false;
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile2a.txt", "2", "Char", false);
+	
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile2b.txt", "2", 
+				"Num (Right Justified zero padded)", false);
+		
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile2an.txt", "2", "Char", true);
+		
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile2bn.txt", "2", 
+				"Num (Right Justified zero padded)", true);
+	}
+
+	
+	
+	public void testCsvParser13()  throws Exception{
+		useLine = false;
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile3.txt", "3", "Char", false);
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile3n.txt", "3", "Char", true);
+	}
+	
+	
+	public void testCsvParser14()  throws Exception{
+		useLine = false;
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile4.txt", "4", "Char", false);
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile4n.txt", "4", "Char", true);
+	}
+	
+	
+	public void testCsvParser15()  throws Exception{
+		useLine = false;
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile5a.txt", "5", "Char", false);
+	
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile5b.txt", "5", 
+				"Num (Right Justified zero padded)", false);
+		
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile5an.txt", "5", "Char", true);
+		
+		writeFile(TstConstants.TEMP_DIRECTORY + "CsvFile5bn.txt", "5", 
+				"Num (Right Justified zero padded)", true);
+	}
+
 
 	private void writeFile(String filename, String style, String type, boolean nameFirstLine)  throws Exception {
 		LayoutDetail layout;
@@ -100,7 +161,7 @@ public class TstCsvWrite  extends TestCase {
 	
 	private LayoutDetail writeFile1(String filename, String style, String type, boolean namesFirstLine)  throws Exception {
 		LayoutDetail layout = getLayout(style, type);
-		Line line = new Line(layout);
+		AbstractLine line = newLine(layout);
 		TextLineWriter writer = new TextLineWriter(namesFirstLine);
 		
 		writer.open(filename);
@@ -117,7 +178,7 @@ public class TstCsvWrite  extends TestCase {
 	
 	private LayoutDetail writeFile2(String filename, String style, String type, boolean namesFirstLine)  throws Exception {
 		LayoutDetail layout = getLayout(style, type);
-		Line line = new Line(layout);
+		AbstractLine line = newLine(layout);
 		TextLineWriter writer = new TextLineWriter(namesFirstLine);
 		
 		writer.open(filename);
@@ -132,6 +193,13 @@ public class TstCsvWrite  extends TestCase {
 		return layout;
 	}
 	
+	
+	private AbstractLine newLine(LayoutDetail layout) {
+		if (useLine) {
+			return new Line(layout);
+		}
+		return new CsvLine(layout);
+	}
 
 	
 	private void checkCsvFile(String filename, String style, String type, String code, 
@@ -221,6 +289,7 @@ public class TstCsvWrite  extends TestCase {
 				+ "  Style: " + style + " , type: " + type, isOk);
 		System.out.println("Tested " + code
 				+ "  Style: " + style + " , type: " + type);
+		reader.close();
 	}
 	
 	private boolean checkStr(String t, String s, String pos) {

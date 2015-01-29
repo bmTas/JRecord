@@ -11,6 +11,7 @@ public class TranslateXmlChars {
         replace(in, "<", "&lt;");
         replace(in, ">", "&gt;");
         replace(in, "\"", "&quot;");
+ //       replace(in, "\t", "&#009;");
         
         return in;
 	}

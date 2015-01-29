@@ -9,6 +9,7 @@ import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.Log.AbsSSLogger;
+import net.sf.JRecord.Log.TextLog;
 
 /**
  * Write a RecordLayout as a RecordEditor-CSBV layout file.
@@ -50,6 +51,8 @@ public class RecordEditorCSVWriter implements CopybookWriter {
 	public String writeCopyBook(String directory, ExternalRecord copybook,
 			AbsSSLogger log) throws Exception {
 		String fileName;
+		
+		log = TextLog.getLog(log);
 		directory = ExternalConversion.fixDirectory(directory);
 
 		for (int i = 0; i < copybook.getNumberOfRecords(); i++) {

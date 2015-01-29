@@ -223,7 +223,26 @@ public class TypeManager {
 		return getInstance();
 	}
 
+	/**
+	 * Whether the type is a numeric type.
+	 * @param typeId type to check
+	 * @return if it is a numeric type
+	 */
+	public static boolean isNumeric(int typeId) {
+		return getInstance().getType(typeId).isNumeric();
+	}
 
+	/**
+	 * return whether the type has a floating decimal.
+	 * @param typeId type to check
+	 * @return whether it is a floating decimal.
+	 */
+	public static boolean hasFloatingDecimal(int typeId) {
+		Type type = getInstance().getType(typeId);
+		return (type instanceof TypeNum) && ((TypeNum) type).hasFloatingDecimal();
+	}
+	
+	
 	/**
 	 * Set the standard system Type Manager
 	 *

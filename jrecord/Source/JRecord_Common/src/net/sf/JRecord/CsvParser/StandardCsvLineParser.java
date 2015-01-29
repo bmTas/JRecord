@@ -1,5 +1,8 @@
 package net.sf.JRecord.CsvParser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sf.JRecord.Types.Type;
 
 /**
@@ -55,6 +58,21 @@ public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLine
 		return ret;
 	}
 
+	
+	
+	@Override
+	public List<String> getFieldList(String line, ICsvDefinition csvDefinition) {
+		ArrayList<String> fields = new ArrayList<String>();
+		String[] lineVals;
+		lineVals = split(0, line, csvDefinition);
+		while (! "".equals(lineVals[2])) {
+			fields.add(lineVals[1]);
+			lineVals = split(1, lineVals[2], csvDefinition);
+		}
+		fields.add(lineVals[1]);
+		return fields;
+	}
+
 	/**
 	 *
 	 */
@@ -75,17 +93,17 @@ public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLine
 		String delimiter = lineDef.getDelimiter();
 		String quote = lineDef.getQuote();
 		int quoteLength = 1;
-		if (quote != null && ! "".equals(quote)) {
+		if (quote != null && quote.length() > 0) {
 			quoteLength = quote.length();
 		}
 
 //		if (textFieldsInQuotes) {
 //			System.out.print("--> " + fieldType + " " + Type.NT_NUMBER + " " + s + " --> ");
 //		}
-		if (quote != null && ! "".equals(quote)
+		if (quote != null && quote.length() > 0
 		&& (	s.indexOf(delimiter) >= 0 || s.indexOf('\n') >= 0 || s.indexOf('\r') >= 0
 			||  s.indexOf(quote) >= 0
-			|| (textFieldsInQuotes & (fieldType != Type.NT_NUMBER)))) {
+			|| (textFieldsInQuotes && (fieldType != Type.NT_NUMBER)))) {
 			StringBuffer b = new StringBuffer(s);
 			int pos;
 			int i = 0;
@@ -102,6 +120,37 @@ public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLine
 		return lineVals[0] + s + lineVals[2];
 	}
 
+    protected String formatField(String s, int fieldType, ICsvDefinition lineDef) {
+		if (s == null) {
+			s = "";
+		} else {
+			String delimiter = lineDef.getDelimiter();
+			String quote = lineDef.getQuote();
+			int quoteLength = 1;
+			if (quote != null && quote.length() > 0) {
+				quoteLength = quote.length();
+			}
+	
+	//		if (textFieldsInQuotes) {
+	//			System.out.print("--> " + fieldType + " " + Type.NT_NUMBER + " " + s + " --> ");
+	//		}
+			if (quote != null && quote.length() > 0
+			&& (	s.indexOf(delimiter) >= 0 || s.indexOf('\n') >= 0 || s.indexOf('\r') >= 0
+				||  s.indexOf(quote) >= 0
+				|| (textFieldsInQuotes & (fieldType != Type.NT_NUMBER)))) {
+				StringBuffer b = new StringBuffer(s);
+				int pos;
+				int i = 0;
+	
+				while ((pos = b.indexOf(quote, i)) >= 0) {
+					b.insert(pos, quote);
+					i = pos + quoteLength * 2;
+				}
+				s = quote + b.toString() + quote;
+			}
+		}
+		return s;
+    }
 	/**
 	 * Split the line into 3<ol compact>
 	 * <li>Line before the request field</li>
@@ -112,7 +161,7 @@ public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLine
 	 * @param fieldNumber  field to retrieve
 	 * @param line line to parse for fields
 	 * @param lineDef Csv Definition
-	 * @return Array containg line before the field, The requested field, The line after
+	 * @return Array containing line before the field, The requested field, The line after
 	 * the request field.
 	 */
 	private String[] split(int fieldNumber, String line, ICsvDefinition lineDef) {
@@ -128,7 +177,7 @@ public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLine
 		String delimiter = lineDef.getDelimiter();
 		String quote = lineDef.getQuote();
 		int quoteLength = 1;
-		if (quote != null && ! "".equals(quote)) {
+		if (quote != null && quote.length() > 0) {
 			quoteLength = quote.length();
 		}
 

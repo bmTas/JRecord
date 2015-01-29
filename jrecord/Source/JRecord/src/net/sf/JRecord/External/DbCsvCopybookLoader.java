@@ -37,7 +37,7 @@ import org.xml.sax.SAXException;
  * @author Bruce Martin
  *
  */
-public class DbCsvCopybookLoader implements CopybookLoader {
+public class DbCsvCopybookLoader extends BaseCopybookLoader {
 
 	private static HashMap<String, Integer> typeConv = new HashMap<String, Integer>();
 	static {
@@ -54,7 +54,7 @@ public class DbCsvCopybookLoader implements CopybookLoader {
 	private final String delimiter = ",";
 
 	public ExternalRecord loadCopyBook(String copyBookFile,
-			int splitCopybookOption, int dbIdx, String font, int binFormat,
+			int splitCopybookOption, int dbIdx, String font, int copybookFormat, int binFormat,
 			int systemId, AbsSSLogger log) throws IOException, SAXException,
 			ParserConfigurationException, RecordException {
 		int rt = Constants.rtGroupOfRecords;

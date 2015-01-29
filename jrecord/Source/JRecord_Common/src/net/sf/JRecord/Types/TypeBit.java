@@ -13,6 +13,7 @@ package net.sf.JRecord.Types;
 
 import java.math.BigInteger;
 
+import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
@@ -61,11 +62,15 @@ public class TypeBit extends TypeChar {
 
 		int pos = position - 1;
 		int len = field.getLen();
-        String val = value.toString();
+		BigInteger v;
+		if (value == CommonBits.NULL_VALUE || value == null || "".equals(value) || "0".equals(value))  {
+			v = BigInteger.ZERO;
+		} else {
+			String val = value.toString();
+			v = new BigInteger(val, 2);
+		}
 
-        formatValueForRecord(field, val);
-
-        Conversion.setBigInt(record, pos, len, new BigInteger(val, 2), true);
+        Conversion.setBigInt(record, pos, len, v, true);
         return record;
 	}
 
@@ -76,7 +81,7 @@ public class TypeBit extends TypeChar {
     public String formatValueForRecord(IFieldDetail field, String val)
     throws RecordException {
         try {
-            Long.parseLong(val, 2);
+        	new BigInteger(val, 2);
         } catch (final Exception ex) {
             throw new RecordException("Invalid Bit String: {0}", ex.getMessage());
         }

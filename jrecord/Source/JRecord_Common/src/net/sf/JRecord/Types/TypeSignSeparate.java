@@ -35,7 +35,7 @@ public class TypeSignSeparate extends TypeNum {
      * @param typeId Type Identifier
      */
     public TypeSignSeparate(final int typeId) {
-        super(false, true, true, false, false);
+        super(false, true, true, false, false, false);
 
         isLeadingSign = (typeId == Type.ftSignSeparateLead);
 
@@ -63,12 +63,19 @@ public class TypeSignSeparate extends TypeNum {
 			Object value)
     throws RecordException {
 
-        String val = formatValueForRecord(field, value.toString());
+        String val = checkValue(field, toNumberString(value));
         copyRightJust(record, toSignSeparate(val, field),
 	            position - 1, field.getLen(),
 	            "0", field.getFontName());
 	    return record;
     }
+
+	@Override
+	public String formatValueForRecord(IFieldDetail field, String value)
+			throws RecordException {
+		return toSignSeparate(checkValue(field, toNumberString(value)), field);
+	}
+
 
 	/**
 	 * Convert a num to a Sign Separate String
@@ -85,7 +92,7 @@ public class TypeSignSeparate extends TypeNum {
     throws RecordException {
 
 
-		if (num == null || num.equals("") || num.equals("-") || num.equals("+")) {
+		if (num == null || num.length() == 0 || num.equals("-") || num.equals("+")) {
 			// throw ...
 			return paddingString("+", field.getLen(), '0', !isLeadingSign);
 		}
@@ -103,8 +110,8 @@ public class TypeSignSeparate extends TypeNum {
 
 		}
 
-        if (ret.length() >= field.getLen()) {
-            throw new RecordException("Value is too large to fit field");
+        if (ret.length() >= field.getLen() && field.isFixedFormat()) {
+            throw new RecordException("Value: " + ret + " is too large to fit field");
         }
 
         ret = paddingString(ret, field.getLen() - 1, '0', true);
@@ -126,22 +133,26 @@ public class TypeSignSeparate extends TypeNum {
      * @return number-string
      */
     private String fromSignSeparate(String numSignSeparate) {
-        String ret;
-        String sign = "";
-
-
-        if (numSignSeparate == null || numSignSeparate.equals("") || numSignSeparate.equals("-")) {
+         if (numSignSeparate == null || numSignSeparate.length() == 0 || numSignSeparate.equals("-")) {
             // throw ...
             return "";
         }
 
+         String ret;
+         String sign = "";
+
+
         ret = numSignSeparate.trim();
-        if (!isLeadingSign) {
-            sign = ret.substring(ret.length() - 1);
-            ret = ret.substring(0, ret.length() - 1);
+        if (isLeadingSign) {
+            if (ret.length() > 0 && ret.charAt(0) == '+') {
+            	ret = ret.substring(1);    
+            }
         } else {
-            sign = ret.substring(0, 1);
-            ret = ret.substring(1);
+			int lastIdx = ret.length() - 1;
+			if (ret.length() > 0 && (ret.charAt(lastIdx) == '+' || ret.charAt(lastIdx) == '-')) {
+			    sign = ret.substring(lastIdx);
+			    ret = ret.substring(0, lastIdx);
+			}
         }
 
         if ("-".equals(sign)) {

@@ -185,7 +185,6 @@ public class Line extends BasicLine implements AbstractLine {
 	}
 
 
-
 	public byte[] getFieldBytes(final int recordIdx, final int fieldIdx) {
 	    FieldDetail field = layout.getField(recordIdx, fieldIdx);
 	    int len = field.getLen();
@@ -198,7 +197,7 @@ public class Line extends BasicLine implements AbstractLine {
 
 
 	/**
-	 * Get the Prefered Record Layou Index for this record
+	 * Get the Prefered Record Layout Index for this record
 	 *
 	 * @return Index of the Record Layout based on the Values
 	 */
@@ -247,7 +246,7 @@ public class Line extends BasicLine implements AbstractLine {
 	 */
 	private void adjustLengthIfNecessary(final IFieldDetail field) {
 
-		if (field.getEnd() > data.length) {
+		if (field != null && field.getEnd() > data.length) {
 		    newRecord(field.getEnd());
 		}
 	}
@@ -407,7 +406,6 @@ public class Line extends BasicLine implements AbstractLine {
 	 * @see java.lang.Object#clone()
 	 */
 	public Object clone() {
-
 		return lineProvider.getLine(layout, data.clone());
 	}
 }

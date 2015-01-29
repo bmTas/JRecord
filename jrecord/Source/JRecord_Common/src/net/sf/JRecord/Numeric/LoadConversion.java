@@ -73,7 +73,7 @@ public class LoadConversion {
 		int ret = defaultValue;
 		String s = properties.getProperty(name);
 
-		if (s != null && ! "".equals(s)) {
+		if (s != null && s.length() > 0) {
 			ret = Integer.parseInt(s.trim());
 		}
 

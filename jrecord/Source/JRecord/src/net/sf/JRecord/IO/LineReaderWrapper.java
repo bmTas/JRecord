@@ -9,8 +9,8 @@ package net.sf.JRecord.IO;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.sf.JRecord.ByteIO.AbstractByteReader;
-import net.sf.JRecord.ByteIO.AbstractByteReader;
+//import net.sf.JRecord.ByteIO.AbstractByteReader;
+import net.sf.JRecord.ByteIO.IByteReader;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -29,13 +29,13 @@ import net.sf.JRecord.Details.LineProvider;
  */
 public class LineReaderWrapper extends AbstractLineReader {
 
-    private AbstractByteReader reader;
+    private IByteReader reader;
     int i = 0;
 
     /**
      *  Create a LineReader from a Byte reader
      */
-    public LineReaderWrapper(AbstractByteReader byteReader) {
+    public LineReaderWrapper(IByteReader byteReader) {
         super();
 
         reader = byteReader;
@@ -44,7 +44,7 @@ public class LineReaderWrapper extends AbstractLineReader {
     /**
      * @param provider
      */
-    public LineReaderWrapper(LineProvider provider, AbstractByteReader byteReader) {
+    public LineReaderWrapper(LineProvider provider, IByteReader byteReader) {
         super(provider);
 
         reader = byteReader;
@@ -87,7 +87,7 @@ public class LineReaderWrapper extends AbstractLineReader {
 	/**
 	 * @param reader the reader to set
 	 */
-	public final void setReader(AbstractByteReader reader) {
+	public final void setReader(IByteReader reader) {
 		this.reader = reader;
 	}
 

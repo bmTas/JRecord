@@ -192,7 +192,7 @@ public abstract class FieldSelect extends ExternalFieldSelection implements Reco
 		public boolean isSelected(Object o) {
 			return o == null
 				|| o.toString() == null
-				|| "".equals(o.toString().trim())
+				|| o.toString().trim().length() == 0
 				|| (o instanceof IEmptyTest && ((IEmptyTest) o).isEmpty());
 		}
 	}

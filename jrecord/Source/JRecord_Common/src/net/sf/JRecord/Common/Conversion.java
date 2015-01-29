@@ -27,17 +27,37 @@ import java.util.Locale;
  */
 public final class Conversion {
 
+	public static final HoldEbcidicFlag DEFAULT_CHARSET_DETAILS = new HoldEbcidicFlag("");
+	private static String defaultSingleByteCharacterset = "";
+	private static boolean alwaysUseDefaultSingByteCharset = false;
+
+	private static HoldEbcidicFlag holdEbcidicFlag = DEFAULT_CHARSET_DETAILS;
+	public static final boolean IS_DEFAULT_CHARSET_SINGLE_BYTE_EBCIDIC = DEFAULT_CHARSET_DETAILS.isSingleByteEbcidic;// isSingleByteEbcidicI("");
     private static final String VALUE_IS_TO_BIG_FOR_FIELD = "Value is to big for field {0} > {1} {2} ~ {3} {4}";
 	private static final byte BYTE_NO_BIT_SET   =  0;
 	private static final byte BYTE_ALL_BITS_SET = -1;
 
 	private static int positiveDiff = 'A' - '1';
 	private static int negativeDiff = 'J' - '1';
+	
+	private static char positive0EbcdicZoned = '{';
+	private static char negative0EbcdicZoned = '}';
 
 	//private static final DecimalFormatSymbols decSymbols = new DecimalFormatSymbols();
 	private static final char decimalChar = '.';  //decSymbols.getDecimalSeparator();
 	private static final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
+	static {
+		try {
+			if (DEFAULT_CHARSET_DETAILS != null && DEFAULT_CHARSET_DETAILS.isEbcdic) {
+				defaultSingleByteCharacterset = "CP037";
+			} else {
+				setDefaultSingleByteCharacterset("cp1252");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Conversion routines
@@ -60,7 +80,7 @@ public final class Conversion {
 
 	    if (str == null) {
 	        return null;
-	    } else if (! "".equals(fontname)) {
+	    } else if (fontname != null && fontname.length() > 0) {
 	        try {
 	            return str.getBytes(fontname);
 	        } catch (Exception e) {
@@ -85,7 +105,7 @@ public final class Conversion {
 		String s = "";
 
 		if (fin - start <= 0) {
-		} else if ( fontName == null || "".equals(fontName)) {
+		} else if ( fontName == null || fontName.length() == 0) {
 		    s = new String(record, start, fin - start);
 		} else {
 		    try {
@@ -110,7 +130,7 @@ public final class Conversion {
 		String s = "";
 
 		try {
-			if (fontName == null || "".equals(fontName)) {
+			if (fontName == null || fontName.length() == 0) {
 			    s = new String(record);
 			} else {
 			    try {
@@ -137,44 +157,51 @@ public final class Conversion {
 	public static String fromZoned(String numZoned) {
 		String ret;
 		String sign = "";
-		char lastChar;
+		char lastChar, ucLastChar;
 
-		if (numZoned == null || numZoned.equals("") || numZoned.equals("-")) {
-			// throw ...
+		if (numZoned == null || ((ret = numZoned.trim()).length() == 0) || ret.equals("-")) {
 			return "";
 		}
 
-		ret = numZoned.trim();
-		lastChar = ret.substring(ret.length() - 1).toUpperCase().charAt(0);
+		lastChar = ret.charAt(ret.length() - 1);
+		ucLastChar = Character.toUpperCase(lastChar);
 
-		switch (lastChar) {
-			case '}' : sign = "-";
-			case '{' :
+		
+		switch (ucLastChar) {
+//				case '}' : sign = "-";
+//				case '{' :
+//					lastChar = '0';
+//				break;
+		case 'A':
+		case 'B':
+		case 'C':
+		case 'D':
+		case 'E':
+		case 'F':
+		case 'G':
+		case 'H':
+		case 'I':
+			lastChar = (char) (ucLastChar - positiveDiff);
+			break;
+		case 'J':
+		case 'K':
+		case 'L':
+		case 'M':
+		case 'N':
+		case 'O':
+		case 'P':
+		case 'Q':
+		case 'R':
+			sign = "-";
+			lastChar = (char) (ucLastChar - negativeDiff);
+			break;
+		default:
+			if (lastChar == positive0EbcdicZoned) {
 				lastChar = '0';
-			break;
-			case 'A':
-			case 'B':
-			case 'C':
-			case 'D':
-			case 'E':
-			case 'F':
-			case 'G':
-			case 'H':
-			case 'I':
-				lastChar = (char) (lastChar - positiveDiff);
-			break;
-			case 'J':
-			case 'K':
-			case 'L':
-			case 'M':
-			case 'N':
-			case 'O':
-			case 'P':
-			case 'Q':
-			case 'R':
+			} else if (lastChar == negative0EbcdicZoned) {
+				lastChar = '0';
 				sign = "-";
-				lastChar = (char) (lastChar - negativeDiff);
-			default:
+			}			
 		}
 		ret = sign + ret.substring(0, ret.length() - 1) + lastChar;
 
@@ -273,7 +300,7 @@ public final class Conversion {
 		int len = fin - start;
 		byte[] bytes = new byte[len];
 
-		for (int i =0; i < len; i++) {
+		for (int i = 0; i < len; i++) {
 			bytes[i] = record[start + len - i - 1];
 		}
 
@@ -432,11 +459,11 @@ public final class Conversion {
 	 * @return equivalent postive byte
 	 */
 	private static int toPostiveByte(byte b) {
-
-		if (b < 0) {
-			return 256 + b;
-		}
-		return b;
+		return (b) & 255;
+//		if (b < 0) {
+//			return 256 + b;
+//		}
+//		return b;
 	}
 
 
@@ -463,7 +490,7 @@ public final class Conversion {
 		if (lastChar < '0' || lastChar > '9') {
 		} else if (num.startsWith("-")) {
 			if (lastChar == '0') {
-				lastChar = '}';
+				lastChar = negative0EbcdicZoned;
 			} else {
 				lastChar = (char) (lastChar + negativeDiff);
 			}
@@ -475,7 +502,7 @@ public final class Conversion {
 		    }
 
 		    if (lastChar == '0') {
-		        lastChar = '{';
+		        lastChar = positive0EbcdicZoned;
 		    } else {
 		        lastChar = (char) (lastChar + positiveDiff);
 		    }
@@ -800,23 +827,6 @@ public final class Conversion {
         return in;
     }
 
-    public static boolean isSingleByte(String fontName) {
-    	return ! isMultiByte(fontName);
-    }
-
-    public static boolean isMultiByte(String fontName) {
-		float f = 2;
-
-		if (fontName == null || "".equals(fontName)) {
-			f = Charset.defaultCharset().newEncoder().maxBytesPerChar() ;
-		} else if (Charset.isSupported(fontName)) {
-			f = Charset.forName(fontName).newEncoder().maxBytesPerChar();
-		}
-
-		return (f > 1.0f);
-
-    }
-
 
     public static byte[] getCsvDelimBytes(String s, String font) {
     	byte[] ret = null;
@@ -872,6 +882,82 @@ public final class Conversion {
 				||  field2check.indexOf("<li>") >= 0);
 	}
 
+	public static String padFront(String val, int size, char ch) {
+		return new StringBuilder()
+						.append(getCharArray(size, ch))
+						.append(val)
+					.toString();
+	}
+	
+	public static final char[] getCharArray(int size, char ch) {
+		char[] c = new char[size];
+    	Arrays.fill(c, ch);
+    	return c;
+	}
+
+	public static final String getDefaultSingleByteCharacterset() {
+		return defaultSingleByteCharacterset;
+	}
+
+
+	public static final void setDefaultSingleByteCharacterset(
+			String defaultSingleByteCharacterset) {
+
+		if (Charset.isSupported(defaultSingleByteCharacterset)
+		&& (! (new HoldEbcidicFlag(defaultSingleByteCharacterset)).isMultiByte)) {
+			Conversion.defaultSingleByteCharacterset = defaultSingleByteCharacterset;
+		}
+	}
+
+
+	public static final boolean isAlwaysUseDefaultSingByteCharset() {
+		return alwaysUseDefaultSingByteCharset;
+	}
+
+
+	public static final void setAlwaysUseDefaultSingByteCharset(
+			boolean alwaysUseDefaultSingByteCharset) {
+		Conversion.alwaysUseDefaultSingByteCharset = alwaysUseDefaultSingByteCharset;
+	}
+
+
+	public static boolean isSingleByteEbcidic(String charset) {
+		return getHold(charset).isSingleByteEbcidic;
+	}
+	
+    public static boolean isSingleByte(String fontName) {
+    	return ! getHold(fontName).isMultiByte;
+    }
+
+    public static boolean isMultiByte(String fontName) {
+    	return getHold(fontName).isMultiByte;
+    }
+
+ 
+    private static HoldEbcidicFlag getHold(String charset) {
+    	HoldEbcidicFlag hold = holdEbcidicFlag;
+		if (charset == null || charset.length() == 0) {
+			hold = DEFAULT_CHARSET_DETAILS;
+		} else if (! charset.equalsIgnoreCase(hold.charset)) {
+			hold = new HoldEbcidicFlag(charset);
+			holdEbcidicFlag = hold;
+		}
+		
+		return hold;
+    }
+    
+    public static void setDefaultEbcidicCharacterset(String charset) {
+    	if (getHold(charset).isEbcdic) {
+    		byte[] b = {(byte) 0xC0, (byte) 0xD0};
+    		String s = toString(b, charset);
+    		if (s.length() == 2) {
+    			positive0EbcdicZoned = s.charAt(0);
+    			negative0EbcdicZoned = s.charAt(1);
+    		}
+    	}
+    }
+    
+    
     /**
      * pad string with zero's to format length
      *
@@ -891,5 +977,42 @@ public final class Conversion {
 //        }
 //        return ret;
 //    }
+	
+	public static final class HoldEbcidicFlag {
+		public final String charset;
+		public final boolean isSingleByteEbcidic, isMultiByte, isEbcdic;
+		
+		public HoldEbcidicFlag(String charset) {
+			super();
+			
+			if (charset == null || charset.length() == 0) {
+				this.charset =  Charset.defaultCharset().name();
+			} else {
+				this.charset = charset;
+			}
+			this.isMultiByte = isMultiByteI(charset);
+			
+			
+			byte[] b = getBytes("0", charset);
+				
+			isEbcdic = b != null && b.length == 1 && b[0] ==  (byte) 0x0F0 ;
+			
+			
+			this.isSingleByteEbcidic = isEbcdic && ! isMultiByte;
+		}
+		
+	    private static boolean isMultiByteI(String fontName) {
+			float f = 2;
+
+			if (fontName == null || fontName.length() == 0) {
+				f = Charset.defaultCharset().newEncoder().maxBytesPerChar();
+			} else if (Charset.isSupported(fontName)) {
+				f = Charset.forName(fontName).newEncoder().maxBytesPerChar();
+			}
+
+			return (f > 1.0f);
+	    }
+
+	}
 
 }

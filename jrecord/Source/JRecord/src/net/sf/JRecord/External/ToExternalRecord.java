@@ -73,12 +73,13 @@ public final class ToExternalRecord {
 		ExternalRecord rec;
 		RecordDetail record = layout.getRecord(id);
 		String name = record.getRecordName();
+		boolean embeddedCr = false;
 
 		rec = new ExternalRecord(
 				id, name, "", record.getRecordType(),
 				system, "N", copybookName + "_" + name, getSeperator(record.getDelimiter()),
 				record.getQuote(), 0, "default", layout.getRecordSep(), record.getFontName(),
-				record.getRecordStyle(), fixIOType(layout.getFileStructure())
+				record.getRecordStyle(), fixIOType(layout.getFileStructure()), embeddedCr
 		);
 		rec.setNew(true);
 		System.out.println("Record >> " + id +  " " + record.getRecordName());

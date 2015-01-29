@@ -43,5 +43,9 @@ public interface ICsvDefinition {
 	 */
 	public boolean isSingleByteFont();
 
+	/**
+	 * wether it has embedded newline characters
+	 * @return the fields could have embedded new line characters
+	 */
 	public abstract boolean isEmbeddedNewLine();
 }

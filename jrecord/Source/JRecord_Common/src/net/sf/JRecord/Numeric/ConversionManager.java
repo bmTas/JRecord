@@ -15,6 +15,7 @@ import java.util.HashMap;
 import net.sf.JRecord.Common.AbstractManager;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Types.Type;
+import net.sf.cb2xml.def.Cb2xmlConstants;
 
 /**
  * This class will store all Cobol Numeric Type Converters. A converter
@@ -176,7 +177,7 @@ public class ConversionManager implements AbstractManager {
     			boolean signSeperate, String signPosition) {
     		int iType;
     		picture = picture.toUpperCase();
-    		if ( "computational-5".equals(usage)) {
+    		if ( Cb2xmlConstants.COMP_5.equalsIgnoreCase(usage)) {
     			iType = Type.ftBinaryInt;
     			if ((! signed) && (! picture.startsWith("S"))) {
         			iType = Type.ftBinaryIntPositive;

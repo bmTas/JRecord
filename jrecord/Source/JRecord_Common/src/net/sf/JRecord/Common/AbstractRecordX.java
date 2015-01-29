@@ -1,6 +1,11 @@
 package net.sf.JRecord.Common;
 
-
+/**
+ * Extended Abstract Record (Record-Schema)  where you can get the Field Definition and Field Count
+ * @author Bruce Martin
+ *
+ * @param <FieldDefinition>
+ */
 public interface AbstractRecordX<FieldDefinition extends IFieldDetail> extends AbstractRecord {
 
 	/**

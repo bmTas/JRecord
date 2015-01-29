@@ -3,6 +3,7 @@ package net.sf.JRecord.Numeric;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Types.Type;
 import net.sf.cb2xml.def.BasicNumericDefinition;
+import net.sf.cb2xml.def.Cb2xmlConstants;
 import net.sf.cb2xml.def.NumericDefinition;
 
 /**
@@ -309,25 +310,25 @@ public class GenericNumericDefinition implements NumericDefinition, Convert {
 
 	protected final int getBinCode(String usage) {
 		int ret = PIC9;
-		if ("computational".equals(usage)) {
+		if (Cb2xmlConstants.COMP.equalsIgnoreCase(usage)) {
 			ret = COMP_0;
-		} else if ("computational-1".equals(usage)) {
+		} else if (Cb2xmlConstants.COMP_1.equalsIgnoreCase(usage)) {
 			ret = COMP_1;
-		} else if ("computational-2".equals(usage)) {
+		} else if (Cb2xmlConstants.COMP_2.equalsIgnoreCase(usage)) {
 			ret = COMP_2;
-		} else if ("computational-3".equals(usage)) {
+		} else if (Cb2xmlConstants.COMP_3.equalsIgnoreCase(usage) || Cb2xmlConstants.PACKED_DECIMAL.equalsIgnoreCase(usage)) {
 			ret = COMP_3;
-		} else if ("computational-4".equals(usage)) {
+		} else if (Cb2xmlConstants.COMP_4.equalsIgnoreCase(usage)) {
 			ret = COMP_4;
-		} else if ("computational-5".equals(usage)) {
+		} else if (Cb2xmlConstants.COMP_5.equalsIgnoreCase(usage)) {
 			ret = COMP_5;
-		} else if ("computational-6".equals(usage)) {
+		} else if (Cb2xmlConstants.COMP_6.equalsIgnoreCase(usage)) {
 			ret = COMP_6;
-		} else if ("computational-7".equals(usage)) {
+		} else if ("computational-7".equalsIgnoreCase(usage)) {
 			ret = COMP_7;
-		} else if ("computational-8".equals(usage)) {
+		} else if ("computational-8".equalsIgnoreCase(usage)) {
 			ret = COMP_8;
-		} else if ("binary".equals(usage)) {
+		} else if (Cb2xmlConstants.BINARY.equalsIgnoreCase(usage)) {
 			ret = BINARY;
 		}
 

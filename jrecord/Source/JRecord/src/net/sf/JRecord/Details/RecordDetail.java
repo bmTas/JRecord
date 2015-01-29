@@ -13,8 +13,13 @@ import java.util.List;
 
 import net.sf.JRecord.Common.AbstractRecordX;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.CsvParser.BasicCsvLineParser;
+import net.sf.JRecord.CsvParser.ICsvDefinition;
+import net.sf.JRecord.CsvParser.ICsvLineParser;
+import net.sf.JRecord.CsvParser.ParserManager;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.detailsSelection.FieldSelectX;
 
@@ -47,9 +52,13 @@ import net.sf.JRecord.detailsSelection.FieldSelectX;
  * @author Bruce Martin
  * @version 0.55
  */
-public class RecordDetail implements AbstractRecordX<FieldDetail> {
+public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinition {
 
     //private static final int STATUS_EXISTS         =  1;
+
+	private static final byte UNDEFINED = -121;
+	private static final byte NO = 1;
+	private static final byte YES = 2;
 
 	private String recordName;
 
@@ -79,6 +88,13 @@ public class RecordDetail implements AbstractRecordX<FieldDetail> {
 	//private int editorStatus = STATUS_UNKOWN;
 
 
+	private byte singleByteFont = UNDEFINED;
+	private boolean embeddedNewLine = false;
+	
+	private int[] fieldTypes = null;
+
+
+
 	/**
 	 * Create a Record
 	 *
@@ -101,6 +117,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail> {
 						final FieldDetail[] pFields,
 						final int pRecordStyle
 						) {
+
 		this(pRecordName, pRecordType, pDelim,
 			 pQuote, pFontName, pFields, pRecordStyle);
 
@@ -130,11 +147,28 @@ public class RecordDetail implements AbstractRecordX<FieldDetail> {
 						final int pRecordStyle,
 						final RecordSelection selection
 						) {
-		this(pRecordName, pRecordType, pDelim,
-			 pQuote, pFontName, pFields, pRecordStyle);
-
-		recordSelection = selection;
+		this(pRecordName, pRecordType, pDelim, pQuote, pFontName, pFields, pRecordStyle, selection, false);
 	}
+
+	public RecordDetail(final String pRecordName,
+			final int pRecordType,
+			final String pDelim,
+			final String pQuote,
+			final String pFontName,
+			final FieldDetail[] pFields,
+			final int pRecordStyle,
+			final RecordSelection selection,
+			final boolean embeddedCr
+			) {
+		this(pRecordName, pRecordType, pDelim,
+				pQuote, pFontName, pFields, pRecordStyle);
+	
+		if (selection != null) {
+			this.recordSelection = selection;
+		}
+		this.embeddedNewLine = embeddedCr;
+	}
+	
 
 	/**
 	 * Create a Record
@@ -700,6 +734,59 @@ public class RecordDetail implements AbstractRecordX<FieldDetail> {
 		throw new RuntimeException("Found " + flds.size() + " fields; should be only one");
 	}
 
+
+	public final int[] getFieldTypes() {
+		if (fieldTypes == null) {
+			fieldTypes = new int[fields.length];
+			for (int i =0; i < fieldTypes.length; i++) {
+				fieldTypes[i] = fields[i].getType();
+			}
+		}
+		return fieldTypes;
+	}
+
+	@Override
+	public int getDelimiterOrganisation() {
+		int delimiterOrganisation = ICsvDefinition.NORMAL_SPLIT;
+		ICsvLineParser parser =  getParser();
+		if (parser != null && parser instanceof BasicCsvLineParser) {
+			BasicCsvLineParser bp = (BasicCsvLineParser) parser;
+			delimiterOrganisation = bp.delimiterOrganisation;
+		}
+		
+		return delimiterOrganisation;
+	}
+
+	/**
+	 * @return the embeddedNewLine
+	 */
+	@Override
+	public boolean isEmbeddedNewLine() {
+		return embeddedNewLine;
+	}
+
+
+
+	/**
+	 * @return the singleByteFont
+	 */
+	public boolean isSingleByteFont() {
+		if (singleByteFont == UNDEFINED) {
+			try {
+				singleByteFont = YES;
+				if (Conversion.isMultiByte(fontName)) {
+					singleByteFont = NO;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return singleByteFont == YES;
+	}
+
+	public final ICsvLineParser getParser() {
+		return ParserManager.getInstance().get(getRecordStyle());
+	}
 
 	/**
 	 * Find requested Field with supplied Field name / Group (or level) name.

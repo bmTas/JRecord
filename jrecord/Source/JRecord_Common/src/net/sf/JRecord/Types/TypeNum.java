@@ -23,8 +23,11 @@ package net.sf.JRecord.Types;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.util.Arrays;
 
+import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
@@ -40,12 +43,15 @@ import net.sf.JRecord.Common.RecordException;
  */
 public class TypeNum extends TypeChar {
 
-    private static final int BASE_10 = 10;
-    private boolean adjustTheDecimal;
+//    private static final String STRING_NULL_VALUE = (String) CommonBits.NULL_VALUE;
+//	private static final int BASE_10 = 10;
+	private final boolean couldBeHexZero;
+    private final boolean adjustTheDecimal;
     private boolean couldBeLong = true;
     private final boolean positive;
     private boolean usePositiveSign = false;
     private String padChar = " ";
+    private final char decimalPoint;
 
     private int typeIdentifier;
 
@@ -83,10 +89,22 @@ public class TypeNum extends TypeChar {
      * @param isPositive
      */
     public TypeNum(final int typeId, final boolean isPositive) {
-        super(typeId == Type.ftNumLeftJustified, false, true);
+    	this(typeId, isPositive, '.');
+    }
 
+    /**
+     *
+     * @param typeId
+     * @param isPositive
+     */
+    protected TypeNum(final int typeId, final boolean isPositive, char decimalPoint) {
+        super(typeId == Type.ftNumLeftJustified, false, true);
+        
+        boolean adjDecimal = false;
+        this.couldBeHexZero = false;
         setNumeric(true);
         positive = isPositive;
+        this.decimalPoint = decimalPoint;
 
         typeIdentifier = typeId;
 
@@ -102,7 +120,7 @@ public class TypeNum extends TypeChar {
         	break;
         case Type.ftAssumedDecimal:
         case Type.ftAssumedDecimalPositive:
-        	adjustTheDecimal = true;
+        	adjDecimal = true;
         	padChar = "0";
         	break;
         case Type.ftNumCommaDecimal:
@@ -111,6 +129,7 @@ public class TypeNum extends TypeChar {
         case Type.ftNumZeroPaddedPositive:
             padChar = "0";
         }
+        adjustTheDecimal = adjDecimal;
 
         couldBeLong = typeId != Type.ftNumLeftJustified;
     }
@@ -139,11 +158,14 @@ public class TypeNum extends TypeChar {
             		  final boolean adjustDecimal,
             		  final boolean couldBeALong,
             		  final boolean isPositive,
-            		  final boolean binary) {
+            		  final boolean binary,
+            		  final boolean couldBeHexHero) {
         super(leftJustified, binary, true);
         adjustTheDecimal = adjustDecimal;
         couldBeLong = couldBeALong;
         positive = isPositive;
+        this.couldBeHexZero = couldBeHexHero;
+        this.decimalPoint = '.';
     }
 
 
@@ -160,13 +182,20 @@ public class TypeNum extends TypeChar {
 	public Object getField(final byte[] record,
 	        final int position,
 			final IFieldDetail currField) {
-	    Object ret = super.getField(record, position, currField);
+		String s = "";
 
-	    ret = addDecimalPoint(ret.toString(), currField.getDecimal());
-	    return ret;
+		if (! isHexZero(record, position, currField.getLen())) {
+			s =  super.getField(record, position, currField).toString();
+		}
+
+	    return addDecimalPoint(s, currField.getDecimal());
 	}
 
 
+	public final boolean isDefined(final byte[] record, IFieldDetail currField) {
+		return record.length >= currField.getLen() 
+			&&  ((couldBeHexZero) || (! isHexZero(record, currField.getPos(), currField.getLen())));
+	}
 
 	/**
 	 * Add decimal point to string if necessary
@@ -180,7 +209,7 @@ public class TypeNum extends TypeChar {
 	    int len;
 	    String sign = "";
 
-		if (((decimal > 0)
+		if (((decimal != 0)
 		&& adjustTheDecimal
 		&&  (! s.endsWith(" ")) && Conversion.isInt(s))) {
 		    if (s.startsWith("-")) {
@@ -192,17 +221,26 @@ public class TypeNum extends TypeChar {
 		    	}
 		    }
 
-		    if (s.length() <= decimal) {
-		        int i;
-		        for (i = 0; i <= decimal; i++) {
-		            s = "0" + s;
-		        }
-		    }
-		    len = s.length();
+		    if (decimal > 0) {
+		    	
+			    if (s.length() <= decimal) {
+			        StringBuilder b = new StringBuilder();
+			        char[] z = new char[decimal - s.length() + 1];
+					Arrays.fill(z, '0');
+			        s = b.append(z).append(s).toString();
+			    }
+			    len = s.length();
 
-		    s = sign + Conversion.numTrim(s.substring(0, len - decimal))
-		      + Conversion.getDecimalchar() + s.substring(len - decimal);
-		} else if (! s.equals("")) {
+	
+			    s = sign + Conversion.numTrim(s.substring(0, len - decimal))
+			      + Conversion.getDecimalchar() + s.substring(len - decimal);
+		    } else {
+		    	StringBuilder b = new StringBuilder(s);
+		        char[] z = new char[-decimal];
+		        Arrays.fill(z, '0');
+		        s =  Conversion.numTrim(b.append(z).toString());
+		    }
+		} else if (s.length() > 0) {
 		    s = Conversion.numTrim(s);
 		}
 		return s;
@@ -221,33 +259,50 @@ public class TypeNum extends TypeChar {
 	 * @return update record
 	 * @throws RecordException any error that occurs during the save
 	 */
+	@Override
 	public byte[] setField(byte[] record,
 	        final int position,
 			final IFieldDetail field,
 			Object value)
 	throws RecordException {
+		return setFieldToVal(record, position, field, checkValue(field, toNumberString(value)));
+	}
+
+
+	protected final byte[] setFieldToVal(byte[] record,
+	        final int position,
+			final IFieldDetail field,
+			String val)
+	throws RecordException {
 
 	    int len = field.getLen();
 	    int pos = position - 1;
 	    String font = field.getFontName();
-	    String val  = formatValueForRecord(field, value.toString());
 
+	    if (val != null && val.length() > 0) {
+	    	String v = Conversion.numTrim(val, decimalPoint);
+	    	if (val.charAt(0) == '0' && ( v.length() == 0 || v.charAt(0) == '.' || v.charAt(0) == ',' || v.charAt(0) == decimalPoint)) {
+	    		v = '0' + v;
+	    	}
+	    	val = v;
+	    }
+	    
 	    checkCharNumLength(val, len);
 
 	    if (padChar.equals("0") && val.startsWith("-")) {
 	        copyRightJust(record, val.substring(1), pos, len, "0", font);
-	        record[pos] = '-';
-	    } else if (padChar.equals("0") && usePositiveSign) {
+	        record[pos] = Conversion.getBytes("-", font)[0];
+	    } else if (padChar.equals("0") && usePositiveSign && val.length() < len) {
 	    	if (val.startsWith("+")) {
 	    		val = val.substring(1);
 	    	}
 	        copyRightJust(record, val, pos, len, "0", font);
-	        record[pos] = '+';
+	        record[pos] = Conversion.getBytes("+", font)[0];
 	    } else if (typeIdentifier == Type.ftNumLeftJustified) {
 			System.arraycopy(getBytes(val, font), 0, record, pos, val.length());
 			padWith(record, pos + val.length(), len - val.length(), " ", font);
 	    } else if (padChar.equals(" ") && usePositiveSign) {
-	    	if (!(val.startsWith("+") || val.startsWith("-"))) {
+	    	if (!(val.startsWith("+") || val.startsWith("-") ||  val.length() >= len)) {
 	    		val = "+" + val;
 	    	}
 	        copyRightJust(record, val, pos, len, " ", font);
@@ -257,7 +312,6 @@ public class TypeNum extends TypeChar {
 
 	    return record;
 	}
-
 
 	/**
 	 * Format a value for storing in the record
@@ -270,20 +324,99 @@ public class TypeNum extends TypeChar {
 	 */
 	public String formatValueForRecord(IFieldDetail field, String val)
 	throws RecordException {
+		String ret = checkValue(field, val);
+		if (isBinary()) return ret;
 
-	    if (field.getDecimal() == 0 && couldBeLong) {
+		if (field.getLen() < 0) {
+			if (usePositiveSign && (! ret.startsWith("-"))  && (! ret.startsWith("+"))) {
+				ret = "+" + ret;
+			}
+			return ret;
+		}
+		int diff = ret.length() - Math.max(0, field.getLen());
+		
+		if (padChar.equals("0") && ret.startsWith("-")) {
+			ret = padStr(ret.substring(1), field.getLen(), '-', '0'); 
+		} else if (diff == 0) {
+			
+		} else if (diff > 0) {
+			if (!ret.startsWith("-")) {
+//				ret = '-' + ret.substring(diff + 1);
+//			} else {
+				ret = ret.substring(diff);
+			}
+	    } else if (padChar.equals("0")) {
+	    	char sign = '0';
+	    	if (usePositiveSign) {
+	    		sign = '+';
+	    	}
+	    			
+			ret = padStr(ret, field.getLen(), sign, '0'); 
+	    } else if (typeIdentifier == Type.ftNumLeftJustified) {
+	    	ret = new StringBuilder(ret).append(Conversion.getCharArray(-diff, ' ')).toString();
+	    } else if (padChar.equals(" ") && usePositiveSign && (! ret.startsWith("+")) && (! ret.startsWith("-"))) {
+	    	StringBuilder b =  new StringBuilder();
+	    	if (diff < -1) {
+	    		b.append(Conversion.getCharArray(-diff-1, ' '));
+	    	}
+	    	ret = b.append('+').append(ret).toString();
+	    } else {
+	    	ret = new StringBuilder().append(Conversion.getCharArray(-diff, ' ')).append(ret).toString();
+	    }
+		
+		return ret;
+	}
+	
+//	protected String padFront(String val, int size, char ch) {
+//		return new StringBuilder()
+//						.append(getCharArray(size, '0'))
+//						.append(val)
+//					.toString();
+//	}
+//	
+//	protected final char[] getCharArray(int size, char ch) {
+//		char[] c = new char[size];
+//    	Arrays.fill(c, ch);
+//    	return c;
+//	}
+	
+	private String padStr(String s, int len, char firstCh, char padCh) {
+		char[] c = new char[len];
+		int toIndex = 0;
+
+		c[0] = firstCh;
+		if (len > s.length()) {
+			toIndex = len - s.length();
+			Arrays.fill(c, 1, toIndex, padCh);
+		}
+		System.arraycopy(s.toCharArray(), 0, c, toIndex, s.length());
+		return new String(c);
+	}
+	
+	
+	public final String checkValue(IFieldDetail field, String val)
+				throws RecordException {
+
+
+		if (val == null || val == CommonBits.NULL_VALUE) {
+			val = "0";
+		}
+	    int decimal = field.getDecimal();
+	    
+		if (decimal == 0 && couldBeLong) {
 	        try {
-	        	int p;
 	            val = val.trim();
 	            if (val.startsWith("+")) {
 	                val = val.substring(1);
 	            }
-	            if ((p = val.lastIndexOf('.')) >= 0) {
-	            	val = val.substring(0, p);
+	            if (val.lastIndexOf('.') >= 0) {
+	            	val = new BigDecimal(val).toString();
+	            	
+	            	val = val.substring(0, val.lastIndexOf('.'));
 	            }
 	            new BigInteger(val);
 	        } catch (final Exception ex) {
-	            throw new RecordException("Invalid Integer :" + val + ": ~ " + ex.getMessage());
+	            throw new RecordException("Invalid Integer :" + val + ": ~ " + ex);
 	        }
 	    } else {
 	        try {
@@ -292,14 +425,16 @@ public class TypeNum extends TypeChar {
 
 	            NumberFormat nf = getNumberFormat();
 	            nf.setGroupingUsed(false);
-	            if ((field.getDecimal() > 0) && adjustTheDecimal) {
-	                decimalVal = decimalVal.multiply(new BigDecimal(
-	                        java.lang.Math.pow(BASE_10, field.getDecimal())));
+	            if ((decimal != 0 && adjustTheDecimal) || decimal < 0) {
+	                decimalVal = adjustForDecimal(field, decimalVal);
+//	                decimalVal = decimalVal.multiply(new BigDecimal(
+//	                        java.lang.Math.pow(BASE_10, field.getDecimal())));
 	                nf.setMaximumFractionDigits(0);
 	            } else {
-	                nf.setMaximumFractionDigits(field.getDecimal());
-	                nf.setMinimumFractionDigits(field.getDecimal());
+	                nf.setMaximumFractionDigits(decimal);
+	                nf.setMinimumFractionDigits(decimal);
 	            }
+	            nf.setRoundingMode(RoundingMode.DOWN);
 	            val = nf.format(decimalVal);
 	        } catch (final Exception ex) {
 	            throw new RecordException("Invalid Number: " + ex.getMessage());
@@ -310,6 +445,17 @@ public class TypeNum extends TypeChar {
 	        throw new RecordException("Only positive numbers are allowed");
 	    }
 	    return val;
+	}
+	
+	public final String toNumberString(Object value) {
+		if (value == null || value == CommonBits.NULL_VALUE) {
+			return "0";
+		}
+		return value.toString();
+	}
+	
+	public boolean hasFloatingDecimal() {
+		return false;
 	}
 
 	protected NumberFormat getNumberFormat() {
@@ -326,12 +472,24 @@ public class TypeNum extends TypeChar {
 	 * @return valuer as a big integer
 	 */
 	protected BigDecimal getBigDecimal(IFieldDetail field, String val) {
+		return adjustForDecimal(field, new BigDecimal(Conversion.numTrim(val)));
+	}
 
-	    BigDecimal decimalVal = new BigDecimal(Conversion.numTrim(val));
-
-	    if ((field.getDecimal() > 0) && adjustTheDecimal) {
-	        decimalVal = decimalVal.multiply(new BigDecimal(
-		        java.lang.Math.pow(BASE_10, field.getDecimal())));
+	/**
+	 * Adjust Big decimal for decimal value 
+	 * @param field field Definition
+	 * @param decimalVal decimal value to be adjusted
+	 * @return adjusted decimal value
+	 */
+	protected BigDecimal adjustForDecimal(IFieldDetail field, BigDecimal decimalVal) {
+	    if ((field.getDecimal() != 0) && adjustTheDecimal) {
+//	        decimalVal = decimalVal.setScale(decimalVal.scale() + field.getDecimal());
+//	        decimalVal = decimalVal.multiply(new BigDecimal(BigInteger.ONE, field.getDecimal()));
+//		        java.lang.Math.pow(BASE_10, field.getDecimal())));
+//	        decimalVal = decimalVal.multiply(new BigDecimal(
+//			        java.lang.Math.pow(BASE_10, field.getDecimal())));
+	        
+	        decimalVal = decimalVal.scaleByPowerOfTen(field.getDecimal());
 	    }
 
 	    return decimalVal;
@@ -350,8 +508,8 @@ public class TypeNum extends TypeChar {
 
 	    if (val.length() > length) {
 	        throw new RecordException(
-	        		"Value is to big !! {0} > {1}",
-	        		new Object[] {val.length(), length});
+	        		"Value {0} is to big !! {1} > {2}",
+	        		new Object[] {val, val.length(), length});
 	    }
 	}
 
@@ -414,4 +572,33 @@ public class TypeNum extends TypeChar {
 
 		return record;
     }
+
+	protected final BigInteger formatAsBigInt(final IFieldDetail field, Object value)
+	throws RecordException {
+    	BigInteger v;
+
+        if (value == null || value == CommonBits.NULL_VALUE) {
+        	v = BigInteger.ZERO ;
+        } else if (field.getDecimal() == 0 && value instanceof BigInteger) {
+        	v = checkPositive((BigInteger) value);
+        } else if (value instanceof BigDecimal) {
+        	v = checkPositive(adjustForDecimal(field, (BigDecimal) value).toBigInteger());
+        } else {
+        	 String val = toNumberString(value);
+
+//        	formatValueForRecord(field, val); // This is for validation purposes only
+//        									  // the return value is deliberately not used
+//        	v = getBigDecimal(field, val).toBigInteger();
+        	v = new BigInteger(checkValue(field, val));
+        }
+        
+        return v;
+    }
+
+	private BigInteger checkPositive(BigInteger v) throws RecordException {
+		if (isPositive() && v.compareTo(BigInteger.ZERO) < 0) {
+			throw new RecordException("Only positive numbers are allowed");
+		}
+		return v;
+	}
 }

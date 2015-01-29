@@ -3,6 +3,7 @@ package net.sf.JRecord.zTest.Numeric;
 import net.sf.JRecord.Numeric.ConversionManager;
 import net.sf.JRecord.Numeric.Convert;
 import net.sf.JRecord.Types.Type;
+import net.sf.cb2xml.def.Cb2xmlConstants;
 import junit.framework.TestCase;
 
 public class TestCommaDecimalPictAnalysis  extends TestCase{
@@ -109,6 +110,6 @@ public class TestCommaDecimalPictAnalysis  extends TestCase{
 
 
 	private void chkCompPict(String compId, String picture, int type) {
-		assertEquals("Checking: " + picture, type, bc.getTypeIdentifier("computational" + compId, picture, false, false, ""));
+		assertEquals("Checking: " + picture, type, bc.getTypeIdentifier(Cb2xmlConstants.COMP + compId, picture, false, false, ""));
 	}
 }

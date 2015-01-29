@@ -56,7 +56,9 @@ public class LineWriterWrapper extends AbstractLineWriter {
      * @see net.sf.JRecord.IO.AbstractLineWriter#close()
      */
     public void close() throws IOException {
-        writer.close();
+    	if (writer != null) {
+    		writer.close();
+    	}
     }
 
 	/**

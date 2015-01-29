@@ -46,14 +46,14 @@ public class RecordEditorXmlWriter implements CopybookWriter {
    	XMLOutputFactory f ;
    	XMLStreamWriter writer;
 
-    	try {
+//    	try {
     		 f = XMLOutputFactory.newInstance();
-    	} catch (Exception e) {
-    		// For Java 5 (before the addition of XMLOutputFactory to standard java
-    		 Object o =  XMLOutputFactory.newInstance("javax.xml.stream.XMLOutputFactory",
-					  this.getClass().getClassLoader());
-    		 f = (XMLOutputFactory) o;
-		}
+//    	} catch (Exception e) {
+//    		// For Java 5 (before the addition of XMLOutputFactory to standard java
+//    		 Object o =  XMLOutputFactory.newInstance("javax.xml.stream.XMLOutputFactory",
+//					  this.getClass().getClassLoader());
+//    		 f = (XMLOutputFactory) o;
+//		}
 
        writer = f.createXMLStreamWriter(new OutputStreamWriter(outStream, STANDARD_FONT));
 
@@ -63,6 +63,7 @@ public class RecordEditorXmlWriter implements CopybookWriter {
 
        writer.writeEndDocument();
        writer.close();
+       outStream.close();
 	}
 
 
@@ -75,13 +76,14 @@ public class RecordEditorXmlWriter implements CopybookWriter {
 	private void writeRecord(XMLStreamWriter writer, ExternalRecord master, ExternalRecord copybook) throws XMLStreamException {
 	   int i;
 	   boolean toPrint = true;
+	   String s;
 	   String name = copybook.getCopyBook();
 
 	   writer.writeStartElement(Constants.RE_XML_RECORD);
 
        writer.writeAttribute(Constants.RE_XML_RECORDNAME,  copybook.getRecordName());
 	   writer.writeAttribute(Constants.RE_XML_COPYBOOK, name);
-	   writeAttr(writer, Constants.RE_XML_DELIMITER, copybook.getDelimiter());
+	   writeAttr(writer, Constants.RE_XML_DELIMITER, encodeDelim(copybook.getDelimiter()));
 	   writeAttr(writer, Constants.RE_XML_DESCRIPTION, copybook.getDescription());
 	   writeAttr(writer, Constants.RE_XML_FONTNAME, copybook.getFontName());
        writer.writeAttribute(Constants.RE_XML_FILESTRUCTURE,
@@ -103,7 +105,10 @@ public class RecordEditorXmlWriter implements CopybookWriter {
        }
        writer.writeAttribute(Constants.RE_XML_QUOTE, copybook.getQuote());
        writer.writeAttribute(Constants.RE_XML_RECORDSEP, copybook.getRecSepList());
-       //writer.writeAttribute(Constants.RE_XML_SYSTEMNAME, "");
+       s = copybook.getSystemName();
+       if (s != null && ! "".equals(s)) {
+    	   writer.writeAttribute(Constants.RE_XML_SYSTEMNAME, s);
+       }
        ExternalSelection xSel = StreamLine.getExternalStreamLine().streamLine(copybook.getRecordSelection());
        if (copybook.isDefaultRecord()) {
     	   if (xSel == null) {
@@ -156,6 +161,13 @@ public class RecordEditorXmlWriter implements CopybookWriter {
        writer.writeEndElement();
 	}
 
+	private String encodeDelim(String delim) {
+		if ("\t".equals(delim)) {
+			delim = "<TAB>";
+		}
+		
+		return delim;
+	}
 
 	private void writeSelection(XMLStreamWriter writer, ExternalSelection sel)
 	throws XMLStreamException {

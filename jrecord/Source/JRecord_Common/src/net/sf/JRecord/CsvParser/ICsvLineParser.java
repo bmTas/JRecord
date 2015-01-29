@@ -44,6 +44,15 @@ public interface ICsvLineParser {
     public abstract String setField(int fieldNumber, int fieldType, String line, ICsvDefinition csvDefinition, String newValue);
 
     /**
+     * Get all the fields in a line
+     * @param line line to disect
+     * @param csvDefinition Csv-Definition
+     * @return list of fields
+     */
+    public abstract List<String> getFieldList(String line,  ICsvDefinition csvDefinition);
+    
+    
+    /**
      * This method converts a Line into a list of column names
      *
      * @param line line containing column names
@@ -67,8 +76,19 @@ public interface ICsvLineParser {
     /**
      * Get The file Structure (i.e. Reader / Writer for the CSV file)
      * @param csvDefinition Csv Definition details.
-     * @param namesOnFirstLine wether names are on the first line
+     * @param namesOnFirstLine wether names are on the first line 
      * @return
      */
     public int getFileStructure(ICsvDefinition csvDefinition, boolean namesOnFirstLine, boolean binary) ;
+    
+
+	/**
+	 * Format field list as a Csv Line
+	 * @param fields fields to be organised as a line
+	 * @param lineDef Csv Line Definition
+	 * @param fieldTypes Field types
+	 * @return Formatted Csv line
+	 */
+	public String formatFieldList(List<? extends Object> fields, ICsvDefinition lineDef, int[] fieldTypes);
+
 }

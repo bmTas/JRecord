@@ -4,7 +4,9 @@ import net.sf.JRecord.Common.Constants;
 
 public class ExternalFieldSelection implements ExternalSelection {
 
-	private String fieldName, fieldValue, operator="=", booleanOp="";
+	public static final String EQUALS_OPERATOR = "=";
+	
+	private String fieldName, fieldValue, operator=EQUALS_OPERATOR, booleanOp="";
 	private boolean caseSensitive = true;
 	private static final String[] VALID_OPS = Constants.VALID_COMPARISON_OPERATORS;
 

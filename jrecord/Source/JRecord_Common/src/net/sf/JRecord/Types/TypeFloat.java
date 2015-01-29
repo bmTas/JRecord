@@ -43,7 +43,7 @@ public class TypeFloat extends TypeNum {
      * and what is to be displayed on the screen for Float or Double fields
      */
     public TypeFloat() {
-        super(true, false, false, false, true);
+        super(true, false, false, false, true, true);
     }
 
     /**
@@ -84,7 +84,7 @@ public class TypeFloat extends TypeNum {
 
         int len = field.getLen();
         int pos = position - 1;
-        double doubleVal  = getBigDecimal(field, value.toString()).doubleValue();
+        double doubleVal  = getBigDecimal(field, toNumberString(value)).doubleValue();
 
 	    if (len == LENGTH_OF_FLOAT) {
 	        long l = Float.floatToRawIntBits((float) doubleVal);

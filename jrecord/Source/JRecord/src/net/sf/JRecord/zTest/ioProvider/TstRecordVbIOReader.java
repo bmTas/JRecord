@@ -20,6 +20,7 @@ import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ToLayoutDetail;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.LineIOProvider;
+import net.sf.JRecord.Log.TextLog;
 import net.sf.JRecord.Numeric.Convert;
 import net.sf.JRecord.zTest.Common.IO;
 import net.sf.JRecord.zTest.Common.TstConstants;
@@ -65,7 +66,7 @@ public class TstRecordVbIOReader extends TestCase {
     	ExternalRecord externalLayout = copybookInt.loadCopyBook(
                 TstConstants.COBOL_DIRECTORY + dtar020CopybookName + ".cbl",
                 CopybookLoader.SPLIT_NONE, 0, "cp037",
-                Convert.FMT_MAINFRAME, 0, null
+                Convert.FMT_MAINFRAME, 0, new TextLog()
         );
     	externalLayout.setFileStructure(Constants.IO_VB);
     	LayoutDetail dtar020CopyBook = ToLayoutDetail.getInstance().getLayout(externalLayout);
@@ -89,7 +90,7 @@ public class TstRecordVbIOReader extends TestCase {
     }
 
     public void testAfile(String fileName, LayoutDetail copyBook, byte[][] lines) 
-    throws IOException, RecordException {
+    throws IOException, RecordException, Exception {
 
         int i, j;
         int copies = 5000;
@@ -109,35 +110,41 @@ public class TstRecordVbIOReader extends TestCase {
 
     private void binReadCheck(String id,  String fileName, LayoutDetail copyBook,
             byte[][] lines2Test)
-    throws IOException, RecordException {
-        AbstractLineReader tReader = LineIOProvider.getInstance().getLineReader(Constants.IO_VB);
-        AbstractLine line;
-        int i = 0;
-        boolean b;
+    throws IOException, RecordException, Exception {
+        try {
+			AbstractLineReader tReader = LineIOProvider.getInstance()
+					.getLineReader(Constants.IO_VB);
+			AbstractLine line;
+			int i = 0;
+			boolean b;
 
-        System.out.println(id + "Bin Read");
-        writeAFile(fileName, lines2Test);
-        tReader.open(fileName, copyBook);
+			System.out.println(id + "Bin Read");
+			writeAFile(fileName, lines2Test);
+			tReader.open(fileName, copyBook);
 
-        while ((line = tReader.read()) != null) {
-            b = Arrays.equals(lines2Test[i], line.getData());
-            if (!b) {
-                System.out.println("");
-                System.out.println(id + "Error Line " + i
-                        + " lengths > " + lines2Test[i].length + " " + line.getData().length);
-                System.out.println("  Expected: " + new String(lines2Test[i],  "CP037"));
-                System.out.println("       Got: " + new String(line.getData(), "CP037"));
-                System.out.println("");
+			while ((line = tReader.read()) != null) {
+			    b = Arrays.equals(lines2Test[i], line.getData());
+			    if (!b) {
+			        System.out.println("");
+			        System.out.println(id + "Error Line " + i
+			                + " lengths > " + lines2Test[i].length + " " + line.getData().length);
+			        System.out.println("  Expected: " + new String(lines2Test[i],  "CP037"));
+			        System.out.println("       Got: " + new String(line.getData(), "CP037"));
+			        System.out.println("");
 
-                assertTrue(id + "Bin Line " + i + " is not correct ", b);
-            }
-            i += 1;
-        }
+			        assertTrue(id + "Bin Line " + i + " is not correct ", b);
+			    }
+			    i += 1;
+			}
 
-        assertEquals(id + "Expected to read " + lines2Test.length
-                   + " got " + i, lines2Test.length, i);
+			assertEquals(id + "Expected to read " + lines2Test.length
+			           + " got " + i, lines2Test.length, i);
 
-        tReader.close();
+			tReader.close();
+		} catch (ExceptionInInitializerError e) {
+			e.printStackTrace();
+			throw e;
+		}
     }
 
 

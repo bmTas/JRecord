@@ -7,6 +7,11 @@ import net.sf.JRecord.Types.Type;
 
 public class TstStandardParser extends TestCase {
 
+	private static final CsvDefinition LINES0_CSV_DEF = new CsvDefinition("," , "");
+	private static final CsvDefinition LINES1_CSV_DEF = new CsvDefinition("," , "'");
+	private static final CsvDefinition LINES2_CSV_DEF = new CsvDefinition("|" , "'");
+	private static final CsvDefinition LINES3_CSV_DEF = new CsvDefinition("," , "`~");
+
 	private String[] lines0 = {"field1, field2, field3",
 			 "f11,f21,f31",
 			 "f12,f22,f32",
@@ -36,7 +41,15 @@ public class TstStandardParser extends TestCase {
 			 "'f17'|'pt1| ''pt2'' | ''pt3''| pt4'|'f37'",
 	};
 
-
+	private String[] lines3 = {"field1, field2, field3",
+			 "f11,`~pt1, pt2, pt3`~,f31",
+			 "f12,`~pt1, pt2, pt3`~`~`~,f32",
+			 "f13,`~pt1, `~`~pt2`~`~ , pt3`~,f33",
+			 "f14,`~pt1, `~`~pt2`~`~ , `~`~pt3`~`~`~,f34",
+			 "f15,`~pt1, `~`~pt2`~`~, `~`~pt3`~`~, pt4`~,f35",
+			 "f16,`~`~`~f2a`~`~,`~`~ f2b`~`~`~,f36",
+			 "`~f17`~,`~pt1, `~`~pt2`~`~ , `~`~pt3`~`~, pt4`~,`~f37`~",
+	};
 
 	public void testGetField1() {
 		StandardCsvLineParser p = new StandardCsvLineParser();
@@ -201,6 +214,24 @@ public class TstStandardParser extends TestCase {
 
 				}
 			}
+	}
+
+	
+	public void testGetFieldList() {
+		StandardCsvLineParser p = new StandardCsvLineParser();
+		CommonCsvTests.tstGetFieldList("0: ", lines0, p, LINES0_CSV_DEF, 3);
+		CommonCsvTests.tstGetFieldList("1: ", lines1, p, LINES1_CSV_DEF, 3);
+		CommonCsvTests.tstGetFieldList("2: ", lines2, p, LINES2_CSV_DEF, 3);
+		CommonCsvTests.tstGetFieldList("3: ", lines3, p, LINES3_CSV_DEF, 3);
+	}
+
+	
+	public void testSetFieldList() {
+		StandardCsvLineParser p = new StandardCsvLineParser();
+		CommonCsvTests.tstSetFieldList("0: ", lines0, p, LINES0_CSV_DEF, 3);
+		CommonCsvTests.tstSetFieldList("1: ", lines1, lines1.length - 1, p, LINES1_CSV_DEF, 3);
+		CommonCsvTests.tstSetFieldList("2: ", lines2, lines2.length - 1, p, LINES2_CSV_DEF, 3);
+		CommonCsvTests.tstSetFieldList("3: ", lines3, lines3.length - 1, p, LINES3_CSV_DEF, 3);
 	}
 
 //	public void testSplit() {

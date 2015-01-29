@@ -12,6 +12,10 @@ import java.io.Reader;
 
 
 /**
+ * Read a logical Csv Record from a file.
+ * A Csv Record may have embedded <EOL> chars
+ * in it (the field must have quote characters).
+ * 
  * @author Bruce Martin
  *
  */
@@ -110,7 +114,7 @@ public class CsvCharReader implements ICharReader {
 	@Override
 	public void open(InputStream inputStream, String font) throws IOException {
 		this.inStream = inputStream;
-		if (font == null || "".equals(font)) {
+		if (font == null || font.length() == 0) {
 			this.in = new InputStreamReader(inputStream);
 		} else {
 			this.in = new InputStreamReader(inputStream, font);

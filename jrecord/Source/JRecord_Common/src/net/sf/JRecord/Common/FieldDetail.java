@@ -5,6 +5,11 @@
  */
 package net.sf.JRecord.Common;
 
+import net.sf.JRecord.Option.IOptionResult;
+import net.sf.JRecord.Option.IOptionType;
+import net.sf.JRecord.Option.OptionResult;
+import net.sf.JRecord.Option.OptionType;
+
 //import net.sf.JRecord.Details.RecordDetail;
 
 
@@ -52,12 +57,11 @@ public class FieldDetail implements IFieldDetail {
 		public int getSourceIndex() {
 			return 0;
 		}
-
 	};
 	private int pos;
 	private int len;
 	private int end;
-	private String name;
+	private String name, lookupName;
 	private final String description;
 	private int type;
 	private final int decimal;
@@ -90,6 +94,7 @@ public class FieldDetail implements IFieldDetail {
 					   final String pParamater) {
 
 		name        = pName;
+		lookupName  = pName;
 		type        = pType;
 		decimal     = pDecimal;
 		fontName    = pFont;
@@ -177,6 +182,22 @@ public class FieldDetail implements IFieldDetail {
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.Common.AbstractFieldDetails#getPos()
 	 */
+
+	/**
+	 * @return the lookupName
+	 */
+	public final String getLookupName() {
+		return lookupName;
+	}
+
+
+	/**
+	 * @param lookupName the lookupName to set
+	 */
+	public final void setLookupName(String lookupName) {
+		this.lookupName = lookupName;
+	}
+
 
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.Common.IFieldDetail#getPos()
@@ -356,4 +377,15 @@ public class FieldDetail implements IFieldDetail {
 	public final void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
+
+
+	@Override
+	public IOptionResult getOption(IOptionType type) {
+		if (type == OptionType.REQUIRED) {
+			return OptionResult.YES;
+		}
+		return OptionResult.UNKOWN;
+	}
+	
+	
  }

@@ -12,7 +12,7 @@ public class TypeCommaDecimalPoint extends TypeNum {
 	private static final NumberFormat GERMAN_NUM_FORMAT = NumberFormat.getIntegerInstance(Locale.GERMAN);
 
 	public TypeCommaDecimalPoint(int typeId, boolean isPositive) {
-		super(typeId, isPositive);
+		super(typeId, isPositive, ',');
 	}
 
 	/* (non-Javadoc)

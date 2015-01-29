@@ -9,7 +9,7 @@ import net.sf.JRecord.Common.RecordException;
 public class TypeNumAnyDecimal extends TypeNum {
 
 	public TypeNumAnyDecimal(boolean isPositive) {
-		super(true, false, true, isPositive, false);
+		super(false, false, true, isPositive, false, false);
 	}
 
 
@@ -18,7 +18,15 @@ public class TypeNumAnyDecimal extends TypeNum {
 	 */
 	@Override
 	protected String addDecimalPoint(String s, int decimal) {
-		return s;
+		return s == null ? "" : s.trim();
+	}
+
+
+
+	@Override
+	public byte[] setField(byte[] record, int position, IFieldDetail field,
+			Object value) throws RecordException {
+		return setFieldToVal(record, position, field, formatValueForRecord(field, toNumberString(value)));
 	}
 
 
@@ -32,13 +40,24 @@ public class TypeNumAnyDecimal extends TypeNum {
         try {
             new BigDecimal(Conversion.numTrim(val));
         } catch (final Exception ex) {
-            throw new RecordException("Invalid Number: {0}", ex.getMessage());
+            throw new RecordException("Invalid Number: " + val + " >" + Conversion.numTrim(val) + "<" , ex.getMessage());
         }
 
 	    if (isPositive() && val.indexOf('-') >= 0) {
-	        throw new RecordException("Only positive numbers are allowed");
+	        throw new RecordException("Only positive numbers are allowed: " + val);
 	    }
 
 	    return val.trim();
 	}
+
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.Types.TypeNum#hasFloatingDecimal()
+	 */
+	@Override
+	public boolean hasFloatingDecimal() {
+		return true;
+	}
+	
+	
 }

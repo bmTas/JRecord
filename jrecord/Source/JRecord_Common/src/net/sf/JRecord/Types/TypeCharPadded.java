@@ -34,7 +34,7 @@ public class TypeCharPadded extends TypeChar {
      * @param b value to pad the field with
      */
     public TypeCharPadded(final byte b) {
-        super(true);
+        super(true, true);
         padByte = b;
     }
 

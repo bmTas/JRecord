@@ -2,6 +2,7 @@ package net.sf.JRecord.External;
 
 import java.io.IOException;
 
+import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.DefaultLineProvider;
@@ -34,10 +35,25 @@ public class CsvNamesFirstLineFileLoader implements CopybookLoader {
 		fieldSeperator = sep;
 	}
 	
+	
+	
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.External.CopybookLoader#loadCopyBook(java.lang.String, int, int, java.lang.String, int, int, net.sf.JRecord.Log.AbsSSLogger)
+	 */
+	@Override
+	public final ExternalRecord loadCopyBook(String copyBookFile,
+			int splitCopybookOption, int dbIdx, String font, int binFormat,
+			int systemId, AbsSSLogger log) throws IOException, RecordException {
+		// TODO Auto-generated method stub
+		return loadCopyBook(copyBookFile, splitCopybookOption, dbIdx, font, CommonBits.getDefaultCobolTextFormat(), binFormat, systemId, log);
+		
+	}
+
 	/**
 	 * @see net.sf.JRecord.External.CopybookLoader#loadCopyBook(java.lang.String, int, int, java.lang.String, int, int, net.sf.JRecord.Log.AbsSSLogger)
 	 */
-	public ExternalRecord loadCopyBook(String copyBookFile, int splitCopybookOption, int dbIdx, String font, int binFormat, int systemId, AbsSSLogger log) 
+	public ExternalRecord loadCopyBook(String copyBookFile, int splitCopybookOption, int dbIdx, String font, int copybookFormat, int binFormat, 
+			int systemId, AbsSSLogger log) 
 	throws IOException, RecordException {
 		TextLineReader r = new TextLineReader(new DefaultLineProvider(),  true);
 		r.setDefaultDelim(fieldSeperator);

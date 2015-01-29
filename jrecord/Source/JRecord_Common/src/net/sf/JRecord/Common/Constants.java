@@ -21,13 +21,15 @@ public interface Constants {
 	public static final  int NUMBER_OF_COPYBOOK_SOURCES = 16;
 
 
-    public static final byte BYTE_CR = 10;
-    public static final byte BYTE_LF = 13;
+    public static final byte BYTE_LF = 10;
+    public static final byte BYTE_CR = 13;
 
-	public static final byte[] LFCR_BYTES      = {BYTE_LF, BYTE_CR};
+	public static final String LINE_SEPERATOR  = System.getProperty("line.separator");
+
+	public static final byte[] CRLF_BYTES      = {BYTE_CR, BYTE_LF};
 	public static final byte[] LF_BYTES        = {BYTE_LF};
 	public static final byte[] CR_BYTES        = {BYTE_CR};
-	public static final byte[] SYSTEM_EOL_BYTES = System.getProperty("line.separator").getBytes();
+	public static final byte[] SYSTEM_EOL_BYTES = LINE_SEPERATOR.getBytes();
 
    	/* record Type constatnts */
 	public static final int rtBinaryRecord         = 0;
@@ -52,6 +54,7 @@ public interface Constants {
     public static final int IO_VB_FUJITSU   = 7;
     public static final int IO_VB_OPEN_COBOL   = 8;
     public static final int IO_BIN_TEXT  = 9;
+    public static final int IO_FIXED_LENGTH_CHAR = 10;
 
     public static final int IO_UNKOWN_FORMAT = 21 /* RecordEditor Format */;
     public static final int IO_WIZARD        = 22 /* RecordEditor Format */;
@@ -114,7 +117,7 @@ public interface Constants {
 	public static final String LF_STRING       =  "<lf>";
 
 	public static final String FILE_SEPERATOR  =  System.getProperty("file.separator");
-	public static final String LINE_SEPERATOR  =  System.getProperty("line.separator");
+
 
 	public static final String RECORD_NAME     = "Record";
 	public static final String SUB_RECORD_NAME = "SR";

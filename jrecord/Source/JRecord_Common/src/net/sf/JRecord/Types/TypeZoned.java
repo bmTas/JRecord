@@ -1,15 +1,29 @@
-/*
+/**
  * @Author Bruce Martin
  * Created on 6/09/2005
  *
  * Purpose:
- * Define mainframe Zoned Decimal Type
- *
-  * # Version 0.60 Bruce Martin 2007/02/16
+ * Define mainframe Zoned Decimal Type.
+ * 
+ * In Zoned-Decimal, the sign is held in the high nyble of the last byte.
+ * Decimal points are assumed so Decimal points<ul>
+ *   <li> must be added back in (when the value is retrieved)
+ *   <li> removed before the value is saved
+ * </ul>
+ * 
+ * in EBCIDIC '0'..'9' are x'F0' .. x'F9'
+ * so for Ebcdic 	x'D1' = -1 and x'C1' = +1	
+ * # Version 0.60 Bruce Martin 2007/02/16
  *   - Starting to seperate the Record package out from the RecordEditor
  *     so that it can be used seperately. So classes have been moved
  *     to the record package (ie RecordException + new Constant interface
- */
+ *     
+ * Version 0.80.5
+ *    Changed so that for EBCDIC charsets, the sign is calculated at byte level, 
+ *    other charsets it is done at character level. 
+ *    This will overcome a problem with German-Ebcdic where 
+ *    +0 = accented-a instead of {
+ **/
 package net.sf.JRecord.Types;
 
 import net.sf.JRecord.Common.Conversion;
@@ -26,7 +40,13 @@ import net.sf.JRecord.Common.RecordException;
 public class TypeZoned extends TypeNum {
 
 
-    /**
+    private static final byte HIGH_NYBLE = (byte) 0xf0;
+	private static final byte ZONED_POSITIVE_NYBLE_OR = (byte) 0xCF;
+	private static final byte ZONED_NEGATIVE_NYBLE_OR = (byte) 0xDF;
+	private static final byte ZONED_NEGATIVE_NYBLE_VALUE = (byte) 0xD0;
+
+
+	/**
      * Define mainframe Zoned Decimal Type
      *
      * <p>This class is the interface between the raw data in the file
@@ -34,11 +54,11 @@ public class TypeZoned extends TypeNum {
      * fields.
      */
     public TypeZoned() {
-        super(false, true, true, false, false);
+        super(false, true, true, false, false, false);
     }
 
     public TypeZoned(boolean positive) {
-        super(false, true, true, positive, false);
+        super(false, true, true, positive, false, false);
     }
 
     /**
@@ -47,8 +67,35 @@ public class TypeZoned extends TypeNum {
     public Object getField(byte[] record,
             final int position,
 			final IFieldDetail field) {
-        return addDecimalPoint(
-                	Conversion.fromZoned(super.getFieldText(record, position, field)),
+        String val = super.getFieldText(record, position, field);
+        String zoned = val; 
+        char ch;
+        if (val.length() == 0 || ((ch = val.charAt(val.length() - 1)) >= '0' && ch <= 9)) {
+        	
+        } else {
+			String charset = field.getFontName();
+			if (Conversion.isSingleByteEbcidic(charset)) {
+				String sign = "";
+				byte signByte = record[field.getEnd() - 1];
+				if (((byte) (signByte & HIGH_NYBLE)) == ZONED_NEGATIVE_NYBLE_VALUE) {
+					sign = "-";
+				}
+				byte[] lastDigitBytes = {(byte) (signByte | HIGH_NYBLE)};
+			
+				zoned = sign 
+					  + val.substring(0, val.length() - 1) 
+					  + Conversion.getString(lastDigitBytes, 0, 1, charset); 
+															 // in EBCIDIC '0'..'9' are x'F0' .. x'F9'
+				                                             // in zoned decimal the sign is held in the high Nyble
+				                                             // last digit
+				                                             // so x'D1' = -1 and x'C1' = +1
+			} else {
+				zoned = Conversion.fromZoned(val);
+			}
+		}
+
+		return addDecimalPoint(
+                	zoned,
                 	field.getDecimal());
     }
 
@@ -56,16 +103,103 @@ public class TypeZoned extends TypeNum {
     /**
      * @see net.sf.JRecord.Types.Type#setField(byte[], int, net.sf.JRecord.Common.FieldDetail, java.lang.Object)
      */
+    @Override
     public byte[] setField(byte[] record,
             final int position,
 			final IFieldDetail field,
 			Object value)
     throws RecordException {
 
-        String val = formatValueForRecord(field, value.toString());
+    	if (field.getLen() == 0) {
+    		return record;
+    	}
+    	
+        String val = checkValue(field, toNumberString(value));
+	    String charset = field.getFontName();
+	    if (Conversion.isSingleByteEbcidic(charset)) {
+	    	byteLevelAssign(record, position, field, val);
+			return record;
+//			byte andByte = ZONED_POSITIVE_NYBLE_OR;
+//			int endPos = field.getEnd() - 1;
+//
+//			if (val.startsWith("+")) {
+////				andByte = ZONED_POSITIVE_NYBLE;
+//				val = val.substring(1);
+//			} else if (val.startsWith("-")) {
+//				andByte = ZONED_NEGATIVE_NYBLE_OR;
+//				val = val.substring(1);
+//			}
+//			copyRightJust(record, val,
+//		            position - 1, field.getLen(),
+//		            "0", charset);
+//
+//			if (! super.isPositive()) {
+//				record[endPos] = (byte) (record[endPos] & andByte);
+//			}
+//				
+//			return record;
+	    }
+	    
 	    copyRightJust(record, Conversion.toZoned(val),
 	            position - 1, field.getLen(),
-	            "0", field.getFontName());
+	            "0", charset);
 	    return record;
+    }
+    
+    
+    @Override
+	public String formatValueForRecord(IFieldDetail field, String value)
+			throws RecordException {
+        String val = checkValue(field, toNumberString(value));
+	    String charset = field.getFontName();
+	    if (Conversion.isSingleByteEbcidic(charset)) {
+	    	int len = Math.max(field.getLen(), val.length());
+
+			byte[] record = new byte[len];
+	    	byteLevelAssign(record, 1, field, val);
+	    	String s = Conversion.toString(record, charset);
+	    	if (field.isFixedFormat()) {
+	    		return s;
+	    	}
+	    	return Conversion.numTrim(s);
+	    }
+	    
+	    val = Conversion.toZoned(val);
+	    if (field.isFixedFormat() && val.length() < field.getLen()) {
+	    	return Conversion.padFront(val, field.getLen() - val.length(), '0');			
+//	    			new StringBuilder()
+//	    					.append(getCharArray(field.getLen() - val.length(), '0'))
+//	    					.append(val)
+//	    				.toString();
+	    }
+	    return val;
+	}
+
+	private void byteLevelAssign(byte[] record,
+            final int position,
+			final IFieldDetail field,
+			String val) throws RecordException {
+		byte andByte = ZONED_POSITIVE_NYBLE_OR;
+		int len = field.getLen();
+		int endPos = len + position - 2;
+		if (! field.isFixedFormat()) {
+			endPos = record.length - 1;
+			len = record.length - position + 1;
+		}
+
+		if (val.startsWith("+")) {
+//			andByte = ZONED_POSITIVE_NYBLE;
+			val = val.substring(1);
+		} else if (val.startsWith("-")) {
+			andByte = ZONED_NEGATIVE_NYBLE_OR;
+			val = val.substring(1);
+		}
+		copyRightJust(record, val,
+	            position - 1, len,
+	            "0", field.getFontName());
+
+		if (! super.isPositive()) {
+			record[endPos] = (byte) (record[endPos] & andByte);
+		}
     }
 }

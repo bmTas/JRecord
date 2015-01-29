@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import net.sf.JRecord.ByteIO.ByteTextReader;
+import net.sf.JRecord.ByteIO.IByteReader;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.RecordException;
@@ -33,8 +34,12 @@ public class BinTextReader extends LineReaderWrapper {
 	private boolean readNames;
 	
 	public BinTextReader(LineProvider provider, boolean nameOn1stLine) {
-		super(provider, new ByteTextReader());
-		
+		this(provider, nameOn1stLine, new ByteTextReader());
+	}
+
+	public BinTextReader(LineProvider provider, boolean nameOn1stLine, IByteReader reader) {
+		super(provider, reader);
+
 		readNames = nameOn1stLine;
 	}
 
@@ -74,6 +79,7 @@ public class BinTextReader extends LineReaderWrapper {
         String quote  = defaultQuote;
         String font   = "";
         byte[] recordSep = Constants.SYSTEM_EOL_BYTES;
+        boolean embeddedCr = false;
 
 	    try {
 	    	int ts = getLayout().getFileStructure();
@@ -91,6 +97,10 @@ public class BinTextReader extends LineReaderWrapper {
 	        param     = rec.getField(0).getParamater();
 	        recordSep = getLayout().getRecordSep();
 	        font      = getLayout().getFontName();
+
+	        if (rec instanceof RecordDetail) {
+	        	embeddedCr = ((RecordDetail) rec).isEmbeddedNewLine();
+	        }
 	    } catch (Exception e) {
         }
 	    
@@ -99,7 +109,7 @@ public class BinTextReader extends LineReaderWrapper {
 	    layout = createLayout(line, rec, 
 	    		recordSep, font,  delim, delimStr,
                 parser, fieldType, decimal, format, 
-                param, quote, structure);
+                param, quote, structure, embeddedCr);
 	    //System.out.println(" Quote  ->");
 
 	    if (layout != null) {
@@ -121,6 +131,7 @@ public class BinTextReader extends LineReaderWrapper {
      * @param param param to add to each field
      * @param quote Quote
      * @param Structure file structure
+     * @param embeddedCr wether there is embedded Cr in the file
      * @return Create a Layout description form a supplied line (first line of a file ?)
      * + other details
      * @throws IOException any error
@@ -129,7 +140,7 @@ public class BinTextReader extends LineReaderWrapper {
     		byte[] recordSep,
             String fontName, byte[] delimiter, String delimStr, int parser,
             int fieldType, int decimal, int format, String param,
-            String quote, int structure) throws IOException {
+            String quote, int structure, boolean embeddedCr) throws IOException {
 
     	int fldType, idx;
         int i;
@@ -161,8 +172,10 @@ public class BinTextReader extends LineReaderWrapper {
                 flds[i].setPosOnly(i + 1);
             }
 
-            recs[0] = new RecordDetail("", "", "", Constants.rtDelimited,
-            		delimStr, quote, fontName, flds, parser);
+            recs[0] =  new RecordDetail("", Constants.rtDelimited, delimStr, quote, fontName, flds, parser, null, embeddedCr);
+            		
+            	//	new RecordDetail("", "", "", Constants.rtDelimited,
+            	//	delimStr, quote, fontName, flds, parser);
 
             try {
                 ret =

@@ -42,7 +42,7 @@ public class TypeBinLittleEndian extends TypeNum {
      * @param isPostive wether it is a positive integer
      */
     public TypeBinLittleEndian(final boolean isPositive) {
-        super(false, true, true, isPositive, true);
+        super(false, true, true, isPositive, true, true);
         positiveStorage = isPositive;
     }
 
@@ -56,7 +56,7 @@ public class TypeBinLittleEndian extends TypeNum {
      * @param isPostive wether it is a positive integer
      */
     public TypeBinLittleEndian(final boolean isPositive, boolean positiveStorage) {
-        super(false, true, true, isPositive, true);
+        super(false, true, true, isPositive, true, true);
         this.positiveStorage = positiveStorage;
     }
 
@@ -92,16 +92,24 @@ public class TypeBinLittleEndian extends TypeNum {
 			  final Object value)
             throws RecordException {
 
-		int pos = position - 1;
-		int len = field.getLen();
-        String val = value.toString();
-
-        formatValueForRecord(field, val);
+//		int pos = position - 1;
+//		int len = field.getLen();
+//		BigInteger v;
+//
+//        if (value == null || value == CommonBits.NULL_VALUE) {
+//        	v = BigInteger.ZERO ;
+//        } else {
+//        	String  val = toNumberString(value);
+//        	formatValueForRecord(field, val);   // This is for validation purposes only
+//                                                // the return value is deliberately not used
+//
+//        	v =  getBigDecimal(field, val).toBigInteger();
+//        }
 
         Conversion.setBigIntLE(record,
-                				   pos, len,
-                				   getBigDecimal(field, val).toBigInteger(),
-                				   positiveStorage);
+        					   position - 1, field.getLen(),
+                			   formatAsBigInt(field, value),
+                			   positiveStorage);
 
         return record;
     }

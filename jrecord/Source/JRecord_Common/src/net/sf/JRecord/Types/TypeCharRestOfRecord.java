@@ -5,6 +5,8 @@ import net.sf.JRecord.Common.RecordException;
 
 public class TypeCharRestOfRecord extends TypeChar {
 
+	private static final byte[] EMPTY = {};
+	
 	public TypeCharRestOfRecord() {
 		super(true, true, false);
 	}
@@ -23,7 +25,7 @@ public class TypeCharRestOfRecord extends TypeChar {
 	 * @see net.sf.JRecord.Types.TypeChar#getFieldEnd(net.sf.JRecord.Common.FieldDetail, byte[])
 	 */
 	@Override
-	protected int getFieldEnd(IFieldDetail currField, byte[] record) {
+	protected int getFieldEnd(int position, IFieldDetail currField, byte[] record) {
 		return record.length;
 	}
 
@@ -42,6 +44,8 @@ public class TypeCharRestOfRecord extends TypeChar {
 	    byte[] byteVal = getBytes(val, font);
 		if (val.length() == len) {
 			System.arraycopy(byteVal, 0, record, pos, len);
+		} else if (pos + val.length() == 0) {
+			record = EMPTY;
 		} else {
 			byte[] temp = new byte[pos + val.length()];
 			System.arraycopy(record, 0, temp, 0, position);

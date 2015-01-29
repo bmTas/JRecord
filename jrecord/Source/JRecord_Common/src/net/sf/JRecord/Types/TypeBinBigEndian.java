@@ -39,7 +39,7 @@ public class TypeBinBigEndian extends TypeNum {
      * @param isPositive wether it is a positive integer
      */
     public TypeBinBigEndian(final boolean isPositive) {
-        super(false, true, true, isPositive, true);
+        super(false, true, true, isPositive, true, true);
         positiveStorage = isPositive;
     }
 
@@ -52,7 +52,7 @@ public class TypeBinBigEndian extends TypeNum {
      * @param isPositive wether it is a positive integer
      */
     public TypeBinBigEndian(final boolean isPositive, boolean positiveStore) {
-        super(false, true, true, isPositive, true);
+        super(false, true, true, isPositive, true, true);
         this.positiveStorage = positiveStore;
     }
 
@@ -87,15 +87,8 @@ public class TypeBinBigEndian extends TypeNum {
             			 final int position,
             			 final IFieldDetail field, Object value)
             throws RecordException {
-
-		int pos = position - 1;
-		int len = field.getLen();
-        String val = value.toString();
-
-        formatValueForRecord(field, val);
-
-        Conversion.setBigInt(record, pos, len,
-                		   getBigDecimal(field, val).toBigInteger(), positiveStorage);
+		
+        Conversion.setBigInt(record, position - 1, field.getLen(), formatAsBigInt(field, value), positiveStorage);
         return record;
     }
 }

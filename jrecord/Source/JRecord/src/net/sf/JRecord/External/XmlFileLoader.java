@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.IO.XmlLineReader;
@@ -13,10 +14,22 @@ import org.xml.sax.SAXException;
 
 public class XmlFileLoader implements CopybookLoader {
 
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.External.CopybookLoader#loadCopyBook(java.lang.String, int, int, java.lang.String, int, int, net.sf.JRecord.Log.AbsSSLogger)
+	 */
+	@Override
+	public final ExternalRecord loadCopyBook(String copyBookFile,
+			int splitCopybookOption, int dbIdx, String font, int binFormat,
+			int systemId, AbsSSLogger log) throws IOException, SAXException, ParserConfigurationException, RecordException {
+		// TODO Auto-generated method stub
+		return loadCopyBook(copyBookFile, splitCopybookOption, dbIdx, font, CommonBits.getDefaultCobolTextFormat(), binFormat, systemId, log);
+		
+	}
+
 	/**
 	 * @see net.sf.JRecord.External.CopybookLoader#loadCopyBook(java.lang.String, int, int, java.lang.String, int, int, net.sf.JRecord.Log.AbsSSLogger)
 	 */
-	public ExternalRecord loadCopyBook(String copyBookFile, int splitCopybookOption, int dbIdx, String font, int binFormat, int systemId, AbsSSLogger log) 
+	public ExternalRecord loadCopyBook(String copyBookFile, int splitCopybookOption, int dbIdx, String font, int copybookFormat, int binFormat, int systemId, AbsSSLogger log) 
 	throws IOException, SAXException, ParserConfigurationException, RecordException {
 		int i;
 		XmlLineReader r = new XmlLineReader(true);

@@ -44,23 +44,9 @@ public class ScreenLog extends JScrollPane implements AbsSSLogger {
 	public void logException(int level, Exception ex) {
 
 		if (ex != null && currErrorLevel < level) {
-			int i;
 			StringBuffer buf = new StringBuffer(log.getText());
-			StackTraceElement[] el = ex.getStackTrace();
-			int fin = Math.min(1000, el.length);
-
-			buf.append("\n\nClass=");
-			buf.append(ex.getClass());
-			buf.append("    Error=");
-			buf.append(ex.getMessage());
-			buf.append("\n");
-
-			for (i = 0; i < fin; i++) {
-				buf.append("\n    ");
-				buf.append(el[i].getClassName());
-				buf.append("  :  ");
-				buf.append(el[i].getLineNumber());
-			}
+			
+			CommonCode.append(buf, ex);
 
 			log.setText(buf.toString());
 			//parent.setVisible(true);

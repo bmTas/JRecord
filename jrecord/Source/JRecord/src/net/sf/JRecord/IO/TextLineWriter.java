@@ -156,8 +156,10 @@ public class TextLineWriter extends AbstractLineWriter {
      */
     public void close() throws IOException {
 
-        writer.close();
-        stdWriter.close();
+    	if (writer != null) {
+    		writer.close();
+    		stdWriter.close();
+    	}
         outStream.close();
 
         writer    = null;

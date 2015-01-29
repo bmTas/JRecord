@@ -187,10 +187,15 @@ public abstract class FieldSelectX extends FieldSelect {
 				} catch (Exception e) {
 				}
 			}
-		} else if (isCaseSensitive()){
-			res = o.toString().compareTo(getFieldValue());
 		} else {
-			res = o.toString().toLowerCase().compareTo(getFieldValue());
+			String fieldValue = getFieldValue();
+			if (fieldValue == null) {
+
+			} else if (isCaseSensitive()){
+				res = o.toString().compareTo(fieldValue);
+			} else {
+				res = o.toString().toLowerCase().compareTo(fieldValue);
+			}
 		}
 		return res;
 	}

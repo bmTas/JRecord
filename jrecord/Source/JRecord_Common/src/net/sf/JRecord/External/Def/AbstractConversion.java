@@ -56,4 +56,19 @@ public interface AbstractConversion {
 	public abstract String getFormatAsString(int idx, int format);
 
 
+	/**
+	 * Get Dialect Name for a dialect code
+	 * @param key dialect-code
+	 * @return Dialect name
+	 */
+	public abstract String getDialectName(int key);
+
+	/**
+	 * Get Dialect Code from a dialect name
+	 * @param name dialect name
+	 * @return Dialect Code
+	 */
+	public abstract int getDialect(String name);
+
+
 }

@@ -26,15 +26,16 @@ public class TypeCharNullTerminated extends TypeChar {
      * create a null terminated char type (ie C style string)
      */
     public TypeCharNullTerminated() {
-        super(true);
+        super(true, true);
     }
 
     /**
      * @see net.sf.JRecord.Types.TypeChar#getFieldEnd(net.sf.RecordEditor.record.types.FieldDetail, byte[])
      */
-    protected int getFieldEnd(IFieldDetail currField, byte[] record) {
-        int end = java.lang.Math.min(currField.getEnd(), record.length);
-        int ret = currField.getPos() - 1;
+    @Override
+    protected int getFieldEnd(int position, IFieldDetail currField, byte[] record) {
+        int ret = position - 1;
+        int end = java.lang.Math.min(ret + currField.getLen(), record.length);
 
         while (ret < end && (record[ret] != padByte)) {
             ret += 1;

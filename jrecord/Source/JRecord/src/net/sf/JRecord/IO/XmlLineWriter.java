@@ -43,13 +43,13 @@ public class XmlLineWriter extends AbstractLineWriter {
     	XMLOutputFactory f ;
 
     	os = outputStream;
-    	try {
+//    	try {
     		 f = XMLOutputFactory.newInstance();
-    	} catch (Exception e) {
-    		 Object o =  XMLOutputFactory.newInstance("javax.xml.stream.XMLOutputFactory",
-					  this.getClass().getClassLoader());
-    		 f = (XMLOutputFactory) o;
-		}
+//    	} catch (Exception e) {
+//    		 Object o =  XMLOutputFactory.newInstance("javax.xml.stream.XMLOutputFactory",
+//					  this.getClass().getClassLoader());
+//    		 f = (XMLOutputFactory) o;
+//		}
 
         try {
             writer = f.createXMLStreamWriter(outputStream);

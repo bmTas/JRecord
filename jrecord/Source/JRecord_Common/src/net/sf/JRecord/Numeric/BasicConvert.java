@@ -2,6 +2,7 @@ package net.sf.JRecord.Numeric;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Types.Type;
+import net.sf.cb2xml.def.Cb2xmlConstants;
 
 /**
  * Standard Cobol Type to JRecord Type conversion class.
@@ -65,11 +66,11 @@ import net.sf.JRecord.Types.Type;
     	if (picture.startsWith("-9(") || picture.startsWith("+++9") || picture.startsWith("+(2)9")) {
     		lType = -121;
     	}
-        if ("computational".equals(usage)
-        || "computational-4".equals(usage)
-        || "computational-5".equals(usage)
-        || "computational-6".equals(usage)
-        || "binary".equals(usage)) {
+        if (Cb2xmlConstants.COMP.equalsIgnoreCase(usage)
+        || Cb2xmlConstants.COMP_4.equalsIgnoreCase(usage) 
+        || Cb2xmlConstants.COMP_5.equalsIgnoreCase(usage)
+        || Cb2xmlConstants.COMP_6.equalsIgnoreCase(usage)
+        || Cb2xmlConstants.BINARY.equalsIgnoreCase(usage)) {
         	if (binId == Convert.FMT_MAINFRAME
            	||  binId == Convert.FMT_FUJITSU
            	||  binId == Convert.FMT_BIG_ENDIAN) {
@@ -89,14 +90,14 @@ import net.sf.JRecord.Types.Type;
                     }
                 }
             }
-        } else if ("computational-3".equals(usage)) {
+        } else if (Cb2xmlConstants.COMP_3.equalsIgnoreCase(usage) || Cb2xmlConstants.PACKED_DECIMAL.equalsIgnoreCase(usage)) {
             lType = Type.ftPackedDecimal;
             if (positive) {
             	lType = Type.ftPackedDecimalPostive;
             }
-        } else if ("computational-1".equals(usage)) {
+        } else if (Cb2xmlConstants.COMP_1.equalsIgnoreCase(usage)) {
             lType = Type.ftFloat;
-        } else if ("computational-2".equals(usage)) {
+        } else if (Cb2xmlConstants.COMP_2.equalsIgnoreCase(usage)) {
             lType = Type.ftDouble;
         } else if (! CommonCode.checkPictureNumeric(picture, '.')) {
         	return Type.ftChar;

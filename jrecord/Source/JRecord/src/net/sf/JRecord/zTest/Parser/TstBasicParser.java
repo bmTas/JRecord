@@ -6,23 +6,48 @@ import net.sf.JRecord.CsvParser.CsvDefinition;
 
 public class TstBasicParser extends TestCase {
 
+	private static final CsvDefinition LINES0_CSV_DEF = new CsvDefinition(",", "");
+
+	private static final CsvDefinition LINES1_CSV_DEF = new CsvDefinition(",", "'");
+
+	private static final CsvDefinition LINES2_CSV_DEF = new CsvDefinition("|", "'");
+
+	private static final CsvDefinition LINES3_CSV_DEF = new CsvDefinition(",", "`~");
+
 	private String[] lines0 = {"field1, field2, field3",
 			 "f11,f21,f31",
 			 "f12,f22,f32",
 			 "f13,f23,f33",
-};
+			 "f14,f24,f34",
+			 "f15,f25,f35",
+			 "f16,f26,f36",
+	};
 
 	private String[] lines1 = {"field1, field2, field3",
 							 "f11,'pt1, pt2, pt3',f31",
 							 "f12,'pt1, pt2, pt3'',f32",
 							 "f13,'pt1, 'pt2' , pt3',f33",
+							 "f14,''pt1, pt2, pt3'',f34",
+							 "f15,''pt1, pt2, pt3',f35",
+							 "f16,''pt1, 'pt2' , pt3',f36",
 	};
 	private String[] lines2 = {"field1| field2| field3",
 			 "f11|'pt1| pt2| pt3'|f31",
 			 "f12|'pt1| pt2| pt3''|f32",
 			 "f13|'pt1| 'pt2' | pt3'|f33",
-};
+			 "f14|''pt1| pt2| pt3''|f34",
+			 "f15|''pt1| pt2| pt3'|f35",
+			 "f16|''pt1| 'pt2' | pt3'|f36",
+	};
 
+	private String[] lines3 = {"field1, field2, field3",
+			 "f11,`~pt1, pt2, pt3`~,f31",
+			 "f12,`~pt1, pt2, pt3`~`~,f32",
+			 "f13,`~pt1, `~pt2`~ , pt3`~,f33",
+			 "f14,`~`~pt1, pt2, pt3`~`~,f34",
+			 "f15,`~`~pt1, pt2, pt3`~,f35",
+			 "f16,`~`~pt1, `~pt2`~ , pt3`~`~,f36",
+	};
 
 	public void testGetFieldCount() {
 		BasicCsvLineParser p = BasicCsvLineParser.getInstance();
@@ -98,6 +123,22 @@ public class TstBasicParser extends TestCase {
 				assertEquals("Error in " + i +":" + j + "c got " + s, lines0[i], s);
 }
 		}
+	}
+	
+	public void testGetFieldList() {
+		BasicCsvLineParser p = BasicCsvLineParser.getInstance();
+		CommonCsvTests.tstGetFieldList("0: ", lines0, p, LINES0_CSV_DEF, 3);
+		CommonCsvTests.tstGetFieldList("1: ", lines1, p, LINES1_CSV_DEF, 3);
+		CommonCsvTests.tstGetFieldList("2: ", lines2, p, LINES2_CSV_DEF, 3);
+		CommonCsvTests.tstGetFieldList("3: ", lines3, p, LINES3_CSV_DEF, 3);
+	}
+	
+	public void testSetFieldList() {
+		BasicCsvLineParser p = BasicCsvLineParser.getInstance();
+		CommonCsvTests.tstSetFieldList("0: ", lines0, p, LINES0_CSV_DEF, 3);
+		CommonCsvTests.tstSetFieldList("1: ", lines1, p, LINES1_CSV_DEF, 3);
+		CommonCsvTests.tstSetFieldList("2: ", lines2, p, LINES2_CSV_DEF, 3);
+		CommonCsvTests.tstSetFieldList("3: ", lines3, p, LINES3_CSV_DEF, 3);
 	}
 
 //	public void testSplit() {

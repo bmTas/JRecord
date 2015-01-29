@@ -51,8 +51,8 @@ public class CopybookLoaderFactory {
 		RECORD_EDITOR_XML_LOADER       = idx++;
 		COMMA_NAMES_1ST_LINE_LOADER    = idx++;
 		TAB_NAMES_1ST_LINE_LOADER      = idx++;
-		RECORD_EDITOR_TAB_CSV_LOADER   = idx++;
 		RECORD_EDITOR_COMMA_CSV_LOADER = idx++;
+		RECORD_EDITOR_TAB_CSV_LOADER   = idx++;
 	}
 
 	protected static final int NUMBER_OF_LOADERS = 30;

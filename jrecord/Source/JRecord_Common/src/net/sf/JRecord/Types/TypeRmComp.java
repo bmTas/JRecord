@@ -11,7 +11,7 @@ public class TypeRmComp extends TypeNum {
 	public final static int NEGATIVE = 13; // x'0d'
 	
 	public TypeRmComp() {
-		super(false, true, true, false, true);
+		super(false, true, true, false, true, true);
 	}
 
 
@@ -40,10 +40,10 @@ public class TypeRmComp extends TypeNum {
 			Object value) throws RecordException {
 
 		
-		String val = value.toString();
+		String val = toNumberString(value);
 		long l = getBigDecimal(field, val).longValue();
 			
-		formatValueForRecord(field, val);
+		checkValue(field, val);
 		
 		record[position + field.getLen() - 2] = POSITIVE;
 		if (l < 0) {

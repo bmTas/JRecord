@@ -13,7 +13,7 @@ public class TypeCharRestOfFixedRecord extends TypeChar {
 	 * @see net.sf.JRecord.Types.TypeChar#getFieldEnd(net.sf.JRecord.Common.FieldDetail, byte[])
 	 */
 	@Override
-	protected int getFieldEnd(IFieldDetail currField, byte[] record) {
+	protected int getFieldEnd(int position, IFieldDetail currField, byte[] record) {
 		return record.length;
 	}
 

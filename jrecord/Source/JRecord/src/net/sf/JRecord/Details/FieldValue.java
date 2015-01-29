@@ -11,7 +11,7 @@ import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 
 /**
- * Reference to one field in a line.
+ * Reference to one field in a line (or Record).
  * It allows the user to get / set the field value using either simple types (int, double etc) or
  * as a Object.
  *
@@ -256,8 +256,9 @@ public final class FieldValue implements AbstractFieldValue {
 	public void set(Object value) throws RecordException {
 		if (recordNum >= 0) {
 			theLine.setField(recordNum, fieldNum, value);
+		} else {
+			theLine.setField(field, value);
 		}
-		theLine.setField(field, value);
 	}
 
 	/**

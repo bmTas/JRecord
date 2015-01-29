@@ -1,5 +1,8 @@
 package net.sf.JRecord.Common;
 
+import net.sf.JRecord.Option.IOptionResult;
+import net.sf.JRecord.Option.IOptionType;
+
 /**
  * Description of one field in a Record (Line)
  *
@@ -17,6 +20,10 @@ public interface IFieldDetail {
 	public abstract int getLen();
 
 	public abstract String getName();
+	
+	public abstract String getLookupName();
+	
+	public abstract void setLookupName(String lookupName);
 
 	public abstract int getPos();
 
@@ -45,5 +52,7 @@ public interface IFieldDetail {
 	public abstract Object getDefaultValue();
 
 	public abstract void setDefaultValue(Object defaultValue);
+	
+	public abstract IOptionResult getOption(IOptionType type);
 
 }

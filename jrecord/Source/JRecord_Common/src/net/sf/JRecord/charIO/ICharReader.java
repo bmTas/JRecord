@@ -3,6 +3,13 @@ package net.sf.JRecord.charIO;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Defines a class that will read a logical record from a file
+ * as a String
+ * 
+ * @author Bruce Martin
+ *
+ */
 public interface ICharReader {
 
 	/**

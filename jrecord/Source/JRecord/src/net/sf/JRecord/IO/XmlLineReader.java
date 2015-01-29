@@ -70,12 +70,12 @@ public class XmlLineReader extends AbstractLineReader {
     	boolean startDocumentPresent;
     	
 
-    	try {
+//    	try {
     		f = XMLInputFactory.newInstance();
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    		f = XMLInputFactory.newInstance("javax.xml.stream.XMLInputFactory", this.getClass().getClassLoader());
-		}
+//    	} catch (Exception e) {
+//    		e.printStackTrace();
+//    		f = XMLInputFactory.newInstance("javax.xml.stream.XMLInputFactory", this.getClass().getClassLoader());
+//		}
 
         if (buildLayout || pLayout == null) {
             try {

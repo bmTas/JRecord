@@ -1,5 +1,8 @@
 package net.sf.JRecord.CsvParser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
 
@@ -17,9 +20,10 @@ import net.sf.JRecord.Common.IFieldDetail;
 
 public class BinaryCsvParser {
 
+	private static final byte[] NULL_BYTES = {};
     private int lastPos = 0;
     private int currPos = 0;
-    private byte look4;
+    private final byte look4;
     private int foundAt = 0;
 
     
@@ -36,7 +40,7 @@ public class BinaryCsvParser {
      	int i = 0;
      	
      	lastPos = 0;
-     	 currPos = 0;
+     	currPos = 0;
      	foundAt = 0;
     	while (foundAt < pos && i < record.length) {
     		if (record[i] == look4) {
@@ -108,13 +112,37 @@ public class BinaryCsvParser {
 		return ret; 
 	}
 	
+
+    /**
+     * Get list of fields
+     * @param line line to extract the list from
+     * @param font font of the file
+     * @return list of fields
+     */
+    public List<String> getFieldList(byte[] line,  String font) {
+    	ArrayList<String> ret = new ArrayList<String>();
+    	int start = 0;
+     	
+    	for (int i = 0; i < line.length; i++) {
+    		if (line[i] == look4) {
+    			ret.add(Conversion.getString(line, start, i, font));
+    			start = i+1;
+    		}
+    	}
+		ret.add(Conversion.getString(line, start, line.length, font));
+		
+		return ret;
+    }
+    
+
+	
 	public byte[] updateValue(byte[] record, IFieldDetail field, String value) {
 		byte[] ret = record;
 		byte[] temp;
 		int i;
 		
 		try {
-			temp =Conversion.getBytes(value, field.getFontName());
+			temp = Conversion.getBytes(value, field.getFontName());
 			getPos(record,  field.getPos());
 			
 			if (foundAt == field.getPos()) {
@@ -162,4 +190,64 @@ public class BinaryCsvParser {
 		return ret;
 	}
 
+	
+
+	/**
+	 * Format field list as a Csv Line
+	 * @param fields fields to be organised as a line
+	 * @param lineDef Csv Line Definition
+	 * @param fieldTypes Field types
+	 * @return Formatted Csv line
+	 */
+	public byte[] formatFieldList(List<String> fields, String font) {
+		if (fields == null || fields.size() == 0) {
+			return NULL_BYTES;
+		}
+		int size = countListSize(0, fields);
+		int charSize = 1;
+		if (Conversion.isMultiByte(font)) {
+			charSize = 2;
+		}
+		
+		byte[] sep = {look4};
+		byte[] b = Conversion.getBytes(fields.get(0), font);
+		byte[] ret = copyTo(0, new byte[size * charSize + fields.size() - 1], b);
+		int pos = b.length;
+		
+		for (int i = 1; i < fields.size(); i++) {
+			b = Conversion.getBytes(fields.get(i), font);
+			ret = copyTo(pos++, ret, sep);
+			ret = copyTo(pos, ret, b);
+			pos += b.length;
+		}
+		
+		if (pos < ret.length) {
+			byte[] t = new byte[pos];
+			System.arraycopy(ret, 0, t, 0, pos);
+			ret = t;
+		}
+		return ret;
+	}
+
+	private byte[] copyTo(int pos, byte[] to, byte[] from) {
+		if (pos + from.length > to.length) {
+			byte[] t = new byte[(pos + from.length + 6) * 6 / 5];
+			//System.out.println("==> " + pos + " " + to.length + " ~ " + from.length + " / " + t.length);
+			System.arraycopy(to, 0, t, 0, pos-1);
+			to = t;
+		}
+		System.arraycopy(from, 0, to, pos, from.length);
+		return to;
+		
+	}
+	
+	private int countListSize(int start, List<String> fields) {
+		int size = 0;
+		for (int i = fields.size() - 1; i >= start; i--) {
+			size += fields.get(i).length();
+		}
+		
+		return size;
+	}
+	
 }

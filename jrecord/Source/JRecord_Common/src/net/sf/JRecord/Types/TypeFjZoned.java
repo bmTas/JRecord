@@ -12,6 +12,7 @@
  */
 package net.sf.JRecord.Types;
 
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 
@@ -34,7 +35,7 @@ public class TypeFjZoned extends TypeNum {
      * fields.
      */
     public TypeFjZoned() {
-        super(false, true, true, false, false);
+        super(false, true, true, false, false, false);
     }
 
 
@@ -59,12 +60,23 @@ public class TypeFjZoned extends TypeNum {
 			Object value)
     throws RecordException {
 
-        String val = formatValueForRecord(field, value.toString());
-	    copyRightJust(record, toFjZoned(val),
+	    copyRightJust(record, formatValueForRecord(field, toNumberString(value)),
 	            position - 1, field.getLen(),
 	            "0", field.getFontName());
 	    return record;
     }
+
+    
+	@Override
+	public String formatValueForRecord(IFieldDetail field, String value)
+			throws RecordException {
+		String val = toFjZoned(checkValue(field, toNumberString(value)));
+		if (field.isFixedFormat()) {
+			return Conversion.padFront(val, field.getLen() - val.length(), '0');
+		}
+		return val;
+	}
+
 
 	/**
 	 * Convert a num to a Fujitsu Zoned Number String
@@ -76,8 +88,7 @@ public class TypeFjZoned extends TypeNum {
 	private String toFjZoned(String num) {
 
 		String ret;
-		if (num == null || (ret = num.trim()).equals("") || ret.equals("-") || ret.equals("+")) {
-			// throw ...
+		if (num == null || (ret = num.trim()).length() == 0 || ret.equals("-") || ret.equals("+")) {
 			return "";
 		}
 
@@ -123,11 +134,10 @@ public class TypeFjZoned extends TypeNum {
         String sign = "";
         char lastChar;
 
-        if (numZoned == null || numZoned.trim().equals("") || numZoned.trim().equals("-")) {
+        if (numZoned == null || (ret = numZoned.trim()).length() == 0 || ret.equals("-")) {
             return "";
         }
 
-        ret = numZoned.trim();
         lastChar = ret.substring(ret.length() - 1).toUpperCase().charAt(0);
 
         switch (lastChar) {

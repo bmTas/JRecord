@@ -76,7 +76,7 @@ public class TstBinTextWriter  extends TestCase {
 
     public void testWindows() throws IOException {
        	System.out.println("--- Testing Windows File ");
-    	tstAFile(Constants.LFCR_BYTES);
+    	tstAFile(Constants.CRLF_BYTES);
     }
 
 	private void tstAFile(byte[]  eol) throws IOException {

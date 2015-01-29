@@ -4,6 +4,8 @@
  */
 package net.sf.JRecord.Log;
 
+import java.io.PrintStream;
+
 /**
  * A very simple logger that writes details to System.out
  *
@@ -11,6 +13,16 @@ package net.sf.JRecord.Log;
  *
  */
 public class TextLog implements AbsSSLogger {
+	
+	private final PrintStream outStream;
+
+	public TextLog() {
+		this(System.err);
+	}
+	
+	public TextLog(PrintStream outStream) {
+		this.outStream = outStream;
+	}
 
 	/**
 	 * @see net.sf.JRecord.Log#setReportLevel(int)
@@ -23,11 +35,11 @@ public class TextLog implements AbsSSLogger {
 	 */
 	public void logException(int level, Exception ex) {
 
-		System.out.println();
+		outStream.println();
 		
 		if (ex != null) {
-			System.out.println();
-			ex.printStackTrace();
+			outStream.println();
+			ex.printStackTrace(outStream);
 		}
 	}
 	/**
@@ -35,7 +47,14 @@ public class TextLog implements AbsSSLogger {
 	 */
 	public void logMsg(int level, String msg) {
 
-		System.out.println();
-		System.out.println(msg);
+		outStream.println();
+		outStream.println(msg);
+	}
+	
+	public static AbsSSLogger getLog(AbsSSLogger log) {
+		if (log == null) {
+			log = new TextLog();
+		}
+		return log;
 	}
 }
