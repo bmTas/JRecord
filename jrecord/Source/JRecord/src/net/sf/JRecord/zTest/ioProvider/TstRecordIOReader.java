@@ -19,7 +19,7 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ToLayoutDetail;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.LineIOProvider;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.IO;
 import net.sf.JRecord.zTest.Common.TstConstants;
 import net.sf.JRecord.zTest.Common.TstData;
@@ -65,7 +65,7 @@ public class TstRecordIOReader extends TestCase {
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + dtar020CopybookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "cp037",
-                        Convert.FMT_MAINFRAME, 0, null
+                        ICopybookDialects.FMT_MAINFRAME, 0, null
                 ));
 
     	testAfile(dtar020FileName, dtar020CopyBook, dtar020Lines);
@@ -80,7 +80,7 @@ public class TstRecordIOReader extends TestCase {
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + dtar107CopybookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "cp037",
-                        Convert.FMT_MAINFRAME, 0, null
+                        ICopybookDialects.FMT_MAINFRAME, 0, null
                 ));
 
     	testAfile(dtar107FileName, dtar107CopyBook, dtar107Lines);

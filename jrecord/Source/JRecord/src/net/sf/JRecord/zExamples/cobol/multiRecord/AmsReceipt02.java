@@ -14,7 +14,7 @@ import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.LineIOProvider;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.cb2xml.def.Cb2xmlConstants;
 
 
@@ -91,7 +91,7 @@ public class AmsReceipt02 {
     	CobolCopybookLoader loaderCBL = new CobolCopybookLoader();
     	ExternalRecord extlayoutCBL = loaderCBL.loadCopyBook(
     			copyName, CopybookLoader.SPLIT_REDEFINE, 0,
-				/* Font name */"", Cb2xmlConstants.USE_STANDARD_COLUMNS, Convert.FMT_FUJITSU, 0, new TextLog());
+				/* Font name */"", Cb2xmlConstants.USE_STANDARD_COLUMNS, ICopybookDialects.FMT_FUJITSU, 0, new TextLog());
     	  
     	
     	fhIdx = addFieldTest(extlayoutCBL, "STDR-DETAIL-RECORD", "STDR-RECORD-TYPE", "FH"); 

@@ -16,7 +16,7 @@ import net.sf.JRecord.Details.CharLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.Line;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.Types.TypeNum;
@@ -213,7 +213,7 @@ public class TstTypesGeneral extends TestCase {
     	for (String c : charsets1) {
     		LayoutDetail schema = TestCommonCode.getLayoutFromCobolStr(
     				cobolCopybook, "COMPANY-RECORD",
-    				CopybookLoader.SPLIT_NONE, c, Convert.FMT_FUJITSU);
+    				CopybookLoader.SPLIT_NONE, c, ICopybookDialects.FMT_FUJITSU);
     		LayoutDetail csvSchema = TestCommonCode.getCsvLayout(Constants.IO_BIN_TEXT, c, ";", "", false, 0);
     		
 	    	System.out.print("\t" + c);
@@ -230,7 +230,7 @@ public class TstTypesGeneral extends TestCase {
        	for (String c : charsets2) {
     		LayoutDetail schema = TestCommonCode.getLayoutFromCobolStr(
     				cobolCopybook, "COMPANY-RECORD",
-    				CopybookLoader.SPLIT_NONE, c, Convert.FMT_FUJITSU);
+    				CopybookLoader.SPLIT_NONE, c, ICopybookDialects.FMT_FUJITSU);
        		LayoutDetail csvSchema = TestCommonCode.getCsvLayout(Constants.IO_BIN_TEXT, c, ";", "", false, 0);
 	    	System.out.print("\t" + c);
 	  		
@@ -340,7 +340,7 @@ public class TstTypesGeneral extends TestCase {
     	
     		LayoutDetail schema = TestCommonCode.getLayoutFromCobolStr(
     				cobolCopybook, "COMPANY-RECORD",
-    				CopybookLoader.SPLIT_NONE, c, Convert.FMT_FUJITSU);
+    				CopybookLoader.SPLIT_NONE, c, ICopybookDialects.FMT_FUJITSU);
     		if (i < charsets1.length - 2) {
     			lines[k] = new Line(schema);
     			lines[k + 1] = new CharLine(schema, initialValue);

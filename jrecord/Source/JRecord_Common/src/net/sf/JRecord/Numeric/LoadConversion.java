@@ -43,7 +43,7 @@ public class LoadConversion {
 		if (properties != null && properties.containsKey(propConversion + idx)) {
 			try {
 				int code = Integer.parseInt(properties.getProperty(propConversion + idx));
-				int binaryId = getIntProperty("CnvBinaryId." + idx, Convert.FMT_BIG_ENDIAN);
+				int binaryId = getIntProperty("CnvBinaryId." + idx, ICopybookDialects.FMT_BIG_ENDIAN);
 				int floatSync = getIntProperty("CnvFloatSync." + idx, 4);
 				int doubleSync = getIntProperty("CnvDoubleSync." + idx, 8);
 

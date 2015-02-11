@@ -6,7 +6,7 @@ import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.TestCommonCode;
 import junit.framework.TestCase;
 
@@ -30,24 +30,24 @@ public class TstGroupFieldAccess2 extends TestCase {
 			+ "         05 STATE            PIC XX.\n"
 			+ "         05 ZIP              PIC 9(5).\n"
 
-			+ "     01 CUSTOMER-RECORD.                                        "
-			+ "          05 EMPLOYEE-LIST."
-			+ "            10 CUSTOMER-NAME."
-			+ "               15 TITLE      PIC X(10)."
-			+ "               15 LAST-NAME  PIC X(15)."
-			+ "               15 FIRST-NAME PIC X(8)."
-			+ "            10 PARTNER-NAME."
-			+ "               15 TITLE      PIC X(10)."
-			+ "               15 LAST-NAME  PIC X(15)."
-			+ "               15 FIRST-NAME PIC X(8)."
-			+ "            10 OTHERS."
-			+ "               15 TITLE      PIC X(10)."
-			+ "               15 LAST-NAME  PIC X(15)."
-			+ "               15 FIRST-NAME PIC X(8)."
-			+ "         05 ADDRESS          PIC X(15)."
-			+ "         05 CITY             PIC X(15)."
-			+ "         05 STATE            PIC XX."
-			+ "         05 ZIP              PIC 9(5)"
+			+ "     01 CUSTOMER-RECORD.\n     "
+			+ "          05 EMPLOYEE-LIST.\n"
+			+ "            10 CUSTOMER-NAME.\n"
+			+ "               15 TITLE      PIC X(10)\n."
+			+ "               15 LAST-NAME  PIC X(15).\n"
+			+ "               15 FIRST-NAME PIC X(8).\n"
+			+ "            10 PARTNER-NAME.\n"
+			+ "               15 TITLE      PIC X(10).\n"
+			+ "               15 LAST-NAME  PIC X(15).\n"
+			+ "               15 FIRST-NAME PIC X(8).\n"
+			+ "            10 OTHERS.\n"
+			+ "               15 TITLE      PIC X(10).\n"
+			+ "               15 LAST-NAME  PIC X(15).\n"
+			+ "               15 FIRST-NAME PIC X(8).\n"
+			+ "         05 ADDRESS          PIC X(15).\n"
+			+ "         05 CITY             PIC X(15).\n"
+			+ "         05 STATE            PIC XX.\n"
+			+ "         05 ZIP              PIC 9(5).\n"
 			;
 
 	private LayoutDetail schema;
@@ -55,14 +55,14 @@ public class TstGroupFieldAccess2 extends TestCase {
 		try {
 			schema = TestCommonCode.getLayoutFromCobolStr(
 							cobolCopybook, "COMPANY-RECORD",
-							CopybookLoader.SPLIT_01_LEVEL, "", Convert.FMT_INTEL);
+							CopybookLoader.SPLIT_01_LEVEL, "", ICopybookDialects.FMT_INTEL);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	};
 	private int recordIdx = schema.getRecordIndex("COMPANY-RECORD");
 
-	public void testFirstName() {
+	public void testFirstName1() {
 		int[][] fieldDetails = {
 				{46, 8, 0},
 				{69, 8, 0},
@@ -112,7 +112,180 @@ public class TstGroupFieldAccess2 extends TestCase {
 	}
 
 
-	public void testLastName() {
+	public void testFirstName2() {
+		int[][] fieldDetails = {
+				{46, 8, 0},
+				{69, 8, 0},
+				{102, 8, 0},
+		};
+		recordIdx = schema.getRecordIndex("COMPANY-RECORD");
+		RecordDetail record = schema.getRecord(recordIdx);
+		List<IFieldDetail> flds1 = record.getGroupFields("FIRST-NAME");
+		List<IFieldDetail> flds2 = record.getGroupFields("EMPLOYEE-LIST", "FIRST-NAME");
+		List<IFieldDetail> flds3 = record.getGroupFields("EMPLOYEE-LIST", "OTHERS", "FIRST-NAME");
+
+		IFieldDetail presidentFirstNameFld = record.getGroupField("PRESIDENT", "FIRST-NAME");
+		IFieldDetail vicePresidentFirstNameFld = record.getGroupField("VICE-PRESIDENT", "FIRST-NAME");
+		IFieldDetail otherFirstNameFld = record.getGroupField("OTHERS", "FIRST-NAME");
+
+		assertEquals("Fields Retrieved 1", 3, flds1.size());
+		assertEquals("Fields Retrieved 2", 3, flds2.size());
+		assertEquals("Fields Retrieved 3", 1, flds3.size());
+
+		chkFields("Fields 1: ", flds1, presidentFirstNameFld, vicePresidentFirstNameFld, otherFirstNameFld);
+		chkFields("Fields 2: ", flds2, presidentFirstNameFld, vicePresidentFirstNameFld, otherFirstNameFld);
+
+		assertTrue(flds3.get(0) == otherFirstNameFld);
+
+		for (int i = 0; i < fieldDetails.length; i++) {
+			IFieldDetail fieldDetail = flds1.get(i);
+
+			assertEquals("check Field Name", "FIRST-NAME", fieldDetail.getName());
+			assertEquals("check Field pos", fieldDetails[i][0], fieldDetail.getPos());
+			assertEquals("check Field Length", fieldDetails[i][1], fieldDetail.getLen());
+			assertEquals("check Field Type", fieldDetails[i][2], fieldDetail.getType());
+		}
+
+		try {
+			record.getGroupField("FIRST-NAME");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("Found 3 fields named FIRST-NAME; there should be only one", e.getMessage());
+		}
+
+		try {
+			record.getGroupField("FIRST-NAME~");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("No Field Found", e.getMessage());
+		}
+	}
+	
+
+	public void testFirstName3() {
+		int[][] fieldDetails = {
+				{46, 8, 0},
+				{69, 8, 0},
+				{102, 8, 0},
+		};
+		recordIdx = schema.getRecordIndex("COMPANY-RECORD");
+		RecordDetail record = schema.getRecord(recordIdx);
+		List<IFieldDetail> flds1 = record.getGroupFields("FIRST-NAME");
+		List<IFieldDetail> flds2 = record.getGroupFields("EMPLOYEE-LIST", "FIRST-NAME");
+		List<IFieldDetail> flds3 = record.getGroupFields("EMPLOYEE-LIST", "OTHERS", "FIRST-NAME");
+
+		IFieldDetail presidentFirstNameFld     = record.getGroupField("COMPANY-RECORD", "PRESIDENT", "FIRST-NAME");
+		IFieldDetail vicePresidentFirstNameFld = record.getGroupField("COMPANY-RECORD", "VICE-PRESIDENT", "FIRST-NAME");
+		IFieldDetail otherFirstNameFld         = record.getGroupField("COMPANY-RECORD", "OTHERS", "FIRST-NAME");
+
+		assertEquals("Fields Retrieved 1", 3, flds1.size());
+		assertEquals("Fields Retrieved 2", 3, flds2.size());
+		assertEquals("Fields Retrieved 3", 1, flds3.size());
+
+		chkFields("Fields 1: ", flds1, presidentFirstNameFld, vicePresidentFirstNameFld, otherFirstNameFld);
+		chkFields("Fields 2: ", flds2, presidentFirstNameFld, vicePresidentFirstNameFld, otherFirstNameFld);
+
+		assertTrue(flds3.get(0) == otherFirstNameFld);
+
+		for (int i = 0; i < fieldDetails.length; i++) {
+			IFieldDetail fieldDetail = flds1.get(i);
+
+			assertEquals("check Field Name", "FIRST-NAME", fieldDetail.getName());
+			assertEquals("check Field pos", fieldDetails[i][0], fieldDetail.getPos());
+			assertEquals("check Field Length", fieldDetails[i][1], fieldDetail.getLen());
+			assertEquals("check Field Type", fieldDetails[i][2], fieldDetail.getType());
+		}
+
+		try {
+			record.getGroupField("COMPANY-RECORD", "FIRST-NAME");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("Found 3 fields named FIRST-NAME; there should be only one", e.getMessage());
+		}
+
+		try {
+			record.getGroupField("FIRST-NAME~");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("No Field Found", e.getMessage());
+		}
+
+		try {
+			record.getGroupField("COMPANY-RECORD", "FIRST-NAME~");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("No Field Found", e.getMessage());
+		}
+	}
+
+	
+
+	public void testFirstName4() {
+		int[][] fieldDetails = {
+				{46, 8, 0},
+				{69, 8, 0},
+				{102, 8, 0},
+		};
+		recordIdx = schema.getRecordIndex("COMPANY-RECORD");
+		RecordDetail record = schema.getRecord(recordIdx);
+		List<IFieldDetail> flds1 = record.getGroupFields("FIRST-NAME");
+		List<IFieldDetail> flds2 = record.getGroupFields("EMPLOYEE-LIST", "FIRST-NAME");
+		List<IFieldDetail> flds3 = record.getGroupFields("EMPLOYEE-LIST", "OTHERS", "FIRST-NAME");
+
+		IFieldDetail presidentFirstNameFld     = schema.getGroupField("COMPANY-RECORD", "PRESIDENT", "FIRST-NAME");
+		IFieldDetail vicePresidentFirstNameFld = schema.getGroupField("COMPANY-RECORD", "VICE-PRESIDENT", "FIRST-NAME");
+		IFieldDetail otherFirstNameFld         = schema.getGroupField("COMPANY-RECORD", "OTHERS", "FIRST-NAME");
+
+		assertEquals("Fields Retrieved 1", 3, flds1.size());
+		assertEquals("Fields Retrieved 2", 3, flds2.size());
+		assertEquals("Fields Retrieved 3", 1, flds3.size());
+
+		chkFields("Fields 1: ", flds1, presidentFirstNameFld, vicePresidentFirstNameFld, otherFirstNameFld);
+		chkFields("Fields 2: ", flds2, presidentFirstNameFld, vicePresidentFirstNameFld, otherFirstNameFld);
+
+		assertTrue(flds3.get(0) == otherFirstNameFld);
+
+		for (int i = 0; i < fieldDetails.length; i++) {
+			IFieldDetail fieldDetail = flds1.get(i);
+
+			assertEquals("check Field Name", "FIRST-NAME", fieldDetail.getName());
+			assertEquals("check Field pos", fieldDetails[i][0], fieldDetail.getPos());
+			assertEquals("check Field Length", fieldDetails[i][1], fieldDetail.getLen());
+			assertEquals("check Field Type", fieldDetails[i][2], fieldDetail.getType());
+		}
+
+		try {
+			schema.getGroupField("COMPANY-RECORD", "FIRST-NAME");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("Found 3 fields named FIRST-NAME; there should be only one", e.getMessage());
+		}
+
+
+		try {
+			schema.getGroupField("FIRST-NAME");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("Found multiple fields named FIRST-NAME; there should be only one", e.getMessage());
+		}
+
+		try {
+			schema.getGroupField("FIRST-NAME~");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("No Field Found", e.getMessage());
+		}
+
+		try {
+			schema.getGroupField("COMPANY-RECORD", "FIRST-NAME~");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("No Field Found", e.getMessage());
+		}
+	}
+
+
+	public void testLastName1() {
 		int[][] fieldDetails = {
 				{31, 15, 0},
 				{54, 15, 0},
@@ -154,6 +327,179 @@ public class TstGroupFieldAccess2 extends TestCase {
 
 		try {
 			record.getUniqueField("LAST-NAME~");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("No Field Found", e.getMessage());
+		}
+	}
+	
+	public void testLastName2() {
+		int[][] fieldDetails = {
+				{31, 15, 0},
+				{54, 15, 0},
+				{87, 15, 0},
+		};
+		RecordDetail record = schema.getRecord(recordIdx);
+		List<IFieldDetail> flds1 = record.getGroupFields("LAST-NAME");
+		List<IFieldDetail> flds2 = record.getGroupFields("EMPLOYEE-LIST", "LAST-NAME");
+		List<IFieldDetail> flds3 = record.getGroupFields("EMPLOYEE-LIST", "OTHERS", "LAST-NAME");
+
+		IFieldDetail presidentFirstNameFld = record.getGroupField("PRESIDENT", "LAST-NAME");
+		IFieldDetail vicePresidentFirstNameFld = record.getGroupField("VICE-PRESIDENT", "LAST-NAME");
+		IFieldDetail otherFirstNameFld = record.getGroupField("OTHERS", "LAST-NAME");
+
+		assertEquals("Fields Retrieved 1", 3, flds1.size());
+		assertEquals("Fields Retrieved 2", 3, flds2.size());
+		assertEquals("Fields Retrieved 3", 1, flds3.size());
+
+		chkFields("Fields 1: ", flds1, presidentFirstNameFld, vicePresidentFirstNameFld, otherFirstNameFld);
+		chkFields("Fields 2: ", flds2, presidentFirstNameFld, vicePresidentFirstNameFld, otherFirstNameFld);
+
+		assertTrue(flds3.get(0) == otherFirstNameFld);
+
+		for (int i = 0; i < fieldDetails.length; i++) {
+			IFieldDetail fieldDetail = flds1.get(i);
+
+			assertEquals("check Field Name", "LAST-NAME", fieldDetail.getName());
+			assertEquals("check Field pos", fieldDetails[i][0], fieldDetail.getPos());
+			assertEquals("check Field Length", fieldDetails[i][1], fieldDetail.getLen());
+			assertEquals("check Field Type", fieldDetails[i][2], fieldDetail.getType());
+		}
+
+		try {
+			record.getGroupField("LAST-NAME");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("Found 3 fields named LAST-NAME; there should be only one", e.getMessage());
+		}
+
+		try {
+			record.getGroupField("LAST-NAME~");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("No Field Found", e.getMessage());
+		}
+	}
+
+	public void testLastName3() {
+		int[][] fieldDetails = {
+				{31, 15, 0},
+				{54, 15, 0},
+				{87, 15, 0},
+		};
+		RecordDetail record = schema.getRecord(recordIdx);
+		List<IFieldDetail> flds1 = record.getGroupFields("LAST-NAME");
+		List<IFieldDetail> flds2 = record.getGroupFields("EMPLOYEE-LIST", "LAST-NAME");
+		List<IFieldDetail> flds3 = record.getGroupFields("EMPLOYEE-LIST", "OTHERS", "LAST-NAME");
+
+		IFieldDetail presidentFirstNameFld = record.getGroupField("COMPANY-RECORD", "PRESIDENT", "LAST-NAME");
+		IFieldDetail vicePresidentFirstNameFld = record.getGroupField("COMPANY-RECORD", "VICE-PRESIDENT", "LAST-NAME");
+		IFieldDetail otherFirstNameFld = record.getGroupField("COMPANY-RECORD", "OTHERS", "LAST-NAME");
+
+		assertEquals("Fields Retrieved 1", 3, flds1.size());
+		assertEquals("Fields Retrieved 2", 3, flds2.size());
+		assertEquals("Fields Retrieved 3", 1, flds3.size());
+
+		chkFields("Fields 1: ", flds1, presidentFirstNameFld, vicePresidentFirstNameFld, otherFirstNameFld);
+		chkFields("Fields 2: ", flds2, presidentFirstNameFld, vicePresidentFirstNameFld, otherFirstNameFld);
+
+		assertTrue(flds3.get(0) == otherFirstNameFld);
+
+		for (int i = 0; i < fieldDetails.length; i++) {
+			IFieldDetail fieldDetail = flds1.get(i);
+
+			assertEquals("check Field Name", "LAST-NAME", fieldDetail.getName());
+			assertEquals("check Field pos", fieldDetails[i][0], fieldDetail.getPos());
+			assertEquals("check Field Length", fieldDetails[i][1], fieldDetail.getLen());
+			assertEquals("check Field Type", fieldDetails[i][2], fieldDetail.getType());
+		}
+
+		try {
+			record.getGroupField("LAST-NAME");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("Found 3 fields named LAST-NAME; there should be only one", e.getMessage());
+		}
+
+		try {
+			record.getGroupField("LAST-NAME~");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("No Field Found", e.getMessage());
+		}
+
+		try {
+			record.getGroupField("COMPANY-RECORD", "LAST-NAME");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("Found 3 fields named LAST-NAME; there should be only one", e.getMessage());
+		}
+
+		try {
+			record.getGroupField("COMPANY-RECORD", "LAST-NAME~");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("No Field Found", e.getMessage());
+		}
+	}
+	
+	
+	public void testLastName4() {
+		int[][] fieldDetails = {
+				{31, 15, 0},
+				{54, 15, 0},
+				{87, 15, 0},
+		};
+		RecordDetail record = schema.getRecord(recordIdx);
+		List<IFieldDetail> flds1 = record.getGroupFields("LAST-NAME");
+		List<IFieldDetail> flds2 = record.getGroupFields("EMPLOYEE-LIST", "LAST-NAME");
+		List<IFieldDetail> flds3 = record.getGroupFields("EMPLOYEE-LIST", "OTHERS", "LAST-NAME");
+
+		IFieldDetail presidentFirstNameFld = schema.getGroupField("COMPANY-RECORD", "PRESIDENT", "LAST-NAME");
+		IFieldDetail vicePresidentFirstNameFld = schema.getGroupField("COMPANY-RECORD", "VICE-PRESIDENT", "LAST-NAME");
+		IFieldDetail otherFirstNameFld = schema.getGroupField("COMPANY-RECORD", "OTHERS", "LAST-NAME");
+
+		assertEquals("Fields Retrieved 1", 3, flds1.size());
+		assertEquals("Fields Retrieved 2", 3, flds2.size());
+		assertEquals("Fields Retrieved 3", 1, flds3.size());
+
+		chkFields("Fields 1: ", flds1, presidentFirstNameFld, vicePresidentFirstNameFld, otherFirstNameFld);
+		chkFields("Fields 2: ", flds2, presidentFirstNameFld, vicePresidentFirstNameFld, otherFirstNameFld);
+
+		assertTrue(flds3.get(0) == otherFirstNameFld);
+
+		for (int i = 0; i < fieldDetails.length; i++) {
+			IFieldDetail fieldDetail = flds1.get(i);
+
+			assertEquals("check Field Name", "LAST-NAME", fieldDetail.getName());
+			assertEquals("check Field pos", fieldDetails[i][0], fieldDetail.getPos());
+			assertEquals("check Field Length", fieldDetails[i][1], fieldDetail.getLen());
+			assertEquals("check Field Type", fieldDetails[i][2], fieldDetail.getType());
+		}
+
+		try {
+			schema.getGroupField("LAST-NAME");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("Found multiple fields named LAST-NAME; there should be only one", e.getMessage());
+		}
+
+		try {
+			schema.getGroupField("LAST-NAME~");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("No Field Found", e.getMessage());
+		}
+
+		try {
+			schema.getGroupField("COMPANY-RECORD", "LAST-NAME");
+			throw new RuntimeException("Should not get here");
+		} catch (Exception e) {
+			assertEquals("Found 3 fields named LAST-NAME; there should be only one", e.getMessage());
+		}
+
+		try {
+			schema.getGroupField("COMPANY-RECORD", "LAST-NAME~");
 			throw new RuntimeException("Should not get here");
 		} catch (Exception e) {
 			assertEquals("No Field Found", e.getMessage());

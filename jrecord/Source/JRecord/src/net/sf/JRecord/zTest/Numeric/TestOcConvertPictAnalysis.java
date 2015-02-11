@@ -2,13 +2,14 @@ package net.sf.JRecord.zTest.Numeric;
 
 import net.sf.JRecord.Numeric.ConversionManager;
 import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Types.Type;
 import net.sf.cb2xml.def.Cb2xmlConstants;
 import junit.framework.TestCase;
 
 public class TestOcConvertPictAnalysis  extends TestCase{
 
-	Convert bc = ConversionManager.getInstance().getConverter4code(Convert.FMT_OPEN_COBOL);
+	Convert bc = ConversionManager.getInstance().getConverter4code(ICopybookDialects.FMT_OPEN_COBOL);
 
 	public void testCharPictures() {
         chkPict("99/99/99", Type.ftChar);

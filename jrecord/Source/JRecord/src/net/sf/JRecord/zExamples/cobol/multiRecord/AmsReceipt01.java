@@ -11,7 +11,7 @@ import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.LineIOProvider;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.cb2xml.def.Cb2xmlConstants;
 
 
@@ -28,7 +28,7 @@ import net.sf.cb2xml.def.Cb2xmlConstants;
  * *  AmsReceipt01 - processing with just Java code no Record-Selection-Criteria. This will use less 
  *                   resources than using the  Record-Selection-Criteria   
  * *  AmsReceipt03 - Combines Record-Selection-Details from a Xml file with Field Details from 
- *                   a cobol Copybook
+ *                   a Cobol Copybook
  *</pre>                   
  *                   
  * @author Bruce Martin
@@ -63,7 +63,7 @@ public class AmsReceipt01 {
     	CobolCopybookLoader loaderCBL = new CobolCopybookLoader();
     	ExternalRecord extlayoutCBL = loaderCBL.loadCopyBook(
     			copyName, CopybookLoader.SPLIT_REDEFINE, 0,
-				/* Font name */"", Cb2xmlConstants.USE_STANDARD_COLUMNS, Convert.FMT_FUJITSU, 0, new TextLog());
+				/* Font name */"", Cb2xmlConstants.USE_STANDARD_COLUMNS, ICopybookDialects.FMT_FUJITSU, 0, new TextLog());
     	  
     	/*
     	   If you want to write this out as a Xml-Schema:

@@ -120,9 +120,8 @@ public class TstCsvLines extends TestCase {
 								.addCsvField("fld1", Type.ftChar, 0)
 								.addCsvField("fld2", Type.ftChar, 0)
 								.addCsvField("fld3", Type.ftChar, 0)
-							.asExternalRecord();
-		
-		r.setRecordStyle(recStyle);
+							.asExternalRecord()
+								.setRecordStyle(recStyle);
 		try {
 			return r.asLayoutDetail();
 		} catch (RecordException e) {

@@ -592,6 +592,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	 * @param fieldName field name to search for
 	 * @param groupNames group names to search for
 	 * @return requested fields
+	 * @deprecated use {@link #getGroupFields(String...)}
 	 */
 	public final List<IFieldDetail> getFields(String fieldName, String... groupNames) {
 
@@ -608,7 +609,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 		}
 
 		for (FieldDetail f : fields) {
-			if (f.getName().equals(fieldName)) {
+			if (f.getName().equalsIgnoreCase(fieldName)) {
 				groupName = f.getGroupName().toUpperCase();
 				ok = true;
 				for (String n : ln) {
@@ -655,24 +656,70 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	 * @param fieldName field name to search for
 	 * @param groupNames group names to search for
 	 * @return requested fields
+	 * 
+	 * @deprecated {@link #getGroupFields(String...)}
 	 */
 	public final List<IFieldDetail> getFieldsGroupsInSequence(String fieldName, String... groupNames) {
+		return getFieldsGroupsInSequence(fieldName, 0, 0, groupNames);
+	}
+	
+	/**
+	 * Find all fields with supplied Field name / Group (or level) name.
+	 * The Group names must be supplied in any sequence they appears in the copybook
+	 *
+	 * <pre>
+	 *  For:
+	 *
+	 *    01 Group-1.
+	 *       05 Group-2.
+	 *          10 Group-3
+	 *             15 Field-1         Pic X(5).
+	 *
+	 * you would code:
+	 *
+	 *   flds = line.getFieldsGroupsInSequence("Group-1", "Group-2", "Group-3", "Field-1");
+	 *
+	 * or
+	 *
+	 *   flds = line.getGroupFields("Group-1", "Group-3", "Field-1");
+	 *   flds = line.getGroupFields("Group-3", "Field-1");
+	 *   flds = line.getGroupFields("Group-1", "Field-1");
+	 *
+	 * </pre>
+	 *
+	 * @param fieldNames group/fields names to search for
+	 * @return requested fields
+	 */
+	public final List<IFieldDetail> getGroupFields(String... fieldNames) {
+		return getGroupFields(0, fieldNames);
+	}
+
+	private List<IFieldDetail> getGroupFields(int firstItem, String... fieldNames) {
+		if (fields == null || fields.length <= firstItem) {
+			return new ArrayList<IFieldDetail>();
+		}
+		return getFieldsGroupsInSequence(fieldNames[fieldNames.length-1], firstItem, 1, fieldNames);
+	}
+
+	
+	private final List<IFieldDetail> getFieldsGroupsInSequence(String fieldName, int start, int drop, String... groupNames) {
+
 
 		ArrayList<IFieldDetail> ret = new ArrayList<IFieldDetail>();
 		boolean ok;
 		String groupName;
 		int st;
-		int numLevelNames = groupNames == null ? 0 : groupNames.length;
+		int numLevelNames = groupNames == null ? 0 : groupNames.length - drop;
 		ArrayList<String> ln = new ArrayList<String>(numLevelNames);
 
-		for (int i = 0; i < numLevelNames; i++) {
+		for (int i = start; i < numLevelNames; i++) {
 			if (groupNames[i] != null && ! "".equals(groupNames[i])) {
 				ln.add("." + groupNames[i].toUpperCase() + ".");
 			}
 		}
 
 		for (FieldDetail f : fields) {
-			if (f.getName().equals(fieldName)) {
+			if (f.getName().equalsIgnoreCase(fieldName)) {
 				groupName = f.getGroupName().toUpperCase();
 				ok = true;
 				st = 0;
@@ -722,6 +769,8 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	 * @param groupNames group names to search for
 	 *
 	 * @return Requested Field
+	 * 
+	 * @deprecated use {@link #getGroupField(String...)}
 	 */
 	public final IFieldDetail getUniqueField(String fieldName, String... groupNames) {
 		List<IFieldDetail> flds = getFields(fieldName, groupNames);
@@ -734,6 +783,88 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 		throw new RuntimeException("Found " + flds.size() + " fields; should be only one");
 	}
 
+	/**
+	 * Find requested Field with supplied Field name / Group (or level) name.
+	 * The Group names must be supplied in any sequence they appears in the copybook
+	 *
+	 * <pre>
+	 *  For:
+	 *
+	 *    01 Group-1.
+	 *       05 Group-2.
+	 *          10 Group-3
+	 *             15 Field-1         Pic X(5).
+	 *
+	 * you would code:
+	 *
+	 *   fld = line.getFieldsGroupsInSequence("Field-1", "Group-1", "Group-2", "Group-3");
+	 *
+	 * or
+	 *
+	 *   fld = line.getUniqueFieldGroupsInSequence("Field-1", "Group-1", "Group-3");
+	 *   fld = line.getFieldsGroupsInSequence("Field-1", "Group-3");
+	 *
+	 * </pre>
+	 *
+	 * @param fieldName field name to search for
+	 * @param groupNames group names to search for
+	 * @return requested fields
+	 * 
+	 * @deprecated use {@link #getGroupField(String...)}
+	 */
+	public final IFieldDetail getUniqueFieldGroupsInSequence(String fieldName, String... groupNames) {
+		List<IFieldDetail> flds = getFieldsGroupsInSequence(fieldName, 0, 0, groupNames);
+
+		switch (flds.size()) {
+		case 0: throw new RuntimeException("No Field Found");
+		case 1: return flds.get(0);
+		}
+
+		throw new RuntimeException("Found " + flds.size() + " fields; should be only one");
+	}
+	
+	
+	/**
+	 * Find requested Field with supplied Field name / Group (or level) name.
+	 * The Group names must be supplied in any sequence they appears in the copybook
+	 *
+	 * <pre>
+	 *  For:
+	 *
+	 *    01 Group-1.
+	 *       05 Group-2.
+	 *          10 Group-3
+	 *             15 Field-1         Pic X(5).
+	 *
+	 * you would code:
+	 *
+	 *   fld = line.getGroupField("Group-1", "Group-2", "Group-3", "Field-1");
+	 *
+	 * or
+	 *
+	 *   fld = line.getGroupField("Group-1", "Group-3", "Field-1");
+	 *   fld = line.getGroupField("Group-3", "Field-1");
+	 *
+	 * </pre>
+	 *
+	 * @param fieldNames group/field names to search for
+	 * @return requested fields
+	 */
+
+	public final IFieldDetail getGroupField(String...fieldNames) {
+		return getGroupField(0, fieldNames);
+	}
+	
+	final IFieldDetail getGroupField(int start, String...fieldNames) {
+		List<IFieldDetail> flds = getGroupFields(start, fieldNames);
+
+		switch (flds.size()) {
+		case 0: throw new RuntimeException("No Field Found");
+		case 1: return flds.get(0);
+		}
+
+		throw new RuntimeException("Found " + flds.size() + " fields named " + fieldNames[fieldNames.length-1] + "; there should be only one");
+	}
 
 	public final int[] getFieldTypes() {
 		if (fieldTypes == null) {
@@ -788,42 +919,6 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 		return ParserManager.getInstance().get(getRecordStyle());
 	}
 
-	/**
-	 * Find requested Field with supplied Field name / Group (or level) name.
-	 * The Group names must be supplied in any sequence they appears in the copybook
-	 *
-	 * <pre>
-	 *  For:
-	 *
-	 *    01 Group-1.
-	 *       05 Group-2.
-	 *          10 Group-3
-	 *             15 Field-1         Pic X(5).
-	 *
-	 * you would code:
-	 *
-	 *   fld = line.getFieldsGroupsInSequence("Field-1", "Group-1", "Group-2", "Group-3");
-	 *
-	 * or
-	 *
-	 *   fld = line.getUniqueFieldGroupsInSequence("Field-1", "Group-1", "Group-3");
-	 *   fld = line.getFieldsGroupsInSequence("Field-1", "Group-3");
-	 *
-	 * </pre>
-	 *
-	 * @param fieldName field name to search for
-	 * @param groupNames group names to search for
-	 * @return requested fields
-	 */
-	public final IFieldDetail getUniqueFieldGroupsInSequence(String fieldName, String... groupNames) {
-		List<IFieldDetail> flds = getFieldsGroupsInSequence(fieldName, groupNames);
 
-		switch (flds.size()) {
-		case 0: throw new RuntimeException("No Field Found");
-		case 1: return flds.get(0);
-		}
-
-		throw new RuntimeException("Found " + flds.size() + " fields; should be only one");
-	}
 
 }

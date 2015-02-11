@@ -12,7 +12,7 @@ import net.sf.JRecord.External.RecordEditorXmlLoader;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.LineIOProvider;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.cb2xml.def.Cb2xmlConstants;
 
 
@@ -104,10 +104,10 @@ public class AmsReceipt03 {
     	TextLog log = new TextLog();
 		ExternalRecord extlayoutCBL = loaderCBL.loadCopyBook(
     			copyName, CopybookLoader.SPLIT_REDEFINE, 0,
-				/* Font name */"", Cb2xmlConstants.USE_STANDARD_COLUMNS, Convert.FMT_FUJITSU, 0, log);
+				/* Font name */"", Cb2xmlConstants.USE_STANDARD_COLUMNS, ICopybookDialects.FMT_FUJITSU, 0, log);
     	ExternalRecord extlayoutXML = loaderXML.loadCopyBook(
     			copyName + ".Xml", CopybookLoader.SPLIT_NONE, 0,
-				/* Font name */"", Cb2xmlConstants.USE_STANDARD_COLUMNS, Convert.FMT_FUJITSU, 0, log);
+				/* Font name */"", Cb2xmlConstants.USE_STANDARD_COLUMNS, ICopybookDialects.FMT_FUJITSU, 0, log);
     	
     	extlayoutCBL.setFileStructure(extlayoutXML.getFileStructure());
     	extlayoutCBL.setFontName(extlayoutXML.getFontName());

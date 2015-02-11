@@ -38,6 +38,7 @@ import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Numeric.ConversionManager;
 import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.cb2xml.def.Cb2xmlConstants;
@@ -54,7 +55,7 @@ import org.xml.sax.SAXException;
  *
  * @author Bruce Martin
  */
-public class XmlCopybookLoader implements CopybookLoader {
+public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
 
     private static final int OPT_WRITE_ELEMENT = 1;
     private static final int OPT_REDEFINES = 2;
@@ -82,7 +83,7 @@ public class XmlCopybookLoader implements CopybookLoader {
     //private static AbsSSLogger logger;
 
 
-    private int binaryFormat = Convert.FMT_INTEL;
+    private int binaryFormat = ICopybookDialects.FMT_INTEL;
     private Convert numTranslator;
     private String fontName = "";
     private int system = 0;
@@ -93,6 +94,9 @@ public class XmlCopybookLoader implements CopybookLoader {
     private String splitAtLevel;
     private int positionAdjustment = 0;
     private ArrayList<String> groupName;
+    
+    boolean dropCopybookFromFieldNames = CommonBits.isDropCopybookFromFieldNames();
+
 
     /**
      * Load a File as a DOM Document
@@ -336,8 +340,13 @@ public class XmlCopybookLoader implements CopybookLoader {
         while (lNodeList.getLength() == 1) {
         	lNodeList = lNodeList.item(0).getChildNodes();
         }
-        if (lNodeList != null) {
-            org.w3c.dom.Node node = lNodeList.item(0);
+        if (lNodeList != null && lNodeList.getLength() > 0) {
+        	org.w3c.dom.Node node = null;
+        	int i = 0;
+        	
+        	while (i < lNodeList.getLength() 
+        	   && (node = lNodeList.item(i++)).getNodeType() != org.w3c.dom.Node.ELEMENT_NODE) {};
+        	   
             if (node.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
                 Element childElement = (Element) node;
                 String attrLevel = childElement.getAttribute(Cb2xmlConstants.LEVEL);
@@ -465,7 +474,7 @@ public class XmlCopybookLoader implements CopybookLoader {
                lName += " (" + nameSuffix + ")";
            }
 
-           if (lName.toUpperCase().startsWith(copyBookPref)) {
+           if (dropCopybookFromFieldNames && lName.toUpperCase().startsWith(copyBookPref)) {
                lName = lName.substring(copyBookPref.length());
            }
 
@@ -572,8 +581,8 @@ public class XmlCopybookLoader implements CopybookLoader {
 
         if (first) {
             int rt = Constants.rtGroupOfRecords;
-            if (binaryFormat == Convert.FMT_MAINFRAME
-            ||  binaryFormat == Convert.FMT_BIG_ENDIAN) {
+            if (binaryFormat == ICopybookDialects.FMT_MAINFRAME
+            ||  binaryFormat == ICopybookDialects.FMT_BIG_ENDIAN) {
                 rt = Constants.rtGroupOfBinaryRecords;
             }
 
@@ -618,8 +627,8 @@ public class XmlCopybookLoader implements CopybookLoader {
             							String recordName,
             							String listChar) {
         int rt = Constants.rtRecordLayout;
-        if (binaryFormat == Convert.FMT_MAINFRAME
-        ||  binaryFormat == Convert.FMT_BIG_ENDIAN) {
+        if (binaryFormat == ICopybookDialects.FMT_MAINFRAME
+        ||  binaryFormat == ICopybookDialects.FMT_BIG_ENDIAN) {
             rt = Constants.rtBinaryRecord;
         }
 
@@ -722,7 +731,7 @@ public class XmlCopybookLoader implements CopybookLoader {
 //                        iType = Type.ftSignSeparateTrail;
 //                    }
 //                } else {
-//                    if (binaryFormat == Convert.FMT_MAINFRAME) {
+//                    if (binaryFormat == ICopybookDialects.FMT_MAINFRAME) {
 //                      iType = Type.ftZonedNumeric;
 //                    } else {
 //                      iType = Type.ftFjZonedNumeric;
@@ -878,4 +887,13 @@ public class XmlCopybookLoader implements CopybookLoader {
     public void setBinaryFormat(int pMachine) {
         binaryFormat = pMachine;
     }
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.External.ISetDropCopybookName#setDropCopybookFromFieldNames(boolean)
+	 */
+	@Override
+	public final void setDropCopybookFromFieldNames(
+			boolean dropCopybookFromFieldNames) {
+		this.dropCopybookFromFieldNames = dropCopybookFromFieldNames;
+	}
 }

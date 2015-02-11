@@ -24,7 +24,7 @@ import org.w3c.dom.Document;
  * @author Bruce Martin
  *
  */
-public class CobolCopybookLoader implements CopybookLoader {
+public class CobolCopybookLoader implements CopybookLoader, ICopybookLoaderStream, ISetDropCopybookName {
 
     private static final String PROBLEM_LOADING_COPYBOOK = "Error Converting Cobol Copybook: {0}    Cause:\n{1}";
 	private static boolean available = true;
@@ -144,21 +144,10 @@ public class CobolCopybookLoader implements CopybookLoader {
     	return loadCopyBook(inputStream, copyBookName, splitCopybook, dbIdx, font, CommonBits.getDefaultCobolTextFormat(), binaryFormat, systemId, log);
     }
     
-    /**
-     * Insert a XML Dom Copybook into the Copybook DB
-     *
-     * @param copyBookName Copy Book file Name
-     * @param splitCopybook wether to split a copy book on a redefine / 01
-     * @param dbIdx Database Index
-     * @param font font name to use
-     * @param copybookFormat format of the copybook; see cb2xmlConstants
-     * @param binaryFormat binary format to use
-     * @param systemId System Identifier
-     * @param log log where any messages should be written
-     *
-     * @return return the record that has been read in
-     * @throws RecordException General Error
-     */
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.External.ICopybookLoaderStream#loadCopyBook(java.io.InputStream, java.lang.String, int, int, java.lang.String, int, int, int, net.sf.JRecord.Log.AbsSSLogger)
+	 */
+    @Override
     public final ExternalRecord loadCopyBook(InputStream inputStream, //Document copyBookXml,
             String copyBookName,
 		  		int splitCopybook,
@@ -228,4 +217,13 @@ public class CobolCopybookLoader implements CopybookLoader {
         }
         return available;
     }
+
+	/**
+	 * @param dropCopybookFromFieldNames
+	 * @see net.sf.JRecord.External.XmlCopybookLoader#setDropCopybookFromFieldNames(boolean)
+	 */
+	public final void setDropCopybookFromFieldNames(
+			boolean dropCopybookFromFieldNames) {
+		xmlLoader.setDropCopybookFromFieldNames(dropCopybookFromFieldNames);
+	}
 }

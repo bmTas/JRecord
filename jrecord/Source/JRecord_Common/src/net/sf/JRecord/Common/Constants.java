@@ -46,14 +46,18 @@ public interface Constants {
 
 
 	public static final int IO_DEFAULT      = 0;
-    public static final int IO_TEXT_LINE    = 1;
-    public static final int IO_FIXED_LENGTH = 2;
+	public static final int IO_STANDARD_TEXT_FILE    = 1;
+		/** alias for IO_STANDARD_TEXT_FILE*/
+    public static final int IO_TEXT_LINE    = IO_STANDARD_TEXT_FILE;
+    public static final int IO_FIXED_LENGTH_RECORDS = 2;
+    	/** Alias for IO_FIXED_LENGTH_RECORDS */
+    public static final int IO_FIXED_LENGTH = IO_FIXED_LENGTH_RECORDS;
     public static final int IO_BINARY       = 3;
     public static final int IO_VB           = 4;
     public static final int IO_VB_DUMP      = 5;
     public static final int IO_VB_FUJITSU   = 7;
     public static final int IO_VB_OPEN_COBOL   = 8;
-    public static final int IO_BIN_TEXT  = 9;
+    public static final int IO_BIN_TEXT     = 9;
     public static final int IO_FIXED_LENGTH_CHAR = 10;
 
     public static final int IO_UNKOWN_FORMAT = 21 /* RecordEditor Format */;
@@ -88,7 +92,9 @@ public interface Constants {
 //    public static final int IO_EVALUATE_DEFAULT_BIN_TEXT  = 82;
 //    public static final int IO_EVALUATE_DEFAULT_TEXT      = 83;
 
-    public static final int IO_UNICODE_TEXT = 90;
+    public static final int IO_STANDARD_UNICODE_TEXT_FILE  = 90;
+    	/** Alias for IO_STANDARD_UNICODE_TEXT_FILE */
+    public static final int IO_UNICODE_TEXT = IO_STANDARD_UNICODE_TEXT_FILE;
 
     public static final int IO_PROTO_DELIMITED      = 71;
     public static final int IO_PROTO_SINGLE_MESSAGE = 72;

@@ -14,6 +14,7 @@
 package net.sf.JRecord.Details;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.sf.JRecord.Common.CommonBits;
@@ -871,5 +872,62 @@ public class LayoutDetail implements IBasicFileSchema {
 	}
 
 
+	/**
+	 * Find requested Field with supplied Field name / Group (or level) name.
+	 * The Group names must be supplied in any sequence they appears in the copybook
+	 *
+	 * <pre>
+	 *  For:
+	 *
+	 *    01 Group-1.
+	 *       05 Group-2.
+	 *          10 Group-3
+	 *             15 Field-1         Pic X(5).
+	 *
+	 * you would code:
+	 *
+	 *   fld = line.getGroupField("Group-1", "Group-2", "Group-3", "Field-1");
+	 *
+	 * or
+	 *
+	 *   fld = line.getGroupField("Group-1", "Group-3", "Field-1");
+	 *   fld = line.getGroupField("Group-3", "Field-1");
+	 *
+	 * </pre>
+	 *
+	 * @param fieldNames group/field names to search for
+	 * @return requested fields
+	 */
+	public final IFieldDetail getGroupField(String...fieldNames) {
+		if (fieldNames == null || fieldNames.length == 0) {
+			return null;
+		}
+		IFieldDetail f = null;
+		List<IFieldDetail> flds;
+		int idx = getRecordIndex(fieldNames[0]);
+		if (idx >= 0 && fieldNames.length > 0) {
+			return records[idx].getGroupField(1, fieldNames);
+		} else {
+			for (RecordDetail r : records) {
+				flds = r.getGroupFields(fieldNames);
+				switch (flds.size()) {
+				case 0: break;
+				case 1:
+					if (f == null) {
+						f = flds.get(0);
+						break;
+					}
+					// deliberate fallthrough
+				default:
+					throw new RuntimeException("Found multiple fields named " + fieldNames[fieldNames.length-1] + "; there should be only one");
+				}
+			}
+		}
+		
+		if (f == null) {
+			throw new RuntimeException("No Field Found");
+		}
+		return f;
+	}
 }
 

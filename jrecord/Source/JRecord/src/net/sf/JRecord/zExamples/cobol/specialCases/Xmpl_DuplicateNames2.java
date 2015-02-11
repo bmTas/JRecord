@@ -12,7 +12,7 @@ import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.LineIOProvider;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.TestCommonCode;
 
 /**
@@ -59,7 +59,7 @@ public class Xmpl_DuplicateNames2 {
 			// Create an Internal JRecord schema (or layout) from the cobol copybook
 		LayoutDetail schema = TestCommonCode.getLayoutFromCobolStr(
 				cobolCopybook, "COMPANY-RECORD",
-				CopybookLoader.SPLIT_NONE, "", Convert.FMT_MAINFRAME);
+				CopybookLoader.SPLIT_NONE, "", ICopybookDialects.FMT_MAINFRAME);
 		int recordIdx = 0;  // since there is only one record type, the record index must be zero
 		                    // If there where more than one record, you could use:
 		                    //    schema.getRecordIndex("COMPANY-RECORD");

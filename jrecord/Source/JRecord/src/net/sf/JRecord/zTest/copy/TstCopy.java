@@ -24,7 +24,7 @@ import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.IO.LineIOProvider;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.utilityClasses.Copy;
 import net.sf.JRecord.utilityClasses.SchemaLoader;
@@ -46,7 +46,7 @@ public class TstCopy extends TestCase {
 	
 	public void testCopyFileByMatchingFieldNames1() throws Exception, RecordException {
 	
-		LayoutDetail outSchema = SchemaLoader.loadSchema(DTAR021_COPBOOK_FILE_NAME, CopybookLoader.SPLIT_NONE, "", Convert.FMT_MAINFRAME)
+		LayoutDetail outSchema = SchemaLoader.loadSchema(DTAR021_COPBOOK_FILE_NAME, CopybookLoader.SPLIT_NONE, "", ICopybookDialects.FMT_MAINFRAME)
 				.asLayoutDetail();
 		doTest(outSchema, true);
 	}
@@ -54,7 +54,7 @@ public class TstCopy extends TestCase {
 	
 	public void testCopyFileByMatchingFieldNames2() throws Exception, RecordException {
 	
-		LayoutDetail outSchema = SchemaLoader.loadSchema(DTAR022_COPBOOK_FILE_NAME, CopybookLoader.SPLIT_NONE, "", Convert.FMT_MAINFRAME)
+		LayoutDetail outSchema = SchemaLoader.loadSchema(DTAR022_COPBOOK_FILE_NAME, CopybookLoader.SPLIT_NONE, "", ICopybookDialects.FMT_MAINFRAME)
 				.asLayoutDetail();
 		doTest(outSchema, false);
 	}
@@ -106,7 +106,7 @@ public class TstCopy extends TestCase {
 		LayoutDetail csvSchema1 = getCsvSchema();
 		LayoutDetail csvSchema2 = getCsvSchemaReverse();
 			
-		LayoutDetail inSchema = SchemaLoader.loadSchema(DTAR020_COPBOOK_FILE_NAME, CopybookLoader.SPLIT_NONE, "CP037", Convert.FMT_MAINFRAME)
+		LayoutDetail inSchema = SchemaLoader.loadSchema(DTAR020_COPBOOK_FILE_NAME, CopybookLoader.SPLIT_NONE, "CP037", ICopybookDialects.FMT_MAINFRAME)
 				.asLayoutDetail();
 		List<AbstractLine> DTAR020_LINES = readStream(inSchema, DTAR020_DATA);
 				
@@ -147,7 +147,7 @@ public class TstCopy extends TestCase {
 	 */
 	private void doTest(LayoutDetail outSchema, boolean normalSequence) throws Exception, RecordException {
 		
-		LayoutDetail inSchema = SchemaLoader.loadSchema(DTAR020_COPBOOK_FILE_NAME, CopybookLoader.SPLIT_NONE, "CP037", Convert.FMT_MAINFRAME)
+		LayoutDetail inSchema = SchemaLoader.loadSchema(DTAR020_COPBOOK_FILE_NAME, CopybookLoader.SPLIT_NONE, "CP037", ICopybookDialects.FMT_MAINFRAME)
 				.asLayoutDetail();
 		List<AbstractLine> DTAR020_LINES = readStream(inSchema, DTAR020_DATA);
 				

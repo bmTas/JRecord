@@ -57,7 +57,7 @@ import net.sf.JRecord.ExternalRecordSelection.StreamLine;
 public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 
   private int recordId;
-  private int initRecordId;
+  private int initRecordId; 
   private String recordName;
   private String description;
   private int recordType;
@@ -319,17 +319,20 @@ public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchem
    *
    * @param val value to be assigned to RecordType
    */
-  public void setRecordType(int val) {
+  public ExternalRecord setRecordType(int val) {
 
       if ((val != recordType) || (updateStatus == NULL_INT_VALUE)) {
            recordType = val;
            updateStatus = UPDATED;
       }
+      return this;
   }
 
   /**
    *  This method gets the vaule of System
    * @return system identifier
+   * 
+   * @deprecated Was originally Used in the RecordEditor; it serves not purpose in JRecord. 
    */
   public int getSystem() {
       return system;
@@ -339,6 +342,8 @@ public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchem
    *  This method sets the vaule of System
    *
    * @param val value to be assigned to System
+   * 
+   * @deprecated Was originally Used in the RecordEditor; it serves not purpose in JRecord. 
    */
   public void setSystem(int val) {
 
@@ -386,6 +391,8 @@ public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchem
    *  This method sets the vaule of CopyBook
    *
    * @param val value to be assigned to CopyBook
+   * 
+   * @deprecated Was originally Used in the RecordEditor; it serves not purpose in JRecord. 
    */
   public void setCopyBook(String val) {
 
@@ -593,12 +600,14 @@ public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchem
    *
    * @param val value to be assigned to FileStructure
    */
-  public void setFileStructure(int val) {
+  public ExternalRecord setFileStructure(int val) {
 
       if ((val != fileStructure) || (updateStatus == NULL_INT_VALUE)) {
            fileStructure = val;
            updateStatus = UPDATED;
       }
+      
+      return this;
   }
 
 
@@ -822,6 +831,7 @@ public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchem
 	/**
 	 * Get the System Name of the system this record belongs to
 	 * @return System Name
+	 * @deprecated Was originally Used in the RecordEditor; it serves not purpose in JRecord. 
 	 */
 	public String getSystemName() {
 		return systemName;
@@ -830,6 +840,8 @@ public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchem
 	/**
 	 * Set the System Name
 	 * @param newSystemName new System Name
+	 * 
+	 * @deprecated Was originally Used in the RecordEditor; it serves not purpose in JRecord. 
 	 */
 	public void setSystemName(String newSystemName) {
 		this.systemName = newSystemName;
@@ -898,9 +910,8 @@ public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchem
 	 * Get the value the TestField should be compared to
 	 *
 	 * @return the tstFieldValue
-	 * @Deprecated Use getTstFields
+	 * @deprecated Use getTstFields
 	 */
-	@Deprecated
 	public String getTstFieldValue() {
 			ExternalFieldSelection f = getFirstSelection(recSelect);
 			if (f == null) {

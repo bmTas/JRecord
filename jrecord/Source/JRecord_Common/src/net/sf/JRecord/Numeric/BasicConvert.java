@@ -71,9 +71,9 @@ import net.sf.cb2xml.def.Cb2xmlConstants;
         || Cb2xmlConstants.COMP_5.equalsIgnoreCase(usage)
         || Cb2xmlConstants.COMP_6.equalsIgnoreCase(usage)
         || Cb2xmlConstants.BINARY.equalsIgnoreCase(usage)) {
-        	if (binId == Convert.FMT_MAINFRAME
-           	||  binId == Convert.FMT_FUJITSU
-           	||  binId == Convert.FMT_BIG_ENDIAN) {
+        	if (binId == ICopybookDialects.FMT_MAINFRAME
+           	||  binId == ICopybookDialects.FMT_FUJITSU
+           	||  binId == ICopybookDialects.FMT_BIG_ENDIAN) {
                  lType = Type.ftBinaryBigEndian;
                  if (positive) {
                 	 lType = Type.ftBinaryBigEndianPositive;

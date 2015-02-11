@@ -66,7 +66,7 @@ public class LineIOProvider implements AbstractManager {
 
     
     /**
-     * Was used in the RecordEditor, not needed for jarecord
+     * Was used in the RecordEditor, not needed for jrecord
      */
     @Deprecated
     public static final int[] FILE_STRUCTURE_ID = {

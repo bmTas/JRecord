@@ -8,7 +8,7 @@ public class CommonCode {
 			int binaryFormat, String usage, String picture, boolean signed, boolean signSeperate,
 			String signPosition) {
 		int iType = 0;
-		if ("true".equals(signed) ||  picture.startsWith("S")) {
+		if (signed ||  picture.startsWith("S")) {
 			if (signSeperate) {
 				if ("leading".equals(signPosition)) {
 					iType = Type.ftSignSeparateLead;
@@ -16,7 +16,7 @@ public class CommonCode {
 					iType = Type.ftSignSeparateTrail;
 				}
 			} else {
-				if (binaryFormat == Convert.FMT_MAINFRAME) {
+				if (binaryFormat == ICopybookDialects.FMT_MAINFRAME) {
 					iType = Type.ftZonedNumeric;
 				} else {
 					iType = Type.ftFjZonedNumeric;

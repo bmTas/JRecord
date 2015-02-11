@@ -8,7 +8,7 @@ import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import junit.framework.TestCase;
 
 public class TstSplitingCobolCopybooks extends TestCase {
@@ -57,7 +57,7 @@ public class TstSplitingCobolCopybooks extends TestCase {
 
     	ExternalRecord extlayoutCBL = loaderXML.loadCopyBook(
     			copyName , splitOption, 0,
-				/* Font name */"", Convert.FMT_MAINFRAME, 0, new TextLog()); 
+				/* Font name */"", ICopybookDialects.FMT_MAINFRAME, 0, new TextLog()); 
     	
     	LayoutDetail schema = extlayoutCBL.asLayoutDetail();
     	

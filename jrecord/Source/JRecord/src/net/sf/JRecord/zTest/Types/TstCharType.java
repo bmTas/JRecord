@@ -17,7 +17,7 @@ import net.sf.JRecord.Details.CharLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.Line;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.zTest.Common.TestCommonCode;
@@ -130,7 +130,7 @@ public class TstCharType extends TestCase {
     	for (String c : charsets) {
            	LayoutDetail schema = TestCommonCode.getLayoutFromCobolStr(
         				cobolCopybook, "COMPANY-RECORD",
-        				CopybookLoader.SPLIT_NONE, c, Convert.FMT_INTEL);
+        				CopybookLoader.SPLIT_NONE, c, ICopybookDialects.FMT_INTEL);
         	System.out.print("\t" + c);
     		Line l1 = new Line(schema);
 //    		tstChar(c, l1);

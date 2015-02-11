@@ -11,7 +11,7 @@ import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.RecordEditorXmlWriter;
 import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.TstConstants;
 
 
@@ -81,7 +81,7 @@ public class ConvertCbl2RecordEditorXml02 {
     	ExternalRecord extlayoutCBL = loaderCBL.loadCopyBook(
     	    new ByteArrayInputStream(copyBookBytes),
     	    Conversion.getCopyBookId("COMPANY-RECORD.cbl"),
-    	    CopybookLoader.SPLIT_NONE, 0, "", Convert.FMT_FUJITSU, 0, new TextLog());
+    	    CopybookLoader.SPLIT_NONE, 0, "", ICopybookDialects.FMT_FUJITSU, 0, new TextLog());
     	
     	transalateFieldNamesInRecord(extlayoutCBL);
     	

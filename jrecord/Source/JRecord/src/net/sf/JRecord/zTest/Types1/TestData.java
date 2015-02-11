@@ -11,7 +11,7 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.CopybookLoaderFactory;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 
 /**
  * This class holds the TestData definition + its
@@ -74,7 +74,7 @@ public class TestData {
 		/* Load as interchange format */
 		ExternalRecord rec = cpybookLoader.loadCopyBook(
 					copyName, CopybookLoader.SPLIT_NONE, 0,
-					/* Font name */ charset, Convert.FMT_MAINFRAME_COMMA_DECIMAL, 
+					/* Font name */ charset, ICopybookDialects.FMT_MAINFRAME_COMMA_DECIMAL, 
 					0, new TextLog());
 		rec.setFileStructure(Constants.IO_TEXT_LINE);
 

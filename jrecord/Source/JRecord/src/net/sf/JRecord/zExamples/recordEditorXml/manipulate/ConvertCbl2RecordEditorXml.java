@@ -10,7 +10,7 @@ import net.sf.JRecord.External.CopybookWriterManager;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.RecordEditorXmlWriter;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 
 
 /**
@@ -38,7 +38,7 @@ public class ConvertCbl2RecordEditorXml {
     	ExternalRecord extlayoutCBL = loaderCBL.loadCopyBook(
     	    new ByteArrayInputStream(copyBookBytes),
     	    Conversion.getCopyBookId("DTAR020.cbl"),
-    	    CopybookLoader.SPLIT_NONE, 0, "", Convert.FMT_INTEL, 0, new TextLog());
+    	    CopybookLoader.SPLIT_NONE, 0, "", ICopybookDialects.FMT_INTEL, 0, new TextLog());
     	CopybookWriterManager writerManager = CopybookWriterManager.getInstance();
     	RecordEditorXmlWriter writer
     			= (RecordEditorXmlWriter) writerManager.get(CopybookWriterManager.RECORD_EDITOR_XML_WRITER);

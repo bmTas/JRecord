@@ -24,7 +24,7 @@ import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Types.Type;
 
 import org.xml.sax.SAXException;
@@ -75,7 +75,7 @@ public class RecordEditorCsvLoader extends BaseCopybookLoader {
         int rt = Constants.rtRecordLayout;
         log = TextLog.getLog(log);
         
-        if (binFormat == Convert.FMT_MAINFRAME) {
+        if (binFormat == ICopybookDialects.FMT_MAINFRAME) {
             rt = Constants.rtBinaryRecord;
         }
 

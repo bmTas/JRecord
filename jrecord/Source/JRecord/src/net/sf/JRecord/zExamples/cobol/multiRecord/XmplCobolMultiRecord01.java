@@ -16,7 +16,7 @@ import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.LineIOProvider;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.cb2xml.def.Cb2xmlConstants;
 
 /**
@@ -115,7 +115,7 @@ public class XmplCobolMultiRecord01 {
 		return  (new CobolCopybookLoader())
 					.loadCopyBook(
 							bs, "RedefTest", CopybookLoader.SPLIT_01_LEVEL, 0, "",
-							Cb2xmlConstants.USE_STANDARD_COLUMNS, Convert.FMT_INTEL, 0, new TextLog());
+							Cb2xmlConstants.USE_STANDARD_COLUMNS, ICopybookDialects.FMT_INTEL, 0, new TextLog());
 	}
 	
 	

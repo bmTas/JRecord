@@ -10,7 +10,7 @@ import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.CsvParser.ParserManager;
 import net.sf.JRecord.External.ExternalConversion;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.utilityClasses.ParseArguments;
 
 
@@ -83,7 +83,7 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
 	    String tOutfile = args.get2Args(ARG_OUT_FILE1, ARG_OUT_FILE, "");
 	    String tQuote   = args.get2Args(ARG_QUOTE1, ARG_QUOTE, "\"");
 	    String renameOptStr = args.getArg(ARG_RENAME, "");
-	    binFormat  = ExternalConversion.getDialect(args.get2Args(ARG_BINARY1, ARG_BINARY,  "" + Convert.FMT_MAINFRAME));
+	    binFormat  = ExternalConversion.getDialect(args.get2Args(ARG_BINARY1, ARG_BINARY,  "" + ICopybookDialects.FMT_MAINFRAME));
 	    infile  = args.get2Args(ARG_IN_FILE1, ARG_IN_FILE, "");
 	    outfile = args.get2Args(ARG_OUT_FILE1, ARG_OUT_FILE, "");
 	    inFont  = args.get2Args(ARG_INPUT_FONT1, ARG_INPUT_FONT,"");
@@ -189,7 +189,7 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
      */
     private static void usage(String msg) {
 
-    	ExternalConversion.getDialectName(Convert.FMT_INTEL);
+    	ExternalConversion.getDialectName(ICopybookDialects.FMT_INTEL);
     	
         System.out.println();
         System.out.println(msg);
@@ -223,12 +223,12 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
         //      + " : CSV file with names on first line");
 
         System.out.println("    " + ARG_BINARY + "\t: Cobol Dialect");
-        System.out.println("        " + Convert.FMT_INTEL     + " or " + ExternalConversion.getDialectName(Convert.FMT_INTEL)     
+        System.out.println("        " + ICopybookDialects.FMT_INTEL     + " or " + ExternalConversion.getDialectName(ICopybookDialects.FMT_INTEL)     
         							  + "\t: Intel little endian ");
-        System.out.println("        " + Convert.FMT_MAINFRAME + " or " +ExternalConversion.getDialectName(Convert.FMT_MAINFRAME)
+        System.out.println("        " + ICopybookDialects.FMT_MAINFRAME + " or " +ExternalConversion.getDialectName(ICopybookDialects.FMT_MAINFRAME)
         							  + "\t: Mainframe big endian (Default) ");
-        System.out.println("        " + Convert.FMT_OPEN_COBOL + " or " + ExternalConversion.getDialectName(Convert.FMT_OPEN_COBOL) + "\t: Gnu:Cobol ");
-        System.out.println("        " + Convert.FMT_FUJITSU + " or " + ExternalConversion.getDialectName(Convert.FMT_FUJITSU)    + "\t: Fujitsu Cobol ");
+        System.out.println("        " + ICopybookDialects.FMT_OPEN_COBOL + " or " + ExternalConversion.getDialectName(ICopybookDialects.FMT_OPEN_COBOL) + "\t: Gnu:Cobol ");
+        System.out.println("        " + ICopybookDialects.FMT_FUJITSU + " or " + ExternalConversion.getDialectName(ICopybookDialects.FMT_FUJITSU)    + "\t: Fujitsu Cobol ");
         System.out.println("    " + ARG_RENAME + "  : How to update cobol variable names");       
         printOtionArray(renameOptions);
 

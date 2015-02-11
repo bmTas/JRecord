@@ -11,7 +11,7 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.LineIOProvider;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.TstConstants;
 
 /*
@@ -53,27 +53,27 @@ public class TstCobol extends TestCase {
 	
 	
 	public void testOpenCobol() throws Exception {
-		checkFiles("default/", "cpy", Convert.FMT_OPEN_COBOL);
+		checkFiles("default/", "cpy", ICopybookDialects.FMT_OPEN_COBOL);
 	}
 	
 	
 	public void testOpenCobolBS2000() throws Exception {
-		checkFiles("bs2000/", "bs", Convert.FMT_FS2000);
+		checkFiles("bs2000/", "bs", ICopybookDialects.FMT_FS2000);
 	}
 	
 	
 	public void testOpenCobolMf() throws Exception {
-		checkFiles("mf/", "mf", Convert.FMT_OC_MICRO_FOCUS);
+		checkFiles("mf/", "mf", ICopybookDialects.FMT_OC_MICRO_FOCUS);
 	}
 
 	
 	public void testOpenCobolMvs() throws Exception {
-		checkFiles("mvs/", "mvs", Convert.FMT_OPEN_COBOL_MVS);
+		checkFiles("mvs/", "mvs", ICopybookDialects.FMT_OPEN_COBOL_MVS);
 	}
 
 	
 	public void testOpenCobolFj() throws Exception {
-		checkFiles("Fj/", "fj", Convert.FMT_FUJITSU);
+		checkFiles("Fj/", "fj", ICopybookDialects.FMT_FUJITSU);
 	}
 	
 	

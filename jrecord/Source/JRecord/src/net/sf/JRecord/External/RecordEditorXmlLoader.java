@@ -7,6 +7,7 @@ import java.io.InputStream;
 import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Common.XmlConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -18,7 +19,7 @@ import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.IO.XmlLineReader;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 
 /**
  * Class to Load a RecordLayout (Record or Line Description)
@@ -33,7 +34,7 @@ import net.sf.JRecord.Numeric.Convert;
  * @author Bruce Martin
  *
  */
-public class RecordEditorXmlLoader extends BaseCopybookLoader {
+public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybookLoaderStream {
 
 	/**
 	 * Load the Copybook
@@ -45,7 +46,7 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader {
 		int systemId, AbsSSLogger log) throws Exception {
 
         int rt = Constants.rtRecordLayout;
-        if (binFormat == Convert.FMT_MAINFRAME) {
+        if (binFormat == ICopybookDialects.FMT_MAINFRAME) {
             rt = Constants.rtBinaryRecord;
         }
 
@@ -63,7 +64,23 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader {
         return rec;
 	}
 
-	public ExternalRecord loadCopyBook(InputStream is, String layoutName) throws Exception {
+	
+	
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.External.ICopybookLoaderStream#loadCopyBook(java.io.InputStream, java.lang.String, int, int, java.lang.String, int, int, int, net.sf.JRecord.Log.AbsSSLogger)
+	 */
+	@Override
+	public ExternalRecord loadCopyBook(InputStream inputStream,
+			String copyBookName, int splitCopybook, int dbIdx, String font,
+			int copybookFormat, int binaryFormat, int systemId, AbsSSLogger log)
+			throws RecordException, IOException {
+		// TODO Auto-generated method stub
+		return loadCopyBook(inputStream, copyBookName);
+	}
+
+
+
+	public ExternalRecord loadCopyBook(InputStream is, String layoutName) throws RecordException, IOException {
 
 	        int rt = Constants.rtRecordLayout;
 
@@ -91,13 +108,12 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader {
 	 * @param dbIdx Database index
 	 *
 	 * @return wether Record was inserted or not
+	 * @throws IOException 
 	 *
 	 * @throws Exception any error that occurs
 	 */
 	private boolean insertRecord(AbsSSLogger log, ExternalRecord parentRec, ExternalRecord childRec,
-			XmlLineReader reader, int dbIdx)
-	throws Exception {
-
+			XmlLineReader reader, int dbIdx) throws IOException {
 		AbstractLine line = reader.read();
 		String name, s;
 		log = TextLog.getLog(log);

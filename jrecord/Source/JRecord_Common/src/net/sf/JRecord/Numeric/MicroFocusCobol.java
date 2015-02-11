@@ -34,7 +34,7 @@ public class MicroFocusCobol extends GenericNumericDefinition {
 	};
 
 	public MicroFocusCobol() {
-		super(Convert.FMT_MICRO_FOCUS, Convert.FMT_BIG_ENDIAN, "Microfocus Cobol",
+		super(ICopybookDialects.FMT_MICRO_FOCUS, ICopybookDialects.FMT_BIG_ENDIAN, "Microfocus Cobol",
 				BIN_SIZES_1_TO_8, BIN_SIZES_1248, BIN_SIZES_1244,
 				STANDARD_TYPES, POSITIVE_TYPES, 4, 8);
 	}

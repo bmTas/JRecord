@@ -18,7 +18,7 @@ import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ToLayoutDetail;
 import net.sf.JRecord.IO.LineIOProvider;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.IO;
 import net.sf.JRecord.zTest.Common.TstConstants;
 import net.sf.JRecord.zTest.Common.TstData;
@@ -78,7 +78,7 @@ public class TstRecordFujitsuVbIOWriter extends TestCase {
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + dtar020CopybookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "cp037",
-                        Convert.FMT_MAINFRAME, 0, null
+                        ICopybookDialects.FMT_MAINFRAME, 0, null
                 ));
 
         tst1file(dtar020Lines, copyBook);
@@ -90,7 +90,7 @@ public class TstRecordFujitsuVbIOWriter extends TestCase {
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + dtar107CopybookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "cp037",
-                        Convert.FMT_MAINFRAME, 0, null
+                        ICopybookDialects.FMT_MAINFRAME, 0, null
                 ));
 
         tst1file(TstData.DTAR107_LINES, copyBook);
@@ -101,7 +101,7 @@ public class TstRecordFujitsuVbIOWriter extends TestCase {
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copybookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "",
-                        Convert.FMT_INTEL, 0, null
+                        ICopybookDialects.FMT_INTEL, 0, null
                 ));
 
         tst1file(TstData.FUTJISU_LINES, copyBook);

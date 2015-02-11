@@ -8,11 +8,10 @@ import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.Types.TypeNum;
-
 import junit.framework.TestCase;
 
 /**
@@ -57,11 +56,11 @@ public class TstCobol1 extends TestCase {
 
 		System.out.println();
 		System.out.println("Intel: ");
-		testPositiveConversion(Convert.FMT_INTEL, intelTypes);
+		testPositiveConversion(ICopybookDialects.FMT_INTEL, intelTypes);
 
 		System.out.println();
 		System.out.println("Mainframe: ");
-		testPositiveConversion(Convert.FMT_MAINFRAME, mainframeTypes);
+		testPositiveConversion(ICopybookDialects.FMT_MAINFRAME, mainframeTypes);
 	}
 
 	public void testPositiveConversion(int cobolDialect, int[] types) throws RecordException {
@@ -97,11 +96,11 @@ public class TstCobol1 extends TestCase {
 
 		System.out.println();
 		System.out.println("Signed Intel: ");
-		testSignedConversion(Convert.FMT_INTEL, intelTypes);
+		testSignedConversion(ICopybookDialects.FMT_INTEL, intelTypes);
 
 		System.out.println();
 		System.out.println("Signed Mainframe: ");
-		testSignedConversion(Convert.FMT_MAINFRAME, mainframeTypes);
+		testSignedConversion(ICopybookDialects.FMT_MAINFRAME, mainframeTypes);
 	}
 
 	public void testSignedConversion(int cobolDialect, int[] types) throws RecordException {

@@ -30,6 +30,11 @@ import net.sf.JRecord.Log.AbsSSLogger;
  *
  * </pre>
  *
+ * <p>If you are using Cobol look at
+ * <pre>
+ *      <b>CobolIOProvider.newIOBuilder(..)</b> methods
+ * </pre>
+ * 
  * @author Bruce Martin
  *
  */
@@ -178,8 +183,18 @@ public class CopybookLoaderFactory {
 
 
 	/**
-	 * get a specific Copybookloader
-	 *
+	 * get a specific Copybookloader, typcally used like:
+	 * 
+	 * <pre>
+	 *       CopybookLoader loader = CopybookLoaderFactory.getInstance()
+     *              .getLoader(CopybookLoaderFactory.RECORD_EDITOR_XML_LOADER);
+     *       LayoutDetail layout = loader.loadCopyBook(copybookName, 0, 0, "", 0, 0, null).asLayoutDetail();
+     * </pre>
+     * 
+     * <p>If you are using Cobol look at
+     * <pre>
+     *      <b>CobolIOProvider.newIOBuilder(..)</b> methods
+	 * </pre>
 	 * @param loaderId loader Identifier
 	 *
 	 * @return requested loader

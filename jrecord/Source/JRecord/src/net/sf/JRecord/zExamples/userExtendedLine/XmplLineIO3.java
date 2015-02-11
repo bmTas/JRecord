@@ -22,7 +22,7 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.IO.CobolIoProvider;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.TstConstants;
 
 /**
@@ -73,7 +73,7 @@ public final class XmplLineIO3 {
             int fileStructure = Constants.IO_FIXED_LENGTH;
             CobolIoProvider ioProvider = CobolIoProvider.getInstance();
             AbstractLineReader reader  = ioProvider.getLineReader(
-                   fileStructure, Convert.FMT_MAINFRAME,
+                   fileStructure, ICopybookDialects.FMT_MAINFRAME,
                     CopybookLoader.SPLIT_NONE, copybookName, salesFile,
                     new DTAR0020provider()
             );

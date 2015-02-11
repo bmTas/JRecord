@@ -6,7 +6,7 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.CopybookLoaderFactory;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 
 /**
  * This is not intended to be run, it shows you how to read a cobol copybook
@@ -29,7 +29,7 @@ public class XmplBldLine01 {
 			/* Load as interchange format */
 			ExternalRecord rec = cpybookLoader.loadCopyBook("CobolCopybook", CopybookLoader.SPLIT_NONE, 0,
 					/* Font name */ "",
-					Convert.FMT_OPEN_COBOL, 0, new TextLog());
+					ICopybookDialects.FMT_OPEN_COBOL, 0, new TextLog());
 
 			/* Create Layout / Description */
 			LayoutDetail cobolDescription = rec.asLayoutDetail();

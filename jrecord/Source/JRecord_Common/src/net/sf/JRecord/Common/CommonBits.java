@@ -9,7 +9,8 @@ public class CommonBits {
 	public  static final Object NULL_VALUE = NULL_STRING;
 	private static byte[] EBCDIC_EOL_BYTES = {0x15};
 	
-	private static int defaultCobolTextFormat = 3; // USE_PROPERTIES_FILE
+	private static int defaultCobolTextFormat = 8; // USE_PROPERTIES_FILE
+	private static boolean dropCopybookFromFieldNames = true;
 	
 	/**
 	 * This variable is used in JRecord to control wether CsvLines (based on a List)
@@ -111,6 +112,21 @@ public class CommonBits {
 	 */
 	public static final void setDefaultCobolTextFormat(int defaultCobolTextFormat) {
 		CommonBits.defaultCobolTextFormat = defaultCobolTextFormat;
+	}
+
+	/**
+	 * @return the dropCopybookFromFieldNames
+	 */
+	public static final boolean isDropCopybookFromFieldNames() {
+		return dropCopybookFromFieldNames;
+	}
+
+	/**
+	 * @param dropCopybookFromFieldNames the dropCopybookFromFieldNames to set
+	 */
+	public static final void setDropCopybookFromFieldNames(
+			boolean dropCopybookFromFieldNames) {
+		CommonBits.dropCopybookFromFieldNames = dropCopybookFromFieldNames;
 	}
 
 }

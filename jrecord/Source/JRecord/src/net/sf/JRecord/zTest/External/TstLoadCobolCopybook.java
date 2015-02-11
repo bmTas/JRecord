@@ -7,7 +7,7 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 
 public class TstLoadCobolCopybook  extends TestCase {
 
@@ -57,7 +57,7 @@ public class TstLoadCobolCopybook  extends TestCase {
     	CobolCopybookLoader loaderCBL = new CobolCopybookLoader();
     	ExternalRecord extlayoutCBL = loaderCBL.loadCopyBook(
     			copyName, CopybookLoader.SPLIT_NONE, 0,
-				/* Font name */"", Convert.FMT_MAINFRAME, 0, new TextLog());
+				/* Font name */"", ICopybookDialects.FMT_MAINFRAME, 0, new TextLog());
     	
     	
     	assertEquals(fldNames.length, extlayoutCBL.getNumberOfRecordFields());

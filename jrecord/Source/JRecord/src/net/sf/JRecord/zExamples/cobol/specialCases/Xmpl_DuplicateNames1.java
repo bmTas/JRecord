@@ -12,7 +12,7 @@ import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.LineIOProvider;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.TestCommonCode;
 
 /**
@@ -60,7 +60,7 @@ public class Xmpl_DuplicateNames1 {
 			// Create an Internal JRecord schema (or layout) from the cobol copybook
 		LayoutDetail schema = TestCommonCode.getLayoutFromCobolStr(
 				cobolCopybook, "COMPANY-RECORD",
-				CopybookLoader.SPLIT_NONE, "", Convert.FMT_INTEL);
+				CopybookLoader.SPLIT_NONE, "", ICopybookDialects.FMT_INTEL);
 		int recordIdx = 0;  // since there is only one record type, the record index must be zero
 		                    // If there where more than one record, you could use:
 		                    //    schema.getRecordIndex("COMPANY-RECORD");
@@ -70,13 +70,13 @@ public class Xmpl_DuplicateNames1 {
 
 			// ** Retrieve the Field definitions from the RecordDefinition **
 			// ** -------------------------------------------------------- **
-		IFieldDetail presidentFirstNameFld     = record.getUniqueField("FIRST-NAME", "PRESIDENT");
-		IFieldDetail vicePresidentFirstNameFld = record.getUniqueField("FIRST-NAME", "VICE-PRESIDENT");
-		IFieldDetail otherFirstNameFld         = record.getUniqueField("FIRST-NAME", "OTHERS");
+		IFieldDetail presidentFirstNameFld     = record.getGroupField("PRESIDENT", "FIRST-NAME");
+		IFieldDetail vicePresidentFirstNameFld = record.getGroupField("VICE-PRESIDENT", "FIRST-NAME");
+		IFieldDetail otherFirstNameFld         = record.getGroupField("OTHERS", "FIRST-NAME");
 
-		IFieldDetail presidentLastNameFld      = record.getUniqueField("LAST-NAME", "PRESIDENT");
-		IFieldDetail vicePresidentLastNameFld  = record.getUniqueField("LAST-NAME", "VICE-PRESIDENT");
-		IFieldDetail otherLastNameFld          = record.getUniqueField("LAST-NAME", "OTHERS");
+		IFieldDetail presidentLastNameFld      = record.getGroupField("PRESIDENT", "LAST-NAME");
+		IFieldDetail vicePresidentLastNameFld  = record.getGroupField("VICE-PRESIDENT", "LAST-NAME");
+		IFieldDetail otherLastNameFld          = record.getGroupField("OTHERS", "LAST-NAME");
 
 
 			//Get the compane-name field definition.

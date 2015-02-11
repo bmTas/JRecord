@@ -10,7 +10,7 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.Log.AppendableLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 
@@ -44,7 +44,7 @@ public class LogExample {
 			ExternalRecord extlayoutCBL = loaderCBL.loadCopyBook(
 			    new ByteArrayInputStream(copyBookBytes),
 			    Conversion.getCopyBookId("ErrorCopybook.cbl"),
-			    CopybookLoader.SPLIT_NONE, 0, "", Convert.FMT_FUJITSU, 0, new AppendableLog(sb));
+			    CopybookLoader.SPLIT_NONE, 0, "", ICopybookDialects.FMT_FUJITSU, 0, new AppendableLog(sb));
 		   	System.out.println();
 	    	System.out.println("Normal End, Printing sb:");
 	    	System.out.println(sb.toString());

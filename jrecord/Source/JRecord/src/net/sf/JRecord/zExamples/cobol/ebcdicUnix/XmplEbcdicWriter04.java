@@ -12,7 +12,7 @@ import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.IO.LineIOProvider;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.TstConstants;
 
 
@@ -33,7 +33,7 @@ public class XmplEbcdicWriter04 {
 		String fileName =  TstConstants.TEMP_DIRECTORY
                 + "cp037FixedWidth_04.txt";
 		try {
-			ExternalRecord schemaBldr = getCobolLayout(Convert.FMT_MAINFRAME, cobolCopyBook);
+			ExternalRecord schemaBldr = getCobolLayout(ICopybookDialects.FMT_MAINFRAME, cobolCopyBook);
 			byte[] eolBytes = "\n".getBytes(charset);
 			schemaBldr.setRecordSep(eolBytes);
 			schemaBldr.setRecSepList(Constants.CR_STRING);

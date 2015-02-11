@@ -82,7 +82,12 @@ public interface AbstractFieldValue {
 	 */
 	public String asHex();
 	
-	
+	/**
+	 * Set the fields value
+	 * @param value new value
+	 */
+	public void set(AbstractFieldValue value) throws RecordException;
+
 	/**
 	 * Set the fields value
 	 * @param value new value

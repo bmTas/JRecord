@@ -216,6 +216,15 @@ public final class FieldValue implements AbstractFieldValue {
 				fld).toString();
 	}
 
+	
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.Common.AbstractFieldValue#set(net.sf.JRecord.Common.AbstractFieldValue)
+	 */
+	@Override
+	public void set(AbstractFieldValue value) throws RecordException {
+		set(value.asString());
+	}
+
 	/**
 	 * @see net.sf.JRecord.Details.AbstractFieldValue#set(boolean)
 	 */

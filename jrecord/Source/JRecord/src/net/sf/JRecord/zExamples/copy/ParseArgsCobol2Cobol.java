@@ -8,7 +8,7 @@ package net.sf.JRecord.zExamples.copy;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.External.ExternalConversion;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.utilityClasses.ParseArguments;
 
 
@@ -59,7 +59,7 @@ public class ParseArgsCobol2Cobol {
     public ParseArgsCobol2Cobol(String[] arguments) { 
         ParseArguments args = new ParseArguments(VALID_PARAMS, arguments);
 
-	    String mainframeStr = Integer.toString(Convert.FMT_MAINFRAME);
+	    String mainframeStr = Integer.toString(ICopybookDialects.FMT_MAINFRAME);
 		inBinFormat  = ExternalConversion.getDialect(args.getArg(ARG_IN_BINARY,  mainframeStr));
 	    outBinFormat  = ExternalConversion.getDialect(args.getArg(ARG_OUT_BINARY,  mainframeStr));
 	    infile  = args.get2Args(ARG_IN_FILE1, ARG_IN_FILE, "");
@@ -96,7 +96,7 @@ public class ParseArgsCobol2Cobol {
      */
     private static void usage(String msg) {
 
-    	ExternalConversion.getDialectName(Convert.FMT_INTEL);
+    	ExternalConversion.getDialectName(ICopybookDialects.FMT_INTEL);
     	
         System.out.println();
         System.out.println(msg);
@@ -122,12 +122,12 @@ public class ParseArgsCobol2Cobol {
                 + "\t: Gnu Cobol VB File "); 
         System.out.println("    " + ARG_INPUT_FONT   + "\t: Input font or character set");
         System.out.println("    " + ARG_IN_BINARY + "\t: Cobol Dialect");
-        System.out.println("        " + Convert.FMT_INTEL     + " or " + ExternalConversion.getDialectName(Convert.FMT_INTEL)     
+        System.out.println("        " + ICopybookDialects.FMT_INTEL     + " or " + ExternalConversion.getDialectName(ICopybookDialects.FMT_INTEL)     
         							  + "\t: Intel little endian ");
-        System.out.println("        " + Convert.FMT_MAINFRAME + " or " +ExternalConversion.getDialectName(Convert.FMT_MAINFRAME)
+        System.out.println("        " + ICopybookDialects.FMT_MAINFRAME + " or " +ExternalConversion.getDialectName(ICopybookDialects.FMT_MAINFRAME)
         							  + "\t: Mainframe big endian (Default) ");
-        System.out.println("        " + Convert.FMT_OPEN_COBOL + " or " + ExternalConversion.getDialectName(Convert.FMT_OPEN_COBOL) + "\t: Gnu:Cobol ");
-        System.out.println("        " + Convert.FMT_FUJITSU + " or " + ExternalConversion.getDialectName(Convert.FMT_FUJITSU)    + "\t: Fujitsu Cobol ");
+        System.out.println("        " + ICopybookDialects.FMT_OPEN_COBOL + " or " + ExternalConversion.getDialectName(ICopybookDialects.FMT_OPEN_COBOL) + "\t: Gnu:Cobol ");
+        System.out.println("        " + ICopybookDialects.FMT_FUJITSU + " or " + ExternalConversion.getDialectName(ICopybookDialects.FMT_FUJITSU)    + "\t: Fujitsu Cobol ");
         System.out.println();
         System.out.println("    " + ARG_OUT_FILE      + "  or " + ARG_OUT_FILE1    + " \t: Output file");
         System.out.println("    " + ARG_OUTPUT_FONT   + "\t: Output font or character set");

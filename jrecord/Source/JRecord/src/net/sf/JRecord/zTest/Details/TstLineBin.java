@@ -20,7 +20,7 @@ import net.sf.JRecord.Details.Line;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ToLayoutDetail;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.TstConstants;
 
 /**
@@ -72,7 +72,7 @@ public class TstLineBin extends TestCase {
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "",
-                        Convert.FMT_MAINFRAME, 0, null
+                        ICopybookDialects.FMT_MAINFRAME, 0, null
                 ));
 
         line = new Line(copyBook, rec);
@@ -124,7 +124,7 @@ public class TstLineBin extends TestCase {
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "",
-                        Convert.FMT_MAINFRAME, 0, null
+                        ICopybookDialects.FMT_MAINFRAME, 0, null
                 ));
 
         AbstractLine line1 = new Line(copyBook1, rec);
@@ -210,7 +210,7 @@ public class TstLineBin extends TestCase {
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "",
-                        Convert.FMT_MAINFRAME, 0, null
+                        ICopybookDialects.FMT_MAINFRAME, 0, null
                 ));
 
         AbstractLine line1 = new Line(copyBook1, rec);
@@ -257,7 +257,7 @@ public class TstLineBin extends TestCase {
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "",
-                        Convert.FMT_MAINFRAME, 0, null
+                        ICopybookDialects.FMT_MAINFRAME, 0, null
                 ));
 
         AbstractLine line1 = new Line(copyBook1, rec);
@@ -396,7 +396,7 @@ public class TstLineBin extends TestCase {
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "",
-                        Convert.FMT_MAINFRAME, 0, null
+                        ICopybookDialects.FMT_MAINFRAME, 0, null
                 ));
 
         line = new Line(copyBook1, rec);
@@ -712,7 +712,7 @@ public class TstLineBin extends TestCase {
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookDTAR020 + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "cp037",
-                        Convert.FMT_MAINFRAME, 0, null
+                        ICopybookDialects.FMT_MAINFRAME, 0, null
                 ));
         return new Line(dtar0020,
                 		recDtar020);

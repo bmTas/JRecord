@@ -8,9 +8,9 @@ import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.Convert;
 
 
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import junit.framework.TestCase;
 
 /**
@@ -94,19 +94,19 @@ public class TstCobol2 extends TestCase {
 
 		System.out.println();
 		System.out.println("Blank Intel 1: ");
-		testConversion(Convert.FMT_INTEL, intelFields, blankNames, BLANK_FILLER_COPYBOOK1, true);
+		testConversion(ICopybookDialects.FMT_INTEL, intelFields, blankNames, BLANK_FILLER_COPYBOOK1, true);
 
 		System.out.println();
 		System.out.println("Blank Mainframe 1: ");
-		testConversion(Convert.FMT_MAINFRAME, mainframeFields, blankNames, BLANK_FILLER_COPYBOOK1, true);
+		testConversion(ICopybookDialects.FMT_MAINFRAME, mainframeFields, blankNames, BLANK_FILLER_COPYBOOK1, true);
 
 		System.out.println();
 		System.out.println("Blank Intel 2: ");
-		testConversion(Convert.FMT_INTEL, intelFields, blankNames, BLANK_FILLER_COPYBOOK2);
+		testConversion(ICopybookDialects.FMT_INTEL, intelFields, blankNames, BLANK_FILLER_COPYBOOK2);
 
 		System.out.println();
 		System.out.println("Blank Mainframe 2: ");
-		testConversion(Convert.FMT_MAINFRAME, mainframeFields, blankNames, BLANK_FILLER_COPYBOOK2);
+		testConversion(ICopybookDialects.FMT_MAINFRAME, mainframeFields, blankNames, BLANK_FILLER_COPYBOOK2);
 	}
 
 
@@ -114,11 +114,11 @@ public class TstCobol2 extends TestCase {
 
 		System.out.println();
 		System.out.println("Blank Intel: ");
-		testConversion(Convert.FMT_INTEL, intelFields, fillerNames, FILLER_COPYBOOK);
+		testConversion(ICopybookDialects.FMT_INTEL, intelFields, fillerNames, FILLER_COPYBOOK);
 
 		System.out.println();
 		System.out.println("Blank Mainframe: ");
-		testConversion(Convert.FMT_MAINFRAME, mainframeFields, fillerNames, FILLER_COPYBOOK);
+		testConversion(ICopybookDialects.FMT_MAINFRAME, mainframeFields, fillerNames, FILLER_COPYBOOK);
 	}
 
 
@@ -127,11 +127,11 @@ public class TstCobol2 extends TestCase {
 
 		System.out.println();
 		System.out.println("Blank Intel: ");
-		testConversion(Convert.FMT_INTEL, intelFields, fillerNames, MIXED_FILLER_COPYBOOK);
+		testConversion(ICopybookDialects.FMT_INTEL, intelFields, fillerNames, MIXED_FILLER_COPYBOOK);
 
 		System.out.println();
 		System.out.println("Blank Mainframe: ");
-		testConversion(Convert.FMT_MAINFRAME, mainframeFields, fillerNames, MIXED_FILLER_COPYBOOK);
+		testConversion(ICopybookDialects.FMT_MAINFRAME, mainframeFields, fillerNames, MIXED_FILLER_COPYBOOK);
 	}
 
 

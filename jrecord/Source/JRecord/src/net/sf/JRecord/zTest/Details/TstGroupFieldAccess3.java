@@ -6,7 +6,7 @@ import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.TestCommonCode;
 import junit.framework.TestCase;
 
@@ -41,7 +41,7 @@ public class TstGroupFieldAccess3 extends TestCase {
 		try {
 			schema = TestCommonCode.getLayoutFromCobolStr(
 							cobolCopybook, "COMPANY-RECORD",
-							CopybookLoader.SPLIT_01_LEVEL, "", Convert.FMT_INTEL);
+							CopybookLoader.SPLIT_01_LEVEL, "", ICopybookDialects.FMT_INTEL);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

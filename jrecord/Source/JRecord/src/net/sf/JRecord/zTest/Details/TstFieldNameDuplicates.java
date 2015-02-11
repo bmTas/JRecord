@@ -7,7 +7,7 @@ import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.TestCommonCode;
 import junit.framework.TestCase;
 
@@ -63,7 +63,7 @@ public class TstFieldNameDuplicates extends TestCase {
 
 	public void testFieldNames() throws RecordException {
 		LayoutDetail l = TestCommonCode.getLayoutFromCobolStr(cobolCopybook, "COMPANY-RECORD",
-				CopybookLoader.SPLIT_NONE, "", Convert.FMT_INTEL);
+				CopybookLoader.SPLIT_NONE, "", ICopybookDialects.FMT_INTEL);
 
 		TreeMap<String, IFieldDetail> fm = new TreeMap<String, IFieldDetail>(l.getFieldNameMap());
 		Set<String> keySet = fm.keySet();

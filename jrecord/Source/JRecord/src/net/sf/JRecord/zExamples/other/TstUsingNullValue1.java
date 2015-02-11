@@ -8,7 +8,7 @@ import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.Line;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.TestCommonCode;
 
 public class TstUsingNullValue1 {
@@ -23,7 +23,7 @@ public class TstUsingNullValue1 {
 		// Create an Internal JRecord schema (or layout) from the cobol copybook
 		LayoutDetail schema = TestCommonCode.getLayoutFromCobolStr(
 				cobolCopybook, "xxx",
-				CopybookLoader.SPLIT_NONE, "IBM237", Convert.FMT_MAINFRAME);
+				CopybookLoader.SPLIT_NONE, "IBM237", ICopybookDialects.FMT_MAINFRAME);
 		Line l = new Line(schema);
 		
 		test(l, CommonBits.NULL_VALUE);

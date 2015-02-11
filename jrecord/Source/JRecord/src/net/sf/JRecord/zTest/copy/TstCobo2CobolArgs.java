@@ -3,7 +3,7 @@ package net.sf.JRecord.zTest.copy;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.External.ExternalConversion;
 import net.sf.JRecord.Numeric.ConversionManager;
-import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zExamples.copy.ParseArgsCobol2Cobol;
 import junit.framework.TestCase;
 
@@ -87,11 +87,11 @@ public class TstCobo2CobolArgs extends TestCase {
 	public void testDialect() {
 		
 		int[] dialects = {
-				Convert.FMT_MAINFRAME,
-				Convert.FMT_FUJITSU,
-				Convert.FMT_OPEN_COBOL,
-				Convert.FMT_OC_MICRO_FOCUS,
-				Convert.FMT_FS2000,
+				ICopybookDialects.FMT_MAINFRAME,
+				ICopybookDialects.FMT_FUJITSU,
+				ICopybookDialects.FMT_OPEN_COBOL,
+				ICopybookDialects.FMT_OC_MICRO_FOCUS,
+				ICopybookDialects.FMT_FS2000,
 		};
 		ParseArgsCobol2Cobol ac;
 		for (int dialect : dialects) {
