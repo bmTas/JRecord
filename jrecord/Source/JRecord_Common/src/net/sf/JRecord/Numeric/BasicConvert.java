@@ -106,15 +106,18 @@ import net.sf.cb2xml.def.Cb2xmlConstants;
 //        		&& picture.indexOf('Z') < 0
 //        		&& picture.indexOf(',') < 0
 //        		&& (! picture.startsWith("S"))
-        		&& (picture.startsWith("-") || picture.startsWith("+") || picture.startsWith("9"))
+        		&& (picture.startsWith("-") || picture.startsWith("+") || picture.startsWith("9")
+        				|| picture.endsWith("-") || picture.endsWith("+"))
         		&& CommonCode.checkPicture(picture, '9', '.')
         ) {
         	if (picture.startsWith("-")) {
         		lType = Type.ftNumZeroPadded;
-        	} else if (picture.startsWith("9")) {
-        		lType = Type.ftNumZeroPaddedPositive;
         	} else if (picture.startsWith("+")) {
         		lType = Type.ftNumZeroPaddedPN;
+        	} else if (picture.endsWith("-") || picture.endsWith("+")) {
+        		lType = Type.ftSignSeparateTrail;
+        	} else if (picture.startsWith("9")) {
+        		lType = Type.ftNumZeroPaddedPositive;
         	} else {
         		lType = chkRest(lType, usage, picture, signed, signSeperate, signPosition);
         	}

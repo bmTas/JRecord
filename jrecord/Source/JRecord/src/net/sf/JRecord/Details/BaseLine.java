@@ -8,6 +8,30 @@ public abstract class BaseLine implements AbstractLine {
 	protected LayoutDetail layout;
 
 
+	/**
+     * Get a fields value
+     *
+     * @param field field to retrieve
+     *
+     * @return fields Value
+     */
+	@Override
+    public final Object getField(IFieldDetail field) {
+        return getField(field.getType(), field);
+    }
+
+    /**
+     * Get a fields value
+     *
+     * @param record record containg the field
+     * @param type type to use when getting the field
+     * @param field field to retrieve
+     *
+     * @return fields Value
+     * 
+     */
+    public abstract Object getField(int type, IFieldDetail field);
+
 //	@Override
 	public final AbstractFieldValue getFieldValue(IFieldDetail field) {
 		return new FieldValue(this, field);

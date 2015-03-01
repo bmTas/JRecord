@@ -79,6 +79,7 @@ import net.sf.JRecord.Types.TypeManager;
  *
  */
 public class LayoutDetail implements IBasicFileSchema {
+	
 
 	private String layoutName;
 	private String description;
@@ -101,6 +102,7 @@ public class LayoutDetail implements IBasicFileSchema {
 	private boolean treeStructure = false;
 
 	private final boolean multiByteCharset, csvLayout;
+	
 
 	/**
 	 * This class holds a one or more records
@@ -507,7 +509,10 @@ public class LayoutDetail implements IBasicFileSchema {
      * @param field field to retrieve
      *
      * @return fields Value
+     * 
+     * @deprecated use getField on Line
      */
+    @Deprecated 
     public Object getField(final byte[] record, int type, IFieldDetail field) {
 
     	//System.out.print(" ---> getField ~ 1");
@@ -515,7 +520,14 @@ public class LayoutDetail implements IBasicFileSchema {
             return TypeManager.getSystemTypeManager().getType(type) //field.getType())
 					.getField(record, field.getPos(), field);
         }
-
+        return getCsvField(record, type, field);
+     }
+    
+    /**
+     * @deprecated internal JRecord use !!!
+     */
+    @Deprecated 
+    public final Object getCsvField(final byte[] record, int type, IFieldDetail field) {
         if (isBinCSV()) {
         	//System.out.print(" 3 ");
         	String value = (new BinaryCsvParser(delimiter)).getValue(record, field);
@@ -523,9 +535,13 @@ public class LayoutDetail implements IBasicFileSchema {
         	return formatField(field,  type, value);
         } else {
 	        return formatCsvField(field,  type, Conversion.toString(record, field.getFontName()));
-        }
+        }  	
     }
 
+    /**
+     * @deprecated internal JRecord use !!!
+     */
+    @Deprecated 
     public final Object formatCsvField(IFieldDetail field,  int type, String value) {
         ICsvLineParser parser = ParserManager.getInstance().get(field.getRecord().getRecordStyle());
         String val = parser.getField(field.getPos() - 1,
@@ -577,6 +593,7 @@ public class LayoutDetail implements IBasicFileSchema {
      *
      * @throws RecordException any conversion error
      */
+    @Deprecated
     public byte[] setField(byte[] record, IFieldDetail field, Object value)
     throws RecordException {
         return setField(record, field.getType(), field, value);
@@ -594,33 +611,42 @@ public class LayoutDetail implements IBasicFileSchema {
      *
      * @throws RecordException any conversion error
      */
+    @Deprecated
     public byte[] setField(byte[] record, int type, IFieldDetail field, Object value)
     throws RecordException {
         if (field.isFixedFormat()) {
             record = TypeManager.getSystemTypeManager().getType(type)
 				.setField(record, field.getPos(), field, value);
         } else  {
-            String font = field.getFontName();
-            ICsvLineParser parser = ParserManager.getInstance().get(field.getRecord().getRecordStyle());
-
-            Type typeVal = TypeManager.getSystemTypeManager().getType(type);
-            String s = typeVal.formatValueForRecord(field, value.toString());
-            //System.out.println(" ---> setField ~ " + delimiter + " ~ " + s + " ~ " + new String(record));
-            if  (isBinCSV()) {
-             	record = (new BinaryCsvParser(delimiter)).updateValue(record, field, s);
-            } else {
-	            String newLine = parser.setField(field.getPos() - 1,
-	            		typeVal.getFieldType(),
-	            		Conversion.toString(record, font),
-	            		new CsvDefinition(delimiter, field.getQuote()), s);
-
-                record = Conversion.getBytes(newLine, font);
-            }
+            record = setCsvField(record, type, field, value);
         }
         //System.out.println(" ---> setField ~ Done");
         return record;
     }
 
+    public byte[] setCsvField(byte[] record, int type, IFieldDetail field, Object value)
+    throws RecordException {
+        
+        String font = field.getFontName();
+        ICsvLineParser parser = ParserManager.getInstance().get(field.getRecord().getRecordStyle());
+
+        Type typeVal = TypeManager.getSystemTypeManager().getType(type);
+        String s = typeVal.formatValueForRecord(field, value.toString());
+        //System.out.println(" ---> setField ~ " + delimiter + " ~ " + s + " ~ " + new String(record));
+        if  (isBinCSV()) {
+         	record = (new BinaryCsvParser(delimiter)).updateValue(record, field, s);
+        } else {
+            String newLine = parser.setField(field.getPos() - 1,
+            		typeVal.getFieldType(),
+            		Conversion.toString(record, font),
+            		new CsvDefinition(delimiter, field.getQuote()), s);
+
+            record = Conversion.getBytes(newLine, font);
+        }
+        
+        //System.out.println(" ---> setField ~ Done");
+        return record;
+    }
 
     /**
      * Get a field for a supplied field-name
@@ -906,7 +932,7 @@ public class LayoutDetail implements IBasicFileSchema {
 		List<IFieldDetail> flds;
 		int idx = getRecordIndex(fieldNames[0]);
 		if (idx >= 0 && fieldNames.length > 0) {
-			return records[idx].getGroupField(1, fieldNames);
+			return records[idx].getGroupFieldX(1, fieldNames);
 		} else {
 			for (RecordDetail r : records) {
 				flds = r.getGroupFields(fieldNames);

@@ -65,8 +65,9 @@ public class TypeDecimalHex extends TypeNum {
 			  final IFieldDetail field) {
         String s; 
         int endOfField = record.length;
-        if (field.getType() != Type.ftCharRestOfRecord && field.getEnd() < endOfField) {
-        	endOfField = field.getEnd();
+        int end = position + field.getLen() - 1;
+		if (field.getType() != Type.ftCharRestOfRecord && end < endOfField) {
+        	endOfField = end;
         }
         
         s = Conversion.getDecimal(record, position - 1, endOfField);

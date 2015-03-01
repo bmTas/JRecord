@@ -45,7 +45,8 @@ public class TypeBit extends TypeChar {
             final int position,
 			final IFieldDetail field) {
 	    int pos = position - 1;
-	    int min = java.lang.Math.min(field.getEnd(), record.length);
+	    int end = position + field.getLen() - 1;
+	    int min = java.lang.Math.min(end, record.length);
 
 	    return Conversion.numTrim(Conversion.getBitField(record, pos, min));
     }

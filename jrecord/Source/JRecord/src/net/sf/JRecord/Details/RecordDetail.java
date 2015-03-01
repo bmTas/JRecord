@@ -11,6 +11,7 @@ package net.sf.JRecord.Details;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.JRecord.Common.AbstractIndexedLine;
 import net.sf.JRecord.Common.AbstractRecordX;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
@@ -20,6 +21,8 @@ import net.sf.JRecord.CsvParser.BasicCsvLineParser;
 import net.sf.JRecord.CsvParser.ICsvDefinition;
 import net.sf.JRecord.CsvParser.ICsvLineParser;
 import net.sf.JRecord.CsvParser.ParserManager;
+import net.sf.JRecord.External.Def.DependingOn;
+import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.detailsSelection.FieldSelectX;
 
@@ -53,6 +56,15 @@ import net.sf.JRecord.detailsSelection.FieldSelectX;
  * @version 0.55
  */
 public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinition {
+
+//	private static final   ArrayList<DependingOn> EMPTY_DEPENDING_ON = new ArrayList<DependingOn>(0);
+	
+	public static final int DO_NONE = 1;
+	public static final int DO_SIMPLE_NO_COMPRESSION = 2;
+	public static final int DO_SIMPLE = 5;
+
+	public static final int DO_COMPLEX = 6;
+
 
     //private static final int STATUS_EXISTS         =  1;
 
@@ -92,6 +104,8 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	private boolean embeddedNewLine = false;
 	
 	private int[] fieldTypes = null;
+	private ArrayList<DependingOn> dependingOn = null;
+	private int dependingOnLevel = DO_NONE;
 
 
 
@@ -850,12 +864,12 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	 * @param fieldNames group/field names to search for
 	 * @return requested fields
 	 */
-
+	@Override
 	public final IFieldDetail getGroupField(String...fieldNames) {
-		return getGroupField(0, fieldNames);
+		return getGroupFieldX(0, fieldNames);
 	}
 	
-	final IFieldDetail getGroupField(int start, String...fieldNames) {
+	final IFieldDetail getGroupFieldX(int start, String...fieldNames) {
 		List<IFieldDetail> flds = getGroupFields(start, fieldNames);
 
 		switch (flds.size()) {
@@ -913,6 +927,145 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 			}
 		}
 		return singleByteFont == YES;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.Common.AbstractRecord#calculateActualPosition(net.sf.JRecord.Common.AbstractIndexedLine, net.sf.JRecord.External.Def.DependingOnDtls, int)
+	 */
+	@Override
+	public int calculateActualPosition(AbstractIndexedLine line, DependingOnDtls dependingOnDtls, int pos) {
+		DependingOnDtls[] tree = null;
+		if (dependingOnDtls != null) {
+			tree = dependingOnDtls.getTree();
+		}
+		return pos - calculateAdjustment(dependingOn, line, tree, 0, pos);
+	}
+	
+	/**
+	 * Calculate an adjustment to the record Position based on 
+	 * 
+	 * @param dependingOnList the list of Depending on clauses to use in the calculation
+	 * @param line line or record for which to calculate the position
+	 * @param dependingOnDtls depending on details for the field which we are calculating the adjustment for
+	 * @param lvl current level (or index in dependingOnDtls array 
+	 * @param pos position of the field
+	 * 
+	 * @return Adjustment to be made to the field
+	 */
+	private int calculateAdjustment(List<DependingOn> dependingOnList, final AbstractIndexedLine line, DependingOnDtls[] dependingOnDtls,
+			int lvl, final int pos) {
+		if (dependingOnList == null || dependingOnList.size() == 0 || pos < dependingOnList.get(0).getPosition()) {
+			return 0;
+		}
+		
+		int tmpAdj = 0;
+//		int origPos = pos;
+		
+		for (int i = 0; i < dependingOnList.size() && pos >= dependingOnList.get(i).getPosition(); i++) {
+			DependingOn dependingOnDef = dependingOnList.get(i);
+			IFieldDetail field = dependingOnDef.getField();	
+
+			int adj = 0;
+			try {
+				Object value = line.getField(field);
+				List<DependingOn> children = dependingOnDef.getChildren();
+				int actualOccurs = Integer.parseInt(value.toString().trim());
+				int occursLength = dependingOnDef.getOccursLength();
+
+				int childAdjustment = calculateAdjustment(children, line, dependingOnDtls, lvl + 1, pos);
+				if (pos > dependingOnDef.getEnd()) {
+					int occursMaxLength = dependingOnDef.getOccursMaxLength();
+					int actualOccursLength = occursLength 
+									 - childAdjustment; 
+					int actualLength = actualOccurs * actualOccursLength;
+	//						- calculateAdjustment(dependingOnDef.getChildren(), line, pos);
+					adj = occursMaxLength - actualLength;//calculateAdjustment(dependingOnDef.getChildren(), line, pos);
+					if (pos - adj < dependingOnDef.getPosition() + actualLength) {
+						return tmpAdj;
+					}
+				} else if (children != null && children.size() > 0 && childAdjustment > 0) { 
+					if (dependingOnDtls != null
+					&& lvl < dependingOnDtls.length ) {
+						int idx = dependingOnDtls[lvl].index;
+						adj = childAdjustment * (idx + 1);
+						
+						DependingOn c = children.get(children.size() - 1);	
+
+						if (pos < c.getEnd() + idx * occursLength) {
+							adj = childAdjustment;
+							int occurs = 1;
+//							System.out.print("\t$$ " + pos + " - " + c.getEnd() + " > " + occursLength);
+							if (occursLength != 0 && pos - c.getEnd() > occursLength) {
+								occurs = ((int) (pos - c.getEnd()) / occursLength) + 1;
+								if (occurs > 1) {
+									adj = childAdjustment * occurs;											
+								}
+							}
+							
+							if (pos - children.get(0).getPosition() + children.get(0).getOccursLength() > occursLength) {
+								int tChildAdj = calculateAdjustment(children, line, dependingOnDtls, lvl + 1, pos - occurs * occursLength);	
+								adj += tChildAdj;						
+							}
+						}
+					} else {
+						adj = childAdjustment;
+					}
+				}
+				tmpAdj += adj;
+			} catch (Exception e) {
+				throw new RuntimeException("Error calculation Occurs Depending On for Variable: " + dependingOnDef.getVariableName() + " msg="+ e.getMessage(), e); 
+			}
+		} 
+		return tmpAdj;	
+	}
+
+
+
+	/**
+	 * @param dependingOn the dependingOn to set
+	 */
+	public final void setDependingOn(ArrayList<DependingOn> dependingOn) {
+		this.dependingOn = dependingOn;
+		this.dependingOnLevel = DO_NONE;
+		
+		if (dependingOn != null && dependingOn.size() > 0) {
+			if (dependingOn.size() == 1 
+			&& (dependingOn.get(0).getPosition() + dependingOn.get(0).getOccursMaxLength() -1 == fields[fields.length - 1].getEnd())) {
+				dependingOnLevel = DO_SIMPLE_NO_COMPRESSION;
+			} else {
+				int firstPos = Integer.MAX_VALUE; 
+				this.dependingOnLevel = DO_SIMPLE;
+				if (dependingOn.size() > 3) {
+					dependingOnLevel = DO_COMPLEX;
+				}
+				
+				for (DependingOn  d : dependingOn) {
+					List<DependingOn> children = d.getChildren();
+					d.updateField(this);
+					
+					if (firstPos == Integer.MAX_VALUE) {
+						firstPos = d.getField().getPos();
+					}
+					if ((children != null && children.size() > 0)
+					||  (d.getField().getPos() > firstPos)) {
+						dependingOnLevel = DO_COMPLEX;
+					}
+					
+				}
+			}
+		}
+	}
+	
+	public final boolean hasDependingOn() {
+		return dependingOnLevel > DO_NONE;
+	}
+
+	/**
+	 * @return the dependingOnLevel
+	 */
+	public final int getDependingOnLevel() {
+		return dependingOnLevel;
 	}
 
 	public final ICsvLineParser getParser() {

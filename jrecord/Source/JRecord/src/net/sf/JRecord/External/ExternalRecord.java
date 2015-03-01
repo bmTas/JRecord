@@ -6,6 +6,7 @@ import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.Def.AbstractUpdatableRecord;
+import net.sf.JRecord.External.Def.DependingOn;
 import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
@@ -90,6 +91,7 @@ public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchem
 
   private ArrayList<ExternalRecord> subRecords = new ArrayList<ExternalRecord>();
   private ArrayList<ExternalField> fields = new ArrayList<ExternalField>();
+  private final ArrayList<DependingOn> dependingOn = new ArrayList<DependingOn>(3);
 
 
   /**
@@ -698,6 +700,10 @@ public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchem
 	public boolean addRecordField(ExternalField o) {
 	    return fields.add(o);
 	}
+	
+	public void addDependingOn(DependingOn child) {
+		DependingOn.addChild(dependingOn, child);
+	}
 
 	/**
 	 * Add a Csv field to the Record
@@ -1107,6 +1113,13 @@ public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchem
 	 */
 	public final void setParentName(String tmpParentName) {
 		this.parentName = tmpParentName;
+	}
+
+	/**
+	 * @return the dependingOn
+	 */
+	public final ArrayList<DependingOn> getDependingOn() {
+		return dependingOn;
 	}
 
 	/**

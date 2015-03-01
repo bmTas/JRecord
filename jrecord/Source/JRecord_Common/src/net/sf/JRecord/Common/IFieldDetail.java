@@ -31,6 +31,7 @@ public interface IFieldDetail {
 
 	public abstract String getDescription();
 
+	@Deprecated
 	public abstract int getEnd();
 
 	public abstract boolean isFixedFormat();
@@ -54,5 +55,11 @@ public interface IFieldDetail {
 	public abstract void setDefaultValue(Object defaultValue);
 	
 	public abstract IOptionResult getOption(IOptionType type);
+
+	public abstract int calculateActualPosition(AbstractIndexedLine line);
+
+//	public abstract int calculateActualLength(AbstractIndexedLine line);
+	
+	public abstract int calculateActualEnd(AbstractIndexedLine line);
 
 }

@@ -57,25 +57,28 @@ public class CharLine extends BasicLine implements AbstractLine {
 
 
 	@Override
-	public Object getField(IFieldDetail field) {
+	public Object getField(int typeId, IFieldDetail field) {
 
 		if (field.isFixedFormat()) {
-			if (field.getType() == Type.ftChar
-			||  field.getType() == Type.ftCharRightJust
-			||  field.getType() == Type.ftCharRestOfRecord 
-			||  TypeManager.getInstance().getType(field.getType()) == TypeManager.getInstance().getType(Type.ftChar)) {
+			if (typeId == Type.ftChar
+			||  typeId == Type.ftCharRightJust
+			||  typeId == Type.ftCharRestOfRecord 
+			||  TypeManager.getInstance().getType(typeId) == TypeManager.getInstance().getType(Type.ftChar)) {
 				return getFieldText(field);
 			}
 
-			Type type = TypeManager.getSystemTypeManager().getType(field.getType());
-			byte[] bytes = getData(field.getPos(), field.getLen());
+			Type type = TypeManager.getSystemTypeManager().getType(typeId);
+
+            int pos =  field.calculateActualPosition(this);
+            
+			byte[] bytes = getData(pos, field.getLen());
 			FieldDetail tmpField = new FieldDetail(field.getFontName(), field.getDescription(),
-					field.getType(), field.getDecimal() ,field.getFontName(), field.getFormat(), field.getParamater());
+					typeId, field.getDecimal() ,field.getFontName(), field.getFormat(), field.getParamater());
 			tmpField.setPosLen(1, bytes.length);
 
 			return type.getField(bytes, 1, tmpField);
 		} else {
-			return layout.formatCsvField(field, field.getType(), data.toString());
+			return layout.formatCsvField(field, typeId, data.toString());
 		}
 	}
 
@@ -94,7 +97,7 @@ public class CharLine extends BasicLine implements AbstractLine {
 
 
 	private String getFieldText(IFieldDetail fldDef) {
-		int start = fldDef.getPos() - 1;
+		int start = fldDef.calculateActualPosition(this) - 1;
 		String tData = data;
 
 		int tempLen = fldDef.getLen();
@@ -164,31 +167,32 @@ public class CharLine extends BasicLine implements AbstractLine {
 
 
 	@Override
-	public void setField(IFieldDetail field, Object value)
+	protected void setField(int typeId , IFieldDetail field, Object value)
 			throws RecordException {
 
 		if (field.isFixedFormat()) {
 			String s = "";
-			Type type = TypeManager.getSystemTypeManager().getType(field.getType());
+			Type type = TypeManager.getSystemTypeManager().getType(typeId);
 			if (value != null) {
 				s = value.toString();
 			}
 
 			s = type.formatValueForRecord(field, s);
 
-			if (s.length() < field.getLen()
+			int len = field.getLen();
+			if (s.length() < len
 			&&	type instanceof TypeChar && ! ((TypeChar) type).isLeftJustified()) {
-				s = Conversion.padFront(s, field.getLen() - s.length(), ' ');
+				s = Conversion.padFront(s, len - s.length(), ' ');
 			} 
-			updateData(field.getPos(), field.getLen(), s);
+			updateData(field.calculateActualPosition(this), len, s);
 			
 		} else {
 	        ICsvLineParser parser = ParserManager.getInstance().get(field.getRecord().getRecordStyle());
-	        Type typeVal = TypeManager.getSystemTypeManager().getType(field.getType());
+	        Type typeVal = TypeManager.getSystemTypeManager().getType(typeId);
 	        String s = typeVal.formatValueForRecord(field, value.toString());
 
             data =
-            		parser.setField(field.getPos() - 1,
+            		parser.setField(field.calculateActualPosition(this) - 1,
             				typeVal.getFieldType(),
             				data,
             				new CsvDefinition(layout.getDelimiter(), field.getQuote()), s);
@@ -207,7 +211,7 @@ public class CharLine extends BasicLine implements AbstractLine {
 			throws RecordException {
 		FieldDetail fldDef = layout.getRecord(recordIdx).getField(fieldIdx);
 
-		updateData(fldDef.getPos(), fldDef.getLen(), value);
+		updateData(fldDef.calculateActualPosition(this), fldDef.getLen(), value);
 	}
 
 	private void updateData(int pos, int length, String value) {

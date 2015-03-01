@@ -50,7 +50,8 @@ public interface CopybookLoader {
      */
     public static final int SPLIT_01_LEVEL = 2;
     /** 
-     *  Multi-Record Copybook with each record on a 01 Group level
+     *  Multi-Record Copybook with each record in a Group level under 01 
+     *  i.e. 05 in the following 
      *  <pre>
      *        05  Header-Record.
      *            .....

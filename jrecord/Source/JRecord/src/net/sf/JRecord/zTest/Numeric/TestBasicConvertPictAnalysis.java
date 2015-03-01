@@ -94,6 +94,15 @@ public class TestBasicConvertPictAnalysis  extends TestCase{
         chkPict("s9999v",Type.ftZonedNumeric);
         chkPict("9999V",Type.ftAssumedDecimalPositive);
 
+		chkPict("999.99-", Type.ftSignSeparateTrail);
+		chkPict("999-", Type.ftSignSeparateTrail);
+		chkPict(".999-", Type.ftSignSeparateTrail);
+		chkPict("999.99+", Type.ftSignSeparateTrail);
+		chkPict("999+", Type.ftSignSeparateTrail);
+		chkPict(".999+", Type.ftSignSeparateTrail);
+		chkPict("Z.999-", Type.ftSignSeparateTrail);
+		chkPict("Z99.9-", Type.ftSignSeparateTrail);
+
         chkPict("99-99-99",Type.ftChar);
         chkPict("Z9-Z9-99",Type.ftChar);
         chkPict("99/99/99",Type.ftChar);

@@ -30,10 +30,10 @@ import net.sf.JRecord.Types.TypeManager;
  */
 public final class FieldValue implements AbstractFieldValue {
 
-	private AbstractLine theLine;
-	private IFieldDetail field;
-	private int recordNum = -1;
-	private int fieldNum;;
+	private final AbstractLine theLine;
+	private final IFieldDetail field;
+	private final int recordNum;
+	private final int fieldNum;;
 
 	/**
 	 * Create a field value
@@ -45,6 +45,7 @@ public final class FieldValue implements AbstractFieldValue {
 		theLine = line;
 		field = fieldDetails;
 		recordNum = -1;
+		fieldNum = -1;
 	}
 
 	/**
@@ -58,6 +59,7 @@ public final class FieldValue implements AbstractFieldValue {
 		theLine = line;
 		recordNum = recordIndex;
 		fieldNum = fieldIndex;
+		field = null;
 	}
 
 	/**
@@ -210,6 +212,9 @@ public final class FieldValue implements AbstractFieldValue {
 		IFieldDetail fld = field;
 		if (recordNum >= 0) {
 			fld = theLine.getLayout().getField(recordNum, fieldNum);
+		}
+		if (theLine instanceof BaseLine) {
+			return ((BaseLine) theLine).getField(Type.ftHex, fld).toString();
 		}
 		return theLine.getLayout().getField(theLine.getData(),
 				Type.ftHex,

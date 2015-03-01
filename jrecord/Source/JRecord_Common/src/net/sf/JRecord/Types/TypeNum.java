@@ -27,6 +27,7 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Arrays;
 
+import net.sf.JRecord.Common.AbstractIndexedLine;
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
@@ -192,9 +193,15 @@ public class TypeNum extends TypeChar {
 	}
 
 
-	public final boolean isDefined(final byte[] record, IFieldDetail currField) {
-		return record.length >= currField.getLen() 
-			&&  ((couldBeHexZero) || (! isHexZero(record, currField.getPos(), currField.getLen())));
+//	public final boolean isDefined(final byte[] record, IFieldDetail currField) {
+//		return record.length >= currField.getLen() 
+//			&&  ((couldBeHexZero) || (! isHexZero(record, currField.getPos(), currField.getLen())));
+//	}
+	
+	public final boolean isDefined(final AbstractIndexedLine line, byte[] record, IFieldDetail currField) {
+		int pos = currField.calculateActualPosition(line);
+		return record.length >= pos + currField.getLen() 
+			&&  ((couldBeHexZero) || (! isHexZero(record, pos, currField.getLen())));
 	}
 
 	/**

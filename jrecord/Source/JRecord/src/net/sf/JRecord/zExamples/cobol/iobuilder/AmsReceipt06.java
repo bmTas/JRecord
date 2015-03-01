@@ -7,6 +7,7 @@ import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.CobolIoProvider;
@@ -54,7 +55,8 @@ public class AmsReceipt06 {
     	String copybookFileame = this.getClass().getResource(copybookFileName).getFile();
     	iobuilder = CobolIoProvider.getInstance()
     						.newIOBuilder(copybookFileame, ICopybookDialects.FMT_FUJITSU)
-    								.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE);
+    								.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE)
+    								.setSplitCopybook(CopybookLoader.SPLIT_REDEFINE);
     		
     	readFile();
     }

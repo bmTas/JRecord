@@ -5,6 +5,7 @@
  */
 package net.sf.JRecord.Common;
 
+import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.Option.IOptionResult;
 import net.sf.JRecord.Option.IOptionType;
 import net.sf.JRecord.Option.OptionResult;
@@ -57,6 +58,16 @@ public class FieldDetail implements IFieldDetail {
 		public int getSourceIndex() {
 			return 0;
 		}
+
+		/* (non-Javadoc)
+		 * @see net.sf.JRecord.Common.AbstractRecord#calculateActualPosition(net.sf.JRecord.Common.AbstractIndexedLine, int)
+		 */
+		@Override
+		public int calculateActualPosition(AbstractIndexedLine line, DependingOnDtls dependingOnDtls, int pos) {
+			return pos;
+		}
+		
+		
 	};
 	private int pos;
 	private int len;
@@ -72,6 +83,8 @@ public class FieldDetail implements IFieldDetail {
 	private AbstractRecord record = DEFAULT_RECORD;
 	private Object defaultValue = null;
 	private String groupName = "";
+	private boolean occursDependingOnValue = false;
+	private DependingOnDtls dependingOnDtls = null;
 
 
 	/**
@@ -207,6 +220,27 @@ public class FieldDetail implements IFieldDetail {
 		return pos;
 	}
 
+
+	/**
+	 * Calculate actual position in the line using data in the line
+	 * @param line 
+	 * @return actual position adjusted for any occurs depending
+	 */
+	@Override
+	public int calculateActualPosition(AbstractIndexedLine line) {
+		return record.calculateActualPosition(line, dependingOnDtls, pos);
+	}
+
+
+
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.Common.IFieldDetail#calculateActualEnd(net.sf.JRecord.Common.AbstractIndexedLine)
+	 */
+	@Override
+	public int calculateActualEnd(AbstractIndexedLine line) {
+		return calculateActualPosition(line) + len - 1;
+	}
 
 
 	/* (non-Javadoc)
@@ -376,6 +410,30 @@ public class FieldDetail implements IFieldDetail {
 	 */
 	public final void setGroupName(String groupName) {
 		this.groupName = groupName;
+	}
+
+
+	/**
+	 * @return the occursDependingOnValue
+	 */
+	public final boolean isOccursDependingOnValue() {
+		return occursDependingOnValue;
+	}
+
+
+	/**
+	 * @param occursDependingOnValue the occursDependingOnValue to set
+	 */
+	public final void setOccursDependingOnValue(boolean occursDependingOnValue) {
+		this.occursDependingOnValue = occursDependingOnValue;
+	}
+
+
+	/**
+	 * @param dependingOnDtls the dependingOnDtls to set
+	 */
+	public final void setDependingOnDtls(DependingOnDtls dependingOnDtls) {
+		this.dependingOnDtls = dependingOnDtls;
 	}
 
 

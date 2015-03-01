@@ -76,7 +76,8 @@ public class TypeZoned extends TypeNum {
 			String charset = field.getFontName();
 			if (Conversion.isSingleByteEbcidic(charset)) {
 				String sign = "";
-				byte signByte = record[field.getEnd() - 1];
+				int end = position + field.getLen() - 1;
+				byte signByte = record[end - 1];
 				if (((byte) (signByte & HIGH_NYBLE)) == ZONED_NEGATIVE_NYBLE_VALUE) {
 					sign = "-";
 				}

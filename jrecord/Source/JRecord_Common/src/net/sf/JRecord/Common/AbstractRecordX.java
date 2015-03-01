@@ -32,4 +32,6 @@ public interface AbstractRecordX<FieldDefinition extends IFieldDetail> extends A
 	 */
 	public abstract FieldDefinition getField(String fieldName);
 
+	public abstract IFieldDetail getGroupField(String... fieldNames);
+
 }

@@ -8,8 +8,6 @@
 package net.sf.JRecord.External;
 
 import net.sf.JRecord.Common.CommonBits;
-import net.sf.JRecord.Common.Constants;
-import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -103,6 +101,7 @@ public class ToLayoutDetail {
 	        }
 
 	        fields[i].setGroupName(fieldRec.getGroup());
+	        fields[i].setDependingOnDtls(fieldRec.getDependOnDtls());
 
 		    String s = fieldRec.getDefault();
 		    if (s != null && ! "".equals(s)) {
@@ -116,6 +115,7 @@ public class ToLayoutDetail {
 	            def.getRecordType(), def.getDelimiter(), def.getQuote(),
 	            def.getFontName(), fields, def.getRecordStyle());
 	    ret.setParentRecordIndex(def.getParentRecord());
+	    ret.setDependingOn(def.getDependingOn());
 
 	    if (def.getRecordSelection() != null && def.getRecordSelection().getSize() > 0) {
 	    	ret.getRecordSelection().setRecSel((new Convert()).convert(def.getRecordSelection(), ret));

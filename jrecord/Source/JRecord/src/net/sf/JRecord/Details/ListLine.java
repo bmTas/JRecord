@@ -72,7 +72,7 @@ public abstract class ListLine extends BaseLine {
 	/**
 	 * @see net.sf.JRecord.Details.AbstractLine#getField(net.sf.JRecord.Common.FieldDetail)
 	 */
-	public Object getField(IFieldDetail field) {
+	public Object getField(int typeId, IFieldDetail field) {
 	    return getFieldRaw(preferredLayout, field.getPos() - getAdj());
 	}
 

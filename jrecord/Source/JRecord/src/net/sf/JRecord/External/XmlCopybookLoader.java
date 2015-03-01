@@ -27,6 +27,7 @@ package net.sf.JRecord.External;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -34,6 +35,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.External.Def.DependingOn;
+import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Numeric.ConversionManager;
@@ -67,6 +70,7 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
 
     private String copybookName;
     private ArrayList<ExternalField> commonDetails;
+    private List<DependingOn> commonDependingOn;
     private String redefinedField;
     private boolean foundRedefine;
     private int splitCopybook;
@@ -203,6 +207,7 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
 
             this.redefinedField = "";
             this.commonDetails  = new ArrayList<ExternalField>();
+            this.commonDependingOn = null;
             this.foundRedefine  = false;
             this.fieldNum       = 0;
             this.recordNum      = 1;
@@ -396,7 +401,7 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
     	groupName = new ArrayList<String>();
     	groupName.add(".");
 
-    	insertXMLcopybook(copyBookPref, element, 0, "");
+    	insertXMLcopybook(copyBookPref, element, 0, "", null);
     }
 
 
@@ -411,7 +416,8 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
     private void insertXMLcopybook(final String copyBookPref,
     							   final Element element,
             					   final int basePosition,
-            					   final String nameSuffix) {
+            					   final String nameSuffix,
+            					   final DependingOnDtls dependOnParentDtls) {
 
         String newSuffix;
         NodeList lNodeList = element.getChildNodes();
@@ -422,9 +428,24 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
             if (node.getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
                 Element childElement = (Element) node;
                 if (!childElement.getAttribute(Cb2xmlConstants.LEVEL).equals("88")) {
+                	
                    if (childElement.hasAttribute(Cb2xmlConstants.OCCURS)) {
                         int childOccurs = getIntAttribute(childElement, Cb2xmlConstants.OCCURS);
                         int length = getIntAttribute(childElement, Cb2xmlConstants.STORAGE_LENGTH);
+                        String dependingVar = getStringAttribute(childElement, Cb2xmlConstants.DEPENDING_ON);
+                        DependingOn dependOn = null;
+                        
+                        if (dependingVar.length() > 0) {
+                        	ExternalField tmpField = convertElement2Field("xx", false, basePosition, childElement, null);
+                    		dependOn= new DependingOn(dependingVar, tmpField.getPos(), length, childOccurs);
+                        	if (dependOnParentDtls == null || dependOnParentDtls.firstIdx) {
+                        		if (splitCopybook != SPLIT_REDEFINE || foundRedefine) {
+                        			currentLayout.addDependingOn(dependOn);
+                         		} else {
+                           			commonDependingOn = DependingOn.addChild(commonDependingOn, dependOn);
+                        		}
+                        	}
+                        }
 
                         for (int j = 0; j < childOccurs; j++) {
                             if (nameSuffix.equals("")) {
@@ -433,12 +454,17 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
                                 newSuffix = nameSuffix + ", " + j;
                             }
 
-                            insertElement(childElement, copyBookPref, newSuffix, basePosition + j * length);
-                            insertXMLcopybook(copyBookPref,  childElement, basePosition + j * length, newSuffix);
+                            DependingOnDtls dependOnDtls = dependOnParentDtls;
+                            if (dependOn != null) {
+                            	dependOnDtls = new DependingOnDtls(dependOn, j, dependOnParentDtls);
+                            }
+                            insertElement(childElement, copyBookPref, newSuffix, basePosition + j * length, dependOnDtls);
+                            
+                            insertXMLcopybook(copyBookPref,  childElement, basePosition + j * length, newSuffix, dependOnDtls);
                         }
                     } else {
-                        insertElement(childElement, copyBookPref, nameSuffix, basePosition);
-                        insertXMLcopybook(copyBookPref, childElement, basePosition, nameSuffix);
+                        insertElement(childElement, copyBookPref, nameSuffix, basePosition, dependOnParentDtls);
+                        insertXMLcopybook(copyBookPref, childElement, basePosition, nameSuffix, dependOnParentDtls);
                     }
                 }
             }
@@ -458,7 +484,8 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
     private void insertElement(	Element element,
             					 String copyBookPref,
             					 String nameSuffix,
-            					 	int posBase) {
+            					 	int posBase,
+            					 DependingOnDtls dependDtls) {
 
        boolean print;
        int opt;
@@ -530,7 +557,7 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
            switch (opt) {
               case OPT_WRITE_ELEMENT:
                   if (print) {
-                      insertRecordField(convertElement2Field(lName, lIsNumeric, posBase, element));
+                      insertRecordField(convertElement2Field(lName, lIsNumeric, posBase, element, dependDtls));
                   }
            	  break;
            	  case OPT_REDEFINED:
@@ -539,18 +566,18 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
 
                   foundRedefine = true;
                   if (print) {
-                      insertRecordField(convertElement2Field(lName, lIsNumeric, posBase, element));
+                      insertRecordField(convertElement2Field(lName, lIsNumeric, posBase, element, dependDtls));
                   }
            	  break;
            	  case OPT_REDEFINES:
                   insertCommonFields(copyBookPref, lName, false);
                   if (print) {
-                      insertRecordField(convertElement2Field(lName, lIsNumeric, posBase, element));
+                      insertRecordField(convertElement2Field(lName, lIsNumeric, posBase, element, dependDtls));
                   }
            	  break;
            	  case OPT_SAVE:
                   if (print) {
-                      commonDetails.add(convertElement2Field(lName, lIsNumeric, posBase, element));
+                      commonDetails.add(convertElement2Field(lName, lIsNumeric, posBase, element, dependDtls));
                   }
           	  break;
            	  default:
@@ -593,6 +620,9 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
             groupRecord.setListChar(STR_YES);
             groupRecord = getUpdatedRecord(copybookName, groupRecord, false);
             //System.out.println("  " + groupRecord.getRecordType());
+            
+            //TODO
+            //TODO occurs depending
         }
 
 
@@ -611,6 +641,13 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
         }
 
         fieldNum = commonDetails.size() + 1;
+        
+        if (commonDependingOn != null) {
+	        for (DependingOn dependOn : commonDependingOn) {
+	        	currentLayout.addDependingOn(dependOn);
+	        }
+        }
+
     }
 
 
@@ -710,7 +747,8 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
             								String name,
             								boolean isNumeric,
             								int base,
-            								Element element) {
+            								Element element,
+            								DependingOnDtls dependDtls) {
         int iType = Type.ftChar;
         String usage = getStringAttribute(element, Cb2xmlConstants.USAGE);
 
@@ -759,7 +797,8 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
         	        "",
         	        "",
         	        getStringAttribute(element, Cb2xmlConstants.NAME),
-        	        fieldNum++
+        	        fieldNum++,
+        	        dependDtls
         	  	 );
 
         if (level > 1) {

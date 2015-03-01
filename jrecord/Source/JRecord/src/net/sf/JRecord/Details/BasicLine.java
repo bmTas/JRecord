@@ -34,9 +34,7 @@ public abstract class BasicLine extends BaseLine implements AbstractLine {
 		try {
 			IFieldDetail field = layout.getField(recordIdx, fieldIdx);
 
-			return layout.getField(getData(),
-			        				Type.ftHex,
-			        				field).toString();
+			return getField(Type.ftHex, field).toString();
 
 		} catch (final Exception ex) {
 			return "";
@@ -173,6 +171,29 @@ public abstract class BasicLine extends BaseLine implements AbstractLine {
 			setField(fld, value);
 		}
 	}
+
+	   /**
+     * Set a fields value
+     *
+     * @param field field to retrieve
+     * @param value value to set the field to
+     *
+     * @throws RecordException any error that occurs
+     */
+    public final void setField(IFieldDetail field, Object value)
+    throws RecordException {
+        setField(field.getType(), field, value);
+    }
+    
+    /**
+     * Set the fields type (overriding the type on the Field)
+     * @param type type-identifier to use
+     * @param field Field-definition
+     * @param value new field value
+     * 
+     * @throws RecordException
+     */
+    protected abstract void setField(int type, IFieldDetail field, Object value) throws RecordException;
 
 	/**
 	 * Sets a field to a new value
