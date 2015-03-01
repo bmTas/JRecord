@@ -236,25 +236,14 @@ public class Line extends BasicLine implements AbstractLine {
 			RecordDetail record = layout.getRecord(recordIdx);
 			if (record == null) {
 			} else if (record.hasDependingOn()) {
-				adjustLengthIfNecessary(field);
+				int end = Math.max(field.calculateActualEnd(this), layout.getRecord(recordIdx).getMinumumPossibleLength());
+
+				if (field != null) {
+					ensureCapacity(end);
+				}
 			} else {
 				adjustLength(recordIdx);
 			}
-		}
-	}
-
-
-	/**
-	 * Adjust the record length if required
-	 *
-	 * @param field field being updated
-	 */
-	private void adjustLengthIfNecessary(final IFieldDetail field) {
-
-		int end = field.calculateActualEnd(this);
-
-		if (field != null) {
-			ensureCapacity(end);
 		}
 	}
 
@@ -409,7 +398,7 @@ public class Line extends BasicLine implements AbstractLine {
 
         FieldDetail field = layout.getField(recordIdx, fieldIdx);
 
-        adjustLengthIfNecessary(field);
+        adjustLengthIfNecessary(field, recordIdx);
         setField(Type.ftChar, field, value);
     }
 

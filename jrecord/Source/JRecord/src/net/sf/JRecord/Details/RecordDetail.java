@@ -87,6 +87,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 
 	private String delimiter;
 	private int    length = 0;
+	private int    minumumPossibleLength;
 	private String fontName;
 	private String quote;
 
@@ -229,6 +230,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 		    	length = l;
 		    }
 		}
+		minumumPossibleLength = length;
 	}
 
 //	/**
@@ -349,6 +351,14 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	 */
 	public int getLength() {
 		return length;
+	}
+
+
+	/**
+	 * @return the minumumPossibleLength
+	 */
+	public final int getMinumumPossibleLength() {
+		return minumumPossibleLength;
 	}
 
 
@@ -1026,6 +1036,8 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	 * @param dependingOn the dependingOn to set
 	 */
 	public final void setDependingOn(ArrayList<DependingOn> dependingOn) {
+		
+		int len = 0;
 		this.dependingOn = dependingOn;
 		this.dependingOnLevel = DO_NONE;
 		
@@ -1054,7 +1066,14 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 					
 				}
 			}
+			
+			
+			
+			for (DependingOn d : dependingOn) {
+				len += d.getOccursMaxLength();
+			}
 		}
+		minumumPossibleLength = length - len;
 	}
 	
 	public final boolean hasDependingOn() {
