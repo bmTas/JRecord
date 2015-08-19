@@ -498,11 +498,12 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
            boolean lIsNumeric = getStringAttribute(element, Cb2xmlConstants.NUMERIC).equalsIgnoreCase(Cb2xmlConstants.TRUE);
 
            if (! "".equals(nameSuffix)) {
-               lName += " (" + nameSuffix + ")";
+               lName += " (" + nameSuffix + ")";               
            }
 
            if (dropCopybookFromFieldNames && lName.toUpperCase().startsWith(copyBookPref)) {
                lName = lName.substring(copyBookPref.length());
+               lOrigName = lOrigName.substring(copyBookPref.length());
            }
 
            if (element.hasAttribute(Cb2xmlConstants.USAGE)) {
@@ -545,7 +546,7 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
 
            //System.out.println(level + " " + print + " " + lName);
            if (level > 0 && level <= groupName.size()) {
-        	   String s = groupName.get(level - 1) + lName + ".";
+        	   String s = groupName.get(level - 1) + lOrigName + ".";
 
         	   if (groupName.size() > level) {
         		   groupName.set(level, s);
@@ -660,7 +661,8 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
      *
      * @return the record just inserted
      */
-    private ExternalRecord createRecord(String copyBook,
+    @SuppressWarnings("deprecation")
+	private ExternalRecord createRecord(String copyBook,
             							String recordName,
             							String listChar) {
         int rt = Constants.rtRecordLayout;
@@ -712,7 +714,8 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
      * @param rec record to be updated
      * @param updateRequired wether an update is required
      */
-    protected void updateRecord(String copyBook,
+    @SuppressWarnings("deprecation")
+	protected void updateRecord(String copyBook,
 			   ExternalRecord rec,
 			   boolean updateRequired) {
 

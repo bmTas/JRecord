@@ -10,8 +10,8 @@ import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.IO.CobolIoProvider;
-import net.sf.JRecord.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import junit.framework.TestCase;
 
 /**

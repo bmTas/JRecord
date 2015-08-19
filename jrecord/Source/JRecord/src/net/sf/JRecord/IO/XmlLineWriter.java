@@ -116,7 +116,8 @@ public class XmlLineWriter extends AbstractLineWriter {
      * @param line line to be written
      * @throws XMLStreamException any error that occurs
      */
-    private void write_200_Element(AbstractLine line) throws XMLStreamException {
+    @SuppressWarnings("deprecation")
+	private void write_200_Element(AbstractLine line) throws XMLStreamException {
         int idx = line.getPreferredLayoutIdx();
         LayoutDetail layout = line.getLayout();
         RecordDetail rec = layout.getRecord(idx);
@@ -170,7 +171,8 @@ public class XmlLineWriter extends AbstractLineWriter {
      */
     private void writeFollowingText(AbstractLine line) throws XMLStreamException {
         int idx = line.getPreferredLayoutIdx();
-        String followingText = toString(line.getField(idx, FOLLOWING_TEXT_INDEX));
+        @SuppressWarnings("deprecation")
+		String followingText = toString(line.getField(idx, FOLLOWING_TEXT_INDEX));
 
         if (! "".equals(followingText)) {
             writer.writeCharacters(followingText);

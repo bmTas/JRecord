@@ -23,7 +23,7 @@ public class FixedLengthTextReader extends BasicTextLineReader {
 
 
     /**
-     * @see net.sf.JRecord.IO.StandardLineReader#open(java.io.InputStream, net.sf.JRecord.Details.LayoutDetail)
+     * @see net.sf.JRecord.StandardLineReader#open(java.io.InputStream, net.sf.JRecord.Details.LayoutDetail)
      */
     public void open(InputStream inputStream, LayoutDetail layout)
     throws IOException, RecordException {

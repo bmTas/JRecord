@@ -28,12 +28,12 @@ import net.sf.JRecord.Types.TypeManager;
  * @author Bruce Martin
  *
  */
-public final class FieldValue implements AbstractFieldValue {
+public class FieldValue implements IFieldValue {
 
 	private final AbstractLine theLine;
-	private final IFieldDetail field;
-	private final int recordNum;
-	private final int fieldNum;;
+	final IFieldDetail field;
+	final int recordNum;
+	final int fieldNum;;
 
 	/**
 	 * Create a field value
@@ -63,7 +63,7 @@ public final class FieldValue implements AbstractFieldValue {
 	}
 
 	/**
-	 * @see net.sf.JRecord.Details.AbstractFieldValue#asBigDecimal()
+	 * @see IFieldValue#asBigDecimal()
 	 */
 	@Override
 	public BigDecimal asBigDecimal() {
@@ -79,7 +79,7 @@ public final class FieldValue implements AbstractFieldValue {
 	}
 
 	/**
-	 * @see net.sf.JRecord.Details.AbstractFieldValue#asBigInteger()
+	 * @see IFieldValue#asBigInteger()
 	 */
 	@Override
 	public BigInteger asBigInteger() {
@@ -95,7 +95,7 @@ public final class FieldValue implements AbstractFieldValue {
 	}
 
 	/**
-	 * @see net.sf.JRecord.Details.AbstractFieldValue#asDouble()
+	 * @see IFieldValue#asDouble()
 	 */
 	@Override
 	public double asDouble() {
@@ -112,7 +112,7 @@ public final class FieldValue implements AbstractFieldValue {
 
 
 	/**
-	 * @see net.sf.JRecord.Details.AbstractFieldValue#asFloat()
+	 * @see IFieldValue#asFloat()
 	 */
 	@Override
 	public float asFloat() {
@@ -128,7 +128,7 @@ public final class FieldValue implements AbstractFieldValue {
 	}
 
 	/**
-	 * @see net.sf.JRecord.Details.AbstractFieldValue#asLong()
+	 * @see IFieldValue#asLong()
 	 */
 	@Override
 	public long asLong() {
@@ -145,7 +145,7 @@ public final class FieldValue implements AbstractFieldValue {
 
 
 	/**
-	 * @see net.sf.JRecord.Details.AbstractFieldValue#asInt()
+	 * @see IFieldValue#asInt()
 	 */
 	@Override
 	public int asInt() {
@@ -155,7 +155,7 @@ public final class FieldValue implements AbstractFieldValue {
 
 
 	/**
-	 * @see net.sf.JRecord.Details.AbstractFieldValue#asBoolean()
+	 * @see IFieldValue#asBoolean()
 	 */
 	@Override
 	public boolean asBoolean() {
@@ -194,6 +194,7 @@ public final class FieldValue implements AbstractFieldValue {
 	 * Get The fields value
 	 * @return fields value
 	 */
+	@SuppressWarnings("deprecation")
 	private Object getValue() {
 		if (recordNum >= 0) {
 			return theLine.getField(recordNum, fieldNum);
@@ -205,8 +206,9 @@ public final class FieldValue implements AbstractFieldValue {
 	}
 
 	/**
-	 * @see net.sf.JRecord.Details.AbstractFieldValue#asHex()
+	 * @see IFieldValue#asHex()
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public String asHex() {
 		IFieldDetail fld = field;
@@ -231,7 +233,7 @@ public final class FieldValue implements AbstractFieldValue {
 	}
 
 	/**
-	 * @see net.sf.JRecord.Details.AbstractFieldValue#set(boolean)
+	 * @see IFieldValue#set(boolean)
 	 */
 	@Override
 	public void set(boolean value) throws RecordException {
@@ -240,7 +242,7 @@ public final class FieldValue implements AbstractFieldValue {
 
 
 	/**
-	 * @see net.sf.JRecord.Details.AbstractFieldValue#set(double)
+	 * @see IFieldValue#set(double)
 	 */
 	@Override
 	public void set(double value) throws RecordException {
@@ -248,7 +250,7 @@ public final class FieldValue implements AbstractFieldValue {
 	}
 
 	/**
-	 * @see net.sf.JRecord.Details.AbstractFieldValue#set(float)
+	 * @see IFieldValue#set(float) 
 	 */
 	@Override
 	public void set(float value) throws RecordException {
@@ -256,7 +258,7 @@ public final class FieldValue implements AbstractFieldValue {
 	}
 
 	/**
-	 * @see net.sf.JRecord.Details.AbstractFieldValue#set(long)
+	 * @see IFieldValue#set(long)
 	 */
 	@Override
 	public void set(long value) throws RecordException {
@@ -264,12 +266,15 @@ public final class FieldValue implements AbstractFieldValue {
 	}
 
 	/**
-	 * @see net.sf.JRecord.Details.AbstractFieldValue#set(java.lang.Object)
+	 * @see IFieldValue#set(java.lang.Object)
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void set(Object value) throws RecordException {
 		if (recordNum >= 0) {
 			theLine.setField(recordNum, fieldNum, value);
+		} else if (field == null) {
+			throw new RuntimeException("Unknown Field !!!");
 		} else {
 			theLine.setField(field, value);
 		}
@@ -301,6 +306,19 @@ public final class FieldValue implements AbstractFieldValue {
 	public boolean isBinary() {
 		return getType().isBinary();
 	}
+	
+	@Override
+	public boolean isFieldPresent() {
+		
+		if (recordNum >= 0) {
+			return this.theLine.isDefined(recordNum, fieldNum);
+		}
+		if (field == null) {
+			return false;
+		} 
+		
+		return this.theLine.isDefined(field);
+	}
 
 	private Type getType() {
 		return TypeManager.getInstance().getType(getFieldDetail().getType());
@@ -316,5 +334,46 @@ public final class FieldValue implements AbstractFieldValue {
 			return field;
 		}
 		return theLine.getLayout().getRecord(recordNum).getField(fieldNum);
+	}
+	
+	@Override
+	public boolean isByteRecord() {
+		return theLine instanceof Line;
+	}
+	
+	
+	@Override
+	public boolean isLowValues() {
+		return false;
+	}
+	
+	@Override
+	public boolean isHighValues() {
+		return false;
+	}
+	
+	@Override
+	public void setHex(String s) throws RecordException {
+		throwError();
+	}
+	
+	@Override
+	public void setToLowValues() {
+		throwError();
+	}
+	
+	
+	@Override
+	public void setToHighValues() {
+		throwError();
+	}
+	
+	private void throwError() {
+		String s = "";
+		if (theLine != null) {
+			s = theLine.getClass().getName();
+		}
+		
+		throw new RuntimeException("Operation is not supported for a " + s);
 	}
 }

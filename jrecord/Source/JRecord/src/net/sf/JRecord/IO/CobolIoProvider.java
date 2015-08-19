@@ -18,8 +18,8 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ToLayoutDetail;
 import net.sf.JRecord.IO.builders.CblIOBuilderSchemaFilename;
 import net.sf.JRecord.IO.builders.CblIOBuilderSchemaStream;
-import net.sf.JRecord.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
 
 /**
@@ -50,7 +50,7 @@ public class CobolIoProvider {
      * @param copybookFileame name of the Copybook (or schema file).
      * @return requested IOBuilder
      */
-    public ICobolIOBuilder newIOBuilder(String copybookFileame) {
+	public ICobolIOBuilder newIOBuilder(String copybookFileame) {
     	return newIOBuilder(copybookFileame, ICopybookDialects.FMT_MAINFRAME);
     }
     
@@ -67,7 +67,7 @@ public class CobolIoProvider {
      * These are the default values (which can be overriden with the appropriate set* method
      * @return requested IOBuilder
      */
-    public ICobolIOBuilder newIOBuilder(String copybookFileame, int cobolDialect) {
+	public ICobolIOBuilder newIOBuilder(String copybookFileame, int cobolDialect) {
     	return new CblIOBuilderSchemaFilename(copybookFileame, new CobolCopybookLoader(), cobolDialect);
     }
 
@@ -76,7 +76,7 @@ public class CobolIoProvider {
      * @param copybookFileame name of the Copybook (or schema file).
      * @return requested IOBuilder
      */
-    public ICobolIOBuilder newIOBuilder(InputStream cobolCopybookStream, String copybookName) {
+	public ICobolIOBuilder newIOBuilder(InputStream cobolCopybookStream, String copybookName) {
     	return newIOBuilder(cobolCopybookStream, copybookName, ICopybookDialects.FMT_MAINFRAME);
     }
     
@@ -92,7 +92,7 @@ public class CobolIoProvider {
      * These are the default values (which can be overriden with the appropriate set* method
      * @return requested IOBuilder
      */
-    public ICobolIOBuilder newIOBuilder(InputStream cobolCopybookStream, String copybookName, int cobolDialect) {
+	public ICobolIOBuilder newIOBuilder(InputStream cobolCopybookStream, String copybookName, int cobolDialect) {
     	return new CblIOBuilderSchemaStream(cobolCopybookStream, copybookName, new CobolCopybookLoader(), cobolDialect);
     }
     

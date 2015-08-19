@@ -16,6 +16,7 @@ import net.sf.JRecord.ByteIO.VbByteReader;
 import net.sf.JRecord.ByteIO.VbByteWriter;
 import net.sf.JRecord.ByteIO.VbDumpByteReader;
 import net.sf.JRecord.ByteIO.VbDumpByteWriter;
+import net.sf.JRecord.Common.BasicFileSchema;
 import net.sf.JRecord.Common.Constants;
 
 /**
@@ -32,7 +33,7 @@ public class TstByteIoProvider extends TestCase {
             Constants.IO_VB_DUMP,
             Constants.IO_VB_FUJITSU,
     };
-    @SuppressWarnings("unchecked")
+ 	@SuppressWarnings("rawtypes")
 	private Class[] classReaders = {
             FixedLengthByteReader.class,
             VbByteReader.class,
@@ -40,7 +41,7 @@ public class TstByteIoProvider extends TestCase {
             FujitsuVbByteReader.class
     };
 
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	private Class[] classWriters = {
             FixedLengthByteWriter.class,
             VbByteWriter.class,
@@ -59,14 +60,31 @@ public class TstByteIoProvider extends TestCase {
     }
 
 
-    public void testIoProviderWriters() {
+    public void testIoProviderWriters1() {
+
+        System.out.println();
+        for (int i = 1; i < ioIds.length; i++) {
+            System.out.println("--> " + i + " " + ioIds[i] + " " + classWriters[i].getName());
+            assertEquals("Error Writer " + ioIds[i],
+                    classWriters[i],
+                    ByteIOProvider.getInstance()
+                    		.getByteWriter(ioIds[i]).getClass());
+        }
+    }
+
+    
+
+    public void testIoProviderWriters2() {
 
         System.out.println();
         for (int i = 0; i < ioIds.length; i++) {
             System.out.println("--> " + i + " " + ioIds[i] + " " + classWriters[i].getName());
             assertEquals("Error Writer " + ioIds[i],
                     classWriters[i],
-                    ByteIOProvider.getInstance().getByteWriter(ioIds[i]).getClass());
+                    ByteIOProvider.getInstance()
+                    		.getByteWriter(
+                    				BasicFileSchema.newFixedSchema(ioIds[i], false, 40, "")
+                    		).getClass());
         }
     }
 

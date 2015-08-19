@@ -108,7 +108,8 @@ public class TstRecordIOReader extends TestCase {
     private void binReadCheck(String id,  String fileName, LayoutDetail copyBook,
             byte[][] lines2Test)
     throws IOException, RecordException {
-        AbstractLineReader tReader = LineIOProvider.getInstance().getLineReader(Constants.IO_FIXED_LENGTH);
+        @SuppressWarnings("deprecation")
+		AbstractLineReader tReader = LineIOProvider.getInstance().getLineReader(Constants.IO_FIXED_LENGTH);
         AbstractLine line;
         int i = 0;
         boolean b;

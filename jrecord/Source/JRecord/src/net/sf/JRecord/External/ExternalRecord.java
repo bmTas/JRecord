@@ -55,7 +55,8 @@ import net.sf.JRecord.ExternalRecordSelection.StreamLine;
  *       LayoutDetail layout = externalLayout.asLayoutDetail();
  * </pre>
  */
-public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
+public class ExternalRecord extends AbstractUpdatableRecord 
+implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 
   private int recordId;
   private int initRecordId; 
@@ -92,6 +93,8 @@ public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchem
   private ArrayList<ExternalRecord> subRecords = new ArrayList<ExternalRecord>();
   private ArrayList<ExternalField> fields = new ArrayList<ExternalField>();
   private final ArrayList<DependingOn> dependingOn = new ArrayList<DependingOn>(3);
+
+  private int lastPosition = -1;
 
 
   /**
@@ -672,6 +675,64 @@ public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchem
 	    return subRecords.get(index);
 	}
 
+	
+//  Code for implementing IBasicSchema
+//
+//	/* (non-Javadoc)
+//	 * @see net.sf.JRecord.Common.IBasicFileSchema#isBinary()
+//	 */
+//	//@Override
+//	public boolean isBinary() {
+//
+//		for (int i = subRecords.size() - 1; i >= 0; i--) {
+//			if (subRecords.get(i).isBinary()) {
+//				return true;
+//			}
+//		}
+//		TypeManager typeMgr = TypeManager.getInstance();
+//		for (int i = fields.size() - 1; i >= 0; i--) {
+//			if (typeMgr.getType(fields.get(i).getType()).isBinary()) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+//
+//	/* (non-Javadoc)
+//	 * @see net.sf.JRecord.Common.IBasicFileSchema#getMaximumRecordLength()
+//	 */
+//	//@Override
+//	public int getMaximumRecordLength() {
+//		int len = 0;
+//		for (int i = subRecords.size() - 1; i >= 0; i--) {
+//			len = Math.max(len, subRecords.get(i).getMaximumRecordLength());
+//		}
+//		
+//		for (int i = fields.size() - 1; i >= 0; i--) {
+//			len = Math.max(len, fields.get(i).getPos() + fields.get(i).getLen() - 1);
+//		}
+//		return len;
+//	}
+
+	public ExternalRecord getRecord(String recordName) {
+	    if (recordName == null || "".equals(recordName)) {
+	    	throw new RuntimeException("Invalid Record Name: " + recordName);
+	    }
+	    
+	    for (int i = subRecords.size() - 1; i >= 0; i--) {
+	    	ExternalRecord rec = subRecords.get(i);
+			if (recordName.equalsIgnoreCase(rec.getRecordName())) {
+	    		return rec;
+	    	}
+	    }
+	    
+	    StringBuilder b = new StringBuilder("Record Names: ");
+	    for (int i = subRecords.size() - 1; i >= 0; i--) {
+	    	b.append(subRecords.get(i).getRecordName()).append("; ");
+	    }
+
+	    throw new RuntimeException("No Record named \"" + recordName + "\" exists: " + b.toString());
+	}
 
 
 	/**
@@ -738,6 +799,7 @@ public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchem
 	}
 
 
+	
 	/**
 	 * Add a field to the Record with the field length (and calculate the position)
 	 * 
@@ -750,15 +812,30 @@ public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchem
 	 */
 	@Override
 	public ExternalRecord addFieldByLength(String name, int type, int length, int decimal) {
-		int pos = 1;
-		if (fields.size() > 0) {
-			ExternalField lf = fields.get(fields.size() - 1);
-			pos = lf.getPos() + lf.getLen();
-		}
-		addRecordField(new ExternalField(pos, length, name, "", type, decimal, 0, "", "", "", 0));
+		addRecordField(new ExternalField(calcNextPos(), length, name, "", type, decimal, 0, "", "", "", 0));
 		return this;
 	}
 	
+	
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.External.FixedWidthSchemaBuilders.IByLengthBuilder#skipBytes(int)
+	 */
+	@Override
+	public ExternalRecord skipBytes(int numberOfBytes) {
+		lastPosition = calcNextPos() + numberOfBytes;
+		return null;
+	}
+	
+	private int calcNextPos() {
+		int pos = 1;
+		if (fields.size() > 0) {
+			ExternalField lf = fields.get(fields.size() - 1);
+			pos = Math.max(lastPosition, lf.getPos() + lf.getLen());
+		}
+		return pos;
+	}
+
 	/**
 	 * Add a field to the Record using the Field position and calculating lengths
 	 * 
@@ -770,14 +847,34 @@ public class ExternalRecord extends AbstractUpdatableRecord implements ICsvSchem
 	 * @return This Record.
 	 */
 	@Override
-	public ExternalRecord addFieldByPosition(String name, int type, int pos, int decimal) {
+	public ExternalRecord addFieldByPosition(String name, int type, int pos, int decimal) { 
 		int length = 1;
-		if (fields.size() > 0) {
-			ExternalField lf = fields.get(fields.size() - 1);
-			lf.setLen(pos -  lf.getPos());
-		}
+		
+		setLastFieldsLength(pos);
+
 		addRecordField(new ExternalField(pos, length, name, "", type, decimal, 0, "", "", "", 0));
 		return this;
+	}
+
+	
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.External.FixedWidthSchemaBuilders.IByPositionBuilder#skipFieldPosition(int)
+	 */
+	@Override
+	public ExternalRecord skipFieldPosition(int pos) {
+		setLastFieldsLength(pos);
+		lastPosition = pos;
+		return this;
+	}
+	
+	private void setLastFieldsLength(int pos) {
+		if (fields.size() > 0) {
+			ExternalField lf = fields.get(fields.size() - 1);
+			if (lf.getPos() >= lastPosition) {
+				lf.setLen(pos -  lf.getPos());
+			}
+		}
+
 	}
 
 	/**

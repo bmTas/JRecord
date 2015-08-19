@@ -11,8 +11,8 @@ import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.IO.CobolIoProvider;
-import net.sf.JRecord.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.cb2xml.def.Cb2xmlConstants;
 import junit.framework.TestCase;
 
@@ -228,42 +228,6 @@ public class TstCobolIOBuilderSchema extends TestCase {
 	}
 
 	
-	private void printBldr(ICobolIOBuilder ioBuilder, TstData data) throws RecordException, IOException {
-		ioBuilder
-			.setCopybookFileFormat(data.copybookFileFormat)
-			.setDropCopybookNameFromFields(data.dropCopybookNameFromFields)
-			.setFileOrganization(data.fileOrganization)
-			.setFont(data.font)
-			.setSplitCopybook(data.splitCopybook);
-		
-		
-		LayoutDetail schema = ioBuilder.getLayout();
-		RecordDetail rec;
-		FieldDetail fld;
-		
-		System.out.println();
-		System.out.println("\tIFieldDetail[][] " + data.testId + " = {" );
-		
-		for (int i = 0; i < schema.getRecordCount(); i++) {
-			rec = schema.getRecord(i);
-			System.out.println("\t\t{");
-			for (int j = 0; j < rec.getFieldCount(); j++) {
-				fld = rec.getField(j);
-				System.out.println(
-							"\t\t\tbldType("
-							+ "\"" + fld.getName() + "\""
-							+ ", " + fld.getPos()
-							+ ", " + fld.getLen()
-							+ ", " + fld.getDecimal()
-							+ ", " + fld.getType()
-							+ ", \"" + fld.getFontName()  + "\""
-							+ "),"
-						);
-			}
-			System.out.println("\t\t},");
-		}
-		System.out.println("\t};");
-	}
 	
 	private IFieldDetail[][] dropFromFieldName(IFieldDetail[][] flds, int len) {
 		IFieldDetail[][] ret = new IFieldDetail[flds.length][];

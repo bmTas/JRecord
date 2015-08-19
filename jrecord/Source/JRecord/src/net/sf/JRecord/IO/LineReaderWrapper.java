@@ -85,6 +85,13 @@ public class LineReaderWrapper extends AbstractLineReader {
     }
 
 	/**
+	 * @return the reader
+	 */
+	public final IByteReader getReader() {
+		return reader;
+	}
+
+	/**
 	 * @param reader the reader to set
 	 */
 	public final void setReader(IByteReader reader) {

@@ -62,6 +62,13 @@ public class LineWriterWrapper extends AbstractLineWriter {
     }
 
 	/**
+	 * @return the writer
+	 */
+	public final AbstractByteWriter getWriter() {
+		return writer;
+	}
+
+	/**
 	 * @param writer the writer to set
 	 */
 	public final void setWriter(AbstractByteWriter writer) {

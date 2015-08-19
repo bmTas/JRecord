@@ -133,6 +133,8 @@ public interface AbstractLine extends AbstractIndexedLine {
      * Set the line provider
      *
      * @param pLineProvider The lineProvider to set.
+     * 
+     * @deprecated for use in JRecord
      */
     public abstract void setLineProvider(LineProvider pLineProvider);
 
@@ -143,6 +145,8 @@ public interface AbstractLine extends AbstractIndexedLine {
      * @param fieldIdx Index of the required field
      *
      * @return the request field (formated)
+     *
+     * @deprecated for use in JRecord, otherwise use {@link AbstractLine#getFieldValue(int, int)}
      */
     public abstract Object getField(final int recordIdx, final int fieldIdx);
 
@@ -154,7 +158,7 @@ public interface AbstractLine extends AbstractIndexedLine {
      *
      * @return fields Value
      *
-     * @deprecated use getFieldValue
+     * @deprecated use {@link AbstractLine#getFieldValue(String)}
      */
     public abstract Object getField(String fieldName);
 
@@ -186,6 +190,16 @@ public interface AbstractLine extends AbstractIndexedLine {
      */
     public abstract AbstractFieldValue getFieldValue(String fieldName);
 
+    
+    /**
+     * Get a fields value
+     *
+     * @param fieldName field to retrieve
+     *
+     * @return fields Value
+     */
+   public abstract AbstractFieldValue getFieldValueIfExists(String fieldName);
+
     /**
      * Set a field via its name
      *
@@ -193,8 +207,8 @@ public interface AbstractLine extends AbstractIndexedLine {
      * @param value value to be applied to the field
      *
      * @throws RecordException any conversion error
-    *
-     * @deprecated use getFieldValue(..).set
+     *
+     * @deprecated use {@link AbstractLine#getFieldValue(IFieldDetail)}.set(..)
      */
     public abstract void setField(String fieldName, Object value)
             throws RecordException;
@@ -207,6 +221,7 @@ public interface AbstractLine extends AbstractIndexedLine {
      * @param val new value
      *
      * @throws RecordException any error that occurs during the save
+     * @deprecated for use in JRecord, use {@link AbstractLine#getFieldValue(int, int)}.set(..)
      */
     public abstract void setField(final int recordIdx, final int fieldIdx,
             Object val) throws RecordException;
@@ -218,6 +233,7 @@ public interface AbstractLine extends AbstractIndexedLine {
      * @param value value to set the field to
      *
      * @throws RecordException any error that occurs
+     * @deprecated for use in JRecord, use {@link AbstractLine#getFieldValue(IFieldDetail)}.set(..)
      */
     public abstract void setField(IFieldDetail field, Object value)
             throws RecordException;
@@ -264,4 +280,35 @@ public interface AbstractLine extends AbstractIndexedLine {
      * @return iterator over fields
      */
     public abstract FieldIterator getFieldIterator(int recordNumber);
+
+    /**
+     * Check if a field is defined in the record (or line).
+     * <br>For Csv / Xml files, the field must exist in the "record"
+     * <br>For Fixed width files<ul>
+     *   <li>The record must be long enough to hold the field
+     *   <li>The field value must not be hex zero's. This creates a potential problem with
+     * Comp fields.
+     * </ul>  
+     * 
+     * @param rec Record Index
+     * @param fldNum Field Index
+     * 
+     * @return wether the field exists in the line
+     */
+    public boolean isDefined(int rec, int fldNum);
+
+    
+    /**
+    * Check if a field is defined in the record (or line).
+     * <br>For Csv / Xml files, the field must exist in the "record"
+     * <br>For Fixed width files<ul>
+     *   <li>The record must be long enough to hold the field
+     *   <li>The field value must not be hex zero's. This creates a potential problem with
+     * Comp fields.
+     * </ul>  
+     * 
+     * @param fld field-defi9ni9tion
+     * @return wether the field exists in the line
+     */
+    public boolean isDefined(IFieldDetail fld);
 }

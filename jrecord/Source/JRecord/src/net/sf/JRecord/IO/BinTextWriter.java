@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sf.JRecord.ByteIO.ByteTextWriter;
-import net.sf.JRecord.ByteIO.FixedLengthByteWriter;
+import net.sf.JRecord.ByteIO.BinaryByteWriter;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -51,7 +51,7 @@ public class BinTextWriter extends LineWriterWrapper {
 	@Override
 	public void write(AbstractLine line) throws IOException {
 		if (toOpen) {
-			FixedLengthByteWriter writer = new FixedLengthByteWriter(false, false, line.getLayout().getRecordSep());
+			BinaryByteWriter writer = new BinaryByteWriter(false, false, line.getLayout().getRecordSep());
 			toOpen = false;
 			super.setWriter(writer);
 			super.open(oStream);

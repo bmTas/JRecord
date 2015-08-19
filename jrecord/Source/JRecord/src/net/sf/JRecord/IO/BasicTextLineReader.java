@@ -33,7 +33,7 @@ public abstract class BasicTextLineReader extends AbstractLineReader {
 	  }
 
 	/**
-	 * @see net.sf.JRecord.IO.StandardLineReader#read()
+	 * @see net.sf.JRecord.JRecordInterface1#read()
 	 */
 	public AbstractLine read() throws IOException {
 	    AbstractLine ret = null;
@@ -51,7 +51,7 @@ public abstract class BasicTextLineReader extends AbstractLineReader {
 	}
 
 	/**
-	 * @see net.sf.JRecord.IO.StandardLineReader#close()
+	 * @see net.sf.JRecord.JRecordInterface1#close()
 	 */
 	public void close() throws IOException {
 	

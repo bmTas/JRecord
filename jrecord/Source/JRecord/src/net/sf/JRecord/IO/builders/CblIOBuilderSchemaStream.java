@@ -7,8 +7,9 @@ import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ICopybookLoaderStream;
 import net.sf.JRecord.External.ISetDropCopybookName;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
-public class CblIOBuilderSchemaStream extends CblIOBuilderBase {
+public class CblIOBuilderSchemaStream extends CblIOBuilderBase implements ICobolIOBuilder {
 
 	private final InputStream copybookStream;
 	private final String copybookName;

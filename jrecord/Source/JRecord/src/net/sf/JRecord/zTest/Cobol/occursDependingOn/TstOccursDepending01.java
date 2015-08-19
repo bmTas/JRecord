@@ -9,8 +9,8 @@ import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.IO.CobolIoProvider;
-import net.sf.JRecord.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import junit.framework.TestCase;
 
 public class TstOccursDepending01 extends TestCase {

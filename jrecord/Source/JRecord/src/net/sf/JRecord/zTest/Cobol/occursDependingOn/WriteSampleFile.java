@@ -6,8 +6,8 @@ import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.IO.CobolIoProvider;
-import net.sf.JRecord.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
 public class WriteSampleFile {
 

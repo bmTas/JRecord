@@ -84,7 +84,7 @@ public class LayoutDetail implements IBasicFileSchema {
 	private String layoutName;
 	private String description;
 	private byte[] recordSep;
-	private int layoutType;
+	private final int layoutType;
 	private RecordDetail[] records;
 	private boolean binary = false, binaryField=false;
 	private String fontName = "";
@@ -102,6 +102,8 @@ public class LayoutDetail implements IBasicFileSchema {
 	private boolean treeStructure = false;
 
 	private final boolean multiByteCharset, csvLayout;
+	
+	private final byte spaceByte;
 	
 
 	/**
@@ -150,13 +152,19 @@ public class LayoutDetail implements IBasicFileSchema {
 		    fontName = "";
 		}
 		this.multiByteCharset = Conversion.isMultiByte(fontName);
+		byte[] t = Conversion.getBytes(" ", fontName);
+		if (t.length == 0) {
+			this.spaceByte = t[0];
+		} else {
+			this.spaceByte = 0;
+		}
 
 		while (recordCount > 0 && pRecords[recordCount - 1] == null) {
 		    recordCount -= 1;
 		}
 
 		if (recordSep == null) {
-			if (fontName == null || "".equals(fontName)) {
+			if ("".equals(fontName)) {
 				recordSep = Constants.SYSTEM_EOL_BYTES;
 			} else {
 				recordSep = CommonBits.getEolBytes(null, "", fontName);
@@ -332,7 +340,23 @@ public class LayoutDetail implements IBasicFileSchema {
 		return records[recordNum];
 	}
 
-
+	/**
+	 * Return record by record name
+	 * @param recordName requested record name
+	 * @return requested record.
+	 */
+	public RecordDetail getRecord(String recordName) {
+		if (recordName == null) {
+			throw new RuntimeException("Record name can not be null");
+		}
+		for (RecordDetail rec : records) {
+			 if (recordName.equalsIgnoreCase(rec.getRecordName())) {
+				 return rec;
+			 }
+		}
+		throw new RuntimeException("Record: " + recordName + " was not found");
+	}
+	
 	/**
 	 * get number of records in the layout
 	 *
@@ -431,16 +455,17 @@ public class LayoutDetail implements IBasicFileSchema {
      * @return file structure
      */
     public int getFileStructure() {
-        int ret = fileStructure;
+        int ret;// = fileStructure;
 
         if (fileStructure == Constants.IO_NAME_1ST_LINE &&  isBinCSV()) {
         	ret = Constants.IO_BIN_NAME_1ST_LINE;
         } else if (fileStructure > Constants.IO_TEXT_LINE) {
+        	ret = fileStructure;
         } else if (fileStructure == Constants.IO_TEXT_LINE) {
 			ret = checkTextType();
         } else if (getLayoutType() == Constants.rtGroupOfBinaryRecords
                &&  recordCount > 1) {
-		    ret = Constants.IO_BINARY;
+		    ret = Constants.IO_BINARY_IBM_4680;
 		} else if (isBinary()) {
 		    ret = Constants.IO_FIXED_LENGTH;
 		} else if ( isBinCSV()) {
@@ -502,6 +527,14 @@ public class LayoutDetail implements IBasicFileSchema {
 
 
     /**
+	 * @param decider the decider to set
+	 */
+	protected final void setDecider(RecordDecider decider) {
+		this.decider = decider;
+	}
+
+
+	/**
      * Get a fields value
      *
      * @param record record containg the field
@@ -847,6 +880,14 @@ public class LayoutDetail implements IBasicFileSchema {
 	public Map<String, IFieldDetail> getRecordFieldNameMap() {
 		buildFieldNameMap();
 		return new HashMap<String, IFieldDetail>(recordFieldNameMap);
+	}
+
+
+	/**
+	 * @return the spaceByte
+	 */
+	public final byte getSpaceByte() {
+		return spaceByte;
 	}
 
 

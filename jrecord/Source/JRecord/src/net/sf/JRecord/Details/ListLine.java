@@ -75,6 +75,8 @@ public abstract class ListLine extends BaseLine {
 	public Object getField(int typeId, IFieldDetail field) {
 	    return getFieldRaw(preferredLayout, field.getPos() - getAdj());
 	}
+	
+	
 
 	/**
 	 * @see net.sf.JRecord.Details.AbstractLine#getField(int, int)
@@ -282,5 +284,15 @@ public abstract class ListLine extends BaseLine {
 			fldDef = layout.getRecord(preferredLayout).getField(fieldName);
 		}
 		return fldDef;
+	}
+	
+	@Override
+	public boolean isDefined(IFieldDetail fld) {
+		return isDefined(0, fld.getPos() - getAdj());
+	}
+	
+	@Override
+	public boolean isDefined(int rec, int pos) {
+		return fields != null && pos < fields.size() && fields.get(pos) != null;
 	}
 }

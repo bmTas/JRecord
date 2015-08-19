@@ -59,13 +59,28 @@ public class RecordEditorXmlWriter implements CopybookWriter {
 
        writer.writeStartDocument(STANDARD_FONT, "1.0");
 
-       writeRecord(writer, null, copybook);
+       writeRecord(writer, null, copybook, hasGroupDetails(copybook));
 
        writer.writeEndDocument();
        writer.close();
        outStream.close();
 	}
 
+	private boolean hasGroupDetails(ExternalRecord copybook) {
+		for (int i = copybook.getNumberOfRecords() - 1; i >= 0; i--) {
+			if (hasGroupDetails(copybook.getRecord(i))) {
+				return true;
+			}
+		}
+		
+		for (int i = copybook.getNumberOfRecordFields() - 1; i >= 0; i--) {
+			String group = copybook.getRecordField(i).getGroup();
+			if (group != null && group.length() > 0) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * Write a Record to the XML file
@@ -73,7 +88,9 @@ public class RecordEditorXmlWriter implements CopybookWriter {
 	 * @param copybook copybook to be written
 	 * @throws XMLStreamException any error that occurs
 	 */
-	private void writeRecord(XMLStreamWriter writer, ExternalRecord master, ExternalRecord copybook) throws XMLStreamException {
+	@SuppressWarnings("deprecation")
+	private void writeRecord(XMLStreamWriter writer, ExternalRecord master, ExternalRecord copybook, boolean hasGroup)
+			throws XMLStreamException {
 	   int i;
 	   boolean toPrint = true;
 	   String s;
@@ -134,7 +151,7 @@ public class RecordEditorXmlWriter implements CopybookWriter {
     	   writer.writeStartElement(Constants.RE_XML_RECORDS);
 
     	   for (i = 0; i < copybook.getNumberOfRecords(); i++) {
-    		   writeRecord(writer, copybook, copybook.getRecord(i));
+    		   writeRecord(writer, copybook, copybook.getRecord(i), hasGroup);
     	   }
     	   writer.writeEndElement();
        }
@@ -150,16 +167,17 @@ public class RecordEditorXmlWriter implements CopybookWriter {
        }
 
        if (copybook.getNumberOfRecordFields() > 0) {
+    	   String lastGroupName = null;
     	   writer.writeStartElement(Constants.RE_XML_FIELDS);
 
     	   for (i = 0; i < copybook.getNumberOfRecordFields(); i++) {
-    		   writeField(writer, copybook.getRecordField(i));
+    		   lastGroupName = writeField(writer, copybook.getRecordField(i), hasGroup, lastGroupName);
     	   }
     	   writer.writeEndElement();
        }
 
        writer.writeEndElement();
-	}
+ 	}
 
 	private String encodeDelim(String delim) {
 		if ("\t".equals(delim)) {
@@ -179,15 +197,15 @@ public class RecordEditorXmlWriter implements CopybookWriter {
     	   writeTstField(writer, (ExternalFieldSelection) sel);
     	   break;
        case RecordSel.TYPE_AND:
-    	   writeGroup(writer, (ExternalGroupSelection) sel, Constants.RE_XML_AND_FIELDS);
+    	   writeSelectionGroup(writer, (ExternalGroupSelection) sel, Constants.RE_XML_AND_FIELDS);
     	   break;
        case RecordSel.TYPE_OR:
-    	   writeGroup(writer, (ExternalGroupSelection) sel, Constants.RE_XML_OR_FIELDS);
+    	   writeSelectionGroup(writer, (ExternalGroupSelection) sel, Constants.RE_XML_OR_FIELDS);
     	   break;
        }
 	}
 
-	private void writeGroup(XMLStreamWriter writer, ExternalGroupSelection g, String s)
+	private void writeSelectionGroup(XMLStreamWriter writer, ExternalGroupSelection g, String s)
 			throws XMLStreamException {
 
 		writer.writeStartElement(s);
@@ -205,7 +223,7 @@ public class RecordEditorXmlWriter implements CopybookWriter {
 	 * @param fld field to write
 	 * @throws XMLStreamException any error
 	 */
-	private void writeField(XMLStreamWriter writer, ExternalField fld)
+	private String writeField(XMLStreamWriter writer, ExternalField fld, boolean hasGroups, String lastGroup)
 	throws XMLStreamException {
 		writer.writeEmptyElement(Constants.RE_XML_FIELD);
 	    writer.writeAttribute(Constants.RE_XML_NAME, fld.getName());
@@ -225,6 +243,14 @@ public class RecordEditorXmlWriter implements CopybookWriter {
 	    writeAttr(writer, Constants.RE_XML_DEFAULT, fld.getDefault());
 	    writeAttr(writer, Constants.RE_XML_COBOLNAME, fld.getCobolName());
 	    //writer.writeAttribute(Constants.RE_XML_SUBKEY, Integer.toString(fld.getSubKey()));
+	    if (hasGroups) {
+	    	String g = fld.getGroup();
+	    	if (lastGroup == null || ! lastGroup.equalsIgnoreCase(g)) {
+	    		writeAttr(writer, Constants.RE_XML_GROUP_NAMES, fld.getGroup());
+	    	}
+	    	lastGroup = g;
+	    }
+	    return lastGroup;
 	}
 
 

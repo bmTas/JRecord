@@ -288,7 +288,7 @@ public class TypeNum extends TypeChar {
 
 	    if (val != null && val.length() > 0) {
 	    	String v = Conversion.numTrim(val, decimalPoint);
-	    	if (val.charAt(0) == '0' && ( v.length() == 0 || v.charAt(0) == '.' || v.charAt(0) == ',' || v.charAt(0) == decimalPoint)) {
+	    	if (( v.length() == 0 || v.charAt(0) == '.' || v.charAt(0) == ',' || v.charAt(0) == decimalPoint)) {
 	    		v = '0' + v;
 	    	}
 	    	val = v;

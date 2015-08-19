@@ -102,6 +102,14 @@ public abstract class BasicLine extends BaseLine implements AbstractLine {
 
 
 	/**
+	 * 
+	 * @param recordIdx The recordIndex to be used calculate size (when writing the record)
+	 */
+	public void setRecordIdxForOutput(int recordIdx) {
+		setWriteLayout(recordIdx);
+	}
+
+	/**
 	 * @param pWriteLayout The writeLayout to set.
 	 */
 	public void setWriteLayout(final int pWriteLayout) {
@@ -222,4 +230,14 @@ public abstract class BasicLine extends BaseLine implements AbstractLine {
     public void setLineProvider(LineProvider pLineProvider) {
         this.lineProvider = pLineProvider;
     }
+    
+	/**
+	 * Check wether a field is defined in the record
+	 * @param recIdx record Index
+	 * @param fldIdx field Index
+	 * @return wether the field is defined
+	 */
+	public final boolean isDefined(int recIdx, int fldIdx) {
+		return isDefined(layout.getRecord(recIdx).getField(fldIdx));
+	}
 }

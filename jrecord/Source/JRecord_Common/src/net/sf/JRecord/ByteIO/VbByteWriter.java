@@ -22,7 +22,7 @@ package net.sf.JRecord.ByteIO;
  * @author Bruce Martin
  *
  */
-public class VbByteWriter extends FixedLengthByteWriter {
+public class VbByteWriter extends BinaryByteWriter {
 
     /**
      *

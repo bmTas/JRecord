@@ -81,8 +81,10 @@ public class LineCompare implements Comparator<AbstractLine> {
         while (ret == 0 && i < this.numFields2compare) {
             idx = fields2compare[i];
             if (fieldType[i] == Type.NT_DATE) {
-                Date d1 = toDate(l1.getField(this.recordIdx, idx));
-                Date d2 = toDate(l2.getField(this.recordIdx, idx));
+                @SuppressWarnings("deprecation")
+				Date d1 = toDate(l1.getField(this.recordIdx, idx));
+                @SuppressWarnings("deprecation")
+				Date d2 = toDate(l2.getField(this.recordIdx, idx));
                 if (d1 == null) {
                     ret = -1;
                     if (d2 == null) {
@@ -105,8 +107,10 @@ public class LineCompare implements Comparator<AbstractLine> {
             		ret = -1;
             	}
             } else {
-                String s1 = toString(l1.getField(this.recordIdx, idx));
-                String s2 = toString(l2.getField(this.recordIdx, idx));
+                @SuppressWarnings("deprecation")
+				String s1 = toString(l1.getField(this.recordIdx, idx));
+                @SuppressWarnings("deprecation")
+				String s2 = toString(l2.getField(this.recordIdx, idx));
 
                 if (fieldType[i] != Type.NT_TEXT) {
                     try {

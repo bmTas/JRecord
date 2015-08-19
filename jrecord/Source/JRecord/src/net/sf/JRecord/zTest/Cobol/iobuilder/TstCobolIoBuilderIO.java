@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.FieldDetail;
+import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -17,7 +20,8 @@ import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.IO.CobolIoProvider;
-import net.sf.JRecord.IO.builders.ICobolIOBuilder;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
+import net.sf.JRecord.def.IO.builders.IIOBuilder;
 import net.sf.JRecord.zTest.Common.TstConstants;
 import junit.framework.TestCase;
 
@@ -61,10 +65,83 @@ public class TstCobolIoBuilderIO extends TestCase {
 			
 					.getBytes();
 
+	
+	private static final FieldDetail[] EXPECTED_DTAR020 = {
+		bldType("DTAR020-KEYCODE-NO", 1, 8, 0, 0, "CP037"),
+		bldType("DTAR020-STORE-NO", 9, 2, 0, 31, "CP037"),
+		bldType("DTAR020-DATE", 11, 4, 0, 31, "CP037"),
+		bldType("DTAR020-DEPT-NO", 15, 2, 0, 31, "CP037"),
+		bldType("DTAR020-QTY-SOLD", 17, 5, 0, 31, "CP037"),
+		bldType("DTAR020-SALE-PRICE", 22, 6, 2, 31, "CP037"),
+	};
+	
+	public void testDTAR020SchemaLoad1() throws RecordException, IOException {
+			ICobolIOBuilder ioBuilder = CobolIoProvider.getInstance()
+					.newIOBuilder(new ByteArrayInputStream(COPBOOK_BYTES), "DTAR020")
+						.setFileOrganization(Constants.IO_FIXED_LENGTH)
+						.setFont("CP037");
+	    	LayoutDetail l = ioBuilder.getLayout();
+	    	RecordDetail r = l.getRecord(0);
+	    	
+	    	for (int i = 0; i < r.getFieldCount(); i++) {
+	    		FieldDetail field = r.getField(i);
+	    		FieldDetail ef = EXPECTED_DTAR020[i];
+	    		
+	    		assertEquals(ef.getName(), field.getName());
+	       		assertEquals(ef.getPos(),  field.getPos());
+	       		assertEquals(ef.getLen(),  field.getLen());
+	       		assertEquals(ef.getDecimal(), field.getDecimal());
+	       		assertEquals(ef.getType(), field.getType());
+//				System.out.println("\tbldType(\"" + field.getName() 
+//						+ "\", " + field.getPos()
+//						+ ", "   + field.getLen()
+//						+ ", "   + field.getDecimal()
+//						+ ", "   + field.getType()
+//						+ ", \"" + l.getFontName() 
+//						+ "\"),"
+//				);
+	    	}
+	    	
+	    	chkDTAR020_Layout(l);
+	   }
+	   
+	
+	public void testDTAR020SchemaLoad2() throws RecordException, IOException {
+		ICobolIOBuilder ioBuilder = CobolIoProvider.getInstance()
+				.newIOBuilder(new ByteArrayInputStream(COPBOOK_BYTES), "DTAR020")
+					.setFileOrganization(Constants.IO_FIXED_LENGTH)
+					.setFont("CP037")
+					.setDropCopybookNameFromFields(true);
+    	LayoutDetail l = ioBuilder.getLayout();
+    	RecordDetail r = l.getRecord(0);
+    	
+    	for (int i = 0; i < r.getFieldCount(); i++) {
+    		FieldDetail field = r.getField(i);
+    		FieldDetail ef = EXPECTED_DTAR020[i];
+    		
+    		assertEquals(ef.getName().substring(8), field.getName());
+       		assertEquals(ef.getPos(),  field.getPos());
+       		assertEquals(ef.getLen(),  field.getLen());
+       		assertEquals(ef.getDecimal(), field.getDecimal());
+       		assertEquals(ef.getType(), field.getType());
+    	}
+    	
+    	chkDTAR020_Layout(l);
+   }
+
+	   private void chkDTAR020_Layout(LayoutDetail l) { 	
+	    	assertEquals(EXPECTED_DTAR020.length, l.getRecord(0).getFieldCount());
+	    	assertEquals("CP037", l.getFontName());
+	    	assertEquals(1, l.getRecordCount());
+	    	assertEquals(27, l.getMaximumRecordLength());
+	    	assertEquals(Constants.IO_FIXED_LENGTH, l.getFileStructure());
+	    	assertEquals(Constants.rtBinaryRecord, l.getLayoutType());
+	 }
+
 	/**
 	 * Check Reading a File / Stream with an IOBuilder
 	 */
-	public void testReader() throws FileNotFoundException, IOException, RecordException {
+	public void testReader1() throws FileNotFoundException, IOException, RecordException {
 		ICobolIOBuilder ioBuilder = CobolIoProvider.getInstance()
 										.newIOBuilder(new ByteArrayInputStream(COPBOOK_BYTES), "DTAR020")
 											.setFileOrganization(Constants.IO_FIXED_LENGTH)
@@ -74,15 +151,43 @@ public class TstCobolIoBuilderIO extends TestCase {
 		check(ioBuilder.newReader(new FileInputStream(dataFile)));
 	}
 	
+	
+	/**
+	 * Check Reading a File / Stream with an IOBuilder
+	 */
+	public void testReader2() throws FileNotFoundException, IOException, RecordException {
+		ICobolIOBuilder ioBuilder = JRecordInterface1.COBOL
+										.newIOBuilder(new ByteArrayInputStream(COPBOOK_BYTES), "DTAR020")
+											.setFileOrganization(Constants.IO_FIXED_LENGTH)
+											.setFont("CP037");
+		String dataFile = this.getClass().getResource("DTAR020_tst1.bin").getFile();
+		check(ioBuilder.newReader(dataFile));
+		check(ioBuilder.newReader(new FileInputStream(dataFile)));
+	}
+
 	/**
 	 * Check writing a Fixed Width Records to  Filename and a Stream
 	 */
-	public void testFixedWriter() throws IOException, RecordException {
+	public void testFixedWriter1() throws IOException, RecordException {
 		ICobolIOBuilder ioBuilder = CobolIoProvider.getInstance()
 				.newIOBuilder(new ByteArrayInputStream(COPBOOK_BYTES), "DTAR020")
 					.setFileOrganization(Constants.IO_FIXED_LENGTH)
 					.setFont("CP037");
-		
+		tstWrite(ioBuilder);
+	}
+
+	/**
+	 * Check writing a Fixed Width Records to  Filename and a Stream
+	 */
+	public void testFixedWriter2() throws IOException, RecordException {
+		ICobolIOBuilder ioBuilder = JRecordInterface1.COBOL
+				.newIOBuilder(new ByteArrayInputStream(COPBOOK_BYTES), "DTAR020")
+					.setFileOrganization(Constants.IO_FIXED_LENGTH)
+					.setFont("CP037");
+		tstWrite(ioBuilder);
+	}
+
+	private void tstWrite(ICobolIOBuilder ioBuilder) throws IOException, RecordException {
 		List<AbstractLine> lines = getLines(ioBuilder);
 		byte[] bytes = writeList(ioBuilder, lines);
 		int recordLength = ioBuilder.getLayout().getMaximumRecordLength();
@@ -183,6 +288,8 @@ public class TstCobolIoBuilderIO extends TestCase {
 		writer.close();
 	}
 	
+	
+	@SuppressWarnings("deprecation")
 	private List<AbstractLine> getLines(ICobolIOBuilder ioBuilder) throws IOException, RecordException {
 		ArrayList<AbstractLine> lines = new ArrayList<AbstractLine>(EXPECTED.length);
 		
@@ -210,5 +317,12 @@ public class TstCobolIoBuilderIO extends TestCase {
 			lineNo+=1;
 		}
 		r.close();
+	}
+	
+	private static FieldDetail bldType(String name, int pos, int len, int decimal, int type, String font) {
+		FieldDetail fd = new FieldDetail(name, "", type, decimal, font, 0, "");
+		fd.setPosLen(pos, len);
+		
+		return fd;
 	}
 }

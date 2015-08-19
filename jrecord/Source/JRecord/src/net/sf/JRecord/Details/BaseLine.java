@@ -1,6 +1,5 @@
 package net.sf.JRecord.Details;
 
-import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.IFieldDetail;
 
 public abstract class BaseLine implements AbstractLine {
@@ -33,21 +32,35 @@ public abstract class BaseLine implements AbstractLine {
     public abstract Object getField(int type, IFieldDetail field);
 
 //	@Override
-	public final AbstractFieldValue getFieldValue(IFieldDetail field) {
+	public IFieldValue getFieldValue(IFieldDetail field) {
 		return new FieldValue(this, field);
 	}
 
 	@Override
-	public final AbstractFieldValue getFieldValue(int recordIdx, int fieldIdx) {
+	public  IFieldValue getFieldValue(int recordIdx, int fieldIdx) {
 		return new FieldValue(this, recordIdx, fieldIdx);
 	}
 
 	@Override
-	public final AbstractFieldValue getFieldValue(String fieldName) {
-		return  getFieldValue(layout.getFieldFromName(fieldName));
+	public final IFieldValue getFieldValue(String fieldName) {
+		IFieldDetail fieldFromName = layout.getFieldFromName(fieldName);
+		
+		if (fieldFromName == null) {
+			throw new RuntimeException("Field: \"" + fieldName +"\" does not exist !!!");
+		}
+		
+		return  getFieldValue(fieldFromName);
 	}
 
 
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.Details.AbstractLine#getFieldValueIfExists(java.lang.String)
+	 */
+	@Override
+	public IFieldValue getFieldValueIfExists(String fieldName) {
+		return  getFieldValue(layout.getFieldFromName(fieldName));
+	}
 
 	/**
 	 * Get Field Iterator for the requested Record-Type

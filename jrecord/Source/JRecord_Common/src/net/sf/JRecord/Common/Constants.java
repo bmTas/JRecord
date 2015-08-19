@@ -52,13 +52,25 @@ public interface Constants {
     public static final int IO_FIXED_LENGTH_RECORDS = 2;
     	/** Alias for IO_FIXED_LENGTH_RECORDS */
     public static final int IO_FIXED_LENGTH = IO_FIXED_LENGTH_RECORDS;
-    public static final int IO_BINARY       = 3;
+    public static final int IO_BINARY_IBM_4680       = 3;
     public static final int IO_VB           = 4;
     public static final int IO_VB_DUMP      = 5;
     public static final int IO_VB_FUJITSU   = 7;
     public static final int IO_VB_OPEN_COBOL   = 8;
     public static final int IO_BIN_TEXT     = 9;
     public static final int IO_FIXED_LENGTH_CHAR = 10;
+    
+    /**
+     * IO_CONTINOUS_NO_LINE_MARKER is for files where there are no 
+     * <i>End-of-Line</i> markers. Records are based on Record-Lengths.
+     * <p>If there are more than 1 record type, you <b>MUST</b> set 
+     * record-Selection criteria <b>!!!</b> 
+     * 
+     * <p>Also <b>try and</b> <font color="red"><b>Avoid</b></font> using 
+     * <b>IO_CONTINOUS_NO_LINE_MARKER</b> if you can, it is always going to be error prone. 
+     * I have provided this option just in case there is no other choice.</p>
+     */
+    public static final int IO_CONTINOUS_NO_LINE_MARKER  = 11;
 
     public static final int IO_UNKOWN_FORMAT = 21 /* RecordEditor Format */;
     public static final int IO_WIZARD        = 22 /* RecordEditor Format */;
@@ -111,7 +123,7 @@ public interface Constants {
     @Deprecated public static final int DEFAULT_IO       = IO_DEFAULT;
     @Deprecated public static final int TEXT_LINE_IO     = IO_TEXT_LINE;
     @Deprecated public static final int FIXED_LENGTH_IO  = IO_FIXED_LENGTH;
-    @Deprecated public static final int BINARY_IO        = IO_BINARY;
+    @Deprecated public static final int BINARY_IO        = IO_BINARY_IBM_4680;
     @Deprecated public static final int VB_LINE_IO       = IO_VB;
     @Deprecated public static final int VB_DUMP_LINE_IO  = IO_VB_DUMP;
     @Deprecated public static final int VB_FUJ_LINE_IO   = IO_VB_FUJITSU;
@@ -163,6 +175,7 @@ public interface Constants {
 	public static final String RE_XML_OPERATOR    = "OPERATOR";
 	public static final String RE_XML_DEFAULT     = "DEFAULT";
 	public static final String RE_XML_COBOLNAME   = "COBOLNAME";
+	public static final String RE_XML_GROUP_NAMES = "GROUPNAMES";
 	public static final String RE_XML_PARAMETER   = "PARAMETER";
 	public static final String RE_XML_CELLFORMAT  = "CELLFORMAT";
 	public static final String RE_XML_POS         = "POSITION";

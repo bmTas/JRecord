@@ -8,6 +8,23 @@ public class ExternalGroupSelection<fs extends ExternalSelection> implements Ext
 	private int type = ExternalSelection.TYPE_AND;
 
 
+	public static ExternalGroupSelection<ExternalSelection> newAnd(ExternalSelection... selections) {
+		ExternalGroupSelection<ExternalSelection> ret = new ExternalGroupSelection<ExternalSelection>(selections.length);
+		
+		ret.addAll(selections);
+		
+		return ret;
+	}
+	
+	public static ExternalGroupSelection<ExternalSelection> newOr(ExternalSelection... selections) {
+		ExternalGroupSelection<ExternalSelection> ret = new ExternalGroupSelection<ExternalSelection>(selections.length);
+		ret.type = ExternalSelection.TYPE_OR;
+		
+		ret.addAll(selections);
+		
+		return ret;
+	}
+
 
 	public ExternalGroupSelection() {
 		super();
@@ -29,6 +46,11 @@ public class ExternalGroupSelection<fs extends ExternalSelection> implements Ext
 		return items.add(e);
 	}
 
+	private void addAll(@SuppressWarnings("unchecked") fs...selections ) {
+		for (fs sel: selections) {
+			items.add(sel);
+		}
+	}
 	/**
 	 * @param index
 	 * @return

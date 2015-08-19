@@ -18,6 +18,7 @@ package net.sf.JRecord.ByteIO;
 import java.io.UnsupportedEncodingException;
 
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IBasicFileSchema;
 
 /**
  * LineIOprovider - This class returns a LineIO class appropriate for
@@ -41,11 +42,25 @@ public class ByteIOProvider {
      * @param fileStructure File Structure of the required reader
      *
      * @return line reader
+     * @deprecated for use inside JRecord/RecordEditor, use {@link ByteIOProvider#getByteReader(IBasicFileSchema)}
      */
     public AbstractByteReader getByteReader(int fileStructure) {
         return getByteReader(fileStructure, DEFAULT_RECORD_LENGTH);
     }
 
+    
+    /**
+     * Get ByteReader for schema
+     * @param schema File schema to get the reader for
+     * @return requested byte reader
+     */
+    public AbstractByteReader getByteReader(IBasicFileSchema schema) {
+    	int fileStructure = schema.getFileStructure();
+		if (fileStructure == Constants.IO_BIN_TEXT) {
+    		return new ByteTextReader(schema.getFontName());
+    	}
+        return getByteReader(fileStructure, schema.getMaximumRecordLength());
+    }
 
     /**
      * Gets a Record Reader Class that is appropriate for writing the
@@ -55,6 +70,7 @@ public class ByteIOProvider {
      * @param length length (if a Fixed length Provider)
      *
      * @return line reader
+     * @deprecated for use inside JRecord/RecordEditor, use {@link ByteIOProvider#getByteReader(IBasicFileSchema)}
      */
     public AbstractByteReader getByteReader(int fileStructure, int length) {
 
@@ -82,6 +98,18 @@ public class ByteIOProvider {
     	return getByteWriter(fileStructure, null);
     }
 
+    /**
+     * Get the appropriate writer for a basic-schema
+     * @param schema
+     * @return requested byte writer
+     */
+    public AbstractByteWriter getByteWriter(IBasicFileSchema schema) {
+    	int fileStructure = schema.getFileStructure();
+		switch(fileStructure) {
+		case Constants.IO_FIXED_LENGTH:	return new FixedLengthByteWriter(schema.getMaximumRecordLength());
+    	}
+    	return getByteWriter(fileStructure, schema.getFontName());
+    }
 
     /**
      * Gets a Record Reader Class
@@ -93,12 +121,12 @@ public class ByteIOProvider {
     public AbstractByteWriter getByteWriter(int fileStructure, String charcterSet) {
 
     	switch(fileStructure) {
-    		case (Constants.IO_FIXED_LENGTH):		return new FixedLengthByteWriter();
-    		case (Constants.IO_VB): 				return new VbByteWriter();
-    		case (Constants.IO_VB_DUMP):			return new VbDumpByteWriter();
-    		case (Constants.IO_VB_FUJITSU):			return new FujitsuVbByteWriter();
-    		case (Constants.IO_VB_OPEN_COBOL):		return new VbByteWriter(false);
-			case (Constants.IO_BIN_TEXT):
+//    		case Constants.IO_FIXED_LENGTH:			return new BinaryByteWriter();
+    		case Constants.IO_VB: 					return new VbByteWriter();
+    		case Constants.IO_VB_DUMP:				return new VbDumpByteWriter();
+    		case Constants.IO_VB_FUJITSU:			return new FujitsuVbByteWriter();
+    		case Constants.IO_VB_OPEN_COBOL:		return new VbByteWriter(false);
+			case Constants.IO_BIN_TEXT:
 				if (charcterSet != null && charcterSet.length() > 0 ) {
 					try {
 						return new ByteTextWriter("\n".getBytes(charcterSet));

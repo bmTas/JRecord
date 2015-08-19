@@ -56,6 +56,7 @@ public class CharLine extends BasicLine implements AbstractLine {
 
 
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Object getField(int typeId, IFieldDetail field) {
 
@@ -242,5 +243,30 @@ public class CharLine extends BasicLine implements AbstractLine {
     public Object clone() {
     	return lineProvider.getLine(layout, data);
     }
+
+    
+
+	@Override
+	public boolean isDefined(IFieldDetail field) {
+		if (this.data == null || data.length() <= field.getPos()) {
+			return false;
+		}
+
+		if (TypeManager.isNumeric(field.getType())) {
+			int e = Math.min(field.getPos() + field.getLen(), data.length());
+			for (int i = field.getPos() - 1; i < e; i++) {
+				switch (data.charAt(i)) {
+				case ' ':
+				case 0:
+					break;
+				default:
+					return true;
+				}
+			}
+			return false;
+		}
+		return true;
+		
+	}
 
 }

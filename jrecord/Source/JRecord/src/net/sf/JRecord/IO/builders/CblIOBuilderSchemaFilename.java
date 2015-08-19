@@ -6,8 +6,9 @@ import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ISetDropCopybookName;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
-public class CblIOBuilderSchemaFilename extends CblIOBuilderBase {
+public class CblIOBuilderSchemaFilename extends CblIOBuilderBase implements ICobolIOBuilder{
 
 	private final String copybookFilename;
 	private final CopybookLoader loader;

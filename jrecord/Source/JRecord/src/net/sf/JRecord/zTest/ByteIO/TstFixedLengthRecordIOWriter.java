@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 import junit.framework.TestCase;
 import net.sf.JRecord.ByteIO.FixedLengthByteReader;
-import net.sf.JRecord.ByteIO.FixedLengthByteWriter;
+import net.sf.JRecord.ByteIO.BinaryByteWriter;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
@@ -157,7 +157,7 @@ public class TstFixedLengthRecordIOWriter extends TestCase {
      */
     private void writeAFile(String name, byte[][] bytes, LayoutDetail details)
     throws IOException  {
-        FixedLengthByteWriter writer = new FixedLengthByteWriter();
+        BinaryByteWriter writer = new BinaryByteWriter();
 
         IO.writeAFile(writer, name, bytes);
     }

@@ -33,7 +33,7 @@ public class BasicConversion implements AbstractConversion {
         keys[i] = Constants.IO_UNICODE_TEXT;           externalNames[i] = "Text_Unicode";            names[i++] = "Text IO (Unicode)";
         keys[i] = Constants.IO_FIXED_LENGTH;           externalNames[i] = "Fixed_Length";            names[i++] = rdFixed;
         keys[i] = Constants.IO_FIXED_LENGTH_CHAR;      externalNames[i] = "Fixed_Length_Char";       names[i++] = "Fixed Length Char";
-        keys[i] = Constants.IO_BINARY;                 externalNames[i] = "Binary";                  names[i++] = rdLineBin;
+        keys[i] = Constants.IO_BINARY_IBM_4680;        externalNames[i] = "Binary";                  names[i++] = rdLineBin;
         keys[i] = Constants.IO_VB;                     externalNames[i] = "Mainframe_VB";            names[i++] = rdVb;
         keys[i] = Constants.IO_VB_DUMP;                externalNames[i] = "Mainframe_VB_As_RECFMU";  names[i++] = rdVbDump;
         keys[i] = Constants.IO_VB_FUJITSU;             externalNames[i] = "FUJITSU_VB";              names[i++] = "Fujitsu Variable Binary";
@@ -45,6 +45,7 @@ public class BasicConversion implements AbstractConversion {
         keys[i] = Constants.IO_UNICODE_CSV;            externalNames[i] = "UNICODE_CSV_EMBEDDED_CR"; names[i++] = "Unicode Csv Embedded Cr";
         keys[i] = Constants.IO_NAME_1ST_LINE;          externalNames[i] = "CSV_NAME_1ST_LINE";       names[i++] = "Csv Name on 1st line";
         keys[i] = Constants.IO_CSV_NAME_1ST_LINE;      externalNames[i] = "CSV_NAME_1ST_LINE_EMBEDDED_CR"; names[i++] = "Csv Name on 1st line (Embedded Cr)";
+        keys[i] = Constants.IO_BIN_NAME_1ST_LINE;      externalNames[i] = "Byte_Text_NAME_1ST_LINE"; names[i++] = "Text IO (byte Based) name 1st Line";
         keys[i] = Constants.IO_UNICODE_NAME_1ST_LINE;  externalNames[i] = "UNICODE_CSV_NAME_1ST_LINE_";    names[i++] = "Unicode Name on 1st line";
         keys[i] = Constants.IO_UNICODE_CSV_NAME_1ST_LINE;externalNames[i] = "UNICODE_CSV_NAME_1ST_LINE_EMBEDDED_CR";      names[i++] = "Unicode Name on 1st line (Embedded Cr)";
 
@@ -52,6 +53,7 @@ public class BasicConversion implements AbstractConversion {
 
         keys[i] = Constants.IO_XML_USE_LAYOUT;         externalNames[i] = "XML_Use_Layout";         names[i++] = "XML - Existing Layout";
         keys[i] = Constants.IO_XML_BUILD_LAYOUT;       externalNames[i] = "XML_Build_Layout";       names[i++] = "XML - Build Layout";
+        keys[i] = Constants.IO_CONTINOUS_NO_LINE_MARKER;       externalNames[i] = "Continuous";  		    names[i++] = "Continuous no eol marker";
         keys[i] = Constants.NULL_INTEGER;              externalNames[i] = null;                     names[i] = null;
         
         numberOfEntries = i;

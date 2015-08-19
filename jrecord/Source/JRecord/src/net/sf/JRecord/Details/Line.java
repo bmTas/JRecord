@@ -19,7 +19,9 @@ import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Types.Type;
+import net.sf.JRecord.Types.TypeChar;
 import net.sf.JRecord.Types.TypeManager;
+import net.sf.JRecord.Types.TypeNum;
 
 /**
  * This class represents one line (or Record) in the File. It contains
@@ -132,7 +134,8 @@ public class Line extends BasicLine implements AbstractLine {
 
 		System.arraycopy(rec, start, data, 0,
 					java.lang.Math.min(len, data.length));
-		preferredLayoutAlt = Constants.NULL_INTEGER;
+		super.preferredLayoutAlt = Constants.NULL_INTEGER;
+		super.preferredLayout = Constants.NULL_INTEGER;
 	}
 
 
@@ -185,7 +188,10 @@ public class Line extends BasicLine implements AbstractLine {
 
 
 	public byte[] getFieldBytes(final int recordIdx, final int fieldIdx) {
-	    FieldDetail field = layout.getField(recordIdx, fieldIdx);
+	    return getFieldBytes(layout.getField(recordIdx, fieldIdx));
+	}
+
+	public byte[] getFieldBytes(IFieldDetail field) {
 	    int len = field.getLen();
 	    if (field.getType() == Type.ftCharRestOfRecord) {
 	    	len = data.length - field.calculateActualPosition(this);
@@ -193,7 +199,6 @@ public class Line extends BasicLine implements AbstractLine {
 
 	    return getData(field.calculateActualPosition(this), len);
 	}
-
 
 	/**
 	 * Get the Prefered Record Layout Index for this record
@@ -230,9 +235,9 @@ public class Line extends BasicLine implements AbstractLine {
 	 * @param field field being updated
 	 * @param recordIdx current record layout index
 	 */
-	private void adjustLengthIfNecessary(final FieldDetail field, final int recordIdx) {
+	private void adjustLengthIfNecessary(final IFieldDetail field, final int recordIdx) {
 
-		if (field.getEnd() > data.length) {
+		if (field.calculateActualEnd(this) > data.length) {
 			RecordDetail record = layout.getRecord(recordIdx);
 			if (record == null) {
 			} else if (record.hasDependingOn()) {
@@ -322,7 +327,7 @@ public class Line extends BasicLine implements AbstractLine {
 	 */
 	public byte[] getData() {
 
-		if (newRecord && (writeLayout != Constants.NULL_INTEGER)) {
+		if (newRecord && (writeLayout >= 0)) {
 			adjustLength(writeLayout);
 		}
 		return data;
@@ -330,6 +335,8 @@ public class Line extends BasicLine implements AbstractLine {
 
 	public final void setData(String newVal) {
 	    data = Conversion.getBytes(newVal, layout.getFontName());
+		super.preferredLayoutAlt = Constants.NULL_INTEGER;
+		super.preferredLayout = Constants.NULL_INTEGER;
 	}
 
 
@@ -343,7 +350,8 @@ public class Line extends BasicLine implements AbstractLine {
      * @return fields Value
      * 
      */
-    public Object getField(int type, IFieldDetail field) {
+    @SuppressWarnings("deprecation")
+	public Object getField(int type, IFieldDetail field) {
 
     	//System.out.print(" ---> getField ~ 1");
         if (field.isFixedFormat()) {
@@ -375,7 +383,7 @@ public class Line extends BasicLine implements AbstractLine {
             if (pos < 0) {
             	pos = field.calculateActualPosition(this);
             }
-            ensureCapacity(pos + field.getLen() - 1);
+            ensureCapacity(field.calculateActualEnd(this));
 			data = TypeManager.getSystemTypeManager().getType(type)
 				.setField(getData(), pos, field, value);
         } else  {
@@ -410,21 +418,28 @@ public class Line extends BasicLine implements AbstractLine {
      */
 	public String setFieldHex(final int recordIdx, final int fieldIdx,
 	        String val) throws RecordException {
-	    FieldDetail field = layout.getField(recordIdx, fieldIdx);
+		FieldDetail field = layout.getField(recordIdx, fieldIdx);
+		adjustLengthIfNecessary(field, recordIdx);
+ 	 	return setFieldHex(field, val);
+	}
+	 
+	public String setFieldHex(IFieldDetail field, String val) throws RecordException {
 	    String ret = null;
 
-        adjustLengthIfNecessary(field, recordIdx);
+	    ensureCapacity(field.calculateActualEnd(this));
 
         try {
             int i, j;
             BigInteger value = new BigInteger(val, Type.BASE_16);
             byte[] bytes = value.toByteArray();
 
-            j = field.getEnd() - 1;
-            for (i = bytes.length - 1; i >= 0 && j >= field.calculateActualPosition(this) - 1; i--) {
+            j = field.calculateActualEnd(this) - 1;
+            int start = field.calculateActualPosition(this) - 1;
+            int en = Math.max(0, bytes.length - (val.length() + 1) / 2);
+			for (i = bytes.length - 1; i >= en && j >= start; i--) {
                 data[j--] = bytes[i];
             }
-            for (i = j; i >= field.calculateActualPosition(this) - 1; i--) {
+            for (i = j; i >= start; i--) {
                 data[i] = 0;
             }
         } catch (Exception e) {
@@ -433,11 +448,51 @@ public class Line extends BasicLine implements AbstractLine {
         }
         return ret;
 	}
+	
+	public void setFieldToByte(IFieldDetail field, byte val) {
+		
+	    ensureCapacity(field.calculateActualEnd(this));
+
+        
+        int en = field.calculateActualEnd(this);
+        for (int i = field.calculateActualPosition(this) - 1; i < en; i++) {
+        	data[i] = val;
+        }
+	}
 
 	/**
 	 * @see java.lang.Object#clone()
 	 */
 	public Object clone() {
 		return lineProvider.getLine(layout, data.clone());
+	}
+	
+	
+	@Override
+	public boolean isDefined(IFieldDetail field) {
+		if (this.data == null || data.length <= field.getPos()) {
+			return false;
+		}
+		boolean ret = false;
+		Type t = TypeManager.getInstance().getType(field.getType());
+		if (t instanceof TypeNum) {
+			ret = ((TypeNum) t).isDefined(this, data, field);
+		} else {
+			ret = ! TypeChar.isHexZero(data, field.getPos(), field.getLen());
+		}
+		return ret;
+	}
+
+
+
+
+	@Override
+	public final FieldValueLine getFieldValue(IFieldDetail field) {
+		return new FieldValueLine(this, field);
+	}
+
+	@Override
+	public final FieldValueLine getFieldValue(int recordIdx, int fieldIdx) {
+		return new FieldValueLine(this, recordIdx, fieldIdx);
 	}
 }

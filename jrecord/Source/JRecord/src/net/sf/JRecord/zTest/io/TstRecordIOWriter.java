@@ -15,7 +15,7 @@ import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ToLayoutDetail;
-import net.sf.JRecord.IO.BinaryLineWriter;
+import net.sf.JRecord.IO.FixedLengthWriter;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.IO;
 import net.sf.JRecord.zTest.Common.TstConstants;
@@ -156,7 +156,7 @@ public class TstRecordIOWriter extends TestCase {
     private void writeAFile(String name, byte[][] bytes, LayoutDetail details)
     throws IOException  {
 
-        IO.writeAFile(new BinaryLineWriter(), name, bytes, details);
+        IO.writeAFile(new FixedLengthWriter(), name, bytes, details);
     }
 
 }

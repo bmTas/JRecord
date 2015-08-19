@@ -9,7 +9,7 @@ import net.sf.JRecord.Common.Constants;
  * @author Bruce Martin
  * @version 0.68
  */
-public class ByteTextWriter extends FixedLengthByteWriter {
+public class ByteTextWriter extends BinaryByteWriter {
 
 	/**
 	 * Standard Text file Byte writer using System End-of-Line

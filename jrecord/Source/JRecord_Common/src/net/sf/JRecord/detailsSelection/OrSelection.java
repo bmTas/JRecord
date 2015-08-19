@@ -3,19 +3,21 @@ package net.sf.JRecord.detailsSelection;
 import java.util.List;
 
 import net.sf.JRecord.Common.AbstractIndexedLine;
-import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
 
 public class OrSelection extends AbsGroup {
 
 	public OrSelection() {
-		super(10);
-		setType(TYPE_OR);
+		this(10);
 	}
 
-	public OrSelection(@SuppressWarnings("rawtypes") ExternalGroupSelection sel) {
-		super(sel.size());
+	public OrSelection(int size) {
+		super (size);
 		setType(TYPE_OR);
 	}
+//	public OrSelection(@SuppressWarnings("rawtypes") ExternalGroupSelection sel) {
+//		super(sel.size());
+//		setType(TYPE_OR);
+//	}
 
 
 	/**

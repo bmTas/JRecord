@@ -53,7 +53,7 @@ public class ExternalFieldSelection implements ExternalSelection {
 	}
 
 	public String getFieldValue() {
-		if (isCaseSensitive() || fieldValue == null) {
+		if (isCaseSensitive() /*|| EQUALS_OPERATOR.equals(getOperator()) */ || fieldValue == null) {
 			return fieldValue;
 		}
 		return fieldValue.toLowerCase();
@@ -119,8 +119,9 @@ public class ExternalFieldSelection implements ExternalSelection {
 	/**
 	 * @param caseSensitive the caseSensitive to set
 	 */
-	public void setCaseSensitive(boolean caseSensitive) {
+	public ExternalFieldSelection setCaseSensitive(boolean caseSensitive) {
 		this.caseSensitive = caseSensitive;
+		return this;
 	}
 
 

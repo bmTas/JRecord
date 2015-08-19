@@ -6,7 +6,7 @@ package net.sf.JRecord.Common;
  *
  * @param <FieldDefinition>
  */
-public interface AbstractRecordX<FieldDefinition extends IFieldDetail> extends AbstractRecord {
+public interface AbstractRecordX<FieldDefinition extends IFieldDetail> extends AbstractRecord, IGetFieldByName {
 
 	/**
 	 * Get a specific field definition
@@ -32,6 +32,11 @@ public interface AbstractRecordX<FieldDefinition extends IFieldDetail> extends A
 	 */
 	public abstract FieldDefinition getField(String fieldName);
 
+	/**
+	 * Get a field (by group names / field name
+	 * @param fieldNames
+	 * @return
+	 */
 	public abstract IFieldDetail getGroupField(String... fieldNames);
 
 }

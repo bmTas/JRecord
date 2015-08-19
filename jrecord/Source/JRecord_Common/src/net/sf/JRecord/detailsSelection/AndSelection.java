@@ -3,17 +3,21 @@ package net.sf.JRecord.detailsSelection;
 import java.util.List;
 
 import net.sf.JRecord.Common.AbstractIndexedLine;
-import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
 
 public class AndSelection extends AbsGroup {
 
 	public AndSelection() {
-		super(10);
+		this(10);
+	}
+	
+	public AndSelection(int size) {
+		super(size);
 	}
 
-	public AndSelection(@SuppressWarnings("rawtypes") ExternalGroupSelection sel) {
-		super(sel.size());
-	}
+
+//	public AndSelection(@SuppressWarnings("rawtypes") ExternalGroupSelection sel) {
+//		super(sel.size());
+//	}
 
 
 	/* (non-Javadoc)

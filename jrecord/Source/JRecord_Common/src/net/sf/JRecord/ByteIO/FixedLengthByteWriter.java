@@ -9,7 +9,6 @@ package net.sf.JRecord.ByteIO;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.math.BigInteger;
 
 
 /**
@@ -20,94 +19,75 @@ import java.math.BigInteger;
  */
 public class FixedLengthByteWriter extends AbstractByteWriter {
     private OutputStream outStream = null;
-    private boolean addLength = false;
 
-    private byte[] rdw = new byte[4];
-    private byte[] eol = null;
-
-    private int rdwAdjust = 4;
-
-    /**
-     * create binary line writer
-     */
-    public FixedLengthByteWriter() {
-        super();
+    private final int recordLength, fillByte;
+    
+    
+    public FixedLengthByteWriter(int recordLength) {
+    	this.recordLength = recordLength;
+    	fillByte = 0;
     }
+    
+    
+    
+//    /**
+//     * create Fixed Length line writer
+//     */
+//    public FixedWidthByteWriter(int recordLength, String charset) {
+//        this.recordLength = recordLength;
+//        
+//        byte[] bytes = Conversion.getBytes(" ", charset);
+//        byte t = 0;
+//        if (bytes != null && bytes.length == 1) {
+//        	t = bytes[0];
+//        }
+//        fillByte = t;
+//    }
 
 
-    /**
-     * create binary line writer
-     *
-     * @param includeRDW write RDW (record Descriptor Word) at the start
-     * of each record. The RDW consists of
-     * <ul Compact>
-     *   <li>2 byte length (big endian format)
-     *   <li>2 bytes (hex zeros)
-     * </ul>
-     */
-    public FixedLengthByteWriter(final boolean includeRDW) {
-    	this(includeRDW, true, null);
-    }
 
-    /**
-     * create binary line writer
-     *
-     * @param includeRDW write RDW (record Descriptor Word) at the start
-     * of each record. The RDW consists of
-     * <ul Compact>
-     *   <li>2 byte length (big endian format)
-     *   <li>2 bytes (hex zeros)
-     * </ul>
-     * @param addRdwToLength wether to add 4 bytes to RDW length
-     */
-    public FixedLengthByteWriter(final boolean includeRDW, boolean addRdwToLength, byte[] eolByte) {
-        super();
-        addLength = includeRDW;
-        eol = eolByte;
-        rdw[2]    = 0;
-        rdw[3]    = 0;
-
-        if (! addRdwToLength) {
-        	rdwAdjust = 0;
-        }
-    }
+    protected FixedLengthByteWriter(int recordLength, int fillByte) {
+		super();
+		this.recordLength = recordLength;
+		this.fillByte = fillByte;
+	}
 
 
-    /**
+
+	/**
      * @see net.sf.JRecord.ByteIO.FixedLengthByteWriter#open(java.io.OutputStream)
      */
     public void open(OutputStream outputStream) throws IOException {
 
-        outStream = new BufferedOutputStream(outputStream, 8192);
+    	outStream = outputStream;
+    	if (! (outputStream instanceof BufferedOutputStream)) {
+     		outStream = new BufferedOutputStream(outputStream, 0x4000);
+    	}
     }
 
 
     /**
      * @see net.sf.JRecord.ByteIO.FixedLengthByteWriter#write(byte[])
      */
-    public void write(byte[] line) throws IOException {
+    public void write(byte[] rec) throws IOException {
 
         if (outStream == null) {
             throw new IOException(AbstractByteWriter.NOT_OPEN_MESSAGE);
         }
-        byte[] rec = line;
-
-        if (addLength) {
-            byte[] bytes = (BigInteger.valueOf(rec.length + rdwAdjust)).toByteArray();
-
-            rdw[1] = bytes[bytes.length - 1];
-            rdw[0] = 0;
-            if (bytes.length > 1) {
-                rdw[0] = bytes[bytes.length - 2];
-            }
-            outStream.write(rdw);
-        }
-
-        outStream.write(rec);
-
-        if (eol != null) {
-        	outStream.write(eol);
-        }
+        
+        
+		if (rec.length != recordLength ) {
+			if (rec.length > recordLength) {
+				outStream.write(rec, 0, recordLength);
+			} else {
+				outStream.write(rec);
+				for (int i = recordLength - rec.length; i > 0; i--) {
+					outStream.write(fillByte);
+				}
+			}
+		} else {
+			outStream.write(rec);
+		}
     }
 
 

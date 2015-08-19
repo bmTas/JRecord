@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import junit.framework.TestCase;
 import net.sf.JRecord.ByteIO.ByteTextReader;
-import net.sf.JRecord.ByteIO.FixedLengthByteWriter;
+import net.sf.JRecord.ByteIO.BinaryByteWriter;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.zTest.Common.TstConstants;
 
@@ -115,7 +115,7 @@ public class TstBinTextWriter  extends TestCase {
     private void writeAFile(String name, String[] line, byte[] eol)
     throws IOException  {
         int i;
-        FixedLengthByteWriter w = new FixedLengthByteWriter(false, false, eol);
+        BinaryByteWriter w = new BinaryByteWriter(false, false, eol);
         w.open(name);
         System.out.println("--- Output file ~ " + name);
 

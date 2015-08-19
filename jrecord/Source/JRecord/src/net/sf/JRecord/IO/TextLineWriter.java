@@ -69,7 +69,8 @@ public class TextLineWriter extends AbstractLineWriter {
     /**
      * @see net.sf.JRecord.IO.AbstractLineWriter#write(net.sf.JRecord.Details.AbstractLine)
      */
-    public void write(AbstractLine line) throws IOException  {
+    @SuppressWarnings("deprecation")
+	public void write(AbstractLine line) throws IOException  {
 
     	LayoutDetail layout =  line.getLayout();
 	    String sep = Constants.LINE_SEPERATOR;

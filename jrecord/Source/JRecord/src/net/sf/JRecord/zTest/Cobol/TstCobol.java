@@ -109,6 +109,7 @@ public class TstCobol extends TestCase {
 		double log;
 		int i, j;
 		
+		@SuppressWarnings("deprecation")
 		AbstractLineReader reader = LineIOProvider.getInstance().getLineReader(structure);
 		AbstractLine line;
 		LayoutDetail layout = loader.loadCopyBook(lname, CopybookLoader.SPLIT_NONE, 0, "", binFormat, 0, new TextLog())

@@ -37,8 +37,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 	public void testDefaultValues() {
 		Object[] attrs = {
 				ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-				Constants.NULL_INTEGER, "", Boolean.FALSE
-				
+				Constants.NULL_INTEGER, "", Boolean.FALSE		
 		};
 		checkAttributes(new CblIoBldr(ICopybookDialects.FMT_MAINFRAME).getAttrs(), attrs);
 	}
@@ -47,7 +46,6 @@ public class TstCobolIOBuilder01 extends TestCase {
 		Object[] attrs = {
 				ICopybookDialects.FMT_OPEN_COBOL, CopybookLoader.SPLIT_01_LEVEL,  Cb2xmlConstants.USE_COLS_6_TO_80,
 				Constants.IO_BIN_CSV, "cp037", Boolean.TRUE
-				
 		};
 		setAndCheckAttributes(attrs);
 	}

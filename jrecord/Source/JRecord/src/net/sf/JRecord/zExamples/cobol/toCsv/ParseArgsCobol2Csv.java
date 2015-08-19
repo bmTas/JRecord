@@ -209,7 +209,7 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
         System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_TEXT_LINE)     + "\t: Use Standard Text IO ");
         System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_FIXED_LENGTH)
                 + "\t: Fixed record Length binary ");
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_BINARY)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_BINARY_IBM_4680)
                 + "\t: Binary File, length based on record ");
         System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_VB)
                 + "\t: Mainframe VB File "); 

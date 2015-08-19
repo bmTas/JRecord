@@ -14,7 +14,7 @@ public class DependingOn {
 	private final int position, occursLength, occursMax, occursMaxLength;
 	private List<DependingOn> children = null;
 	private IFieldDetail field;
-	private DependingOn parent = null;
+//	private DependingOn parent = null;
 	
 	 
 	public DependingOn(String variableName, int position, int occursLength, int occursMax) {
@@ -94,7 +94,7 @@ public class DependingOn {
 			for (DependingOn c : childList) {
 				if (c.position <= child.position
 				&& c.position + c.occursMaxLength > child.position) {
-					child.parent = c;
+//					child.parent = c;
 					c.addChild(child);
 					return childList;
 				}

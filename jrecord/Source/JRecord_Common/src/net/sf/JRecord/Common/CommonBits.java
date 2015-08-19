@@ -3,6 +3,11 @@ package net.sf.JRecord.Common;
 import java.nio.charset.Charset;
 
 public class CommonBits {
+	
+	public static int LT_XML = 1;
+	public static int LT_TEXT = 2;
+	public static int LT_BYTE = 3;
+			
 	private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 	private static final char[] EMPTY_CHAR_ARRAY = {};
 	public  static final String NULL_STRING = new String(EMPTY_CHAR_ARRAY, 0, 0); 
@@ -129,4 +134,20 @@ public class CommonBits {
 		CommonBits.dropCopybookFromFieldNames = dropCopybookFromFieldNames;
 	}
 
+	
+	public static int getLineType(int fileStructure) {
+    	switch (fileStructure) {
+    	case Constants.IO_XML_BUILD_LAYOUT:
+    	case Constants.IO_XML_USE_LAYOUT:   		
+       		return LT_XML;
+    	case Constants.IO_FIXED_LENGTH_CHAR:
+    	case Constants.IO_UNICODE_CSV:
+    	case Constants.IO_UNICODE_CSV_NAME_1ST_LINE:
+    	case Constants.IO_UNICODE_NAME_1ST_LINE:
+    	case Constants.IO_UNICODE_TEXT:
+    		return LT_TEXT;
+    	default:
+    		return LT_BYTE;
+    	}
+	}
 }
