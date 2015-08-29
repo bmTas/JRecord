@@ -39,6 +39,7 @@ public interface Type {
 
     public  static final int USER_RANGE_START    = 1000;
     public  static final int DEFAULT_USER_RANGE_SIZE = 75;
+    public  static final int LAST_SYSTEM_TYPE    = 150;
 
 	public static final int NULL_INT             = -121;
 

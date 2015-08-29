@@ -228,8 +228,7 @@ public class TypeNum extends TypeChar {
 		    	}
 		    }
 
-		    if (decimal > 0) {
-		    	
+		    if (decimal > 0) {	    	
 			    if (s.length() <= decimal) {
 			        StringBuilder b = new StringBuilder();
 			        char[] z = new char[decimal - s.length() + 1];
@@ -238,7 +237,6 @@ public class TypeNum extends TypeChar {
 			    }
 			    len = s.length();
 
-	
 			    s = sign + Conversion.numTrim(s.substring(0, len - decimal))
 			      + Conversion.getDecimalchar() + s.substring(len - decimal);
 		    } else {

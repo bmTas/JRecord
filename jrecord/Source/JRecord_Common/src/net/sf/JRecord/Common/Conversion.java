@@ -50,7 +50,10 @@ public final class Conversion {
 	static {
 		try {
 			if (DEFAULT_CHARSET_DETAILS != null && DEFAULT_CHARSET_DETAILS.isEbcdic) {
+				defaultSingleByteCharacterset = DEFAULT_CHARSET_DETAILS.charset;
+				if (DEFAULT_CHARSET_DETAILS.isMultiByte) {
 				defaultSingleByteCharacterset = "CP037";
+				}
 			} else {
 				setDefaultSingleByteCharacterset("cp1252");
 			}
@@ -748,19 +751,25 @@ public final class Conversion {
      * Checks if a string is a valid integer
      *
      * @param s possibleInteger
-     * @return wether it is a integer
+     * @return whether it is a integer
      */
     public static final boolean isInt(String s) {
         boolean ret = false;
+        String ss = s.trim();
+        int len = ss.length();
+        int firstIndex = 0;
 
-        try {
-            String ss = s.trim();
-            if (!ss.equals("")) {
-            	new BigInteger(ss);
-                //Long.parseLong(ss);
-                ret = true;
+        if (len > 0) {
+            char first = ss.charAt(firstIndex);
+            if (first  == '+' || first == '-') {
+                if (len == 1) return false;
+                firstIndex++;
+            }   
+            for (int i = firstIndex; i < len; i++) {
+                if (!Character.isDigit(ss.charAt(i)))
+                    return false;
             }
-        } catch (Exception ex) {
+            ret = true;
         }
         return ret;
     }

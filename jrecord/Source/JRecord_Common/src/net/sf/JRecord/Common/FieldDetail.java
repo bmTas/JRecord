@@ -445,5 +445,35 @@ public class FieldDetail implements IFieldDetail {
 		return OptionResult.UNKOWN;
 	}
 	
+	public static final FieldDetail newFixedWidthField(
+					   final String pName,
+	        		   final String pDescription,
+	        		   final int pType,
+	        		   final int pDecimal,
+	        		   final String pFont,
+					   final int pFormat,
+					   final String pParamater,
+					   final int pos,
+					   final int len) {
+		FieldDetail r = new FieldDetail(pName, pDescription, pType, pDecimal, pFont, pFormat, pParamater);
+		
+		r.setPosLen(pos, len);
+		
+		return r;
+	}
 	
+	public static final FieldDetail newCsvField(
+			   final String pName,
+ 		   final String pDescription,
+ 		   final int pType,
+ 		   final int pDecimal,
+ 		   final String pFont,
+			   final int pFormat,
+			   final String pParamater,
+			   final int pos) {
+	FieldDetail r = new FieldDetail(pName, pDescription, pType, pDecimal, pFont, pFormat, pParamater);
+	
+	r.setPosOnly(pos);
+	return r;
+}
  }
