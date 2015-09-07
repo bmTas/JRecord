@@ -17,8 +17,6 @@
  */
 package net.sf.JRecord.Types;
 
-import java.util.Arrays;
-
 import net.sf.JRecord.Common.Messages;
 import net.sf.JRecord.Common.RecordException;
 
@@ -39,8 +37,6 @@ public class TypeManager {
 
     public static final int INVALID_INDEX  = SYSTEM_ENTRIES - 1;
 
-    public static String[] javaTypeName = new String[SYSTEM_ENTRIES];
-
     private Type[] types;
 
     private Type charType    = new TypeChar(true);
@@ -49,10 +45,7 @@ public class TypeManager {
 
     private static TypeManager systemTypeManager = null;
     
-    static {
-    	Arrays.fill(javaTypeName, "");
-    }
-
+ 
 
     /**
      * This class stores / retrieves types definitions
@@ -272,94 +265,4 @@ public class TypeManager {
 		return userSize;
 	}
 	
-	/**
-	 * Get the JRecord-Constant Type name for a type. This is for use in code generation
-	 * 
-	 * @param type JRecord Type
-	 * 
-	 * @return JRecord-Constant 
-	 */
-	public static String getJRecordTypeName(int type) {
-		initTypeNames();
-		
-		return javaTypeName[type];
-	}
-	
-	@SuppressWarnings("deprecation")
-	private static void initTypeNames() {
-		if (javaTypeName[Type.ftChar] == null || javaTypeName[Type.ftChar].length() == 0) {		
-			javaTypeName [Type.ftChar                        ] = "ftChar";
-			javaTypeName [Type.ftCharRightJust               ] = "ftCharRightJust";
-			javaTypeName [Type.ftCharNullTerminated          ] = "ftCharNullTerminated             ";
-			javaTypeName [Type.ftCharNullPadded              ] = "ftCharNullPadded";
-			
-			javaTypeName [Type.ftHex                         ] = "ftHex";
-			javaTypeName [Type.ftNumLeftJustified            ] = "ftNumLeftJustified";
-			javaTypeName [Type.ftNumRightJustified           ] = "ftNumRightJustified                    ";
-			javaTypeName [Type.ftNumZeroPadded               ] = "ftNumZeroPadded";
-			javaTypeName [Type.ftAssumedDecimal              ] = "ftAssumedDecimal";
-			javaTypeName [Type.ftSignSeparateLead            ] = "ftSignSeparateLead";
-			javaTypeName [Type.ftSignSeparateTrail           ] = "ftSignSeparateTrail";
-			javaTypeName [Type.ftDecimal                     ] = "ftDecimal";
-			javaTypeName [Type.ftBinaryInt                   ] = "ftBinaryInt";
-			javaTypeName [Type.ftPostiveBinaryInt            ] = "ftPostiveBinaryInt";
-			javaTypeName [Type.ftFloat                       ] = "ftFloat";
-			javaTypeName [Type.ftDouble                      ] = "ftDouble";
-			javaTypeName [Type.ftNumAnyDecimal               ] = "ftNumAnyDecimal";
-			javaTypeName [Type.ftPositiveNumAnyDecimal       ] = "ftPositiveNumAnyDecimal";
-			javaTypeName [Type.ftBit                         ] = "ftBit";
-			javaTypeName [Type.ftAssumedDecimalPositive      ] = "ftAssumedDecimalPositive";
-			javaTypeName [Type.ftBinaryIntPositive           ] = "ftBinaryIntPositive";
-
-			javaTypeName [Type.ftNumZeroPaddedPN             ] = "ftNumZeroPaddedPN";
-			javaTypeName [Type.ftNumZeroPaddedPositive       ] = "ftNumZeroPaddedPositive";
-			javaTypeName [Type.ftNumCommaDecimal             ] = "ftNumCommaDecimal";
-			javaTypeName [Type.ftNumCommaDecimalPN           ] = "ftNumCommaDecimalPN";
-			javaTypeName [Type.ftNumCommaDecimalPositive     ] = "ftNumCommaDecimalPositive";
-
-			javaTypeName [Type.ftNumRightJustifiedPN         ] = "ftNumRightJustifiedPN";
-			
-			javaTypeName [Type.ftPackedDecimal               ] = "ftPackedDecimal";
-			javaTypeName [Type.ftZonedNumeric                ] = "ftZonedNumeric";
-			javaTypeName [Type.ftPackedDecimalPostive        ] = "ftPackedDecimalPostive";
-			javaTypeName [Type.ftBinaryBigEndian             ] = "ftBinaryBigEndian";                                                      
-			javaTypeName [Type.ftBinaryBigEndianPositive     ] = "ftBinaryBigEndianPositive";
-			javaTypeName [Type.ftPositiveBinaryBigEndian     ] = "ftPositiveBinaryBigEndian";
-			javaTypeName [Type.ftRmComp                      ] = "ftRmComp";
-			javaTypeName [Type.ftRmCompPositive              ] = "ftRmCompPositive";
-
-			javaTypeName [Type.ftFjZonedNumeric              ] = "ftFjZonedNumeric";
-			javaTypeName [Type.ftNumRightJustCommaDp         ] = "ftNumRightJustCommaDp";
-			javaTypeName [Type.ftNumRightJustCommaDpPN       ] = "ftNumRightJustCommaDpPN";
-
-			javaTypeName [Type.ftCharMultiLine               ] = "ftCharMultiLine";
-
-			javaTypeName [Type.ftDate                        ] = "ftDate";
-			javaTypeName [Type.ftDateYMD                     ] = "ftDateYMD";
-			javaTypeName [Type.ftDateYYMD                    ] = "ftDateYYMD";
-			javaTypeName [Type.ftDateDMY                     ] = "ftDateDMY";
-			javaTypeName [Type.ftDateDMYY                    ] = "ftDateDMYY";
-
-			javaTypeName [Type.ftCharRestOfFixedRecord       ] = "ftCharRestOfFixedRecord";
-			javaTypeName [Type.ftCharRestOfRecord            ] = "ftCharRestOfRecord";
-			
-//			javaTypeName [Type.ftProtoField                  ] = "ftProtoField";
-//			javaTypeName [Type.ftAvroField                   ] = "ftAvroField";                                                                                                                                               
-			javaTypeName [Type.ftArrayField                  ] = "ftArrayField";
-			javaTypeName [Type.ftComboItemField              ] = "ftComboItemField";                                                                         
-//			javaTypeName [Type.ftAvroUnionField              ] = "ftAvroUnionField";
-			
-			javaTypeName [Type.ftCheckBoxY                   ] = "ftCheckBoxY";
-			javaTypeName [Type.ftCheckBoxTrue                ] = "ftCheckBoxTrue";
-			javaTypeName [Type.ftCheckBoxYN                  ] = "ftCheckBoxYN";
-			javaTypeName [Type.ftCheckBoxTF                  ] = "ftCheckBoxTF";
-			javaTypeName [Type.ftCheckBoxBoolean             ] = "ftCheckBoxBoolean";
-			
-			javaTypeName [Type.ftCsvArray                    ] = "ftCsvArray";
-			javaTypeName [Type.ftXmlNameTag                  ] = "ftXmlNameTag";
-			javaTypeName [Type.ftMultiLineEdit               ] = "ftMultiLineEdit";
-			javaTypeName [Type.ftMultiLineChar               ] = "ftMultiLineChar";
-			javaTypeName [Type.ftHtmlField                   ] = "ftHtmlField";
-		}
-	}
 }

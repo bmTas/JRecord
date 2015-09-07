@@ -6,7 +6,7 @@ package net.sf.JRecord.zExamples.cobol.toCsv.test;
 import net.sf.JRecord.zExamples.cobol.toCsv.Cobol2Csv;
 
 /**
- * @author Bruce01
+ * @author Bruce Martin
  *
  */
 public class TestCobol2Csv02_1_UTF16 {

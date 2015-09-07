@@ -1,0 +1,96 @@
+package example;
+#incl("schema/CommentExample.pvm")
+
+import net.sf.JRecord.JRecordInterface1;
+#*  *##if (${generateOptions.isXmlSchema()})
+import net.sf.JRecord.Details.AbstractLine;
+import net.sf.JRecord.IO.AbstractLineReader;
+import net.sf.JRecord.def.IO.builders.IIOBuilder;
+#*  *##else	
+import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Details.AbstractLine;
+import net.sf.JRecord.External.CopybookLoader;
+import net.sf.JRecord.IO.AbstractLineReader;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
+#*  *##end                                           
+
+
+/**
+ * Read Cobol file using a Cobol Copybook (${generateOptions.schemaDefinition.extensionName}).
+ *
+ * This Generated program is intended as an example of using JRecord
+ * rather than a useful program (that compiles - it wont).
+ * You should regard it as a starting point and modify 
+ * it according to needs
+ */
+public final class Read${generateOptions.schemaDefinition.extensionName} {
+
+    private String testDir        = "G:/temp/";
+    private String salesFile      = testDir + "DTAR020.bin";
+#*    private String salesFileOut   = testDir + "DTAR020out.bin";*#
+    private String copybookName   = "${generateOptions.schemaName}"; 
+ 
+    /**
+     * Example of LineReader  classes
+     */
+    public Read${generateOptions.schemaDefinition.extensionName}() {
+        super();
+
+        AbstractLine saleRecord;
+        int lineNum = 0;
+
+        try {
+#*  *##if (${generateOptions.isXmlSchema()})
+            IIOBuilder iob = JRecordInterface1.SCHEMA_XML
+                                       .newIOBuilder(copybookName);
+#*  *##else
+            ICobolIOBuilder iob = JRecordInterface1.COBOL
+                                       .newIOBuilder(copybookName)
+                                           .setFont("${generateOptions.font}")
+                                           .setFileOrganization(${generateOptions.io.code})
+                                           .setSplitCopybook(${generateOptions.splitOption.code})
+                                           .setDropCopybookNameFromFields(${generateOptions.dropCopybookName});  
+#*  *##end                                           
+            AbstractLineReader reader = iob.newReader(salesFile);
+ 
+            while ((saleRecord = reader.read()) != null) {
+                lineNum += 1;
+#*  *##if (${generateOptions.schemaDefinition.getRecords().size()} == 1)
+#*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+#*          *##set( $sep = "        ")    
+                System.out.println(
+#*          *##foreach($f in ${r.getFields(11)}) 
+                      ${sep}saleRecord.getFieldValue("${f.fieldDetail.getLookupName()}").asString()
+#*              *##set( $sep = '+ " " + ')    
+#*          *##end
+                   );
+#*      *##end                        
+#*  *##else	
+#*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+#*          *##set( $sep = "        ")    
+                if (/* ${r.record.recordName} */) {
+                   System.out.println(
+#*          *##foreach($f in ${r.getFields(11)}) 
+                      ${sep}saleRecord.getFieldValue("${f.fieldDetail.getLookupName()}").asString()
+#*              *##set( $sep = '+ " " + ')    
+#*          *##end
+                   );
+                }
+#*      *##end                        
+#*  *##end                        
+            }
+
+            reader.close();
+        } catch (Exception e) {
+            System.out.println("~~> " + lineNum + " " + e);
+            System.out.println();
+
+            e.printStackTrace();
+        }
+    }
+    
+    public static void main(String[] args) {
+        new Read${generateOptions.schemaDefinition.extensionName}();
+    }
+}
+

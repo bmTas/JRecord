@@ -3,6 +3,7 @@ package net.sf.JRecord.zTest.Cobol.iobuilder;
 import java.io.IOException;
 
 import junit.framework.TestCase;
+import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.CopybookLoader;
@@ -34,12 +35,19 @@ public class TstCobolIOBuilder01 extends TestCase {
 //	int fileOrganization = Constants.NULL_INTEGER;
 //	boolean dropCopybookNameFromFields = false;
 	
+	@SuppressWarnings("deprecation")
 	public void testDefaultValues() {
 		Object[] attrs = {
 				ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
 				Constants.NULL_INTEGER, "", Boolean.FALSE		
 		};
 		checkAttributes(new CblIoBldr(ICopybookDialects.FMT_MAINFRAME).getAttrs(), attrs);
+		checkAttributes(
+				((CblIOBuilderBase)JRecordInterface1.COBOL
+						.newIOBuilder("")
+							.setDialect(ICopybookDialects.FMT_MAINFRAME)
+				).getAllAttributes(), 
+				attrs);
 	}
 	
 	public void testAttrs01() {
@@ -69,6 +77,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 		setAndCheckAttributes(attrs);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void setAndCheckAttributes(Object[] attrs) {
 		CblIoBldr bldr = new CblIoBldr((Integer)attrs[0]);
 		bldr.setSplitCopybook((Integer)attrs[1]);
@@ -78,11 +87,22 @@ public class TstCobolIOBuilder01 extends TestCase {
 		bldr.setDropCopybookNameFromFields((Boolean)attrs[5]);
 
 		checkAttributes(attrs, bldr.getAttrs());
+		
+		CblIOBuilderBase bld = (CblIOBuilderBase) JRecordInterface1.COBOL. newIOBuilder("xyz");
+		bld.setDialect((Integer)attrs[0]);
+		bld.setSplitCopybook((Integer)attrs[1]);
+		bld.setCopybookFileFormat((Integer)attrs[2]);
+		bld.setFileOrganization((Integer)attrs[3]);
+		bld.setFont(attrs[4].toString());
+		bld.setDropCopybookNameFromFields((Boolean)attrs[5]);
+
+		checkAttributes(attrs, bld.getAllAttributes());
+
 	}
 
 	private void checkAttributes(Object[] expected, Object[] attrs) {
 		for (int i = 0; i < expected.length; i++) {
-			assertEquals(ATTR_NAMES[i],expected[i], attrs[i]);
+			assertEquals( ATTR_NAMES[i],expected[i], attrs[i]);
 		}
 	}
 	
@@ -102,6 +122,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 		}
 
 
+		@SuppressWarnings("deprecation")
 		public Object[] getAttrs() {
 			return super.getAllAttributes();
 		}

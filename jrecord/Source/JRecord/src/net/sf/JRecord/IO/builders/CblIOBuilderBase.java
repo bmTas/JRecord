@@ -24,7 +24,7 @@ import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.IO.LineIOProvider;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
+import net.sf.JRecord.def.IO.builders.ICobolMultiCopybookIOBuilder;
 import net.sf.JRecord.def.IO.builders.ICsvIOBuilder;
 import net.sf.JRecord.def.IO.builders.IDefineCsvFields;
 import net.sf.JRecord.def.IO.builders.IDefineFixedFieldsByLength;
@@ -58,7 +58,6 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
     
 	protected CblIOBuilderBase(int dialect) {
 		super();
-		//this.copybookType = copybookType;
 		this.dialect = dialect;
 	}
 
@@ -73,7 +72,7 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	/**
 	 * @param dialect the dialect to set
 	 */
-	public final ICobolIOBuilder setDialect(int dialect) {
+	public final ICobolMultiCopybookIOBuilder setDialect(int dialect) {
 		this.dialect = dialect;
 		clearLayout();
 		return this;
@@ -86,7 +85,7 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	 * @see net.sf.JRecord.def.IO.ICobolIOBuilder#setSplitCopybook(int)
 	 */
 	@Override
-	public final ICobolIOBuilder setSplitCopybook(int splitCopybook) {
+	public ICobolMultiCopybookIOBuilder setSplitCopybook(int splitCopybook) {
 		this.splitCopybook = splitCopybook;
 		clearLayout();
 		return this;
@@ -106,7 +105,7 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	 * @see net.sf.JRecord.IO.IIOBuilder#setCopybookFileFormat(int)
 	 */
 	@Override
-	public final ICobolIOBuilder setCopybookFileFormat(int copybookFileFormat) {
+	public final ICobolMultiCopybookIOBuilder setCopybookFileFormat(int copybookFileFormat) {
 		this.copybookFileFormat = copybookFileFormat;
 		clearLayout();
 		return this;
@@ -137,7 +136,7 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	 * @param dropCopybookNameFromFields the dropCopybookNameFromFields to set
 	 */
 	@Override
-	public final ICobolIOBuilder setDropCopybookNameFromFields(
+	public final ICobolMultiCopybookIOBuilder setDropCopybookNameFromFields(
 			boolean dropCopybookNameFromFields) {
 		this.dropCopybookNameFromFields = dropCopybookNameFromFields;
 		clearLayout();
@@ -248,10 +247,12 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	 * </pre>    
 	 * Used to test if attributes are set correctly
 	 * @return all the attributes
+	 * 
+	 * @deprecated for testing
 	 */
-	protected final Object[] getAllAttributes() {
+	public final Object[] getAllAttributes() {
 		Object[] r = {
-				dialect,
+				dialect, 
 				splitCopybook,
 				copybookFileFormat,// actually Cb2xmlConstants.USE_STANDARD_COLUMNS;
 				fileOrganization,
@@ -375,6 +376,35 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	@Override
 	public ICsvIOBuilder setQuote(String val) {
 		return null;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.def.IO.builders.ICobolMultiCopybookIOBuilder#addCopyBook(java.lang.String)
+	 */
+	@Override
+	public ICobolMultiCopybookIOBuilder addCopyBook(String fileName) {
+		throw new RuntimeException("JRecord Error - this method should not be called in CblIOBuilderBase");
+	}
+
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.def.IO.builders.ICobolMultiCopybookIOBuilder#addCopyBook(java.io.InputStream, java.lang.String)
+	 */
+	@Override
+	public ICobolMultiCopybookIOBuilder addCopyBook(InputStream inStream,
+			String copybookName) {
+		throw new RuntimeException("JRecord Error - this method should not be called in CblIOBuilderBase");
+	}
+
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.def.IO.builders.ICobolMultiCopybookIOBuilder#setRecordSelectionCurrentCopybook(net.sf.JRecord.ExternalRecordSelection.ExternalSelection)
+	 */
+	@Override
+	public ICobolMultiCopybookIOBuilder setRecordSelectionCurrentCopybook(
+			ExternalSelection recordSelection) {
+		throw new RuntimeException("JRecord Error - this method should not be called in CblIOBuilderBase");
 	}
 	
 	

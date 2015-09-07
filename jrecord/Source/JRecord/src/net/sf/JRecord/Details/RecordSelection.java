@@ -158,6 +158,13 @@ public class RecordSelection {
 		YES
 	}
 
+	/**
+	 * @return the recSel
+	 */
+	public final RecordSel getRecSel() {
+		return recSel;
+	}
+
 
 
 }

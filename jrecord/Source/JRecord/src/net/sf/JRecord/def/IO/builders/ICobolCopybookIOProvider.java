@@ -113,4 +113,11 @@ public interface ICobolCopybookIOProvider {
 	public abstract ICobolIOBuilder newIOBuilder(
 			InputStream cobolCopybookStream, String copybookName);
 
+	/**
+	 * This method returns that will combine multiple Cobol Copybooks into the one internal copybook or File-Schema
+	 * @param copybookname name of the copybook
+	 * @return requested IOBuilder
+	 */
+	public abstract ICobolMultiCopybookIOBuilder newMultiCopybookIOBuilder(String copybookname);
+
 }

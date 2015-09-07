@@ -22,7 +22,7 @@ import net.sf.JRecord.Types.TypeNum;
 import net.sf.JRecord.Types.TypeSignSeparate;
 
 /**
- * @author Bruce01
+ * @author Bruce Martin
  *
  */
 public class WriteTestFiles {

@@ -195,7 +195,7 @@ public class FieldValue implements IFieldValue {
 	 * @return fields value
 	 */
 	@SuppressWarnings("deprecation")
-	private Object getValue() {
+	protected Object getValue() {
 		if (recordNum >= 0) {
 			return theLine.getField(recordNum, fieldNum);
 		}

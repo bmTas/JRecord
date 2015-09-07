@@ -1,0 +1,24 @@
+<html>
+<head><title>net.sf.JRecord Interface</title>
+<body>
+
+<p>This package holds <b>JRecordInterface1</b> class, the new main interface for JRecord</p> 
+
+<pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   1 </font></span>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   2 </font></span>    ICobolIOBuilder ioBldr 
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   3 </font></span>                <font color="#000000"><strong>=</strong></font> JRecordInterface1.COBOL
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   4 </font></span>                    .<font color="#9966ff">newIOBuilder</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">CobolCopybook</font><font color="#ff00cc">.</font><font color="#ff00cc">cbl</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">   5 </font></span>                        .<font color="#9966ff">setSplitCopybook</font><font color="#000000"><strong>(</strong></font>CopybookLoader.SPLIT_01_LEVEL<font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   6 </font></span>                        .<font color="#9966ff">setDialect</font><font color="#000000"><strong>(</strong></font>ICopybookDialects.FMT_FUJITSU<font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   7 </font></span>    AbstractLineReader reader <font color="#000000"><strong>=</strong></font> ioBldr.<font color="#9966ff">newReader</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">input</font><font color="#ff00cc"> </font><font color="#ff00cc">File</font><font color="#ff00cc"> </font><font color="#ff00cc">Name</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   8 </font></span>    AbstractLine l;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   9 </font></span>        
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">  10 </font></span>    <font color="#006699"><strong>while</strong></font> <font color="#000000"><strong>(</strong></font><font color="#000000"><strong>(</strong></font>l <font color="#000000"><strong>=</strong></font> reader.<font color="#9966ff">read</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font><font color="#000000"><strong>)</strong></font> <font color="#000000"><strong>!</strong></font><font color="#000000"><strong>=</strong></font> <font color="#cc00cc">null</font><font color="#000000"><strong>)</strong></font> <font color="#000000"><strong>{</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">  11 </font></span>        ...
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">  12 </font></span>    <font color="#000000"><strong>}</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">  13 </font></span>    reader.<font color="#9966ff">close</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">  14 </font></span>    
+</font></pre>
+
+</body>
+</html>

@@ -90,7 +90,8 @@ public class Fixed2Csv {
      *
      * @throws IOException any error that occurs
      */
-    private void copyFile(AbstractLineReader reader, String outfile, String font, String sep, String quote, IUpdateFieldName updateFldName)
+    @SuppressWarnings("deprecation")
+	private void copyFile(AbstractLineReader reader, String outfile, String font, String sep, String quote, IUpdateFieldName updateFldName)
     throws IOException {
         AbstractLine line;
         int idx, i;

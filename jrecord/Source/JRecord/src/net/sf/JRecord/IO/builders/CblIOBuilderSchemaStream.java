@@ -19,10 +19,10 @@ public class CblIOBuilderSchemaStream extends CblIOBuilderBase implements ICobol
 	/**
 	 * Create a IOBuilder for a Stream based Copybook (schema)
 	 * 
-	 * @param copybookStream copybook
-	 * @param copybookName
-	 * @param copybookType
-	 * @param cobolDialect
+	 * @param copybookStream copybook stream
+	 * @param copybookName name of the copybook
+	 * @param copybookType copybook type
+	 * @param cobolDialect Cobol Dialect
 	 */
 	public CblIOBuilderSchemaStream(InputStream copybookStream, String copybookName, ICopybookLoaderStream loader, int cobolDialect) {
 		super(cobolDialect);

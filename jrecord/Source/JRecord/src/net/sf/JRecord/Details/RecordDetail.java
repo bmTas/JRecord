@@ -17,13 +17,16 @@ import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Common.IGetFieldByName;
 import net.sf.JRecord.CsvParser.BasicCsvLineParser;
 import net.sf.JRecord.CsvParser.ICsvDefinition;
 import net.sf.JRecord.CsvParser.ICsvLineParser;
 import net.sf.JRecord.CsvParser.ParserManager;
 import net.sf.JRecord.External.Def.DependingOn;
 import net.sf.JRecord.External.Def.DependingOnDtls;
+import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Types.TypeManager;
+import net.sf.JRecord.detailsSelection.Convert;
 import net.sf.JRecord.detailsSelection.FieldSelectX;
 
 
@@ -311,6 +314,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 
 	/**
 	 * @param newSelectionField the selectionFld to set
+	 * @deprecated you should do this at the External record stage before you build the layout
 	 */
 	public final void setSelectionField(FieldDetail newSelectionField) {
 
@@ -574,7 +578,13 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	public RecordSelection getRecordSelection() {
 		return recordSelection;
 	}
-
+	
+	public void updateRecordSelection(ExternalSelection selection, IGetFieldByName fieldInfo) {
+	    if (selection != null && selection.getSize() > 0) {
+	    	this.getRecordSelection().setRecSel((new Convert()).convert(selection, fieldInfo));
+	    }
+	}
+	
 	/**
 	 * @return the parentRecordIndex
 	 */
@@ -1076,6 +1086,16 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 		minumumPossibleLength = length - len;
 	}
 	
+	/**
+	 * @return the dependingOn
+	 */
+	public final List<DependingOn> getDependingOn() {
+		if (dependingOn == null) {
+			return null;
+		}
+		return new ArrayList<DependingOn>(dependingOn);
+	}
+
 	public final boolean hasDependingOn() {
 		return dependingOnLevel > DO_NONE;
 	}

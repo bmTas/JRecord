@@ -48,7 +48,7 @@ import net.sf.JRecord.Types.TypeNum;
  * @author Bruce Martin
  * @version 0.55
  */
-public class Line extends BasicLine implements AbstractLine {
+public class Line extends BasicLine implements AbstractLine, IGetByteData {
 
 	static LineProvider defaultProvider = new DefaultLineProvider();
 
@@ -322,9 +322,10 @@ public class Line extends BasicLine implements AbstractLine {
 	}
 
 
-	/**
-	 * @return Returns the record.
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.Details.IGetByteData#getData()
 	 */
+	@Override
 	public byte[] getData() {
 
 		if (newRecord && (writeLayout >= 0)) {

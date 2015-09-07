@@ -7,7 +7,7 @@ import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Log.AbsSSLogger;
 
 /**
- * @author Bruce01
+ * @author Bruce Martin
  *
  */
 public abstract class BaseCopybookLoader implements CopybookLoader {

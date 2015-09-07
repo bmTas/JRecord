@@ -2,6 +2,7 @@ package net.sf.JRecord.zTest.Cobol.occursDependingOn;
 
 import java.io.IOException;
 
+import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IFieldDetail;
@@ -28,28 +29,66 @@ public class TstOccursDepending42 extends TestCase {
 
 	public void testPositionCalc1() throws Exception {
 		try {
-			tstPositionStore("OccursDependingOn42.cbl");
+			tstPositionStore1("OccursDependingOn42.cbl");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
 	
-
 	public void testPositionCalc2() throws Exception {
 		try {
-			tstPositionRegion("OccursDependingOn42.cbl");
+			tstPositionStore2("OccursDependingOn42.cbl");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
 
-	private  void tstPositionStore(String copybookFile)  throws IOException, RecordException {
+	public void testPositionCalc3() throws Exception {
+		try {
+			tstPositionRegion1("OccursDependingOn42.cbl");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public void testPositionCalc4() throws Exception {
+		try {
+			tstPositionRegion2("OccursDependingOn42.cbl");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+
+	private  void tstPositionStore1(String copybookFile)  throws IOException, RecordException {
 		String copybookFileName = WriteSampleFile.class.getResource(copybookFile).getFile();
 		ICobolIOBuilder ioBuilder = CobolIoProvider.getInstance()
-				.newIOBuilder(copybookFileName, ICopybookDialects.FMT_MAINFRAME)
-					.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE)
+				.newIOBuilder(copybookFileName, ICopybookDialects.FMT_MAINFRAME);
+		tstPositionStore(ioBuilder);
+
+	}
+
+
+	private  void tstPositionStore2(String copybookFile)  throws IOException, RecordException {
+		String copybookFileName = WriteSampleFile.class.getResource(copybookFile).getFile();
+		ICobolIOBuilder ioBuilder = JRecordInterface1.COBOL
+				.newIOBuilder(copybookFileName).setDialect(ICopybookDialects.FMT_MAINFRAME);
+		tstPositionStore(ioBuilder);
+
+	}
+
+	/**
+	 * @param ioBuilder
+	 * @throws RecordException
+	 * @throws IOException
+	 */
+	private void tstPositionStore(ICobolIOBuilder ioBuilder)
+			throws RecordException, IOException {
+		ioBuilder	.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE)
 					.setSplitCopybook(CopybookLoader.SPLIT_REDEFINE);
 
 
@@ -63,15 +102,31 @@ public class TstOccursDepending42 extends TestCase {
 				}
 			}
 		}
-
 	}
 	
 	
-	private  void tstPositionRegion(String copybookFile)  throws IOException, RecordException {
+	private  void tstPositionRegion1(String copybookFile)  throws IOException, RecordException {
 		String copybookFileName = WriteSampleFile.class.getResource(copybookFile).getFile();
 		ICobolIOBuilder ioBuilder = CobolIoProvider.getInstance()
-				.newIOBuilder(copybookFileName, ICopybookDialects.FMT_MAINFRAME)
-					.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE)
+				.newIOBuilder(copybookFileName, ICopybookDialects.FMT_MAINFRAME);
+		tstPositionRegion(ioBuilder);
+	}
+
+	private  void tstPositionRegion2(String copybookFile)  throws IOException, RecordException {
+		String copybookFileName = WriteSampleFile.class.getResource(copybookFile).getFile();
+		ICobolIOBuilder ioBuilder = JRecordInterface1.COBOL
+				.newIOBuilder(copybookFileName).setDialect(ICopybookDialects.FMT_MAINFRAME);
+		tstPositionRegion(ioBuilder);
+	}
+
+	/**
+	 * @param ioBuilder
+	 * @throws RecordException
+	 * @throws IOException
+	 */
+	private void tstPositionRegion(ICobolIOBuilder ioBuilder)
+			throws RecordException, IOException {
+		ioBuilder	.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE)
 					.setSplitCopybook(CopybookLoader.SPLIT_REDEFINE);
 
 
@@ -85,7 +140,6 @@ public class TstOccursDepending42 extends TestCase {
 				}
 			}
 		}
-
 	}
 
 

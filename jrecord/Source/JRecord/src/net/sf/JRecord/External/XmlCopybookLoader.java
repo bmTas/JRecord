@@ -211,6 +211,7 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
             this.foundRedefine  = false;
             this.fieldNum       = 0;
             this.recordNum      = 1;
+            this.positionAdjustment = 0;
 
             Element element = /*(Element)*/ pCopyBookXml.getDocumentElement();
 

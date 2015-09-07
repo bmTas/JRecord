@@ -1,0 +1,86 @@
+package ${generateOptions.packageId}.schema;
+
+import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.FieldDetail;
+import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.Details.RecordDetail;
+#*  *##if (${currentRecord.getRecordSelectionStr().trim().length()} > 0)
+import net.sf.JRecord.Details.LayoutGetFieldByName;
+import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
+#*  *##end
+import net.sf.JRecord.Types.Type;
+
+public class Record${currentRecord.extensionName} {
+
+    public static final String RECORD_NAME = "${currentRecord.record.getRecordName()}";
+    
+#*  *##foreach($f in ${currentRecord.getFields()}) 
+    public final IFieldDetail fld${f.extensionName};
+#*  *##end
+ 
+    public final RecordDetail record;
+    
+    private final String font;
+    
+    public Record${currentRecord.extensionName}() {
+       FieldDetail[] flds = new FieldDetail[${currentRecord.getFields().size()}];
+       int i = 0;
+       
+       font = "${generateOptions.font}";
+#*  *##foreach($f in ${currentRecord.getFields()}) 
+       fld${f.extensionName} = createField(flds, i++, "${f.fieldDetail.getLookupName()}", ${f.getJRecordTypeId()}, ${f.fieldDetail.getDecimal()}, ${f.fieldDetail.getPos()}, ${f.fieldDetail.getLen()});
+#*  *##end
+
+      String t = "${currentRecord.record.getDelimiter()}"; 	
+      if (t == "\t") {
+          t = "<tab>";
+      }
+      record = new RecordDetail(RECORD_NAME,
+	            ${currentRecord.getJRecordRecordType()}, t, "${currentRecord.record.getQuote()}",
+	            font, flds, ${currentRecord.record.getRecordStyle()});
+      record.setParentRecordIndex( ${currentRecord.record.getParentRecordIndex()});
+	    
+#*  *##set( $dependingOn = ${currentRecord.getDependingOn()})
+#*  *##if ( ${dependingOn} ) 
+#*      *##if ( ${dependingOn.size()} > 0) 
+    List<DependingOn> dep = Arrays.asList(
+#*           *##foreach($d in ${dep}) 
+       new DependingOn("${d.getVariableName()}", ${d.getPosition()}, ${d.getOccursLength()}, ${d.getOccursMax()}));
+#*           *##end
+    );
+    
+    ret.setDependingOn(new ArrayList(dep));
+#*      *##end
+#*  *##end
+    }
+    
+    public Record${currentRecord.extensionName}(LayoutDetail l, RecordDetail r) {
+    
+        font = l.getFontName();
+        record = r;
+        
+#*  *##foreach($f in ${currentRecord.getFields()}) 
+        fld${f.extensionName} = l.getFieldFromName("${f.fieldDetail.getLookupName()}");        
+#*  *##end
+    }
+    
+    public void updateRecordSelection(LayoutDetail l) {
+#*  *##if (${currentRecord.getRecordSelectionStr().trim().length()} > 0)
+       record.updateRecordSelection(
+             ${currentRecord.getRecordSelectionStr()},
+                 new LayoutGetFieldByName(l, record));
+#*  *##end                 
+    }
+    
+    private FieldDetail createField(
+                FieldDetail[] flds, int idx,
+                String name,
+	        int type,
+	        int decimal,
+	        int pos,
+		int len) {
+        flds[idx] = FieldDetail.newFixedWidthField(name, type, pos, len, decimal, font);
+        return flds[idx];
+    }
+}

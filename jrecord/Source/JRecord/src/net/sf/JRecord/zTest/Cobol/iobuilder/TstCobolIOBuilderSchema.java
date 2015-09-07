@@ -3,6 +3,7 @@ package net.sf.JRecord.zTest.Cobol.iobuilder;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
@@ -170,6 +171,21 @@ public class TstCobolIOBuilderSchema extends TestCase {
 	private void tstFileBldrLongLine(TstData data) throws RecordException, IOException {
 		String copybookFileName = this.getClass().getResource("BldrTstLongLine.cbl").getFile();
 		ICobolIOBuilder ioBuilder = CobolIoProvider.getInstance().newIOBuilder(copybookFileName, data.dialect);
+		tstFileBldrLongLine(data, ioBuilder);
+		
+		ioBuilder = JRecordInterface1.COBOL.newIOBuilder(copybookFileName).setDialect(data.dialect);
+		tstFileBldrLongLine(data, ioBuilder);
+	}
+
+
+	/**
+	 * @param data
+	 * @param ioBuilder
+	 * @throws RecordException
+	 * @throws IOException
+	 */
+	private void tstFileBldrLongLine(TstData data, ICobolIOBuilder ioBuilder)
+			throws RecordException, IOException {
 		int hold = data.copybookFileFormat;
 		
 		data.copybookFileFormat = Cb2xmlConstants.USE_LONG_LINE;
@@ -181,11 +197,17 @@ public class TstCobolIOBuilderSchema extends TestCase {
 		String copybookFileName = this.getClass().getResource("BldrTst.cbl").getFile();
 		ICobolIOBuilder ioBuilder = CobolIoProvider.getInstance().newIOBuilder(copybookFileName, data.dialect);
 		tstBldr(ioBuilder, data);
+		
+		ioBuilder = JRecordInterface1.COBOL.newIOBuilder(copybookFileName).setDialect(data.dialect);
+		tstBldr(ioBuilder, data);
 	}
 
 	private void tstFileBldrStream(TstData data) throws RecordException, IOException {
 		String copybookFileName = this.getClass().getResource("BldrTst.cbl").getFile(); 
 		ICobolIOBuilder ioBuilder = CobolIoProvider.getInstance().newIOBuilder(new FileInputStream(copybookFileName), "BldrTst", data.dialect);
+		tstBldr(ioBuilder, data);
+		
+		ioBuilder = JRecordInterface1.COBOL.newIOBuilder(new FileInputStream(copybookFileName), "BldrTst").setDialect(data.dialect);
 		tstBldr(ioBuilder, data);
 	}
 

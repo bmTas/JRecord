@@ -15,7 +15,7 @@ import junit.framework.TestCase;
 
 /**
  * Test Occurs depending on with one nested occurs !!!
- * @author Bruce01
+ * @author Bruce Martin
  *
  */
 public class TstOccursDepending27 extends TestCase {

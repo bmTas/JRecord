@@ -6,7 +6,10 @@
  */
 package net.sf.JRecord.utilityClasses;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Generic cllass to parses program arguments into a hashmap
@@ -15,8 +18,11 @@ import java.util.HashMap;
  *
  */
 public class ParseArguments {
+	
+	private static final String[] EMPTY_ARRAY = {}; 
 
-    private HashMap<String, String> argsMap = new HashMap<String, String>();
+//    private HashMap<String, String> argsMap = new HashMap<String, String>();
+    private HashMap<String, List<String>> argsMapOfList = new HashMap<String, List<String>>();
 
 
     /**
@@ -27,26 +33,39 @@ public class ParseArguments {
      * @param args arguments supplied to the program
      */
     public ParseArguments(final String[] validArgs, final String[] args) {
+    	this(validArgs, EMPTY_ARRAY, args);
+    	
+    }
+    public ParseArguments(final String[] validSingleItemArgs, final String[] validMultiItemArgs,final String[] args) {
+
         int i;
-        HashMap<String, Integer> valid = new HashMap<String, Integer>();
+        HashSet<String> valid = new HashSet<String>();
+        HashSet<String> validMulti = new HashSet<String>();
         String currArg = null;
         String currValue = null;
         String sep = "";
 
-        for (i = 0; i < validArgs.length; i++) {
-            valid.put(validArgs[i].toUpperCase(), Integer.valueOf(i));
+        for (i = 0; i < validSingleItemArgs.length; i++) {
+            valid.add(validSingleItemArgs[i].toUpperCase());
+        }
+        for (i = 0; i < validMultiItemArgs.length; i++) {
+        	validMulti.add(validMultiItemArgs[i].toUpperCase());
         }
 
         for (i = 0; i < args.length; i++) {
             if (args[i].startsWith("-")) {
-                if (currArg != null) {
-                    argsMap.put(currArg, currValue);
-                }
+            	updateMap(currArg, currValue);
+                
                 currValue = "";
                 sep = "";
                 currArg = args[i].toUpperCase();
 
-                if (! valid.containsKey(currArg)) {
+                if (valid.contains(currArg)) {
+                	if (argsMapOfList.containsKey(currArg)) {
+                		System.out.println(" ** Only one " + args[i] + " argument is allowed !!!");
+                		currArg = null;
+                	}
+                } else if (! validMulti.contains(currArg) ) {
                     currArg = null;
                     System.out.println(" ** Invalid Argument " + args[i]);
                 }
@@ -55,14 +74,23 @@ public class ParseArguments {
                 sep = " ";
             }
         }
-        if (currArg != null) {
-            argsMap.put(currArg, currValue);
-        }
+        updateMap(currArg, currValue);
+        
         System.out.println();
         System.out.println();
     }
 
 
+    private void updateMap(String currArg, String currValue) {
+        if (currArg != null) {
+        	List<String> list = argsMapOfList.get(currArg);
+        	if (list == null) {
+        		list = new ArrayList<String>(5);
+        	}
+        	list.add(currValue);
+            argsMapOfList.put(currArg, list);
+        }
+    }
     /**
      * Get a requested argument
      *
@@ -71,7 +99,7 @@ public class ParseArguments {
      * @return Argument value
      */
     public String getArg(String arg) {
-        return argsMap.get(arg.toUpperCase());
+        return getArg(arg, null);
     }
 
 
@@ -97,12 +125,20 @@ public class ParseArguments {
     public String getArg(String arg, String defaultValue) {
         String ret = defaultValue;
         String key = arg.toUpperCase();
-        if (argsMap.containsKey(key)) {
-            ret = argsMap.get(key);
+        
+        if (argsMapOfList.containsKey(key)) {
+            List<String> list = argsMapOfList.get(key);
+            if (list.size() > 1) {
+            	throw new RuntimeException("There where: " + list.size() + " objects in the list");
+            }
+			ret = list.get(0);
         }
         return ret;
     }
-
+    
+    public List<String> getArgList(String arg) {
+    	return argsMapOfList.get(arg.toUpperCase());
+    }
 
 //    /**
 //     * Get a requested integer argument

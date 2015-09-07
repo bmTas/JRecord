@@ -1,6 +1,10 @@
 package net.sf.JRecord.def.IO.builders;
 
+
 import java.io.InputStream;
+import java.io.OutputStream;
+
+import net.sf.JRecord.External.ExternalRecord;
 
 /**
  * Interface to create IOBuilders
@@ -38,5 +42,25 @@ public interface IIOCopybookProvider {
 	 */
 	public abstract IIOBuilder newIOBuilder(
 			InputStream cobolCopybookStream, String copybookName);
+	
+	/**
+	 * Exporting a {@link ExternalRecord} to an Xml-File
+	 * 
+	 * @param fileName Output file name
+	 * @param schema schema to export
+	 * 
+	 * @throws Exception any error that occurs
+	 */
+	public abstract void export(String fileName, ExternalRecord schema) throws Exception;
+
+	/**
+	 * Exporting a {@link ExternalRecord} to a Stream
+	 * 
+	 * @param outStream output stream where the schema is to be written
+	 * @param schema
+	 * 
+	 * @throws Exception Any Error that occurs
+	 */
+	public abstract void export(OutputStream outStream, ExternalRecord schema) throws Exception;
 
 }

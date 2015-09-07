@@ -489,8 +489,8 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
   }
 
   /**
-   * This method gets the vaule of RecSepList
-   * @return record Seperator list value
+   * This method gets the value of RecSepList
+   * @return record Separator list value
    */
   public String getRecSepList() {
       return recSepList;

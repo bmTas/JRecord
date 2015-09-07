@@ -1,5 +1,7 @@
 package net.sf.JRecord.def.IO.builders;
 
+import java.io.InputStream;
+
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Log.AbsSSLogger;
 
@@ -202,5 +204,24 @@ public interface ICobolMultiCopybookIOBuilder extends ICobolIOBuilder {
 	 * @return
 	 */
 	public abstract ICobolMultiCopybookIOBuilder addCopyBook(String fileName);
+	
+	/**
+	 * Add a copybook stream to the builder
+	 * 
+	 * @param inStream input stream
+	 * @param copybookName copybook name
+	 * 
+	 * @return this IOBuilder
+	 */
+	public abstract ICobolMultiCopybookIOBuilder addCopyBook(InputStream inStream,
+			String copybookName);
+
+	/**
+	 * Define the record Selection for the last copybook defined
+	 * @param recordSelection record selection to be used
+	 * @return IOBuilder for further definition (fluid style)
+	 */
+	public abstract ICobolMultiCopybookIOBuilder setRecordSelectionCurrentCopybook(	ExternalSelection recordSelection);
+
 	
 }

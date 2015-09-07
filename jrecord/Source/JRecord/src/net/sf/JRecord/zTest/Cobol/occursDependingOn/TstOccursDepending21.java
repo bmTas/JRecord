@@ -2,6 +2,7 @@ package net.sf.JRecord.zTest.Cobol.occursDependingOn;
 
 import java.io.IOException;
 
+import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IFieldDetail;
@@ -15,7 +16,7 @@ import junit.framework.TestCase;
 
 /**
  * Test Occurs depending on with one nested occurs !!!
- * @author Bruce01
+ * @author Bruce Martin
  *
  */
 public class TstOccursDepending21 extends TestCase {
@@ -25,7 +26,7 @@ public class TstOccursDepending21 extends TestCase {
 
 	public void testPositionCalc1() throws Exception {
 		try {
-			tstPosition("OccursDependingOn21.cbl");
+			tstPosition1("OccursDependingOn21.cbl");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -33,12 +34,43 @@ public class TstOccursDepending21 extends TestCase {
 	}
 	
 
+	public void testPositionCalc2() throws Exception {
+		try {
+			tstPosition2("OccursDependingOn21.cbl");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 	
-	private  void tstPosition(String copybookFile)  throws IOException, RecordException {
+	
+	private  void tstPosition1(String copybookFile)  throws IOException, RecordException {
 		String copybookFileName = WriteSampleFile.class.getResource(copybookFile).getFile();
 		ICobolIOBuilder ioBuilder = CobolIoProvider.getInstance()
-				.newIOBuilder(copybookFileName, ICopybookDialects.FMT_MAINFRAME)
-					.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE);
+				.newIOBuilder(copybookFileName, ICopybookDialects.FMT_MAINFRAME);
+		tstPosition(copybookFile, ioBuilder);
+
+	}
+
+
+	
+	private  void tstPosition2(String copybookFile)  throws IOException, RecordException {
+		String copybookFileName = WriteSampleFile.class.getResource(copybookFile).getFile();
+		ICobolIOBuilder ioBuilder = JRecordInterface1.COBOL
+				.newIOBuilder(copybookFileName).setDialect(ICopybookDialects.FMT_MAINFRAME);
+		tstPosition(copybookFile, ioBuilder);
+
+	}
+
+	/**
+	 * @param copybookFile
+	 * @param ioBuilder
+	 * @throws RecordException
+	 * @throws IOException
+	 */
+	private void tstPosition(String copybookFile, ICobolIOBuilder ioBuilder)
+			throws RecordException, IOException {
+		ioBuilder	.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE);
 
 
 		boolean normal = copybookFile.endsWith("1.cbl");
@@ -51,7 +83,6 @@ public class TstOccursDepending21 extends TestCase {
 				}
 //			}
 		}
-
 	}
 	
 

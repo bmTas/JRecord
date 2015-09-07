@@ -9,14 +9,11 @@ package net.sf.JRecord.External;
 
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.FieldDetail;
-import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Common.IGetFieldByName;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.Details.LayoutGetFieldByName;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.External.Def.ExternalField;
-import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
-import net.sf.JRecord.detailsSelection.Convert;
 
 
 /**
@@ -45,7 +42,7 @@ public class ToLayoutDetail {
 		}
 	    LayoutDetail ret = null;
 
-	    RecordDetail[] layouts;
+	    RecordDetail[] records;
 	    String recordSepString = recordDefinition.getRecSepList();
 
 	    String fontName = recordDefinition.getFontName();
@@ -53,26 +50,30 @@ public class ToLayoutDetail {
 
 		
 		if (recordDefinition.getNumberOfRecords() == 0) {
-	        layouts = new RecordDetail[1];
-	        layouts[0] = toRecordDetail(recordDefinition);
-		    ExternalSelection recordSelection = recordDefinition.getRecordSelection();
-		    if (recordSelection != null && recordSelection.getSize() > 0) {
-		    	layouts[0].getRecordSelection().setRecSel((new Convert()).convert(recordSelection, layouts[0]));
-		    }
-	        ret = genSchema(recordDefinition, layouts, recordSepString, recordSep);
+	        records = new RecordDetail[1];
+	        records[0] = toRecordDetail(recordDefinition);
+	        records[0].updateRecordSelection(recordDefinition.getRecordSelection(), records[0]);
+//		    ExternalSelection recordSelection = recordDefinition.getRecordSelection();
+//		    if (recordSelection != null && recordSelection.getSize() > 0) {
+//		    	layouts[0].getRecordSelection().setRecSel((new Convert()).convert(recordSelection, layouts[0]));
+//		    }
+	        ret = genSchema(recordDefinition, records, recordSepString, recordSep);
 	    } else {
-	        layouts = new RecordDetail[recordDefinition.getNumberOfRecords()];
-	        for (int i = 0; i < layouts.length; i++) {
-	            layouts[i] = toRecordDetail(recordDefinition.getRecord(i));
+	        records = new RecordDetail[recordDefinition.getNumberOfRecords()];
+	        for (int i = 0; i < records.length; i++) {
+	            records[i] = toRecordDetail(recordDefinition.getRecord(i));
 	        }    
 
-	        ret = genSchema(recordDefinition, layouts, recordSepString, recordSep);
-		    for (int i = 0; i < layouts.length; i++) {
-			    ExternalSelection recordSelection = recordDefinition.getRecord(i).getRecordSelection();
-			    if (recordSelection != null && recordSelection.getSize() > 0) {
-			    	layouts[i].getRecordSelection().setRecSel(
-			    			(new Convert()).convert(recordSelection, new GetField(ret,  layouts[i])));
-			    }
+	        ret = genSchema(recordDefinition, records, recordSepString, recordSep);
+		    for (int i = 0; i < records.length; i++) {
+		    	records[i].updateRecordSelection(
+		    			recordDefinition.getRecord(i).getRecordSelection(), 
+		    			new LayoutGetFieldByName(ret,  records[i]));
+//			    ExternalSelection recordSelection = recordDefinition.getRecord(i).getRecordSelection();
+//			    if (recordSelection != null && recordSelection.getSize() > 0) {
+//			    	layouts[i].getRecordSelection().setRecSel(
+//			    			(new Convert()).convert(recordSelection, new GetField(ret,  layouts[i])));
+//			    }
 		    }
 	    }
 	
@@ -167,30 +168,5 @@ public class ToLayoutDetail {
             instance = new ToLayoutDetail();
         }
         return instance;
-    }
-    
-    
-    private static class GetField implements IGetFieldByName {
-    	final LayoutDetail layout;
-    	final RecordDetail rec;
-
-		protected GetField(LayoutDetail l, RecordDetail rec) {
-			super();
-			this.rec = rec;
-			this.layout = l;
-		}
-		/* (non-Javadoc)
-		 * @see net.sf.JRecord.Common.IGetFieldByName#getField(java.lang.String)
-		 */
-		@Override
-		public IFieldDetail getField(String fieldName) {
-			IFieldDetail ret = rec.getField(fieldName);
-			if (ret == null) {
-				ret = layout.getFieldFromName(fieldName);
-			}
-			return ret;
-		}
-    	
-    	
     }
 }

@@ -15,6 +15,8 @@ import net.sf.JRecord.zTest.Common.TstConstants;
 
 /**
  * Example of Reading /writing CSV files with names on the first line
+ * 
+ * 
  * @author Bruce Martin
  *
  */
@@ -46,9 +48,11 @@ public final class XmplLineIO5a {
 	        CommonBits.setUseCsvLine(true);
 	    	
 	        try {
-	        	AbstractLineReader reader = JRecordInterface1.CSV.newIOBuilder("\t", "\"")
+	        	AbstractLineReader reader = JRecordInterface1.CSV
+	        			.newIOBuilder("\t", "\"")
 	        					.newReader(salesFile);
-	        	ICsvIOBuilder outIOBlbdr = JRecordInterface1.CSV.newIOBuilder(";", "\"")
+	        	ICsvIOBuilder outIOBlbdr = JRecordInterface1.CSV
+	        			.newIOBuilder(";", "\"")
 	        					.defineFields()
 									.addCsvField(FLD_SKU,   Type.ftChar, 0)
 									.addCsvField(FLD_STORE, Type.ftNumAnyDecimal, 0)
