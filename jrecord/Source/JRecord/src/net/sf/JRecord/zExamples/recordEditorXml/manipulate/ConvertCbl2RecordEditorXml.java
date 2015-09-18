@@ -8,7 +8,6 @@ import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.CopybookWriterManager;
 import net.sf.JRecord.External.ExternalRecord;
-import net.sf.JRecord.External.RecordEditorXmlWriter;
 import net.sf.JRecord.Log.TextLog;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 
@@ -38,11 +37,12 @@ public class ConvertCbl2RecordEditorXml {
     	ExternalRecord extlayoutCBL = loaderCBL.loadCopyBook(
     	    new ByteArrayInputStream(copyBookBytes),
     	    Conversion.getCopyBookId("DTAR020.cbl"),
-    	    CopybookLoader.SPLIT_NONE, 0, "", ICopybookDialects.FMT_INTEL, 0, new TextLog());
-    	CopybookWriterManager writerManager = CopybookWriterManager.getInstance();
-    	RecordEditorXmlWriter writer
-    			= (RecordEditorXmlWriter) writerManager.get(CopybookWriterManager.RECORD_EDITOR_XML_WRITER);
-
-    	writer.writeCopyBook(new FileOutputStream("H:\\Temp\\XML_DTAR020.Xml"), extlayoutCBL, null);
+    	    CopybookLoader.SPLIT_NONE, 0, "", ICopybookDialects.FMT_MAINFRAME, 0, new TextLog());
+    	CopybookWriterManager.getInstance()
+    			.get(CopybookWriterManager.RECORD_EDITOR_XML_WRITER)
+    		    .writeCopyBook(
+    		    		new FileOutputStream("H:\\Temp\\XML_DTAR020.Xml"), 
+    		    		extlayoutCBL, 
+    		    		null);
     }
 }

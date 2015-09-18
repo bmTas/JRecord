@@ -14,8 +14,10 @@
 package net.sf.JRecord.Details;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
@@ -94,6 +96,8 @@ public class LayoutDetail implements IBasicFileSchema {
 
 	private HashMap<String, IFieldDetail> fieldNameMap = null;
 	private HashMap<String, IFieldDetail> recordFieldNameMap = null;
+	private HashSet<String> duplicateFieldNames = null;
+	
 	private String delimiter = "";
 	private int fileStructure;
 
@@ -700,6 +704,11 @@ public class LayoutDetail implements IBasicFileSchema {
 
     	return ret;
     }
+    
+    public Set<String> getDuplicateFieldNames() {
+    	buildFieldNameMap();
+    	return duplicateFieldNames;
+    }
 
     private void buildFieldNameMap() {
 
@@ -716,6 +725,7 @@ public class LayoutDetail implements IBasicFileSchema {
 
     		fieldNameMap = new HashMap<String, IFieldDetail>(size);
     		recordFieldNameMap = new HashMap<String, IFieldDetail>(size);
+    		duplicateFieldNames = new HashSet<String>(10);
 
     		for (i = 0; i < recordCount; i++) {
     			//FieldDetail[] flds = records[i].getFields();
@@ -727,6 +737,9 @@ public class LayoutDetail implements IBasicFileSchema {
     			    k = 1;
     			    while (fieldNameMap.containsKey(name.toUpperCase())) {
     			    	name = nameTmp + k++;
+    			    }
+    			    if (k == 2) {
+    			    	duplicateFieldNames.add(fld.getName().toUpperCase());
     			    }
     			    fld.setLookupName(name);
 					fieldNameMap.put(name.toUpperCase(), fld);
@@ -992,7 +1005,11 @@ public class LayoutDetail implements IBasicFileSchema {
 		}
 		
 		if (f == null) {
-			throw new RuntimeException("No Field Found");
+			StringBuilder b = new StringBuilder();
+			for (String s : fieldNames) {
+				b.append('.').append(s);
+			}
+			throw new RuntimeException("No Field Found: " + b);
 		}
 		return f;
 	}

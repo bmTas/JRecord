@@ -24,12 +24,12 @@ import org.w3c.dom.Document;
  * @author Bruce Martin
  *
  */
-public class CobolCopybookLoader implements CopybookLoader, ICopybookLoaderStream, ISetDropCopybookName {
+public class CobolCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
 
     private static final String PROBLEM_LOADING_COPYBOOK = "Error Converting Cobol Copybook: {0}    Cause:\n{1}";
 	private static boolean available = true;
     private static boolean toCheck = true;
-
+  
     private XmlCopybookLoader xmlLoader;
 
     /**
@@ -50,6 +50,16 @@ public class CobolCopybookLoader implements CopybookLoader, ICopybookLoaderStrea
        // System.out.println("Cobol Copybook loader");
     }
     
+    
+    
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.External.ICopybookLoaderStream#setSaveCb2xmlDocument(boolean)
+	 */
+	@Override
+	public void setSaveCb2xmlDocument(boolean saveCb2xml) {
+		xmlLoader.setSaveCb2xmlDocument(saveCb2xml);
+	}
+
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.External.CopybookLoader#loadCopyBook(java.lang.String, int, int, java.lang.String, int, int, net.sf.JRecord.Log.AbsSSLogger)
 	 */

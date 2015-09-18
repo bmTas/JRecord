@@ -66,6 +66,7 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 		super();
 		//this.copybookType = copybookType;
 		this.layout = schema;
+		this.lineProvider = LineIOProvider.getInstance().getLineProvider(layout);
 	}
 
 

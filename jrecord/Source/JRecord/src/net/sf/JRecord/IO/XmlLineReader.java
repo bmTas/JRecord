@@ -402,10 +402,10 @@ public class XmlLineReader extends AbstractLineReader {
      * @see net.sf.JRecord.IO.AbstractLineReader#close()
      */
     public void close() throws IOException {
-        for (int i = 0; i < getLayout().getRecordCount(); i++) {
-            //System.out.println("^^ " + i + " " + getLayout().getRecord(i).getRecordName()
-            //        + " " + getLayout().getRecord(i).getFieldCount());
-        }
+//        for (int i = 0; i < getLayout().getRecordCount(); i++) {
+//            //System.out.println("^^ " + i + " " + getLayout().getRecord(i).getRecordName()
+//            //        + " " + getLayout().getRecord(i).getFieldCount());
+//        }
         try {
             parser.close();
         } catch (Exception e) {

@@ -40,10 +40,7 @@ public final class XmplLineIO7 {
 	        try {
 	            CopybookLoader loader = new RecordEditorXmlLoader();
 	            LayoutDetail layout = loader.loadCopyBook(copybookName, 0, 0, "", 0, 0, null).asLayoutDetail();
-	            
-	            /* with XML copybooks, get the file structure from layout */
-	            int fileStructure = layout.getFileStructure();
-	            
+		            
 	            AbstractLineReader reader  = LineIOProvider.getInstance().getLineReader(layout);
 	            AbstractLineWriter writer  = LineIOProvider.getInstance().getLineWriter(layout);
 	            

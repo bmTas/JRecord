@@ -430,6 +430,14 @@ public class FieldDetail implements IFieldDetail {
 
 
 	/**
+	 * @return the dependingOnDtls
+	 */
+	public final DependingOnDtls getDependingOnDtls() {
+		return dependingOnDtls;
+	}
+
+
+	/**
 	 * @param dependingOnDtls the dependingOnDtls to set
 	 */
 	public final void setDependingOnDtls(DependingOnDtls dependingOnDtls) {
@@ -448,9 +456,9 @@ public class FieldDetail implements IFieldDetail {
 	public static final FieldDetail newFixedWidthField(
 					   final String pName,
 	        		   final int pType,
-	        		   final int pDecimal,
 	        		   final int pos,
 					   final int len,
+	        		   final int pDecimal,
 	        		   final String pFont) {
 		FieldDetail r = new FieldDetail(pName, "", pType, pDecimal, pFont, 0, "" /* pFormat, pParamater*/);
 		

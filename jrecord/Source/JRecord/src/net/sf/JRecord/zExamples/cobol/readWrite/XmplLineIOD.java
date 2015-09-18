@@ -19,6 +19,7 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.CobolIoProvider;
 import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.zTest.Common.TstConstants;
 import net.sf.cb2xml.def.Cb2xmlConstants;
 
 /**
@@ -31,8 +32,8 @@ import net.sf.cb2xml.def.Cb2xmlConstants;
  */
 public final class XmplLineIOD {
 
-    private String salesFile        = "DTAR020.bin";
-    private String copybookName     = "DTAR020.cbl";
+    private String salesFile        = TstConstants.SAMPLE_DIRECTORY + "DTAR020.bin";
+    private String copybookName     = TstConstants.COBOL_DIRECTORY + "DTAR020.cbl";
 
     /**
      * Example of LineReader / LineWrite classes

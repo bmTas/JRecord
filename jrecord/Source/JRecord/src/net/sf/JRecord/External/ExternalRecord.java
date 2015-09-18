@@ -1,6 +1,8 @@
 package net.sf.JRecord.External;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.RecordException;
@@ -95,6 +97,8 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
   private final ArrayList<DependingOn> dependingOn = new ArrayList<DependingOn>(3);
 
   private int lastPosition = -1;
+  
+  private ArrayList<Cb2xmlDocument> cb2xmlDocuments = new ArrayList<Cb2xmlDocument>();
 
 
   /**
@@ -1275,6 +1279,31 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 		this.embeddedCr = embeddedCr;
 	}
 
+
+	/**
+	 * @return the cb2xmlDocuments details
+	 */
+	public final List<Cb2xmlDocument> getCb2xmlDocuments() {
+		return cb2xmlDocuments;
+	}
+
+	/**
+	 * @param e cb2xml document details
+	 * @return
+	 * @see java.util.ArrayList#add(java.lang.Object)
+	 */
+	public void addCb2xmlDocument(Cb2xmlDocument e) {
+		cb2xmlDocuments.add(e);
+	}
+
+	/**
+	 * @param c cb2xmlDoc collection to add.
+	 * @return
+	 * @see java.util.ArrayList#addAll(java.util.Collection)
+	 */
+	public boolean addAllCb2xmlDocuments(Collection<Cb2xmlDocument> c) {
+		return cb2xmlDocuments.addAll(c);
+	}
 
 	public static IFixedWidthSchemaBuilder newFixedWidthRecord(String name, int fileStructure, String fontName) {
 		ExternalRecord r =  getNullRecord(name, Constants.rtRecordLayout, fontName);

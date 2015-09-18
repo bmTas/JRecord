@@ -26,6 +26,7 @@ package net.sf.JRecord.External;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.Def.DependingOn;
 import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.External.Def.ExternalField;
@@ -58,7 +60,7 @@ import org.xml.sax.SAXException;
  *
  * @author Bruce Martin
  */
-public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
+public class XmlCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
 
     private static final int OPT_WRITE_ELEMENT = 1;
     private static final int OPT_REDEFINES = 2;
@@ -73,6 +75,7 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
     private List<DependingOn> commonDependingOn;
     private String redefinedField;
     private boolean foundRedefine;
+    private boolean saveCb2xml = false;
     private int splitCopybook;
 
     private int fieldNum;
@@ -122,6 +125,18 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
 	        return factory.newDocumentBuilder().parse(new File(fileName));
 		}
     }
+    
+    
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.External.ISetDropCopybookName#setSaveCb2xmlDocument(boolean)
+	 */
+	@Override
+	public void setSaveCb2xmlDocument(boolean saveCb2xml) {
+		this.saveCb2xml = saveCb2xml;
+	}
+
+
 
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.External.CopybookLoader#loadCopyBook(java.lang.String, int, int, java.lang.String, int, int, net.sf.JRecord.Log.AbsSSLogger)
@@ -130,13 +145,37 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
 	public final ExternalRecord loadCopyBook(String copyBookFile,
 			int splitCopybookOption, int dbIdx, String font, int binFormat,
 			int systemId, AbsSSLogger log) throws IOException, SAXException, ParserConfigurationException {
-		// TODO Auto-generated method stub
+		
 		return loadCopyBook(copyBookFile, splitCopybookOption, dbIdx, font, CommonBits.getDefaultCobolTextFormat(), binFormat, systemId, log);
 		
 	}
 
 
-    /**
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.External.ICopybookLoaderStream#loadCopyBook(java.io.InputStream, java.lang.String, int, int, java.lang.String, int, int, int, net.sf.JRecord.Log.AbsSSLogger)
+	 */
+	@Override
+	public ExternalRecord loadCopyBook(InputStream inputStream,
+			String copyBookName, int splitCopybook, int dbIdx, String font,
+			int copybookFormat, int binaryFormat, int systemId, AbsSSLogger log)
+			throws RecordException, IOException {
+		try {
+			synchronized (this) {	
+			    DocumentBuilderFactory factory
+			       		= DocumentBuilderFactory.newInstance();
+			    Document doc = factory.newDocumentBuilder().parse(inputStream);
+				return loadDOMCopyBook(doc, copyBookName, splitCopybook, dbIdx, font, binaryFormat, systemId);
+			}
+		} catch (SAXException e) {
+			throw new IOException(e);
+		} catch (ParserConfigurationException e) {
+			throw new IOException(e);
+		}
+	}
+
+
+
+	/**
      * Convert a XML Dom Copybook into the ExternalRecord
      *
      * @param copyBookFile Copy Book file Name
@@ -261,6 +300,10 @@ public class XmlCopybookLoader implements CopybookLoader, ISetDropCopybookName {
             }
             parentLayout.setFileStructure(numTranslator.getFileStructure(multipleRecordLengths, binary));
             freeDBs(pDbIdx);
+            
+            if (saveCb2xml) {
+            	parentLayout.addCb2xmlDocument(new Cb2xmlDocument(pSplitCopybook, splitAtLevel, pCopyBookXml));
+            }
 
             return parentLayout;
         }

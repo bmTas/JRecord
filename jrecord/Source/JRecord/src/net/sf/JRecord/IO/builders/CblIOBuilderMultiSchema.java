@@ -11,10 +11,9 @@ import net.sf.JRecord.External.ICopybookLoaderStream;
 import net.sf.JRecord.External.ISetDropCopybookName;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Numeric.ICopybookDialects;
-import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.def.IO.builders.ICobolMultiCopybookIOBuilder;
 
-public class CblIOBuilderMultiSchema extends CblIOBuilderBase implements ICobolIOBuilder, ICobolMultiCopybookIOBuilder {
+public class CblIOBuilderMultiSchema extends CblIOBuilderBase implements ICobolMultiCopybookIOBuilder {
 
 	private final String copybookname;
 	final ICopybookLoaderStream loader;

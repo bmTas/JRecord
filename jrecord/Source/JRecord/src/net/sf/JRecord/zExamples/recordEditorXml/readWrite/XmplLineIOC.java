@@ -30,7 +30,6 @@ public final class XmplLineIOC {
 
 		    String installDir     = TstConstants.SAMPLE_DIRECTORY;
 		    String amsPoFile      = installDir + "Ams_PODownload_20041231.txt";
-//		    String salesFileOut   = installDir + "DTAR020out.bin";
 		    String copybookName   = TstConstants.RE_XML_DIRECTORY
 	    					+ "ams PO Download.Xml";
 	        int lineNum = 0;
@@ -41,9 +40,6 @@ public final class XmplLineIOC {
 	        String recordType = "";
 	        try {
 	            LayoutDetail schema = CopybookLoaderFactory.getInstance().getLayoutRecordEditXml(copybookName, null);
-
-	            /* with XML copybooks, get the file structure from layout */
-	            int fileStructure = schema.getFileStructure();
 
 	            recordIdxMap.put("H1", schema.getRecord(schema.getRecordIndex("ams PO Download: Detail")));
 	            recordIdxMap.put("D1", schema.getRecord(schema.getRecordIndex("ams PO Download: Header")));

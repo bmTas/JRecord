@@ -1,0 +1,20 @@
+TAR5839DCDC - Taras Ave                                                             30-68 Taras Ave                         Altona North                       3025      VICA
+TAR5850DCVIC West Ad Support                                                        Lot 2 Little Boundary Rd                Laverton                           3028      VICA
+TAR5853DCNSW North Sydney Ad Support                                                                                                                           0000         A
+TAR5866DCWA Ad Support                                                                                                                                         0000         A
+TAR5015STBankstown                          Bankstown                               Unit 2, 39-41 Allingham Street          Condell Park                       2200      NSWA
+TAR5019STPenrith                            Penrith                                 58 Leland Street                        Penrith                            2750      NSWA
+TAR5033STBlacktown                          Marayong                                Dock 2, 11 Melissa Place                Marayong                           2148      NSWA
+TAR5035STRockdale                           Building B,  Portside DC                2-8 Mc Pherson Street                   Botany                             2019      NSWA
+TAR5037STMiranda                            Westfield Shoppingtown                  Cnr. Urunga Pde & The Kingsway          Miranda                            2228      NSWA
+TAR5052STEastwood                           Marayong Offsite Reserve                11 Melissa Place                        Marayong                           2148      NSWA
+TAR5055STLeichhardt                         Marketown                               Marion Street                           Leichhardt                         2040      NSWA
+TAR5060STSt Marys                           St. Mary's                              Charles Hackett Drive                   St Mary's                          2760      NSWA
+TAR5070STBass Hill                          Bass Hill Plaza                         753 Hume Highway                        Bass Hill                          2197      NSWA
+TAR5074STCampbelltown                       Campbelltown Mall                       303 Queen Street                        Campbelltown                       2560      NSWA
+TAR5078STWarringah Mall                     Frenchs Forest                          Units 2-3, 14 Aquatic Drive             Frenchs Forest                     2086      NSWA
+TAR5081STAshfield                           Ashfield Mall                           Knox Street                             Ashfield                           2131      NSWA
+TAR5085STRoselands                          Condell park                            Unit 2, 39-41 Allingham Street          Condell Park                       2200      NSWA
+TAR5090STCarlingford Court                                                          Dock 1, 11 Melissa Place                Marayong                           2148      NSWA
+TAR5091STChatswood                          Frenchs Forest                          Unit 2-3, 14 Aquatic Drive              Frenchs Forest                     2086      NSWA
+TAR5093STLiverpool                          Westfield Phoenix Plaza                 Northumberland Street                   Liverpool                          2170      NSWA

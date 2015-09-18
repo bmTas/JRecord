@@ -8,9 +8,9 @@ import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.CsvParser.ParserManager;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
+import net.sf.JRecord.External.CopybookWriter;
 import net.sf.JRecord.External.CopybookWriterManager;
 import net.sf.JRecord.External.ExternalRecord;
-import net.sf.JRecord.External.RecordEditorXmlWriter;
 import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.Log.TextLog;
 import net.sf.JRecord.Numeric.ICopybookDialects;
@@ -54,8 +54,8 @@ public class ConvertCbl2CsvRecordEditorXml01 {
      	updateFields(extlayoutCBL);
     	
     	CopybookWriterManager writerManager = CopybookWriterManager.getInstance();
-    	RecordEditorXmlWriter writer
-    			= (RecordEditorXmlWriter) writerManager.get(CopybookWriterManager.RECORD_EDITOR_XML_WRITER);
+    	CopybookWriter writer
+    			= writerManager.get(CopybookWriterManager.RECORD_EDITOR_XML_WRITER);
 
     	writer.writeCopyBook(new FileOutputStream(TstConstants.TEMP_DIRECTORY + "DTAR020_Csv.Xml"), extlayoutCBL, null);
     }

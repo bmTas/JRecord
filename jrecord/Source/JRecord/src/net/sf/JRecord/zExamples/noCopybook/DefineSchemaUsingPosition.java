@@ -30,7 +30,8 @@ public class DefineSchemaUsingPosition {
 							.addFieldByPosition("Date" , Type.ftNumRightJustified, 12, 0)
 							.addFieldByPosition("Dept" , Type.ftNumRightJustified, 18, 0)
 							.addFieldByPosition("Qty"  , Type.ftNumRightJustified, 21, 0)
-							.addFieldByPosition("Price", Type.ftNumRightJustified, 23, 6, 2); 
+							.addFieldByPosition("Price", Type.ftNumRightJustified, 23, 6, 2)
+						.asExternalRecord(); 
 							// Need to define both position and length for the last field
 			LayoutDetail schema = r.asLayoutDetail();
 			AbstractLine saleRecord;

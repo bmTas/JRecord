@@ -1,14 +1,8 @@
 package net.sf.JRecord.Details;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-
-import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
-import net.sf.JRecord.External.ExternalConversion;
 import net.sf.JRecord.Types.Type;
-import net.sf.JRecord.Types.TypeManager;
 
 /**
  * Reference to one field in a line (or Record).
@@ -28,10 +22,10 @@ import net.sf.JRecord.Types.TypeManager;
  * @author Bruce Martin
  *
  */
-public class FieldValue implements IFieldValue {
+public class FieldValue extends BaseFieldValue implements IFieldValue {
 
 	private final AbstractLine theLine;
-	final IFieldDetail field;
+	//final IFieldDetail field;
 	final int recordNum;
 	final int fieldNum;;
 
@@ -42,8 +36,8 @@ public class FieldValue implements IFieldValue {
 	 * @param fieldDetails Field Description
 	 */
 	public FieldValue(AbstractLine line, IFieldDetail fieldDetails) {
+		super(fieldDetails);
 		theLine = line;
-		field = fieldDetails;
 		recordNum = -1;
 		fieldNum = -1;
 	}
@@ -56,138 +50,10 @@ public class FieldValue implements IFieldValue {
 	 * @param fieldIndex field index of the field
 	 */
 	public FieldValue(AbstractLine line, int recordIndex, int fieldIndex) {
+		super(null);
 		theLine = line;
 		recordNum = recordIndex;
 		fieldNum = fieldIndex;
-		field = null;
-	}
-
-	/**
-	 * @see IFieldValue#asBigDecimal()
-	 */
-	@Override
-	public BigDecimal asBigDecimal() {
-		Object ret = getValue();
-
-		if (ret == null) {
-			return null;
-		} else if (ret instanceof BigDecimal) {
-			return (BigDecimal) ret;
-		} else {
-			return new BigDecimal(ret.toString());
-		}
-	}
-
-	/**
-	 * @see IFieldValue#asBigInteger()
-	 */
-	@Override
-	public BigInteger asBigInteger() {
-		Object ret = getValue();
-
-		if (ret == null) {
-			return null;
-		} else if (ret instanceof BigInteger) {
-			return (BigInteger) ret;
-		} else {
-			return new BigInteger(ret.toString());
-		}
-	}
-
-	/**
-	 * @see IFieldValue#asDouble()
-	 */
-	@Override
-	public double asDouble() {
-		Object ret = getValue();
-
-		if (ret == null) {
-			return 0;
-		} else if (ret instanceof Number) {
-			return ((Number) ret).doubleValue();
-		} else {
-			return Double.parseDouble(ret.toString());
-		}
-	}
-
-
-	/**
-	 * @see IFieldValue#asFloat()
-	 */
-	@Override
-	public float asFloat() {
-		Object ret = getValue();
-
-		if (ret == null) {
-			return 0;
-		} else if (ret instanceof Number) {
-			return ((Number) ret).floatValue();
-		} else {
-			return Float.parseFloat(ret.toString());
-		}
-	}
-
-	/**
-	 * @see IFieldValue#asLong()
-	 */
-	@Override
-	public long asLong() {
-		Object ret = getValue();
-
-		if (ret == null) {
-			return 0;
-		} else if (ret instanceof Number) {
-			return ((Number) ret).longValue();
-		} else {
-			return Long.parseLong(ret.toString());
-		}
-	}
-
-
-	/**
-	 * @see IFieldValue#asInt()
-	 */
-	@Override
-	public int asInt() {
-		return (int) asLong();
-	}
-
-
-
-	/**
-	 * @see IFieldValue#asBoolean()
-	 */
-	@Override
-	public boolean asBoolean() {
-		Object ret = getValue();
-
-		if (ret == null) {
-			return false;
-		} else if (ret instanceof Boolean) {
-			return ((Boolean) ret).booleanValue();
-		} else {
-			return Boolean.parseBoolean(ret.toString());
-		}
-	}
-
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return asString();
-	}
-
-
-	@Override
-	public String asString() {
-		Object ret = getValue();
-
-		if (ret == null) {
-			return "";
-		}
-		return ret.toString();
 	}
 
 	/**
@@ -224,46 +90,6 @@ public class FieldValue implements IFieldValue {
 	}
 
 	
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.Common.AbstractFieldValue#set(net.sf.JRecord.Common.AbstractFieldValue)
-	 */
-	@Override
-	public void set(AbstractFieldValue value) throws RecordException {
-		set(value.asString());
-	}
-
-	/**
-	 * @see IFieldValue#set(boolean)
-	 */
-	@Override
-	public void set(boolean value) throws RecordException {
-		set(Boolean.valueOf(value));
-	}
-
-
-	/**
-	 * @see IFieldValue#set(double)
-	 */
-	@Override
-	public void set(double value) throws RecordException {
-		set(Double.valueOf(value));
-	}
-
-	/**
-	 * @see IFieldValue#set(float) 
-	 */
-	@Override
-	public void set(float value) throws RecordException {
-		set(Float.valueOf(value));
-	}
-
-	/**
-	 * @see IFieldValue#set(long)
-	 */
-	@Override
-	public void set(long value) throws RecordException {
-		set(Long.valueOf(value));
-	}
 
 	/**
 	 * @see IFieldValue#set(java.lang.Object)
@@ -280,32 +106,6 @@ public class FieldValue implements IFieldValue {
 		}
 	}
 
-	/**
-	 * Get the Type name
-	 * @return Type name
-	 */
-	@Override
-	public String getTypeName() {
-		return ExternalConversion.getTypeAsString(0, getFieldDetail().getType());
-	}
-
-	/**
-	 * Wether it is a Numeric field
-	 * @return is a Numeric field
-	 */
-	@Override
-	public boolean isNumeric() {
-		return getType().isNumeric();
-	}
-
-	/**
-	 * Wether it is a binary Field
-	 * @return is a binary field
-	 */
-	@Override
-	public boolean isBinary() {
-		return getType().isBinary();
-	}
 	
 	@Override
 	public boolean isFieldPresent() {
@@ -320,9 +120,6 @@ public class FieldValue implements IFieldValue {
 		return this.theLine.isDefined(field);
 	}
 
-	private Type getType() {
-		return TypeManager.getInstance().getType(getFieldDetail().getType());
-	}
 
 	/**
 	 * Get The field Definition

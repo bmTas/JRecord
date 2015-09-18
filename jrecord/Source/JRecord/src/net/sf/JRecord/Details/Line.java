@@ -334,6 +334,16 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
 		return data;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.Details.IGetByteData#setData(byte[])
+	 */
+	@Override
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+
+
+
 	public final void setData(String newVal) {
 	    data = Conversion.getBytes(newVal, layout.getFontName());
 		super.preferredLayoutAlt = Constants.NULL_INTEGER;

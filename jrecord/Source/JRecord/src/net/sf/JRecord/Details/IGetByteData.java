@@ -11,5 +11,7 @@ public interface IGetByteData {
 	 * @return Returns the record (line) as an array of bytes.
 	 */
 	public abstract byte[] getData();
+	
+	public abstract void setData(byte[] data);
 
 }

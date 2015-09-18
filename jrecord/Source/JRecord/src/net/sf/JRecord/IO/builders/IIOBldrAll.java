@@ -1,7 +1,6 @@
 package net.sf.JRecord.IO.builders;
 
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
-import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.def.IO.builders.ICobolMultiCopybookIOBuilder;
 import net.sf.JRecord.def.IO.builders.ICsvIOBuilder;
 import net.sf.JRecord.def.IO.builders.IFixedWidthIOBuilder;
@@ -13,7 +12,7 @@ import net.sf.JRecord.def.IO.builders.IFixedWidthIOBuilder;
  * @author Bruce Martin
  *
  */
-interface IIOBldrAll extends ICobolIOBuilder, ICsvIOBuilder, IFixedWidthIOBuilder, ICobolMultiCopybookIOBuilder {
+interface IIOBldrAll extends ICsvIOBuilder, IFixedWidthIOBuilder, ICobolMultiCopybookIOBuilder {
 
 
 	public abstract IIOBldrAll setFileOrganization(int fileOrganization);

@@ -14,7 +14,7 @@
  *   
  */
 /**
- * @author Bruce01
+ * @author Bruce Martin
  *
  */
 package net.sf.JRecord.zExamples.recordEditorXml.manipulate;

@@ -6,9 +6,9 @@ import java.io.FileOutputStream;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
+import net.sf.JRecord.External.CopybookWriter;
 import net.sf.JRecord.External.CopybookWriterManager;
 import net.sf.JRecord.External.ExternalRecord;
-import net.sf.JRecord.External.RecordEditorXmlWriter;
 import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.Log.TextLog;
 import net.sf.JRecord.Numeric.ICopybookDialects;
@@ -86,8 +86,8 @@ public class ConvertCbl2RecordEditorXml02 {
     	transalateFieldNamesInRecord(extlayoutCBL);
     	
     	CopybookWriterManager writerManager = CopybookWriterManager.getInstance();
-    	RecordEditorXmlWriter writer
-    			= (RecordEditorXmlWriter) writerManager.get(CopybookWriterManager.RECORD_EDITOR_XML_WRITER);
+    	CopybookWriter writer
+    			= writerManager.get(CopybookWriterManager.RECORD_EDITOR_XML_WRITER);
 
     	writer.writeCopyBook(new FileOutputStream(TstConstants.TEMP_DIRECTORY + "XML_CompanyRecord.Xml"), extlayoutCBL, null);
     }
