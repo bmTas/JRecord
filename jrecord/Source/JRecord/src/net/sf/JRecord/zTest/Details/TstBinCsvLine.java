@@ -17,7 +17,7 @@ public class TstBinCsvLine extends TestCase {
 	
 	//private static final String TMP_DIRECTORY = TstConstants.TEMP_DIRECTORY;
 	
-	private String layoutFile = "/home/bm/Work/JRecord/CopyBook/Xml/zzBinCsv.Xml";
+	private String layoutFile = "F:/Work/JRecord/Versions/Version_0.80.8f/CopyBook/Xml/zzBinCsv.Xml";
 	private LayoutDetail layout = null;
 	
 	
@@ -26,6 +26,7 @@ public class TstBinCsvLine extends TestCase {
 	 * 
 	 * @throws Exception any error that occurs
 	 */
+	@SuppressWarnings("deprecation")
 	public void testAssign1() throws Exception {
 		long v = 1;
 		String s, t;
@@ -64,6 +65,7 @@ public class TstBinCsvLine extends TestCase {
 	 * 
 	 * @throws Exception any error that occurs
 	 */
+	@SuppressWarnings("deprecation")
 	public void testAssign2() throws Exception {
 		long v = 1;
 		String s, t;
