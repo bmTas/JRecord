@@ -17,7 +17,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.CsvParser.BasicCsvLineParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.External.Def.ExternalField;
@@ -70,7 +69,7 @@ public class RecordEditorCsvLoader extends BaseCopybookLoader {
     public ExternalRecord loadCopyBook(String copyBookFile,
             int splitCopybookOption, int dbIdx, String font, int copybookFormat, int binFormat,
             int systemId, AbsSSLogger log) throws IOException, SAXException,
-            ParserConfigurationException, RecordException {
+            ParserConfigurationException {
 
         int rt = Constants.rtRecordLayout;
         log = TextLog.getLog(log);

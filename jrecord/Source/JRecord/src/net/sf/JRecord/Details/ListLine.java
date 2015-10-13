@@ -6,7 +6,6 @@ import java.util.List;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Common.XmlConstants;
 
 public abstract class ListLine extends BaseLine {
@@ -179,7 +178,7 @@ public abstract class ListLine extends BaseLine {
 	/**
 	 * @see net.sf.JRecord.Details.AbstractLine#setField(net.sf.JRecord.Common.FieldDetail, java.lang.Object)
 	 */
-	public void setField(IFieldDetail field, Object value) throws RecordException {
+	public void setField(IFieldDetail field, Object value) {
 		if (field == null && (value == null || "".equals(value.toString()))) return;
 		setRawField(preferredLayout, field.getPos() - getAdj(), value);
 	}
@@ -189,7 +188,7 @@ public abstract class ListLine extends BaseLine {
 	/**
 	 * @see net.sf.JRecord.Details.AbstractLine#setField(int, int, java.lang.Object)
 	 */
-	public void setField(int recordIdx, int fieldIdx, Object val) throws RecordException {
+	public void setField(int recordIdx, int fieldIdx, Object val) {
 		setRawField(recordIdx, getFieldNumber(recordIdx, fieldIdx), val);
 	}
 	
@@ -198,7 +197,7 @@ public abstract class ListLine extends BaseLine {
 	}
 
 	public void setRawField(int recordIdx, int fieldIdx, Object val)
-			throws RecordException {
+			{
 
     	int endFieldNum = XmlConstants.END_INDEX; //layout.getRecordIndex(XmlConstants.END_ELEMENT);
         for (int i = fields.size(); i <= fieldIdx; i++) {
@@ -229,7 +228,7 @@ public abstract class ListLine extends BaseLine {
 	/**
 	 * @see net.sf.JRecord.Details.AbstractLine#setField(java.lang.String, java.lang.Object)
 	 */
-	public void setField(String fieldName, Object value) throws RecordException {
+	public void setField(String fieldName, Object value) {
 	    setField(getFieldFromName(fieldName), value);
 	}
 
@@ -237,17 +236,16 @@ public abstract class ListLine extends BaseLine {
 	/**
 	 * @see net.sf.JRecord.Details.AbstractLine#setFieldHex(int, int, java.lang.String)
 	 */
-	public String setFieldHex(int recordIdx, int fieldIdx, String val) 	throws RecordException {
+	public String setFieldHex(int recordIdx, int fieldIdx, String val) 	{
 	    return ""; //super.setFieldHex(recordIdx, fieldIdx, val);
 	}
 
 	/**
 	 * @see net.sf.JRecord.Details.AbstractLine#setFieldText(int, int, java.lang.String)
 	 */
-	public void setFieldText(int recordIdx, int fieldIdx, String value)
-			throws RecordException {
-				setField(recordIdx, fieldIdx, value);
-			}
+	public void setFieldText(int recordIdx, int fieldIdx, String value) {
+		setField(recordIdx, fieldIdx, value);
+	}
 
 	/**
 	 * @see net.sf.JRecord.Details.AbstractLine#setWriteLayout(int)

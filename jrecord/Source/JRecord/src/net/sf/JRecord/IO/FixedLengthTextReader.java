@@ -3,7 +3,6 @@ package net.sf.JRecord.IO;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
 import net.sf.JRecord.charIO.FixedLengthCharReader;
@@ -26,7 +25,7 @@ public class FixedLengthTextReader extends BasicTextLineReader {
      * @see net.sf.JRecord.StandardLineReader#open(java.io.InputStream, net.sf.JRecord.Details.LayoutDetail)
      */
     public void open(InputStream inputStream, LayoutDetail layout)
-    throws IOException, RecordException {
+    throws IOException {
     	String font = "";
 		if (layout != null) {
 			font = layout.getFontName();

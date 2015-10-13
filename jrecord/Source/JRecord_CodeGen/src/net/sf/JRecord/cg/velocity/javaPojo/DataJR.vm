@@ -1,0 +1,115 @@
+package ${generateOptions.packageId}.data;
+#incl("schema/CommentSchema.pvm")
+
+#*  *##foreach($imp in ${currentRecord.getImportList()})
+import ${imp};
+#*  *##end
+                                                                             
+import net.sf.JRecord.Details.IGetByteData;
+import net.sf.JRecord.cgen.def.IAsPojo;
+import net.sf.JRecord.cgen.impl.FieldValueCG;
+	
+import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
+import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;  
+import ${generateOptions.packageId}.schema.Record${currentRecord.extensionName};  
+
+public class Line${currentRecord.extensionName}JR 
+implements I${currentRecord.extensionName}Pojo, IGetByteData, IAsPojo<Line${currentRecord.extensionName}Pojo> {
+
+    public static final byte[] EMPTY_BYTE_ARRAY = {};
+    
+    private byte[] data = EMPTY_BYTE_ARRAY;
+    private final Record${currentRecord.extensionName} record;
+
+#*  *##foreach($f in ${currentRecord.getFields()}) 
+#*      *##if (! ${f.isArrayItem()})	
+    private FieldValueCG ${f.javaName};
+#*      *##end
+#*  *##end
+                                                                             
+###*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+##    private ${a.getFirstFieldDef().getJavaType()}#*
+##        *##foreach ($ii in [1 .. ${a.getSizes().size()}])[]#end#*
+##             *# ${a.getFirstElement().javaName};        
+###*  *##end
+
+    public Line${currentRecord.extensionName}JR(Record${currentRecord.extensionName} rec) {
+    
+        record = rec;
+
+#*  *##foreach($f in ${currentRecord.getFields()}) 
+#*      *##if (! ${f.isArrayItem()})	
+        ${f.javaName} = new FieldValueCG(this, rec.fld${f.extensionName});
+#*      *##end
+#*  *##end
+    }
+
+#*  *##foreach($f in ${currentRecord.getFields()}) 
+#*      *##if (! ${f.isArrayItem()})
+    @Override
+    public ${f.getJavaType()} get${f.extensionName}() {
+#*          *##if (${f.getJavaType()} == "short")
+        return (short) ${f.javaName}.asInt();                                 
+#*          *##else   
+        return ${f.javaName}.${f.getAsType()}();
+#*          *##end
+    }
+    
+    @Override
+    public void set${f.extensionName}(${f.getJavaType()} value) {
+        this.${f.javaName}.set(value);
+    }
+
+#*      *##end
+#*  *##end
+
+#*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+    @Override
+    public ${a.getFirstFieldDef().getJavaType()}  get${a.getFirstElement().extensionName}(${a.getIndexParameters()}) {
+#*          *##if ( ${a.getFirstFieldDef().getJavaType()} == "short")
+        return (short) (new FieldValueCG(this, record.array${a.getFirstElement().extensionName}.get(${a.getCallIndexParameters()}))).asInt();
+#*          *##else
+        return (new FieldValueCG(this, record.array${a.getFirstElement().extensionName}.get(${a.getCallIndexParameters()}))).${a.getFirstFieldDef().getAsType()}();
+#*          *##end
+##        return ${a.getFirstElement().javaName}${a.getCallIndexParameters()};
+    }
+    
+    
+    @Override
+    public void set${a.getFirstElement().extensionName}(${a.getIndexParameters()}, ${a.getFirstFieldDef().getJavaType()} value) {
+        (new FieldValueCG(this, record.array${a.getFirstElement().extensionName}.get(${a.getCallIndexParameters()}))).set(value);
+##        ${a.getFirstElement().javaName}${a.getCallIndexParameters()} = value;
+    }
+
+#*  *##end
+	
+	
+#*  *##foreach($a in ${currentRecord.getArraySameSize()}) 
+    public int  get${a.get(0).getFirstElement().extensionName}ArrayLength(int indexNumber) {
+        return record.array${a.get(0).getFirstElement().extensionName}.getArrayLength(indexNumber);
+    }
+#*  *##end	
+
+    @Override
+    public byte[] getData() {
+        return data;  
+    }
+
+    @Override
+    public void setData(byte[] data) {
+        this.data = data;
+    }
+    
+    public Line${currentRecord.extensionName}Pojo asPojo() {
+        Line${currentRecord.extensionName}Pojo l = new Line${currentRecord.extensionName}Pojo();
+        l.set(this);
+        return l;
+    }
+    
+    public void set(I${currentRecord.extensionName} value) {
+        Code${generateOptions.schemaDefinition.extensionName}
+            .assign${currentRecord.extensionName}(
+                this, value);
+    }
+}
+

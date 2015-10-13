@@ -1,7 +1,6 @@
 package net.sf.JRecord.Details;
 
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Types.Type;
 
 /**
@@ -96,7 +95,7 @@ public class FieldValue extends BaseFieldValue implements IFieldValue {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void set(Object value) throws RecordException {
+	public void set(Object value) {
 		if (recordNum >= 0) {
 			theLine.setField(recordNum, fieldNum, value);
 		} else if (field == null) {
@@ -150,7 +149,7 @@ public class FieldValue extends BaseFieldValue implements IFieldValue {
 	}
 	
 	@Override
-	public void setHex(String s) throws RecordException {
+	public void setHex(String s) {
 		throwError();
 	}
 	

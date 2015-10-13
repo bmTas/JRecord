@@ -1,22 +1,23 @@
 package example;
+##
+##  Example Standard JRecord
+##
 #incl("schema/CommentExample.pvm")
 
 import java.io.IOException;
 
 import net.sf.JRecord.JRecordInterface1;
-#*  *##if (${generateOptions.isXmlSchema()})
-#*      *##set ($ioBldr = "IIOBuilder")
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
-#*  *##else
-#*      *##set ($ioBldr = "ICobolIOBuilder")
-import net.sf.JRecord.Common.Constants;
-import net.sf.JRecord.Common.RecordException;
-import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.External.CopybookLoader;
-#*  *##end                                           
+#IoBldrImport()
+###*  *##if (${generateOptions.isXmlSchema()})
+###*      *##set ($ioBldr = "IIOBuilder")
+###*  *##else
+###*      *##set ($ioBldr = "ICobolIOBuilder")
+##import net.sf.JRecord.Common.Constants;
+##import net.sf.JRecord.External.CopybookLoader;
+###*  *##end                                           
 import net.sf.JRecord.IO.AbstractLineWriter;
-import net.sf.JRecord.def.IO.builders.${ioBldr};
+##import net.sf.JRecord.def.IO.builders.${ioBldr};
 
 /**
  * Write Cobol file using a Cobol Copybook (${generateOptions.schemaDefinition.extensionName}).
@@ -31,7 +32,7 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
     private String testDir        = "G:/temp/";
     private String salesFileOut   = testDir + "DTAR020out.bin";
     private String copybookName   = "${generateOptions.schemaName}"; 
- 
+                              
     /**
      * Example of LineReader  classes
      */
@@ -39,17 +40,18 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
         super();
 
         try {
-#*  *##if (${generateOptions.isXmlSchema()})
-            IIOBuilder iob = JRecordInterface1.SCHEMA_XML
-                                       .newIOBuilder(copybookName);
-#*  *##else	
-            ICobolIOBuilder iob = JRecordInterface1.COBOL
-                                       .newIOBuilder(copybookName)
-                                           .setFont("${generateOptions.font}")
-                                           .setFileOrganization(${generateOptions.io.code})
-                                           .setSplitCopybook(${generateOptions.splitOption.code})
-                                           .setDropCopybookNameFromFields(${generateOptions.dropCopybookName});  
- #*  *##end                                           
+#incl("schema/DclIOBuilder.pvm")        
+##*  *##if (${generateOptions.isXmlSchema()})
+##           IIOBuilder iob = JRecordInterface1.SCHEMA_XML
+##                                      .newIOBuilder(copybookName);
+##*  *##else	
+##           ICobolIOBuilder iob = JRecordInterface1.COBOL
+##                                      .newIOBuilder(copybookName)
+##                                          .setFont("${generateOptions.font}")
+##                                          .setFileOrganization(${generateOptions.io.code})
+##                                          .setSplitCopybook(${generateOptions.splitOption.code})
+##                                          .setDropCopybookNameFromFields(${generateOptions.dropCopybookName});  
+###*  *##end                                           
             AbstractLineWriter writer = iob.newWriter(salesFileOut);
  
 #*  *##set( $sep = "        ")    
@@ -66,7 +68,7 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
     }
 
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
-    private AbstractLine create${r.extensionName}(${ioBldr} iob, UserData data) throws RecordException, IOException {
+    private AbstractLine create${r.extensionName}(${ioBldr} iob, UserData data) throws IOException {
         AbstractLine l = iob.newLine();    
         
 #*      *##foreach($f in ${r.getFields()}) 

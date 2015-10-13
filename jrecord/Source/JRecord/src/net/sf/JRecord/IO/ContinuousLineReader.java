@@ -101,7 +101,7 @@ public class ContinuousLineReader extends AbstractLineReader {
     /**
      * @see net.sf.JRecord.IO.AbstractLineReader#read()
      */
-    public AbstractLine read() throws IOException {
+    public AbstractLine readImplementation() throws IOException {
         AbstractLine ret = null;
         int recordSize, bytesRead;
         byte[] rec;

@@ -66,7 +66,7 @@ public class CobolCopybookLoader implements CopybookLoader, ICobolCopybookLoader
 	@Override
 	public final ExternalRecord loadCopyBook(String copyBookFile,
 			int splitCopybookOption, int dbIdx, String font, int binFormat,
-			int systemId, AbsSSLogger log) throws RecordException {
+			int systemId, AbsSSLogger log) {
 
 		return loadCopyBook(copyBookFile, splitCopybookOption, dbIdx, font, CommonBits.getDefaultCobolTextFormat(), binFormat, systemId, log);
 		
@@ -85,7 +85,6 @@ public class CobolCopybookLoader implements CopybookLoader, ICobolCopybookLoader
      * @param log log where any messages should be written
      *
      * @return return the record that has been read in
-     * @throws RecordException General Error
      */
     public final ExternalRecord loadCopyBook(String copyBookFile, //Document copyBookXml,
             						  		int splitCopybook,
@@ -95,7 +94,7 @@ public class CobolCopybookLoader implements CopybookLoader, ICobolCopybookLoader
                 						  final int binFormat,
                 						  final int systemId,
                 						        AbsSSLogger log)
-    				throws RecordException {
+    				{
         ExternalRecord ret = null;
         //System.out.println("load Copybook (Cobol)");
         try {
@@ -140,7 +139,6 @@ public class CobolCopybookLoader implements CopybookLoader, ICobolCopybookLoader
      * @param log log where any messages should be written
      *
      * @return return the record that has been read in
-     * @throws RecordException General Error
      */
     public final ExternalRecord loadCopyBook(InputStream inputStream, //Document copyBookXml,
     		                             String copyBookName,
@@ -150,7 +148,7 @@ public class CobolCopybookLoader implements CopybookLoader, ICobolCopybookLoader
                 						  final int binaryFormat,
                 						  final int systemId,
                 						  final AbsSSLogger log)
-    				throws RecordException {
+    				{
     	return loadCopyBook(inputStream, copyBookName, splitCopybook, dbIdx, font, CommonBits.getDefaultCobolTextFormat(), binaryFormat, systemId, log);
     }
     
@@ -167,7 +165,7 @@ public class CobolCopybookLoader implements CopybookLoader, ICobolCopybookLoader
 			  final int binaryFormat,
 			  final int systemId,
 			        AbsSSLogger log)
-					  throws RecordException {
+					  {
 
         ExternalRecord ret = null;
         //System.out.println("load Copybook (Cobol)");

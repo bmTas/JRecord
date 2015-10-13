@@ -1,18 +1,22 @@
 package example;
+##  
+##   Read Example JRecord using Schema-Fields
+##
+##   Author: Bruce Martin
+##
 #incl("schema/CommentExample.pvm")
 
 import net.sf.JRecord.JRecordInterface1;
-#*  *##if (${generateOptions.isXmlSchema()})
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineReader;
-import net.sf.JRecord.def.IO.builders.IIOBuilder;
-#*  *##else	
-import net.sf.JRecord.Common.Constants;
-import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.IO.AbstractLineReader;
-import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
-#*  *##end                                           
+#IoBldrImport()
+###*  *##if (${generateOptions.isXmlSchema()})
+##import net.sf.JRecord.def.IO.builders.IIOBuilder;
+###*  *##else	
+##import net.sf.JRecord.Common.Constants;
+##import net.sf.JRecord.External.CopybookLoader;
+##import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
+###*  *##end                                           
 
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                     
 import ${generateOptions.packageId}.schema.Record${r.extensionName};
@@ -45,17 +49,18 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
         int lineNum = 0;
 
         try {
-#*  *##if (${generateOptions.isXmlSchema()})
-            IIOBuilder iob = JRecordInterface1.SCHEMA_XML
-                                       .newIOBuilder(copybookName);
-#*  *##else
-            ICobolIOBuilder iob = JRecordInterface1.COBOL
-                                       .newIOBuilder(copybookName)
-                                           .setFont("${generateOptions.font}")
-                                           .setFileOrganization(${generateOptions.io.code})
-                                           .setSplitCopybook(${generateOptions.splitOption.code})
-                                           .setDropCopybookNameFromFields(${generateOptions.dropCopybookName});  
-#*  *##end                                           
+#incl("schema/DclIOBuilder.pvm")        
+###*  *##if (${generateOptions.isXmlSchema()})
+##            IIOBuilder iob = JRecordInterface1.SCHEMA_XML
+##                                       .newIOBuilder(copybookName);
+###*  *##else
+##            ICobolIOBuilder iob = JRecordInterface1.COBOL
+##                                       .newIOBuilder(copybookName)
+##                                           .setFont("${generateOptions.font}")
+##                                           .setFileOrganization(${generateOptions.io.code})
+##                                           .setSplitCopybook(${generateOptions.splitOption.code})
+##                                           .setDropCopybookNameFromFields(${generateOptions.dropCopybookName});  
+###*  *##end                                           
             Schema${generateOptions.schemaDefinition.extensionName} schema${generateOptions.schemaDefinition.extensionName}
                     = new Schema${generateOptions.schemaDefinition.extensionName}(iob.getLayout()); 
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                     
@@ -63,16 +68,23 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
 #*  *##end                                           
             AbstractLineReader reader = iob.newReader(salesFile);
 #macro (printFields)
-#*          *##foreach($f in ${r.getFields(11)}) 
+#*  *##set( $sep = "        ")    
+#*  *##foreach($f in ${r.getFields(11)})
+#*      *##if (! ${f.isArrayItem()})
                       ${sep}saleRecord.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
-#*              *##set( $sep = '+ " " + ')    
-#*          *##end
+#*            *##set( $sep = '+ " " + ')    
+#*      *##end
+#*  *##end
+#*  *##foreach($a in ${r.getArrayDetailsList()}) 
+#*      *##if (! ${f.isArrayItem()})	
+                      ${sep}saleRecord.getFieldValue(r${r.extensionName}.array${a.getFirstElement().extensionName}.get(${a.getZeroArrayIndex()})).asString()
+#*      *##end
+#*  *##end
 #end	
             while ((saleRecord = reader.read()) != null) {
                 lineNum += 1;
 #*  *##if (${generateOptions.schemaDefinition.getRecords().size()} == 1)
 #*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
-#*          *##set( $sep = "        ")    
                 System.out.println(
 #*          *##printFields()  
 ###*          *##foreach($f in ${r.getFields(11)}) 
@@ -83,7 +95,6 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
 #*      *##end                        
 #*  *##else	
 #*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
-#*          *##set( $sep = "        ")    
                 if (/* ${r.record.recordName} */) {
                    System.out.println(
 #*          *##printFields()  

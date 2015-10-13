@@ -26,8 +26,7 @@ public class CsvIOBuilder extends CblIOBuilderBase implements ICsvIOBuilder, IDe
 	}
 
 	@Override
-	protected ExternalRecord getExternalRecordImpl() throws RecordException,
-			IOException {
+	protected ExternalRecord getExternalRecordImpl() throws IOException {
 		return record;
 	}
 
@@ -64,7 +63,7 @@ public class CsvIOBuilder extends CblIOBuilderBase implements ICsvIOBuilder, IDe
 	 * @see net.sf.JRecord.IO.builders.CblIOBuilderBase#checkOk(boolean)
 	 */
 	@Override
-	protected void checkOk(boolean input) throws RecordException {
+	protected void checkOk(boolean input) {
 		if (definedField) {
 		} else if (input) {
 			switch (super.getFileOrganization()) {
@@ -86,7 +85,7 @@ public class CsvIOBuilder extends CblIOBuilderBase implements ICsvIOBuilder, IDe
 	 * @see net.sf.JRecord.IO.builders.CblIOBuilderBase#newLine()
 	 */
 	@Override
-	public AbstractLine newLine() throws IOException, RecordException {
+	public AbstractLine newLine() throws IOException {
 		return new CsvLine(getLayout());
 	}
 

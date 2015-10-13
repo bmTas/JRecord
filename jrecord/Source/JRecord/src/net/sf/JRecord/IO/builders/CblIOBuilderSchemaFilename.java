@@ -24,8 +24,7 @@ public class CblIOBuilderSchemaFilename extends CblIOBuilderBase {
 	 * @see net.sf.JRecord.IO.builders.CblIOBuilderBase#getExternalRecordImpl()
 	 */
 	@Override
-	protected ExternalRecord getExternalRecordImpl() throws RecordException,
-			IOException {
+	protected ExternalRecord getExternalRecordImpl() throws IOException {
 		
 		if (loader instanceof ISetDropCopybookName) { 
 			((ISetDropCopybookName) loader).setDropCopybookFromFieldNames(super.dropCopybookNameFromFields);

@@ -10,4 +10,5 @@ package net.sf.JRecord.Option;
  */
 public interface IOptionType {
 
+	public String getName();
 }

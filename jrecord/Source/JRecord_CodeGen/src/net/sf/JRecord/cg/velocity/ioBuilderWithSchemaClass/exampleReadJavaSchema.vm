@@ -45,8 +45,10 @@ public final class ReadJavaSchema${generateOptions.schemaDefinition.extensionNam
             AbstractLineReader reader = iob.newReader(salesFile);
 #macro (printFields)
 #*          *##foreach($f in ${r.getFields(11)}) 
+#*              *##if (! ${f.isArrayItem()})
                       ${sep}saleRecord.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
-#*              *##set( $sep = '+ " " + ')    
+#*                  *##set( $sep = '+ " " + ')    
+#*              *##end
 #*          *##end
 #end	
             while ((saleRecord = reader.read()) != null) {

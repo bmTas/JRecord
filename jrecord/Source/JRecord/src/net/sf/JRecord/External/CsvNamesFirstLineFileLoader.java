@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Conversion;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.DefaultLineProvider;
 import net.sf.JRecord.IO.TextLineReader;
 import net.sf.JRecord.Log.AbsSSLogger;
@@ -43,7 +42,7 @@ public class CsvNamesFirstLineFileLoader implements CopybookLoader {
 	@Override
 	public final ExternalRecord loadCopyBook(String copyBookFile,
 			int splitCopybookOption, int dbIdx, String font, int binFormat,
-			int systemId, AbsSSLogger log) throws IOException, RecordException {
+			int systemId, AbsSSLogger log) throws IOException {
 		// TODO Auto-generated method stub
 		return loadCopyBook(copyBookFile, splitCopybookOption, dbIdx, font, CommonBits.getDefaultCobolTextFormat(), binFormat, systemId, log);
 		
@@ -54,7 +53,7 @@ public class CsvNamesFirstLineFileLoader implements CopybookLoader {
 	 */
 	public ExternalRecord loadCopyBook(String copyBookFile, int splitCopybookOption, int dbIdx, String font, int copybookFormat, int binFormat, 
 			int systemId, AbsSSLogger log) 
-	throws IOException, RecordException {
+	throws IOException {
 		TextLineReader r = new TextLineReader(new DefaultLineProvider(),  true);
 		r.setDefaultDelim(fieldSeperator);
 		r.open(copyBookFile);

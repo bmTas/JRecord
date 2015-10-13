@@ -10,11 +10,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.DefaultLineProvider;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
+import net.sf.JRecord.Details.SpecialRecordIds;
 import net.sf.JRecord.External.ExternalRecord;
 
 
@@ -41,12 +41,18 @@ import net.sf.JRecord.External.ExternalRecord;
  * @author Bruce Martin
  *
  */
-public abstract class AbstractLineReader {
+public abstract class AbstractLineReader implements IReadLine {
 
     public static final String NOT_OPEN_MESSAGE = "File has not been opened";
+    
+    private static final int RT_FIRST_RECORD = 1;
+    private static final int RT_MIDDLE_RECORD = 2;
+    private static final int RT_LAST_RECORD = 3;
+    private static final int RT_FINISHED = 4;
 
 	private LineProvider lineProvider;
 	private LayoutDetail layout = null;
+	private IReadLine filter = null;
 
 
 	/**
@@ -79,7 +85,7 @@ public abstract class AbstractLineReader {
 	 * - CSV files where the field names are stored on the first line
 	 * @param fileName file to be opened.
 	 */
-	 public void open(String fileName) throws IOException, RecordException {
+	 public void open(String fileName) throws IOException {
 		 open(fileName, (LayoutDetail) null);
 	 }
     /**
@@ -90,11 +96,11 @@ public abstract class AbstractLineReader {
      *
      * @throws IOException any IOerror
      */
-    public void open(String fileName, LayoutDetail pLayout) throws IOException, RecordException {
+    public void open(String fileName, LayoutDetail pLayout) throws IOException {
         open(new FileInputStream(fileName), pLayout);
 
         if (layout == null) {
-            layout = pLayout;
+            setLayout(pLayout);
         }
     }
     
@@ -105,15 +111,14 @@ public abstract class AbstractLineReader {
      * @param inputStream input
      * @param recordLayout recordlayout to use
      * @throws IOException any IOError that occurs
-     * @throws RecordException any other error
      */
     public void open(InputStream inputStream, ExternalRecord recordLayout) 
-    throws IOException, RecordException {
+    throws IOException {
     	LayoutDetail pLayout = recordLayout.asLayoutDetail();
     	open(inputStream, pLayout);
 
         if (layout == null) {
-            layout = pLayout;
+        	setLayout(pLayout);
         }
     }
 
@@ -127,7 +132,7 @@ public abstract class AbstractLineReader {
      * @throws IOException any IOerror
      */
     public abstract void open(InputStream inputStream, LayoutDetail pLayout)
-    throws IOException, RecordException;
+    throws IOException;
 
 
 
@@ -138,8 +143,21 @@ public abstract class AbstractLineReader {
      *
      * @throws IOException io error
      */
-    public abstract AbstractLine read() throws IOException;
+    public final AbstractLine read() throws IOException {
+    	if (filter == null) {
+    		return readImplementation();
+    	}
+    	return filter.read();
+    }
 
+    /**
+     * Read one line from the input file
+     *
+     * @return line read in
+     *
+     * @throws IOException io error
+     */
+    public abstract AbstractLine readImplementation() throws IOException;
 
     /**
      * Closes the file
@@ -224,6 +242,11 @@ public abstract class AbstractLineReader {
 	 */
     public final void setLayout(LayoutDetail pLayout) {
         this.layout = pLayout;
+        
+        filter = null;
+        if (layout != null && layout.hasHeaderTrailerRecords()) {
+        	filter = new HeaderTrailerDelagate(this, layout);
+        }
     }
 
 
@@ -232,5 +255,68 @@ public abstract class AbstractLineReader {
 	 */
 	public final LineProvider getLineProvider() {
 		return lineProvider;
+	}
+	
+	private static class HeaderTrailerDelagate implements IReadLine {
+		private final AbstractLineReader parent;
+		private int recordId = RT_FIRST_RECORD;
+		private int firstRecordId = -1,
+				    middleRecordId = -1,
+				    lastRecordId = -1;
+		private AbstractLine next = null;
+
+		
+
+		protected HeaderTrailerDelagate(AbstractLineReader parent, LayoutDetail l) {
+			super();
+			this.parent = parent;
+			SpecialRecordIds sr = l.getPositionRecordId();
+			firstRecordId = sr.headerId;
+			middleRecordId = sr.middleId;
+			lastRecordId = sr.trailerId;
+		}
+
+
+
+		/* (non-Javadoc)
+		 * @see net.sf.JRecord.IO.IReadLine#read()
+		 */
+		@Override
+		public AbstractLine read() throws IOException {
+			AbstractLine ret = next;
+			int id = -1;
+			switch (recordId) {
+			case RT_FINISHED:
+			case RT_FIRST_RECORD:
+				ret = parent.readImplementation();
+				if (ret == null) {
+					return null;
+				}
+				id = firstRecordId;
+
+				recordId = RT_MIDDLE_RECORD;
+				next = parent.readImplementation();
+				if (next == null) {
+					recordId = RT_LAST_RECORD;
+				}
+				break;
+			case RT_MIDDLE_RECORD:
+				id = middleRecordId; 
+				next = parent.readImplementation();
+				if (next == null) {
+					recordId = RT_LAST_RECORD;
+					id = lastRecordId;
+				}
+				break;
+			case RT_LAST_RECORD:
+				recordId = RT_FINISHED;
+				return null;
+			}
+			if (id >= 0) {
+				ret.setWriteLayout(id);
+			}
+			return ret;
+		}
+
 	}
 }

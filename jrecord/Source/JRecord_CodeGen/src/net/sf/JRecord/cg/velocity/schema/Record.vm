@@ -1,5 +1,22 @@
 package ${generateOptions.packageId}.schema;
-
+#incl("schema/CommentSchema.pvm")
+#macro(arrayDef)
+#*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+        array${a.getFirstElement().extensionName} = new ArrayFieldDefinition(
+#*      *##set ( $sep = '  ')
+                 ${sep}record,
+                 ${sep}${a.getSizes().get(0)},
+#*      *##foreach($af in ${a.getFieldDefs()}) 
+                 ${sep}fld${af.extensionName}
+#*          *##set ( $sep = ', ')
+#*      *##end
+        );
+#*  *##end
+#end	
+#*  *##if (${currentRecord.getArrayDetailsList().size()} > 0)
+import net.sf.JRecord.cgen.impl.ArrayFieldDefinition;
+import net.sf.JRecord.cgen.def.*;
+#*  *##end
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
@@ -10,15 +27,24 @@ import net.sf.JRecord.Details.LayoutGetFieldByName;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 #*  *##end
 import net.sf.JRecord.Types.Type;
+#*  *##if (${currentRecord.getRecordPositionOptionStr()} != 'null') 
+import net.sf.JRecord.Option.Options;
+#*  *##end
 
 public class Record${currentRecord.extensionName} {
 
     public static final String RECORD_NAME = "${currentRecord.record.getRecordName()}";
     
 #*  *##foreach($f in ${currentRecord.getFields()}) 
+#*      *##if (${f.alwaysIncludeField()})	
     public final IFieldDetail fld${f.extensionName};
+#*      *##end
 #*  *##end
- 
+
+#*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+    public final IArray${a.getDimensionString()}Dimension array${a.getFirstElement().extensionName};
+#*  *##end
+
     public final RecordDetail record;
     
     private final String font;
@@ -29,7 +55,9 @@ public class Record${currentRecord.extensionName} {
        
        font = "${generateOptions.font}";
 #*  *##foreach($f in ${currentRecord.getFields()}) 
-       fld${f.extensionName} = createField(flds, i++, "${f.fieldDetail.getLookupName()}", ${f.getJRecordTypeId()}, ${f.fieldDetail.getDecimal()}, ${f.fieldDetail.getPos()}, ${f.fieldDetail.getLen()});
+#*      *##if (${f.alwaysIncludeField()})	
+       fld${f.extensionName} = createField(flds, i++, "${f.fieldDetail.getLookupName()}", ${f.getJRecordTypeId()}, ${f.fieldDetail.getPos()}, ${f.fieldDetail.getLen()}, ${f.fieldDetail.getDecimal()});
+#*      *##end
 #*  *##end
 
       String t = "${currentRecord.record.getDelimiter()}"; 	
@@ -37,22 +65,25 @@ public class Record${currentRecord.extensionName} {
           t = "<tab>";
       }
       record = new RecordDetail(RECORD_NAME,
-	            ${currentRecord.getJRecordRecordType()}, t, "${currentRecord.record.getQuote()}",
-	            font, flds, ${currentRecord.record.getRecordStyle()});
+                   ${currentRecord.getRecordPositionOptionStr()},
+                   ${currentRecord.getJRecordRecordType()}, t, "${currentRecord.record.getQuote()}",
+                   font, flds, ${currentRecord.record.getRecordStyle()});
       record.setParentRecordIndex( ${currentRecord.record.getParentRecordIndex()});
-	    
+         
 #*  *##set( $dependingOn = ${currentRecord.getDependingOn()})
 #*  *##if ( ${dependingOn} ) 
 #*      *##if ( ${dependingOn.size()} > 0) 
-    List<DependingOn> dep = Arrays.asList(
+      List<DependingOn> dep = Arrays.asList(
 #*           *##foreach($d in ${dep}) 
-       new DependingOn("${d.getVariableName()}", ${d.getPosition()}, ${d.getOccursLength()}, ${d.getOccursMax()}));
+          new DependingOn("${d.getVariableName()}", ${d.getPosition()}, ${d.getOccursLength()}, ${d.getOccursMax()}));
 #*           *##end
-    );
+      );
     
-    ret.setDependingOn(new ArrayList(dep));
+      ret.setDependingOn(new ArrayList(dep));
 #*      *##end
 #*  *##end
+
+#arrayDef
     }
     
     public Record${currentRecord.extensionName}(LayoutDetail l, RecordDetail r) {
@@ -61,8 +92,12 @@ public class Record${currentRecord.extensionName} {
         record = r;
         
 #*  *##foreach($f in ${currentRecord.getFields()}) 
+#*      *##if (${f.alwaysIncludeField()})	
         fld${f.extensionName} = l.getFieldFromName("${f.fieldDetail.getLookupName()}");        
+#*      *##end
 #*  *##end
+
+#arrayDef
     }
     
     public void updateRecordSelection(LayoutDetail l) {
@@ -76,10 +111,10 @@ public class Record${currentRecord.extensionName} {
     private FieldDetail createField(
                 FieldDetail[] flds, int idx,
                 String name,
-	        int type,
-	        int decimal,
-	        int pos,
-		int len) {
+                int type,
+                int pos,
+                int len,
+                int decimal) {
         flds[idx] = FieldDetail.newFixedWidthField(name, type, pos, len, decimal, font);
         return flds[idx];
     }

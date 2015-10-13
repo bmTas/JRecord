@@ -11,7 +11,7 @@ public class TstIoBldrSchemaGen01 {
 				ArgNames.OPT_TEMPLATE, "ioBuilderWithSchemaClass",
 				ArgNames.OPT_PACKAGE, "example.ioBuilderWithSchema",
 				ArgNames.OPT_SCHEMA, TstIoBldrSchemaGen01.class.getResource("DTAR020.cbl").getFile(),
-				ArgNames.OPT_FILE_ORGANISATION, "FixerdWidth",
+				ArgNames.OPT_FILE_ORGANISATION, "FixedWidth",
 				ArgNames.OPT_FONT_NAME, "CP037",
 				ArgNames.OPT_DROP_COPYBOOK_NAME, "true",
 				ArgNames.OPT_OUTPUT_DIR, "G:/Temp/Gen/ioBuilderSchema"
@@ -33,12 +33,23 @@ public class TstIoBldrSchemaGen01 {
 				ArgNames.OPT_TEMPLATE, "ioBuilderWithSchemaClass",
 				ArgNames.OPT_PACKAGE, "example.ioBuilderWithSchema",
 				ArgNames.OPT_SCHEMA, TstIoBldrSchemaGen01.class.getResource("MultiRecordTest.cbl").getFile(),
-				ArgNames.OPT_FILE_ORGANISATION, "FixerdWidth",
+				ArgNames.OPT_FILE_ORGANISATION, "FixedWidth",
 				ArgNames.OPT_SPLIT, "01",
 				ArgNames.OPT_OUTPUT_DIR, "G:/Temp/Gen/ioBuilderSchema"
 		};
 		
 		Generate.main(arguments3);
+		
+		String[] arguments4 = {
+				ArgNames.OPT_TEMPLATE, "ioBuilderWithSchemaClass",
+				ArgNames.OPT_PACKAGE, "example.ioBuilderWithSchema",
+				ArgNames.OPT_SCHEMA, TstIoBldrSchemaGen01.class.getResource("ArrayCopybook.cbl").getFile(),
+				ArgNames.OPT_FILE_ORGANISATION, "FixedWidth",
+				ArgNames.OPT_OUTPUT_DIR, "G:/Temp/Gen/ioBuilderSchema"
+		};
+		
+		Generate.main(arguments4);
+
 	}
 
 }

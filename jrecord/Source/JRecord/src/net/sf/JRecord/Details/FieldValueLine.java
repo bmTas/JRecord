@@ -52,7 +52,7 @@ public class FieldValueLine extends FieldValue {
 	 * @see net.sf.JRecord.Details.FieldValue#setHex(java.lang.String)
 	 */
 	@Override
-	public void setHex(String val) throws RecordException {
+	public void setHex(String val) {
 		theLine.setFieldHex(field, val); 
 	}
 

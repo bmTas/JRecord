@@ -1,7 +1,6 @@
 package net.sf.JRecord.Details;
 
 import net.sf.JRecord.Common.AbstractFieldValue;
-import net.sf.JRecord.Common.RecordException;
 
 
 /**
@@ -17,7 +16,7 @@ public interface IFieldValue extends AbstractFieldValue {
 
 	public abstract void setToLowValues();
 
-	public abstract void setHex(String s) throws RecordException;
+	public abstract void setHex(String s);
 
 	public abstract boolean isFieldPresent();
 

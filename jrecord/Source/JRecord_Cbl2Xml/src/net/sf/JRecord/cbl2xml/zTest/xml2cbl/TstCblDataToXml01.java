@@ -58,12 +58,12 @@ public class TstCblDataToXml01 {
 		String xml2data;
 		String expected = loadLocationFile();
 		
-		for (int i = 0; i < 3; i++) { // xml2data only works when there are no arrays !!!
+		for (int i = 0; i < files.length - 1; i++) { // xml2data only works when there are no arrays !!!
 			String[] d = files[i];
 			System.out.println("->> " + d[0]);
 			xml2data = xml2data(Code.getFullName("xml/" + d[2]), Code.getFullName("xmlCopybook/" + d[0]));
 			//System.out.println(xml2data);
-			assertEquals(expected, xml2data);
+			assertEquals(d[0] + " " +  i, expected, xml2data);
 		}
 	}
 	

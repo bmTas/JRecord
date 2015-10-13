@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.IO.AbstractLineReader;
@@ -30,9 +29,8 @@ public interface ISchemaIOBuilder {
 	 * @return the new Line
 	 * 
 	 * @throws IOException
-	 * @throws RecordException
 	 */
-	public abstract AbstractLine newLine() throws IOException, RecordException;
+	public abstract AbstractLine newLine() throws IOException;
 
 	/**
 	 * Create line for supplied data
@@ -40,17 +38,14 @@ public interface ISchemaIOBuilder {
 	 * @param data data to be store in the line
 	 * 
 	 * @return new line
-	 * @throws IOException
-	 * @throws RecordException
 	 */
-	public abstract AbstractLine newLine(byte[] data) throws IOException, RecordException;
+	public abstract AbstractLine newLine(byte[] data) throws IOException;
 
 	/**
 	 * 
 	 * @return the layout or File-Schema (File Description)
 	 */
-	public abstract LayoutDetail getLayout() throws RecordException,
-			IOException;
+	public abstract LayoutDetail getLayout() throws	IOException;
 
 	/**
 	 * Create a new LineReader for a specified file
@@ -71,10 +66,9 @@ public interface ISchemaIOBuilder {
 	 * 
 	 * @throws FileNotFoundException
 	 * @throws IOException anyIoexception that occurs
-	 * @throws RecordException any JRecord error
 	 */
 	public abstract AbstractLineReader newReader(String filename)
-			throws FileNotFoundException, IOException, RecordException;
+			throws FileNotFoundException, IOException;
 
 	/**
 	 * Create a new LineReader for a supplied input stream
@@ -92,10 +86,9 @@ public interface ISchemaIOBuilder {
      *      reader.close()
      * </pre>
 	 * @throws IOException 
-	 * @throws RecordException any JRecord error
 	 */
 	public abstract AbstractLineReader newReader(InputStream datastream)
-			throws IOException, RecordException;
+			throws IOException;
 
 	/**
 	 * Create LineWriter for a supplied filename
@@ -123,10 +116,9 @@ public interface ISchemaIOBuilder {
 	 * 
 	 * @throws FileNotFoundException
 	 * @throws IOException
-	 * @throws RecordException any JRecord error
 	 */
 	public abstract AbstractLineWriter newWriter(String filename)
-			throws FileNotFoundException, IOException, RecordException;
+			throws FileNotFoundException, IOException;
 
 	/**
 	 * Create LineWriter for a supplied stream
@@ -152,9 +144,8 @@ public interface ISchemaIOBuilder {
      *</pre>
 	 * 
 	 * @throws IOException
-	 * @throws RecordException any JRecord error
 	 */
 	public abstract AbstractLineWriter newWriter(OutputStream datastream)
-			throws IOException, RecordException;
+			throws IOException;
 
 }

@@ -9,11 +9,11 @@ import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.Common.RecordException;
-import net.sf.JRecord.cbl2xml.def.ICobol2Xml;
+import net.sf.JRecord.cbl2xml.def.Icb2xml2Xml;
 import net.sf.JRecord.cbl2xml.impl.ConvertOptions;
 
 /**
- * @author Bruce01
+ * @author Bruce Martin
  *
  */
 public class Data2Xml {
@@ -26,16 +26,16 @@ public class Data2Xml {
 		ConvertOptions opts = new ConvertOptions(args);
 		
 		if (opts.isOk()) {
-			ICobol2Xml cbl2xml;
+			Icb2xml2Xml cbl2xml;
 			if (opts.useCobol) {
-				cbl2xml = Cobol2Xml.newCobol2Xml(opts.cobolCopybook);
+				cbl2xml = Cobol2Xml.newCobol2Xml(opts.cobolCopybook)
+								   .setDialect(opts.dialect);
 			} else {
-				cbl2xml = Cobol2Xml.newCb2Xml2Xml(opts.cobolCopybook);
+				cbl2xml = Cobol2Xml.newCb2Xml2Xml(opts.cb2xmlCopybook);
 			}
 			cbl2xml
 					.setFont(opts.font)
 					.setFileOrganization(opts.fileOrganisation)
-					.setDialect(opts.dialect)
 					.setDropCopybookNameFromFields(opts.dropCopybookName)
 					.setXmlMainElement(opts.mainXmlTag)
 				.cobol2xml(opts.inputFile, opts.outputFile);

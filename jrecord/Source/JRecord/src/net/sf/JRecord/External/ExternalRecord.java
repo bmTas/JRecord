@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sf.JRecord.Common.Constants;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.Def.AbstractUpdatableRecord;
 import net.sf.JRecord.External.Def.DependingOn;
@@ -14,6 +13,7 @@ import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.ExternalRecordSelection.StreamLine;
+import net.sf.JRecord.Option.IRecordPositionOption;
 
 //import net.sf.RecordEditor.utils.Common;
 
@@ -80,6 +80,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
   private int lineNumberOfFieldNames = 1;
 
   private ExternalSelection recSelect;
+  private IRecordPositionOption recordPosistionOption = null;
   //private ArrayList<TstField> tstFields = null;
   private boolean defaultRecord = false;
   private boolean embeddedCr    = false;  //private String tstField = "";
@@ -1185,10 +1186,8 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	 * Convert to internal format
 	 * @return the internal LayoutDetail equivalent
 	 *
-	 * @throws RecordException any error that occurs
 	 */
-	public final LayoutDetail asLayoutDetail()
-	throws RecordException {
+	public final LayoutDetail asLayoutDetail() {
 		return ToLayoutDetail.getInstance().getLayout(this);
 	}
 
@@ -1279,6 +1278,20 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 		this.embeddedCr = embeddedCr;
 	}
 
+
+	/**
+	 * @return the recordOption
+	 */
+	public final IRecordPositionOption getRecordPositionOption() {
+		return recordPosistionOption;
+	}
+
+	/**
+	 * @param recordOption the recordOption to set
+	 */
+	public final void setRecordPositionOption(IRecordPositionOption recordOption) {
+		this.recordPosistionOption = recordOption;
+	}
 
 	/**
 	 * @return the cb2xmlDocuments details

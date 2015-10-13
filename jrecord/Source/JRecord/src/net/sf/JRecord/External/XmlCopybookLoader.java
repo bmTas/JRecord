@@ -36,7 +36,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.Def.DependingOn;
 import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.External.Def.ExternalField;
@@ -158,7 +157,7 @@ public class XmlCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
 	public ExternalRecord loadCopyBook(InputStream inputStream,
 			String copyBookName, int splitCopybook, int dbIdx, String font,
 			int copybookFormat, int binaryFormat, int systemId, AbsSSLogger log)
-			throws RecordException, IOException {
+			throws IOException {
 		try {
 			synchronized (this) {	
 			    DocumentBuilderFactory factory

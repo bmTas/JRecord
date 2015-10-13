@@ -11,19 +11,24 @@ import net.sf.JRecord.cgen.def.IArrayAnyDimension;
 
 public class ArrayFieldDefinition implements IArray1Dimension, IArray2Dimension, IArray3Dimension, IArrayAnyDimension {
 
-	private final int[] sizeAdj;
+	private final int[] sizeAdj, lengths;
 	private final IFieldDetail firstField;
 	private final RecordDetail record;
 	private final DependingOnDtls dependingOnDtls;
 	
-	public ArrayFieldDefinition(RecordDetail rec, IFieldDetail... fd) {
+	public ArrayFieldDefinition(RecordDetail rec, int firstArrayLength, IFieldDetail... fd) {
 		this.record = rec;
 		sizeAdj = new int[fd.length - 1];
+		lengths = new int[fd.length - 1];
 		firstField =  fd[sizeAdj.length];
-		for (int i = 0; i < sizeAdj.length; i++) {
+		lengths[0] = firstArrayLength;
+		sizeAdj[0] = fd[0].getPos() - firstField.getPos();
+		for (int i = 1; i < sizeAdj.length; i++) {
 			sizeAdj[i] = fd[i].getPos() - firstField.getPos();
+			lengths[0] = sizeAdj[i - 1] / sizeAdj[i];
 		}
 		
+
 		DependingOnDtls depOn = null;
 		if (firstField instanceof FieldDetail) {
 			depOn = ((FieldDetail) firstField).getDependingOnDtls();
@@ -79,5 +84,15 @@ public class ArrayFieldDefinition implements IArray1Dimension, IArray2Dimension,
 		f.setDependingOnDtls(dependingOnDtls);
 		
 		return f;
+	}
+	
+	/**
+	 * get the Array length
+	 * @param indexNumber array index number
+	 * @return array length
+	 */
+	@Override
+	public int getArrayLength(int indexNumber) {
+		return lengths[indexNumber];
 	}
 }

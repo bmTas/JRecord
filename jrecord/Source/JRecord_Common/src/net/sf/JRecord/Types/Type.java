@@ -20,7 +20,6 @@
 package net.sf.JRecord.Types;
 
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Common.RecordException;
 
 /**
  * A "Type" is the interface between the raw data in the file
@@ -149,13 +148,11 @@ public interface Type {
      * @param val new value
      *
      * @return updated record
-     * @throws RecordException any error that occurs during the save
      */
     public abstract byte[] setField(final byte[] data,
             					  final int position,
             					  final IFieldDetail field,
-            					  Object val)
-    throws RecordException;
+            					  Object val);
 
     /**
      * Format a value for storing in the record, it
@@ -170,10 +167,8 @@ public interface Type {
      * @param val value to be formated
      *
      * @return value value as it is store in the record
-     * @throws RecordException any conversion errors
-     */
-    public abstract String formatValueForRecord(IFieldDetail field, String val)
-    throws RecordException;
+      */
+    public abstract String formatValueForRecord(IFieldDetail field, String val);
 
 
     /**

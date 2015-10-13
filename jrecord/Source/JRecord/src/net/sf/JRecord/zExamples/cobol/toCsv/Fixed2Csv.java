@@ -41,14 +41,13 @@ public class Fixed2Csv {
      *
      * @throws IOException any io-error that occurs when opening
      *         the input file
-     * @throws RecordException 
      */
     public Fixed2Csv(final LayoutDetail layout, 
     		       final String infile,   final String outfile,
     		       final String font,
     		       final String sep,	  final String quote,
     		       final IUpdateFieldName updateFldName)
-    throws IOException, RecordException {
+    throws IOException {
         super();
         LineIOProvider ioProvider = new LineIOProvider();
         AbstractLineReader reader = ioProvider.getLineReader(layout);

@@ -25,7 +25,7 @@ public class TypeNumAnyDecimal extends TypeNum {
 
 	@Override
 	public byte[] setField(byte[] record, int position, IFieldDetail field,
-			Object value) throws RecordException {
+			Object value) {
 		return setFieldToVal(record, position, field, formatValueForRecord(field, toNumberString(value)));
 	}
 
@@ -34,8 +34,7 @@ public class TypeNumAnyDecimal extends TypeNum {
 	 * @see net.sf.JRecord.Types.TypeNum#formatValueForRecord(net.sf.JRecord.Common.FieldDetail, java.lang.String)
 	 */
 	@Override
-	public String formatValueForRecord(IFieldDetail field, String val)
-			throws RecordException {
+	public String formatValueForRecord(IFieldDetail field, String val) {
 
         try {
             new BigDecimal(Conversion.numTrim(val));

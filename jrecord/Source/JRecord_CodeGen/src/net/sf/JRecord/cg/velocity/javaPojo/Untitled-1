@@ -1,0 +1,54 @@
+The file_structure (or file organisation) you use is determined by the file
+
+if file consists of Fixed-length records like the following where each record
+is exactly 15 bytes long you use Constants.IO_FIXED_LENGTH
+
+    ....5...10....5...20....5...30....5...40....5...50....5...60
+    Record-1      Record-2       Record-3       Record-4
+ 
+If the file has Windows/Linux style \n characters denoting the enod-of-record, you can use
+Constants.IO_BIN_TEXT etc.
+    
+A Constants.IO_VB is a *Mainframe* style VB file it has a 
+
+* 2 Byte Length (Big endian initeger), The length includes 2 bytes length + 2 hex zero's
+* 2 Bytes hex zero
+* 0 to 32000 bytes of record data
+
+A Constants.IO_VB_OPEN_COBOL is a *GNU Cobol* style VB file it has a 
+
+* 2 Byte Length (Big endian initeger), The length is the length of the data and **does not** include 2 bytes length + 2 hex zero's
+* 2 Bytes hex zero
+* 0 to 32000 bytes of record data
+
+etc.
+ 
+If you try looking at a file using the Layout-Wizard (**Record Layout &gt;&gt;&gt; Layout Wizard**) 
+it will hopefully work out the structure.
+
+-----
+
+~~~~
+ioProvider.getLineReader(Constants.IO_FIXED_LENGTH, Convert.FMT_MAINFRAME, CopybookLoader.SPLIT_HIGHEST_REPEATING, copybookURI, dataURI);
+
+Or would I have to include code similar to what I had for Continuous IO
+
+//do I need to add something similar to the code below?
+if ("MASTER".equalsIgnoreCase(name)) {
+    rec.setRecordSelection(newFieldSelection("RECID-TYPE ", "1"));
+} else if ("MASTER-2".equalsIgnoreCase(name)) {
+    rec.setRecordSelection(newFieldSelection("RECID-TYPE ", "2"));
+}
+
+* No, you will still need to test the record-id when you read the file though.
+
+----
+
+For variable block I use the following, it reads the first line correctly but all subsequent reads return the incorrect data
+
+
+~~~~
+ioProvider.getLineReader(Constants.IO_VB, Convert.FMT_MAINFRAME, CopybookLoader.SPLIT_HIGHEST_REPEATING, copybookURI, dataURI);
+~~~~
+
+* Then it is not a "IO_VB" file try looking at the file in the RecordEditor or send me a small sample

@@ -17,7 +17,6 @@ package net.sf.JRecord.Types;
 
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Common.RecordException;
 
 /**
  * Type for Binary Integers - Big Endian (high to low format)
@@ -86,8 +85,7 @@ public class TypeBinBigEndian extends TypeNum {
      */
     public byte[] setField(byte[] record,
             			 final int position,
-            			 final IFieldDetail field, Object value)
-            throws RecordException {
+            			 final IFieldDetail field, Object value) {
 		
         Conversion.setBigInt(record, position - 1, field.getLen(), formatAsBigInt(field, value), positiveStorage);
         return record;

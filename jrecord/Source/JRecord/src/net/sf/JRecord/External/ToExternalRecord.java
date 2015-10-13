@@ -23,10 +23,8 @@ public final class ToExternalRecord {
 	 * @param copybookName
 	 * @param system
 	 * @return layout in ExternalRecord format
-	 * @throws RecordException
 	 */
-	public final ExternalRecord getExternalRecord(LayoutDetail layout, String copybookName, int system)
-	throws  RecordException {
+	public final ExternalRecord getExternalRecord(LayoutDetail layout, String copybookName, int system) {
 		//int rt = Constants.rtGroupOfRecords;
 		//int type = recordDefinition.getLayoutType();
 

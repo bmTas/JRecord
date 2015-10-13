@@ -1,6 +1,5 @@
 package net.sf.JRecord.cbl2xml.zTest.xml2cbl;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
 
 import java.io.ByteArrayOutputStream;
@@ -112,7 +111,7 @@ public class TstCblDataToXml02 {
 		for (int i = 0; i < 4; i++) {
 			expected[i] = readFile(Code.getFullName(files[i][1]));
 		}
-		for (int i = 0; i < 8; i++) { // xml2data only works when there are no arrays !!!
+		for (int i = 0; i < files.length; i++) { // xml2data only works when there are no arrays !!!
 			try {
 				d = files[i];
 				System.out.println("->> " + d[0] + " " + d[2]);
@@ -159,6 +158,7 @@ public class TstCblDataToXml02 {
 			os.write(buf, 0, len);
 			len = is.read(buf);
 		}
+		is.close();
 		
 		return os.toByteArray();
 		

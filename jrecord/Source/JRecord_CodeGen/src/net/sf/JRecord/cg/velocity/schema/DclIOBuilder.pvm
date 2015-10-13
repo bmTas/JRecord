@@ -1,0 +1,17 @@
+#*  *##if (${generateOptions.isXmlSchema()})
+            IIOBuilder iob = JRecordInterface1.SCHEMA_XML
+                                       .newIOBuilder(copybookName);
+#*  *##else
+            ICobolIOBuilder iob = JRecordInterface1.COBOL
+                                       .newIOBuilder(copybookName)
+#*      *##if (${generateOptions.font} != "")
+                                           .setFont("${generateOptions.font}")
+#*      *##end                                           
+                                           .setFileOrganization(${generateOptions.io.code})
+                                           .setSplitCopybook(${generateOptions.splitOption.code})
+#*      *##if (${generateOptions.dropCopybookName} == "true")
+                                           .setDropCopybookNameFromFields(${generateOptions.dropCopybookName})
+#*      *##end                                           
+                                       ;  
+#*  *##end                                           
+

@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TreeSet;
 
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
+import net.sf.JRecord.Option.Options;
 import net.sf.JRecord.cg.common.CCode;
 
 
@@ -23,7 +25,10 @@ public class RecordDef extends JavaDetails {
 	
 	private final ArrayList<FieldDef> fields = new ArrayList<FieldDef>();
 	
-	private final String RecordSelectionStr;
+	private final String RecordSelectionStr, recordPositionOptionStr;
+	private final List<ArrayDetails> arrayDetailsList = new ArrayList<ArrayDetails>();
+	private final List<List<ArrayDetails>> arraySameSize = new ArrayList<List<ArrayDetails>>();
+	private final List<String> importList;
 
 	/**
 	 * Class to describe one record type in a file for use in code generation
@@ -38,6 +43,12 @@ public class RecordDef extends JavaDetails {
 		HashMap<String, Integer> fieldsUsed = new HashMap<String, Integer>(fieldCount * 3);
 		FieldDetail field;
 		String fldName, lcFldName;
+		ArrayElement ai;
+		HashMap<String, ArrayDetails> arrayMap = new HashMap<String, ArrayDetails>();
+		FieldDef fieldDef;
+		ArrayDetails ad = null;
+		TreeSet<String> importSet = new TreeSet<String>();
+
 		
 		fields.ensureCapacity(fieldCount);
 		
@@ -49,17 +60,67 @@ public class RecordDef extends JavaDetails {
 			if (num == null) {
 				num = Integer.valueOf(1);
 			} else {
-				fldName = fldName + num;
+				fldName = fldName + num; 
 				num = num + 1;
 			}
 			fieldsUsed.put(lcFldName, num);
 			
-			fields.add(new FieldDef(fldName, field));
+
+			
+			ai = null;
+			if (fldName.indexOf('(') > 0) {
+				ai = ArrayElement.newArrayItem(fldName);
+				fieldDef = new FieldDef(fldName, field, ai);
+				
+				if (arrayMap.containsKey(ai.arrayName)) {
+					ad = arrayMap.get(ai.arrayName);
+					ad.addDetails(ai, fieldDef);
+				} else {
+					ad = new ArrayDetails(ai, fieldDef);
+					arrayMap.put(ai.arrayName, ad);
+					arrayDetailsList.add(ad);
+				}
+			} else {
+				fieldDef = new FieldDef(fldName, field, ai);
+			}
+			
+			fields.add(fieldDef);
+			
+			String jType = fieldDef.getJavaType();
+			if ("BigDecimal".equals(jType)) {
+				importSet.add("java.math.BigDecimal");
+			} else if ("BigInteger".equals(jType)) {
+				importSet.add("java.math.BigInteger");
+			}
 		}
+		
+		importList = new ArrayList<String>(importSet);
 		
 		StringBuilder b = new StringBuilder(30);
 		expandSel(b, record.getRecordSelection().getRecSel(), 0);
 		RecordSelectionStr = b.toString();
+		String s = "null";
+		if (record.getRecordPositionOption() == Options.RP_FIRST_RECORD_IN_FILE) {
+			s = "Options.RP_FIRST_RECORD_IN_FILE"; 
+		} else if (record.getRecordPositionOption() == Options.RP_MIDDLE_RECORDS) {
+			s = "Options.RP_MIDDLE_RECORDS"; 
+		} else if (record.getRecordPositionOption() == Options.RP_LAST_RECORD_IN_FILE) {
+			s = "Options.RP_LAST_RECORD_IN_FILE"; 
+		}
+		this.recordPositionOptionStr = s;
+		
+		if (arrayDetailsList.size() > 0) {
+		    List<ArrayDetails> currList = new ArrayList<ArrayDetails>();
+			currList.add(arrayDetailsList.get(0));
+			for (int i = 1; i < arrayDetailsList.size(); i++) {
+				if (! currList.get(0).sizesEqual(arrayDetailsList.get(i))) {
+					arraySameSize.add(currList);
+					currList = new ArrayList<ArrayDetails>();
+				}
+				currList.add(arrayDetailsList.get(i));
+			}
+			arraySameSize.add(currList);
+		}
 	}
 
 	public void expandSel(StringBuilder b, ExternalSelection sel, int level) {
@@ -132,5 +193,33 @@ public class RecordDef extends JavaDetails {
 	 */
 	public final String getRecordSelectionStr() {
 		return RecordSelectionStr;
+	}
+
+	/**
+	 * @return the recordPositionOptionStr
+	 */
+	public final String getRecordPositionOptionStr() {
+		return recordPositionOptionStr;
+	}
+
+	/**
+	 * @return the arrayDetailsList
+	 */
+	public final List<ArrayDetails> getArrayDetailsList() {
+		return arrayDetailsList;
+	}
+
+	/**
+	 * @return the arraySameSize
+	 */
+	public final List<List<ArrayDetails>> getArraySameSize() {
+		return arraySameSize;
+	}
+
+	/**
+	 * @return the importList
+	 */
+	public final List<String> getImportList() {
+		return importList;
 	}
 }

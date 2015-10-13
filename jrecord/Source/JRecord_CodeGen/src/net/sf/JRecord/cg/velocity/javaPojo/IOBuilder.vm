@@ -1,0 +1,105 @@
+package ${generateOptions.packageId}.io;
+#incl("schema/CommentSchema.pvm")
+#macro(schemaDef)
+                    .setSplitCopybook(${generateOptions.getSplitOption().getCode()})
+                    .setFileOrganization(${generateOptions.getIo().getCode()})
+                    .setDropCopybookNameFromFields(${generateOptions.isDropCopybookName()})
+                    .setFont("${generateOptions.getFont()}");
+#end
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import net.sf.JRecord.JRecordInterface1;
+import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.External.CopybookLoader;
+import net.sf.JRecord.cgen.def.IReader;
+import net.sf.JRecord.cgen.def.IWriter;
+import net.sf.JRecord.cgen.impl.PojoReaderWrapper;
+import net.sf.JRecord.cgen.impl.ReadFromBytes;
+import net.sf.JRecord.cgen.impl.WriteAsBytes;
+import net.sf.JRecord.def.IO.builders.IIOBuilder;
+#*  *##set( $r = ${generateOptions.schemaDefinition.getRecords().get(0)}) 
+import example.pojo.data.Line${r.extensionName}JR;
+import example.pojo.data.Line${r.extensionName}Pojo;
+import example.pojo.def.I${r.extensionName};
+import example.pojo.schema.Schema${r.extensionName};
+
+public class IOBuilder${generateOptions.schemaDefinition.extensionName} {
+
+    private IIOBuilder bldr;
+    private Schema${generateOptions.schemaDefinition.extensionName} schema${generateOptions.schemaDefinition.extensionName};
+    
+    public IOBuilder${generateOptions.schemaDefinition.extensionName}(String copybookFileName) throws IOException {
+        bldr = JRecordInterface1.COBOL.newIOBuilder(copybookFileName)
+#schemaDef
+##                    .setSplitCopybook(${generateOptions.getSplitOption()})
+##                    .setFileOrganization(${generateOptions.getIo()})
+##                    .setFont(${generateOptions.getFont()});
+        schema${generateOptions.schemaDefinition.extensionName} = new Schema${generateOptions.schemaDefinition.extensionName}(bldr.getLayout());
+    }
+    
+    public IOBuilder${generateOptions.schemaDefinition.extensionName}(InputStream copybook, String copybookName) throws IOException {
+        bldr = JRecordInterface1.COBOL.newIOBuilder(copybook, copybookName)
+#schemaDef
+        schema${generateOptions.schemaDefinition.extensionName} = new Schema${generateOptions.schemaDefinition.extensionName}(bldr.getLayout());
+    }
+
+    /**
+     * Create
+     */
+    public IOBuilder${generateOptions.schemaDefinition.extensionName}() {
+        schema${generateOptions.schemaDefinition.extensionName} = new Schema${generateOptions.schemaDefinition.extensionName}();
+    }
+    
+    
+    public IReader<Line${r.extensionName}JR> newReader(String fileName) throws IOException {
+        return new ReadFromBytes<Line${r.extensionName}JR>(
+                                schema${generateOptions.schemaDefinition.extensionName}.schema, 
+                                new Decoder${r.extensionName}JR(schema${generateOptions.schemaDefinition.extensionName}))
+                        .open(fileName);
+    }
+
+    public IReader<Line${r.extensionName}JR> newReader(InputStream in) throws IOException {
+        return new ReadFromBytes<Line${r.extensionName}JR>(
+                                schema${generateOptions.schemaDefinition.extensionName}.schema,
+                                new Decoder${r.extensionName}JR(schema${generateOptions.schemaDefinition.extensionName}))
+                        .open(in);
+    }
+
+
+    public IReader<Line${r.extensionName}Pojo> newPojoReader(String fileName) throws IOException {
+        return new PojoReaderWrapper<Line${r.extensionName}Pojo, Line${r.extensionName}JR>(newReader(fileName)); 
+    }
+
+    public IReader<Line${r.extensionName}Pojo> newPojoReader(InputStream in) throws IOException {
+        return new PojoReaderWrapper<Line${r.extensionName}Pojo, Line${r.extensionName}JR>(newReader(in)); 
+    }
+
+    public IWriter<I${r.extensionName}> newWriter(String fileName) throws IOException {
+        return new WriteAsBytes<I${r.extensionName}>(
+                                schema${generateOptions.schemaDefinition.extensionName}.schema,
+                                new Encoder${generateOptions.schemaDefinition.extensionName}(schema${generateOptions.schemaDefinition.extensionName}))
+                        .open(fileName);
+    }
+    
+    public IWriter<I${r.extensionName}> newWriter(OutputStream out) throws IOException {
+        return new WriteAsBytes<I${r.extensionName}>(
+                                schema${generateOptions.schemaDefinition.extensionName}.schema,
+                                new Encoder${generateOptions.schemaDefinition.extensionName}(schema${generateOptions.schemaDefinition.extensionName}))
+                        .open(out);
+    }
+    
+  
+    public Line${r.extensionName}JR newJrLine() {
+    	return new Line${r.extensionName}JR(schema${generateOptions.schemaDefinition.extensionName}.record${r.extensionName});
+    }
+    
+    
+    public Line${r.extensionName}Pojo newPojoLine() {
+    	return new Line${r.extensionName}Pojo();
+    }
+    
+}
+

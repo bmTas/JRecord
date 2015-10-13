@@ -18,7 +18,6 @@ package net.sf.JRecord.Types;
 
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Common.RecordException;
 
 /**
  * Float / Double field Type
@@ -79,8 +78,7 @@ public class TypeFloat extends TypeNum {
     public byte[] setField(byte[] record,
             final int position,
 			final IFieldDetail field,
-			Object value)
-    throws RecordException {
+			Object value) {
 
         int len = field.getLen();
         int pos = position - 1;

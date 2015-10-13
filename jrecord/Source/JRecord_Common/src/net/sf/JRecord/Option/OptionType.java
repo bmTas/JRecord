@@ -1,6 +1,6 @@
 package net.sf.JRecord.Option;
 
-public class OptionType implements IOptionType {
+public class OptionType implements IRecordPositionOption {
 	
 	public static final OptionType REQUIRED = new OptionType("Required");
 	
@@ -8,4 +8,13 @@ public class OptionType implements IOptionType {
 	public OptionType(String name) {
 		this.name = name;
 	}
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.Option.IOptionType#getName()
+	 */
+	@Override
+	public String getName() {
+		return name;
+	}
+	
+	
 }

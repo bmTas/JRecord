@@ -130,6 +130,7 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
 	 * @param start Start of the record
 	 * @param len length of the record
 	 */
+	@Override
 	public final void replace(final byte[] rec, final int start, final int len) {
 
 		System.arraycopy(rec, start, data, 0,
@@ -384,10 +385,8 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
      * @param field Field-definition
      * @param value new field value
      * 
-     * @throws RecordException
      */
-    public void setField(int type, IFieldDetail field, Object value)
-    throws RecordException {
+    public void setField(int type, IFieldDetail field, Object value) {
     	
         if (field.isFixedFormat()) {
             int pos = field.calculateActualPosition(this);
@@ -410,10 +409,8 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
 	 * @param fieldIdx field number in the record
 	 * @param value new value
 	 *
-	 * @throws RecordException any error that occurs during the save
      */
-    public void setFieldText(final int recordIdx, final int fieldIdx, String value)
-    throws RecordException {
+    public void setFieldText(final int recordIdx, final int fieldIdx, String value) {
 
         FieldDetail field = layout.getField(recordIdx, fieldIdx);
 
@@ -428,13 +425,13 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
      * @param val hex value
      */
 	public String setFieldHex(final int recordIdx, final int fieldIdx,
-	        String val) throws RecordException {
+	        String val) {
 		FieldDetail field = layout.getField(recordIdx, fieldIdx);
 		adjustLengthIfNecessary(field, recordIdx);
  	 	return setFieldHex(field, val);
 	}
 	 
-	public String setFieldHex(IFieldDetail field, String val) throws RecordException {
+	public String setFieldHex(IFieldDetail field, String val) {
 	    String ret = null;
 
 	    ensureCapacity(field.calculateActualEnd(this));

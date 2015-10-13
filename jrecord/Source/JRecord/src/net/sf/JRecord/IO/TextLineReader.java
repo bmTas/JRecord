@@ -18,7 +18,6 @@ import java.util.List;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.CsvParser.ICsvLineParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.CsvParser.ParserManager;
@@ -103,7 +102,7 @@ public class TextLineReader extends BasicTextLineReader {
      * @see net.sf.JRecord.StandardLineReader#open(java.io.InputStream, net.sf.JRecord.Details.LayoutDetail)
      */
     public void open(InputStream inputStream, LayoutDetail layout)
-    throws IOException, RecordException {
+    throws IOException {
     	String font = "";
 		if (layout != null) {
 			font = layout.getFontName();
@@ -124,7 +123,7 @@ public class TextLineReader extends BasicTextLineReader {
      *
      * @throws IOException sny IO error that occurs
      */
-    protected void createLayout(ICharReader pReader, InputStream inputStream, String font) throws IOException, RecordException {
+    protected void createLayout(ICharReader pReader, InputStream inputStream, String font) throws IOException {
         LayoutDetail layout;
 
         RecordDetail rec = null;

@@ -178,14 +178,14 @@ public abstract class BaseFieldValue  {
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.Common.AbstractFieldValue#set(net.sf.JRecord.Common.AbstractFieldValue)
 	 */
-	public final void set(AbstractFieldValue value) throws RecordException {
+	public final void set(AbstractFieldValue value) {
 		set(value.asString());
 	}
 
 	/**
 	 * @see IFieldValue#set(boolean)
 	 */
-	public final void set(boolean value) throws RecordException {
+	public final void set(boolean value) {
 		set(Boolean.valueOf(value));
 	}
 
@@ -193,28 +193,28 @@ public abstract class BaseFieldValue  {
 	/**
 	 * @see IFieldValue#set(double)
 	 */
-	public final void set(double value) throws RecordException {
+	public final void set(double value) {
 		set(Double.valueOf(value));
 	}
 
 	/**
 	 * @see IFieldValue#set(float) 
 	 */
-	public final void set(float value) throws RecordException {
+	public final void set(float value) {
 		set(Float.valueOf(value));
 	}
 
 	/**
 	 * @see IFieldValue#set(long)
 	 */
-	public final void set(long value) throws RecordException {
+	public final void set(long value) {
 		set(Long.valueOf(value));
 	}
 
 	/**
 	 * @see IFieldValue#set(java.lang.Object)
 	 */
-	public abstract void set(Object value) throws RecordException;
+	public abstract void set(Object value);
 
 	/**
 	 * Get the Type name

@@ -3,7 +3,6 @@ package net.sf.JRecord.External;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Log.AbsSSLogger;
 
 public interface ICopybookLoaderStream extends CopybookLoader {
@@ -21,12 +20,11 @@ public interface ICopybookLoaderStream extends CopybookLoader {
 	 * @param log log where any messages should be written
 	 *
 	 * @return return the record that has been read in
-	 * @throws RecordException General Error
 	 */
 	public abstract ExternalRecord loadCopyBook(
 			InputStream inputStream, //Document copyBookXml,
 			String copyBookName, int splitCopybook, int dbIdx, String font,
 			int copybookFormat, int binaryFormat, int systemId, AbsSSLogger log)
-			throws RecordException, IOException;
-
+			throws IOException;
+	
 }

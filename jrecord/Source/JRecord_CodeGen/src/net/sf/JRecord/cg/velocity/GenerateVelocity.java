@@ -148,6 +148,7 @@ public class GenerateVelocity {
 		Files.createDirectories(Paths.get(outputFile).getParent());
 		Writer writer = new FileWriter(outputFile);
 
+		System.out.println("Template: " + templateFile);
         Velocity.evaluate( context, writer, "log tag name", getTemplateFromResource(templateFile));
  
         /*

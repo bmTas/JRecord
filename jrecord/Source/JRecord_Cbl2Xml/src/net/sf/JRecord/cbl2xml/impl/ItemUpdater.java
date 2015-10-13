@@ -2,7 +2,6 @@ package net.sf.JRecord.cbl2xml.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,47 +23,58 @@ public class ItemUpdater {
 		{"(1, 0, 0, 0)", "(0, 1, 0, 0)", "(0, 0, 1, 0)", "(0, 0, 0, 1)", "(0, 0, 0, 0)"},
 	};
 
-	private final Copybook copybook;
+	//private final Copybook copybook;
 	private final LayoutDetail schema;
 	private final Set<String> duplicateFieldNames;
 	private final HashMap<String,Item> arrayItems = new HashMap<String, Item>();
 	private final boolean dropCopybook;
-	private final String copybookName;
+	private final String copybookName1, copybookName2;
 	
 	public ItemUpdater(Copybook copybook, LayoutDetail schema, boolean dropCopybook, String copybookName) {
-		this.copybook = copybook;
+		//this.copybook = copybook;
 		this.schema = schema;
+		if (copybookName == null || copybookName.length() == 0) {
+			dropCopybook = false;
+			copybookName = "";
+		}
 		this.dropCopybook = dropCopybook;
-		this.copybookName = copybookName;
+		copybookName = copybookName.toUpperCase();
+		this.copybookName1 = copybookName + "-";
+		this.copybookName2 = copybookName + "_";
 				
 		
 		duplicateFieldNames = schema.getDuplicateFieldNames();
 		
-		update(copybook.getItem(), 0, new ArrayList<String>(45));
+		update(copybook.getItem(), 0, -1, new ArrayList<String>(45));
 		
 	}
 	
-	private void update(List<Item> items, int indexs, ArrayList<String> levels) {
+	private void update(List<Item> items, int indexs, int firstArraySize, ArrayList<String> levels) {
 		
 		for (Item item : items) {
 			String name = item.getName();
+			name = name==null?"":name;
 			String ucName = name.toUpperCase();
 			boolean dup = duplicateFieldNames.contains(ucName);
 			int newIndexs = indexs;
 			item.names = new ArrayList<String>(levels);
 			item.nameToUse = name;
-			if (dropCopybook && ucName.startsWith(copybookName.toUpperCase())) {
-				name = name.substring(copybookName.length() + 1);
+			if (dropCopybook && name.length() > copybookName1.length()
+			&& (ucName.startsWith(copybookName1) || ucName.startsWith(copybookName2))) {
+				name = name.substring(copybookName1.length());
 				item.nameToUse = name;
 			}
 			levels.add(name);
 			if (item.getOccurs() != null && item.getOccurs() > 1) {
 				newIndexs += 1;
-				System.out.println(item.getName() + " " + newIndexs);
+				//System.out.println(item.getName() + " " + newIndexs);
+				if (firstArraySize < 0) {
+					firstArraySize = item.getOccurs();
+				}
 				arrayItems.put(item.nameToUse.toUpperCase(), item);
 			}
 			if (item.getItem().size() > 0) {
-				update(item.getItem(), newIndexs, levels);
+				update(item.getItem(), newIndexs, firstArraySize, levels);
 			} else if (newIndexs == 0) {
 				item.itemType = Item.TYPE_FIELD;
 				if (dup) {
@@ -84,7 +94,7 @@ public class ItemUpdater {
 					fields[i] = schema.getGroupField(levels.toArray(new String[levels.size()]));
 				}
 				
-				item.arrayDef = new ArrayFieldDefinition((RecordDetail)fields[0].getRecord(), fields);
+				item.arrayDef = new ArrayFieldDefinition((RecordDetail)fields[0].getRecord(), firstArraySize, fields);
 			}
 			levels.remove(levels.size() - 1);
 		}

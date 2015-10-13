@@ -47,12 +47,11 @@ public class Copy {
 	 * @param outFileName output filename
 	 * 
 	 * @throws IOException Any IO error
-	 * @throws RecordException Any JRecord Error
 	 */
 	public static void copyFileByMatchingFieldNames(
 			LayoutDetail inSchema,  String inFileName,
 			LayoutDetail outSchema, String outFileName)
-	throws IOException, RecordException {
+	throws IOException {
 		LineIOProvider ioProvider = LineIOProvider.getInstance();
 		AbstractLineReader in = ioProvider.getLineReader(inSchema); 
 		AbstractLineWriter out = ioProvider.getLineWriter(outSchema);
@@ -85,10 +84,9 @@ public class Copy {
 	 * @param outLine output line used to write to the file
 	 * 
 	 * @throws IOException any IO exception that occurs
-	 * @throws RecordException any JRecordException
 	 */
 	public static int copyFileByMatchingFieldNames(AbstractLineReader reader, AbstractLineWriter writer,  AbstractLine outLine) 
-	throws IOException, RecordException {
+	throws IOException {
 		
 		AbstractLine inLine = reader.read();
 		LayoutDetail inSchema = reader.getLayout();
@@ -146,12 +144,11 @@ public class Copy {
 	 * @param outFileName output filename
 	 * 
 	 * @throws IOException Any IO error
-	 * @throws RecordException Any JRecord Error
 	 */
 	public static void copyFileByFieldNumber(
 			LayoutDetail inSchema,  String inFileName,
 			LayoutDetail outSchema, String outFileName)
-	throws IOException, RecordException {
+	throws IOException {
 		LineIOProvider ioProvider = LineIOProvider.getInstance();
 		AbstractLineReader in = ioProvider.getLineReader(inSchema);
 		AbstractLineWriter out = ioProvider.getLineWriter(outSchema);
@@ -186,7 +183,7 @@ public class Copy {
 	 * @throws RecordException
 	 */
 	public static int copyFileByFieldNumber(AbstractLineReader reader, AbstractLineWriter writer,  AbstractLine outLine) 
-	throws IOException, RecordException {
+	throws IOException {
 		
 		AbstractLine inLine = reader.read();
 		LayoutDetail inSchema = reader.getLayout();

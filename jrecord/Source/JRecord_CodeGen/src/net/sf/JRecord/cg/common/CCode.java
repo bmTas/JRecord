@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Types.Type;
+import net.sf.JRecord.Types.TypeManager;
 
 public class CCode {
 
@@ -38,7 +39,9 @@ public class CCode {
 			return "";
 		}
 		
-		if (b.charAt(0) < 'a' || b.charAt(0) > 'z') {
+		if ((b.charAt(0) >= 'A' && b.charAt(0) <= 'Z')) {
+			b.setCharAt(0, Character.toLowerCase(b.charAt(0)));
+		} else if (b.charAt(0) < 'a' || b.charAt(0) > 'z') {
 			b.insert(0, pref);
 		}
 		return b.toString();
@@ -120,12 +123,12 @@ public class CCode {
 		if (JAVA_TYPE_NAME[0] == null || JAVA_TYPE_NAME [Type.ftHtmlField ] == null) {		
 			JAVA_TYPE_NAME [Type.ftChar                     ] = "ftChar";
 			JAVA_TYPE_NAME [Type.ftCharRightJust            ] = "ftCharRightJust";
-			JAVA_TYPE_NAME [Type.ftCharNullTerminated       ] = "ftCharNullTerminated             ";
+			JAVA_TYPE_NAME [Type.ftCharNullTerminated       ] = "ftCharNullTerminated";
 			JAVA_TYPE_NAME [Type.ftCharNullPadded           ] = "ftCharNullPadded";
 			
 			JAVA_TYPE_NAME [Type.ftHex                      ] = "ftHex";
 			JAVA_TYPE_NAME [Type.ftNumLeftJustified         ] = "ftNumLeftJustified";
-			JAVA_TYPE_NAME [Type.ftNumRightJustified        ] = "ftNumRightJustified                    ";
+			JAVA_TYPE_NAME [Type.ftNumRightJustified        ] = "ftNumRightJustified";
 			JAVA_TYPE_NAME [Type.ftNumZeroPadded            ] = "ftNumZeroPadded";
 			JAVA_TYPE_NAME [Type.ftAssumedDecimal           ] = "ftAssumedDecimal";
 			JAVA_TYPE_NAME [Type.ftSignSeparateLead         ] = "ftSignSeparateLead";
@@ -262,5 +265,49 @@ public class CCode {
 		    IO_TYPE [Constants.IO_STANDARD_UNICODE_TEXT_FILE ] = "IO_STANDARD_UNICODE_TEXT_FILE";
 		    IO_TYPE [Constants.IO_PROTO_SD_SINGLE_MESSAGE    ] = "IO_PROTO_SD_SINGLE_MESSAGE";
 		}
+	}
+	
+	
+	public static String typeToJavaType(int typeId, int length, int decimal) {
+		if (! TypeManager.isNumeric(typeId)) {
+			return "String";
+		} else if (typeId == Type.ftFloat) {
+			return "float";
+		} else if (typeId == Type.ftDouble) {
+			return "double";
+		} else if (decimal > 0) {
+			return "BigDecimal";
+		}
+		
+		if (typeId == Type.ftPackedDecimal) {
+			if (length < 3) {
+				return "short";
+			} else if (length < 6) {
+				return "int";
+			} else if (length < 11) {
+				return "long";
+			}
+
+			return "BigInteger";
+		} else if (TypeManager.isBinary(typeId)) {
+			if (length < 3) {
+				return "short";
+			} else if (length < 5) {
+				return "int";
+			} else if (length < 9) {
+				return "long";
+			}			
+			return "BigInteger";
+		}
+		
+		if (length < 5) {
+			return "short";
+		} else if (length < 10) {
+			return "int";
+		} else if (length < 19) {
+			return "long";
+		}			
+		return "BigInteger";
+
 	}
 }

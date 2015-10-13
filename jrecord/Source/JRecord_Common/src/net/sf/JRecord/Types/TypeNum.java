@@ -268,8 +268,7 @@ public class TypeNum extends TypeChar {
 	public byte[] setField(byte[] record,
 	        final int position,
 			final IFieldDetail field,
-			Object value)
-	throws RecordException {
+			Object value) {
 		return setFieldToVal(record, position, field, checkValue(field, toNumberString(value)));
 	}
 
@@ -277,8 +276,7 @@ public class TypeNum extends TypeChar {
 	protected final byte[] setFieldToVal(byte[] record,
 	        final int position,
 			final IFieldDetail field,
-			String val)
-	throws RecordException {
+			String val) {
 
 	    int len = field.getLen();
 	    int pos = position - 1;
@@ -325,10 +323,8 @@ public class TypeNum extends TypeChar {
 	 * @param val value to be formated
 	 *
 	 * @return value value as it is store in the record
-	 * @throws RecordException any conversion errors
 	 */
-	public String formatValueForRecord(IFieldDetail field, String val)
-	throws RecordException {
+	public String formatValueForRecord(IFieldDetail field, String val) {
 		String ret = checkValue(field, val);
 		if (isBinary()) return ret;
 
@@ -506,8 +502,7 @@ public class TypeNum extends TypeChar {
 	 *
 	 * @param val value to check
 	 * @param length length to check it against
-	 *
-	 * @throws RecordException to big error
+	 * 
 	 */
 	private void checkCharNumLength(String val, int length) throws RecordException {
 
@@ -578,8 +573,7 @@ public class TypeNum extends TypeChar {
 		return record;
     }
 
-	protected final BigInteger formatAsBigInt(final IFieldDetail field, Object value)
-	throws RecordException {
+	protected final BigInteger formatAsBigInt(final IFieldDetail field, Object value) {
     	BigInteger v;
 
         if (value == null || value == CommonBits.NULL_VALUE) {

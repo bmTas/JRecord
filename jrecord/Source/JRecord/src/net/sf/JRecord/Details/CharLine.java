@@ -168,8 +168,7 @@ public class CharLine extends BasicLine implements AbstractLine {
 
 
 	@Override
-	protected void setField(int typeId , IFieldDetail field, Object value)
-			throws RecordException {
+	protected void setField(int typeId , IFieldDetail field, Object value) {
 
 		if (field.isFixedFormat()) {
 			String s = "";
@@ -201,15 +200,13 @@ public class CharLine extends BasicLine implements AbstractLine {
 	}
 
 	@Override
-	public String setFieldHex(int recordIdx, int fieldIdx, String val)
-			throws RecordException {
+	public String setFieldHex(int recordIdx, int fieldIdx, String val) {
 
 		return null;
 	}
 
 	@Override
-	public void setFieldText(int recordIdx, int fieldIdx, String value)
-			throws RecordException {
+	public void setFieldText(int recordIdx, int fieldIdx, String value) {
 		FieldDetail fldDef = layout.getRecord(recordIdx).getField(fieldIdx);
 
 		updateData(fldDef.calculateActualPosition(this), fldDef.getLen(), value);

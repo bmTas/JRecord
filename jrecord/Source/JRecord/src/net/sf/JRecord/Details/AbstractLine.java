@@ -206,12 +206,9 @@ public interface AbstractLine extends AbstractIndexedLine {
      * @param fieldName fieldname to be updated
      * @param value value to be applied to the field
      *
-     * @throws RecordException any conversion error
-     *
      * @deprecated use {@link AbstractLine#getFieldValue(IFieldDetail)}.set(..)
      */
-    public abstract void setField(String fieldName, Object value)
-            throws RecordException;
+    public abstract void setField(String fieldName, Object value);
 
     /**
      * Sets a field to a new value
@@ -220,11 +217,10 @@ public interface AbstractLine extends AbstractIndexedLine {
      * @param fieldIdx field number in the record
      * @param val new value
      *
-     * @throws RecordException any error that occurs during the save
      * @deprecated for use in JRecord, use {@link AbstractLine#getFieldValue(int, int)}.set(..)
      */
     public abstract void setField(final int recordIdx, final int fieldIdx,
-            Object val) throws RecordException;
+            Object val);
 
     /**
      * Set a fields value
@@ -232,11 +228,9 @@ public interface AbstractLine extends AbstractIndexedLine {
      * @param field field to retrieve
      * @param value value to set the field to
      *
-     * @throws RecordException any error that occurs
      * @deprecated for use in JRecord, use {@link AbstractLine#getFieldValue(IFieldDetail)}.set(..)
      */
-    public abstract void setField(IFieldDetail field, Object value)
-            throws RecordException;
+    public abstract void setField(IFieldDetail field, Object value);
 
     /**
      * Set the field with a Text value - ie update the field
@@ -246,10 +240,9 @@ public interface AbstractLine extends AbstractIndexedLine {
      * @param fieldIdx field number in the record
      * @param value new value
      *
-     * @throws RecordException any error that occurs during the save
      */
     public abstract void setFieldText(final int recordIdx, final int fieldIdx,
-            String value) throws RecordException;
+            String value);
 
     /**
      * Set a field to a Hex value
@@ -258,7 +251,7 @@ public interface AbstractLine extends AbstractIndexedLine {
      * @param val hex value
      */
     public abstract String setFieldHex(final int recordIdx, final int fieldIdx,
-            String val) throws RecordException;
+            String val);
 
 //     was RecordEditor related but The RecordEditor has its own AbstractLine
 //    

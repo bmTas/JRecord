@@ -25,6 +25,7 @@ import net.sf.JRecord.CsvParser.ParserManager;
 import net.sf.JRecord.External.Def.DependingOn;
 import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
+import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.detailsSelection.Convert;
 import net.sf.JRecord.detailsSelection.FieldSelectX;
@@ -74,7 +75,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	private static final byte UNDEFINED = -121;
 	private static final byte NO = 1;
 	private static final byte YES = 2;
-
+	
 	private String recordName;
 
 	private int fieldCount;
@@ -87,6 +88,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	//private String selectionField;
 	//private String selectionValue;
 	private RecordSelection recordSelection = new RecordSelection(this);
+    private final IRecordPositionOption recordPositionOption;
 
 	private String delimiter;
 	private int    length = 0;
@@ -136,7 +138,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 						final int pRecordStyle
 						) {
 
-		this(pRecordName, pRecordType, pDelim,
+		this(pRecordName, null, pRecordType, pDelim,
 			 pQuote, pFontName, pFields, pRecordStyle);
 
 		if (!"".equals(pSelectionField)) {
@@ -178,7 +180,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 			final RecordSelection selection,
 			final boolean embeddedCr
 			) {
-		this(pRecordName, pRecordType, pDelim,
+		this(pRecordName, null, pRecordType, pDelim,
 				pQuote, pFontName, pFields, pRecordStyle);
 	
 		if (selection != null) {
@@ -200,6 +202,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	 * @param pRecordStyle Record Style
 	 */
 	public RecordDetail(final String pRecordName,
+	 					final IRecordPositionOption rpOpt,
 						final int pRecordType,
 						final String pDelim,
 						final String pQuote,
@@ -217,6 +220,8 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 		this.quote    = pQuote;
 		this.fontName = pFontName;
 		this.recordStyle = pRecordStyle;
+		this.recordPositionOption  = rpOpt;
+
 
 		this.fieldCount = pFields.length;
 		while (fieldCount > 0 && fields[fieldCount - 1] == null) {
@@ -1106,6 +1111,15 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	public final int getDependingOnLevel() {
 		return dependingOnLevel;
 	}
+	
+
+	/**
+	 * @return the recordOption
+	 */
+	public final IRecordPositionOption getRecordPositionOption() {
+		return recordPositionOption;
+	}
+
 
 	public final ICsvLineParser getParser() {
 		return ParserManager.getInstance().get(getRecordStyle());

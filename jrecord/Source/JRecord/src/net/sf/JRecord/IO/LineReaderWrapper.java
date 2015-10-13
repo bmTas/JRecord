@@ -11,7 +11,6 @@ import java.io.InputStream;
 
 //import net.sf.JRecord.ByteIO.AbstractByteReader;
 import net.sf.JRecord.ByteIO.IByteReader;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
@@ -54,7 +53,7 @@ public class LineReaderWrapper extends AbstractLineReader {
      * @see net.sf.JRecord.IO.AbstractLineReader#open(java.io.InputStream, net.sf.JRecord.Details.LayoutDetail)
      */
     public void open(InputStream inputStream, LayoutDetail pLayout)
-            throws IOException, RecordException {
+            throws IOException {
 
         reader.setLineLength(pLayout.getMaximumRecordLength());
         reader.open(inputStream);
@@ -65,7 +64,7 @@ public class LineReaderWrapper extends AbstractLineReader {
     /**
      * @see net.sf.JRecord.IO.AbstractLineReader#read()
      */
-    public AbstractLine read() throws IOException {
+    public AbstractLine readImplementation() throws IOException {
         byte bytes[] = reader.read();
 
         if (bytes == null) {

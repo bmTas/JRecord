@@ -2,6 +2,7 @@ package net.sf.JRecord.def.IO.builders;
 
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Log.AbsSSLogger;
+import net.sf.JRecord.Option.IRecordPositionOption;
 
 
 /**
@@ -210,7 +211,8 @@ public interface ICobolIOBuilder extends IIOBuilder {
 	 * Define record-selection criteria. For a single selection you would do
 	 * 
 	 * @param recordName name of the record 
-	 * @param selectionCriteria selection-criteria
+	 * @param selectionCriteria selection-criteria. Typically you would
+	 * use  new ExternalFieldSelection("Record-Type", "D") or similar
 	 * 
 	 * @return updated IOBuilder
 	 * 
@@ -301,4 +303,18 @@ public interface ICobolIOBuilder extends IIOBuilder {
 	 * <br><b>Note: </b> The default is <b>false</b>
 	 */
 	public abstract ICobolIOBuilder setDropCopybookNameFromFields(boolean dropCopybookNameFromFields);
+
+	/**
+	 * Set this as a position record (i.e. first or last record in the file)
+	 * 
+	 * @param recordName Name of Record to be updated 
+	 * @param positionOption position type; options are <ul>
+	 *     <li>Options.RP_FIRST_RECORD_IN_FILE
+	 *     <li>Options.RP_MIDDLE_RECORDS
+	 *     <li>Options.RP_LAST_RECORD_IN_FILE
+	 * </ul>
+	 * @return Builder for further updates
+	 */
+	public abstract ICobolIOBuilder setRecordPositionCode(String recordName,
+			IRecordPositionOption positionOption);
 }

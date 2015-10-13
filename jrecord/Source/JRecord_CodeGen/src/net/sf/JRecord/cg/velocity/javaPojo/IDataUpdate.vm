@@ -1,0 +1,27 @@
+package ${generateOptions.packageId}.def;
+#incl("schema/CommentSchema.pvm")
+
+#*  *##foreach($imp in ${currentRecord.getImportList()})
+import ${imp};
+#*  *##end
+
+public interface I${currentRecord.extensionName}Upd {
+
+#*  *##foreach($f in ${currentRecord.getFields()}) 
+#*      *##if (! ${f.isArrayItem()})	
+    public abstract void set${f.extensionName}(${f.getJavaType()} value);
+#*      *##end
+#*  *##end
+
+#*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+    public abstract void  set${a.getFirstElement().extensionName}(${a.getIndexParameters()}, ${a.getFirstFieldDef().getJavaType()} value);
+#*  *##end
+
+#*  *##foreach($a in ${currentRecord.getArraySameSize()}) 
+    public int  get${a.get(0).getFirstElement().extensionName}ArrayLength(int indexNumber);
+#*  *##end	
+
+
+    public abstract void set(I${currentRecord.extensionName} value);
+}
+

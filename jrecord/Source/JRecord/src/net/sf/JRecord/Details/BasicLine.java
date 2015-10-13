@@ -170,9 +170,8 @@ public abstract class BasicLine extends BaseLine implements AbstractLine {
 	 * @param fieldName fieldname to be updated
 	 * @param value value to be applied to the field
 	 *
-	 * @throws RecordException any conversion error
 	 */
-	public void setField(String fieldName, Object value) throws RecordException {
+	public void setField(String fieldName, Object value) {
 		IFieldDetail fld = layout.getFieldFromName(fieldName);
 
 		if (fld != null) {
@@ -186,10 +185,9 @@ public abstract class BasicLine extends BaseLine implements AbstractLine {
      * @param field field to retrieve
      * @param value value to set the field to
      *
-     * @throws RecordException any error that occurs
-     */
+      */
     public final void setField(IFieldDetail field, Object value)
-    throws RecordException {
+    {
         setField(field.getType(), field, value);
     }
     
@@ -199,9 +197,8 @@ public abstract class BasicLine extends BaseLine implements AbstractLine {
      * @param field Field-definition
      * @param value new field value
      * 
-     * @throws RecordException
      */
-    protected abstract void setField(int type, IFieldDetail field, Object value) throws RecordException;
+    protected abstract void setField(int type, IFieldDetail field, Object value);
 
 	/**
 	 * Sets a field to a new value
@@ -210,10 +207,8 @@ public abstract class BasicLine extends BaseLine implements AbstractLine {
 	 * @param fieldIdx field number in the record
 	 * @param val new value
 	 *
-	 * @throws RecordException any error that occurs during the save
 	 */
-	public void setField(final int recordIdx, final int fieldIdx, Object val)
-			throws RecordException {
+	public void setField(final int recordIdx, final int fieldIdx, Object val) {
 
 	    IFieldDetail field = layout.getField(recordIdx, fieldIdx);
 

@@ -144,7 +144,7 @@ public class XmlLineReader extends AbstractLineReader {
     /**
      * @see net.sf.JRecord.IO.AbstractLineReader#read()
      */
-    public AbstractLine read() throws IOException {
+    public AbstractLine readImplementation() throws IOException {
 
         XmlLine ret = null;
         do {

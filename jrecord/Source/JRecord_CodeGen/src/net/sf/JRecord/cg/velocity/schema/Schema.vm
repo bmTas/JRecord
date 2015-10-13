@@ -1,4 +1,5 @@
 package ${generateOptions.packageId}.schema;
+#incl("schema/CommentSchema.pvm")
 
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;

@@ -7,7 +7,6 @@ import net.sf.JRecord.ByteIO.ByteTextReader;
 import net.sf.JRecord.ByteIO.IByteReader;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.CsvParser.BinaryCsvParser;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
@@ -47,7 +46,7 @@ public class BinTextReader extends LineReaderWrapper {
      * @see net.sf.JRecord.IO.AbstractLineReader#open(java.io.InputStream, net.sf.JRecord.Details.LayoutDetail)
      */
     public void open(InputStream inputStream, LayoutDetail layout)
-    throws IOException, RecordException {
+    throws IOException {
 
         super.open(inputStream, layout);
 
@@ -64,7 +63,7 @@ public class BinTextReader extends LineReaderWrapper {
      *
      * @throws IOException sny IO error that occurs
      */
-    protected void createLayout(byte[] line) throws IOException, RecordException {
+    protected void createLayout(byte[] line) throws IOException {
         LayoutDetail layout;
 	    
         RecordDetail rec = null;

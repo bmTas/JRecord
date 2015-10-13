@@ -3,7 +3,6 @@ package net.sf.JRecord.IO;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
@@ -23,7 +22,7 @@ public abstract class BasicTextLineReader extends AbstractLineReader {
 	}
 
 	  protected void open(ICharReader r, InputStream inputStream, LayoutDetail layout, String font)
-	  throws IOException, RecordException {
+	  throws IOException {
 
 		  reader = r;
 		  inStream = inputStream;
@@ -35,7 +34,7 @@ public abstract class BasicTextLineReader extends AbstractLineReader {
 	/**
 	 * @see net.sf.JRecord.JRecordInterface1#read()
 	 */
-	public AbstractLine read() throws IOException {
+	public AbstractLine readImplementation() throws IOException {
 	    AbstractLine ret = null;
 	
 	    if (reader == null) {

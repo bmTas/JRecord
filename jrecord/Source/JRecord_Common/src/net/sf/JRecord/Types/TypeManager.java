@@ -139,10 +139,8 @@ public class TypeManager {
      * @param typeId type identifier of the type being top
      * @param typeDef type being registered
      *
-     * @throws RecordException any error that occurs
      */
-    public void registerType(int typeId, Type typeDef)
-    throws RecordException {
+    public void registerType(int typeId, Type typeDef) {
         int idx = getIndex(typeId);
 
         if (idx == INVALID_INDEX) {
@@ -230,6 +228,11 @@ public class TypeManager {
 	 */
 	public static boolean isNumeric(int typeId) {
 		return getInstance().getType(typeId).isNumeric();
+	}
+
+	public static boolean isBinary(int typeId) {
+		Type type = getInstance().getType(typeId);
+		return type.isNumeric() && (type instanceof TypeNum) && ((TypeNum) type).isBinary();
 	}
 
 	/**

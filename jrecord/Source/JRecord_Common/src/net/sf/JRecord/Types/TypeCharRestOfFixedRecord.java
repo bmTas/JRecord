@@ -1,7 +1,6 @@
 package net.sf.JRecord.Types;
 
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Common.RecordException;
 
 public class TypeCharRestOfFixedRecord extends TypeChar {
 
@@ -22,7 +21,7 @@ public class TypeCharRestOfFixedRecord extends TypeChar {
 	 */
 	@Override
 	public byte[] setField(byte[] record, int position, IFieldDetail field,
-			Object value) throws RecordException {
+			Object value) {
         String val  = value.toString();
 		String font = field.getFontName();
 		int pos = position - 1;

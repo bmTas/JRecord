@@ -1,8 +1,5 @@
 package net.sf.JRecord.IO.builders;
 
-import java.io.IOException;
-
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
@@ -27,8 +24,7 @@ public class SchemaIOBuilder extends CblIOBuilderBase {
 	 * @see net.sf.JRecord.IO.builders.CblIOBuilderBase#getExternalRecordImpl()
 	 */
 	@Override
-	protected ExternalRecord getExternalRecordImpl() throws RecordException,
-			IOException {
+	protected ExternalRecord getExternalRecordImpl()  {
 		throw new RuntimeException("Error: this method should not get called in SchemaIOBuilder");
 	}
 

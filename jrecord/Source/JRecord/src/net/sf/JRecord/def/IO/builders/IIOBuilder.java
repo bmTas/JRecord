@@ -2,7 +2,6 @@ package net.sf.JRecord.def.IO.builders;
 
 import java.io.IOException;
 
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 
@@ -108,11 +107,9 @@ public interface IIOBuilder extends ISchemaIOBuilder{
 	 *  
 	 * @return ExternalRecord (Schema-Builder) class 
 	 * 
-	 * @throws RecordException
 	 * @throws IOException
 	 */
-	public abstract ExternalRecord getExternalRecord() throws RecordException,
-			IOException;
+	public abstract ExternalRecord getExternalRecord() throws IOException;
 
 	
 	

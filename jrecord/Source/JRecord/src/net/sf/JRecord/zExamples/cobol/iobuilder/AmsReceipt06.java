@@ -11,7 +11,7 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.CobolIoProvider;
-import net.sf.JRecord.IO.builders.ICobolIOBuilder;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 
 

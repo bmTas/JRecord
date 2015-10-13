@@ -48,10 +48,9 @@ public interface AbstractIndexedLine {
 	 * @param fieldIdx field number in the record
 	 * @param val new value
 	 *
-	 * @throws RecordException any error that occurs during the save
 	 */
 	public abstract void setField(final int recordIdx, final int fieldIdx,
-			Object val) throws RecordException;
+			Object val);
 
 	/**
 	 * Set a fields value
@@ -59,9 +58,7 @@ public interface AbstractIndexedLine {
 	 * @param field field to retrieve
 	 * @param value value to set the field to
 	 *
-	 * @throws RecordException any error that occurs
 	 */
-	public abstract void setField(IFieldDetail field, Object value)
-			throws RecordException;
+	public abstract void setField(IFieldDetail field, Object value);
 
 }

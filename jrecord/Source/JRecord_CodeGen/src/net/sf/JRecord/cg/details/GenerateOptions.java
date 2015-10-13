@@ -2,6 +2,7 @@ package net.sf.JRecord.cg.details;
 
 
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,7 +26,7 @@ public class GenerateOptions implements ArgNames {
 	private static final Opts[] TEMPLATE_OPTIONS = {
 		new Opts("ioBuilder",  "", "Generate example code using JRecord IO Builders"),
 		new Opts("ioBuilderWithSchemaClass", "", "Generate example code using JRecord IO Builders + Schema details"),
-		new Opts("javaBean",   "", "Generate java classes for each Cobol Record"),
+		new Opts("javaPojo",   "", "Generate java classes for each Cobol Record"),
 	};
 	private static final Opts[] LOAD_SCHEMA_OPTS = {
 		new Opts("inLine",   "", "Create a SchemaClass in code"),
@@ -33,7 +34,7 @@ public class GenerateOptions implements ArgNames {
 		new Opts("both",   "", "Do both, create schema class and allow user to read from a file")};
 	private static final Opts[] FILE_ORGANISATION_OPTS = {
 		new Opts("Text",         "Constants.IO_BIN_TEXT",     "Standard Windows/Unix text file (single byte characterset)", Constants.IO_BIN_TEXT),
-		new Opts("FixerdWidth",  "Constants.IO_FIXED_LENGTH", "File where lines (records) are the same length no \\n", Constants.IO_FIXED_LENGTH),
+		new Opts("FixedWidth",   "Constants.IO_FIXED_LENGTH", "File where lines (records) are the same length no \\n", Constants.IO_FIXED_LENGTH),
 		new Opts("Mainframe_VB", "Constants.IO_VB",           "Mainframe VB, file consists of <record-length><record-data>", Constants.IO_VB)};
 	private static final Opts[] GENERATE_OPTS = {
 		new Opts("bean",     "","Generate Java \"bean\" class"),
@@ -49,7 +50,7 @@ public class GenerateOptions implements ArgNames {
 
 	
 	private boolean ok = true;
-	public final String template, schemaName, packageId, packageDir, font, outputDir, currentDate;
+	public final String template, schemaName, schemaShortName, packageId, packageDir, font, outputDir, currentDate;
 	public final boolean inLineSchema, LoadSchemaFromFile;
 	
 	public final Set<String> generateOptions = new HashSet<String>(10);
@@ -64,8 +65,13 @@ public class GenerateOptions implements ArgNames {
 		String dropVal = pa.getArg(OPT_DROP_COPYBOOK_NAME, "");
 		
 
-		template = decode(pa, OPT_TEMPLATE, false, "javaBean", TEMPLATE_OPTIONS);
+		template = decode(pa, OPT_TEMPLATE, false, "javaPojo", TEMPLATE_OPTIONS);
 		schemaName   = required(pa, OPT_SCHEMA);
+		if (schemaName == null) {
+			schemaShortName = "";
+		} else {
+			schemaShortName = (new File(schemaName)).getName();
+		}
 		if ("ioBuilder".equals(template)) {
 			String s = pa.getArg(OPT_PACKAGE);
 			if (s == null) {
@@ -92,7 +98,7 @@ public class GenerateOptions implements ArgNames {
 		font = pa.getArg(OPT_FONT_NAME, "");
 		outputDir = pa.getArg(OPT_OUTPUT_DIR, ".");
 		
-		if ("javaBean".equals(template)) {
+		if ("javaPojo".equals(template)) {
 			if (generateOpts == null || generateOpts.size() == 0) {
 				for (Opts o : GENERATE_OPTS) {
 					generateOptions.add(o.option);
@@ -104,7 +110,7 @@ public class GenerateOptions implements ArgNames {
 			}
 			
 			if (splitVal != null && splitVal.length() > 0) {
-				System.out.println("Split does not work for javaBean generation !!! ");
+				System.out.println("Split does not work for javaPojo generation !!! ");
 				ok = false;
 			}
 		} else if (generateOpts != null){
@@ -251,7 +257,7 @@ public class GenerateOptions implements ArgNames {
 		printList(FILE_ORGANISATION_OPTS);
 		System.out.println("    " + OPT_LOAD_SCHEMA + ":\tWether to generate a Schema (LayoutDetail) class or not");
 		printList(LOAD_SCHEMA_OPTS);
-		System.out.println("    " + OPT_GENERATE + ":\tWhich skeltons to generate, for template=javaBean:");
+		System.out.println("    " + OPT_GENERATE + ":\tWhich skeltons to generate, for template=javaPojo:");
 		printList(GENERATE_OPTS);
 		System.out.println();
 		System.out.println("    -h -?:\tList options");
@@ -384,30 +390,41 @@ public class GenerateOptions implements ArgNames {
 			this.description = description;
 			this.id = id;
 		}
+		
 		/**
 		 * @return the option
 		 */
 		public final String getOption() {
 			return option;
 		}
+		
 		/**
 		 * @return the code
 		 */
 		public final String getCode() {
 			return code;
 		}
+		
 		/**
 		 * @return the description
 		 */
 		public final String getDescription() {
 			return description;
 		}
+		
 		/**
 		 * @return the id
 		 */
 		public final int getId() {
 			return id;
 		}
+	}
+
+	/**
+	 * @return the schemaShotName
+	 */
+	public final String getSchemaShortName() {
+		return schemaShortName;
 	}
 
 	/**

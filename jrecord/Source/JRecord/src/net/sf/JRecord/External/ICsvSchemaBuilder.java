@@ -1,6 +1,5 @@
 package net.sf.JRecord.External;
 
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
 
 public interface ICsvSchemaBuilder {
@@ -17,9 +16,8 @@ public interface ICsvSchemaBuilder {
 	/**
 	 * Convert to schema (LayoutDetail)
 	 * @return schema in the form of LayoutDetail
-	 * @throws RecordException
 	 */
-	public LayoutDetail asLayoutDetail() throws RecordException;
+	public LayoutDetail asLayoutDetail();
 
 	/**
 	 * Used in interface to convert back to ExternalRecord

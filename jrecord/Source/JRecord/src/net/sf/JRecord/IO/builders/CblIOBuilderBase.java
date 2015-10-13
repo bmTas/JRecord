@@ -11,7 +11,6 @@ import java.util.TreeMap;
 
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.CharLineProvider;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -24,6 +23,8 @@ import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.IO.LineIOProvider;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Log.TextLog;
+import net.sf.JRecord.Option.IOptionType;
+import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.def.IO.builders.ICobolMultiCopybookIOBuilder;
 import net.sf.JRecord.def.IO.builders.ICsvIOBuilder;
 import net.sf.JRecord.def.IO.builders.IDefineCsvFields;
@@ -40,10 +41,10 @@ import net.sf.JRecord.def.IO.builders.IDefineFixedFieldsByPosition;
 public abstract class CblIOBuilderBase implements IIOBldrAll {
 
 	private static final TextLog DEFAULT_LOG = new TextLog();
-
+	
 	private LayoutDetail layout = null;
 	private LineProvider lineProvider;
-	Map<String, ExternalSelection> recordSelectionMap = null;
+	Map<String, RecordUpdate> recordSelectionMap = null;
 
 	int dialect;
     //final int copybookType;
@@ -162,7 +163,7 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	 * @see net.sf.JRecord.def.IO.builders.ICobolIOBuilder#newLine()
 	 */
 	@Override
-	public AbstractLine newLine() throws IOException, RecordException {
+	public AbstractLine newLine() throws IOException {
 		LayoutDetail schema = getLayout();
 		
 		return lineProvider.getLine(schema);
@@ -173,7 +174,7 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	 * @see net.sf.JRecord.def.IO.builders.ICobolIOBuilder#newLine()
 	 */
 	@Override
-	public AbstractLine newLine(byte[] data) throws IOException, RecordException {
+	public AbstractLine newLine(byte[] data) throws IOException {
 		LayoutDetail schema = getLayout();
 		
 		return lineProvider.getLine(schema, data);
@@ -184,7 +185,7 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	 * @see net.sf.JRecord.IO.IIOBuilder#newReader(java.lang.String)
 	 */
 	@Override
-	public final AbstractLineReader newReader(String filename) throws FileNotFoundException, IOException, RecordException {
+	public final AbstractLineReader newReader(String filename) throws FileNotFoundException, IOException {
 		//checkOk(true);
 		return newReader(new FileInputStream(filename));
 	}
@@ -193,7 +194,7 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	 * @see net.sf.JRecord.IO.IIOBuilder#newReader(java.io.InputStream)
 	 */
 	@Override
-	public final AbstractLineReader newReader(InputStream datastream) throws IOException, RecordException {
+	public final AbstractLineReader newReader(InputStream datastream) throws IOException {
 		checkOk(true);
 		LayoutDetail schema = getLayout();
 		AbstractLineReader r = LineIOProvider.getInstance().getLineReader(schema);
@@ -207,7 +208,7 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	 * @see net.sf.JRecord.IO.IIOBuilder#newWriter(java.lang.String)
 	 */
 	@Override
-	public final AbstractLineWriter newWriter(String filename) throws FileNotFoundException, IOException, RecordException {
+	public final AbstractLineWriter newWriter(String filename) throws FileNotFoundException, IOException {
 		checkOk(false);
 		return newWriter(new FileOutputStream(filename));
 	}
@@ -216,7 +217,7 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	 * @see net.sf.JRecord.IO.IIOBuilder#newWriter(java.io.OutputStream)
 	 */
 	@Override
-	public final AbstractLineWriter newWriter(OutputStream datastream) throws IOException, RecordException {
+	public final AbstractLineWriter newWriter(OutputStream datastream) throws IOException {
 		checkOk(false);
 		LayoutDetail schema = getLayout();
 		AbstractLineWriter r = LineIOProvider.getInstance().getLineWriter(schema);
@@ -230,9 +231,8 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	 * Method to allow ChildBuilders to validate the schema prior to
 	 * creating Reader / Writer
 	 * @param input
-	 * @throws RecordException
 	 */
-	protected void checkOk(boolean input) throws RecordException {
+	protected void checkOk(boolean input) {
 		
 	}
 	
@@ -272,19 +272,21 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	 */
 	@Override
 	public IIOBldrAll setRecordSelection(String recordName, ExternalSelection selectionCriteria) {
-		if (recordSelectionMap == null) {
-			recordSelectionMap = new TreeMap<String, ExternalSelection>();
-		}
-		
-		recordSelectionMap.put(recordName.toLowerCase(), selectionCriteria);
+		getRecordUpdate(recordName).selection = selectionCriteria;
+		return this;
+	}
+
+
+	@Override
+	public IIOBldrAll setRecordPositionCode(String recordName, IRecordPositionOption positionOption) {
+		getRecordUpdate(recordName).positionCode = positionOption;
 		return this;
 	}
 
 
 
-
 	@Override
-	public final ExternalRecord getExternalRecord() throws RecordException, IOException  {			
+	public final ExternalRecord getExternalRecord() throws IOException  {			
 		ExternalRecord schema =  getExternalRecordImpl();
 		
 		if (fileOrganization >= 0) {
@@ -294,9 +296,19 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 		if (recordSelectionMap != null) {
 			for (int i = 0; i < schema.getNumberOfRecords(); i++) {
 				ExternalRecord record = schema.getRecord(i);
-				ExternalSelection selection = recordSelectionMap.get(record.getRecordName().toLowerCase());
-				if (selection != null) {
-					record.setRecordSelection(selection);
+				RecordUpdate recUpdate = recordSelectionMap.get(record.getRecordName().toLowerCase());
+				if (recUpdate != null) {
+					if (recUpdate.selection != null) {	
+						record.setRecordSelection(recUpdate.selection);
+					}
+					
+					if (recUpdate.positionCode != null) {
+						record.setRecordPositionOption(recUpdate.positionCode);
+					}
+					
+					if (recUpdate.parentName != null) {
+						record.setParentName(recUpdate.parentName);
+					}
 				}
 			}
 		}
@@ -304,7 +316,22 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 		return schema; 
 	}
 	
-	protected abstract ExternalRecord getExternalRecordImpl() throws RecordException, IOException;
+	private RecordUpdate getRecordUpdate(String recordName) {
+		RecordUpdate rec;
+		if (recordSelectionMap == null) {
+			recordSelectionMap = new TreeMap<String, RecordUpdate>();
+		}
+		
+		String key = recordName.toLowerCase();
+		rec = recordSelectionMap.get(key);
+		if (rec == null) {
+			rec = new RecordUpdate();
+			recordSelectionMap.put(key, rec);
+		}
+
+		return rec;
+	}
+	protected abstract ExternalRecord getExternalRecordImpl() throws IOException;
 
 	protected final void clearLayout() {
 		layout = null;
@@ -315,7 +342,7 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	 * @see net.sf.JRecord.IO.IIOBuilder#getLayout()
 	 */
 	@Override
-	public final LayoutDetail getLayout() throws RecordException, IOException {
+	public final LayoutDetail getLayout() throws IOException {
 		if (layout == null) {
 			layout = getExternalRecord()	.asLayoutDetail();
 			lineProvider = LineIOProvider.getInstance().getLineProvider(layout);
@@ -408,5 +435,11 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 		throw new RuntimeException("JRecord Error - this method should not be called in CblIOBuilderBase");
 	}
 	
+	
+	private static class RecordUpdate {
+		ExternalSelection selection = null;
+		String parentName = null;
+		IRecordPositionOption positionCode = null;
+	}
 	
 }

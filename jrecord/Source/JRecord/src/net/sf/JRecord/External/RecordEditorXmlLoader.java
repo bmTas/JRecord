@@ -7,7 +7,6 @@ import java.io.InputStream;
 import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Common.XmlConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -43,11 +42,11 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 	public ExternalRecord loadCopyBook(InputStream inputStream,
 			String copyBookName, int splitCopybook, int dbIdx, String font,
 			int copybookFormat, int binaryFormat, int systemId, AbsSSLogger log)
-			throws RecordException, IOException {
+			throws IOException {
 		return (new RecordEditorXmlLoaderImp()).loadCopyBook(inputStream, copyBookName);
 	}
 	
-	public ExternalRecord loadCopyBook(InputStream is, String layoutName) throws RecordException, IOException {
+	public ExternalRecord loadCopyBook(InputStream is, String layoutName) throws IOException {
 		return (new RecordEditorXmlLoaderImp()).loadCopyBook(is, layoutName); 
 	}
 
@@ -101,7 +100,7 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 	
 	
 	
-		public ExternalRecord loadCopyBook(InputStream is, String layoutName) throws RecordException, IOException {
+		public ExternalRecord loadCopyBook(InputStream is, String layoutName) throws IOException {
 	
 		        int rt = Constants.rtRecordLayout;
 	

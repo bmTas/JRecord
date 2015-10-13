@@ -74,7 +74,6 @@ public class BasicManager<managedClass> {
      * @param classId type identifier of the type being top
      * @param obj object to be registered
      *
-     * @throws RecordException any error that occurs
      */
     public void register(int classId, managedClass obj) {
         int idx = getIndex(classId);

@@ -9,7 +9,6 @@ package net.sf.JRecord.External;
 
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.FieldDetail;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LayoutGetFieldByName;
 import net.sf.JRecord.Details.RecordDetail;
@@ -32,10 +31,8 @@ public class ToLayoutDetail {
 	 * @param recordDefinition Standard record definition
 	 *
 	 * @return Group of records
-	 * @throws RecordException any error that occurs
 	 */
-	public LayoutDetail getLayout(ExternalRecord recordDefinition)
-	throws  RecordException {
+	public LayoutDetail getLayout(ExternalRecord recordDefinition) {
 
 		if (recordDefinition == null) {
 			return null;
@@ -141,6 +138,7 @@ public class ToLayoutDetail {
 
 
 	    RecordDetail ret = new RecordDetail(def.getRecordName(),
+	            def.getRecordPositionOption(),
 //	    		def.getTstField(), def.getTstFieldValue(),
 	            def.getRecordType(), def.getDelimiter(), def.getQuote(),
 	            def.getFontName(), fields, def.getRecordStyle());

@@ -86,8 +86,7 @@ public class TypeChar implements Type {
      * @see net.sf.JRecord.Types.Type#formatValueForRecord
      * (record.layout.DetailField, java.lang.String)
      */
-    public String formatValueForRecord(IFieldDetail field, String val)
-            throws RecordException {
+    public String formatValueForRecord(IFieldDetail field, String val) {
     	if (val == null) {
     		val = "";
     	} else if (val.length() < field.getLen() && ! leftJust) {
@@ -125,7 +124,7 @@ public class TypeChar implements Type {
 	        					  final int position,
 	        					  final IFieldDetail currField) {
 
-		if (isHexZero(record, position, currField.getLen())) {
+		if (record == null || isHexZero(record, position, currField.getLen())) {
 			return "";
 		}
 		String s = Conversion.getString(record, position - 1,
@@ -192,8 +191,7 @@ public class TypeChar implements Type {
     public byte[] setField(byte[] record,
             			 final int position,
             			 final IFieldDetail field,
-            			 Object value)
-            throws RecordException {
+            			 Object value) {
         String val  = value.toString();
 		String font = field.getFontName();
 		int pos = position - 1;
@@ -204,6 +202,7 @@ public class TypeChar implements Type {
 			if (val.length() >= len) {
 				System.arraycopy(byteVal, 0, record, pos, len);
 			} else {
+				//System.out.println("---> " + pos + " " + byteVal.length + " " + record.length + " " + val.length());
 				System.arraycopy(byteVal, 0, record, pos, val.length());
 				//padWith(record, pos + val.length(), len - val.length(), " ", font);
 				padByte(record, pos + val.length(), len - val.length(), getPadByte(font));
@@ -278,14 +277,12 @@ public class TypeChar implements Type {
 	 * @param pad pad character
 	 * @param font fontname to use
 	 *
-	 * @throws RecordException can through field to big error
 	 */
 	protected final void copyRightJust(byte[] record,
 	        				   String val,
 	        				   int pos, int len,
 	        				   String pad,
-	        				   String font)
-					throws RecordException {
+	        				   String font) {
 
 	    int l = val.length();
 

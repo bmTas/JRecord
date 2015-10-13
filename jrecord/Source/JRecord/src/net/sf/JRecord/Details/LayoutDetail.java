@@ -25,11 +25,12 @@ import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IBasicFileSchema;
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.CsvParser.ICsvLineParser;
 import net.sf.JRecord.CsvParser.BinaryCsvParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.CsvParser.ParserManager;
+import net.sf.JRecord.Option.IRecordPositionOption;
+import net.sf.JRecord.Option.Options;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 
@@ -102,10 +103,10 @@ public class LayoutDetail implements IBasicFileSchema {
 	private int fileStructure;
 
 	private int recordCount;
-
+	
 	private boolean treeStructure = false;
 
-	private final boolean multiByteCharset, csvLayout;
+	private final boolean multiByteCharset, csvLayout, headerTrailerRecords;
 	
 	private final byte spaceByte;
 	
@@ -123,7 +124,6 @@ public class LayoutDetail implements IBasicFileSchema {
 	 * @param pRecordDecider used to decide which layout to use
 	 * @param pFileStructure file structure
 	 *
-	 * @throws RecordException multiple field delimiters used
 	 */
 	public LayoutDetail(final String pLayoutName,
 	        		   final RecordDetail[] pRecords,
@@ -133,8 +133,20 @@ public class LayoutDetail implements IBasicFileSchema {
 	        		   final String pEolIndicator,
 	        		   final String pFontName,
 	        		   final RecordDecider pRecordDecider,
-	        		   final int pFileStructure)
+	        		   final int pFileStructure) 
 	{
+		this(pLayoutName, pRecords, pDescription, pLayoutType, pRecordSep, pEolIndicator, pFontName, pRecordDecider, pFileStructure, null);
+	}
+	public LayoutDetail(final String pLayoutName,
+ 		   final RecordDetail[] pRecords,
+ 		   final String pDescription,
+ 		   final int pLayoutType,
+ 		   final byte[] pRecordSep,
+ 		   final String pEolIndicator,
+ 		   final String pFontName,
+ 		   final RecordDecider pRecordDecider,
+ 		   final int pFileStructure,
+ 		   final IRecordPositionOption rpOpt) {
 	    super();
 
         int i, j;
@@ -211,8 +223,10 @@ public class LayoutDetail implements IBasicFileSchema {
 		}
 
 		boolean csv = false;
+		boolean hasFilePosRecords = false;
 	    for (j = 0; j < recordCount; j++) {
 	    	RecordDetail record =  pRecords[j];
+	    	hasFilePosRecords = hasFilePosRecords || record.getRecordPositionOption() != null;
 	    	if ((record.getRecordType() == Constants.rtDelimitedAndQuote
 			          || record.getRecordType() == Constants.rtDelimited)) {
 	    		csv = true;
@@ -244,6 +258,7 @@ public class LayoutDetail implements IBasicFileSchema {
 		        }
 	    	}
 	    }
+	    this.headerTrailerRecords = hasFilePosRecords;
 	    csvLayout = csv;
 	}
 
@@ -403,6 +418,26 @@ public class LayoutDetail implements IBasicFileSchema {
     }
 
 
+	/**
+	 * @return the headerTrailerRecords
+	 */
+	public final boolean hasHeaderTrailerRecords() {
+		return headerTrailerRecords;
+	}
+	
+	public SpecialRecordIds getPositionRecordId() {
+		int h=-1, m=-1, t=-1;
+		for (int i = 0; i < recordCount; i++) {
+			if (getRecord(i).getRecordPositionOption() == Options.RP_FIRST_RECORD_IN_FILE) {
+				h = i;
+			} else if (getRecord(i).getRecordPositionOption() == Options.RP_MIDDLE_RECORDS) {
+				m = i;
+			} else if (getRecord(i).getRecordPositionOption() == Options.RP_LAST_RECORD_IN_FILE) {
+				t = i;
+			}
+		}	
+		return new SpecialRecordIds(h, m, t);
+	}
 	/**
 	 * @return the binaryField
 	 */
@@ -628,11 +663,10 @@ public class LayoutDetail implements IBasicFileSchema {
      *
      * @return byte[] updated record
      *
-     * @throws RecordException any conversion error
      */
     @Deprecated
     public byte[] setField(byte[] record, IFieldDetail field, Object value)
-    throws RecordException {
+    {
         return setField(record, field.getType(), field, value);
     }
 
@@ -646,11 +680,10 @@ public class LayoutDetail implements IBasicFileSchema {
      *
      * @return byte[] updated record
      *
-     * @throws RecordException any conversion error
      */
     @Deprecated
     public byte[] setField(byte[] record, int type, IFieldDetail field, Object value)
-    throws RecordException {
+    {
         if (field.isFixedFormat()) {
             record = TypeManager.getSystemTypeManager().getType(type)
 				.setField(record, field.getPos(), field, value);
@@ -661,8 +694,7 @@ public class LayoutDetail implements IBasicFileSchema {
         return record;
     }
 
-    public byte[] setCsvField(byte[] record, int type, IFieldDetail field, Object value)
-    throws RecordException {
+    public byte[] setCsvField(byte[] record, int type, IFieldDetail field, Object value) {
         
         String font = field.getFontName();
         ICsvLineParser parser = ParserManager.getInstance().get(field.getRecord().getRecordStyle());

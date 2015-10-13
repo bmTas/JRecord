@@ -4,8 +4,9 @@ import java.io.InputStream;
 
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Log.AbsSSLogger;
+import net.sf.JRecord.Option.IRecordPositionOption;
 
-public interface ICobolMultiCopybookIOBuilder extends ICobolIOBuilder {
+public interface ICobolMultiCopybookIOBuilder extends  ICobolIOBuilder {
 
 	/**
 	 * File Organization or File Structure (e.g. VB, Fixed Width Etc. Use Constants.IO_*
@@ -223,5 +224,18 @@ public interface ICobolMultiCopybookIOBuilder extends ICobolIOBuilder {
 	 */
 	public abstract ICobolMultiCopybookIOBuilder setRecordSelectionCurrentCopybook(	ExternalSelection recordSelection);
 
-	
+	/**
+	 * Set this as a position record (i.e. first or last record in the file)
+	 * 
+	 * @param recordName Name of Record to be updated 
+	 * @param positionOption position type; options are <ul>
+	 *     <li>Options.RP_FIRST_RECORD_IN_FILE
+	 *     <li>Options.RP_MIDDLE_RECORDS
+	 *     <li>Options.RP_LAST_RECORD_IN_FILE
+	 * </ul>
+	 * @return Builder for further updates
+	 */
+	public abstract ICobolMultiCopybookIOBuilder setRecordPositionCode(String recordName,
+			IRecordPositionOption positionOption);
+
 }

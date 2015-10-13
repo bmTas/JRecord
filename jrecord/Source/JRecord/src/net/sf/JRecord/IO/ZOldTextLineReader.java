@@ -19,7 +19,6 @@ import java.util.List;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.CsvParser.ICsvLineParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.CsvParser.ParserManager;
@@ -90,7 +89,7 @@ public class ZOldTextLineReader extends AbstractLineReader {
      * @see net.sf.JRecord.IO.AbstractLineReader#open(java.io.InputStream, net.sf.JRecord.Details.LayoutDetail)
      */
     public void open(InputStream inputStream, LayoutDetail layout)
-    throws IOException, RecordException {
+    throws IOException {
     	String font = "";
         inStream = inputStream;
         setLayout(layout);
@@ -121,7 +120,7 @@ public class ZOldTextLineReader extends AbstractLineReader {
      *
      * @throws IOException sny IO error that occurs
      */
-    protected void createLayout(BufferedReader pReader, InputStream inputStream, String font) throws IOException, RecordException {
+    protected void createLayout(BufferedReader pReader, InputStream inputStream, String font) throws IOException {
         LayoutDetail layout;
 
         RecordDetail rec = null;
@@ -259,7 +258,7 @@ public class ZOldTextLineReader extends AbstractLineReader {
     /**
      * @see net.sf.JRecord.IO.AbstractLineReader#read()
      */
-    public AbstractLine read()  throws IOException {
+    public AbstractLine readImplementation()  throws IOException {
         AbstractLine ret = null;
 
         if (reader == null) {

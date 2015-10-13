@@ -1,7 +1,6 @@
 package net.sf.JRecord.cgen.impl;
 
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.BaseFieldValue;
 import net.sf.JRecord.Details.IGetByteData;
 import net.sf.JRecord.Types.Type;
@@ -47,7 +46,7 @@ public class FieldValueCG extends BaseFieldValue {
 	 * @see net.sf.JRecord.Details.BaseFieldValue#set(java.lang.Object)
 	 */
 	@Override
-	public void set(Object value) throws RecordException {
+	public void set(Object value) {
 		dataSource.setData(type.setField(dataSource.getData(), fieldDetails.getPos(), fieldDetails, value));
 	}
 }

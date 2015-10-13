@@ -86,38 +86,37 @@ public interface AbstractFieldValue {
 	 * Set the fields value
 	 * @param value new value
 	 */
-	public void set(AbstractFieldValue value) throws RecordException;
+	public void set(AbstractFieldValue value);
 
 	/**
 	 * Set the fields value
 	 * @param value new value
 	 */
-	public void set(Object value) throws RecordException;
+	public void set(Object value);
 	
 	/**
 	 * Set the fields value
 	 * @param value new value
 	 */
-	public void set(long value) throws RecordException;
+	public void set(long value);
 	
 	/**
 	 * Set the fields value
 	 * @param value new value
 	 */
-	public void set(double value) throws RecordException;
+	public void set(double value);
 
 	/**
 	 * Set the fields value
 	 * @param value new value
 	 */
-	public void set(float value) throws RecordException;
+	public void set(float value);
 
 	/**
 	 * Set the field Value
 	 * @param value new value
-	 * @throws RecordException
 	 */
-	public void set(boolean value) throws RecordException;
+	public void set(boolean value);
 
 	/**
 	 * Get Field Definition

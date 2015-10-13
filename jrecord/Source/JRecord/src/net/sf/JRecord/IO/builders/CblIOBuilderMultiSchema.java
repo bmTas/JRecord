@@ -81,8 +81,7 @@ public class CblIOBuilderMultiSchema extends CblIOBuilderBase implements ICobolM
 	 * @see net.sf.JRecord.IO.builders.CblIOBuilderBase#getExternalRecordImpl()
 	 */
 	@Override
-	protected ExternalRecord getExternalRecordImpl() throws RecordException,
-			IOException { 
+	protected ExternalRecord getExternalRecordImpl() throws IOException { 
 		
 		if (copybooks.size() == 0) {
 			throw new RecordException("No copybooks have been specified");

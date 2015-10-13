@@ -52,7 +52,7 @@ public final class Conversion {
 			if (DEFAULT_CHARSET_DETAILS != null && DEFAULT_CHARSET_DETAILS.isEbcdic) {
 				defaultSingleByteCharacterset = DEFAULT_CHARSET_DETAILS.charset;
 				if (DEFAULT_CHARSET_DETAILS.isMultiByte) {
-				defaultSingleByteCharacterset = "CP037";
+					defaultSingleByteCharacterset = "CP037";
 				}
 			} else {
 				setDefaultSingleByteCharacterset("cp1252");
@@ -527,10 +527,8 @@ public final class Conversion {
 	 * @param val   new value
 	 * @param isPositive wether the field represents only positive integers
 	 *
-	 * @throws RecordException can through field to big
 	 */
-	public static void setLong(final byte[] record, int pos, int len, long val, boolean isPositive)
-	throws RecordException {
+	public static void setLong(final byte[] record, int pos, int len, long val, boolean isPositive) {
 		int i;
 		long b;
 
@@ -547,8 +545,7 @@ public final class Conversion {
 		}
 	}
 
-	public static void setBigInt(final byte[] record, int pos, int len, BigInteger val, boolean isPositive)
-	throws RecordException {
+	public static void setBigInt(final byte[] record, int pos, int len, BigInteger val, boolean isPositive) {
 		byte[] bytes = val.toByteArray();
 		int i;
 		byte sb = BYTE_NO_BIT_SET;
@@ -579,8 +576,7 @@ public final class Conversion {
 	}
 
 
-	public static void setBigIntLE(final byte[] record, int pos, int len, BigInteger val, boolean isPositive)
-	throws RecordException {
+	public static void setBigIntLE(final byte[] record, int pos, int len, BigInteger val, boolean isPositive) {
 		byte[] bytes = val.toByteArray();
 		int i;
 
@@ -620,13 +616,11 @@ public final class Conversion {
 	 * @param val value to move to the record
 	 * @param isPositive wethear the field represents only positive integers
 	 *
-	 * @throws RecordException error converting to long (ie 2 big for the field)
 	 */
 	public static void setLongLow2High(byte[] record,
 	        						   int pos, int len,
 	        						   long val,
-	        						   boolean isPositive)
-	throws RecordException {
+	        						   boolean isPositive) {
 		byte[] bytes = BigInteger.valueOf(val).toByteArray();
 		int i;
 
@@ -658,10 +652,8 @@ public final class Conversion {
 	 * @param val value to check
 	 * @param length length of the destination field
 	 *
-	 * @throws RecordException field to long error
 	 */
-	public static void checkLength(long val, int length, boolean isPositive)
-				throws RecordException {
+	public static void checkLength(long val, int length, boolean isPositive) {
 		long t = val;
 		int i;
 		for (i = 1; i < length; i++) {
@@ -755,7 +747,7 @@ public final class Conversion {
      */
     public static final boolean isInt(String s) {
         boolean ret = false;
-        String ss = s.trim();
+            String ss = s.trim();
         int len = ss.length();
         int firstIndex = 0;
 
@@ -764,7 +756,7 @@ public final class Conversion {
             if (first  == '+' || first == '-') {
                 if (len == 1) return false;
                 firstIndex++;
-            }   
+            }
             for (int i = firstIndex; i < len; i++) {
                 if (!Character.isDigit(ss.charAt(i)))
                     return false;
@@ -910,7 +902,7 @@ public final class Conversion {
 
 
 	public static final void setDefaultSingleByteCharacterset(
-			String defaultSingleByteCharacterset) {
+		String defaultSingleByteCharacterset) {
 
 		if (Charset.isSupported(defaultSingleByteCharacterset)
 		&& (! (new HoldEbcidicFlag(defaultSingleByteCharacterset)).isMultiByte)) {

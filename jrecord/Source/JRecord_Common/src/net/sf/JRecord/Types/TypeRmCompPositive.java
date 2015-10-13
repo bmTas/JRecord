@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Common.RecordException;
 
 public class TypeRmCompPositive extends TypeNum {
 
@@ -30,8 +29,7 @@ public class TypeRmCompPositive extends TypeNum {
 	
 	@Override
 	public byte[] setField(byte[] record, int position, IFieldDetail field,
-			Object value) throws RecordException {
-
+			Object value) {
 		
 		String val = toNumberString(value);
 			

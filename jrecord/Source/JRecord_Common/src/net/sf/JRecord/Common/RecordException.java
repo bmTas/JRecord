@@ -11,7 +11,7 @@ package net.sf.JRecord.Common;
  * @version 0.51
  */
 @SuppressWarnings("serial")
-public class RecordException extends Exception {
+public class RecordException extends RuntimeException {
 
 
 	/**

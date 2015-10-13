@@ -3,7 +3,6 @@ package net.sf.JRecord.IO.builders;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ICopybookLoaderStream;
 import net.sf.JRecord.External.ISetDropCopybookName;
@@ -34,7 +33,7 @@ public class CblIOBuilderSchemaStream extends CblIOBuilderBase {
 	 * @see net.sf.JRecord.IO.builders.CblIOBuilderBase#getExternalRecordImpl()
 	 */
 	@Override
-	protected ExternalRecord getExternalRecordImpl() throws RecordException, IOException {
+	protected ExternalRecord getExternalRecordImpl() throws IOException {
 		if (loader instanceof ISetDropCopybookName) {
 			((ISetDropCopybookName) loader).setDropCopybookFromFieldNames(super.dropCopybookNameFromFields);
 		}
