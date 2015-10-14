@@ -98,7 +98,8 @@ public class TstXmlLine extends TestCase {
     /**
      * Check the Line.getField function (Text Field)
      */
-    public void testGetField() throws Exception {
+    @SuppressWarnings("deprecation")
+	public void testGetField() throws Exception {
 
         assertEquals(" 1 GetField - Character Field " + getLineField( 0),
                 "asdf", getLineField( 0));
@@ -370,7 +371,8 @@ public class TstXmlLine extends TestCase {
      *
      * @throws RecordException any conversion error
      */
-    private void checkAssignment(String msg, int fldNum,  String val)
+    @SuppressWarnings("deprecation")
+	private void checkAssignment(String msg, int fldNum,  String val)
     					throws RecordException {
 
         String s;
@@ -471,7 +473,7 @@ public class TstXmlLine extends TestCase {
     private	XMLStreamWriter writer;
     private final AbstractLine getAsXml(AbstractLine pLine, String id) throws Exception {
 	   	XMLOutputFactory f ;
-	   	String fileName = TstConstants.SAMPLE_DIRECTORY + "TempXml" + id + ".xml";
+	   	String fileName = TstConstants.TEMP_DIRECTORY + "TempXml" + id + ".xml";
 
 	   	try {
 	   		f = XMLOutputFactory.newInstance();	

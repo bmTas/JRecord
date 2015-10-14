@@ -18,7 +18,7 @@ public class TestCobol2Csv02_2 {
 		String inputFileName = TestCobol2Csv02_2.class.getResource("DTAR1000_Store_file_std.bin").getFile();
 		String[] args= {
 				"-I", inputFileName, 
-				"-O", "G:\\Temp\\DTAR1000_Store_file_std_02.csv", 
+				"-O", ExampleConstants.TEMP_DIR + "DTAR1000_Store_file_std_02.csv", 
 				"-C", TestCobol2Csv02_2.class.getResource("DTAR1000.cbl").getFile(), 
 				"-Q", "\"",               /* Quote           */
 				"-FS", "Mainframe_VB",    /* File Structure  */

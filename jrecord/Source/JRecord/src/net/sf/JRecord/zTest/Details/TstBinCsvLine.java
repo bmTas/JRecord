@@ -6,6 +6,8 @@ import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.Line;
 import net.sf.JRecord.External.RecordEditorXmlLoader;
 import net.sf.JRecord.Log.TextLog;
+import net.sf.JRecord.zTest.Common.TstConstants;
+import net.sf.JRecord.zTest.copy.TstCopy;
 
 /**
  * This class Tests assigning values to a Binary CSV line
@@ -17,7 +19,7 @@ public class TstBinCsvLine extends TestCase {
 	
 	//private static final String TMP_DIRECTORY = TstConstants.TEMP_DIRECTORY;
 	
-	private String layoutFile = "F:/Work/JRecord/Versions/Version_0.80.8f/CopyBook/Xml/zzBinCsv.Xml";
+	private String layoutFile = TstConstants.RE_XML_DIRECTORY + "zzBinCsv.Xml";
 	private LayoutDetail layout = null;
 	
 	

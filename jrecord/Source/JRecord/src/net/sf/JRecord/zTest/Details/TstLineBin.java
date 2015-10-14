@@ -91,7 +91,8 @@ public class TstLineBin extends TestCase {
     /**
      * Check the Line.getField function (Text Field)
      */
-    public void testGetField() throws Exception {
+    @SuppressWarnings("deprecation")
+	public void testGetField() throws Exception {
 
         assertEquals(" 1 GetField - Character Field " + line.getField(0, 0 + xmlTotal),
                 "asdf", line.getField(0, 0));
@@ -445,7 +446,8 @@ public class TstLineBin extends TestCase {
      *
      * @throws RecordException any conversion error
      */
-    private void checkAssignment(String msg, int fldNum,  String val)
+    @SuppressWarnings("deprecation")
+	private void checkAssignment(String msg, int fldNum,  String val)
     					throws RecordException {
 
         String s;
@@ -465,7 +467,8 @@ public class TstLineBin extends TestCase {
      *
      * @throws RecordException any conversion error
      */
-    private void checkAssignmentHex(String msg, int fldNum,  String val, String hexVal)
+    @SuppressWarnings("deprecation")
+	private void checkAssignmentHex(String msg, int fldNum,  String val, String hexVal)
     					throws RecordException {
 
         String s;
@@ -612,7 +615,8 @@ public class TstLineBin extends TestCase {
      * @param value value to assign to the supplied field
      * @param msg error message to use if size error is not thrown
      */
-    private void checkSizeError(String msg, int fldNum, String value) {
+    @SuppressWarnings("deprecation")
+	private void checkSizeError(String msg, int fldNum, String value) {
 
         try {
             line.setField(0, fldNum, value);

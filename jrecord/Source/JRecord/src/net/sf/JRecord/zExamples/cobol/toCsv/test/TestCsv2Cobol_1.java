@@ -19,7 +19,7 @@ public class TestCsv2Cobol_1 {
 		String inputFileName1 = TestCsv2Cobol_1.class.getResource("DTAR020.csv").getFile();
 		String[] args1 = {
 				"-I", inputFileName1, 
-				"-O", "G:\\Temp\\o_DTAR020.bin", 
+				"-O", ExampleConstants.TEMP_DIR + "o_DTAR020.bin", 
 				"-C", TestCsv2Cobol_1.class.getResource("DTAR020.cbl").getFile(), 
 				"-Q", "\"",                /* Quote           */
 				"-FS", "Fixed_Length",     /* File Structure  */
@@ -31,7 +31,7 @@ public class TestCsv2Cobol_1 {
 		String inputFileName2 = TestCsv2Cobol_1.class.getResource("DTAR1000_Store_file_std_02.csv").getFile();
 		String[] args2= {
 				"-I", inputFileName2, 
-				"-O", "G:\\Temp\\o_DTAR1000_Store_file_std_02.bin", 
+				"-O", ExampleConstants.TEMP_DIR + "o_DTAR1000_Store_file_std_02.bin", 
 				"-C", TestCobol2Csv02_2.class.getResource("DTAR1000.cbl").getFile(), 
 				"-Q", "\"",               /* Quote           */
 				"-FS", "Mainframe_VB",    /* File Structure  */

@@ -8,6 +8,7 @@ import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.IO.CobolIoProvider;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
+import net.sf.JRecord.zTest.Common.TstConstants;
 
 public class WriteSampleFile {
 
@@ -16,7 +17,7 @@ public class WriteSampleFile {
 		ICobolIOBuilder ioBuilder = CobolIoProvider.getInstance()
 				.newIOBuilder(copybookFileName, ICopybookDialects.FMT_MAINFRAME)
 					.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE);
-		AbstractLineWriter w = ioBuilder.newWriter("G:\\Temp\\OccursDependingOn.txt");
+		AbstractLineWriter w = ioBuilder.newWriter(TstConstants.TEMP_DIRECTORY + "OccursDependingOn.txt");
 		try {
 			for (int i = 0; i < 16; i++) {
 				for (int j = 0; j < 12; j++) {

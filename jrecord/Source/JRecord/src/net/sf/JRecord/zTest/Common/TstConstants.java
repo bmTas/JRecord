@@ -6,6 +6,8 @@
  */
 package net.sf.JRecord.zTest.Common;
 
+import java.io.File;
+
 /**
  * Constants for testing
  *
@@ -38,12 +40,27 @@ public final class TstConstants {
 	};
 
     public static final String BM_DIRECTORY     = "/home/knoppix/";
-    public static final String RE_DIRECTORY     = "G:\\Users\\Bruce01\\.JRecord\\Params\\";
-    public static final String TEMP_DIRECTORY   = "G:\\Temp\\RecordEditorTest\\";
+    public static final String RE_DIRECTORY  ;//   = "G:\\Users\\Bruce01\\.JRecord\\Params\\"; 
+    public static final String TEMP_DIRECTORY;//   = "G:\\Temp\\RecordEditorTest\\";   F:/
+    static {
+    	String thisClass = "TstConstants.class";
+    	String file = TstConstants.class.getResource( thisClass).getFile();
+    	RE_DIRECTORY = file.substring(0, file.length() - thisClass.length());
+		
+		//
+		String defaultTempDirectory = "G:\\Temp\\JRecordTest\\";
+		if (new File(defaultTempDirectory) .exists() ) {
+			TEMP_DIRECTORY = defaultTempDirectory;
+		} else {
+			TEMP_DIRECTORY = System.getProperty("java.io.tmpdir");
+		}
+		
+		//System.out.println(RE_DIRECTORY + " " + TEMP_DIRECTORY + " " + System.getProperty("java.io.tmpdir"));
+    }
     public static final int    DB_INDEX         = 0;
     public static final String SAMPLE_DIRECTORY = RE_DIRECTORY + "SampleFiles/";
     public static final String COBOL_DIRECTORY  = RE_DIRECTORY + "CopyBook/Cobol/";
-    public static final String COBOL_DIRECTORY2 = "G:\\RecordEditor\\CobolTestData\\";
+    public static final String COBOL_DIRECTORY2 = RE_DIRECTORY + "CobolTestData/"; //"G:\\RecordEditor\\CobolTestData\\";
     public static final String RE_XML_DIRECTORY = RE_DIRECTORY + "CopyBook/Xml/";
 
     public static final String CSV_DIRECTORY        = RE_DIRECTORY + "CopyBook/csv/";
@@ -53,11 +70,15 @@ public final class TstConstants {
 
 //    public static final String COBOL_TEST_DIR = BM_DIRECTORY + "open-cobol-1.0/CobolSrc/";
 
-    public static final String COBOL_TEST_DIR = "G:\\RecordEditor\\CobolTestData\\";
-    /**
-     * tst constants
-     */
-    private TstConstants() {
-        super();
-    }
+    public static final String COBOL_TEST_DIR = COBOL_DIRECTORY2; //"G:\\RecordEditor\\CobolTestData\\";
+//    /**
+//     * tst constants
+//     */
+//    private TstConstants() {
+//        super();
+//    }
+//    
+//    public static void main(String[] a) {
+//    	
+//    }
 }

@@ -3,17 +3,14 @@ package net.sf.JRecord.zTest.Types1;
 import net.sf.JRecord.Common.FieldDetail;
 
 public class TestDataConstants {
-	public static final String TEST_DATA_DIRECTORY = "F:/Work/EclipseWorkspaces/workspace/JRecord/src/net/sf/JRecord/zTest/Types1/";
-	
-
 
 	public static String getTestDataFileName(String charset) {
 		String s = charset;
 		if (s.length() == 0) {
 			s = "Std";
 		}
-		
-		return TEST_DATA_DIRECTORY + "TestData_" + s +".txt";
+
+		return TestDataConstants.class.getResource( "TestData_" + s +".txt").getFile();
 	}
 	
 	
