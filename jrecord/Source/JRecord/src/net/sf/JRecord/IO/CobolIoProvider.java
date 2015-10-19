@@ -189,7 +189,8 @@ public class CobolIoProvider {
                         splitOption, 0, font,
                         copybookFormat,
                         numericType, 0, null
-                ));
+                ).setFileStructure(fileStructure)
+        );
 
 //       	if (provider == null) {
 //       		provider = LineIOProvider.getInstance().getLineProvider(fileStructure, font);

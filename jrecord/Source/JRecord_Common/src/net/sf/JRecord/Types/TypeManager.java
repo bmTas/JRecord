@@ -116,8 +116,8 @@ public class TypeManager {
             types[Type.ftPostiveBinaryInt]		= new TypeBinLittleEndian(true);
             types[Type.ftBinaryInt]				= new TypeBinLittleEndian(false);
             types[Type.ftBinaryBigEndian]		= new TypeBinBigEndian(false);
-            types[Type.ftBinaryBigEndianPositive]= new TypeBinBigEndian(true, false);
-            types[Type.ftPositiveBinaryBigEndian]= new TypeBinBigEndian(true);
+            types[Type.ftBinaryBigEndianPositive]= new TypeBinBigEndian(true, false); // Signed integer but only positive numbers allowed for 2 bytes 0->32k
+            types[Type.ftPositiveBinaryBigEndian]= new TypeBinBigEndian(true);        // C uint - unsigned integer for 2 bytes 0->64k
 
             types[Type.ftRmComp]				= new TypeRmComp();
             types[Type.ftRmCompPositive]		= new TypeRmCompPositive();

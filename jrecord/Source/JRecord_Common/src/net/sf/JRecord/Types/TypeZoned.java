@@ -149,8 +149,7 @@ public class TypeZoned extends TypeNum {
     
     
     @Override
-	public String formatValueForRecord(IFieldDetail field, String value)
-			throws RecordException {
+	public String formatValueForRecord(IFieldDetail field, String value) {
         String val = checkValue(field, toNumberString(value));
 	    String charset = field.getFontName();
 	    if (Conversion.isSingleByteEbcidic(charset)) {
@@ -179,7 +178,7 @@ public class TypeZoned extends TypeNum {
 	private void byteLevelAssign(byte[] record,
             final int position,
 			final IFieldDetail field,
-			String val) throws RecordException {
+			String val) {
 		byte andByte = ZONED_POSITIVE_NYBLE_OR;
 		int len = field.getLen();
 		int endPos = len + position - 2;

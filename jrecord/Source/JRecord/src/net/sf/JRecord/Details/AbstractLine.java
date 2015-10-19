@@ -9,7 +9,6 @@ package net.sf.JRecord.Details;
 import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.AbstractIndexedLine;
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Common.RecordException;
 
 /**
  * Interface to represent one Line in a file. Used through out JRecord / RecordEditor

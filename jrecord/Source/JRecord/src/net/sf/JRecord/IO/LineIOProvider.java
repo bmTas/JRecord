@@ -168,8 +168,7 @@ public class LineIOProvider implements AbstractManager {
      * @return requested reader;
      */
     public AbstractLineReader getLineReader(IBasicFileSchema fs) {
-    	int fileStructure = fs.getFileStructure();
-		return getLineReader(fs, getLineProvider(fileStructure, fs.getFontName()));
+		return getLineReader(fs, getLineProvider(fs.getFileStructure(), fs.getFontName()));
     }
     
     /**

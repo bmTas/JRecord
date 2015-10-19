@@ -23,7 +23,6 @@ import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.IO.LineIOProvider;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Option.IOptionType;
 import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.def.IO.builders.ICobolMultiCopybookIOBuilder;
 import net.sf.JRecord.def.IO.builders.ICsvIOBuilder;
