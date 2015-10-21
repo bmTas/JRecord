@@ -69,6 +69,7 @@ public class RecordEditorCSVWriter implements CopybookWriter {
 	/**
 	 * @see net.sf.JRecord.External.CopybookWriter#writeCopyBook(java.io.OutputStream, net.sf.JRecord.External.ExternalRecord, net.sf.JRecord.Log.AbsSSLogger)
 	 */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void writeCopyBook(OutputStream outStream, ExternalRecord copybook,
 			AbsSSLogger log) throws Exception {

@@ -80,6 +80,7 @@ public class DbCsvCopybookLoader extends BaseCopybookLoader {
 	 * @param rec copybook
 	 * @param copyBookFile copybook file
 	 */
+	@SuppressWarnings("deprecation")
 	private void insertFields(ExternalRecord parentRec, String copyBookFile,
 			int dbIdx, String font) {
 		String s, name, typeStr, system, lastSystem, lastCopybookName, CopybookName;

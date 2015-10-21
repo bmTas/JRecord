@@ -22,7 +22,7 @@ public class BasicFileSchema implements IBasicFileSchema {
 	
 	
 	/**
-	 * Basic Csv schema
+	 * Basic Csv schema, used for Testing JRecord
 	 * 
 	 * @param fileStructure file structure (or organisation)
 	 * @param binary wether it is a "Binary Csv" i.e. has a separator like 0x00
@@ -40,11 +40,17 @@ public class BasicFileSchema implements IBasicFileSchema {
 		return new BasicFileSchema(fileStructure, Integer.MAX_VALUE, layoutType, charset, delimiter, quote);
 	}
 	
+	/**
+	 * Create a basic FileSchema ((record-length=80, font="") - basically used in Testing JRecord)
+	 * @param fileStructure File-Structure (or File-Organization) of the schema
+	 * @return requested basic schema
+	 */
 	public static BasicFileSchema newFixedSchema(int fileStructure) {
 		return newFixedSchema(fileStructure, true, 80, "");
 	}
+	
 	/**
-	 * Definje basic fixed width schema
+	 * Define basic fixed width schema
 	 * 
 	 * @param fileStructure  file structure (or organisation)
 	 * @param binary is it a binary file ???
