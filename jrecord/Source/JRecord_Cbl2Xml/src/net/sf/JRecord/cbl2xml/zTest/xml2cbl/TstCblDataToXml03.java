@@ -22,17 +22,19 @@ import net.sf.JRecord.Option.Options;
 import net.sf.JRecord.cbl2xml.def.ICobol2Xml;
 import net.sf.JRecord.cbl2xml.impl.Cobol2GroupXml;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
 public class TstCblDataToXml03 {
 
 	private String[][] files ={
-			{"amsPoDownload.cbl",  "Ams_PODownload_20041231.txt",  "amsPoDownload.xml", "1", "01"},
-			{"hdt.cbl",  "hdt.txt",  "hdt.xml", "2", "01"},
-			{"amsPoDownload05.cbl",  "Ams_PODownload_20041231.txt",  "amsPoDownload.xml", "1", "HR"},
-			{"hdt05.cbl",  "hdt.txt",  "hdt.xml", "2", "HR"},
+			{"ArrayDependingCopybook.cbl",  "ArrayDependingFile.txt",  "ArrayDependingFile.xml", "3", "N"},
 			{"ArrayCopybook.cbl",  "ArrayFile.txt",  "ArrayFile.xml", "3", "N"},
+			{"hdt.cbl",  "hdt.txt",  "hdt.xml", "2", "01"},
+			{"hdt05.cbl",  "hdt.txt",  "hdt.xml", "2", "HR"},
+			{"amsPoDownload.cbl",  "Ams_PODownload_20041231.txt",  "amsPoDownload.xml", "1", "01"},
+			{"amsPoDownload05.cbl",  "Ams_PODownload_20041231.txt",  "amsPoDownload.xml", "1", "HR"},
 	};
 
 
@@ -155,13 +157,13 @@ public class TstCblDataToXml03 {
 	@Test
 	public void testXml2Data() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
 		byte[] xml2data;
-		byte[][] expected = new byte[4][];
+		byte[][] expected = new byte[files.length][];
 		String[] d = files[0];
 		
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < files.length; i++) {
 			expected[i] = readFile(Code.getFullName(files[i][1]));
 		}
-		for (int i = 0; i < 1; i++) { // xml2data only works when there are no arrays !!!
+		for (int i = 0; i < files.length - 2; i++) { // xml2data only works when there are no arrays !!!
 			try {
 				d = files[i];
 				System.out.println("->> " + d[0] + " " + d[2]);
@@ -169,12 +171,19 @@ public class TstCblDataToXml03 {
 						Code.getFullName("xml/" + d[2]), 
 						Code.getFullName("cobol/" + d[0]),
 						d[4]);
-				//System.out.println(xml2data);
-				assertArrayEquals("idx=" + 1, expected[i%4], xml2data);
+				System.out.println("=== " + expected[i].length + " " + xml2data.length);
+				if (expected[i].length == xml2data.length - 2) {
+					for (int k = 0; k < expected[i].length; k++) {
+						Assert.assertEquals("idx=" + i + ", " + k, expected[i][k], xml2data[k] );
+					}
+				} else {
+					assertArrayEquals("idx=" + i, expected[i], xml2data);
+				}
 			} catch (Exception e) {
 				System.err.println();
 				System.err.println("   --> " + i + " " + d[0]  + " " + d[1] + " " + d[2]);
 				System.err.println();
+				throw new RuntimeException(e);
 			}
 		}
 	}

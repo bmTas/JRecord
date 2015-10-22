@@ -15,6 +15,7 @@ public class ArrayFieldDefinition implements IArray1Dimension, IArray2Dimension,
 	private final IFieldDetail firstField;
 	private final RecordDetail record;
 	private final DependingOnDtls dependingOnDtls;
+	private DependingOnDtls lastDependingOnDtls;
 	
 	public ArrayFieldDefinition(RecordDetail rec, int firstArrayLength, IFieldDetail... fd) {
 		this.record = rec;
@@ -81,9 +82,36 @@ public class ArrayFieldDefinition implements IArray1Dimension, IArray2Dimension,
 				b.toString(), firstField.getType(), 
 				p, firstField.getLen(), firstField.getDecimal(), firstField.getFontName());
 		f.setRecord(record);
-		f.setDependingOnDtls(dependingOnDtls);
+		f.setDependingOnDtls(getDependingOnDtls(indexs));
 		
 		return f;
+	}
+	
+	private DependingOnDtls getDependingOnDtls(int[] indexs) {
+		if (dependingOnDtls == null || cmp(dependingOnDtls, indexs)) {
+			return dependingOnDtls;
+		} else if (lastDependingOnDtls == null || (! cmp(lastDependingOnDtls, indexs))) {
+			lastDependingOnDtls = bld(dependingOnDtls, indexs.length - 1, indexs);
+		} 
+		return lastDependingOnDtls;
+	}
+	
+	private DependingOnDtls bld(DependingOnDtls d, int lvl, int[] indexs) {
+		if (lvl < 0 || d == null) { 
+			return null;
+		} 
+		
+		return new DependingOnDtls(d.dependingOn, indexs[lvl], bld(d, lvl-1, indexs));
+	}
+	
+	private boolean cmp(DependingOnDtls d, int[] indexs) {
+		for (int i = indexs.length- 1; i >= 0; i--) {
+			if (d.index != indexs[i]) {
+				return false;
+			}
+			d = d.parent;
+		}
+		return true;
 	}
 	
 	/**

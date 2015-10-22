@@ -1060,6 +1060,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 			if (dependingOn.size() == 1 
 			&& (dependingOn.get(0).getPosition() + dependingOn.get(0).getOccursMaxLength() -1 == fields[fields.length - 1].getEnd())) {
 				dependingOnLevel = DO_SIMPLE_NO_COMPRESSION;
+				dependingOn.get(0).updateField(this);
 			} else {
 				int firstPos = Integer.MAX_VALUE; 
 				this.dependingOnLevel = DO_SIMPLE;
