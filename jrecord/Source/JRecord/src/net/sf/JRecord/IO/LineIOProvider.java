@@ -62,7 +62,7 @@ public class LineIOProvider implements AbstractManager {
     private static LineIOProvider ioProvider = null;
     
     
-    private LineProvider provider;
+    private LineProvider provider = DEFAULT_PROVIDER;
     private XmlLineProvider xmlProvider = null;
 
     /**

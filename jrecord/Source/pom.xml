@@ -8,12 +8,7 @@
 
     <properties>
         <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
-        <jrecord.version>0.80.8g</jrecord.version>
-        <jrecord.dir.base>JRecord</jrecord.dir.base>
-        <jrecord.dir.codegen>JRecord_CodeGen</jrecord.dir.codegen>
-        <jrecord.dir.common>JRecord_Common</jrecord.dir.common>
-        <jrecord.dir.iobuilder_examples>JRecord_IO_Builder_Examples</jrecord.dir.iobuilder_examples>
-        <jrecord.dir.cbl2xml>JRecord_Cbl2Xml</jrecord.dir.cbl2xml>
+        <jrecord.version>${project.version}</jrecord.version>
     </properties>
 
     <build>
@@ -55,11 +50,11 @@
     </dependencies>
 
     <modules>
-        <module>${jrecord.dir.common}</module>
-        <module>${jrecord.dir.base}</module>
-        <module>${jrecord.dir.codegen}</module>
-        <module>${jrecord.dir.iobuilder_examples}</module>
-        <module>${jrecord.dir.cbl2xml}</module>
+        <module>JRecord_Common</module>
+        <module>JRecord</module>
+        <module>JRecord_CodeGen</module>
+        <module>JRecord_IO_Builder_Examples</module>
+        <module>JRecord_Cbl2Xml</module>
     </modules>
 
 </project>

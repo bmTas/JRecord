@@ -9,7 +9,6 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
-import net.sf.JRecord.def.IO.builders.ICobolMultiCopybookIOBuilder;
 
 public class TstMultiCopybookRead11 extends TestCase {
 

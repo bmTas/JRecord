@@ -52,7 +52,7 @@ public final class TstConstants {
 		if (new File(defaultTempDirectory) .exists() ) {
 			TEMP_DIRECTORY = defaultTempDirectory;
 		} else {
-			TEMP_DIRECTORY = System.getProperty("java.io.tmpdir");
+			TEMP_DIRECTORY = System.getProperty("java.io.tmpdir") + File.separator;
 		}
 		
 		//System.out.println(RE_DIRECTORY + " " + TEMP_DIRECTORY + " " + System.getProperty("java.io.tmpdir"));

@@ -4,7 +4,7 @@
     <parent>
         <groupId>net.sf</groupId>
         <artifactId>jrecord</artifactId>
-        <version>${jrecord.version}</version>
+        <version>0.80.8g</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>jrecord-cbl2xml</artifactId>

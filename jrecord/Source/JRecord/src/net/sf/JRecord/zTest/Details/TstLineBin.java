@@ -141,12 +141,14 @@ public class TstLineBin extends TestCase {
      * check Line.getFieldText
      */
     public void testGetFieldText() {
-
+    	//"436857cf"
+    	byte[] b = {0x43, 0x68, 0x57, (byte) 0xcf};
         assertEquals("GetFieldText - Character Field ", "asdf", line.getFieldText(0, 0));
         assertEquals("GetFieldText - Character Field ", "    qwerty", line.getFieldText(0, 1));
 
  //       assertEquals("GetFieldText - 4 >> ", "ChWï¿½", line.getFieldText(0, 4));
-        assertEquals("GetFieldText - 4 >> ", "ChWÏ", line.getFieldText(0, 4));
+ //       assertEquals("GetFieldText - 4 >> ", "ChWÏ", line.getFieldText(0, 4));
+        assertEquals("GetFieldText - 4 >> ", new String(b), line.getFieldText(0, 4));
         assertEquals("GetFieldText - 5 >> ", "3456", line.getFieldText(0, 5));
         assertEquals("GetFieldText - 6 >> ", "     123", line.getFieldText(0, 6));
     }

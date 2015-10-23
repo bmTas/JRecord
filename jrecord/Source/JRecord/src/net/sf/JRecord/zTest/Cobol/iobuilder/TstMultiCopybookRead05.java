@@ -9,6 +9,7 @@ import java.io.IOException;
 import junit.framework.TestCase;
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.Numeric.ICopybookDialects;
@@ -55,7 +56,8 @@ public class TstMultiCopybookRead05 extends TestCase {
 				.newMultiCopybookIOBuilder("MultiRecordTest")
 					.setDialect(ICopybookDialects.FMT_FUJITSU)
  					.setFileOrganization(Constants.IO_CONTINOUS_NO_LINE_MARKER)
- 					.addCopyBook(new ByteArrayInputStream(CPY1_BYTES), "Record-A")
+     				.setFont(Conversion.DEFAULT_ASCII_CHARSET)
+					.addCopyBook(new ByteArrayInputStream(CPY1_BYTES), "Record-A")
  						.setRecordSelectionCurrentCopybook(
  								newFieldSelection(TstMultiCopybookCommon.RECORD_TYPE, TstMultiCopybookCommon.REC_A_ID))
  					.addCopyBook(new ByteArrayInputStream(CPY2_BYTES), "MultiRecord")

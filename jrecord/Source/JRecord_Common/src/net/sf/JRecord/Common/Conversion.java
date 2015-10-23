@@ -32,6 +32,7 @@ public final class Conversion {
 	private static boolean alwaysUseDefaultSingByteCharset = false;
 
 	private static HoldEbcidicFlag holdEbcidicFlag = DEFAULT_CHARSET_DETAILS;
+	public static String DEFAULT_ASCII_CHARSET ;
 	public static final boolean IS_DEFAULT_CHARSET_SINGLE_BYTE_EBCIDIC = DEFAULT_CHARSET_DETAILS.isSingleByteEbcidic;// isSingleByteEbcidicI("");
     private static final String VALUE_IS_TO_BIG_FOR_FIELD = "Value is to big for field {0} > {1} {2} ~ {3} {4}";
 	private static final byte BYTE_NO_BIT_SET   =  0;
@@ -50,11 +51,17 @@ public final class Conversion {
 	static {
 		try {
 			if (DEFAULT_CHARSET_DETAILS != null && DEFAULT_CHARSET_DETAILS.isEbcdic) {
+				DEFAULT_ASCII_CHARSET = "cp1252";
 				defaultSingleByteCharacterset = DEFAULT_CHARSET_DETAILS.charset;
 				if (DEFAULT_CHARSET_DETAILS.isMultiByte) {
 					defaultSingleByteCharacterset = "CP037";
 				}
 			} else {
+				if (DEFAULT_CHARSET_DETAILS == null || DEFAULT_CHARSET_DETAILS.isMultiByte) {
+					DEFAULT_ASCII_CHARSET = "cp1252";
+				} else {
+					DEFAULT_ASCII_CHARSET = "";
+				}
 				setDefaultSingleByteCharacterset("cp1252");
 			}
 		} catch (Exception e) {

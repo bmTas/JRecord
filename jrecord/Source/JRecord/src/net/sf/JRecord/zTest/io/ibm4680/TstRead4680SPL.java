@@ -1,5 +1,6 @@
 package net.sf.JRecord.zTest.io.ibm4680;
 
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -30,7 +31,7 @@ public class TstRead4680SPL extends TestCase {
 	private void tstRead(String filename, int expected) throws RecordException, Exception {
 		String schemaFile = this.getClass().getResource("SPL.Xml").getFile();
 		LayoutDetail schema = (new RecordEditorXmlLoader())
-									.loadCopyBook(schemaFile, 0, 0, "", 0, 0, null)
+									.loadCopyBook(schemaFile, 0, 0, Conversion.DEFAULT_ASCII_CHARSET, 0, 0, null)
 									.asLayoutDetail();
 		
 		//= RecordEditorXmlLoader.getExternalRecord(schemaXml, "Schema").asLayoutDetail();

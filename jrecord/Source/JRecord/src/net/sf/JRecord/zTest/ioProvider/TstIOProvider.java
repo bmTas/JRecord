@@ -12,6 +12,7 @@ import net.sf.JRecord.ByteIO.VbDumpByteReader;
 import net.sf.JRecord.ByteIO.VbDumpByteWriter;
 import net.sf.JRecord.Common.BasicFileSchema;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Details.DefaultLineProvider;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
@@ -74,7 +75,7 @@ public class TstIOProvider extends TestCase {
 		LineIOProvider iop = LineIOProvider.getInstance();
 		
 		for (RWDetails rd : READER_WRAPPER_DETAILS2) {
-			check("2: ", rd, iop.getLineReader(BasicFileSchema.newFixedSchema(rd.fileOrg, false, 121, "")));
+			check("2: ", rd, iop.getLineReader(BasicFileSchema.newFixedSchema(rd.fileOrg, false, 121, Conversion.getDefaultSingleByteCharacterset())));
 			
 			check("3: ", rd, iop.getLineReader(BasicFileSchema.newFixedSchema(rd.fileOrg, true, 121, "cp037")));
 

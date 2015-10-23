@@ -3,6 +3,7 @@ package net.sf.JRecord.zTest.Cobol.iobuilder;
 import junit.framework.TestCase;
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.Numeric.ICopybookDialects;
@@ -49,6 +50,7 @@ public class TstMultiCopybookRead06 extends TestCase {
     				.newMultiCopybookIOBuilder("MultiRecordTest")
     					.setDialect(ICopybookDialects.FMT_FUJITSU)
      					.setFileOrganization(Constants.IO_CONTINOUS_NO_LINE_MARKER)
+    					.setFont(Conversion.DEFAULT_ASCII_CHARSET)
      					.addCopyBook(copyFileName1)
      						.setRecordSelectionCurrentCopybook(
      								newFieldSelection(TstMultiCopybookCommon.RECORD_TYPE, TstMultiCopybookCommon.REC_A_ID))
