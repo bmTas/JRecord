@@ -8,14 +8,14 @@ import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Numeric.ICopybookDialects;
-import net.sf.JRecord.cbl2xml.zTest.xml2cbl.Code;
+import net.sf.JRecord.cbl2xml.zTest.xml2cbl.Cb2XmlCode;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
 public class CreateArrayFile {
 
 	public CreateArrayFile() throws IOException {
 		ICobolIOBuilder ioBldr = JRecordInterface1.COBOL
-						.newIOBuilder(Code.getFullName("cobol/ArrayCopybook.cbl"))
+						.newIOBuilder(Cb2XmlCode.getFullName("cobol/ArrayCopybook.cbl"))
 								.setDialect(ICopybookDialects.FMT_FUJITSU)
 								.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE)
 						;

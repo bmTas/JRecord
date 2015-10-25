@@ -8,18 +8,19 @@ import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Numeric.ICopybookDialects;
-import net.sf.JRecord.cbl2xml.zTest.xml2cbl.Code;
+import net.sf.JRecord.cbl2xml.zTest.xml2cbl.Cb2XmlCode;
+import net.sf.JRecord.cbl2xml.zTest.xml2cbl.TstXmlConstants;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
 public class CreateArrayDependFile {
 
 	public CreateArrayDependFile() throws IOException {
 		ICobolIOBuilder ioBldr = JRecordInterface1.COBOL
-						.newIOBuilder(Code.getFullName("cobol/ArrayDependingCopybook.cbl"))
+						.newIOBuilder(Cb2XmlCode.getFullName("cobol/ArrayDependingCopybook.cbl"))
 								.setDialect(ICopybookDialects.FMT_FUJITSU)
 								.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE)
 						;
-		BufferedWriter w = new BufferedWriter( new FileWriter("G:\\temp\\ArrayDependingFile.txt"));
+		BufferedWriter w = new BufferedWriter( new FileWriter(TstXmlConstants.TEMP_DIRECTORY + "ArrayDependingFile.txt"));
 		
 		for (int i = 0; i < 20; i++) {
 			AbstractLine l = ioBldr.newLine();

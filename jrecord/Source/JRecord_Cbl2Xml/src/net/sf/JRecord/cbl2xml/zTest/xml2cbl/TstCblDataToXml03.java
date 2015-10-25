@@ -68,8 +68,8 @@ public class TstCblDataToXml03 {
 		String xmlDataName;
 		
 		System.out.println("Checking: " + d[0]);
-		copybookName = Code.getFullName("cobol/" + d[0]);
-		dataName = Code.getFullName(d[1]);
+		copybookName = Cb2XmlCode.getFullName("cobol/" + d[0]);
+		dataName = Cb2XmlCode.getFullName(d[1]);
 
 		byte[] doc;
 		if ("1".equals(d[3])) {
@@ -84,8 +84,8 @@ public class TstCblDataToXml03 {
 		System.out.println();
 		System.out.println(new String(doc));
 
-		xmlDataName = Code.getFullName("xml/" + d[2]);
-		Code.compare("File: " + copybookName,  xmlDataName, doc);
+		xmlDataName = Cb2XmlCode.getFullName("xml/" + d[2]);
+		Cb2XmlCode.compare("File: " + copybookName,  xmlDataName, doc);
 	} 
 	
 	private static byte[] data2xml1(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId) 
@@ -161,15 +161,15 @@ public class TstCblDataToXml03 {
 		String[] d = files[0];
 		
 		for (int i = 0; i < files.length; i++) {
-			expected[i] = readFile(Code.getFullName(files[i][1]));
+			expected[i] = readFile(Cb2XmlCode.getFullName(files[i][1]));
 		}
 		for (int i = 0; i < files.length - 2; i++) { // xml2data only works when there are no arrays !!!
 			try {
 				d = files[i];
 				System.out.println("->> " + d[0] + " " + d[2]);
 				xml2data = xml2data1(
-						Code.getFullName("xml/" + d[2]), 
-						Code.getFullName("cobol/" + d[0]),
+						Cb2XmlCode.getFullName("xml/" + d[2]), 
+						Cb2XmlCode.getFullName("cobol/" + d[0]),
 						d[4]);
 				System.out.println("=== " + expected[i].length + " " + xml2data.length);
 				if (expected[i].length == xml2data.length - 2) {
@@ -204,7 +204,6 @@ public class TstCblDataToXml03 {
 //					      .setRecordSelection("Location-Record", newFieldSelection("Record-Type","S1"))
 //					  .xml2Cobol(new FileInputStream(dataFileName), os);
 		return os.toByteArray();
-
 	}
 	
 

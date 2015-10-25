@@ -66,8 +66,8 @@ public class TstCblDataToXml02 {
 		String dataName;
 		String xmlDataName;
 		
-		copybookName = Code.getFullName("cobol/" + d[0]);
-		dataName = Code.getFullName(d[1]);
+		copybookName = Cb2XmlCode.getFullName("cobol/" + d[0]);
+		dataName = Cb2XmlCode.getFullName(d[1]);
 		
 		byte[] doc = data2xml(dataName, copybookName, "Y".equalsIgnoreCase(d[3]),  "V".equalsIgnoreCase(d[4]));
 		
@@ -77,8 +77,8 @@ public class TstCblDataToXml02 {
 		System.out.println();
 		System.out.println(new String(doc));
 		
-		xmlDataName = Code.getFullName("xml/" + d[2]);
-		Code.compare("File: " + copybookName,  xmlDataName, doc);
+		xmlDataName = Cb2XmlCode.getFullName("xml/" + d[2]);
+		Cb2XmlCode.compare("File: " + copybookName,  xmlDataName, doc);
 	} 
 	
 	private static byte[] data2xml(String dataFileName, String copybookFileName, boolean dropCopybookName, boolean vb) 
@@ -109,15 +109,15 @@ public class TstCblDataToXml02 {
 		String[] d = files[0];
 		
 		for (int i = 0; i < 4; i++) {
-			expected[i] = readFile(Code.getFullName(files[i][1]));
+			expected[i] = readFile(Cb2XmlCode.getFullName(files[i][1]));
 		}
 		for (int i = 0; i < files.length; i++) { // xml2data only works when there are no arrays !!!
 			try {
 				d = files[i];
 				System.out.println("->> " + d[0] + " " + d[2]);
 				xml2data = xml2data(
-						Code.getFullName("xml/" + d[2]), 
-						Code.getFullName("cobol/" + d[0]), 
+						Cb2XmlCode.getFullName("xml/" + d[2]), 
+						Cb2XmlCode.getFullName("cobol/" + d[0]), 
 						"Y".equalsIgnoreCase(d[3]),  "V".equalsIgnoreCase(d[4]));
 				//System.out.println(xml2data);
 				assertArrayEquals("idx=" + 1, expected[i%4], xml2data);

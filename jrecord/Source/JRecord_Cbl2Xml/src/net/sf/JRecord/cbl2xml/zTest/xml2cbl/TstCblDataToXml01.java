@@ -38,8 +38,8 @@ public class TstCblDataToXml01 {
 	public void testData2Xml() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
 		String copybookName, dataName, xmlDataName;
 		for (String[] d : files) {
-			copybookName = Code.getFullName("xmlCopybook/" + d[0]);
-			dataName = Code.getFullName(d[1]);
+			copybookName = Cb2XmlCode.getFullName("xmlCopybook/" + d[0]);
+			dataName = Cb2XmlCode.getFullName(d[1]);
 			
 			byte[] doc = data2xml(dataName, copybookName);
 			
@@ -48,8 +48,8 @@ public class TstCblDataToXml01 {
 			System.out.println("Copybook: " + d[0] + " " + d[2]);
 			System.out.println();
 			
-			xmlDataName = Code.getFullName("xml/" + d[2]);
-			Code.compare("File: " + copybookName,  xmlDataName, doc);
+			xmlDataName = Cb2XmlCode.getFullName("xml/" + d[2]);
+			Cb2XmlCode.compare("File: " + copybookName,  xmlDataName, doc);
 		}
 	} 
 
@@ -61,7 +61,7 @@ public class TstCblDataToXml01 {
 		for (int i = 0; i < files.length - 1; i++) { // xml2data only works when there are no arrays !!!
 			String[] d = files[i];
 			System.out.println("->> " + d[0]);
-			xml2data = xml2data(Code.getFullName("xml/" + d[2]), Code.getFullName("xmlCopybook/" + d[0]));
+			xml2data = xml2data(Cb2XmlCode.getFullName("xml/" + d[2]), Cb2XmlCode.getFullName("xmlCopybook/" + d[0]));
 			//System.out.println(xml2data);
 			assertEquals(d[0] + " " +  i, expected, xml2data);
 		}
@@ -93,6 +93,6 @@ public class TstCblDataToXml01 {
 	}
 	
 	private static String loadLocationFile() throws IOException {
-		return Code.loadFile(Code.getFullName("compare/" + LOC_DOWNLOAD_TXT), "\r\n", true);
+		return Cb2XmlCode.loadFile(Cb2XmlCode.getFullName("compare/" + LOC_DOWNLOAD_TXT), "\r\n", true);
 	}
 }
