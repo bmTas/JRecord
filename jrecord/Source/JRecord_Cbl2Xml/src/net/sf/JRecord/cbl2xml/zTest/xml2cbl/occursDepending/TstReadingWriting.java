@@ -16,10 +16,11 @@ import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.cbl2xml.def.ICobol2Xml;
 import net.sf.JRecord.cbl2xml.impl.Cobol2GroupXml;
 import net.sf.JRecord.cbl2xml.zTest.xml2cbl.Cb2XmlCode;
+import net.sf.JRecord.cbl2xml.zTest.xml2cbl.Code;
 import net.sf.JRecord.cbl2xml.zTest.xml2cbl.TstXmlConstants;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
-import net.sf.JRecord.zTest.Cobol.occursDependingOn.Code;
-import net.sf.JRecord.zTest.Cobol.occursDependingOn.WriteSampleFile;
+//import net.sf.JRecord.zTest.Cobol.occursDependingOn.Code;
+//import net.sf.JRecord.zTest.Cobol.occursDependingOn.WriteSampleFile;
 import junit.framework.TestCase;
 
 public class TstReadingWriting extends TestCase {
@@ -47,7 +48,7 @@ public class TstReadingWriting extends TestCase {
 //	}
 	
 	private void tst(String copybook, int fileOrg, String id) throws IOException, RecordException, XMLStreamException, JAXBException {
-		String copybookFileName = WriteSampleFile.class.getResource(copybook).getFile();
+		String copybookFileName = TstXmlConstants.COBOL_DIRECTORY + copybook;
 		
 		ICobolIOBuilder ioBuilder = JRecordInterface1.COBOL
 				.newIOBuilder(copybookFileName)

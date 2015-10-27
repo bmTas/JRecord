@@ -36,4 +36,5 @@ public final class TstXmlConstants {
     }
     public static final int    DB_INDEX         = 0;
     public static final String XML_DIRECTORY = TX_DIRECTORY + "xml/";
+    public static final String COBOL_DIRECTORY = TX_DIRECTORY + "cobol/";
 }
