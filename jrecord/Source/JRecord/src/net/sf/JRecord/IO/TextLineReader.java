@@ -37,12 +37,11 @@ import net.sf.JRecord.charIO.StandardCharReader;
  */
 public class TextLineReader extends BasicTextLineReader {
 
-    private static final StandardCharReader STANDARD_CHAR_READER = new StandardCharReader();
-	private boolean namesInFile = false;
+	private final boolean namesInFile;
 
     private String defaultDelim  = ",";
     private String defaultQuote  = "'";
-    private ICharReader reader = STANDARD_CHAR_READER;
+    private final ICharReader reader;
 
 
 
@@ -51,6 +50,8 @@ public class TextLineReader extends BasicTextLineReader {
 	 */
 	public TextLineReader() {
 	    super();
+	    namesInFile = false;
+	    reader = new StandardCharReader();
 	}
 
 
@@ -63,7 +64,7 @@ public class TextLineReader extends BasicTextLineReader {
 	 * @param provider line provider
 	 */
 	public TextLineReader(final LineProvider provider) {
-	    super(provider);
+	    this(provider, false);
 	}
 
 	/**
@@ -78,7 +79,7 @@ public class TextLineReader extends BasicTextLineReader {
 	 */
 	public TextLineReader(final LineProvider provider,
 	        			  final boolean namesOn1stLine) {
-	    this(provider, namesOn1stLine, STANDARD_CHAR_READER);
+	    this(provider, namesOn1stLine, new StandardCharReader());
 	}
 
 	/**
