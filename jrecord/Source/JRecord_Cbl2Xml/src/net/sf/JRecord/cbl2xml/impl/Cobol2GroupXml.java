@@ -26,6 +26,7 @@ import org.w3c.dom.Document;
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.CommonBits;
+import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -379,6 +380,9 @@ public class Cobol2GroupXml implements ICobol2Xml {
 		Map<String, Item> arrayItems = itemDtls.getArrayItems();
 		IntStack arrayDtls = new IntStack();
 		IntStack levelNames = new IntStack();
+		LayoutDetail layout = iob.getLayout();
+		
+		String spaces = "                                                                                              ";
 
 
 
@@ -392,8 +396,8 @@ public class Cobol2GroupXml implements ICobol2Xml {
             	name = parser.getName().toString();
             	if (lvl == 2) {
             		if (l != null) {
-            			//System.out.println();
-            			//System.out.println(l.getFullLine());
+//           			System.out.println();
+//            			System.out.println(l.getFullLine());
             			w.write(l);
             		}
             		l = iob.newLine();
@@ -404,8 +408,8 @@ public class Cobol2GroupXml implements ICobol2Xml {
             			}
             		}
             	}
-            	//System.out.println();
-            	//System.out.print(spaces.substring(spaces.length() - 2 * lvl +1) + parser.getName() + " >");
+//            	System.out.println();
+//           	System.out.print(spaces.substring(spaces.length() - 2 * lvl +1) + parser.getName() + " >");
             	if (name != null && arrayItems.containsKey(name.toUpperCase())) {
             		if (name.equalsIgnoreCase(levelNames.getLastName())) {
             			arrayDtls.inc();
@@ -423,24 +427,33 @@ public class Cobol2GroupXml implements ICobol2Xml {
             case XMLStreamConstants.END_ELEMENT:
             	String name2 = parser.getName().toString();
             	
-				//System.out.print(b + "< " + name2 );
+//				System.out.print(b + "< " + name2 );
 				
 				if (lastName.equals(name2)) {
-	        		AbstractFieldValue fieldValue;
-	        		if (arrayDtls.size == 0) {
-	        			fieldValue = l.getFieldValue(lastName);
-	        		} else {
-	        			fieldValue = l.getFieldValue(arrayDtls.toArrayIndex(lastName));
+	        		IFieldDetail f;
+	        		String n = lastName;
+	        		if (arrayDtls.size > 0) {
+	        			n = arrayDtls.toArrayIndex(lastName);
 	        		}
-		        	if (lastType == XMLStreamConstants.START_ELEMENT) {
-						fieldValue.set(CommonBits.NULL_VALUE);
-		        	} else {
-		        		String txt = b.toString();
-		        		if (fieldValue.isNumeric()) {
-		        			txt = txt.trim();
-		        		}
-						fieldValue.set(txt);
-		        	}
+	        		
+	        		f = layout.getFieldFromName(n);
+	        		
+	        		if (f == null) {
+	        			if (b.length() > 0) {
+	        				throw new RuntimeException("Field: " + n + " does not exist, can not assign '" + b.toString() + "'");
+	        			}
+	        		} else {
+		        		AbstractFieldValue fieldValue = l.getFieldValue(f);
+			        	if (lastType == XMLStreamConstants.START_ELEMENT) {
+							fieldValue.set(CommonBits.NULL_VALUE);
+			        	} else {
+			        		String txt = b.toString();
+			        		if (fieldValue.isNumeric()) {
+			        			txt = txt.trim();
+			        		}
+							fieldValue.set(txt);
+			        	}
+	        		}
 		        	b.setLength(0); 	
 				}
 				

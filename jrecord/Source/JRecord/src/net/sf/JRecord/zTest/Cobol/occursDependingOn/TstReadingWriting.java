@@ -35,17 +35,31 @@ public class TstReadingWriting extends TestCase {
 		tst("OccursDepending2.cbl", Constants.IO_VB_FUJITSU);
 	}
 	
+	public void test06()  throws IOException, RecordException {
+		tstSales("OccursDepending3.cbl", Constants.IO_VB, true);
+	}
+
+	
+	public void test07()  throws IOException, RecordException {
+		tstSales("OccursDepending4.cbl", Constants.IO_VB, true);
+	}
+	
+	
+	public void test08()  throws IOException, RecordException {
+		tstSales("OccursDepending5.cbl", Constants.IO_VB_OPEN_COBOL, false);
+	}
+	
 	private void tst(String copybook, int fileOrg) throws IOException, RecordException {
-		String copybookFileName = WriteSampleFile.class.getResource("OccursDepending1.cbl").getFile();
+		String copybookFileName = WriteSampleFile.class.getResource(copybook).getFile();
 		
 		ICobolIOBuilder ioBuilder = CobolIoProvider.getInstance()
 				.newIOBuilder(copybookFileName, ICopybookDialects.FMT_MAINFRAME)
-					.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE);
+					.setFileOrganization(fileOrg);
 		for (int i = 0; i < 16; i++) {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			AbstractLineWriter w = ioBuilder.newWriter(out);
 			try {
-				for (int j = 0; j < 12; j++) {
+				for (int j = 0; j <= 12; j++) {
 					w.write(Code.generateLine(ioBuilder.newLine(), i, j));
 				}
 			} finally {
@@ -53,7 +67,7 @@ public class TstReadingWriting extends TestCase {
 			}
 			AbstractLineReader r= ioBuilder.newReader(new ByteArrayInputStream(out.toByteArray()));
 			try {
-				for (int j = 0; j < 12; j++) {
+				for (int j = 0; j <= 12; j++) {
 					Code.checkLine(r.read(), i, j);
 				}
 			} finally {
@@ -61,4 +75,33 @@ public class TstReadingWriting extends TestCase {
 			}
 		}
 	}
+	
+	
+	private void tstSales(String copybook, int fileOrg, boolean hasValue) throws IOException, RecordException {
+		String copybookFileName = WriteSampleFile.class.getResource(copybook).getFile();
+		
+		ICobolIOBuilder ioBuilder = CobolIoProvider.getInstance()
+				.newIOBuilder(copybookFileName, ICopybookDialects.FMT_MAINFRAME)
+					.setFileOrganization(fileOrg);
+		for (int i = 0; i < 16; i++) {
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			AbstractLineWriter w = ioBuilder.newWriter(out);
+			try {
+				for (int j = 0; j <= 12; j++) {
+					w.write(Code.generateSalesLine(ioBuilder.newLine(), i, j, hasValue));
+				}
+			} finally {
+				w.close();
+			}
+			AbstractLineReader r= ioBuilder.newReader(new ByteArrayInputStream(out.toByteArray()));
+			try {
+				for (int j = 0; j <= 12; j++) {
+					Code.checkSalesRecord(r.read(), i, j, hasValue);
+				}
+			} finally {
+				r.close();
+			}
+		}
+	}
+
 }

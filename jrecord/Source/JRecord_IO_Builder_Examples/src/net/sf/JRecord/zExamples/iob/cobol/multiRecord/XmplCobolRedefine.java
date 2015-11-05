@@ -6,18 +6,13 @@ package net.sf.JRecord.zExamples.iob.cobol.multiRecord;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.Details.LayoutDetail;
-import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.IO.AbstractLineReader;
-import net.sf.JRecord.IO.LineIOProvider;
-import net.sf.JRecord.Log.TextLog;
 import net.sf.JRecord.Numeric.ICopybookDialects;
-import net.sf.cb2xml.def.Cb2xmlConstants;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
 /**
  * This program is an example of processing a Cobol file with 
@@ -69,11 +64,10 @@ public class XmplCobolRedefine {
 		
 		String recordType;
 		InputStream inputFile = array2stream(fileData);
-		LayoutDetail layout = getLayout();
-		AbstractLineReader reader = LineIOProvider.getInstance().getLineReader(Constants.IO_BIN_TEXT);
+		ICobolIOBuilder bldr = getBuilder();
+		AbstractLineReader reader = bldr.newReader(inputFile);
 		AbstractLine l;
-		
-		reader.open(inputFile, layout);
+
 		
 		while ((l = reader.read()) != null) {
 			recordType = l.getFieldValue("Record-Type").asString();
@@ -100,18 +94,20 @@ public class XmplCobolRedefine {
 	}
 	
 	
+
 	
-	private LayoutDetail getLayout() throws RecordException, Exception {		
-		return getExternalLayout().asLayoutDetail();
-	}
-	
-	private ExternalRecord getExternalLayout() throws Exception {
+	private ICobolIOBuilder getBuilder() throws Exception {
 		ByteArrayInputStream bs = array2stream(cobolCopybook);
 		
-		return  (new CobolCopybookLoader())
-					.loadCopyBook(
-							bs, "RedefTest", CopybookLoader.SPLIT_REDEFINE, 0, "",
-							Cb2xmlConstants.USE_STANDARD_COLUMNS, ICopybookDialects.FMT_INTEL, 0, new TextLog());
+		return  JRecordInterface1.COBOL.newIOBuilder(bs, "RedefTest")
+					.setSplitCopybook(CopybookLoader.SPLIT_REDEFINE)
+					.setDialect(ICopybookDialects.FMT_INTEL)
+					.setFileOrganization(Constants.IO_BIN_TEXT);
+				
+//				(new CobolCopybookLoader())
+//					.loadCopyBook(
+//							bs, "RedefTest", CopybookLoader.SPLIT_REDEFINE, 0, "",
+//							Cb2xmlConstants.USE_STANDARD_COLUMNS, ICopybookDialects.FMT_INTEL, 0, new TextLog());
 	}
 	
 	

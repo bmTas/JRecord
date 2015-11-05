@@ -96,7 +96,7 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	 * @see net.sf.JRecord.IO.IIOBuilder#setFont(java.lang.String)
 	 */
 	@Override
-	public final IIOBldrAll setFont(String font) {
+	public IIOBldrAll setFont(String font) {
 		this.font = font;
 		clearLayout();
 		return this;

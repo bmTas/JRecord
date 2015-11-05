@@ -18,6 +18,7 @@ import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.IGetFieldByName;
+import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.CsvParser.BasicCsvLineParser;
 import net.sf.JRecord.CsvParser.ICsvDefinition;
 import net.sf.JRecord.CsvParser.ICsvLineParser;
@@ -1038,8 +1039,10 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 					}
 				}
 				tmpAdj += adj;
+			} catch (RecordException e) {
+				throw e;
 			} catch (Exception e) {
-				throw new RuntimeException("Error calculation Occurs Depending On for Variable: " + dependingOnDef.getVariableName() + " msg="+ e.getMessage(), e); 
+				throw new RecordException("Error calculation Occurs Depending On for Variable: " + dependingOnDef.getVariableName() + " msg="+ e.getMessage(), e); 
 			}
 		} 
 		return tmpAdj;	

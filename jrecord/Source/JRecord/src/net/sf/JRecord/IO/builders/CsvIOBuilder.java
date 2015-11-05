@@ -27,6 +27,7 @@ public class CsvIOBuilder extends CblIOBuilderBase implements ICsvIOBuilder, IDe
 
 	@Override
 	protected ExternalRecord getExternalRecordImpl() throws IOException {
+		record.setFontName(super.font);
 		return record;
 	}
 

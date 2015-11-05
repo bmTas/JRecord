@@ -2,6 +2,7 @@ package net.sf.JRecord.zExamples.iob.cobol.readWrite;
 
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
@@ -35,6 +36,7 @@ public final class XmplLineIO6 {
         int lineNum = 0;
         double gstExclusive;
         AbstractLine saleRecord;
+        Conversion.setDefaultEbcidicCharacterset("IBM273");
         ICobolIOBuilder ioBldr = JRecordInterface1.COBOL
         		.newIOBuilder(copybookName)
         			.setDialect( ICopybookDialects.FMT_MAINFRAME)

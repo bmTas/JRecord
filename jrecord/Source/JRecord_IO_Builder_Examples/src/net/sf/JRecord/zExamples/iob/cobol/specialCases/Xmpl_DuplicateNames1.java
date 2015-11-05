@@ -60,6 +60,7 @@ public class Xmpl_DuplicateNames1 {
 				.newIOBuilder(new ByteArrayInputStream(cobolCopybook.getBytes()), "COMPANY-RECORD")
 					.setDialect(ICopybookDialects.FMT_INTEL)
 					.setFileOrganization(Constants.IO_BIN_TEXT);
+		
 		LayoutDetail schema = ioBldr.getLayout();
 
 		int recordIdx = 0;  // since there is only one record type, the record index must be zero
