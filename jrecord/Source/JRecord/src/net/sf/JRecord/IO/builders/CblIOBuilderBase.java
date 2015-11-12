@@ -11,6 +11,7 @@ import java.util.TreeMap;
 
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.CharLineProvider;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -49,7 +50,7 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
     //final int copybookType;
 
 	int splitCopybook = CopybookLoader.SPLIT_NONE;
-	String font = "";
+	private String font = null;
 	int copybookFileFormat = 1; // actually Cb2xmlConstants.USE_STANDARD_COLUMNS;
 	int fileOrganization = Constants.NULL_INTEGER;
 	boolean dropCopybookNameFromFields = false;
@@ -61,7 +62,7 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 		this.dialect = dialect;
 	}
 
-
+ 
 	protected CblIOBuilderBase(LayoutDetail schema) {
 		super();
 		//this.copybookType = copybookType;
@@ -249,14 +250,14 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	 * @return all the attributes
 	 * 
 	 * @deprecated for testing
-	 */
+	 */ @Deprecated
 	public final Object[] getAllAttributes() {
 		Object[] r = {
 				dialect, 
 				splitCopybook,
 				copybookFileFormat,// actually Cb2xmlConstants.USE_STANDARD_COLUMNS;
 				fileOrganization,
-				font,
+				getFont(),
 				dropCopybookNameFromFields,
 		};
 		 
@@ -283,10 +284,23 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 	}
 
 
+	protected String getFont() {
+		String f = font;
+		
+		if (font == null) {
+			if (CommonBits.getLineType(fileOrganization) == CommonBits.LT_BYTE) {
+				f = Conversion.DEFAULT_ASCII_CHARSET;
+			} else {
+				f = "";
+			}
+		}
+		return f;
+	}
 
 	@Override
 	public final ExternalRecord getExternalRecord() throws IOException  {			
 		ExternalRecord schema =  getExternalRecordImpl();
+		//schema.setFontName(getFont());
 		
 		if (fileOrganization >= 0) {
 			schema.setFileStructure(fileOrganization);

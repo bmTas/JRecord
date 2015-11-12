@@ -6,6 +6,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -32,29 +33,29 @@ public class TstMultiCopybookCommon {
 
 	private final static FieldDetail[][] EXPECTED_FIELDS = {
 		{
-			bldType("Record-Type", 1, 1, 0, Type.ftChar, ""),
-			bldType("Field-1a", 2, 11, 0, Type.ftChar, ""),
-			bldType("Field-2a", 13, 12, 0, Type.ftChar, ""),
-			bldType("Field-3a", 25, 11, 0, Type.ftChar, ""),
-			bldType("Field-4a", 36, 44, 0, Type.ftChar, ""),
+			bldType("Record-Type", 1, 1, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Field-1a", 2, 11, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Field-2a", 13, 12, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Field-3a", 25, 11, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Field-4a", 36, 44, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
 		}, {
-			bldType("Record-Type", 1, 1, 0, Type.ftChar, ""),
-			bldType("Creation-Date", 2, 8, 0, 25, ""),
-			bldType("Version", 10, 5, 2, 22, ""),
+			bldType("Record-Type", 1, 1, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Creation-Date", 2, 8, 0, 25, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Version", 10, 5, 2, 22, Conversion.DEFAULT_ASCII_CHARSET),
 		}, {
-			bldType("Record-Type", 1, 1, 0, Type.ftChar, ""),
-			bldType("Field-1", 2, 10, 0, Type.ftChar, ""),
-			bldType("Field-2", 12, 20, 0, Type.ftChar, ""),
-			bldType("Field-3", 32, 10, 0, Type.ftChar, ""),
+			bldType("Record-Type", 1, 1, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Field-1", 2, 10, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Field-2", 12, 20, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Field-3", 32, 10, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
 		}, {
-			bldType("Record-Type", 1, 1, 0, Type.ftChar, ""),
-			bldType("Record-Count", 2, 9, 0, 25, ""),
+			bldType("Record-Type", 1, 1, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Record-Count", 2, 9, 0, 25, Conversion.DEFAULT_ASCII_CHARSET),
 		}, {
-			bldType("Record-Type", 1, 1, 0, Type.ftChar, ""),
-			bldType("Field-1b", 2, 22, 0, Type.ftChar, ""),
-			bldType("Field-2b", 24, 33, 0, Type.ftChar, ""),
-			bldType("Field-3b", 57, 11, 0, Type.ftChar, ""),
-			bldType("Field-4b", 68, 11, 0, Type.ftChar, ""),
+			bldType("Record-Type", 1, 1, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Field-1b", 2, 22, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Field-2b", 24, 33, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Field-3b", 57, 11, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Field-4b", 68, 11, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
 		}
 	};
 
@@ -76,7 +77,7 @@ public class TstMultiCopybookCommon {
 		
 		TestCase.assertEquals(5, l.getRecordCount());
 		TestCase.assertEquals(Constants.IO_CONTINOUS_NO_LINE_MARKER, l.getFileStructure());
-		TestCase.assertEquals("", l.getFontName());
+		TestCase.assertEquals(Conversion.DEFAULT_ASCII_CHARSET, l.getFontName());
 		
 		for (int i = 0; i < l.getRecordCount(); i++) {
 			RecordDetail r = l.getRecord(i);
@@ -270,7 +271,7 @@ public class TstMultiCopybookCommon {
 
 
 	private static FieldDetail bldType(String name, int pos, int len, int decimal, int type, String font) {
-		FieldDetail fd = new FieldDetail(name, "", type, decimal, font, 0, "");
+		FieldDetail fd = new FieldDetail(name, "", type, decimal, font, 0, Conversion.DEFAULT_ASCII_CHARSET);
 		fd.setPosLen(pos, len);
 		
 		return fd;

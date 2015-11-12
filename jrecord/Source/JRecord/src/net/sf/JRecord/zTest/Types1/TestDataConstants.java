@@ -1,12 +1,13 @@
 package net.sf.JRecord.zTest.Types1;
 
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 
 public class TestDataConstants {
 
 	public static String getTestDataFileName(String charset) {
 		String s = charset;
-		if (s.length() == 0) {
+		if (s.length() == 0 || Conversion.DEFAULT_ASCII_CHARSET.equals(s)) {
 			s = "Std";
 		}
 

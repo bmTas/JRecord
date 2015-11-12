@@ -160,7 +160,7 @@ public class TstBinType extends TestCase {
 
     private FieldDetail getType(int pos, int len, int type, int decimal) {
 
-        FieldDetail field = new FieldDetail("", "", type, decimal, "", -1, "");
+        FieldDetail field = new FieldDetail("", "", type, decimal, Conversion.DEFAULT_ASCII_CHARSET, -1, "");
 
         field.setPosLen(pos, len);
 

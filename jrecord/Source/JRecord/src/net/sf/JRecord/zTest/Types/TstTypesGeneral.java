@@ -136,7 +136,7 @@ public class TstTypesGeneral extends TestCase {
 		byte[] b;
 		String s= "";
 		for (int i = 0; i < 200; i++) {
-			FieldDetail fld = getType(1, 4, i, "");
+			FieldDetail fld = getType(1, 4, i, Conversion.DEFAULT_ASCII_CHARSET);
 			try {
 				b = typeManager.getType(i).setField(bytes, fld.getPos(), fld, CommonBits.NULL_VALUE);
 				if (i == Type.ftFloat || i == Type.ftDouble) {
@@ -204,7 +204,7 @@ public class TstTypesGeneral extends TestCase {
 	}
 	
 	public void testAssignment() throws RecordException,  Exception {
-		String[] charsets1 = {"", "cp1525", "utf-8", "CP037", "IBM273"};
+		String[] charsets1 = {Conversion.DEFAULT_ASCII_CHARSET, "cp1525", "utf-8", "CP037", "IBM273"};
 		String[] charsets2 = {"utf-16", "utf-16be"};
 		    	String cobolCopybook
     		= "      01 COMPANY-RECORD.\n"
@@ -329,7 +329,7 @@ public class TstTypesGeneral extends TestCase {
 	 */
 	public void testFixedLineSet() throws RecordException {
 		String initialValue = "123456789.123456789";
-		String[] charsets1 = {"", "cp1525", "CP037", "IBM273", "utf-8", "utf-16be"};
+		String[] charsets1 = {Conversion.DEFAULT_ASCII_CHARSET, "cp1525", "CP037", "IBM273", "utf-8", "utf-16be"};
     	String cobolCopybook
     		= "      01 COMPANY-RECORD.\n"
     		+ "         05 COMPANY-NAME     PIC X(30).\n";
@@ -486,7 +486,7 @@ public class TstTypesGeneral extends TestCase {
 			switch (type) {
 			case Type.ftBit: break;
 			default:
-				fd = getType(1, 8, type, "");
+				fd = getType(1, 8, type, Conversion.DEFAULT_ASCII_CHARSET);
 				for (int i = 0; i < 5000; i++) {
 					val = r.nextInt(10000);
 

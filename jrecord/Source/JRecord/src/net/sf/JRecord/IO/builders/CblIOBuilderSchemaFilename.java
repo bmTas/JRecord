@@ -31,7 +31,7 @@ public class CblIOBuilderSchemaFilename extends CblIOBuilderBase {
 		}
 		try {
 
-			return loader	.loadCopyBook(copybookFilename, splitCopybook, 0, font, super.copybookFileFormat, dialect, 0, log);
+			return loader	.loadCopyBook(copybookFilename, splitCopybook, 0, super.getFont(), super.copybookFileFormat, dialect, 0, log);
 
 		} catch (RecordException e) {
 			throw e; 

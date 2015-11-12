@@ -17,6 +17,6 @@ public class CreateExternalFromFile extends CreateExternalBase implements ICreat
 
 	@Override
 	public ExternalRecord createExternalRecordImp() throws Exception {
-		return parent.loader.loadCopyBook(copybookFilename, splitCopybook, 0, parent.font, parent.copybookFileFormat, parent.dialect, 0, parent.log);
+		return parent.loader.loadCopyBook(copybookFilename, splitCopybook, 0, parent.getFont(), parent.copybookFileFormat, parent.dialect, 0, parent.log);
 	}
 }

@@ -38,7 +38,7 @@ public class CblIOBuilderSchemaStream extends CblIOBuilderBase {
 			((ISetDropCopybookName) loader).setDropCopybookFromFieldNames(super.dropCopybookNameFromFields);
 		}
 						
-		return  loader	.loadCopyBook(copybookStream, copybookName, splitCopybook, 0, font, super.copybookFileFormat, dialect, 0, log);
+		return  loader	.loadCopyBook(copybookStream, copybookName, splitCopybook, 0, super.getFont(), super.copybookFileFormat, dialect, 0, log);
 	}
 
 }

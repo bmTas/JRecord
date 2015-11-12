@@ -94,7 +94,7 @@ public class CblIOBuilderMultiSchema extends CblIOBuilderBase implements ICobolM
 			if (copybooks.size() == 1) {
 				return copybooks.get(0).createExternalRecord();
 			} else {
-				ExternalRecord rec = ExternalRecord.getNullRecord(copybookname, Constants.rtGroupOfRecords, super.font);
+				ExternalRecord rec = ExternalRecord.getNullRecord(copybookname, Constants.rtGroupOfRecords, super.getFont());
 				ExternalRecord r;
 				
 				for (ICreateExternal copybookdef : copybooks) {

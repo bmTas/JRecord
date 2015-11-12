@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
 
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Types.Type;
@@ -159,7 +160,7 @@ public class TstTypesSetValues extends TestCase {
 
 	private void tstField1(int typeId) throws RecordException{
 		for (int i = 0; i < 5; i++) {
-			tstField1(typeId, i, "", 11);
+			tstField1(typeId, i, Conversion.DEFAULT_ASCII_CHARSET, 11);
 		}
 	}
 	
@@ -212,7 +213,7 @@ public class TstTypesSetValues extends TestCase {
 	
 	private void tstField2(int typeId) throws RecordException{
 		for (int i = 0; i < 5; i++) {
-			tstField2(typeId, i, "", 7);
+			tstField2(typeId, i, Conversion.DEFAULT_ASCII_CHARSET, 7);
 		}
 	}
 	
@@ -224,7 +225,7 @@ public class TstTypesSetValues extends TestCase {
 	 */
 	private void tstField2(int typeId, int decimalPlaces, String font, int inc) throws RecordException{
 		Type t = TypeManager.getInstance().getType(typeId);
-		FieldDetail fldDef = new FieldDetail("", "", typeId, decimalPlaces, "", 0, "");
+		FieldDetail fldDef = new FieldDetail("", "", typeId, decimalPlaces, font, 0, "");
 		if (t.isBinary()) {
 			fldDef.setPosLen(1, 8);
 		} else {

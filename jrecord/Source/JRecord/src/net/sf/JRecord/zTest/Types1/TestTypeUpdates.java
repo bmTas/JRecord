@@ -1,6 +1,7 @@
 package net.sf.JRecord.zTest.Types1;
 
 import net.sf.JRecord.Common.AbstractFieldValue;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.Line;
@@ -18,7 +19,7 @@ import junit.framework.TestCase;
 public class TestTypeUpdates extends TestCase {
 
 	public void testTypesStandardCharset() throws Exception {
-		tstFile("");
+		tstFile(Conversion.DEFAULT_ASCII_CHARSET);
 	}
 
 	public void testTypesCP037() throws Exception {

@@ -46,7 +46,9 @@ public class TstCopy extends TestCase {
 	
 	public void testCopyFileByMatchingFieldNames1() throws Exception, RecordException {
 	
-		LayoutDetail outSchema = SchemaLoader.loadSchema(DTAR021_COPBOOK_FILE_NAME, CopybookLoader.SPLIT_NONE, "", ICopybookDialects.FMT_MAINFRAME)
+		LayoutDetail outSchema = SchemaLoader.loadSchema(
+				DTAR021_COPBOOK_FILE_NAME, CopybookLoader.SPLIT_NONE, 
+				Conversion.DEFAULT_ASCII_CHARSET, ICopybookDialects.FMT_MAINFRAME)
 				.asLayoutDetail();
 		doTest(outSchema, true);
 	}
@@ -54,7 +56,8 @@ public class TstCopy extends TestCase {
 	
 	public void testCopyFileByMatchingFieldNames2() throws Exception, RecordException {
 	
-		LayoutDetail outSchema = SchemaLoader.loadSchema(DTAR022_COPBOOK_FILE_NAME, CopybookLoader.SPLIT_NONE, "", ICopybookDialects.FMT_MAINFRAME)
+		LayoutDetail outSchema = SchemaLoader.loadSchema(
+				DTAR022_COPBOOK_FILE_NAME, CopybookLoader.SPLIT_NONE, Conversion.DEFAULT_ASCII_CHARSET, ICopybookDialects.FMT_MAINFRAME)
 				.asLayoutDetail();
 		doTest(outSchema, false);
 	}

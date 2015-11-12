@@ -4,6 +4,7 @@
 package net.sf.JRecord.zTest.Types1;
 
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -34,7 +35,7 @@ public class TestData {
 		
 		this.charset = charset;
 
-		testDataDefinition = loadCopybook("");
+		testDataDefinition = loadCopybook(Conversion.DEFAULT_ASCII_CHARSET);
 		
 		/**
 		 * Extracting the field Definitions, it is slightly more efficient

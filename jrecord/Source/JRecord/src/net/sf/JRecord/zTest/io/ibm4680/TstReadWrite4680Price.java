@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.ExternalRecord;
@@ -153,6 +154,7 @@ public class TstReadWrite4680Price extends TestCase {
 		String schemaFile = this.getClass().getResource("Price.Xml").getFile();
 		ExternalRecord schema = (new RecordEditorXmlLoader())
 									.loadCopyBook(schemaFile, 0, 0, "", 0, 0, null);
+		schema.setFontName(Conversion.DEFAULT_ASCII_CHARSET);
 		if (fileStructure >= 0) {
 			schema.setFileStructure(fileStructure);
 		}

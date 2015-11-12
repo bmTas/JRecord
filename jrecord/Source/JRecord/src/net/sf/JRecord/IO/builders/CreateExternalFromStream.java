@@ -36,6 +36,8 @@ public class CreateExternalFromStream  extends CreateExternalBase  implements IC
 		}
 
 		return parent. loader
-				.loadCopyBook(new ByteArrayInputStream(copybookBytes), copybookName, splitCopybook, 0, parent.font, parent.copybookFileFormat, parent.dialect, 0, parent.log);
+				.loadCopyBook(new ByteArrayInputStream(copybookBytes), copybookName, splitCopybook, 0, 
+						parent.getFont(), parent.copybookFileFormat, 
+						parent.dialect, 0, parent.log);
 	}
 }

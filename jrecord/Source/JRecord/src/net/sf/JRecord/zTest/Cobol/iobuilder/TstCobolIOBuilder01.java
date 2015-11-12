@@ -5,6 +5,7 @@ import java.io.IOException;
 import junit.framework.TestCase;
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
@@ -36,10 +37,10 @@ public class TstCobolIOBuilder01 extends TestCase {
 //	boolean dropCopybookNameFromFields = false;
 	
 	@SuppressWarnings("deprecation")
-	public void testDefaultValues() {
+	public void testDefaultValues1() {
 		Object[] attrs = {
 				ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-				Constants.NULL_INTEGER, "", Boolean.FALSE		
+				Constants.NULL_INTEGER, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE		
 		};
 		checkAttributes(new CblIoBldr(ICopybookDialects.FMT_MAINFRAME).getAttrs(), attrs);
 		checkAttributes(
@@ -49,7 +50,64 @@ public class TstCobolIOBuilder01 extends TestCase {
 				).getAllAttributes(), 
 				attrs);
 	}
+
+	@SuppressWarnings("deprecation")
+	public void testDefaultValues2() {
+		int[] fileStructures = {
+				Constants.IO_STANDARD_UNICODE_TEXT_FILE, Constants.IO_FIXED_LENGTH_CHAR,
+				Constants.IO_UNICODE_CSV, Constants.IO_UNICODE_CSV_NAME_1ST_LINE,
+				Constants.IO_UNICODE_NAME_1ST_LINE, Constants.IO_UNICODE_TEXT
+		};
+		
+		for (int fs : fileStructures) {
+			Object[] attrs = {
+					ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
+					fs, "", Boolean.FALSE		
+			};
+			CblIoBldr cblIoBldr = new CblIoBldr(ICopybookDialects.FMT_MAINFRAME);
+			cblIoBldr.setFileOrganization(fs);
+			checkAttributes(cblIoBldr.getAttrs(), attrs);
+			checkAttributes(
+					((CblIOBuilderBase)JRecordInterface1.COBOL
+							.newIOBuilder("")
+								.setFileOrganization(fs)
+								.setDialect(ICopybookDialects.FMT_MAINFRAME)
+					).getAllAttributes(), 
+					attrs);
+		}
+	}
 	
+
+	@SuppressWarnings("deprecation")
+	public void testDefaultValues3() {
+		int[] fileStructures = {
+				Constants.IO_BIN_TEXT, Constants.IO_BIN_CSV,
+				Constants.IO_CONTINOUS_NO_LINE_MARKER, Constants.IO_CSV,
+				Constants.IO_NAME_1ST_LINE, 
+				Constants.IO_FIXED_LENGTH, Constants.IO_FIXED_LENGTH_RECORDS,
+				Constants.IO_VB, Constants.IO_VB_DUMP, Constants.IO_VB_FUJITSU,
+				Constants.IO_VB_OPEN_COBOL
+		};
+		
+		for (int fs : fileStructures) {
+			Object[] attrs = {
+					ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
+					fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE		
+			};
+			CblIoBldr cblIoBldr = new CblIoBldr(ICopybookDialects.FMT_MAINFRAME);
+			cblIoBldr.setFileOrganization(fs);
+			checkAttributes(cblIoBldr.getAttrs(), attrs);
+			checkAttributes(
+					((CblIOBuilderBase)JRecordInterface1.COBOL
+							.newIOBuilder("")
+								.setFileOrganization(fs)
+								.setDialect(ICopybookDialects.FMT_MAINFRAME)
+					).getAllAttributes(), 
+					attrs);
+		}
+	}
+
+
 	public void testAttrs01() {
 		Object[] attrs = {
 				ICopybookDialects.FMT_OPEN_COBOL, CopybookLoader.SPLIT_01_LEVEL,  Cb2xmlConstants.USE_COLS_6_TO_80,
@@ -102,7 +160,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 
 	private void checkAttributes(Object[] expected, Object[] attrs) {
 		for (int i = 0; i < expected.length; i++) {
-			assertEquals( ATTR_NAMES[i],expected[i], attrs[i]);
+			assertEquals( ATTR_NAMES[i], expected[i], attrs[i]);
 		}
 	}
 	

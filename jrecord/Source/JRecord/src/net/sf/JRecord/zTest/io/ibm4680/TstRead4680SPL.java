@@ -4,6 +4,7 @@ import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.RecordEditorXmlLoader;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.LineIOProvider;
@@ -30,9 +31,10 @@ public class TstRead4680SPL extends TestCase {
 	
 	private void tstRead(String filename, int expected) throws RecordException, Exception {
 		String schemaFile = this.getClass().getResource("SPL.Xml").getFile();
-		LayoutDetail schema = (new RecordEditorXmlLoader())
-									.loadCopyBook(schemaFile, 0, 0, Conversion.DEFAULT_ASCII_CHARSET, 0, 0, null)
-									.asLayoutDetail();
+		ExternalRecord cpy = (new RecordEditorXmlLoader())
+									.loadCopyBook(schemaFile, 0, 0, "", 0, 0, null);
+		cpy.setFontName(Conversion.DEFAULT_ASCII_CHARSET);
+		LayoutDetail schema = cpy	.asLayoutDetail();
 		
 		//= RecordEditorXmlLoader.getExternalRecord(schemaXml, "Schema").asLayoutDetail();
 		AbstractLineReader lineReader = LineIOProvider.getInstance().getLineReader(schema);

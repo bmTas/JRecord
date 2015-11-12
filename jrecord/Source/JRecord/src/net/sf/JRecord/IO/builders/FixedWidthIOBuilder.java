@@ -29,7 +29,7 @@ implements IFixedWidthIOBuilder, IDefineFixedFieldsByPosition, IDefineFixedField
 
 	@Override
 	protected ExternalRecord getExternalRecordImpl() {
-		record.setFontName(super.font);
+		record.setFontName(super.getFont());
 		return record;
 	} 
 

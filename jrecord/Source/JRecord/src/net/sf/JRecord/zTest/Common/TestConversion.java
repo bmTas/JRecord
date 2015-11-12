@@ -42,10 +42,10 @@ public class TestConversion extends TestCase {
 		
 		Conversion.setDefaultEbcidicCharacterset("CP273");
 //		System.out.println(Conversion.toZoned("10") + " " + Conversion.toZoned("-10"));
-		assertEquals("1ä", Conversion.toZoned("10"));
-		assertEquals("1ü", Conversion.toZoned("-10"));
-		assertEquals("10", Conversion.fromZoned("1ä"));
-		assertEquals("-10", Conversion.fromZoned("1ü"));
+		assertEquals(toCp273("1{"), Conversion.toZoned("10"));
+		assertEquals(toCp273("1}"), Conversion.toZoned("-10"));
+		assertEquals("10", Conversion.fromZoned(toCp273("1{")));
+		assertEquals("-10", Conversion.fromZoned(toCp273("1}")));
 		
 		Conversion.setDefaultEbcidicCharacterset("IBM037");
 		assertEquals("1{", Conversion.toZoned("10"));
@@ -53,5 +53,9 @@ public class TestConversion extends TestCase {
 		assertEquals("10", Conversion.fromZoned("1{"));
 		assertEquals("-10", Conversion.fromZoned("1}"));
 
+	}
+	
+	private String toCp273(String s) {
+		return Conversion.toString(Conversion.getBytes(s, "CP037"), "CP273");
 	}
 }
