@@ -59,10 +59,11 @@ public final class Conversion {
 			} else {
 				if (DEFAULT_CHARSET_DETAILS == null || DEFAULT_CHARSET_DETAILS.isMultiByte) {
 					DEFAULT_ASCII_CHARSET = "cp1252";
+					setDefaultSingleByteCharacterset("cp1252");
 				} else {
 					DEFAULT_ASCII_CHARSET = "";
+					defaultSingleByteCharacterset = "";
 				}
-				setDefaultSingleByteCharacterset("cp1252");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

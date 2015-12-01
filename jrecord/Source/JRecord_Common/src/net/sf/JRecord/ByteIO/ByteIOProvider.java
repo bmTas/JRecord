@@ -115,10 +115,11 @@ public class ByteIOProvider {
      * Gets a Record Reader Class
      *
      * @param fileStructure File Structure
+     * @param characterSet character-set of the file
      *
      * @return record reader
      */
-    public AbstractByteWriter getByteWriter(int fileStructure, String charcterSet) {
+    public AbstractByteWriter getByteWriter(int fileStructure, String characterSet) {
 
     	switch(fileStructure) {
 //    		case Constants.IO_FIXED_LENGTH:			return new BinaryByteWriter();
@@ -127,9 +128,9 @@ public class ByteIOProvider {
     		case Constants.IO_VB_FUJITSU:			return new FujitsuVbByteWriter();
     		case Constants.IO_VB_OPEN_COBOL:		return new VbByteWriter(false);
 			case Constants.IO_BIN_TEXT:
-				if (charcterSet != null && charcterSet.length() > 0 ) {
+				if (characterSet != null && characterSet.length() > 0 ) {
 					try {
-						return new ByteTextWriter("\n".getBytes(charcterSet));
+						return new ByteTextWriter("\n".getBytes(characterSet));
 					} catch (UnsupportedEncodingException e) {
 					}
 				}

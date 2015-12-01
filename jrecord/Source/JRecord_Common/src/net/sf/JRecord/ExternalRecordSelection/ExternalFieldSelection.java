@@ -52,6 +52,10 @@ public class ExternalFieldSelection implements ExternalSelection {
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
 	}
+	
+	public String getRawFieldValue() {
+		return fieldValue;
+	}
 
 	public String getFieldValue() {
 		if (isCaseSensitive() /*|| EQUALS_OPERATOR.equals(getOperator()) */ || fieldValue == null) {

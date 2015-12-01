@@ -139,7 +139,7 @@ public class RecordEditorXmlWriter implements CopybookWriter {
     	   ExternalFieldSelection eFld = (ExternalFieldSelection) xSel;
     	   if ("=".equals(eFld.getOperator()) || "eq".equalsIgnoreCase(eFld.getOperator())) {
 	    	   writeAttr(writer, Constants.RE_XML_TESTFIELD, eFld.getFieldName());
-	    	   writeAttr(writer, Constants.RE_XML_TESTVALUE, eFld.getFieldValue());
+	    	   writeAttr(writer, Constants.RE_XML_TESTVALUE, eFld.getRawFieldValue());
 	    	   toPrint = false;
     	   }
        } else if (xSel instanceof ExternalGroupSelection) {
@@ -258,7 +258,7 @@ public class RecordEditorXmlWriter implements CopybookWriter {
 	throws XMLStreamException {
 		writer.writeEmptyElement(Constants.RE_XML_TST_FIELD);
 		writeAttr(writer, Constants.RE_XML_NAME, fld.getFieldName());
-	    writeAttr(writer, Constants.RE_XML_VALUE, fld.getFieldValue());
+	    writeAttr(writer, Constants.RE_XML_VALUE, fld.getRawFieldValue());
 	}
 
 	private void writeAttr(XMLStreamWriter writer, String attr, String value)

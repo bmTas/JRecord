@@ -288,10 +288,10 @@ public abstract class CblIOBuilderBase implements IIOBldrAll {
 		String f = font;
 		
 		if (font == null) {
-			if (CommonBits.getLineType(fileOrganization) == CommonBits.LT_BYTE) {
-				f = Conversion.DEFAULT_ASCII_CHARSET;
-			} else {
-				f = "";
+			f = "";
+			if (Conversion.DEFAULT_CHARSET_DETAILS.isMultiByte
+			&&  CommonBits.getLineType(fileOrganization) == CommonBits.LT_BYTE) {
+				f = Conversion.getDefaultSingleByteCharacterset();
 			}
 		}
 		return f;

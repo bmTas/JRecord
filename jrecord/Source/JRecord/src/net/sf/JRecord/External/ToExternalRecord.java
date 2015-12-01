@@ -71,6 +71,10 @@ public final class ToExternalRecord {
 		RecordDetail record = layout.getRecord(id);
 		String name = record.getRecordName();
 		boolean embeddedCr = false;
+		if (record instanceof RecordDetail) {
+			embeddedCr =((RecordDetail) record).isEmbeddedNewLine();
+		}
+
 
 		rec = new ExternalRecord(
 				id, name, "", record.getRecordType(),
