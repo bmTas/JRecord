@@ -107,7 +107,7 @@ public class Cobol2Csv {
      * @param rec Schema to be update
      */
     private static void updateFields(ExternalRecord rec, ParseArgsCobol2Csv csvArgs) {
-    	rec.setFileStructure(Constants.IO_NAME_1ST_LINE);
+    	rec.setFileStructure(csvArgs.outputFileStructure);
     	rec.setRecordType(Constants.rtDelimited);
     	rec.setQuote(csvArgs.quote);
     	rec.setDelimiter(csvArgs.sep);
