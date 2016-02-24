@@ -129,7 +129,7 @@ public class BinTextReader extends LineReaderWrapper {
      * @param format format to use
      * @param param param to add to each field
      * @param quote Quote
-     * @param Structure file structure
+     * @param structure file structure
      * @param embeddedCr wether there is embedded Cr in the file
      * @return Create a Layout description form a supplied line (first line of a file ?)
      * + other details

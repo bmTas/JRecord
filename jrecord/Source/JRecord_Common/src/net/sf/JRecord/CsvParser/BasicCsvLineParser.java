@@ -16,7 +16,7 @@ import net.sf.JRecord.Types.Type;
  * Basic CSV line parser. Basically
  *
  *   - If the Field start with {Quote}; the fields is ended by {Quote}{Field-Seperator}
- *   - Otherwise the field ends with a {Field-Seperator}
+ *   - Otherwise the field ends with a {Field-Separator}
  *
  * @author Bruce Martin
  *
@@ -65,7 +65,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLinePar
     /**
      * Get a specific field from a line
      *
-     * @see ICsvLineParser#getField(int, String, String, String)
+     * @see ICsvLineParser#getField(int, String, ICsvDefinition)
      */
     public final String getField(int fieldNumber, String line, ICsvDefinition lineDef) {
         String[] fields = split(line, lineDef, fieldNumber);
@@ -130,7 +130,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLinePar
     }
 
 	/**
-     * @see ICsvLineParser#setField(int, int, String, String, String, String)
+     * @see ICsvLineParser#setField(int, int, String, ICsvDefinition, String)
      */
     public final String setField(int fieldNumber, int fieldType, String line, ICsvDefinition lineDef,
             String newValue) {
@@ -161,9 +161,9 @@ public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLinePar
         return s;
     }
     /**
-     * Initialise array
+     * Initialize array
      * @param count array size
-     * @return initialised array
+     * @return initialized array
      */
     private String[] initArray(int count) {
         String[] ret = new String[count];
@@ -178,7 +178,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLinePar
 
 	/**
 	 * Split a supplied line into its Fields. This only applies to
-	 * Comma / Tab seperated files
+	 * Comma / Tab separated files
 	 *
 	 * @param line line to be split
 	 * @param lineDefinition Csv Definition

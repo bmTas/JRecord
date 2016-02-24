@@ -50,7 +50,7 @@ public interface IDefineFixedFieldsByLength {
 	/**
 	 * Skip a specified number of bytes in the record.
 	 * @param numberOfBytes number of bytes to be skipped
-	 * @return
+	 * @return this Builder so the user can define more fields
 	 */
 	public IDefineFixedFieldsByLength skipBytes(int numberOfBytes);
 	

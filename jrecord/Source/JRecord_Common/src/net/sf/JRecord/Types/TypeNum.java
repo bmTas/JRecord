@@ -417,7 +417,7 @@ public class TypeNum extends TypeChar {
 	            }
 	            new BigInteger(val);
 	        } catch (final Exception ex) {
-	            throw new RecordException("Invalid Integer :" + val + ": ~ " + ex);
+	            throw new RecordException(field.getName() + " Invalid Integer :" + val + ": ~ " + ex);
 	        }
 	    } else {
 	        try {

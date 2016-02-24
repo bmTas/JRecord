@@ -14,6 +14,7 @@ import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.ExternalRecordSelection.StreamLine;
 import net.sf.JRecord.Option.IRecordPositionOption;
+import net.sf.JRecord.Types.TypeManager;
 
 //import net.sf.RecordEditor.utils.Common;
 
@@ -84,6 +85,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
   //private ArrayList<TstField> tstFields = null;
   private boolean defaultRecord = false;
   private boolean embeddedCr    = false;  //private String tstField = "";
+  private boolean initToSpaces  = false;  // for backward compatibility
   //private String tstFieldValue = "";
 
 
@@ -961,7 +963,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	 *
 	 * @return the tstField
 	 *
-	 * @Deprecated Use getTstFields
+	 * @deprecated Use getTstFields
 	 */ @Deprecated
 	public String getTstField() {
 
@@ -980,7 +982,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	 * @param tstField the tstField to set
 	 * @param value Value to compare field to
 	 *
-	 *  @Deprecated  use addTstField
+	 *  @deprecated  use addTstField
 	 */ @Deprecated
 	public void setTstField(String tstField, String value) {
 
@@ -1131,7 +1133,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 				maxPos = Math.max(maxPos, fields.get(i).getPos() + fields.get(i).getLen());
 			}
 
-			tmpFields = new ArrayList<ExternalField>(count);
+			tmpFields = new ArrayList<ExternalField>(count + 1);
 
 			for (i = 0; i < fields.size(); i++) {
 				fld = fields.get(i);
@@ -1152,7 +1154,9 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	}
 
 	private boolean isFiller(String s) {
-		return s == null || "".equals(s.trim()) || "filler".equalsIgnoreCase(s);
+		return s == null || "".equals(s.trim()) 
+			  || "filler".equalsIgnoreCase(s)
+			  || s.toLowerCase().startsWith("filler (");
 	}
 
 	/**
@@ -1243,6 +1247,25 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 		return defaultRecord;
 	}
 
+	public boolean isBinary() {
+		return checkBinary(this);
+	}
+	
+	private boolean checkBinary(ExternalRecord rec) {
+		for (ExternalField f : rec.fields ) {
+			if (TypeManager.isBinary(f.getType())) {
+				return true;
+			}
+		}
+		
+		for (ExternalRecord r : rec.subRecords) {
+			if (checkBinary(r)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	 * @param defaultRecord the defaultRecord to set
 	 */
@@ -1294,6 +1317,20 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	}
 
 	/**
+	 * @return the initToSpaces
+	 */
+	public final boolean isInitToSpaces() {
+		return initToSpaces;
+	}
+
+	/**
+	 * @param initToSpaces the initToSpaces to set
+	 */
+	public final void setInitToSpaces(boolean initToSpaces) {
+		this.initToSpaces = initToSpaces;
+	}
+
+	/**
 	 * @return the cb2xmlDocuments details
 	 */
 	public final List<Cb2xmlDocument> getCb2xmlDocuments() {
@@ -1302,7 +1339,6 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 
 	/**
 	 * @param e cb2xml document details
-	 * @return
 	 * @see java.util.ArrayList#add(java.lang.Object)
 	 */
 	public void addCb2xmlDocument(Cb2xmlDocument e) {
@@ -1311,7 +1347,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 
 	/**
 	 * @param c cb2xmlDoc collection to add.
-	 * @return
+	 * @return whether added successfully 
 	 * @see java.util.ArrayList#addAll(java.util.Collection)
 	 */
 	public boolean addAllCb2xmlDocuments(Collection<Cb2xmlDocument> c) {

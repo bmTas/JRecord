@@ -2,16 +2,17 @@ package net.sf.JRecord.IO.builders;
 
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
+import net.sf.JRecord.External.ICopybookLoaderStream;
 import net.sf.JRecord.External.ISetDropCopybookName;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 
 public abstract class CreateExternalBase {
-	final CblIOBuilderMultiSchema parent;
+	final IGetLoader parent;
 
 	int splitCopybook = CopybookLoader.SPLIT_NONE;
 	private ExternalSelection recordSelection = null;
 
-	protected CreateExternalBase(CblIOBuilderMultiSchema parent) {
+	protected CreateExternalBase(IGetLoader parent) {
 		super();
 		this.parent = parent;
 	}
@@ -42,8 +43,9 @@ public abstract class CreateExternalBase {
 
 	public ExternalRecord createExternalRecord() throws Exception {
 		
-		if (parent.loader instanceof ISetDropCopybookName) { 
-			((ISetDropCopybookName) parent.loader).setDropCopybookFromFieldNames(parent.dropCopybookNameFromFields);
+		ICopybookLoaderStream loader = parent.getLoader();
+		if (loader instanceof ISetDropCopybookName) { 
+			((ISetDropCopybookName) loader).setDropCopybookFromFieldNames(parent.isDropCopybookNameFromFields());
 		}
 
 		ExternalRecord r = createExternalRecordImp();

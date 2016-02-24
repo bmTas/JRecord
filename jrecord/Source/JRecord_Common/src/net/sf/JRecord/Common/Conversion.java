@@ -283,7 +283,7 @@ public final class Conversion {
 	 * @param start Field start
 	 * @param fin Field End
 	 *
-	 * @return Postive Integer Field
+	 * @return Positive Integer Field
 	 */
 	public static String getPostiveBinary(final byte[] record, final int start, final int fin) {
 		int i;
@@ -967,14 +967,14 @@ public final class Conversion {
     }
     
     
-    /**
-     * pad string with zero's to format length
-     *
-     * @param dateFormatStr date format string
-     * @param s string to be padded
-     *
-     * @return padded string
-     */
+//    /**
+//     * pad string with zero's to format length
+//     *
+//     * @param dateFormatStr date format string
+//     * @param s string to be padded
+//     *
+//     * @return padded string
+//     */
 //    public static String padZeros(String dateFormatStr, String s) {
 //
 //        String ret = s;
@@ -987,6 +987,12 @@ public final class Conversion {
 //        return ret;
 //    }
 	
+    /**
+     * Class to hold character-set details
+     * 
+     * @author Bruce Martin
+     *
+     */
 	public static final class HoldEbcidicFlag {
 		public final String charset;
 		public final boolean isSingleByteEbcidic, isMultiByte, isEbcdic;

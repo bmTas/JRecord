@@ -30,7 +30,7 @@ public class TypeCharNullTerminated extends TypeChar {
     }
 
     /**
-     * @see net.sf.JRecord.Types.TypeChar#getFieldEnd(net.sf.RecordEditor.record.types.FieldDetail, byte[])
+     * @see net.sf.JRecord.Types.TypeChar#getFieldEnd(int, IFieldDetail, byte[])
      */
     @Override
     protected int getFieldEnd(int position, IFieldDetail currField, byte[] record) {
@@ -45,7 +45,8 @@ public class TypeCharNullTerminated extends TypeChar {
     }
 
     /**
-     * @see net.sf.JRecord.Types.TypeChar#getPadByte(java.lang.String)
+     * @see net.sf.JRecord.Types.TypeChar#getPadByte(String)
+     * 
      */
     protected byte getPadByte(String font) {
         return padByte;

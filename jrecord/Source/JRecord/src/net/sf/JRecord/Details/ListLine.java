@@ -69,7 +69,7 @@ public abstract class ListLine extends BaseLine {
 	}
 
 	/**
-	 * @see net.sf.JRecord.Details.AbstractLine#getField(net.sf.JRecord.Common.FieldDetail)
+	 * @see net.sf.JRecord.Details.AbstractLine#getField(IFieldDetail)
 	 */
 	public Object getField(int typeId, IFieldDetail field) {
 	    return getFieldRaw(preferredLayout, field.getPos() - getAdj());
@@ -176,7 +176,7 @@ public abstract class ListLine extends BaseLine {
 	}
 
 	/**
-	 * @see net.sf.JRecord.Details.AbstractLine#setField(net.sf.JRecord.Common.FieldDetail, java.lang.Object)
+	 * @see net.sf.JRecord.Details.AbstractLine#setField(IFieldDetail, Object)
 	 */
 	public void setField(IFieldDetail field, Object value) {
 		if (field == null && (value == null || "".equals(value.toString()))) return;

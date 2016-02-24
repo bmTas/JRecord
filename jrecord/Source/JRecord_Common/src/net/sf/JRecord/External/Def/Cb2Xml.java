@@ -16,6 +16,7 @@ package net.sf.JRecord.External.Def;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Numeric.ConversionManager;
@@ -117,4 +118,15 @@ public class Cb2Xml {
 		CopyBookAnalyzer.setNumericDetails((NumericDefinition) conv.getNumericDefinition());
 		return net.sf.cb2xml.Cb2Xml2.convertToXMLDOM(is, name, debug, format);
 	}
+	
+
+	public static Document convertToXMLDOM(Reader reader, String name,  int binaryFormat, boolean debug, int format) 
+			throws ParserException, LexerException, IOException {
+		
+		Convert conv = ConversionManager.getInstance().getConverter4code(binaryFormat) ;
+	
+		CopyBookAnalyzer.setNumericDetails((NumericDefinition) conv.getNumericDefinition());
+		return net.sf.cb2xml.Cb2Xml2.convert(reader, name, debug, format);
+	}
+
 }

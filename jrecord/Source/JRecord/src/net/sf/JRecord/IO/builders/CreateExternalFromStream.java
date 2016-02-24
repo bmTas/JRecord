@@ -14,7 +14,7 @@ public class CreateExternalFromStream  extends CreateExternalBase  implements IC
 
 	
 
-	public CreateExternalFromStream(CblIOBuilderMultiSchema parent, InputStream inStream, String copybookName) {
+	public CreateExternalFromStream(IGetLoader parent, InputStream inStream, String copybookName) {
 		super(parent);
 		this.copybookName = copybookName;
 		this.inStream = inStream;
@@ -35,9 +35,9 @@ public class CreateExternalFromStream  extends CreateExternalBase  implements IC
 			inStream = null;
 		}
 
-		return parent. loader
+		return parent. getLoader()
 				.loadCopyBook(new ByteArrayInputStream(copybookBytes), copybookName, splitCopybook, 0, 
-						parent.getFont(), parent.copybookFileFormat, 
-						parent.dialect, 0, parent.log);
+						parent.getFont(), parent.getCopybookFileFormat(), 
+						parent.getDialect(), 0, parent.getLog());
 	}
 }

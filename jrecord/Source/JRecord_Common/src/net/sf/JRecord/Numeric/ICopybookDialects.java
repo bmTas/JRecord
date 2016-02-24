@@ -17,5 +17,10 @@ public interface ICopybookDialects {
 	public static final int FMT_MICRO_FOCUS = 21;
 	public static final int FMT_MAINFRAME_COMMA_DECIMAL = 31;
 	public static final int FMT_FUJITSU_COMMA_DECIMAL = 32;
+	
+	public static final int FMT_GNU_COBOL = FMT_OPEN_COBOL;
+	public static final int FMT_GNU_COBOL_MVS = FMT_OPEN_COBOL_MVS;
+	public static final int FMT_GNU_COBOL_MF = FMT_OC_MICRO_FOCUS;
+
 
 }

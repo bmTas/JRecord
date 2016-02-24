@@ -4,13 +4,11 @@ import java.io.IOException;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.RecordException;
-import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.Details.CsvLine;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.def.IO.builders.ICsvIOBuilder;
 import net.sf.JRecord.def.IO.builders.IDefineCsvFields;
 
-public class CsvIOBuilder extends CblIOBuilderBase implements ICsvIOBuilder, IDefineCsvFields {
+public class CsvIOBuilder extends CblIOBuilderBase<ICsvIOBuilder> implements ICsvIOBuilder, IDefineCsvFields {
 
 	private ExternalRecord record = new ExternalRecord();
 	private boolean definedField = false;
@@ -19,7 +17,7 @@ public class CsvIOBuilder extends CblIOBuilderBase implements ICsvIOBuilder, IDe
 	private CsvIOBuilder(String delim, String quote) {
 
 		super(0);
-		setFileOrganization(Constants.IO_NAME_1ST_LINE);
+		setFileOrganization(Constants.IO_UNICODE_NAME_1ST_LINE);
 		record.setQuote(quote);
 		record.setDelimiter(delim);
 		record.setRecordType(Constants.rtDelimitedAndQuote);
@@ -72,6 +70,8 @@ public class CsvIOBuilder extends CblIOBuilderBase implements ICsvIOBuilder, IDe
 			case Constants.IO_UNICODE_CSV_NAME_1ST_LINE:
 			case Constants.IO_NAME_1ST_LINE:
 			case Constants.IO_CSV_NAME_1ST_LINE:
+			case Constants.IO_BIN_NAME_1ST_LINE:
+			case Constants.IO_BIN_CSV_NAME_1ST_LINE:
 				break;
 			default:
 				throw new RecordException("Unless you are reading from a file with field names on the first line, "
@@ -82,13 +82,15 @@ public class CsvIOBuilder extends CblIOBuilderBase implements ICsvIOBuilder, IDe
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.IO.builders.CblIOBuilderBase#newLine()
-	 */
-	@Override
-	public AbstractLine newLine() throws IOException {
-		return new CsvLine(getLayout());
-	}
+//	/* (non-Javadoc)
+//	 * @see net.sf.JRecord.IO.builders.CblIOBuilderBase#newLine()
+//	 */
+//	@Override
+//	public AbstractLine newLine() throws IOException {
+//		LayoutDetail layout = getLayout();
+//		if (layout.)
+//		return new CsvLine(layout);
+//	}
 
 	public IDefineCsvFields defineFields() {
 		return this;
@@ -117,7 +119,7 @@ public class CsvIOBuilder extends CblIOBuilderBase implements ICsvIOBuilder, IDe
 
 	
 	public static ICsvIOBuilder newCsvIOBuilder() {
-		return new CsvIOBuilder("\"", ",");
+		return new CsvIOBuilder(",", "\"");
 	}
 	
 	

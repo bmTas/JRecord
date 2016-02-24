@@ -84,7 +84,7 @@ public class TstCobol1 extends TestCase {
 			Type t = m.getType(field.getType());
 
 			assertTrue("Field: " + field.getName(), t instanceof TypeNum && ((TypeNum) t).isPositive());
-			assertEquals(types[i], field.getType());
+			assertEquals("Index: " + i, types[i], field.getType());
 		}
 
 	}

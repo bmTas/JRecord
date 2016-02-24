@@ -108,20 +108,30 @@ import net.sf.cb2xml.def.Cb2xmlConstants;
 //        		&& (! picture.startsWith("S"))
         		&& (picture.startsWith("-") || picture.startsWith("+") || picture.startsWith("9")
         				|| picture.endsWith("-") || picture.endsWith("+"))
-        		&& CommonCode.checkPicture(picture, '9', '.')
+        		&& CommonCode.checkPicture(picture, '9', '.', 'V')
         ) {
         	if (picture.startsWith("-")) {
         		lType = Type.ftNumZeroPadded;
+        		if (picture.indexOf('V') >= 0) {
+        			lType = Type.ftSignSepLeadAssumedDecimal;
+         		}
         	} else if (picture.startsWith("+")) {
         		lType = Type.ftNumZeroPaddedPN;
+          		if (picture.indexOf('V') >= 0) {
+        			lType = Type.ftSignSepLeadAssumedDecimal;
+         		}
         	} else if (picture.endsWith("-") || picture.endsWith("+")) {
-        		lType = Type.ftSignSeparateTrail;
-        	} else if (picture.startsWith("9")) {
+       			lType = Type.ftSignSeparateTrail;
+       			if (picture.indexOf('V') >= 0) {
+        			lType = Type.ftSignSepTrailAssumedDecimal;
+         		}
+        	} else if (picture.startsWith("9") && (picture.indexOf('V') < 0)) {
         		lType = Type.ftNumZeroPaddedPositive;
         	} else {
         		lType = chkRest(lType, usage, picture, signed, signSeperate, signPosition);
         	}
          } else {
+//        	 System.out.println(">" + picture + "< " + picture.indexOf('9') + " " + picture.startsWith("9") + " " + picture.endsWith("+"));
      		lType = chkRest(lType, usage, picture, signed, signSeperate, signPosition);
         }
         return lType;
@@ -129,7 +139,7 @@ import net.sf.cb2xml.def.Cb2xmlConstants;
 
     private int chkRest(int lType, String usage, String picture, boolean signed,
 			boolean signSeperate, String signPosition) {
-    	if (picture.startsWith("+") && CommonCode.checkPicture(picture, '+', '.')) {
+    	if (picture.startsWith("+") && CommonCode.checkPicture(picture, '+', '.', 'V')) {
     		lType = Type.ftNumRightJustifiedPN;
     	} else if (picture.indexOf('Z') >= 0
     			||  picture.indexOf('-') >= 0

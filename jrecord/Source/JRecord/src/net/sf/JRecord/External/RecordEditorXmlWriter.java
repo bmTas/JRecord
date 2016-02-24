@@ -113,6 +113,9 @@ public class RecordEditorXmlWriter implements CopybookWriter {
        if (copybook.isEmbeddedCr()) {
     	   writer.writeAttribute(Constants.RE_XML_EMBEDDED_CR, "Y");
        }
+       if (copybook.isInitToSpaces()) {
+    	   writer.writeAttribute(Constants.RE_XML_INIT_SPACES, "Y");
+       }
 
        if (master != null && copybook.getParentRecord() >= 0) {
     	   try {

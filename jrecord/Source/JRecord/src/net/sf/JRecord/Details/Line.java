@@ -12,6 +12,7 @@
 package net.sf.JRecord.Details;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
@@ -261,7 +262,12 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
 	 */
 	private void ensureCapacity(int end) {
 		if (end > data.length) {
-		    newRecord(end);
+		    newRecord(Math.max(end, layout.getMinimumRecordLength()));
+		    if (writeLayout >= 0
+		    && writeLayout < layout.getRecordCount()
+		    && layout.getRecord(writeLayout).getLength() < end) {
+		    	writeLayout = -1;
+		    }
 		}
 	}
 
@@ -296,8 +302,14 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
 	private void newRecord(int newSize) {
 //		byte[] sep = layout.getRecordSep();
 		byte[] rec = new byte[newSize];
+		int len = Math.min(rec.length, data.length);
 
-		System.arraycopy(data, 0, rec, 0, data.length);
+		newRecord = false;
+		System.arraycopy(data, 0, rec, 0, len);
+		
+		if (len < rec.length && layout.getInitByte() != 0) {
+			Arrays.fill(rec, len, rec.length, layout.getInitByte());
+		}
 		
 //		if ((layout.getLayoutType() == Constants.rtGroupOfBinaryRecords)
 //				&& sep != null && sep.length > 0) {
@@ -355,7 +367,6 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
     /**
      * Get a fields value
      *
-     * @param record record containg the field
      * @param type type to use when getting the field
      * @param field field to retrieve
      *
@@ -390,10 +401,15 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
     	
         if (field.isFixedFormat()) {
             int pos = field.calculateActualPosition(this);
-            if (pos < 0) {
-            	pos = field.calculateActualPosition(this);
-            }
+//            if (pos < 0) {
+//            	pos = field.calculateActualPosition(this);
+//            }
+            
+//            if (field.calculateActualEnd(this) == 101) {
+//            	 System.out.println("~~ " + field.calculateActualEnd(this));
+//            }
             ensureCapacity(field.calculateActualEnd(this));
+//            System.out.println("~~ " + field.calculateActualEnd(this));
 			data = TypeManager.getSystemTypeManager().getType(type)
 				.setField(getData(), pos, field, value);
         } else  {

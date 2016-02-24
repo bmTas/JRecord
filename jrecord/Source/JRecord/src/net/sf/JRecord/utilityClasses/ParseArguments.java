@@ -42,7 +42,7 @@ public class ParseArguments {
         HashSet<String> valid = new HashSet<String>();
         HashSet<String> validMulti = new HashSet<String>();
         String currArg = null;
-        String currValue = null;
+        StringBuilder currValue = new StringBuilder();
         String sep = "";
 
         for (i = 0; i < validSingleItemArgs.length; i++) {
@@ -54,9 +54,9 @@ public class ParseArguments {
 
         for (i = 0; i < args.length; i++) {
             if (args[i].startsWith("-")) {
-            	updateMap(currArg, currValue);
+            	updateMap(currArg, currValue.toString());
                 
-                currValue = "";
+                currValue.setLength(0);;
                 sep = "";
                 currArg = args[i].toUpperCase();
 
@@ -70,11 +70,11 @@ public class ParseArguments {
                     System.out.println(" ** Invalid Argument " + args[i]);
                 }
             } else {
-                currValue += sep + args[i];
+                currValue.append(sep).append(args[i]);
                 sep = " ";
             }
         }
-        updateMap(currArg, currValue);
+        updateMap(currArg, currValue.toString());
         
         System.out.println();
         System.out.println();

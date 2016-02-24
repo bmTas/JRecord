@@ -20,8 +20,8 @@ public interface ICsvDefinition {
 	public String getQuote();
 
 	/**
-	 * Get how the delimiter are organised (Normal, SEP_FOR_EVERY_FIELD, SEP_FOR_EVERY_FIELD_PLUS_END )
-	 * @return
+	 * Get how the delimiter are organized (Normal, SEP_FOR_EVERY_FIELD, SEP_FOR_EVERY_FIELD_PLUS_END )
+	 * @return Field Delimiter placement
 	 */
 	public int getDelimiterOrganisation();
 
@@ -33,7 +33,7 @@ public interface ICsvDefinition {
 
 	/**
 	 * Get character set
-	 * @return
+	 * @return the character-set (font) of the Csv file.
 	 */
 	public String getFontName();
 

@@ -27,14 +27,14 @@ public interface IFixedWidthSchemaBuilder extends IBasicSchemaBuilder {
 	 * </ul>
 	 * @param length field Length
 	 * @param decimal number of decimal places
-	 * @return
+	 * @return this schema builder (for further updates)
 	 */
 	public IFixedWidthSchemaBuilder addFieldByLength(String name, int type, int length, int decimal);
 	
 	/**
 	 * Skip a specified number of bytes in the record.
 	 * @param numberOfBytes number of bytes to be skipped
-	 * @return
+	 * @return this schema builder (for further updates)
 	 */
 	public IFixedWidthSchemaBuilder skipBytes(int numberOfBytes);
 

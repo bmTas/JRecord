@@ -50,6 +50,7 @@ public class TestTypeUpdates extends TestCase {
 								charset);
 				AbstractFieldValue fieldValue = testLine.getFieldValue(fld);
 				fieldValue.set(inLine.getFieldValue(td.testValue).asString());
+				System.out.println(inLine.getFieldValue(td.testResultHex).asString() + " " + fieldValue.asHex() + " " +  fieldValue.asString());
 				assertEquals("Type 1: " + fld.getType(), inLine.getFieldValue(td.testResultHex).asString(), fieldValue.asHex());
 				
 				if (! fieldValue.isBinary()) {

@@ -936,6 +936,10 @@ public class XmlCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
             } else {
                 lRet = lDecimalStr.length();
             }
+            
+            if (lRet > 0 && (type == Type.ftSignSeparateTrail || type == Type.ftSignSepTrailAssumedDecimal)) {
+            	lRet -= 1;
+            }
         }
 
         //System.out.println("===> " + format + "\t" + lRet);

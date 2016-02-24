@@ -1,6 +1,7 @@
 package net.sf.JRecord.def.IO.builders;
 
 import java.io.InputStream;
+import java.io.Reader;
 
 /**
  * Interface to create CobolIOBuilders (a Builder builder).
@@ -34,7 +35,6 @@ public interface ICobolCopybookIOProvider {
 	 * 
 	 * These are the default values (which can be overriden with the appropriate set* method
 	 * @return requested IOBuilder
-	 * @author Bruce Martin
 	 * 
 	 *<pre> </pre>
 	 *
@@ -75,13 +75,9 @@ public interface ICobolCopybookIOProvider {
 	 *                 .setDialect(ICopybookDialects.FMT_FUJITSU)
 	 *             .newReader("Data-Filename");
 	 * </pre> 
-
-	 * @param copybookFileame name of the Copybook (or schema file).
-	 * @param cobolDialect Cobol Dialect. Values include:<ul>
-	 *   <li><b>ICopybookDialects.FMT_MAINFRAME</b> - Mainframe cobol
-	 *   <li><b>ICopybookDialects.FMT_OPEN_COBOL</b> - Open cobol (or GNU Cobol as it is now known).
-	 *   <li><b>ICopybookDialects.FMT_FUJITSU</b> - Old Free Fujitsu Cobol 3. 
-	 * </ul>
+     *
+     * @param cobolCopybookStream stream to read the Cobol Copybook from
+	 * @param copybookName name of the Copybook (or schema file).
 	 * 
 	 * These are the default values (which can be overriden with the appropriate set* method)
 	 * @return requested IOBuilder
@@ -112,6 +108,15 @@ public interface ICobolCopybookIOProvider {
 	 */
 	public abstract ICobolIOBuilder newIOBuilder(
 			InputStream cobolCopybookStream, String copybookName);
+
+	/**
+	 * Create IO Builder with reader
+	 * @param copybookReader Cobol Copybook Reader
+	 * @param copybookName Name of the Cobol Copybook
+	 * @return Cobol IOBuilder
+	 */
+	public abstract ICobolIOBuilder newIOBuilder(
+			Reader copybookReader, String copybookName);
 
 	/**
 	 * This method returns that will combine multiple Cobol Copybooks into the one internal copybook or File-Schema

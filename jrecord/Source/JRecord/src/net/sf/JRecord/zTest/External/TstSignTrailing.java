@@ -48,13 +48,13 @@ public class TstSignTrailing extends TestCase {
 		assertTrue(line.getFieldValue(0,2).isNumeric());
 		System.out.println(line.getFullLine());
 		
-		assertEquals("0100-121000-00131000-", line.getFullLine());
+		assertEquals("0100-121.00-00131.00-", line.getFullLine());
 		line.getFieldValue(0,0).set(100);
 		line.getFieldValue(0,1).set(121);
 		line.getFieldValue(0,2).set(131);
 
 		System.out.println(line.getFullLine());
 		
-		//assertEquals("0100 121000 00131000 ", line.getFullLine());
+		assertEquals("0100+121.00+00131.00+", line.getFullLine());
 	}
 }

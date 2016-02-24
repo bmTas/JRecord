@@ -56,7 +56,7 @@ public class TypeBinBigEndian extends TypeNum {
     }
 
     /**
-     * @see net.sf.JRecord.Types.Type#getField(byte[], int, net.sf.JRecord.Common.FieldDetail)
+     * @see net.sf.JRecord.Types.Type#getField(byte[], int, IFieldDetail)
      */
     public Object getField(byte[] record,
             			   final int position,
@@ -81,7 +81,7 @@ public class TypeBinBigEndian extends TypeNum {
 
 
     /**
-     * @see net.sf.JRecord.Types.Type#setField(byte[], int, net.sf.JRecord.Common.FieldDetail, java.lang.Object)
+     * @see net.sf.JRecord.Types.Type#setField(byte[], int, IFieldDetail, Object)
      */
     public byte[] setField(byte[] record,
             			 final int position,

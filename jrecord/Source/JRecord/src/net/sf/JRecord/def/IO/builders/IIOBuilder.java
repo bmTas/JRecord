@@ -3,7 +3,6 @@ package net.sf.JRecord.def.IO.builders;
 import java.io.IOException;
 
 import net.sf.JRecord.External.ExternalRecord;
-import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 
 
 /**
@@ -42,65 +41,6 @@ public interface IIOBuilder extends ISchemaIOBuilder{
 	 * @param font the font (or character set) of the File e.g CP037 is US-EBCDIC, CP273 is German EBCDIC
 	 */
 	public abstract IIOBuilder setFont(String font);
-
-	
-
-	/**
-	 * Define record-selection criteria. For a single selection you would do
-	 * 
-	 * @param recordName name of the record 
-	 * @param selectionCriteria selection-criteria
-	 * 
-	 * @return updated IOBuilder
-	 * 
-	 * <pre>
-	 * Usage:
-	 * 
-	 *   IOBldr.setRecordSelection("Header-Record", new FieldSelection("Record-Type", "H"));
-	 * </pre>   
-	 *  or if you want to use or's / and's  
-	 * <pre>  
-	 *   IOBldr.setRecordSelection(
-     *          "Trailer-Record",
-     *          ExternalGroupSelection.newOr(
-     *                  new ExternalFieldSelection("Record-Type", "D"),
-     *                  new ExternalFieldSelection("Record-Type", "E"),
-     *                  new ExternalFieldSelection("Record-Type", "F")
-     * 	 ));
-     * 
-     * This is basically the following expression:
-     *    
-     *         Record-Type = "D"
-     *      or Record-Type = "E"
-     *      or Record-Type = "F"
-     *      
-     * and more complicated boolean logic is possible:
-     * 
-     * 
-     * 	 IOBldr.setRecordSelection(
-     *          "Trailer-Record",
-     *          ExternalGroupSelection.newAnd(
-     *               new ExternalFieldSelection("Record-Type-1", "D"),
-     *               ExternalGroupSelection.newOr(
-     *                    new ExternalFieldSelection("Record-Type-2", "D"),
-     *                    new ExternalFieldSelection("Record-Type-2", "E"),
-     *                    new ExternalFieldSelection("Record-Type-2", "F")
-     *               )
-     *          ));
-     *          
-     *   which is
-     *   
-     *             Record-Type-1 = "D"
-     *       and ( Record-Type-2 = "D"
-     *          or Record-Type-2 = "E"
-     *          or Record-Type-2 = "F" )     
-	 * </pre>
-	 * 
-	 *
-	 */
-	public abstract IIOBuilder setRecordSelection(String recordName, ExternalSelection selectionCriteria);
-
-
 	
 	/**
 	 * Get the ExternalRecord (Schema-Builder) class

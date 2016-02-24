@@ -4,7 +4,7 @@ public interface IGetFieldByName {
 
 	/**
 	 * Get a specific field definition
-	 * @param name of the field
+	 * @param fieldName name of the field
 	 * @return requested field
 	 */
 	public abstract IFieldDetail getField(String fieldName);

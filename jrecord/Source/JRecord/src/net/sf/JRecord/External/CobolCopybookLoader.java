@@ -8,6 +8,7 @@ package net.sf.JRecord.External;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.Reader;
 
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Conversion;
@@ -174,6 +175,52 @@ public class CobolCopybookLoader implements CopybookLoader, ICobolCopybookLoader
         	synchronized (PROBLEM_LOADING_COPYBOOK) {		
 	        	//CopyBookAnalyzer.setNumericDetails((NumericDefinition) conv.getNumericDefinition());
 	            Document xml = net.sf.JRecord.External.Def.Cb2Xml.convertToXMLDOM(inputStream, copyBookName,  binaryFormat, false, copybookFormat);
+
+	            //Document xml = net.sf.cb2xml.Cb2Xml2.convertToXMLDOM(inputStream, copyBookName, false, copybookFormat);
+	
+	            if (xml != null) {
+		            ret = xmlLoader.loadDOMCopyBook(xml, copyBookName,
+		                    splitCopybook, dbIdx,
+						    font, binaryFormat, systemId);
+		        } else if (log != null) {
+	            	log.logMsg(AbsSSLogger.ERROR, "Error parsing Cobol File ???");
+	            }
+        	}
+        } catch (Exception e) {
+        	log = TextLog.getLog(log);
+            log.logMsg(AbsSSLogger.ERROR, e.getMessage());
+            log.logException(AbsSSLogger.ERROR, e);
+            
+            if (! (log instanceof TextLog)) {
+            	e.printStackTrace();
+            }
+            throw new RecordException(
+            					PROBLEM_LOADING_COPYBOOK ,
+                    			new Object[] {copyBookName, e.getMessage()},
+                    			e);
+        }
+
+        return ret;
+    }
+
+    public final ExternalRecord loadCopyBook(Reader reader, //Document copyBookXml,
+            String copyBookName,
+		  		int splitCopybook,
+		  		int dbIdx,
+			  final String font,
+			  final int copybookFormat,	  
+			  final int binaryFormat,
+			  final int systemId,
+			        AbsSSLogger log)
+					  {
+
+        ExternalRecord ret = null;
+        //System.out.println("load Copybook (Cobol)");
+        //Convert conv = ConversionManager.getInstance().getConverter4code(binaryFormat) ;
+        try {
+        	synchronized (PROBLEM_LOADING_COPYBOOK) {		
+	        	//CopyBookAnalyzer.setNumericDetails((NumericDefinition) conv.getNumericDefinition());
+	            Document xml = net.sf.JRecord.External.Def.Cb2Xml.convertToXMLDOM(reader, copyBookName,  binaryFormat, false, copybookFormat);
 
 	            //Document xml = net.sf.cb2xml.Cb2Xml2.convertToXMLDOM(inputStream, copyBookName, false, copybookFormat);
 	

@@ -95,11 +95,7 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 	        return rec;
 		}
 	
-		
-		
-	
-	
-	
+
 		public ExternalRecord loadCopyBook(InputStream is, String layoutName) throws IOException {
 	
 		        int rt = Constants.rtRecordLayout;
@@ -170,6 +166,9 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 				childRec.setEmbeddedCr(
 						"Y".equalsIgnoreCase(
 								line.getFieldValueIfExists(Constants.RE_XML_EMBEDDED_CR).asString()));
+				childRec.setInitToSpaces(
+						"Y".equalsIgnoreCase(
+								line.getFieldValueIfExists(Constants.RE_XML_INIT_SPACES).asString()));
 				
 				s = line.getFieldValueIfExists(Constants.RE_XML_RECORDSEP).asString();
 				if (s != null && ! "".equals(s)) {

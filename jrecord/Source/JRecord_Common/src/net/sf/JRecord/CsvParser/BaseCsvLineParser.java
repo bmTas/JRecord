@@ -8,7 +8,8 @@ import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Types.Type;
 
 /**
- * Class contains comon code for use in other CSV parser's
+ * Class contains common code for use in other CSV parser's
+ * A <i>Csv Parser</i> is used to split a Csv line in to seperate fields
  *
  *
  * @author Bruce Martin
@@ -26,8 +27,8 @@ public abstract class BaseCsvLineParser  {
     }
 
     /**
-     * Wether Quote is to be used in column names
-     * @return
+     * Whether Quote is to be used in column names
+     * @return whether there a quote is to be used in column names 
      */
 	public boolean isQuoteInColumnNames() {
 		return quoteInColNames;
@@ -73,7 +74,7 @@ public abstract class BaseCsvLineParser  {
 	 *
 	 * @param names list of column names
 	 * @param lineDef Csv Definition
-	 * @return
+	 * @return The formated column name line (1st line in the file)
 	 */
 	public String getColumnNameLine(List<String> names, ICsvDefinition lineDef) {
 		StringBuilder buf = new StringBuilder();

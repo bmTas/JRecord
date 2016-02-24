@@ -40,8 +40,8 @@ public class TstMultiCopybookCommon {
 			bldType("Field-4a", 36, 44, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
 		}, {
 			bldType("Record-Type", 1, 1, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
-			bldType("Creation-Date", 2, 8, 0, 25, Conversion.DEFAULT_ASCII_CHARSET),
-			bldType("Version", 10, 5, 2, 22, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Creation-Date", 2, 8, 0, Type.ftNumZeroPaddedPositive, Conversion.DEFAULT_ASCII_CHARSET),
+			bldType("Version", 10, 5, 2, Type.ftAssumedDecimalPositive, Conversion.DEFAULT_ASCII_CHARSET),
 		}, {
 			bldType("Record-Type", 1, 1, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),
 			bldType("Field-1", 2, 10, 0, Type.ftChar, Conversion.DEFAULT_ASCII_CHARSET),

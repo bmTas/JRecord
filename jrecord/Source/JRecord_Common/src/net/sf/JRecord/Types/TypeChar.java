@@ -83,7 +83,7 @@ public class TypeChar implements Type {
 
 
     /**
-     * @see net.sf.JRecord.Types.Type#formatValueForRecord
+     * @see net.sf.JRecord.Types.Type#formatValueForRecord(IFieldDetail, String)
      * (record.layout.DetailField, java.lang.String)
      */
     public String formatValueForRecord(IFieldDetail field, String val) {
@@ -102,7 +102,7 @@ public class TypeChar implements Type {
 
 
     /**
-     * @see net.sf.JRecord.Types.Type#getField(byte[], int, net.sf.JRecord.Common.FieldDetail)
+     * @see net.sf.JRecord.Types.Type#getField(byte[], int, IFieldDetail)
      */
     public Object getField(final byte[] record,
             			   final int position,
@@ -186,7 +186,7 @@ public class TypeChar implements Type {
 
 
     /**
-     * @see net.sf.JRecord.Types.Type#setField(byte[], int, net.sf.JRecord.Common.FieldDetail, java.lang.Object)
+     * @see net.sf.JRecord.Types.Type#setField(byte[], int, IFieldDetail, Object)
      */
     public byte[] setField(byte[] record,
             			 final int position,

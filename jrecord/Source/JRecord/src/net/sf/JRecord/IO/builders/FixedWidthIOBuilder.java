@@ -12,8 +12,8 @@ import net.sf.JRecord.def.IO.builders.IFixedWidthIOBuilder;
  * @author Bruce Martin
  *
  */
-public class FixedWidthIOBuilder extends CblIOBuilderBase 
-implements IFixedWidthIOBuilder, IDefineFixedFieldsByPosition, IDefineFixedFieldsByLength {
+public class FixedWidthIOBuilder extends CblIOBuilderBase<IFixed> 
+implements IFixed /*, IFixedWidthIOBuilder, IDefineFixedFieldsByPosition, IDefineFixedFieldsByLength*/ {
 
 	private ExternalRecord record = new ExternalRecord();
 	private boolean definedField = false;

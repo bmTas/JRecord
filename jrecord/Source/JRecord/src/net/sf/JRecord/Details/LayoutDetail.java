@@ -108,7 +108,9 @@ public class LayoutDetail implements IBasicFileSchema {
 
 	private final boolean multiByteCharset, csvLayout, headerTrailerRecords;
 	
-	private final byte spaceByte;
+	private final byte spaceByte, initByte ;
+	
+	private final int maxPossibleLength, minPossibleLength;
 	
 
 	/**
@@ -135,8 +137,9 @@ public class LayoutDetail implements IBasicFileSchema {
 	        		   final RecordDecider pRecordDecider,
 	        		   final int pFileStructure) 
 	{
-		this(pLayoutName, pRecords, pDescription, pLayoutType, pRecordSep, pEolIndicator, pFontName, pRecordDecider, pFileStructure, null);
+		this(pLayoutName, pRecords, pDescription, pLayoutType, pRecordSep, pEolIndicator, pFontName, pRecordDecider, pFileStructure, null, false);
 	}
+	
 	public LayoutDetail(final String pLayoutName,
  		   final RecordDetail[] pRecords,
  		   final String pDescription,
@@ -146,7 +149,8 @@ public class LayoutDetail implements IBasicFileSchema {
  		   final String pFontName,
  		   final RecordDecider pRecordDecider,
  		   final int pFileStructure,
- 		   final IRecordPositionOption rpOpt) {
+ 		   final IRecordPositionOption rpOpt,
+ 		         boolean  initToSpaces) {
 	    super();
 
         int i, j;
@@ -169,11 +173,13 @@ public class LayoutDetail implements IBasicFileSchema {
 		}
 		this.multiByteCharset = Conversion.isMultiByte(fontName);
 		byte[] t = Conversion.getBytes(" ", fontName);
-		if (t.length == 0) {
+		if (t.length == 1) {
 			this.spaceByte = t[0];
 		} else {
 			this.spaceByte = 0;
 		}
+		
+		initByte = initToSpaces? spaceByte: 0;
 
 		while (recordCount > 0 && pRecords[recordCount - 1] == null) {
 		    recordCount -= 1;
@@ -258,6 +264,16 @@ public class LayoutDetail implements IBasicFileSchema {
 		        }
 	    	}
 	    }
+	    
+	    int maxSize = 0;
+	    int minSize = recordCount > 0 ? Integer.MAX_VALUE: 0;
+		for (i = 0; i < recordCount; i++) {
+			maxSize = java.lang.Math.max(maxSize, records[i].getLength());
+			minSize = java.lang.Math.min(minSize, records[i].getMinumumPossibleLength());
+		}
+		maxPossibleLength = maxSize;
+		minPossibleLength = minSize;
+
 	    this.headerTrailerRecords = hasFilePosRecords;
 	    csvLayout = csv;
 	}
@@ -274,6 +290,7 @@ public class LayoutDetail implements IBasicFileSchema {
 		return records[layoutIdx].getField(fieldIdx);
 	}
 
+	
 	/**
 	 * Get the field Description array
 	 *
@@ -478,15 +495,26 @@ public class LayoutDetail implements IBasicFileSchema {
      * @return the maximum length
      */
     public int getMaximumRecordLength() {
-        int i;
-        int maxSize = 0;
-		for (i = 0; i < recordCount; i++) {
-			maxSize = java.lang.Math.max(maxSize, records[i].getLength());
-		}
-
-		return maxSize;
+    	return maxPossibleLength;
+//        int i;
+//        int maxSize = 0;
+//		for (i = 0; i < recordCount; i++) {
+//			maxSize = java.lang.Math.max(maxSize, records[i].getLength());
+//		}
+//
+//		return maxSize;
     }
 
+    public int getMinimumRecordLength() {
+    	return minPossibleLength;
+//        int i;
+//        int maxSize = 0;
+//		for (i = 0; i < recordCount; i++) {
+//			maxSize = java.lang.Math.max(maxSize, records[i].getLength());
+//		}
+//
+//		return maxSize;
+    }
 
     /**
      * Return the file structure
@@ -935,6 +963,13 @@ public class LayoutDetail implements IBasicFileSchema {
 		return spaceByte;
 	}
 
+
+	/**
+	 * @return the initByte
+	 */
+	public final byte getInitByte() {
+		return initByte;
+	}
 
 	public final boolean isCsvLayout() {
 		return csvLayout;

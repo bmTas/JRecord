@@ -11,6 +11,7 @@ import net.sf.JRecord.def.IO.builders.ICsvIOBuilder;
 import net.sf.JRecord.def.IO.builders.IFixedWidthIOBuilder;
 import net.sf.JRecord.def.IO.builders.IIOCopybookProvider;
 import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
+import net.sf.JRecord.def.IO.builders.Icb2xmlIOProvider;
 
 
 /**
@@ -56,7 +57,7 @@ public class JRecordInterface1 {
 	 * Create IO Builders for Cb2Xml-xml schemas (created from Cobol copybooks
 	 * <br/><b><font color="blue">Note:</font> This option is new, it has undergone basic testing</b>
 	 */
-	public static final ICobolCopybookIOProvider CB2XML = new FileSchemaBuilder(CopybookLoaderFactory.CB2XML_LOADER); 
+	public static final Icb2xmlIOProvider CB2XML = new FileSchemaBuilder(CopybookLoaderFactory.CB2XML_LOADER); 
 
 	/**
 	 * Create IOBuilders for Record-Editor Xml descriptions
@@ -71,8 +72,11 @@ public class JRecordInterface1 {
 	public static final SchemaIOBuilderProvider  SCHEMA = new SchemaIOBuilderProvider(); 
 
 	/**
-	 * Create Csv-IO-Builders
-	 * <br/><b><font color="blue">Note:</font> This option is new, it has undergone basic testing</b>
+	 * Create Csv-IO-Builders. Typical usage for reading is:
+	 * 
+	 * <pre>
+	 * </pre>
+	 * 
 	 */
 	public static final CsvIOBuilderProvider        CSV = new CsvIOBuilderProvider();
 	

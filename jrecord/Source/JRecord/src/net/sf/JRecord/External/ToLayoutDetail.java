@@ -26,7 +26,7 @@ public class ToLayoutDetail {
     private static ToLayoutDetail instance = null;
 
 	/**
-	 * onvert an ExternalRecord into a LayoutDetail (internal form)
+	 * convert an ExternalRecord into a LayoutDetail (internal form)
 	 *
 	 * @param recordDefinition Standard record definition
 	 *
@@ -44,6 +44,8 @@ public class ToLayoutDetail {
 
 	    String fontName = recordDefinition.getFontName();
 	    byte[] recordSep = CommonBits.getEolBytes( recordDefinition.getRecordSep(), recordSepString, fontName);
+	    
+	    recordDefinition.setParentsFromName();
 
 		
 		if (recordDefinition.getNumberOfRecords() == 0) {
@@ -82,23 +84,25 @@ public class ToLayoutDetail {
 
 
 	/**
-	 * @param recordDefinition
-	 * @param layouts
-	 * @param recordSepString
-	 * @param recordSep
-	 * @return
+	 * @param recordDefinition  Schema-Builder (External schema definitions
+	 * @param recordDefs Record Definitions
+	 * @param recordSepString Record (or line) separator (String)
+	 * @param recordSep Record Separator (bytes)
+	 * @return requested schema (Layoutdetail - internal schema format)
 	 */
 	private LayoutDetail genSchema(ExternalRecord recordDefinition,
-			RecordDetail[] layouts, String recordSepString, byte[] recordSep) {
+			RecordDetail[] recordDefs, String recordSepString, byte[] recordSep) {
 		return new LayoutDetail(recordDefinition.getRecordName(),
-	            layouts,
+	            recordDefs,
 	            recordDefinition.getDescription(),
 	            recordDefinition.getRecordType(),
 	            recordSep,
 	            recordSepString,
 	            recordDefinition.getFontName(),
 	            null,
-	            recordDefinition.getFileStructure());
+	            recordDefinition.getFileStructure(),
+	            null,
+	            recordDefinition.isInitToSpaces());
 	}
 
 

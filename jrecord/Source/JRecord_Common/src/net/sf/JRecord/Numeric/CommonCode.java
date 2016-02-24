@@ -10,10 +10,16 @@ public class CommonCode {
 		int iType = 0;
 		if (signed ||  picture.startsWith("S")) {
 			if (signSeperate) {
+				boolean assumedDecimal = picture.indexOf('V') >= 0;
+				
+				iType = Type.ftSignSeparateTrail;
 				if ("leading".equals(signPosition)) {
 					iType = Type.ftSignSeparateLead;
-				} else {
-					iType = Type.ftSignSeparateTrail;
+					if (assumedDecimal) {
+						iType = Type.ftSignSepLeadAssumedDecimal;
+					}
+				} else if (assumedDecimal) {
+					iType = Type.ftSignSepTrailAssumedDecimal;
 				}
 			} else {
 				if (binaryFormat == ICopybookDialects.FMT_MAINFRAME) {
@@ -37,7 +43,7 @@ public class CommonCode {
 	 *
 	 * @return wether it is a valid picture
 	 */
-	public static final boolean checkPicture(String pict, char validChar, char decimalChar) {
+	public static final boolean checkPicture(String pict, char validChar, char decimalChar, char altDecimal) {
 
 
 		boolean check = false;
@@ -80,7 +86,7 @@ public class CommonCode {
 						return false;
 					}
 					lastChSearch = true;
-				} else if (ch == decimalChar) {
+				} else if (ch == decimalChar || ch == altDecimal) {
 						if (foundDot) {
 							return false;
 						}
@@ -132,11 +138,11 @@ public class CommonCode {
 					case 'V':
 						break;
 					case '+':
-                                		if (! leadingSign && i == pict.length() - 1) break;
+                        if (! leadingSign && i == pict.length() - 1) break;
 						if (! plusAllowed) return false;
 						break;
 					case '-':
-                            			if (! leadingSign && i == pict.length() - 1) break;
+                        if (! leadingSign && i == pict.length() - 1) break;
 						if (! minusAllowed) return false;
 						break;
 					case 'S':

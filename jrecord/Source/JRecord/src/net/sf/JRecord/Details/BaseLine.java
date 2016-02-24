@@ -22,7 +22,6 @@ public abstract class BaseLine implements AbstractLine {
     /**
      * Get a fields value
      *
-     * @param record record containg the field
      * @param type type to use when getting the field
      * @param field field to retrieve
      *
@@ -64,7 +63,7 @@ public abstract class BaseLine implements AbstractLine {
 
 	/**
 	 * Get Field Iterator for the requested Record-Type
-	 * @param recordNumber Record Name
+	 * @param recordName Record Name to retrieve the field list for.
 	 * @return Field Iterator
 	 */
 	@Override public final FieldIterator getFieldIterator(String recordName) {

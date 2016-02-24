@@ -28,7 +28,9 @@ public class DefaultLineProvider implements LineProvider {
      * @return line just created
      */
     public AbstractLine getLine(LayoutDetail recordDescription) {
-		if (recordDescription.isCsvLayout() && CommonBits.useCsvLine()) {
+    	if (recordDescription.isCsvLayout() 
+    	&& (! recordDescription.isBinCSV())
+    	&& CommonBits.useCsvLine()) {
 			return new CsvLine(recordDescription);
 		}
         return new Line(recordDescription);
@@ -43,7 +45,9 @@ public class DefaultLineProvider implements LineProvider {
      * @return line
      */
     public AbstractLine getLine(LayoutDetail recordDescription, String linesText) {
-		if (recordDescription.isCsvLayout() && CommonBits.useCsvLine()) {
+    	if (recordDescription.isCsvLayout() 
+    	&& (! recordDescription.isBinCSV())
+    	&& CommonBits.useCsvLine()) {
 			return new CsvLine(recordDescription, linesText);
 		}
         return new Line(recordDescription, linesText);
@@ -59,7 +63,9 @@ public class DefaultLineProvider implements LineProvider {
      * @return line
      */
     public AbstractLine getLine(LayoutDetail recordDescription, byte[] lineBytes) {
-		if (recordDescription.isCsvLayout() && CommonBits.useCsvLine()) {
+		if (recordDescription.isCsvLayout() 
+		&& (! recordDescription.isBinCSV())
+		&& CommonBits.useCsvLine()) {
 			return new CsvLine(recordDescription, Conversion.toString(lineBytes, recordDescription.getFontName()));
 		}
 

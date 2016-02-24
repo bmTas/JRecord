@@ -35,12 +35,10 @@ public abstract class BaseFieldValue  {
 	/**
 	 * Create a field value
 	 *
-	 * @param line line the field value belongs to
 	 * @param fieldDetails Field Description
 	 */
 	public BaseFieldValue(IFieldDetail fieldDetails) {
 		field = fieldDetails;
-
 	}
 
 	/**

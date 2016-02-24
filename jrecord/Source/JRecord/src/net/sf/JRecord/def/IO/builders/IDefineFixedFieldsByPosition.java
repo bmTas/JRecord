@@ -25,9 +25,9 @@ public interface IDefineFixedFieldsByPosition {
 	 * 
 	 * @param name field name
 	 * @param type Field type. Values include:<ul>
-	 *  <li>Type.ftChar - character field
-	 *  <li>Type.ftNumLeftJustified - left justified namber
-	 *  <li>Type.ftNumRightJustified - Right justified number
+	 *  <li><b>Type.ftChar</b> - character field
+	 *  <li><b>Type.ftNumLeftJustified</b> - left justified namber
+	 *  <li><b>Type.ftNumRightJustified</b> - Right justified number
 	 * </ul>
 	 * @param pos starting position of the field
 	 * @param decimal number of decimal places (fixed length numeric fields)

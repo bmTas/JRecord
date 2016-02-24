@@ -16,8 +16,7 @@ import net.sf.JRecord.Details.LineProvider;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ToLayoutDetail;
-import net.sf.JRecord.IO.builders.CblIOBuilderSchemaFilename;
-import net.sf.JRecord.IO.builders.CblIOBuilderSchemaStream;
+import net.sf.JRecord.IO.builders.CblIOBuilderMultiSchema;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
@@ -57,7 +56,7 @@ public class CobolIoProvider {
     /**
      * Create a new Cobol IOBulder for a file.
      * 
-     * @param copybookFileame name of the Copybook (or schema file).
+     * @param copybookFilename name of the Copybook (or schema file).
      * @param cobolDialect Cobol Dialect. Values include:<ul>
      *   <li><b>ICopybookDialects.FMT_MAINFRAME</b> - Mainframe cobol
      *   <li><b>ICopybookDialects.FMT_OPEN_COBOL</b> - Open cobol (or GNU Cobol as it is now known).
@@ -67,33 +66,37 @@ public class CobolIoProvider {
      * These are the default values (which can be overriden with the appropriate set* method
      * @return requested IOBuilder
      */
-	public ICobolIOBuilder newIOBuilder(String copybookFileame, int cobolDialect) {
-    	return new CblIOBuilderSchemaFilename(copybookFileame, new CobolCopybookLoader(), cobolDialect);
+	public ICobolIOBuilder newIOBuilder(String copybookFilename, int cobolDialect) {
+		return new CblIOBuilderMultiSchema(copybookFilename, new CobolCopybookLoader(), cobolDialect);
+//    	return new CblIOBuilderSchemaFilename(copybookFileame, new CobolCopybookLoader(), cobolDialect);
     }
 
     /**
      * Create a new Mainframe-Cobol IOBulder for a file.
-     * @param copybookFileame name of the Copybook (or schema file).
+     * @param cobolCopybookStream stream to read the Cobol Copybook from
+     * @param copybookName name of the Cobol-Copybook.
      * @return requested IOBuilder
      */
-	public ICobolIOBuilder newIOBuilder(InputStream cobolCopybookStream, String copybookName) {
+	public ICobolIOBuilder newIOBuilder(InputStream cobolCopybookStream, String copybookName) throws IOException {
     	return newIOBuilder(cobolCopybookStream, copybookName, ICopybookDialects.FMT_MAINFRAME);
     }
     
     /**
      * Create a new Cobol IOBulder for a file.
-     * @param copybookFileame name of the Copybook (or schema file).
+     * @param cobolCopybookStream stream to read the Cobol Copybook from
+     * @param copybookName name of the Cobol-Copybook.
      * @param cobolDialect Cobol Dialect. Values include:<ul>
      *   <li><b>ICopybookDialects.FMT_MAINFRAME</b> - Mainframe cobol
      *   <li><b>ICopybookDialects.FMT_OPEN_COBOL</b> - Open cobol (or GNU Cobol as it is now known).
      *   <li><b>ICopybookDialects.FMT_FUJITSU</b> - Old Free Fujitsu Cobol 3. 
      * </ul>
      * 
-     * These are the default values (which can be overriden with the appropriate set* method
+     * These are the default values (which can be over-ridden with the appropriate set* method
      * @return requested IOBuilder
      */
 	public ICobolIOBuilder newIOBuilder(InputStream cobolCopybookStream, String copybookName, int cobolDialect) {
-    	return new CblIOBuilderSchemaStream(cobolCopybookStream, copybookName, new CobolCopybookLoader(), cobolDialect);
+    	return new CblIOBuilderMultiSchema(cobolCopybookStream, copybookName, new CobolCopybookLoader(), cobolDialect);
+//    	return new CblIOBuilderSchemaStream(cobolCopybookStream, copybookName, new CobolCopybookLoader(), cobolDialect);
     }
     
 
@@ -223,7 +226,9 @@ public class CobolIoProvider {
      /**
       * Create a line writer for a Cobol File
       * 
-      * @param fileStructure structure of the output file
+      * @param schema File-Schema (or file definition)
+      * @param outputFileName name of the file to be written
+      * 
       * @return Line writer for the file
       */
      public AbstractLineWriter getLineWriter(IBasicFileSchema schema, String outputFileName)

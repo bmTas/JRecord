@@ -7,7 +7,6 @@ import java.io.IOException;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.IO.CobolIoProvider;
@@ -85,7 +84,6 @@ public class TstReadingWriting11 extends TestCase {
 	}
 
 	private void checkLine(AbstractLine line, int levelCount, int attrCount) throws RecordException {
-		LayoutDetail layout = line.getLayout();
 		assertEquals("r", line.getFieldValue("Record-Type").asString());
 		assertEquals(levelCount, line.getFieldValue("Level-Count").asInt());
 		assertEquals(attrCount, line.getFieldValue("Attr-Count").asInt());

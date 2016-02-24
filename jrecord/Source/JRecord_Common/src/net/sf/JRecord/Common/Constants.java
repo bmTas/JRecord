@@ -52,11 +52,12 @@ public interface Constants {
     public static final int IO_FIXED_LENGTH_RECORDS = 2;
     	/** Alias for IO_FIXED_LENGTH_RECORDS */
     public static final int IO_FIXED_LENGTH = IO_FIXED_LENGTH_RECORDS;
-    public static final int IO_BINARY_IBM_4680       = 3;
+    public static final int IO_BINARY_IBM_4680 = 3;
     public static final int IO_VB           = 4;
     public static final int IO_VB_DUMP      = 5;
     public static final int IO_VB_FUJITSU   = 7;
-    public static final int IO_VB_OPEN_COBOL   = 8;
+    public static final int IO_VB_GNU_COBOL = 8;
+    public static final int IO_VB_OPEN_COBOL= IO_VB_GNU_COBOL;
     public static final int IO_BIN_TEXT     = 9;
     public static final int IO_FIXED_LENGTH_CHAR = 10;
     
@@ -162,6 +163,7 @@ public interface Constants {
 	public static final String RE_XML_RECORDNAME  = "RECORDNAME";
 	public static final String RE_XML_RECORDTYPE  = "RECORDTYPE";
 	public static final String RE_XML_EMBEDDED_CR = "EMBEDDEDCR";
+	public static final String RE_XML_INIT_SPACES = "INITSPACES";
 	public static final String RE_XML_RECORDSEP   = "RecSep";
 	public static final String RE_XML_STYLE       = "STYLE";
 	public static final String RE_XML_SYSTEMNAME  = "SYSTEMNAME";

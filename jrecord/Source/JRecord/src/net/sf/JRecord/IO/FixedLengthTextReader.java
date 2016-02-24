@@ -22,7 +22,7 @@ public class FixedLengthTextReader extends BasicTextLineReader {
 
 
     /**
-     * @see net.sf.JRecord.StandardLineReader#open(java.io.InputStream, net.sf.JRecord.Details.LayoutDetail)
+     * @see net.sf.JRecord.IO.AbstractLineReader#open(InputStream, LayoutDetail)
      */
     public void open(InputStream inputStream, LayoutDetail layout)
     throws IOException {
@@ -33,6 +33,4 @@ public class FixedLengthTextReader extends BasicTextLineReader {
     	
     	super.open(new FixedLengthCharReader(layout.getMaximumRecordLength()), inputStream, layout, font);
     }
-
-
 }

@@ -17,9 +17,10 @@ implements AbstractManager {
 
 	/**
 	 * Create a Named Manager
+	 * @param managerName name of the "Manager"
 	 * @param numberOfSystemEntries number of System Entries
 	 * @param startOfUserRange first user key
-	 * @param numberOfUserEntries number of user entries
+	 * @param initialArray array of classes to be returned to the user
 	 */
 	public BasicNamedManager(String managerName, int numberOfSystemEntries, int startOfUserRange, final managedClass[] initialArray) {
 		super(numberOfSystemEntries, startOfUserRange, initialArray);

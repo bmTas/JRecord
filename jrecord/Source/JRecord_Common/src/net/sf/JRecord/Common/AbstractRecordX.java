@@ -33,9 +33,9 @@ public interface AbstractRecordX<FieldDefinition extends IFieldDetail> extends A
 	public abstract FieldDefinition getField(String fieldName);
 
 	/**
-	 * Get a field (by group names / field name
+	 * Get a field (by group names / field name)
 	 * @param fieldNames
-	 * @return
+	 * @return request field
 	 */
 	public abstract IFieldDetail getGroupField(String... fieldNames);
 

@@ -38,7 +38,7 @@ public class TypeBinLittleEndian extends TypeNum {
      * and what is to be displayed on the screen for Little-Endian
      * binary integers.
      *
-     * @param isPostive wether it is a positive integer
+     * @param isPositive whether it is a positive integer
      */
     public TypeBinLittleEndian(final boolean isPositive) {
         super(false, true, true, isPositive, true, true);
@@ -52,7 +52,8 @@ public class TypeBinLittleEndian extends TypeNum {
      * and what is to be displayed on the screen for Little-Endian
      * binary integers.
      *
-     * @param isPostive wether it is a positive integer
+     * @param isPositive whether it is a positive integer
+     * @param positiveStorage wether to use positive or signed storage
      */
     public TypeBinLittleEndian(final boolean isPositive, boolean positiveStorage) {
         super(false, true, true, isPositive, true, true);
@@ -60,7 +61,7 @@ public class TypeBinLittleEndian extends TypeNum {
     }
 
     /**
-     * @see net.sf.JRecord.Types.Type#getField(byte[], int, net.sf.JRecord.Common.FieldDetail)
+     * @see net.sf.JRecord.Types.Type#getField(byte[], int, IFieldDetail)
      */
     public Object getField(byte[] record,
             			   final int position,
@@ -84,7 +85,7 @@ public class TypeBinLittleEndian extends TypeNum {
 
 
     /**
-     * @see net.sf.JRecord.Types.Type#setField(byte[], int, net.sf.JRecord.Common.FieldDetail, java.lang.Object)
+     * @see net.sf.JRecord.Types.Type#setField(byte[], int, IFieldDetail, Object)
      */
     public byte[] setField(byte[] record,
               final int position,

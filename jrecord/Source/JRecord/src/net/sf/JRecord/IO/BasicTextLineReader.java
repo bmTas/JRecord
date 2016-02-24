@@ -32,8 +32,10 @@ public abstract class BasicTextLineReader extends AbstractLineReader {
 	  }
 
 	/**
-	 * @see net.sf.JRecord.JRecordInterface1#read()
+	 * Method to do the actual read. It is called by read in AbstractLineReader
+	 * @see AbstractLineReader#read()
 	 */
+	@Override
 	public AbstractLine readImplementation() throws IOException {
 	    AbstractLine ret = null;
 	

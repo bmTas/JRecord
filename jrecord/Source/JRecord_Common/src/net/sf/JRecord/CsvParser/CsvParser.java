@@ -13,9 +13,9 @@ public class CsvParser {
 	 * </ol>
 	 *
 	 * @param fieldNumber  field to retrieve
-	 * @param line line to parse for fields
+	 * @param dataSource data-line to parse for fields
 	 * @param lineDef Csv Definition
-	 * @return Array containg line before the field, The requested field, The line after
+	 * @return Array containing line before the field, The requested field, The line after
 	 * the request field.
 	 */
 	public List<String> getLine(int fieldNumber, ICharIterator dataSource, ICsvDefinition lineDef) {

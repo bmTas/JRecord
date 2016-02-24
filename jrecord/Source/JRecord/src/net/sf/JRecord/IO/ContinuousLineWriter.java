@@ -10,8 +10,9 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.Details.RecordDetail;
 
 
 /**
@@ -26,8 +27,6 @@ public class ContinuousLineWriter extends AbstractLineWriter {
     private boolean toInit = true;
     private byte fillByte = 0;
     
-
-
 
     /**
      * create binary line writer
@@ -64,10 +63,9 @@ public class ContinuousLineWriter extends AbstractLineWriter {
 
         byte[] rec = line.getData();
         int pref = line.getPreferredLayoutIdx();
-        LayoutDetail l = line.getLayout();
         int prefLength;
         
-        if (pref < 0 || ((prefLength = l.getRecord(pref).getLength()) == rec.length) ) {
+        if (pref < 0 || ((prefLength = findLength(pref, line)) == rec.length) ) {
         	outStream.write(rec);    	
         } else if (prefLength < rec.length) {
         	outStream.write(rec, 0, prefLength);
@@ -86,6 +84,18 @@ public class ContinuousLineWriter extends AbstractLineWriter {
     		}
         }
     }
+
+    
+	private int findLength(int pref, AbstractLine line) {
+		
+		RecordDetail rec = line.getLayout().getRecord(pref);
+		if (rec.hasDependingOn()) {
+			FieldDetail f =  rec.getField(rec.getFieldCount() - 1);
+			int len = rec.calculateActualPosition(line, f.getDependingOnDtls(), f.getEnd() + 1) - 1;
+			return len;
+		}
+		return rec.getLength();
+	}
 
 
     /**

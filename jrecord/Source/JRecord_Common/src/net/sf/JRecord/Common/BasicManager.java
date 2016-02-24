@@ -44,9 +44,9 @@ public class BasicManager<managedClass> {
     /**
      *  This class stores / retrieves variations on a Class
      *
-     * @param numberOfSystemEntries the number of system entires
+     * @param numberOfSystemEntries the number of system entries
      * @param startOfUserRange where the user range starts
-     * @param numberOfUserEntries the number of user types to be allowed
+     * @param initialArray array of classes to be stored / requested by the user
      */
     public BasicManager(final int numberOfSystemEntries,
     				    final int startOfUserRange,

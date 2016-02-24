@@ -58,7 +58,7 @@ public interface IBasicFileSchema {
 
 	/**
 	 * Get Quote (for CSV files)
-	 * @return
+	 * @return get the Quote character
 	 */
 	public abstract String getQuote();
 	

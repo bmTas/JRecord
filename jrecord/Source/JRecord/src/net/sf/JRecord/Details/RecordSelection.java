@@ -6,6 +6,13 @@ import java.util.List;
 import net.sf.JRecord.detailsSelection.FieldSelect;
 import net.sf.JRecord.detailsSelection.RecordSel;
 
+
+/**
+ * Used to check if the line is a specific Record.
+ *
+ * @author Bruce Martin
+ *
+ */
 public class RecordSelection {
 	
 	private RecordSel recSel;
@@ -30,8 +37,7 @@ public class RecordSelection {
 //	}
 
 	/**
-	 * @return
-	 * @see java.util.ArrayList#size()
+	 * @return size of the selection
 	 */
 	public int size() {
 		if (recSel == null) {
@@ -42,7 +48,7 @@ public class RecordSelection {
 
 
 	/**
-	 * @return
+	 * @return the number of child elements
 	 * @see net.sf.JRecord.ExternalRecordSelection.ExternalSelection#getElementCount()
 	 */
 	public int getElementCount() {
@@ -77,10 +83,10 @@ public class RecordSelection {
 //		}
 //	}
 	
-	/**
-	 * Add a list of TstFields
-	 * @param flds fields to add
-	 */
+//	/**
+//	 * Add a list of TstFields
+//	 * @param flds fields to add
+//	 */
 //	public void add(List<TstField> flds) {
 //		for (TstField fld : flds) {
 //    		addTstField(fld.fieldName, fld.value);
@@ -97,8 +103,11 @@ public class RecordSelection {
 	public RecordSelectionResult isSelected(AbstractLine line) {
 		RecordSelectionResult ret = RecordSelectionResult.NO;
 		
-		if (recSel != null) {
-			
+		if (recSel == null) {
+			if (defaultRecord) {
+				ret = RecordSelectionResult.DEFAULT;
+			} 
+		} else {
 			if (recSel.isSelected(line)) {
 				if (defaultRecord) {
 					ret = RecordSelectionResult.DEFAULT;

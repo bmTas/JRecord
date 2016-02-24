@@ -11,12 +11,10 @@ import net.sf.JRecord.Option.IOptionType;
 import net.sf.JRecord.Option.OptionResult;
 import net.sf.JRecord.Option.OptionType;
 
-//import net.sf.JRecord.Details.RecordDetail;
-
 
 /**
  * This class stores the description of one field in a record (or Line).
- * It is used by the {@link RecordDetail} class
+ * It is used by the <b>RecordDetail</b> class
  *
  * <pre>
  *     LayoutDetail  - Describes a file

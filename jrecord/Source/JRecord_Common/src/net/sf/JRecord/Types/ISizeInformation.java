@@ -4,7 +4,7 @@ public interface ISizeInformation {
 
 	/**
 	 * Gets the normal size of a type (in bytes)
-	 * @return
+	 * @return normal size of a type (in bytes)
 	 */
 	public int getNormalSize();
 }

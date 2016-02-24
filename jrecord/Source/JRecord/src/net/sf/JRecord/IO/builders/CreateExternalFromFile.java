@@ -9,7 +9,7 @@ public class CreateExternalFromFile extends CreateExternalBase implements ICreat
 
 	
 
-	public CreateExternalFromFile(CblIOBuilderMultiSchema parent, String copybookFilename) {
+	public CreateExternalFromFile(IGetLoader parent, String copybookFilename) {
 		super(parent); 
 		this.copybookFilename = copybookFilename;
 	} 
@@ -17,6 +17,7 @@ public class CreateExternalFromFile extends CreateExternalBase implements ICreat
 
 	@Override
 	public ExternalRecord createExternalRecordImp() throws Exception {
-		return parent.loader.loadCopyBook(copybookFilename, splitCopybook, 0, parent.getFont(), parent.copybookFileFormat, parent.dialect, 0, parent.log);
+		return parent.getLoader().loadCopyBook(copybookFilename, splitCopybook, 0, parent.getFont(), 
+				parent.getCopybookFileFormat(), parent.getDialect(), 0, parent.getLog());
 	}
 }

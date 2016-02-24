@@ -10,9 +10,9 @@ import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
  * @author Bruce Martin
  *
  */
-public class SchemaIOBuilder extends CblIOBuilderBase {
+public class SchemaIOBuilder extends CblIOBuilderBase<ISchemaIOBuilder> implements ISchemaIOBuilder {
 
-	public static ISchemaIOBuilder newSchemaIOBuilder(LayoutDetail schema) {
+	public static ISchemaIOBuilder newSchemaIOBuilder(LayoutDetail schema) { 
 		return new SchemaIOBuilder(schema);
 	}
 	

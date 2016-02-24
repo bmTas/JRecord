@@ -54,6 +54,8 @@ public interface Type {
 	public static final int ftAssumedDecimal     = 8;
 	public static final int ftSignSeparateLead   = 9;
 	public static final int ftSignSeparateTrail  = 10;
+	public static final int ftSignSepLeadAssumedDecimal   = 44;
+	public static final int ftSignSepTrailAssumedDecimal  = 45;
 	public static final int ftDecimal            = 11;
 	public static final int ftBinaryInt          = 15;
 	public static final int ftPostiveBinaryInt   = 16;
@@ -172,16 +174,16 @@ public interface Type {
 
 
     /**
-     * wether it is a binary field
+     * whether it is a binary field
      *
-     * @return wether it is binary field
+     * @return whether it is binary field
      */
     public abstract boolean isBinary();
 
     /**
      * Is this a Numeric Type
      *
-     * @return wether it is a numeric Type
+     * @return whether it is a numeric Type
      */
     public abstract boolean isNumeric();
 
@@ -194,7 +196,8 @@ public interface Type {
 
     /**
      * Get the character used for the decimal point
-     * @return
+     * @return the character that marks the decimal point (normally '.' but can be ','
+     * for our German user's
      */
     public abstract char getDecimalChar();
 }

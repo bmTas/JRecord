@@ -18,8 +18,8 @@ import java.util.List;
 public interface ICsvLineParser {
 
 	/**
-	 * Controls wether Column names on the first line are in Quotes
-	 * @return wether Column names on the first line are in Quotes
+	 * Controls whether Column names on the first line are in Quotes
+	 * @return whether Column names on the first line are in Quotes
 	 */
 	public abstract boolean isQuoteInColumnNames();
 
@@ -28,6 +28,7 @@ public interface ICsvLineParser {
 	 * @param fieldNumber  field to retrieve
 	 * @param line line to parse for fields
      * @param csvDefinition Csv details like delimiter, quote etc
+     * @return requested field
 	 */
     public abstract String getField(int fieldNumber, String line, ICsvDefinition csvDefinition);
 
@@ -77,7 +78,7 @@ public interface ICsvLineParser {
      * Get The file Structure (i.e. Reader / Writer for the CSV file)
      * @param csvDefinition Csv Definition details.
      * @param namesOnFirstLine wether names are on the first line 
-     * @return
+     * @return calculate the file-structure (or file organisation)
      */
     public int getFileStructure(ICsvDefinition csvDefinition, boolean namesOnFirstLine, boolean binary) ;
     

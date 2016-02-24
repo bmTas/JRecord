@@ -15,9 +15,11 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
+import net.sf.JRecord.Details.RecordDetail;
 
 
 /**
@@ -146,6 +148,12 @@ public class ContinuousLineReader extends AbstractLineReader {
 		    throw new RuntimeException("Can Not Determine Record Type: " + tmpLine.getFullLine());
 		}
 
+		RecordDetail rec = super.getLayout().getRecord(pref);
+		if (rec.hasDependingOn()) {
+			FieldDetail f =  rec.getField(rec.getFieldCount() - 1);
+			int len = rec.calculateActualPosition(tmpLine, f.getDependingOnDtls(), f.getEnd() + 1) - 1;
+			return len;
+		}
 		return lengths[pref];
 	}
 

@@ -47,7 +47,7 @@ public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLine
 
 
 	/**
-	 * @see net.sf.JRecord.CsvParser.ICsvLineParser#getField(int, java.lang.String, java.lang.String, java.lang.String)
+	 * @see net.sf.JRecord.CsvParser.ICsvLineParser#getField(int, String, ICsvDefinition)
 	 */
 	public String getField(int fieldNumber, String line, ICsvDefinition lineDef) {
 		String[] lineVals = split(fieldNumber, line, lineDef);
@@ -82,7 +82,7 @@ public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLine
 	}
 
 	/**
-	 * @see net.sf.JRecord.CsvParser.ICsvLineParser#setField(int, int, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 * @see net.sf.JRecord.CsvParser.ICsvLineParser#setField(int, int, String, ICsvDefinition, String)
 	 */
 	public String setField(int fieldNumber, int fieldType, String line, ICsvDefinition lineDef, String newValue) {
 		String[] lineVals = split(fieldNumber, line, lineDef);

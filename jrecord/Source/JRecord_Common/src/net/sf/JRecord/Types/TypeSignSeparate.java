@@ -24,7 +24,9 @@ import net.sf.JRecord.Common.RecordException;
  */
 public class TypeSignSeparate extends TypeNum {
 
-    private boolean isLeadingSign = true;
+    private final boolean isLeadingSign;
+    private final boolean isActualDecimal;
+    
     /**
      * Define mainframe Zoned Decimal Type
      *
@@ -37,13 +39,14 @@ public class TypeSignSeparate extends TypeNum {
     public TypeSignSeparate(final int typeId) {
         super(false, true, true, false, false, false);
 
-        isLeadingSign = (typeId == Type.ftSignSeparateLead);
+        isLeadingSign = (typeId == Type.ftSignSeparateLead || typeId == Type.ftSignSepLeadAssumedDecimal);
+        isActualDecimal = (typeId == Type.ftSignSeparateLead || typeId == Type.ftSignSeparateTrail);
 
     }
 
 
     /**
-     * @see net.sf.JRecord.Types.Type#getField(byte[], int, net.sf.JRecord.Common.FieldDetail)
+     * @see net.sf.JRecord.Types.Type#getField(byte[], int, IFieldDetail)
      */
     public Object getField(byte[] record,
             final int position,
@@ -55,7 +58,7 @@ public class TypeSignSeparate extends TypeNum {
 
 
     /**
-     * @see net.sf.JRecord.Types.Type#setField(byte[], int, net.sf.JRecord.Common.FieldDetail, java.lang.Object)
+     * @see net.sf.JRecord.Types.Type#setField(byte[], int, IFieldDetail, Object)
      */
     public byte[] setField(byte[] record,
             final int position,
@@ -103,19 +106,29 @@ public class TypeSignSeparate extends TypeNum {
             if (num.startsWith("+")) {
                 ret = ret.substring(1);
             }
-
 		}
 
-        if (ret.length() >= field.getLen() && field.isFixedFormat()) {
-            throw new RecordException("Value: " + ret + " is too large to fit field");
+  
+        int len = field.getLen() - 1;
+        int decimal = field.getDecimal();
+		if (decimal > 0 && isActualDecimal && len > 2) {
+        	ret = paddingString(ret, len - 1, '0', true);
+        	ret = ret.substring(0, ret.length() - decimal) + "." + 
+        		  ret.substring(ret.length() - decimal);
+        } else {
+        	ret = paddingString(ret, len, '0', true);
         }
 
-        ret = paddingString(ret, field.getLen() - 1, '0', true);
-
-        if (isLeadingSign) {
+        if ("+".equals(sign) && ret.length() == field.getLen()) {
+        	
+        } else if (isLeadingSign) {
             ret = sign + ret;
         } else {
             ret = ret + sign;
+        }
+
+        if (ret.length() > field.getLen() && field.isFixedFormat()) {
+            throw new RecordException("Value: " + ret + " is too large to fit field: " + field.getLen());
         }
 
 		return ret;

@@ -195,8 +195,7 @@ public class BinaryCsvParser {
 	/**
 	 * Format field list as a Csv Line
 	 * @param fields fields to be organised as a line
-	 * @param lineDef Csv Line Definition
-	 * @param fieldTypes Field types
+	 * @param font character-set to use in byte conversion
 	 * @return Formatted Csv line
 	 */
 	public byte[] formatFieldList(List<String> fields, String font) {
