@@ -63,7 +63,21 @@ public interface ICsvIOBuilder extends IIOBuilder {
 	 */
 	public abstract ICsvIOBuilder setFont(String font);
 
-	
+	/**
+	 * Set the type of parser to use
+	 * @param csvParser type of parser to use. Options include<ul>
+	 * <li>ParserManager.BASIC_CSV_PARSER,                    Parse Csv - when a field starts with " look for "<FieldSeparator> or "<eol> 
+     * <li>ParserManager.STANDARD_CSV_PARSER,                 Parse CSV matching Quotes
+     * <li>ParserManager.DB_CSV_PARSER,                       Standard Parser, add Quotes to all Char fields
+     * <li>ParserManager.BASIC_QUOTED_COL_NAME_CSV_PARSER,    Basic Parser, Field (Column) names in Quotes
+     * <li>ParserManager.STANDARD_QUOTED_COL_NAME_CSV_PARSER, Standard Parser, Field (Column) names in Quotes
+     * <li>ParserManager.DB_QUOTED_COL_NAME_CSV_PARSER,       Standard Parser, Char fields in Quotes,  Field (Column) names in Quotes
+     * <li>ParserManager.BASIC_ENSURE_CORRECT_NO_FIELDS,      Basic Parser, Field Separator for all fields
+     * <li>ParserManager.BASIC_ENSURE_CORRECT_NO_FIELDS_P1,   Basic Parser, Field Separator for all fields + extra Separator at the End-of-Line
+     * </ul>
+	 * @return
+	 */
+	public abstract ICsvIOBuilder setParser(int csvParser);
 //
 //	/**
 //	 * Define record-selection criteria. For a single selection you would do

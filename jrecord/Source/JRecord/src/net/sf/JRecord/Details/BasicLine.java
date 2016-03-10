@@ -43,7 +43,9 @@ public abstract class BasicLine extends BaseLine implements AbstractLine {
 
 	/**
 	 * @param pLayout The layouts to set.
+	 * @deprecated was for use in the RecordEditor, do not use in JRecord
 	 */
+	@Override
 	public void setLayout(final LayoutDetail pLayout) {
 		this.layout = pLayout;
 		preferredLayoutAlt = Constants.NULL_INTEGER;

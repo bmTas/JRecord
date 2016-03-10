@@ -3,8 +3,8 @@ package net.sf.JRecord.zTest.copy;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.External.ExternalConversion;
 import net.sf.JRecord.Numeric.ConversionManager;
-import net.sf.JRecord.Numeric.ICopybookDialects;
-import net.sf.JRecord.zExamples.cobol.toCsv.ParseArgsCobol2Csv;
+import net.sf.JRecord.Numeric.ICopybookDialects; 
+import net.sf.JRecord.zExamples.cobol.toCsv.ParseArgsCobol2Csv; 
 import junit.framework.TestCase;
 
 
@@ -55,7 +55,7 @@ public class TstCobo2CsvArgs extends TestCase {
 		assertEquals(COPYBOOK, a.copybookName);
 		assertEquals(IN_FONT, a.inFont);
 		assertEquals(1, a.binFormat);
-		assertEquals(1, a.fileStructure);
+		assertEquals(1, a.inputFileStructure);
 		assertEquals(OUT_FILE, a.outfile);
 		assertEquals(OUT_FONT, a.outFont);
 		assertEquals(1, a.csvParser);
@@ -108,7 +108,7 @@ public class TstCobo2CsvArgs extends TestCase {
 			};
 			ParseArgsCobol2Csv ac = new ParseArgsCobol2Csv(a);
 			assertEquals(IN_FILE, ac.infile);
-			assertEquals(fileOrganisation, ac.fileStructure);
+			assertEquals(fileOrganisation, ac.inputFileStructure);
 		}
 	}
 

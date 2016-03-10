@@ -30,6 +30,7 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
     public static final String ARG_INPUT_FONT   = "-IC";
     public static final String ARG_OUTPUT_FONT  = "-OC";
     public static final String ARG_STRUCTURE    = "-FS";
+    public static final String ARG_INPUT_STRUCTURE  = "-IFS";
     public static final String ARG_OUTPUT_STRUCTURE = "-OFS";
     public static final String ARG_IN_FILE      = "-I";
     public static final String ARG_OUT_FILE     = "-O";
@@ -42,6 +43,7 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
     public static final String ARG_INPUT_FONT1  = "-InputCharacterSet";
     public static final String ARG_OUTPUT_FONT1 = "-OutputCharacterSet";
     public static final String ARG_STRUCTURE1   = "-FileStructure";
+    public static final String ARG_INPUT_STRUCTURE1    = "-InputFileStructure";
     public static final String ARG_OUTPUT_STRUCTURE1   = "-OutputFileStructure";
     public static final String ARG_IN_FILE1     = "-InputFile";
     public static final String ARG_OUT_FILE1    = "-OutputFile";
@@ -58,11 +60,12 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
             ARG_RENAME, ARG_CSV_PARSER,
             ARG_COPYBOOK1, ARG_BINARY1, ARG_STRUCTURE1, ARG_SEPARATOR1,
             ARG_IN_FILE1, ARG_OUT_FILE1, ARG_INPUT_FONT1, ARG_OUTPUT_FONT1, ARG_QUOTE1,
+            ARG_INPUT_STRUCTURE, ARG_INPUT_STRUCTURE1,
             ARG_OUTPUT_STRUCTURE, ARG_OUTPUT_STRUCTURE1,
     };
 
     public final boolean infilePresent;
-    public final int binFormat, fileStructure, csvParser, outputFileStructure;
+    public final int binFormat, inputFileStructure, csvParser, outputFileStructure;
     public final String infile,  outfile,
     					inFont,  outFont,  sep,   quote,
     					copybookName;
@@ -75,13 +78,19 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
     public final int renameOption;
     
     
+    public ParseArgsCobol2Csv(String[] arguments) {
+    	this(false, arguments);
+ //   	this(Constants.IO_DEFAULT, Constants.IO_UNICODE_NAME_1ST_LINE, arguments);
+   }
+
+    
     /**
      * convert a cobol file to a CSV file
      * @param arguments program arguments
      */
-    public ParseArgsCobol2Csv(String[] arguments) { 
+    public ParseArgsCobol2Csv(boolean toCsv, String[] arguments) { 
         ParseArguments args = new ParseArguments(VALID_PARAMS, arguments);
-	
+ 	
 	    String tSep     = args.get2Args(ARG_SEPARATOR1, ARG_SEPARATOR, "\t");
 	    String tOutfile = args.get2Args(ARG_OUT_FILE1, ARG_OUT_FILE, "");
 	    String tQuote   = args.get2Args(ARG_QUOTE1, ARG_QUOTE, "\"");
@@ -92,13 +101,22 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
 	    inFont  = args.get2Args(ARG_INPUT_FONT1, ARG_INPUT_FONT,"");
 	    outFont = args.get2Args(ARG_OUTPUT_FONT1, ARG_OUTPUT_FONT, "");
 	    copybookName = args.get2Args(ARG_COPYBOOK1, ARG_COPYBOOK, "");
-	    fileStructure = ExternalConversion.getFileStructure(0, args.get2Args(ARG_STRUCTURE, ARG_STRUCTURE1, Integer.toString(Constants.IO_DEFAULT)));
+	    String  fStruct = args.get2Args(ARG_STRUCTURE, ARG_STRUCTURE1, "");
+	    String  csvDef = Integer.toString(Constants.IO_UNICODE_NAME_1ST_LINE);
+	    String  cblDef = fStruct.length()>0 ? fStruct : Integer.toString(Constants.IO_DEFAULT);
+	    String  inDefault = cblDef, 
+	    		outDefault = csvDef; 
+	    if (toCsv) {
+	    	inDefault = csvDef;
+	    	outDefault = cblDef;
+	    }
+	    inputFileStructure = ExternalConversion.getFileStructure(0, args.get2Args(ARG_INPUT_STRUCTURE, ARG_INPUT_STRUCTURE1, inDefault));
 	    outputFileStructure = ExternalConversion.getFileStructure(
 	    		0, 
 	    		args.get2Args(
 	    				ARG_OUTPUT_STRUCTURE, 
 	    				ARG_OUTPUT_STRUCTURE1, 
-	    				Integer.toString(Constants.IO_UNICODE_NAME_1ST_LINE)));
+	    				outDefault));
 	    csvParser = getOptionCode(args.getArg(ARG_CSV_PARSER, ""), csvParserOption, ParserManager.STANDARD_CSV_PARSER);
 
 	    if ("doublequote".equalsIgnoreCase(tQuote)) {
@@ -212,8 +230,9 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
         System.out.println("    " + ARG_QUOTE       + "  or " + ARG_QUOTE1       + " \t: Quote, you can use DoubleQuote SingleQuote as well");
         System.out.println("    " + ARG_INPUT_FONT  + "  or " + ARG_INPUT_FONT1  + "\t: Input font or character set");
         System.out.println("    " + ARG_OUTPUT_FONT + "  or " + ARG_OUTPUT_FONT1 + "\t: Output font or character set");
-        System.out.println("    " + ARG_STRUCTURE   + "  or " + ARG_STRUCTURE1   + "\t: File Structure:");
-                                                     
+        System.out.println("    " + ARG_INPUT_STRUCTURE   + "  or " + ARG_INPUT_STRUCTURE1   + "\t: Input File Structure:");
+        System.out.println("    " + ARG_OUTPUT_STRUCTURE   + " or " + ARG_OUTPUT_STRUCTURE1  + "\t: Output File Structure:");
+
         System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_DEFAULT)       + "\t: Determine by  ");
         System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_TEXT_LINE)     + "\t: Use Standard Text IO ");
         System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_FIXED_LENGTH)
@@ -230,7 +249,6 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
                 + "\t: Gnu Cobol VB File "); 
         //System.out.println("        " +  Common.NAME_1ST_LINE_IO
         //      + " : CSV file with names on first line");
-        System.out.println("    " + ARG_OUTPUT_STRUCTURE   + " or " + ARG_OUTPUT_STRUCTURE1   + "\t: File Structure:");
         System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_UNICODE_NAME_1ST_LINE)
         		+ "\tStandard Csv file with colum names on the first line");
         System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_UNICODE_TEXT)
@@ -258,10 +276,13 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
     
     public static Option[] getRenameOptions() {
         Option[] options = {
+       		new Option(RO_LEAVE_ASIS, "Asis", "Use the COBOL name"),
     		new Option(RO_LEAVE_ASIS, "Leave_Asis", "Use the COBOL name"),
+       		new Option(RO_CHANGE_MINUS_TO_UNDERSCORE, "_", "Change '-(),' to '_'"), 
     		new Option(RO_CHANGE_MINUS_TO_UNDERSCORE, "Change_Minus_To_Underscore", "Change '-(),' to '_'"), 
+    		new Option(RO_DROP_MINUS, "No-", "Drop minus ('-') from the name"),
     		new Option(RO_DROP_MINUS, "Drop_Minus", "Drop minus ('-') from the name"),
-        };
+       };
         
         return options;
     }

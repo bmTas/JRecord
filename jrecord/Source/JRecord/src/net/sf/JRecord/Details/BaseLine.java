@@ -40,6 +40,9 @@ public abstract class BaseLine implements AbstractLine {
 		return new FieldValue(this, recordIdx, fieldIdx);
 	}
 
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.Details.IGetFieldValueByName#getFieldValue(java.lang.String)
+	 */
 	@Override
 	public final IFieldValue getFieldValue(String fieldName) {
 		IFieldDetail fieldFromName = layout.getFieldFromName(fieldName);

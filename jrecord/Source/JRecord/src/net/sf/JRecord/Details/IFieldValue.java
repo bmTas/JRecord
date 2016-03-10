@@ -40,4 +40,14 @@ public interface IFieldValue extends AbstractFieldValue {
 	 * @return wether it is a Byte based record.
 	 */
 	public abstract boolean isByteRecord();
+	
+	/**
+	 * For Cobol Records it checks wether a field in a Occurs-Depending
+	 * array is actually there (i.e. wether the index < current-Max-Index).
+	 * 
+	 * @return wether the line is actually valid for this Record.
+	 * For Cobol Lines it checks the status of Fields
+	 * in an Occurs-Depending
+	 */
+	public abstract boolean isFieldInRecord();
 }

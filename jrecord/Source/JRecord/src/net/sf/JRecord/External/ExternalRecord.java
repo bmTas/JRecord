@@ -97,7 +97,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 
   private ArrayList<ExternalRecord> subRecords = new ArrayList<ExternalRecord>();
   private ArrayList<ExternalField> fields = new ArrayList<ExternalField>();
-  private final ArrayList<DependingOn> dependingOn = new ArrayList<DependingOn>(3);
+  private ArrayList<DependingOn> dependingOn = new ArrayList<DependingOn>(3);
 
   private int lastPosition = -1;
   
@@ -1225,6 +1225,10 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	public final ArrayList<DependingOn> getDependingOn() {
 		return dependingOn;
 	}
+	public final void newDependingOn() {
+		dependingOn = new ArrayList<DependingOn>();
+	}
+	
 
 	/**
 	 * @return the lineNumberOfFieldNames

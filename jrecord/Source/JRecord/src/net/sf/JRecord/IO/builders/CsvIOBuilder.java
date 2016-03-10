@@ -12,6 +12,8 @@ public class CsvIOBuilder extends CblIOBuilderBase<ICsvIOBuilder> implements ICs
 
 	private ExternalRecord record = new ExternalRecord();
 	private boolean definedField = false;
+	
+//	private int parser = 0;
 
 	
 	private CsvIOBuilder(String delim, String quote) {
@@ -55,6 +57,17 @@ public class CsvIOBuilder extends CblIOBuilderBase<ICsvIOBuilder> implements ICs
 		if (val == null || val.length() == 0) {
 			record.setRecordType(Constants.rtDelimited);
 		}
+		return this;
+	}
+
+	
+	
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.def.IO.builders.ICsvIOBuilder#setParser(int)
+	 */
+	@Override
+	public ICsvIOBuilder setParser(int csvParser) {
+		record.setRecordStyle(csvParser);
 		return this;
 	}
 

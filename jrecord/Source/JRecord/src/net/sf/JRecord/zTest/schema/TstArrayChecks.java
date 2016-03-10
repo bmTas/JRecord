@@ -102,7 +102,7 @@ public class TstArrayChecks extends TestCase {
 	}
 
 	
-	public void testSlipSpacesZero01() throws IOException {
+	public void testSkipSpacesZero01() throws IOException {
 		IArrayItemCheck stopAtSpacesZeros = ArrayElementChecks.INSTANCE.newSkipSpacesZeros();
 		int stop = IArrayItemCheck.R_SKIP;
 		tstSacesZeros(stopAtSpacesZeros, stop);

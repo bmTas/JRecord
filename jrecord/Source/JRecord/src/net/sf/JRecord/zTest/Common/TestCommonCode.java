@@ -1,6 +1,10 @@
 package net.sf.JRecord.zTest.Common;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
@@ -122,4 +126,27 @@ public class TestCommonCode {
 
 		return conv.loadCopyBook(in, copyBookName, splitCopybook, 0, font, binaryFormat, 0, new TextLog());
 	}
+	
+	
+	public static byte[] loadFile(String filename) {
+		File f = new File(filename);
+		byte[] b = new byte[(int)f.length()];
+		try {
+			BufferedInputStream in = new BufferedInputStream(new FileInputStream(f));
+			int n = in.read(b);
+			int num = n;
+			
+			while (n > 0) {
+				n = in.read(b, num, b.length - num);
+				num += n;
+			}
+			in.close();
+			return b;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return new byte[0];
+	}
+
 }

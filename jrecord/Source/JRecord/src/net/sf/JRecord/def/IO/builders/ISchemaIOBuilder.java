@@ -21,7 +21,7 @@ import net.sf.JRecord.IO.AbstractLineWriter;
  * @author Bruce Martin
  *
  */
-public interface ISchemaIOBuilder {
+public interface ISchemaIOBuilder extends INewLineCreator {
 
 	/**
 	 * Create new empty Line 

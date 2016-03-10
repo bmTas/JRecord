@@ -44,7 +44,7 @@ public class Cobol2CsvAlternative {
 		    			// Load the Cobol Copybook and set the file-structure (supplied as an input parameter 
 		        schema = conv.loadCopyBook(csvArgs.copybookName, CopybookLoader.SPLIT_NONE, 0, csvArgs.inFont, 
 		        		Cb2xmlConstants.USE_STANDARD_COLUMNS, csvArgs.binFormat, 0, new TextLog());
-		        schema.setFileStructure(csvArgs.fileStructure);
+		        schema.setFileStructure(csvArgs.inputFileStructure);
 				layout = schema.asLayoutDetail();
 
 						// Now copy copy the input file to the output Csv file

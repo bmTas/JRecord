@@ -86,8 +86,19 @@ public class TstOccursDepending23 extends TestCase {
 			for (int w = 0; w < week; w++) {
 				pos = check(line, layout.getFieldFromName("daily-value (" + i + ", " + w + ")"), pos);
 			}
+			for (int w = week; w < 5; w++) {
+				assertFalse(line.getFieldValue("daily-sales (" + i + ", " + w + ")").isFieldInRecord());
+				assertFalse(line.getFieldValue("daily-value (" + i + ", " + w + ")").isFieldInRecord());
+			}
 			pos = check(line, countFld, pos);
 			pos = check(line, valueFld, pos);
+		}
+		
+		for (int i = salesCount; i< 12; i++) {
+			for (int w = 0; w < 5; w++) {
+				assertFalse(line.getFieldValue("daily-sales (" + i + ", " + w + ")").isFieldInRecord());
+				assertFalse(line.getFieldValue("daily-value (" + i + ", " + w + ")").isFieldInRecord());
+			}
 		}
 
 		pos = check(line, layout.getFieldFromName("total-sales"), pos);
@@ -105,6 +116,15 @@ public class TstOccursDepending23 extends TestCase {
 
 		pos = check(line, layout.getFieldFromName("total-purchase-count"), pos);
 		pos = check(line, layout.getFieldFromName("total-purchase-value"), pos);
+
+		
+		for (int i = purchaseCount; i < 52; i++) {
+			for (int w = 0; w < 5; w++) {
+				String id = purchaseCount + ": " + i +", " + w;
+				assertFalse(id, line.getFieldValue("daily-purch-count (" + i + ", " + w + ")").isFieldInRecord());
+				assertFalse(id, line.getFieldValue("daily-purch-value (" + i + ", " + w + ")").isFieldInRecord());
+			}
+		}
 
 		
 //		System.out.println("** line: " + purchaseCount + " " + salesCount + " length=" + line.getData().length);
@@ -131,6 +151,8 @@ public class TstOccursDepending23 extends TestCase {
 				setAndCheck(line, fld, i);
 			}
 		}
+		assertTrue(line.getFieldValue(fld).isFieldInRecord());
+
 		return end + 1;
 	}
 	

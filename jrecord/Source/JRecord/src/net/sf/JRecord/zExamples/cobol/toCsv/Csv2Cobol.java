@@ -6,15 +6,23 @@
  */
 package net.sf.JRecord.zExamples.cobol.toCsv;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Details.LayoutDetail;
-import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.External.ExternalRecord;
-import net.sf.JRecord.External.Def.ExternalField;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
+import net.sf.JRecord.def.IO.builders.ICsvIOBuilder;
 import net.sf.JRecord.utilityClasses.Copy;
-import net.sf.JRecord.utilityClasses.SchemaLoader;
-
 
 
 
@@ -53,73 +61,108 @@ public class Csv2Cobol {
     public static void main(String[] arguments) { 
 
 		try {
-		    LayoutDetail cobolLayout;
-		    ExternalRecord schema;
-		   
-		    ParseArgsCobol2Csv csvArgs = new ParseArgsCobol2Csv(arguments);
+		    ParseArgsCobol2Csv csvArgs = new ParseArgsCobol2Csv(true, arguments);
 		    
 		    CommonBits.setUseCsvLine(true); // Use the new CsvLine !!!
 
 		    if (csvArgs.infilePresent) {
-		    			// Load the Cobol Copybook and set the file-structure (supplied as an input parameter 
-		        schema = SchemaLoader.loadSchema(csvArgs.copybookName, CopybookLoader.SPLIT_NONE,csvArgs.outFont, csvArgs.binFormat);
-		        schema.setFileStructure(csvArgs.fileStructure);
-		        
-		        updateFieldNames(schema, csvArgs);         // Update the field names (change -(,) to _)
-		                                                   // This must be done before the Cobol layout is generated
-		                                                   // Otherwise the field-names will not match
-		        
-		        cobolLayout = schema.asLayoutDetail();     // Create the Cobol layout
-				
-
-
-		        										   // We do not know the field order, so match on field name
-				Copy.copyFileByMatchingFieldNames(getCsvLayout(csvArgs), csvArgs.infile, cobolLayout, csvArgs.outfile);
+		    	ICobolIOBuilder iobOut = JRecordInterface1.COBOL
+		        		.newIOBuilder(csvArgs.copybookName);
+		        doCopy(csvArgs, iobOut, 
+		        		new FileInputStream(csvArgs.infile), new FileOutputStream(csvArgs.outfile));
 		    }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
     }
+
+	/**
+	 * @param csvArgs
+	 * @param iobOut
+	 * @throws IOException
+	 * @throws FileNotFoundException
+	 */
+	public static void doCopy(ParseArgsCobol2Csv csvArgs, ICobolIOBuilder iobOut, InputStream inStream, OutputStream outStream) 
+			throws IOException, FileNotFoundException {
+		ICsvIOBuilder iobIn = JRecordInterface1.CSV
+				.newIOBuilder(csvArgs.sep, csvArgs.quote)
+					.setFont(csvArgs.inFont)
+					.setParser(csvArgs.csvParser)
+					.setFileOrganization(Constants.IO_UNICODE_NAME_1ST_LINE);
+		LayoutDetail outSchema = iobOut.getLayout();
+
+        iobOut	 	.setFont(csvArgs.outFont)
+        			.setDialect(csvArgs.binFormat)
+        			.setFileOrganization(csvArgs.outputFileStructure);
+
+		Copy.copyFileUsingMap(
+				iobIn.newReader(inStream), 
+				iobOut.newWriter(outStream), outSchema, getNameList(csvArgs, outSchema), iobOut);
+	}
     
-    
-    /**
-     * This method updates field names, converting cobol '-' to _ and (,) to _
-     *  
-     * @param rec Schema to be updated
-     */
-    private static void updateFieldNames(ExternalRecord rec, ParseArgsCobol2Csv csvArgs) {
-    	if (rec.getNumberOfRecords() == 0) {
-    		ExternalField recordField;
-    		for (int i = 0; i < rec.getNumberOfRecordFields(); i++) {
-    			recordField = rec.getRecordField(i);
-    			recordField.setName(csvArgs.updateName(recordField.getName()));
-    		}
-    	} else {
-    		for (int i = 0; i < rec.getNumberOfRecords(); i++) {
-    			updateFieldNames(rec.getRecord(i), csvArgs);
+    private static List<String> getNameList(ParseArgsCobol2Csv csvArgs, LayoutDetail schema) {
+    	ArrayList<String> list = new ArrayList<String>(schema.getRecord(0).getFieldCount());
+    	FieldDetail  f;
+    	
+    	for (int i = 0; i < schema.getRecordCount(); i++) {
+    		for (int j = 0; j < schema.getRecord(0).getFieldCount(); j++) {
+    			f = schema.getField(i, j);
+    			list.add(csvArgs.updateName(f.getLookupName()));
     		}
     	}
-    }
-
-    
-
-    
-    
-    /**
-     * Create a Csv Layout
-     * 
-     * @param csvArgs the arguments supplied to the program
-     * 
-     * @return requested layout
-     * @throws Exception any exception thrown
-     */
-    private static LayoutDetail getCsvLayout(ParseArgsCobol2Csv csvArgs) throws Exception {
-    	ExternalRecord csvRec 
-    			= ExternalRecord.newCsvRecord("Csv", Constants.IO_NAME_1ST_LINE, csvArgs.inFont, csvArgs.sep, csvArgs.quote)
-    							.asExternalRecord();
     	
-    	csvRec.setRecordStyle(csvArgs.csvParser);
-    	
-    	return csvRec.asLayoutDetail();
+    	return list;
     }
+    
+//    /**
+//     * This method updates field names, converting cobol '-' to _ and (,) to _
+//     *  
+//     * @param rec Schema to be updated
+//     */
+//    private static void updateFieldNames(ExternalRecord rec, ParseArgsCobol2Csv csvArgs) {
+//    	ArrayList<DependingOn> dependingOn = rec.getDependingOn();
+//    	if (dependingOn != null && dependingOn.size() > 0) {
+//    		for (int i = 0; i < dependingOn.size(); i++) {
+//    			DependingOn dep = dependingOn.get(i);
+//    			dependingOn.set(
+//    					i, 
+//    					new DependingOn(
+//    							csvArgs.updateName(dep.getVariableName()), 
+//    							dep.getPosition(), dep.getOccursLength(), dep.getOccursMaxLength()));
+//    		}
+//    	}
+//    	if (rec.getNumberOfRecords() == 0) {
+//    		ExternalField recordField;
+//    		for (int i = 0; i < rec.getNumberOfRecordFields(); i++) {
+//    			recordField = rec.getRecordField(i);
+//    			recordField.setName(csvArgs.updateName(recordField.getName()));
+//    		}
+//    	} else {
+//    		for (int i = 0; i < rec.getNumberOfRecords(); i++) {
+//    			updateFieldNames(rec.getRecord(i), csvArgs);
+//    		}
+//    	}
+//    }
+//
+//    
+//
+//    
+//    
+//    /**
+//     * Create a Csv Layout
+//     * 
+//     * @param csvArgs the arguments supplied to the program
+//     * 
+//     * @return requested layout
+//     * @throws Exception any exception thrown
+//     */
+//    private static LayoutDetail getCsvLayout(ParseArgsCobol2Csv csvArgs) throws Exception {
+//    	ExternalRecord csvRec 
+//    			= ExternalRecord.newCsvRecord("Csv", Constants.IO_NAME_1ST_LINE, csvArgs.inFont, csvArgs.sep, csvArgs.quote)
+//    							.asExternalRecord();
+//    	
+//    	csvRec.setRecordStyle(csvArgs.csvParser);
+//    	
+//    	return csvRec.asLayoutDetail();
+//    }
 }

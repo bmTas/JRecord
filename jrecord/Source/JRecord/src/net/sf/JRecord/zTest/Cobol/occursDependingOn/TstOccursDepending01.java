@@ -105,6 +105,13 @@ public class TstOccursDepending01 extends TestCase {
 			}
 			pos = check(line, countFld, pos);
 			pos = check(line, valueFld, pos);
+			assertTrue(line.getFieldValue("sales-count (" + i + ")").isFieldInRecord());
+			assertTrue(line.getFieldValue("sales-value (" + i + ")").isFieldInRecord());
+		}
+		
+		for (int i = salesCount; i < 12; i++) {
+			assertFalse(line.getFieldValue("sales-count (" + i + ")").isFieldInRecord());
+			assertFalse(line.getFieldValue("sales-value (" + i + ")").isFieldInRecord());
 		}
 
 		if (normalPos) {
@@ -118,6 +125,10 @@ public class TstOccursDepending01 extends TestCase {
 		for (int i = 0; i < purchaseCount; i++) {
 			pos = check(line, layout.getFieldFromName("purchase-count (" + i + ")"), pos);
 			pos = check(line, layout.getFieldFromName("purchase-value (" + i + ")"), pos);
+		}
+		for (int i = purchaseCount; i < 52; i++) {
+			assertFalse(line.getFieldValue("purchase-count (" + i + ")").isFieldInRecord());
+			assertFalse(line.getFieldValue("purchase-value (" + i + ")").isFieldInRecord());
 		}
 
 		pos = check(line, layout.getFieldFromName("total-purchase-count"), pos);
@@ -144,6 +155,7 @@ public class TstOccursDepending01 extends TestCase {
 				setAndCheck(line, fld, i);
 			}
 		}
+		assertTrue(line.getFieldValue(fld).isFieldInRecord());
 		return end + 1;
 	}
 	

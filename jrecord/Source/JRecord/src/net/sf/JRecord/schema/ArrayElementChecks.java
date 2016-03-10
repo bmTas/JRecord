@@ -259,7 +259,6 @@ public class ArrayElementChecks {
 	
 	private static class CheckIndex implements IArrayItemCheck {
 		private final String varName;
-		private AbstractLine lastLine = null;
 		private int lastIdx = 0;
 		
 		protected CheckIndex(String varName) {
@@ -269,10 +268,7 @@ public class ArrayElementChecks {
 		@Override
 		public int checkItem(AbstractLine line, Item item, int[] indexs, int index) {
 			
-			//if (lastLine != line) {
 			lastIdx = line.getFieldValue(varName).asInt();
-			//	lastLine = line;
-			//}
 			
 			if (index >= lastIdx) {
 				return IArrayItemCheck.R_STOP;
@@ -286,7 +282,6 @@ public class ArrayElementChecks {
 		@Override
 		public int getCount(AbstractLine line, Item item, int[] indexs, int defaultCount) {
 			lastIdx = line.getFieldValue(varName).asInt();
-			lastLine = line;
 			return Math.min(lastIdx, defaultCount);
 		}
 

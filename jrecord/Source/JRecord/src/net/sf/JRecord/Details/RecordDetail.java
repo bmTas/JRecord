@@ -1039,7 +1039,10 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 					}
 				}
 				tmpAdj += adj;
-			} catch (RecordException e) {
+			} catch (RuntimeException e) {
+				System.out.println();
+				System.out.println("Error Retrieving: " + (field==null?"null field":field.getName()));
+				System.out.println();
 				throw e;
 			} catch (Exception e) {
 				throw new RecordException("Error calculation Occurs Depending On for Variable: " + dependingOnDef.getVariableName() + " msg="+ e.getMessage(), e); 

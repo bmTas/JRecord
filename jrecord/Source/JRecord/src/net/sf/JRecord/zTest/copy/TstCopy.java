@@ -1,10 +1,7 @@
 package net.sf.JRecord.zTest.copy;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -29,6 +26,7 @@ import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.utilityClasses.Copy;
 import net.sf.JRecord.utilityClasses.SchemaLoader;
 import net.sf.JRecord.zExamples.cobol.toCsv.test.TestCobol2Csv_1;
+import net.sf.JRecord.zTest.Common.TestCommonCode;
 import junit.framework.TestCase;
 
 public class TstCopy extends TestCase {
@@ -229,24 +227,25 @@ public class TstCopy extends TestCase {
 	}
 	
 	private static byte[] loadFile(String filename) {
-		File f = new File(filename);
-		byte[] b = new byte[(int)f.length()];
-		try {
-			BufferedInputStream in = new BufferedInputStream(new FileInputStream(f));
-			int n = in.read(b);
-			int num = n;
-			
-			while (n > 0) {
-				n = in.read(b, num, b.length - num);
-				num += n;
-			}
-			in.close();
-			return b;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return new byte[0];
+		return TestCommonCode.loadFile(filename);
+//		File f = new File(filename);
+//		byte[] b = new byte[(int)f.length()];
+//		try {
+//			BufferedInputStream in = new BufferedInputStream(new FileInputStream(f));
+//			int n = in.read(b);
+//			int num = n;
+//			
+//			while (n > 0) {
+//				n = in.read(b, num, b.length - num);
+//				num += n;
+//			}
+//			in.close();
+//			return b;
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return new byte[0];
 	}
 	
 	private static void compare(String id, List<AbstractLine> l1, List<AbstractLine> l2, boolean normalFieldSequence) {

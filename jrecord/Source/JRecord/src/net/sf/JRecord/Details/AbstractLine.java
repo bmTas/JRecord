@@ -113,6 +113,9 @@ public interface AbstractLine extends AbstractIndexedLine {
     /**
      * Set the record Layout - Description of the Line
      * @param pLayout The layouts to set.
+     * @deprecated This was used in the RecordEditor where it's use could be
+     * controlled. <b>Only</b> use it in JRecord if you know what you are doing.
+     * Basically it works if the Layouts are <b>very</b> similar.
      */
     public abstract void setLayout(final LayoutDetail pLayout);
 
@@ -169,7 +172,7 @@ public interface AbstractLine extends AbstractIndexedLine {
      *
      * @return the request field (formated)
      */
-    public abstract AbstractFieldValue getFieldValue(final int recordIdx, final int fieldIdx);
+    public abstract IFieldValue getFieldValue(final int recordIdx, final int fieldIdx);
 
     /**
      * Get a fields value
@@ -178,7 +181,7 @@ public interface AbstractLine extends AbstractIndexedLine {
      *
      * @return fields Value
      */
-    public abstract AbstractFieldValue getFieldValue(IFieldDetail field);
+    public abstract IFieldValue getFieldValue(IFieldDetail field);
 
     /**
      * Get a fields value
@@ -187,7 +190,7 @@ public interface AbstractLine extends AbstractIndexedLine {
      *
      * @return fields Value
      */
-    public abstract AbstractFieldValue getFieldValue(String fieldName);
+    public abstract IFieldValue getFieldValue(String fieldName);
 
     
     /**
