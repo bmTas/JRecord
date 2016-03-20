@@ -68,7 +68,17 @@ public interface ICobolIOBuilder extends IIOBuilder, Icb2xmlLoadOptions {
 	
 	@Override public abstract ICobolIOBuilder setRecordParent(String recordName, String parentName);
 	
-	@Override public abstract ICobolIOBuilder setCopybookFileFormat(int copybookFileFormat);
+	/**
+	 * Cobol is a column-sensitive language; Traditionally columns 1-5 are used for line-numbers (or version comment)
+	 * and ignore everything after column 72. This parameter controls which part of the line to use. Supported values:<ul>
+	 *   <li><b>Cb2xmlConstants.USE_STANDARD_COLUMNS</b> -  use columns 6-72 (normal format for mainframe copybooks), this is the default.
+	 *   <li><b>Cb2xmlConstants.USE_COLS_6_TO_80</b> -  use columns 6-80
+	 *   <li><b>Cb2xmlConstants.USE_LONG_LINE</b> -  use columns 6-10000
+	 *   <li><b>Cb2xmlConstants.USE_PROPERTIES_FILE</b> -  columns are supplied in cb2xml.properties file.
+	 * </ul>
+	 * @param copybookFileFormat the copybookFileFormat to set
+	 */
+	public abstract ICobolIOBuilder setCopybookFileFormat(int copybookFileFormat);
 	
 	@Override public abstract ICobolIOBuilder setInitToSpaces(boolean initToSpaces);
 

@@ -54,7 +54,7 @@ public class WriteTestFiles {
 			}
 			
 			try {
-				w.open(TestDataConstants.getTestDataFileName(charset));
+				w.open("G:\\Temp\\TestData_" + charset +".txt");//TestDataConstants.getTestDataFileName(charset));
 				for (int i = 0; i < 200; i++) {
 					switch (i) {
 					case Type.ftFloat:

@@ -3,11 +3,11 @@ package net.sf.JRecord.cbl2xml.zTest.xml2cbl;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.math.BigDecimal;
 import java.net.URL;
 
@@ -19,8 +19,11 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import net.sf.JRecord.Common.Conversion;
 import net.sf.cb2xml.util.XmlUtils;
 
+import org.junit.Assert;
+import org.junit.internal.ArrayComparisonFailure;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -36,6 +39,25 @@ import org.xml.sax.SAXException;
  *
  */
 public class Cb2XmlCode {
+
+	public static final boolean IS_MAC, IS_NIX, IS_WINDOWS;
+	
+	static {
+		boolean isNix = false, isMac=false, isWin = true;
+		try {
+			String s = System.getProperty("os.name").toLowerCase();
+			if (s != null) {
+				isNix = (s.indexOf("nix") >= 0 || s.indexOf("nux") >= 0);
+				isMac = s.indexOf("mac") >= 0;
+				isWin = s.indexOf("win") >= 0;
+			}
+		} catch (Exception e) {
+		}
+
+		IS_MAC = isMac;
+		IS_NIX = isNix;
+		IS_WINDOWS = isWin;
+	}
 
 	public static String toString(String[] lines) {
 		StringBuilder b = new StringBuilder();
@@ -68,22 +90,86 @@ public class Cb2XmlCode {
 		return true;
 	}
 	
+	public static void compare(String id, boolean isBinary, byte[] xml2data, byte[] expected) throws ArrayComparisonFailure {
+		if (isBinary) {
+			if (expected.length == xml2data.length - 2) {
+				for (int k = 0; k < expected.length; k++) {
+					Assert.assertEquals(id + ", " + k, expected[k], xml2data[k] );
+				}
+			} else {
+				Assert.assertArrayEquals(id, expected, xml2data);
+			} 
+		} else {
+			compare(id, new String(expected), new String(xml2data));
+		}
+	}
+
+	public static void compare(String id, String e, String a) {
+		if (e.length() != a.length()) {
+			if (Cb2XmlCode.IS_NIX) {
+				e = Conversion.replace(e, "\r\n", "\n").toString();
+			}
+		}
+		a = fix(a, e);
+		e = fix(e, a);
+		if (a.length() == e.length() + 2 && (a.endsWith(" \n") || a.endsWith("\r\n"))){
+			a = a.substring(0, a.length() - 2);
+		}
+		if (! e.equals(a)) {
+//			System.out.println(e.length() + " " + a.length());
+			Assert.assertEquals(id, e, a);
+		}
+	}
+	
+	private static String fix(String s1, String s2) {
+		int s1Len = s1.length() - 1;
+		if (s1.length() == s2.length() + 1 && s1.charAt(s1Len) == '\n') {
+			s1 = s1.substring(0, s1Len);
+		}
+		return s1;
+	}
+	
 	public static void compare(String id, String fileName, byte[] data) throws IOException, XMLStreamException, FactoryConfigurationError {
 		String s1 = loadFile(fileName, "\r\n", false);
+		compareXmlStr(id, s1, data);
+	}
+
+	/**
+	 * @param id
+	 * @param xmlStr
+	 * @param data
+	 * @throws FileNotFoundException
+	 * @throws XMLStreamException
+	 * @throws FactoryConfigurationError
+	 */
+	public static void compareXmlStr(String id, String xmlStr, byte[] data) throws FileNotFoundException, XMLStreamException,
+			FactoryConfigurationError {
 		String s2 = new String(data);
-		if (s1.equals(s2) || isEqivalent(fileName, data)) {
+		System.out.println(id);
+		//System.out.println(xmlStr);
+		System.out.println(new String(data));
+		if (xmlStr.equals(s2)) { // || isEquivalent(new StringReader(xmlStr), data)) {
 			return;
 		} else {
-			System.out.println("Lengths= " + s2.length() + ", " + s1.length());
-			org.junit.Assert.assertEquals(id, s1, s2);
+			System.out.println("Lengths= " + s2.length() + ", " + xmlStr.length());
+			org.junit.Assert.assertEquals(id, xmlStr, s2);
 		}
 	}
 		
-	private static boolean isEqivalent( String fileName, byte[] data) throws FileNotFoundException, XMLStreamException, FactoryConfigurationError {
+
+	/**
+	 * @param data
+	 * @param stream
+	 * @return
+	 * @throws XMLStreamException
+	 * @throws FactoryConfigurationError
+	 */
+	private static boolean isEquivalent(Reader stream, byte[] data)
+			throws XMLStreamException, FactoryConfigurationError {
 		
-		String spaces = "                                                                                                        ";
-		XMLStreamReader parser1 = XMLInputFactory.newInstance().createXMLStreamReader(new FileInputStream(fileName));
+		XMLStreamReader parser1 = XMLInputFactory.newInstance().createXMLStreamReader(stream);
 		XMLStreamReader parser2 = XMLInputFactory.newInstance().createXMLStreamReader(new ByteArrayInputStream(data));
+		String spaces = "                                                                                                        ";
 		int type1 = -1, type2;
 
 		StringBuilder b1 = new StringBuilder();
@@ -261,6 +347,16 @@ public class Cb2XmlCode {
         DocumentBuilderFactory factory
            		= DocumentBuilderFactory.newInstance();
         return factory.newDocumentBuilder().parse(new File(fileName));
+    }
+    
+	public static String loadFile(String fileName, boolean addToEnd) throws IOException {
+		String recordSep = "\r\n";
+		if (IS_NIX) {
+			recordSep = "\n";
+		}
+		
+		return loadFile(fileName, recordSep, addToEnd);
+		
     }
     
 	public static String loadFile(String fileName, String recordSep, boolean addToEnd) throws IOException {

@@ -37,6 +37,7 @@ public class TestTypeUpdates extends TestCase {
 		AbstractLineReader r = LineIOProvider.getInstance().getLineReader(td.testDataDefinition);
 		AbstractLine inLine;
 		AbstractLine testLine = new Line(td.testDataDefinition);
+		int num = 0;
 		
 		r.open(TestDataConstants.getTestDataFileName(charset), td.testDataDefinition);
 		try {
@@ -49,9 +50,11 @@ public class TestTypeUpdates extends TestCase {
 								inLine.getFieldValue(td.typeNumber).asInt(), 
 								charset);
 				AbstractFieldValue fieldValue = testLine.getFieldValue(fld);
+				
+				num += 1;
 				fieldValue.set(inLine.getFieldValue(td.testValue).asString());
 				System.out.println(inLine.getFieldValue(td.testResultHex).asString() + " " + fieldValue.asHex() + " " +  fieldValue.asString());
-				assertEquals("Type 1: " + fld.getType(), inLine.getFieldValue(td.testResultHex).asString(), fieldValue.asHex());
+				assertEquals(num + " Type 1: " + fld.getType(), inLine.getFieldValue(td.testResultHex).asString(), fieldValue.asHex());
 				
 				if (! fieldValue.isBinary()) {
 //					assertEquals("Type 2: " + fld.getType(), 

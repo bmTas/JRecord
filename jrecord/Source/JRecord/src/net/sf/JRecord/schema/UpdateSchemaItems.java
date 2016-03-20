@@ -52,6 +52,7 @@ public class UpdateSchemaItems {
 	private final boolean dropCopybook;
 	private final String copybookName1, copybookName2;
 	private final Map<String, IArrayItemCheck> arrayChecks;
+	private final Map<String, Integer> recordMap;
 	
 	private int duplicateFieldsStatus = -1;
 	private final int varRenameOption;
@@ -60,6 +61,8 @@ public class UpdateSchemaItems {
 	//private List<Item> lastItems;
 	private int itemCount = 0;
 	private final List<Item> items;
+	
+	private boolean redefinedBinaryField = false;
 	
 	private int maxRecordLevel = Integer.MIN_VALUE;
 	
@@ -91,11 +94,19 @@ public class UpdateSchemaItems {
 		
 		duplicateFieldNames = schema.getDuplicateFieldNames();
 		
-		update(items, 0, -1, new ArrayList<String>(45));
+		update(items, 0, -1, new ArrayList<String>(45), false);
 		
+		if (schema.getRecordCount() < 2) {
+			recordMap = null;
+		} else {
+			recordMap = new HashMap<String, Integer>(schema.getRecordCount() * 2);
+			for (int i = 0; i < schema.getRecordCount(); i++) {
+				recordMap.put(updateName(schema.getRecord(i).getRecordName()).toLowerCase(), i);
+			}
+		}
 	}
 	
-	private void update(List<Item> itemList, int indexs, int firstArraySize, ArrayList<String> levels) {
+	private void update(List<Item> itemList, int indexs, int firstArraySize, ArrayList<String> levels, boolean redefined) {
 		 
 		for (Item item : itemList) {
 			String name = item.getName();
@@ -103,8 +114,15 @@ public class UpdateSchemaItems {
 			String ucName = name.toUpperCase();
 			boolean dup = duplicateFieldNames.contains(ucName);
 			int newIndexs = indexs;
+			String usage = item.getUsage();
+			boolean redef = redefined || isPresent(item.getRedefined())  || isPresent(item.getRedefines());
 			item.names = new ArrayList<String>(levels);
+			item.isRedefined = redef;
 			
+			if (redef && (! this.redefinedBinaryField) && isPresent(usage)) {
+				String lcUsage = usage.toLowerCase();
+				this.redefinedBinaryField = lcUsage.startsWith("comp") || lcUsage.startsWith("bin");
+			}
 			if (dropCopybook && name.length() > copybookName1.length()
 			&& (ucName.startsWith(copybookName1) || ucName.startsWith(copybookName2))) {
 				name = name.substring(copybookName1.length());
@@ -127,7 +145,7 @@ public class UpdateSchemaItems {
 				arrayItems.put(item.nameToUse.toUpperCase(), item);
 			}
 			if (item.getItem().size() > 0) {
-				update(item.getItem(), newIndexs, firstArraySize, levels);
+				update(item.getItem(), newIndexs, firstArraySize, levels, redef);
 			} else if ("filler".equalsIgnoreCase(name)) {
 			} else if (newIndexs == 0) {
 				item.itemType = Item.TYPE_FIELD;
@@ -154,6 +172,10 @@ public class UpdateSchemaItems {
 			}
 			levels.remove(levels.size() - 1);
 		}
+	}
+	
+	private boolean isPresent(String s) {
+		return s != null && s.length() > 0;
 	}
 
 	/**
@@ -184,6 +206,19 @@ public class UpdateSchemaItems {
 			 return ret;
 		}
 		return EMPTY_RECORD_MAP;
+	}
+	
+	public final int getRecordIndex(String name) {
+		int r = 1;
+		if (schema.getRecordCount() > 1) {
+			String lcName = name.toLowerCase();
+			if (recordMap.containsKey(lcName)) {
+				r = recordMap.get(lcName);
+			} else {
+				r = schema.getRecordIndex(name);
+			}
+		}
+		return r;
 	}
 	/**
 	 * @return the maxRecordLevel
@@ -316,6 +351,13 @@ public class UpdateSchemaItems {
 		return fieldLookup;
 	}
 	
+	/**
+	 * @return the redefinedBinaryField
+	 */
+	public final boolean isRedefinedBinaryField() {
+		return redefinedBinaryField;
+	}
+
 	private FieldLookup updateLookup(FieldLookup tl, List<Item> items) {
 		for (Item item : items) {
 			if (item.getItem().size() > 0) {

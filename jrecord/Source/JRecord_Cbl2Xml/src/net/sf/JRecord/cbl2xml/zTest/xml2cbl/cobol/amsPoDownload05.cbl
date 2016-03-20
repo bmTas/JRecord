@@ -13,8 +13,8 @@
            10 beg02-code             Pic X(2).
            10 Department             Pic X(4).
            10 Expected-Reciept-Date  Pic X(6).
-           10 Filler                 Pic X(4).
            10 Cancel-by-date         Pic X(6).
+           10 Filler                 Pic X(4).
            10 EDI-Type               Pic X(1).
            10 Add-Date               Pic X(6).
            10 Filler                 Pic X(1).

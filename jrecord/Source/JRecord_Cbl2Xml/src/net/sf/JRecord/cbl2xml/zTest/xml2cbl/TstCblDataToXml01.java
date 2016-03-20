@@ -1,10 +1,6 @@
 package net.sf.JRecord.cbl2xml.zTest.xml2cbl;
 
-import static org.junit.Assert.*;
-
-
 import java.io.ByteArrayOutputStream;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -13,13 +9,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 
+import org.junit.Test;
+import org.xml.sax.SAXException;
+
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.cbl2xml.impl.Cobol2GroupXml;
-
-
-import org.junit.Test;
-import org.xml.sax.SAXException;
 
 
 public class TstCblDataToXml01 {
@@ -37,7 +32,7 @@ public class TstCblDataToXml01 {
 	@Test
 	public void testData2Xml() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
 		String copybookName, dataName, xmlDataName;
-		for (String[] d : files) {
+		for (String[] d : files) { 
 			copybookName = Cb2XmlCode.getFullName("xmlCopybook/" + d[0]);
 			dataName = Cb2XmlCode.getFullName(d[1]);
 			
@@ -63,9 +58,12 @@ public class TstCblDataToXml01 {
 			System.out.println("->> " + d[0]);
 			xml2data = xml2data(Cb2XmlCode.getFullName("xml/" + d[2]), Cb2XmlCode.getFullName("xmlCopybook/" + d[0]));
 			//System.out.println(xml2data);
-			assertEquals(d[0] + " " +  i, expected, xml2data);
+			Cb2XmlCode.compare(d[0] + " " +  i, expected, xml2data);
+			//assertEquals(d[0] + " " +  i, expected, xml2data);
 		}
 	}
+	
+
 	
 	private static byte[] data2xml(String dataFileName, String copybookFileName) 
 	throws FileNotFoundException, RecordException, IOException, JAXBException, XMLStreamException, SAXException, ParserConfigurationException {

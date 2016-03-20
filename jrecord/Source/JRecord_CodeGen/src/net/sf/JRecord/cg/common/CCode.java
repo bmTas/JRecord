@@ -1,20 +1,54 @@
+/*  -------------------------------------------------------------------------
+ *
+ *            Sub-Project: JRecord CodeGen
+ *    
+ *    Sub-Project purpose: Generate Java - JRecord source code 
+ *                        to read/write cobol data files.
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: GPL
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+      
 package net.sf.JRecord.cg.common;
 
 import java.util.Arrays;
 
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.Option.ICobolSplitOptions;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
+import net.sf.cb2xml.def.Cb2xmlConstants;
 
 public class CCode {
 
     private static final String[] JAVA_TYPE_NAME = new String[Type.LAST_SYSTEM_TYPE];
     private static final String[] RECORD_TYPES = new String[20];
     private static final String[] IO_TYPE = new String[150];
-    
+    private static final String[] DIALECT = new String[150];
+    private static final String[] SPLIT = new String[20];
+    private static final String[] COPYBOOK_FORMAT = new String[20];
+  
     static {
     	Arrays.fill(JAVA_TYPE_NAME, null);
     	Arrays.fill(RECORD_TYPES, null);
+    	Arrays.fill(IO_TYPE, null);
+       	Arrays.fill(SPLIT, null);
+       	Arrays.fill(COPYBOOK_FORMAT, null);
     }
 
 	public static String toSuffix(StringBuilder b) {
@@ -216,6 +250,71 @@ public class CCode {
 		return "Constants." + RECORD_TYPES[recType];
 	}
 	
+
+	public static String getDialectName(int dialect) {
+		
+		if (RECORD_TYPES[RECORD_TYPES.length - 1] == null) {
+		    DIALECT[ICopybookDialects.FMT_INTEL]                   = "FMT_INTEL";
+		    DIALECT[ICopybookDialects.FMT_MAINFRAME]               = "FMT_MAINFRAME";
+		    DIALECT[ICopybookDialects.FMT_FUJITSU]                 = "FMT_FUJITSU";
+		    DIALECT[ICopybookDialects.FMT_BIG_ENDIAN]              = "FMT_BIG_ENDIAN";
+		    DIALECT[ICopybookDialects.FMT_GNU_COBOL]               = "FMT_GNU_COBOL";
+		    DIALECT[ICopybookDialects.FMT_FS2000]                  = "FMT_FS2000";
+		    DIALECT[ICopybookDialects.FMT_GNU_COBOL_MVS]           = "FMT_GNU_COBOL_MVS";
+		    DIALECT[ICopybookDialects.FMT_GNU_COBOL_MF]            = "FMT_GNU_COBOL_MF";
+		    DIALECT[ICopybookDialects.FMT_OPEN_COBOL_BE]           = "FMT_OPEN_COBOL_BE";
+		    DIALECT[ICopybookDialects.FMT_FS2000_BE]               = "FMT_FS2000_BE";                                                           
+		    DIALECT[ICopybookDialects.FMT_OPEN_COBOL_MVS_BE]       = "FMT_OPEN_COBOL_MVS_BE";
+		    DIALECT[ICopybookDialects.FMT_OC_MICRO_FOCUS_BE]       = "FMT_OC_MICRO_FOCUS_BE";
+		    DIALECT[ICopybookDialects.FMT_MICRO_FOCUS]             = "FMT_MICRO_FOCUS";                                           
+		    DIALECT[ICopybookDialects.FMT_MAINFRAME_COMMA_DECIMAL] = "FMT_MAINFRAME_COMMA_DECIMAL";
+		    DIALECT[ICopybookDialects.FMT_FUJITSU_COMMA_DECIMAL]   = "FMT_FUJITSU_COMMA_DECIMAL";
+		}
+		
+		if (dialect < 0 || dialect > DIALECT.length || DIALECT[dialect] == null) {
+			return Integer.toString(dialect);
+		}
+		
+		return "ICopybookDialects." + DIALECT[dialect];
+	}
+	
+
+	public static String getSplitName(int split) {
+		
+		if (RECORD_TYPES[RECORD_TYPES.length - 1] == null) {
+		    SPLIT[ICobolSplitOptions.SPLIT_NONE]              = "SPLIT_NONE";
+		    SPLIT[ICobolSplitOptions.SPLIT_REDEFINE]          = "SPLIT_REDEFINE";
+		    SPLIT[ICobolSplitOptions.SPLIT_01_LEVEL]          = "SPLIT_01_LEVEL";
+		    SPLIT[ICobolSplitOptions.SPLIT_HIGHEST_REPEATING] = "SPLIT_HIGHEST_REPEATING";
+		}
+		
+		if (split < 0 || split > SPLIT.length || SPLIT[split] == null) {
+			return Integer.toString(split);
+		}
+		
+		return "ICobolSplitOptions." + SPLIT[split];
+	}
+
+
+	public static String getCopybookFormatName(int format) {
+		
+		if (RECORD_TYPES[RECORD_TYPES.length - 1] == null) {
+		    COPYBOOK_FORMAT[Cb2xmlConstants.USE_STANDARD_COLUMNS ]  = "USE_STANDARD_COLUMNS";
+		    COPYBOOK_FORMAT[Cb2xmlConstants.USE_SUPPLIED_COLUMNS ]  = "USE_SUPPLIED_COLUMNS";
+		    COPYBOOK_FORMAT[Cb2xmlConstants.USE_COLS_6_TO_80     ]  = "USE_COLS_6_TO_80";                           
+		    COPYBOOK_FORMAT[Cb2xmlConstants.USE_LONG_LINE        ]  = "USE_LONG_LINE";
+		    COPYBOOK_FORMAT[Cb2xmlConstants.USE_PROPERTIES_FILE  ]  = "USE_PROPERTIES_FILE";
+		    COPYBOOK_FORMAT[Cb2xmlConstants.FREE_FORMAT          ]  = "FREE_FORMAT";           
+		}
+		
+		if (format < 0 || format > COPYBOOK_FORMAT.length || COPYBOOK_FORMAT[format] == null) {
+			return Integer.toString(format);
+		}
+		
+		return "Cb2xmlConstants." + COPYBOOK_FORMAT[format];
+	}
+
+
 	public static String getJRecordIoTypeName(int type) {
 		initIoTypes();
 		

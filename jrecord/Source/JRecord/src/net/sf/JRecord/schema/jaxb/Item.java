@@ -91,6 +91,8 @@ public class Item {
 	public String nameToUse, fieldName;
 	@XmlTransient
 	public IArrayItemCheck arrayCheck = null;
+	@XmlTransient
+	public boolean isRedefined = false;
 	
 
 

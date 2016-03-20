@@ -104,6 +104,8 @@ public class BasicConversion implements AbstractConversion {
 
 		setName(Type.ftSignSeparateLead   , "Num Sign Separate Leading");
 		setName(Type.ftSignSeparateTrail  , "Num Sign Separate Trailing");
+		setName(Type.ftSignSepLeadAssumedDecimal   , "Num Sign Sep Leading Assumed Dec");
+		setName(Type.ftSignSepTrailAssumedDecimal  , "Num Sign Sep Trailing Assumed Dec");
 		setName(Type.ftDecimal            , "Decimal");
 		setName(Type.ftBinaryInt          , "Binary Integer");
 		setName(Type.ftBinaryIntPositive  , "Binary Integer (only +ve)");

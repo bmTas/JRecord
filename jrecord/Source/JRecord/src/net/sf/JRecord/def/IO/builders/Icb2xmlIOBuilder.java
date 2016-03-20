@@ -57,8 +57,6 @@ public interface Icb2xmlIOBuilder extends IIOBuilder, Icb2xmlLoadOptions {
 	
 	@Override public abstract Icb2xmlIOBuilder setRecordParent(String recordName, String parentName);
 
-	@Override public abstract Icb2xmlIOBuilder setCopybookFileFormat(int copybookFileFormat);
-
 	/**
 	 * Old parameter, can be ignore most of the time
 	 * @param log the log to set

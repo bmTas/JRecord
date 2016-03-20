@@ -127,8 +127,8 @@ Num Sign Separate Leading                      9  4 0 0        +000     4ef0f0f0
                                                9  4 0 -255     -255     60f2f5f5        
                                                9  4 0 -256     -256     60f2f5f6        
                                                9  4 0 -257     -257     60f2f5f7        
-Num Sign Separate Leading                      9  4 1 1.1      +011     4ef0f1f1        
-                                               9  4 1 -2.1     -021     60f0f2f1        
+Num Sign Separate Leading                      9  4 1 1.1      +1.1     4ef14bf1        
+                                               9  4 1 -2.1     -2.1     60f24bf1        
 Num Sign Separate Trailing                    10  4 0 0        000+     f0f0f04e        
                                               10  4 0 5        005+     f0f0f54e        
                                               10  4 0 10       010+     f0f1f04e        
@@ -144,9 +144,9 @@ Num Sign Separate Trailing                    10  4 0 0        000+     f0f0f04e
                                               10  4 0 -255     255-     f2f5f560        
                                               10  4 0 -256     256-     f2f5f660        
                                               10  4 0 -257     257-     f2f5f760        
-Num Sign Separate Trailing                    10  4 1 1.1      011+     f0f1f14e        
-                                              10  4 1 -2.1     021-     f0f2f160        
-NumAnyDecimal                                 19  4 0 0           0     404040f0        
+Num Sign Separate Trailing                    10  4 1 1.1      1.1+     f14bf14e        
+                                              10  4 1 -2.1     2.1-     f24bf160        
+Number any decimal                            19  4 0 0           0     404040f0        
                                               19  4 0 5           5     404040f5        
                                               19  4 0 10         10     4040f1f0        
                                               19  4 0 32         32     4040f3f2        
@@ -162,7 +162,7 @@ NumAnyDecimal                                 19  4 0 0           0     404040f0
                                               19  4 0 -255     -255     60f2f5f5        
                                               19  4 0 -256     -256     60f2f5f6        
                                               19  4 0 -257     -257     60f2f5f7        
-NumAnyDecimal                                 19  4 1 1.1       1.1     40f14bf1        
+Number any decimal                            19  4 1 1.1       1.1     40f14bf1        
                                               19  4 1 -2.1     -2.1     60f24bf1        
                                               19  4 1 54.3     54.3     f5f44bf3        
 PositiveNumAnyDecimal                         20  4 0 0           0     404040f0        
@@ -255,7 +255,7 @@ Zero Padded Number decimal="," sign=+/-       27  4 0 0        +000     4ef0f0f0
 Zero Padded Number decimal="," sign=+/-       27  4 1 1.1      +1,1     4ef16bf1        
                                               27  4 1 -2.1     -2,1     60f26bf1        
                                               27  4 1 54.3     54,3     f5f46bf3        
-Num (Right Justified zero padded positive)    28  4 0 0        0000     f0f0f0f0        
+Zero Padded Number decimal="," (only +ve)     28  4 0 0        0000     f0f0f0f0        
                                               28  4 0 5        0005     f0f0f0f5        
                                               28  4 0 10       0010     f0f0f1f0        
                                               28  4 0 32       0032     f0f0f3f2        
@@ -264,7 +264,7 @@ Num (Right Justified zero padded positive)    28  4 0 0        0000     f0f0f0f0
                                               28  4 0 255      0255     f0f2f5f5        
                                               28  4 0 256      0256     f0f2f5f6        
                                               28  4 0 257      0257     f0f2f5f7        
-Num (Right Justified zero padded positive)    28  4 1 1.1      01,1     f0f16bf1        
+Zero Padded Number decimal="," (only +ve)     28  4 1 1.1      01,1     f0f16bf1        
                                               28  4 1 54.3     54,3     f5f46bf3        
 Num (Right Justified space padded) +/- sign   29  4 0 0          +0     40404ef0        
                                               29  4 0 5          +5     40404ef5        
@@ -361,3 +361,37 @@ Num (Right Just space padded, "," Decimal) +  43  4 0 0          +0     40404ef0
 Num (Right Just space padded, "," Decimal) +  43  4 1 1.1      +1,1     4ef16bf1        
                                               43  4 1 -2.1     -2,1     60f26bf1        
                                               43  4 1 54.3     54,3     f5f46bf3        
+Num Sign Sep Leading Assumed Dec              44  4 0 0        +000     4ef0f0f0        
+                                              44  4 0 5        +005     4ef0f0f5        
+                                              44  4 0 10       +010     4ef0f1f0        
+                                              44  4 0 32       +032     4ef0f3f2        
+                                              44  4 0 432      +432     4ef4f3f2        
+                                              44  4 0 -5       -005     60f0f0f5        
+                                              44  4 0 -10      -010     60f0f1f0        
+                                              44  4 0 -32      -032     60f0f3f2        
+                                              44  4 0 -432     -432     60f4f3f2        
+                                              44  4 0 255      +255     4ef2f5f5        
+                                              44  4 0 256      +256     4ef2f5f6        
+                                              44  4 0 257      +257     4ef2f5f7        
+                                              44  4 0 -255     -255     60f2f5f5        
+                                              44  4 0 -256     -256     60f2f5f6        
+                                              44  4 0 -257     -257     60f2f5f7        
+Num Sign Sep Leading Assumed Dec              44  4 1 1.1      +011     4ef0f1f1        
+                                              44  4 1 -2.1     -021     60f0f2f1        
+Num Sign Sep Trailing Assumed Dec             45  4 0 0        000+     f0f0f04e        
+                                              45  4 0 5        005+     f0f0f54e        
+                                              45  4 0 10       010+     f0f1f04e        
+                                              45  4 0 32       032+     f0f3f24e        
+                                              45  4 0 432      432+     f4f3f24e        
+                                              45  4 0 -5       005-     f0f0f560        
+                                              45  4 0 -10      010-     f0f1f060        
+                                              45  4 0 -32      032-     f0f3f260        
+                                              45  4 0 -432     432-     f4f3f260        
+                                              45  4 0 255      255+     f2f5f54e        
+                                              45  4 0 256      256+     f2f5f64e        
+                                              45  4 0 257      257+     f2f5f74e        
+                                              45  4 0 -255     255-     f2f5f560        
+                                              45  4 0 -256     256-     f2f5f660        
+                                              45  4 0 -257     257-     f2f5f760        
+Num Sign Sep Trailing Assumed Dec             45  4 1 1.1      011+     f0f1f14e        
+                                              45  4 1 -2.1     021-     f0f2f160        

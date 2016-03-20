@@ -1,6 +1,5 @@
 package net.sf.JRecord.cbl2xml.zTest.xml2cbl;
 
-import static org.junit.Assert.assertArrayEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -17,12 +16,12 @@ import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
+import net.sf.JRecord.IO.builders.CblIOBuilderMultiSchemaBase;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Option.Options;
 import net.sf.JRecord.cbl2xml.def.ICobol2Xml;
 import net.sf.JRecord.cbl2xml.impl.Cobol2GroupXml;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -37,8 +36,8 @@ public class TstCblDataToXml03 {
 			{"amsPoDownload05.cbl",  "Ams_PODownload_20041231.txt",  "amsPoDownload.xml", "1", "HR"},
 	};
 
+	boolean isBinary;
 
-	//private String firstLine = "TAR5839DCDC - Taras Ave                                                             30-68 Taras Ave                         Altona North                       3025      VICA";
 	@Test
 	public void testData2Xml() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
 		for (String[] d : files) {
@@ -94,8 +93,8 @@ public class TstCblDataToXml03 {
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);		
 		
 		createXmlBuilder(copybookFileName, splitId)
-					      .setRecordSelection("PO-Record", newFieldSelection("Record-Type","H1"))
-					      .setRecordSelection("Product-Record", newFieldSelection("Record-Type","D1"))
+					      .setRecordSelection("PO-Record",       newFieldSelection("Record-Type","H1"))
+					      .setRecordSelection("Product-Record",  newFieldSelection("Record-Type","D1"))
 					      .setRecordSelection("Location-Record", newFieldSelection("Record-Type","S1"))
 				      .cobol2xml(new FileInputStream(dataFileName), os);
 
@@ -171,14 +170,8 @@ public class TstCblDataToXml03 {
 						Cb2XmlCode.getFullName("xml/" + d[2]), 
 						Cb2XmlCode.getFullName("cobol/" + d[0]),
 						d[4]);
-				System.out.println("=== " + expected[i].length + " " + xml2data.length);
-				if (expected[i].length == xml2data.length - 2) {
-					for (int k = 0; k < expected[i].length; k++) {
-						Assert.assertEquals("idx=" + i + ", " + k, expected[i][k], xml2data[k] );
-					}
-				} else {
-					assertArrayEquals("idx=" + i, expected[i], xml2data);
-				}
+				System.out.println("=== " + expected[i].length + " " + xml2data.length + " " + isBinary);
+				Cb2XmlCode.compare("idx=" + i, isBinary, xml2data, expected[i]);
 			} catch (Exception e) {
 				System.err.println();
 				System.err.println("   --> " + i + " " + d[0]  + " " + d[1] + " " + d[2]);
@@ -188,21 +181,21 @@ public class TstCblDataToXml03 {
 		}
 	}
 
-	private static byte[] xml2data1(String dataFileName, String copybookFileName, String splitId) 
+
+
+
+
+	@SuppressWarnings("unchecked")
+	private byte[] xml2data1(String dataFileName, String copybookFileName, String splitId) 
 	throws FileNotFoundException, RecordException, IOException, JAXBException, XMLStreamException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 		
-		createXmlBuilder(copybookFileName, splitId)
-					  .xml2Cobol(new FileInputStream(dataFileName), os);
-//		Cobol2GroupXml.newCobol2Xml(copybookFileName)
-//					      .setFileOrganization(fileOrg)
-//					      .setDialect(ICopybookDialects.FMT_INTEL)
-//					      .setSplitCopybook(CopybookLoader.SPLIT_01_LEVEL)
-//					      .setRecordSelection("PO-Record", newFieldSelection("Record-Type","H1"))
-//					      .setRecordSelection("Product-Record", newFieldSelection("Record-Type","D1"))
-//					      .setRecordSelection("Location-Record", newFieldSelection("Record-Type","S1"))
-//					  .xml2Cobol(new FileInputStream(dataFileName), os);
+		ICobol2Xml xmlBldr = createXmlBuilder(copybookFileName, splitId);
+		xmlBldr	  .xml2Cobol(new FileInputStream(dataFileName), os);
+		
+		isBinary = ((CblIOBuilderMultiSchemaBase<ICobol2Xml> )xmlBldr).getLayout().isBinary();
+
 		return os.toByteArray();
 	}
 	
@@ -219,9 +212,7 @@ public class TstCblDataToXml03 {
 		}
 		is.close();
 		
-		return os.toByteArray();
-		
-		
+		return os.toByteArray();		
 	}
 
 }

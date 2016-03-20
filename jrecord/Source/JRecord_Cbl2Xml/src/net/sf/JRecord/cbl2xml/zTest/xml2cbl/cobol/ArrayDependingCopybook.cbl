@@ -3,7 +3,7 @@
       *    Author Bruce Martin
       *  *-----------------------------------------------------------
 
-       01 ArrayDependingCopybook.
+       01 Array-Depending-Copybook.
           03 field-1               pic x(12).
           03 field-2               pic x(14).
           03 group-3-count         pic 99.

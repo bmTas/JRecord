@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,34 +23,34 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 
-import org.w3c.dom.Document;
-
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.CommonBits;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.Cb2xmlDocument;
 import net.sf.JRecord.External.CobolCopybookLoader;
-import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ICobolCopybookLoader;
 import net.sf.JRecord.External.XmlCopybookLoader;
-import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
-import net.sf.JRecord.IO.builders.CblIOBuilderMultiSchema;
-import net.sf.JRecord.Numeric.ICopybookDialects;
-import net.sf.JRecord.Option.IRecordPositionOption;
+import net.sf.JRecord.IO.builders.CblIOBuilderMultiSchemaBase;
+import net.sf.JRecord.Option.IReformatFieldNames;
 import net.sf.JRecord.cbl2xml.def.ICobol2Xml;
 import net.sf.JRecord.cbl2xml.def.Icb2xml2Xml;
-import net.sf.JRecord.cbl2xml.jaxb.Condition;
-import net.sf.JRecord.cbl2xml.jaxb.Copybook;
-import net.sf.JRecord.cbl2xml.jaxb.Item;
-import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
+import net.sf.JRecord.schema.IArrayItemCheck;
+import net.sf.JRecord.schema.IGetRecordFieldByName;
+import net.sf.JRecord.schema.UpdateSchemaItems;
+import net.sf.JRecord.schema.jaxb.Condition;
+import net.sf.JRecord.schema.jaxb.Copybook;
+import net.sf.JRecord.schema.jaxb.Item;
+
+import org.w3c.dom.Document;
 
 
 /**
@@ -57,124 +59,54 @@ import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
  * @author Bruce Martin
  *
  */
-public class Cobol2GroupXml implements ICobol2Xml {
+public class Cobol2GroupXml extends CblIOBuilderMultiSchemaBase<ICobol2Xml> implements ICobol2Xml, ISchemaIOBuilder {
 	
 	private static final String STANDARD_FONT = "UTF-8"; 
 	private String xmlMainElement = MAIN_XML_TAG;
 
-	private final ICobolIOBuilder ioBuilder;
-	
 	private ExternalRecord externalRecord = null;
 	private LayoutDetail schema;
 	private ISchemaIOBuilder iob;
 	private Copybook copybook = null;
-	private ItemUpdater itemDtls = null;
-	private boolean dropCopybook = false;
+	private UpdateSchemaItems itemDtls = null;
+	
+	private int tagFormat = IReformatFieldNames.RO_LEAVE_ASIS;
+	
+	private HashMap<String, IArrayItemCheck> arrayChecks = new HashMap<String, IArrayItemCheck>();
+	
+	private XMLOutputFactory xmlOutputFactory = null;
+	private XMLInputFactory  xmlInputFactory = null;
+	
+	private boolean skipValidation;
+//	private boolean dropCopybook = false;
 //	private int splitOption = CopybookLoader.SPLIT_NONE ;
 
 	
 	
 	private Cobol2GroupXml(String copybookFilename, ICobolCopybookLoader loader) {
+		super(Conversion.getCopyBookId(copybookFilename), loader);
 		loader.setSaveCb2xmlDocument(true);
-		ioBuilder = new CblIOBuilderMultiSchema(copybookFilename, loader, ICopybookDialects.FMT_MAINFRAME);
+		super.addCopyBook(copybookFilename);
+		//ioBuilder = new CblIOBuilderMultiSchema(copybookFilename, loader, ICopybookDialects.FMT_MAINFRAME);
 	}
 
-	private Cobol2GroupXml(InputStream is, String copybookname, ICobolCopybookLoader loader) throws IOException {
+	private Cobol2GroupXml(InputStream is, String copybookname, ICobolCopybookLoader loader) {
+		super(copybookname, loader);
 		loader.setSaveCb2xmlDocument(true);
-		ioBuilder = new CblIOBuilderMultiSchema(is, copybookname, loader, ICopybookDialects.FMT_MAINFRAME);
+		
+		super.addCopyBook(is, copybookname);
+		//ioBuilder = new CblIOBuilderMultiSchema(is, copybookname, loader, ICopybookDialects.FMT_MAINFRAME);
 	}
 
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.cbl2xml.def.ICobol2Xml#setFileOrganization(int)
-	 */
-	@Override
-	public ICobol2Xml setFileOrganization(int fileOrganization) {
-		ioBuilder.setFileOrganization(fileOrganization);
-		reset();
-		return this;
-	}
-
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.cbl2xml.def.ICobol2Xml#setSplitCopybook(int)
-	 */
-	@Override
-	public ICobol2Xml setSplitCopybook(int splitCopybook) {
-		if (splitCopybook == CopybookLoader.SPLIT_REDEFINE ) {
-			throw new RecordException("Split = SPLIT_REDEFINE is not supported !!!");
-		}
-		ioBuilder.setSplitCopybook(splitCopybook);
-		reset();
-//		this.splitOption = splitCopybook;
-		return this;
-	}
-
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.cbl2xml.def.ICobol2Xml#setDialect(int)
-	 */
-	@Override
-	public ICobol2Xml setDialect(int dialect) {
-		ioBuilder.setDialect(dialect);
-		reset();
-		return this;
-	}
-
-	/**
-	 * @param dropCopybookNameFromFields
-	 * @return
-	 * @see net.sf.JRecord.def.IO.builders.ICobolIOBuilder#setDropCopybookNameFromFields(boolean)
-	 */
-	@Override
-	public ICobol2Xml setDropCopybookNameFromFields(
-			boolean dropCopybookNameFromFields) {
-		ioBuilder.setDropCopybookNameFromFields(dropCopybookNameFromFields);
-		dropCopybook = dropCopybookNameFromFields;
-		return this;
-	}
-
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.cbl2xml.def.ICobol2Xml#setFont(java.lang.String)
-	 */
-	@Override
-	public ICobol2Xml setFont(String font) {
-		ioBuilder.setFont(font);
-		reset();
-		return this;
-	}
-
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.cbl2xml.def.ICobol2Xml#setRecordSelection(java.lang.String, net.sf.JRecord.ExternalRecordSelection.ExternalSelection)
-	 */
-	@Override
-	public ICobol2Xml setRecordSelection(String recordName,
-			ExternalSelection selectionCriteria) {
-		ioBuilder.setRecordSelection(recordName, selectionCriteria);
-		reset();
-		return this;
-	}
-
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.cbl2xml.def.ICobol2Xml#setCopybookFileFormat(int)
-	 */
-	@Override
-	public ICobol2Xml setCopybookFileFormat(int copybookFileFormat) {
-		ioBuilder.setCopybookFileFormat(copybookFileFormat);
-		reset();
-		return this;
+	private Cobol2GroupXml(Reader copybookReader, String copybookname, ICobolCopybookLoader loader) {
+		super(copybookname, loader);
+		loader.setSaveCb2xmlDocument(true);
+		
+		super.addCopyBook(copybookReader, copybookname);
+		//ioBuilder = new CblIOBuilderMultiSchema(is, copybookname, loader, ICopybookDialects.FMT_MAINFRAME);
 	}
 
 
-	/**
-	 * @param recordName
-	 * @param positionOption
-	 * @return
-	 * @see net.sf.JRecord.def.IO.builders.ICobolIOBuilder#setRecordPositionCode(java.lang.String, net.sf.JRecord.Option.IRecordPositionOption)
-	 */
-	public ICobol2Xml setRecordPositionCode(String recordName,
-			IRecordPositionOption positionOption) {
-		ioBuilder.setRecordPositionCode(recordName, positionOption);
-		reset();
-		return this;
-	}
  
 	/**
 	 * @param xmlMainElement the xmlMainElement to set
@@ -182,36 +114,53 @@ public class Cobol2GroupXml implements ICobol2Xml {
 	@Override
 	public final ICobol2Xml setXmlMainElement(String xmlMainElement) {
 		this.xmlMainElement = xmlMainElement;
-		reset();
+		clearLayout();
 		return this;
 	}
 	
 	
-
-//	/* (non-Javadoc)
-//	 * @see net.sf.JRecord.cbl2xml.def.ICobol2Xml#setLog(net.sf.JRecord.Log.AbsSSLogger)
-//	 */
-//	@Override
-//	public ICobol2Xml setLog(AbsSSLogger log) {
-//		// TODO Auto-generated method stub
-//		return this;
-//	}
-//
-//	/* (non-Javadoc)
-//	 * @see net.sf.JRecord.cbl2xml.def.ICobol2Xml#setDropCopybookNameFromFields(boolean)
-//	 */
-//	@Override
-//	public ICobol2Xml setDropCopybookNameFromFields(
-//			boolean dropCopybookNameFromFields) {
-//		ioBuilder.setDropCopybookNameFromFields(dropCopybookNameFromFields);
-//		return this;
-//	}
-
 	
-	private void reset() {
+	/**
+	 * @see net.sf.JRecord.cbl2xml.def.ICobol2Xml#setTagFormat(int)
+	 */
+	@Override
+	public ICobol2Xml setTagFormat(int tagFormat) {
+		this.tagFormat = tagFormat;
+		copybook = null;
+	
+		return this;
+	}
+	
+	@Override
+	public ICobol2Xml setArrayCheck(String arrayName, IArrayItemCheck check) {
+		arrayChecks.put(arrayName.toUpperCase(), check);
+		clearLayout();
+		return this;
+	}
+
+
+	/**
+	 * @param xmlInputFactory the xmlInputFactory to set
+	 */
+	@Override
+	public final ICobol2Xml setXmlInputFactory(XMLInputFactory xmlInputFactory) {
+		this.xmlInputFactory = xmlInputFactory;
+		return this;
+	}
+
+	/**
+	 * @param xmlOutputFactory the xmlOutputFactory to set
+	 */
+	@Override
+	public final ICobol2Xml setXmlOutputFactory(XMLOutputFactory xmlOutputFactory) {
+		this.xmlOutputFactory = xmlOutputFactory;
+		return this;
+	}
+
+	protected void clearLayout() {
+		super.clearLayout();
 		externalRecord = null;
 		copybook = null;
-		
 	}
 
 	@Override
@@ -226,9 +175,13 @@ public class Cobol2GroupXml implements ICobol2Xml {
         AbstractLineReader r = iob.newReader(cobolStream);
         LayoutDetail schema =  iob.getLayout();
         AbstractLine l;
-       	XMLOutputFactory f = XMLOutputFactory.newInstance();
+       	XMLOutputFactory f = xmlOutputFactory ; //=  XMLOutputFactory.newInstance();
+        if (f == null) {
+        	f = XMLOutputFactory.newInstance();
+        }
        	XMLStreamWriter writer = f.createXMLStreamWriter(new OutputStreamWriter(xmlStream, STANDARD_FONT));
         List<Item> items = copybook.getItem();
+        
 
         writer.writeStartDocument(STANDARD_FONT, "1.0"); 
         writer.writeStartElement(xmlMainElement);
@@ -238,7 +191,19 @@ public class Cobol2GroupXml implements ICobol2Xml {
 	        while ((l = r.read()) != null) {
 	        	writeItem(writer, l, item, new IntStack());
 	        }
-        } else if (schema.getRecordCount() > 1) {
+        } else if (schema.getRecordCount() <= 1) {
+	        while ((l = r.read()) != null) {
+	        	writer.writeStartElement("Line");
+	        	writeItems(writer, l, items, new IntStack());
+		        writer.writeEndElement();
+	        }
+        } else if (schema.hasTreeStructure()) {
+           	ReadManager rm = new ReadManager(r, schema);
+           	rm.read();
+        	while (rm.line != null) {
+        		writeItemInTree(writer, rm, items);
+        	}
+        } else {
         	int lineNo = 0;
         	while ((l = r.read()) != null) {
         		int recordIdx = l.getPreferredLayoutIdx();
@@ -248,13 +213,8 @@ public class Cobol2GroupXml implements ICobol2Xml {
 				}
 				writeItem(writer, l, items.get(recordIdx), new IntStack());
         	}
-        } else {
-	        while ((l = r.read()) != null) {
-	        	writer.writeStartElement("Line");
-	        	writeItems(writer, l, items, new IntStack());
-		        writer.writeEndElement();
-	        }
-       }
+        }
+
         writer.writeEndElement();
 
 
@@ -264,11 +224,11 @@ public class Cobol2GroupXml implements ICobol2Xml {
         r.close();
 	}
 	
-	private void doInit() throws RecordException, IOException, JAXBException {
+	private void doInit() throws IOException, JAXBException {
 		if (copybook == null) {
 			synchronized (this) {
 				if (copybook == null) {
-					externalRecord = ioBuilder.getExternalRecord();
+					externalRecord = super.getExternalRecord();
 					schema = externalRecord.asLayoutDetail();
 					iob = JRecordInterface1.SCHEMA.newIOBuilder(schema);
 					
@@ -283,13 +243,38 @@ public class Cobol2GroupXml implements ICobol2Xml {
 			        Unmarshaller unmarshaller = jc.createUnmarshaller();
 			        JAXBElement<Copybook> jaxbCopybook = unmarshaller.unmarshal(((Document) cb2xmlDocuments.get(0).cb2xmlDocument), Copybook.class);
 			        copybook = jaxbCopybook.getValue();
-			        itemDtls = new ItemUpdater(copybook, schema, dropCopybook, schema.getLayoutName());
+			        itemDtls = new UpdateSchemaItems(
+			        		copybook, schema, arrayChecks,
+			        		super.isDropCopybookNameFromFields(), schema.getLayoutName(), tagFormat);
+			        skipValidation = ! itemDtls.isRedefinedBinaryField();
 				}
 			}
 		}
 	}
 
-	
+	private void writeItemInTree(XMLStreamWriter writer, ReadManager rm, List<Item> items) 
+	throws XMLStreamException, IOException {
+
+
+		if (rm.recordIdx < 0) {
+			throw new RecordException("Unknow Record Type for line number: " + rm.lineNumber + " " + rm.line.getFullLine());
+		}
+
+  		int recIdx = rm.recordIdx;
+		Item item = items.get(recIdx);
+		
+		writer.writeStartElement(item.nameToUse);
+		writeAnItem(writer, rm.line, item, new IntStack());
+		
+		rm.read();
+		while (rm.line != null
+		&& rm.recordIdx >= 0
+		&& rm.schema.getRecord(rm.recordIdx).getParentRecordIndex() == recIdx) {
+			writeItemInTree(writer, rm, items);
+		}
+		
+		writer.writeEndElement();
+	}
 	private void writeItem(XMLStreamWriter writer, AbstractLine l, Item item, IntStack indexs) throws XMLStreamException {
 
 		String name = item.getName();
@@ -305,15 +290,95 @@ public class Cobol2GroupXml implements ICobol2Xml {
 			writeArray(writer, l, item, item.nameToUse, indexs);
 		} else {
 			writer.writeStartElement(item.nameToUse);
-			if (item.itemType == Item.TYPE_GROUP) {
-				writeItems(writer, l, item.getItem(), indexs);
-			} else if (indexs.size == 0) {
-				writer.writeCharacters(l.getFieldValue(item.fieldDef).asString());
-			} else {
-				writer.writeCharacters(l.getFieldValue(item.arrayDef.getField(indexs.toArray())).asString());
-			}
+			writeAnItem(writer, l, item, indexs);
 			writer.writeEndElement();
 		}
+	}
+
+	/**
+	 * @param writer
+	 * @param l
+	 * @param item
+	 * @param indexs
+	 * @throws XMLStreamException
+	 */
+	private void writeAnItem(XMLStreamWriter writer, AbstractLine l, Item item,
+			IntStack indexs) throws XMLStreamException {
+		if (item.itemType == Item.TYPE_GROUP) {
+			writeItems(writer, l, item.getItem(), indexs);
+		} else if (indexs.size == 0) {
+			writeText(writer, item, l.getFieldValue(item.fieldDef).asString());
+		} else {
+			writeText(writer, item, l.getFieldValue(item.arrayDef.getField(indexs.toArray())).asString());
+		}
+	}
+
+	/**
+	 * @param writer
+	 * @param item
+	 * @param s
+	 * @throws XMLStreamException
+	 */
+	public void writeText(XMLStreamWriter writer, Item item, String s)
+			throws XMLStreamException {
+		int len;
+		if (s != null && (len = s.length() - 1) >= 0) {
+			if (s.charAt(len) == 0) {
+				while( len > 0 && s.charAt(len-1) == 0) {
+					len -= 1;
+				}
+				
+				s = s.substring(0, len);
+			}
+			
+			if (skipValidation || (! item.isRedefined) || isValidString(s)) {
+				writer.writeCharacters(s);
+			}
+		}
+	}
+
+	/**
+	 * @param fl
+	 */
+	private static boolean isValidString(String fl) {
+		for (int j = 0; j < fl.length(); j++) {
+			char ch = fl.charAt(j);
+			switch (Character.getType(ch)) {
+			case  Character.COMBINING_SPACING_MARK:
+			case  Character.CONNECTOR_PUNCTUATION:
+			case  Character.CURRENCY_SYMBOL:
+			case  Character.DASH_PUNCTUATION:
+			case  Character.DECIMAL_DIGIT_NUMBER:
+			case  Character.ENCLOSING_MARK:
+			case  Character.END_PUNCTUATION:
+			case  Character.FINAL_QUOTE_PUNCTUATION:
+			case  Character.FORMAT:
+			case  Character.INITIAL_QUOTE_PUNCTUATION:
+			case  Character.LETTER_NUMBER:
+			case  Character.LINE_SEPARATOR:
+			case  Character.LOWERCASE_LETTER:
+			case  Character.MATH_SYMBOL:
+			case  Character.MODIFIER_LETTER:
+			case  Character.MODIFIER_SYMBOL:
+			case  Character.NON_SPACING_MARK:
+			case  Character.OTHER_LETTER:
+			case  Character.OTHER_NUMBER:
+			case  Character.OTHER_PUNCTUATION:
+			case  Character.OTHER_SYMBOL:
+			case  Character.PARAGRAPH_SEPARATOR:
+			case  Character.SPACE_SEPARATOR:
+			case  Character.START_PUNCTUATION:
+			case  Character.SURROGATE:
+			case  Character.TITLECASE_LETTER:
+			case  Character.UPPERCASE_LETTER:
+				break;
+			// Should be: Character.CONTROL, Character.UNASSIGNED, Character.PRIVATE_USE
+			default:
+				//System.out.print('*' + " " + ch + "~" + Character.getType(ch));
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -327,24 +392,36 @@ public class Cobol2GroupXml implements ICobol2Xml {
 			IntStack indexs) throws XMLStreamException {
 		int num = item.getOccurs();
 		String dependingOn = item.getDependingOn();
+
 		if (dependingOn != null && dependingOn.length() > 0) {
 			try {
 				num = l.getFieldValue(dependingOn).asInt();
 			} catch (Exception e) {
 			}
+		} else if (item.arrayCheck != null) {
+			num = item.arrayCheck.getCount(l, item, indexs.toArray(), num);
 		}
 		
 		indexs.add(0);
 		int[] indexArray = indexs.toArray();
+		int id;
 		for (int i = 0; i < num; i++) {
-			writer.writeStartElement(name);
-			if (item.itemType == Item.TYPE_GROUP) {
-				writeItems(writer, l, item.getItem(), indexs.set(i));
-			} else {
-				indexArray[indexArray.length - 1] = i;
-				writer.writeCharacters(l.getFieldValue(item.arrayDef.getField(indexArray)).asString());
+			if (item.arrayCheck != null
+			&& (id = item.arrayCheck.checkItem(l, item, indexArray, i)) != IArrayItemCheck.R_PROCESS ) {
+				if (id == IArrayItemCheck.R_STOP) {
+					break;
+				}
+			} else { 
+				writer.writeStartElement(name);
+				if (item.itemType == Item.TYPE_GROUP) {	
+					writeItems(writer, l, item.getItem(), indexs.set(i));
+				} else {
+					indexArray[indexArray.length - 1] = i;
+
+					writer.writeCharacters(l.getFieldValue(item.arrayDef.getField(indexArray)).asString());
+				}
+				writer.writeEndElement();
 			}
-			writer.writeEndElement();
 		}
 		indexs.remove();
 	}
@@ -366,25 +443,30 @@ public class Cobol2GroupXml implements ICobol2Xml {
 	throws RecordException, IOException, JAXBException, XMLStreamException{
 		//XMLInputFactory f = XMLInputFactory.newInstance();
 		doInit();
-		if (! schema.getDuplicateFieldNames().isEmpty()) {
+		if (itemDtls.getDuplicateFieldsStatus() == UpdateSchemaItems.D_DUPLICATES) {
 			throw new RuntimeException("Duplicate names are not supported for Xml --> Cobol");
 		}
 //		String spaces = "                                                                                                  ";
 		String lastName = "", name;
 		int lvl = 0;
 		int lastType, type = -1;
-		XMLStreamReader parser = XMLInputFactory.newInstance().createXMLStreamReader(xmlStream);
+		XMLStreamReader parser = (xmlInputFactory==null
+										? XMLInputFactory.newInstance()
+										: xmlInputFactory)
+												.createXMLStreamReader(xmlStream);
 		AbstractLine l = null;
 		AbstractLineWriter w = iob.newWriter(cobolStream);		
 		StringBuilder b = new StringBuilder();
 		Map<String, Item> arrayItems = itemDtls.getArrayItems();
 		IntStack arrayDtls = new IntStack();
 		IntStack levelNames = new IntStack();
-		LayoutDetail layout = iob.getLayout();
+		IGetRecordFieldByName fieldLookup = itemDtls.getFieldLookup();
+		Map<String, Integer> recordHierarchyMap = itemDtls.getRecordHierarchyMap();
+		int maxHierarchLvl = itemDtls.getMaxRecordHierarchyLevel();
+		String recordName = "";
+		Integer lookupLvl;
+		boolean lastWasArray = false;
 		
-		String spaces = "                                                                                              ";
-
-
 
 		
 		while (parser.hasNext()) {
@@ -394,52 +476,62 @@ public class Cobol2GroupXml implements ICobol2Xml {
             case XMLStreamConstants.START_ELEMENT:
             	lvl += 1;
             	name = parser.getName().toString();
-            	if (lvl == 2) {
+            	if (lvl == 2 
+                || (     maxHierarchLvl >= lvl - 3
+                   &&	(lookupLvl = recordHierarchyMap.get(name.toUpperCase())) != null
+             	   &&    lookupLvl >= lvl - 3 
+             		)) {
             		if (l != null) {
 //           			System.out.println();
 //            			System.out.println(l.getFullLine());
             			w.write(l);
             		}
+        			recordName = name;
+
             		l = iob.newLine();
             		if (schema.getRecordCount() > 1) {
-            			int recIdx = schema.getRecordIndex(name);
+            			int recIdx = itemDtls.getRecordIndex(name); // schema.getRecordIndex(name);
             			if (recIdx >= 0) {
             				l.setWriteLayout(recIdx);
             			}
             		}
+//            	} else if ((lookupLvl = recordHierarchyMap.get(name.toUpperCase())) != null) {
+//            		System.out.println("## " + name + " " + lookupLvl + " " + lvl );
+//            	} else if (lvl <= 4 && name.indexOf("Record") >= 0) {
+//            		System.out.println("** " + name + " " + lvl );
             	}
 //            	System.out.println();
 //           	System.out.print(spaces.substring(spaces.length() - 2 * lvl +1) + parser.getName() + " >");
-            	if (name != null && arrayItems.containsKey(name.toUpperCase())) {
+            	String ucName;
+            	if (name != null && arrayItems.containsKey((ucName = name.toUpperCase()))) {
             		if (name.equalsIgnoreCase(levelNames.getLastName())) {
             			arrayDtls.inc();
             		} else {
-            			arrayDtls.add(0, name);
+            			arrayDtls.add(0, name, arrayItems.get(ucName));
             		}
             	}
             	
             	lastName = name;
-            	levelNames.add(0, name);
+            	levelNames.add(0, name, null);
             	b.setLength(0);
             	
             	
             	break;
             case XMLStreamConstants.END_ELEMENT:
             	String name2 = parser.getName().toString();
+    			int[] indexes = arrayDtls.toArray();
             	
 //				System.out.print(b + "< " + name2 );
 				
 				if (lastName.equals(name2)) {
 	        		IFieldDetail f;
 	        		String n = lastName;
-	        		if (arrayDtls.size > 0) {
-	        			n = arrayDtls.toArrayIndex(lastName);
-	        		}
 	        		
-	        		f = layout.getFieldFromName(n);
+	        		f = fieldLookup.getField(recordName, n, indexes);
 	        		
 	        		if (f == null) {
 	        			if (b.length() > 0) {
+	        				f = fieldLookup.getField(recordName, n, indexes);
 	        				throw new RuntimeException("Field: " + n + " does not exist, can not assign '" + b.toString() + "'");
 	        			}
 	        		} else {
@@ -457,8 +549,16 @@ public class Cobol2GroupXml implements ICobol2Xml {
 		        	b.setLength(0); 	
 				}
 				
+				if (lastWasArray) {
+					Item item = arrayDtls.getLastItem();
+					if (item != null && item.arrayCheck != null && arrayDtls.size >= 0) {
+						item.arrayCheck.updateForCount(l, item, indexes, arrayDtls.stack[arrayDtls.size]+1);
+					}					
+				}
+				lastWasArray = false;
 				if (name2 != null && name2.equalsIgnoreCase(arrayDtls.getName())) {
 					arrayDtls.remove();
+					lastWasArray = true;
 				}
 				levelNames.remove();
             	lvl -= 1;
@@ -495,9 +595,17 @@ public class Cobol2GroupXml implements ICobol2Xml {
 		cobolStream.close();
 	}
 	
+	
+	/**
+	 * Class to keep track of Cobol Group Levels
+	 * (in particular Groups that are arrays) 
+	 * @author Bruce Martin
+	 *
+	 */
 	private static class IntStack {
 		private int[] stack = new int[100];
 		private String[] names = new String[100];
+		private Item[] items = new Item[100];
 		private int size = 0;
 		
 		public IntStack add(int item) {
@@ -505,8 +613,9 @@ public class Cobol2GroupXml implements ICobol2Xml {
 			return this;
 		}
 		
-		public IntStack add(int item, String name) {
-			stack[size] = item;
+		public IntStack add(int pos, String name, Item item) {
+			stack[size] = pos;
+			items[size] = item;
 			names[size++] = name;
 			return this;
 		}
@@ -534,9 +643,10 @@ public class Cobol2GroupXml implements ICobol2Xml {
 			return names[size];
 		}
 
-//		public int get(int idx) {
-//			return stack[idx];
-//		}
+		public Item getLastItem() {
+			if (size < 0) return null;
+			return items[size];
+		}
 		
 		public void remove() {
 			names[size+1] = null;
@@ -547,27 +657,7 @@ public class Cobol2GroupXml implements ICobol2Xml {
 			int[] ret = new int[size];
 			System.arraycopy(stack, 0, ret, 0, size);
 			return ret;
-		}
-
-		
-		public String toArrayIndex(String name) {
-			StringBuilder b = new StringBuilder(name);
-			String sep = " (";
-			
-			for (int i = 0; i < size; i++) {
-				b.append(sep).append(stack[i]);
-				sep = ", ";
-			}
-			
-			return b.append(')').toString();
-		}
-//		/**
-//		 * @return the size
-//		 */
-//		public final int getSize() {
-//			return size;
-//		}
-		
+		}	
 	}
 
 	
@@ -576,8 +666,12 @@ public class Cobol2GroupXml implements ICobol2Xml {
 	}
 	
 	
-	public static ICobol2Xml newCobol2Xml(InputStream cobolCopybook, String copybookName) throws IOException {
+	public static ICobol2Xml newCobol2Xml(InputStream cobolCopybook, String copybookName) {
 		return new Cobol2GroupXml(cobolCopybook, copybookName, new CobolCopybookLoader());
+	}
+	
+	public static ICobol2Xml newCobol2Xml(Reader cobolCopybookReader, String copybookName) {
+		return new Cobol2GroupXml(cobolCopybookReader, copybookName, new CobolCopybookLoader());
 	}
 
 	
@@ -586,8 +680,32 @@ public class Cobol2GroupXml implements ICobol2Xml {
 	}
 	
 	
-	public static Icb2xml2Xml newCb2Xml2Xml(InputStream cobolCopybook, String copybookName) throws IOException {
+	public static Icb2xml2Xml newCb2Xml2Xml(InputStream cobolCopybook, String copybookName) {
 		return new Cobol2GroupXml(cobolCopybook, copybookName, new XmlCopybookLoader());
 	}
 
+	@Override
+	public ISchemaIOBuilder asIOBuilder() {
+		return this;
+	}
+	
+	private static class ReadManager {
+		final AbstractLineReader reader;
+		final LayoutDetail schema;
+		AbstractLine line;
+		int recordIdx, lineNumber = 0;
+		ReadManager(AbstractLineReader r, LayoutDetail schema) {
+			super();
+			this.reader = r;
+			this.schema = schema;
+		}
+		
+		void read() throws IOException {
+			line = reader.read();
+			if (line != null) {
+				lineNumber += 1;
+				recordIdx = line.getPreferredLayoutIdx();
+			}
+		}
+	}
 }

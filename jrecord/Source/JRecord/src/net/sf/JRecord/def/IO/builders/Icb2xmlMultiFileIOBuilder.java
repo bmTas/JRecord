@@ -61,8 +61,6 @@ public interface Icb2xmlMultiFileIOBuilder extends  Icb2xmlIOBuilder {
 	
 	@Override public abstract Icb2xmlMultiFileIOBuilder setRecordParent(String recordName, String parentName);
 
-	@Override public abstract Icb2xmlMultiFileIOBuilder setCopybookFileFormat(int copybookFileFormat);
-
 	@Override public abstract Icb2xmlMultiFileIOBuilder setLog(AbsSSLogger log);
 
 	@Override public abstract Icb2xmlMultiFileIOBuilder setDropCopybookNameFromFields(boolean dropCopybookNameFromFields);
