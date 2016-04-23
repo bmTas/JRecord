@@ -6,6 +6,34 @@
 //
 
 
+/*  -------------------------------------------------------------------------
+ *
+ *                Project: JRecord
+ *    
+ *    Sub-Project purpose: Provide support for reading Cobol-Data files 
+ *                        using a Cobol Copybook in Java.
+ *                         Support for reading Fixed Width / Binary / Csv files
+ *                        using a Xml schema.
+ *                         General Fixed Width / Csv file processing in Java.
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+
 package net.sf.JRecord.schema.jaxb;
 
 import java.util.ArrayList;
@@ -73,28 +101,44 @@ import net.sf.JRecord.schema.IArrayItemCheck;
     "item"
 })
 @XmlRootElement(name = "item")
-public class Item {
+public class Item implements IItem {
 	
-	public static final int TYPE_GROUP = 1;
-	public static final int TYPE_FIELD = 2;
-	public static final int TYPE_ARRAY = 3;
-
 	@XmlTransient
 	public int itemType = TYPE_GROUP;
 	@XmlTransient
-	public IFieldDetail fieldDef = null;
+	public IFieldDetail fieldDefinition = null;
 	@XmlTransient
-	public IArrayAnyDimension arrayDef = null;
+	public IArrayAnyDimension arrayDefinition = null;
 	@XmlTransient
 	public List<String> names = null;
 	@XmlTransient
 	public String nameToUse, fieldName;
 	@XmlTransient
-	public IArrayItemCheck arrayCheck = null;
+	public IArrayItemCheck arrayValidation = null;
 	@XmlTransient
-	public boolean isRedefined = false;
+	public boolean fieldRedefined = false;
 	
 
+	public void initFields(String name, List<Item> childItems) {
+    	fieldName = name;
+    	nameToUse = name;
+    	this.name = name;
+    	fieldRedefined = false;
+    	itemType = IItem.TYPE_GROUP;
+    	
+    	position = 1;
+    	
+    	storageLength = 0;
+    	displayLength = 0;
+    	for (Item ii : childItems) {
+    		storageLength += ii.storageLength;
+    		displayLength += ii.displayLength;
+    	}
+    	
+    	item = childItems;
+    	level = "00";
+
+	}
 
     protected List<Condition> condition;
     protected List<Item> item;
@@ -185,44 +229,22 @@ public class Item {
         return this.condition;
     }
 
-    /**
-     * Gets the value of the item property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the item property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getItem().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Item }
-     * 
-     * 
-     */
-    public List<Item> getItem() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getItem()
+	 */
+    @Override
+	public List<Item> getChildItems() {
         if (item == null) {
             item = new ArrayList<Item>();
         }
         return this.item;
     }
 
-    /**
-     * Gets the value of the assumedDigits property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getAssumedDigits() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getAssumedDigits()
+	 */
+    @Override
+	public Integer getAssumedDigits() {
         return assumedDigits;
     }
 
@@ -238,15 +260,11 @@ public class Item {
         this.assumedDigits = value;
     }
 
-    /**
-     * Gets the value of the dependingOn property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDependingOn() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getDependingOn()
+	 */
+    @Override
+	public String getDependingOn() {
         return dependingOn;
     }
 
@@ -262,11 +280,11 @@ public class Item {
         this.dependingOn = value;
     }
 
-    /**
-     * Gets the value of the displayLength property.
-     * 
-     */
-    public int getDisplayLength() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getDisplayLength()
+	 */
+    @Override
+	public int getDisplayLength() {
         return displayLength;
     }
 
@@ -302,15 +320,11 @@ public class Item {
         this.insertDecimalPoint = value;
     }
 
-    /**
-     * Gets the value of the level property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getLevel() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getLevel()
+	 */
+    @Override
+	public String getLevel() {
         return level;
     }
 
@@ -326,15 +340,11 @@ public class Item {
         this.level = value;
     }
 
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getName() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getName()
+	 */
+    @Override
+	public String getName() {
         return name;
     }
 
@@ -350,15 +360,11 @@ public class Item {
         this.name = value;
     }
 
-    /**
-     * Gets the value of the numeric property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isNumeric() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#isNumeric()
+	 */
+    @Override
+	public Boolean isNumeric() {
         return numeric;
     }
 
@@ -374,15 +380,11 @@ public class Item {
         this.numeric = value;
     }
 
-    /**
-     * Gets the value of the occurs property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getOccurs() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getOccurs()
+	 */
+    @Override
+	public Integer getOccurs() {
         return occurs;
     }
 
@@ -398,15 +400,11 @@ public class Item {
         this.occurs = value;
     }
 
-    /**
-     * Gets the value of the occursMin property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getOccursMin() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getOccursMin()
+	 */
+    @Override
+	public Integer getOccursMin() {
         return occursMin;
     }
 
@@ -422,15 +420,11 @@ public class Item {
         this.occursMin = value;
     }
 
-    /**
-     * Gets the value of the picture property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPicture() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getPicture()
+	 */
+    @Override
+	public String getPicture() {
         return picture;
     }
 
@@ -446,11 +440,11 @@ public class Item {
         this.picture = value;
     }
 
-    /**
-     * Gets the value of the position property.
-     * 
-     */
-    public int getPosition() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getPosition()
+	 */
+    @Override
+	public int getPosition() {
         return position;
     }
 
@@ -462,15 +456,11 @@ public class Item {
         this.position = value;
     }
 
-    /**
-     * Gets the value of the redefined property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getRedefined() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getRedefined()
+	 */
+    @Override
+	public String getRedefined() {
         return redefined;
     }
 
@@ -486,15 +476,11 @@ public class Item {
         this.redefined = value;
     }
 
-    /**
-     * Gets the value of the redefines property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getRedefines() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getRedefines()
+	 */
+    @Override
+	public String getRedefines() {
         return redefines;
     }
 
@@ -510,15 +496,11 @@ public class Item {
         this.redefines = value;
     }
 
-    /**
-     * Gets the value of the scale property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getScale() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getScale()
+	 */
+    @Override
+	public Integer getScale() {
         return scale;
     }
 
@@ -534,15 +516,11 @@ public class Item {
         this.scale = value;
     }
 
-    /**
-     * Gets the value of the signPosition property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSignPosition() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getSignPosition()
+	 */
+    @Override
+	public String getSignPosition() {
         return signPosition;
     }
 
@@ -558,15 +536,11 @@ public class Item {
         this.signPosition = value;
     }
 
-    /**
-     * Gets the value of the signSeparate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isSignSeparate() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#isSignSeparate()
+	 */
+    @Override
+	public Boolean isSignSeparate() {
         return signSeparate;
     }
 
@@ -582,15 +556,11 @@ public class Item {
         this.signSeparate = value;
     }
 
-    /**
-     * Gets the value of the signed property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isSigned() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#isSigned()
+	 */
+    @Override
+	public Boolean isSigned() {
         return signed;
     }
 
@@ -606,11 +576,11 @@ public class Item {
         this.signed = value;
     }
 
-    /**
-     * Gets the value of the storageLength property.
-     * 
-     */
-    public int getStorageLength() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getStorageLength()
+	 */
+    @Override
+	public int getStorageLength() {
         return storageLength;
     }
 
@@ -622,15 +592,11 @@ public class Item {
         this.storageLength = value;
     }
 
-    /**
-     * Gets the value of the sync property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isSync() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#isSync()
+	 */
+    @Override
+	public Boolean isSync() {
         return sync;
     }
 
@@ -646,15 +612,11 @@ public class Item {
         this.sync = value;
     }
 
-    /**
-     * Gets the value of the usage property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getUsage() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getUsage()
+	 */
+    @Override
+	public String getUsage() {
         return usage;
     }
 
@@ -670,15 +632,11 @@ public class Item {
         this.usage = value;
     }
 
-    /**
-     * Gets the value of the value property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getValue() {
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getValue()
+	 */
+    @Override
+	public String getValue() {
         return value;
     }
 
@@ -693,5 +651,61 @@ public class Item {
     public void setValue(String value) {
         this.value = value;
     }
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getItemType()
+	 */
+	@Override
+	public final int getItemType() {
+		return itemType;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getFieldDefinition()
+	 */
+	@Override
+	public final IFieldDetail getFieldDefinition() {
+		return fieldDefinition;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getArrayDefinition()
+	 */
+	@Override
+	public final IArrayAnyDimension getArrayDefinition() {
+		return arrayDefinition;
+	}
+
+	/**
+	 * @return the arrayValidation
+	 */
+	@Override
+	public final IArrayItemCheck getArrayValidation() {
+		return arrayValidation;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getNameToUse()
+	 */
+	@Override
+	public final String getNameToUse() {
+		return nameToUse;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getFieldName()
+	 */
+	@Override
+	public final String getFieldName() {
+		return fieldName;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#isFieldRedefined()
+	 */
+	@Override
+	public final boolean isFieldRedefined() {
+		return fieldRedefined;
+	}
 
 }

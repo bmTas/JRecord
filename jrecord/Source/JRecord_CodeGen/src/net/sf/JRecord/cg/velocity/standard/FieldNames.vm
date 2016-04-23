@@ -1,9 +1,8 @@
 package ${generateOptions.packageId}.schema;
-#incl("schema/CommentSchema.pvm")
+#incl("schema/CommentFieldName.pvm")
 
 #*  *##set ($toAdd = "yes")
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
-//	${toAdd} $toAdd ${r.getArrayDetailsList().size()}
 #*      *##if (${r.getArrayDetailsList().size()} > 0)
 #*          *##if (${toAdd} == "yes")
 import net.sf.JRecord.cgen.impl.ArrayFieldName;
@@ -17,7 +16,7 @@ public class FieldNames${generateOptions.schemaDefinition.extensionName} {
 
 #*  *##set ($schemaDef = ${generateOptions.schemaDefinition})
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
-    public static final Record${r.extensionName} record${r.extensionName} = new Record${r.extensionName}();
+    public static final Record${r.extensionName} RECORD_${r.constantName} = new Record${r.extensionName}();
 #*  *##end    
 
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
@@ -27,11 +26,14 @@ public class FieldNames${generateOptions.schemaDefinition.extensionName} {
        public final String ${f.javaName} = "${f.fieldDetail.getLookupName()}";
 #*      *##end
 #*    *##end 
-	
+#*    *##if (${r.getArrayDetailsList().size()} > 0)
 
-#*    *##foreach($a in ${r.getArrayDetailsList()}) 
+   // Array fields follow:	
+
+#*        *##foreach($a in ${r.getArrayDetailsList()}) 
        public final IFieldName${a.getDimensionString()}Dimension ${a.getFirstElement().javaName} #*
     *# = new ArrayFieldName("${a.getFirstElement().cobolName}");
+#*        *##end
 #*    *##end
 	
     }

@@ -1,3 +1,28 @@
+/*  -------------------------------------------------------------------------
+ *
+ *            Sub-Project: JRecord Common
+ *    
+ *    Sub-Project purpose: Common Low-Level Code shared between 
+ *                        the JRecord and Record Projects
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+      
 package net.sf.JRecord.External.Def;
 
 import java.util.HashMap;
@@ -55,7 +80,8 @@ public class BasicConversion implements AbstractConversion {
         keys[i] = Constants.IO_XML_USE_LAYOUT;         externalNames[i] = "XML_Use_Layout";         names[i++] = "XML - Existing Layout";
         keys[i] = Constants.IO_XML_BUILD_LAYOUT;       externalNames[i] = "XML_Build_Layout";       names[i++] = "XML - Build Layout";
         keys[i] = Constants.IO_CONTINOUS_NO_LINE_MARKER;       externalNames[i] = "Continuous";  		    names[i++] = "Continuous no eol marker";
-        keys[i] = Constants.NULL_INTEGER;              externalNames[i] = null;                     names[i] = null;
+        keys[i] = Constants.IO_VBS;                    externalNames[i] = "Mainframe_VBS";            names[i++] = "Variable Block Spanned (VBS)";
+       keys[i] = Constants.NULL_INTEGER;              externalNames[i] = null;                     names[i] = null;
         
         numberOfEntries = i;
     }
@@ -104,8 +130,8 @@ public class BasicConversion implements AbstractConversion {
 
 		setName(Type.ftSignSeparateLead   , "Num Sign Separate Leading");
 		setName(Type.ftSignSeparateTrail  , "Num Sign Separate Trailing");
-		setName(Type.ftSignSepLeadAssumedDecimal   , "Num Sign Sep Leading Assumed Dec");
-		setName(Type.ftSignSepTrailAssumedDecimal  , "Num Sign Sep Trailing Assumed Dec");
+		setName(Type.ftSignSepLeadActualDecimal   , "Num Sign Sep Leading Actual Dec");
+		setName(Type.ftSignSepTrailActualDecimal  , "Num Sign Sep Trailing Actual Dec");
 		setName(Type.ftDecimal            , "Decimal");
 		setName(Type.ftBinaryInt          , "Binary Integer");
 		setName(Type.ftBinaryIntPositive  , "Binary Integer (only +ve)");

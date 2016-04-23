@@ -1,3 +1,27 @@
+/*  -------------------------------------------------------------------------
+ *
+ *            Sub-Project: JRecord Cbl2Xml
+ *    
+ *    Sub-Project purpose: Convert Cobol Data files to / from Xml
+ *
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+
 package net.sf.JRecord.cbl2xml.zTest.xml2cbl.attr;
 
 import java.io.ByteArrayInputStream;
@@ -309,14 +333,14 @@ public class TstSetAttributes01 extends TestCase {
 	}
 	
 	
-	public void testAttrs02() {
-		Object[] attrs = {
-				ICopybookDialects.FMT_FUJITSU, CopybookLoader.SPLIT_REDEFINE,  Cb2xmlConstants.USE_LONG_LINE,
-				Constants.IO_FIXED_LENGTH, "ibm037", Boolean.FALSE
-				
-		};
-		setAndCheckAttributes(attrs);
-	}
+//	public void testAttrs02() {
+//		Object[] attrs = {
+//				ICopybookDialects.FMT_FUJITSU, CopybookLoader.SPLIT_REDEFINE,  Cb2xmlConstants.USE_LONG_LINE,
+//				Constants.IO_FIXED_LENGTH, "ibm037", Boolean.FALSE
+//				
+//		};
+//		setAndCheckAttributes(attrs);
+//	}
 	
 	
 	public void testAttrs03() {

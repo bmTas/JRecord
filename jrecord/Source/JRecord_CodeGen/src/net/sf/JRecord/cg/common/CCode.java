@@ -7,14 +7,14 @@
  *    
  *                 Author: Bruce Martin
  *    
- *                License: GPL
+ *                License: GPL 3 or later
  *                
  *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
  *   
  *    This library is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU Lesser General Public
- *    License as published by the Free Software Foundation; either
- *    version 2.1 of the License, or (at your option) any later version.
+ *    modify it under the terms of the GNU General Public License
+ *    as published by the Free Software Foundation; either
+ *    version 3.0 of the License, or (at your option) any later version.
  *   
  *    This library is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -28,6 +28,7 @@ package net.sf.JRecord.cg.common;
 import java.util.Arrays;
 
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Option.ICobolSplitOptions;
 import net.sf.JRecord.Types.Type;
@@ -50,6 +51,15 @@ public class CCode {
        	Arrays.fill(SPLIT, null);
        	Arrays.fill(COPYBOOK_FORMAT, null);
     }
+    
+    
+
+	public static String toConstant(StringBuilder b) {
+		b = Conversion.replace(new StringBuilder(b), "-", "_");
+		return b.toString().toUpperCase();
+    }
+    
+    
 
 	public static String toSuffix(StringBuilder b) {
 		if (b == null || b.length() == 0) {
@@ -167,6 +177,8 @@ public class CCode {
 			JAVA_TYPE_NAME [Type.ftAssumedDecimal           ] = "ftAssumedDecimal";
 			JAVA_TYPE_NAME [Type.ftSignSeparateLead         ] = "ftSignSeparateLead";
 			JAVA_TYPE_NAME [Type.ftSignSeparateTrail        ] = "ftSignSeparateTrail";
+			JAVA_TYPE_NAME [Type.ftSignSepLeadActualDecimal ] = "ftSignSepLeadActualDecimal";
+			JAVA_TYPE_NAME [Type.ftSignSepTrailActualDecimal] = "ftSignSepTrailActualDecimal";
 			JAVA_TYPE_NAME [Type.ftDecimal                  ] = "ftDecimal";
 			JAVA_TYPE_NAME [Type.ftBinaryInt                ] = "ftBinaryInt";
 			JAVA_TYPE_NAME [Type.ftPostiveBinaryInt         ] = "ftPostiveBinaryInt";
@@ -325,6 +337,7 @@ public class CCode {
 		return "Constants." + IO_TYPE[type];
 	}
 
+	@SuppressWarnings("deprecation")
 	private static void initIoTypes() {
 
 		if (IO_TYPE [Constants.IO_PROTO_SD_SINGLE_MESSAGE] == null) {
@@ -333,6 +346,7 @@ public class CCode {
 		    IO_TYPE [Constants.IO_FIXED_LENGTH_RECORDS ] = "IO_FIXED_LENGTH_RECORDS";
 		    IO_TYPE [Constants.IO_BINARY_IBM_4680      ] = "IO_BINARY_IBM_4680";
 		    IO_TYPE [Constants.IO_VB                   ] = "IO_VB";
+		    IO_TYPE [Constants.IO_VBS                  ] = "IO_VBS";
 		    IO_TYPE [Constants.IO_VB_DUMP              ] = "IO_VB_DUMP";
 		    IO_TYPE [Constants.IO_VB_FUJITSU           ] = "IO_VB_FUJITSU";
 		    IO_TYPE [Constants.IO_VB_OPEN_COBOL        ] = "IO_VB_OPEN_COBOL";

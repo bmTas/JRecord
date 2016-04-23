@@ -4,6 +4,31 @@
  *
  * Purpose:
  */
+/*  -------------------------------------------------------------------------
+ *
+ *            Sub-Project: JRecord Common
+ *    
+ *    Sub-Project purpose: Common Low-Level Code shared between 
+ *                        the JRecord and Record Projects
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+      
 package net.sf.JRecord.Common;
 
 /**
@@ -72,6 +97,16 @@ public interface Constants {
      * I have provided this option just in case there is no other choice.</p>
      */
     public static final int IO_CONTINOUS_NO_LINE_MARKER  = 11;
+    
+    /**
+     * @deprecated This option is for reading Mainframe VBS files,
+     * It was written based on information in the Manual and has had
+     * very limited testing against real VBS files.
+     * <p>I <b>strongly</b> suggest you <b>copy</b> the file from <b>VBS</b> to <b>VB</b>/<b>FB</b> on the mainframe
+     * and use <b>IO_VB</b> / <b>IO_FIXED_LENGTH</b> instead of the IO_VBS option. Also you can only 
+     * read VBS files, there is now Write option. 
+     */
+    public static final int IO_VBS  = 12;
 
     public static final int IO_UNKOWN_FORMAT = 21 /* RecordEditor Format */;
     public static final int IO_WIZARD        = 22 /* RecordEditor Format */;

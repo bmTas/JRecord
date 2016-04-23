@@ -1,3 +1,31 @@
+/*  -------------------------------------------------------------------------
+ *
+ *                Project: JRecord
+ *    
+ *    Sub-Project purpose: Provide support for reading Cobol-Data files 
+ *                        using a Cobol Copybook in Java.
+ *                         Support for reading Fixed Width / Binary / Csv files
+ *                        using a Xml schema.
+ *                         General Fixed Width / Csv file processing in Java.
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+
 package net.sf.JRecord.schema;
 
 import java.util.Arrays;
@@ -6,7 +34,8 @@ import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.CharLine;
 import net.sf.JRecord.Details.Line;
-import net.sf.JRecord.schema.jaxb.Item;
+import net.sf.JRecord.schema.jaxb.IItem;
+
 
 /**
  * Class holds various Array-Check Creator's (or Builders).
@@ -137,7 +166,7 @@ public class ArrayElementChecks {
 		}
 
 		@Override
-		public int checkItem(AbstractLine line, Item item, int[] indexs, int index) {
+		public int checkItem(AbstractLine line, IItem item, int[] indexs, int index) {
 			int length = item.getStorageLength();
 			int pos = item.getPosition() + length * index - 1;
 			if (line instanceof Line) {
@@ -156,7 +185,7 @@ public class ArrayElementChecks {
 		 * @see net.sf.JRecord.schema.IArrayItemCheck#getCount(net.sf.JRecord.Details.AbstractLine, int)
 		 */
 		@Override
-		public int getCount(AbstractLine line, Item item, int[] indexs, int defaultCount) {
+		public int getCount(AbstractLine line, IItem item, int[] indexs, int defaultCount) {
 			return defaultCount;
 		}
 
@@ -164,7 +193,7 @@ public class ArrayElementChecks {
 		 * @see net.sf.JRecord.schema.IArrayItemCheck#updateForCount(net.sf.JRecord.Details.AbstractLine, int)
 		 */
 		@Override
-		public void updateForCount(AbstractLine line, Item item, int[] indexs, int count) {
+		public void updateForCount(AbstractLine line, IItem item, int[] indexs, int count) {
 			Integer occurs = item.getOccurs();
 			if (line instanceof Line && occurs != null && occurs > count) {
 				int length = item.getStorageLength();
@@ -189,7 +218,7 @@ public class ArrayElementChecks {
 		}
 		
 		@Override
-		public int checkItem(AbstractLine line, Item item, int[] indexs, int index) {
+		public int checkItem(AbstractLine line, IItem item, int[] indexs, int index) {
 			int length = item.getStorageLength();
 			int pos = item.getPosition() + length * index - 1;
 			if (line instanceof Line) {
@@ -225,7 +254,7 @@ public class ArrayElementChecks {
 		 * @see net.sf.JRecord.schema.IArrayItemCheck#getCount(net.sf.JRecord.Details.AbstractLine, int)
 		 */
 		@Override
-		public int getCount(AbstractLine line, Item item, int[] indexs, int defaultCount) {
+		public int getCount(AbstractLine line, IItem item, int[] indexs, int defaultCount) {
 			return defaultCount;
 		}
 
@@ -233,7 +262,7 @@ public class ArrayElementChecks {
 		 * @see net.sf.JRecord.schema.IArrayItemCheck#updateForCount(net.sf.JRecord.Details.AbstractLine, int)
 		 */
 		@Override
-		public void updateForCount(AbstractLine line, Item item, int[] indexs, int count) {
+		public void updateForCount(AbstractLine line, IItem item, int[] indexs, int count) {
 			Integer occurs = item.getOccurs();
 			if (occurs == null || occurs <= count) {
 			} else {
@@ -266,7 +295,7 @@ public class ArrayElementChecks {
 		}
 
 		@Override
-		public int checkItem(AbstractLine line, Item item, int[] indexs, int index) {
+		public int checkItem(AbstractLine line, IItem item, int[] indexs, int index) {
 			
 			lastIdx = line.getFieldValue(varName).asInt();
 			
@@ -280,7 +309,7 @@ public class ArrayElementChecks {
 		 * @see net.sf.JRecord.schema.IArrayItemCheck#getCount(net.sf.JRecord.Details.AbstractLine, int)
 		 */
 		@Override
-		public int getCount(AbstractLine line, Item item, int[] indexs, int defaultCount) {
+		public int getCount(AbstractLine line, IItem item, int[] indexs, int defaultCount) {
 			lastIdx = line.getFieldValue(varName).asInt();
 			return Math.min(lastIdx, defaultCount);
 		}
@@ -289,7 +318,7 @@ public class ArrayElementChecks {
 		 * @see net.sf.JRecord.schema.IArrayItemCheck#updateForCount(net.sf.JRecord.Details.AbstractLine, int)
 		 */
 		@Override
-		public void updateForCount(AbstractLine line, Item item, int[] indexs, int count) {
+		public void updateForCount(AbstractLine line, IItem item, int[] indexs, int count) {
 			line.getFieldValue(varName).set(count);
 		}
 	}

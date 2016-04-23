@@ -1,3 +1,31 @@
+/*  -------------------------------------------------------------------------
+ *
+ *                Project: JRecord
+ *    
+ *    Sub-Project purpose: Provide support for reading Cobol-Data files 
+ *                        using a Cobol Copybook in Java.
+ *                         Support for reading Fixed Width / Binary / Csv files
+ *                        using a Xml schema.
+ *                         General Fixed Width / Csv file processing in Java.
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+
 package net.sf.JRecord.zTest.External;
 
 import java.io.ByteArrayInputStream;
@@ -11,7 +39,6 @@ import net.sf.JRecord.Details.Line;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.Types.Type;
-import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import junit.framework.TestCase;
 
@@ -29,15 +56,17 @@ public class TstSignTrailing extends TestCase {
 		LayoutDetail schema = rec.asLayoutDetail();
 		AbstractLine line = new Line(schema);
 		
-		for (int i = 0 ; i < rec.getNumberOfRecordFields(); i++) {
-			assertEquals(Type.ftSignSeparateTrail, rec.getRecordField(i).getType());
-			System.out.println(rec.getRecordField(i).getName() + "\t" + rec.getRecordField(i).getType() + " " + Type.ftSignSeparateTrail
-					+ " " + TypeManager.isNumeric(Type.ftSignSeparateTrail));
+		assertEquals(Type.ftSignSeparateTrail, rec.getRecordField(0).getType());
+		for (int i = 1 ; i < rec.getNumberOfRecordFields(); i++) {
+			assertEquals(Type.ftSignSepTrailActualDecimal, rec.getRecordField(i).getType());
+//			System.out.println(rec.getRecordField(i).getName() + "\t" + rec.getRecordField(i).getType() + " " + Type.ftSignSeparateTrail
+//					+ " " + TypeManager.isNumeric(Type.ftSignSeparateTrail));
 		}
 		
 		RecordDetail r = schema.getRecord(0);
-		for (int i = 0; i < r.getFieldCount(); i++) {
-			assertEquals(Type.ftSignSeparateTrail, r.getField(i).getType());
+		assertEquals(Type.ftSignSeparateTrail, r.getField(0).getType());
+		for (int i = 1; i < r.getFieldCount(); i++) {
+			assertEquals(Type.ftSignSepTrailActualDecimal, r.getField(i).getType());
 		}
 		
 		line.getFieldValue(0,0).set(-100);

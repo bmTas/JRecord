@@ -17,6 +17,31 @@
  *  Version 0.60 Bruce Martin
  *    - Added getFieldType to help with sorting etc
  */
+/*  -------------------------------------------------------------------------
+ *
+ *            Sub-Project: JRecord Common
+ *    
+ *    Sub-Project purpose: Common Low-Level Code shared between 
+ *                        the JRecord and Record Projects
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2005, Bruce Martin / Jean-Francois Gagnon, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+      
 package net.sf.JRecord.Types;
 
 import net.sf.JRecord.Common.IFieldDetail;
@@ -54,8 +79,8 @@ public interface Type {
 	public static final int ftAssumedDecimal     = 8;
 	public static final int ftSignSeparateLead   = 9;
 	public static final int ftSignSeparateTrail  = 10;
-	public static final int ftSignSepLeadAssumedDecimal   = 44;
-	public static final int ftSignSepTrailAssumedDecimal  = 45;
+	public static final int ftSignSepLeadActualDecimal   = 44;
+	public static final int ftSignSepTrailActualDecimal  = 45;
 	public static final int ftDecimal            = 11;
 	public static final int ftBinaryInt          = 15;
 	public static final int ftPostiveBinaryInt   = 16;

@@ -21,10 +21,10 @@ import net.sf.JRecord.cgen.impl.ReadFromBytes;
 import net.sf.JRecord.cgen.impl.WriteAsBytes;
 import net.sf.JRecord.def.IO.builders.IIOBuilder;
 #*  *##set( $r = ${generateOptions.schemaDefinition.getRecords().get(0)}) 
-import example.pojo.data.Line${r.extensionName}JR;
-import example.pojo.data.Line${r.extensionName}Pojo;
-import example.pojo.def.I${r.extensionName};
-import example.pojo.schema.Schema${r.extensionName};
+import ${generateOptions.packageId}.data.Line${r.extensionName}JR;
+import ${generateOptions.packageId}.data.Line${r.extensionName}Pojo;
+import ${generateOptions.packageId}.def.I${r.extensionName};
+import ${generateOptions.packageId}.schema.Schema${r.extensionName};
 
 public class IOBuilder${generateOptions.schemaDefinition.extensionName} {
 

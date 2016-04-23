@@ -1,7 +1,31 @@
+/*  -------------------------------------------------------------------------
+ *
+ *            Sub-Project: JRecord Cbl2Xml
+ *    
+ *    Sub-Project purpose: Convert Cobol Data files to / from Xml
+ *
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+
 package net.sf.JRecord.cbl2xml.def;
 
 import java.io.IOException;
-import java.io.InputStream; 
+import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.xml.bind.JAXBException;
@@ -9,6 +33,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 
+import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
@@ -47,13 +72,14 @@ public interface ICobol2Xml  extends  Icb2xml2Xml  {
 
 	@Override public abstract ICobol2Xml setRecordSelection(String recordName, ExternalSelection selectionCriteria);
 	
+	@Override public abstract ICobol2Xml setRecordDecider(RecordDecider recordDecider);
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override public abstract ICobol2Xml setRecordPositionCode(String recordName,
 			IRecordPositionOption positionOption);
 
-	@Override public abstract ICobol2Xml setCopybookFileFormat(int copybookFileFormat);
 
 	@Override public abstract ICobol2Xml setDropCopybookNameFromFields(boolean dropCopybookNameFromFields);
 

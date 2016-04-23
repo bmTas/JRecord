@@ -1,3 +1,31 @@
+/*  -------------------------------------------------------------------------
+ *
+ *                Project: JRecord
+ *    
+ *    Sub-Project purpose: Provide support for reading Cobol-Data files 
+ *                        using a Cobol Copybook in Java.
+ *                         Support for reading Fixed Width / Binary / Csv files
+ *                        using a Xml schema.
+ *                         General Fixed Width / Csv file processing in Java.
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+
 package net.sf.JRecord.zTest.Cobol;
 
 import java.io.IOException;
@@ -57,7 +85,7 @@ public class TstCobolCnv extends TestCase {
 		AbstractFieldValue fieldValue = line.getFieldValue(0, 0);
 		IFieldDetail fieldDef = fieldValue.getFieldDetail();
 		
-		assertEquals(Type.ftSignSepTrailAssumedDecimal, fieldDef.getType());
+		assertEquals(fieldValue.getTypeName(), Type.ftSignSeparateTrail, fieldDef.getType());
 		assertEquals(1, fieldDef.getPos());
 		assertEquals(7, fieldDef.getLen());
 		assertEquals(2, fieldDef.getDecimal());
@@ -90,7 +118,7 @@ public class TstCobolCnv extends TestCase {
 		AbstractFieldValue fieldValue = line.getFieldValue(0, 0);
 		IFieldDetail fieldDef = fieldValue.getFieldDetail();
 		
-		assertEquals(Type.ftSignSepLeadAssumedDecimal, fieldDef.getType());
+		assertEquals(Type.ftSignSeparateLead, fieldDef.getType());
 		assertEquals(1, fieldDef.getPos());
 		assertEquals(7, fieldDef.getLen());
 		assertEquals(2, fieldDef.getDecimal());
@@ -122,7 +150,7 @@ public class TstCobolCnv extends TestCase {
 		AbstractFieldValue fieldValue = line.getFieldValue(0, 0);
 		IFieldDetail fieldDef = fieldValue.getFieldDetail();
 		
-		assertEquals(Type.ftSignSeparateTrail, fieldDef.getType());
+		assertEquals(fieldValue.getTypeName(), Type.ftSignSepTrailActualDecimal, fieldDef.getType());
 		assertEquals(1, fieldDef.getPos());
 		assertEquals(8, fieldDef.getLen());
 		assertEquals(2, fieldDef.getDecimal());
@@ -202,7 +230,7 @@ public class TstCobolCnv extends TestCase {
 		AbstractFieldValue fieldValue = line.getFieldValue(0, 0);
 		
 		fieldValue.set("123.45");
-		assertEquals("012345+", line.getFullLine());
+		assertEquals(fieldValue.getTypeName(), "012345+", line.getFullLine());
 		fieldValue.set("+123.45");
 		assertEquals("012345+", line.getFullLine());
 		fieldValue.set("-123.45");
@@ -231,7 +259,7 @@ public class TstCobolCnv extends TestCase {
 		AbstractFieldValue fieldValue = line.getFieldValue(0, 0);
 		
 		fieldValue.set("123.45");
-		assertEquals("+012345", line.getFullLine());
+		assertEquals(fieldValue.getTypeName(), "+012345", line.getFullLine());
 		fieldValue.set("+123.45");
 		assertEquals("+012345", line.getFullLine());
 		fieldValue.set("-123.45");
@@ -259,7 +287,7 @@ public class TstCobolCnv extends TestCase {
 		AbstractFieldValue fieldValue = line.getFieldValue(0, 0);
 		
 		fieldValue.set("123.45");
-		assertEquals("0123.45+", line.getFullLine());
+		assertEquals(fieldValue.getTypeName(), "0123.45+", line.getFullLine());
 		fieldValue.set("+123.45");
 		assertEquals("0123.45+", line.getFullLine());
 		fieldValue.set("-123.45");
@@ -336,7 +364,7 @@ public class TstCobolCnv extends TestCase {
 					.newIOBuilder(new StringReader(copybooks[i]), "Test");
 			AbstractLine line = iob.newLine();
 			AbstractFieldValue fieldValue = line.getFieldValue(0, 0);
-			String id = i+ "";
+			String id = i+ " " + fieldValue.getTypeName();
 			System.out.println(i + " " + copybooks[i]);
 			
 			getSet(id, fieldValue, "123.45");	

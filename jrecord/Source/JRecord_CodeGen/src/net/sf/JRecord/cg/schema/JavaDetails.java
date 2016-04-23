@@ -7,14 +7,14 @@
  *    
  *                 Author: Bruce Martin
  *    
- *                License: GPL
+ *                License: GPL 3 or later
  *                
  *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
  *   
  *    This library is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU Lesser General Public
- *    License as published by the Free Software Foundation; either
- *    version 2.1 of the License, or (at your option) any later version.
+ *    modify it under the terms of the GNU General Public License
+ *    as published by the Free Software Foundation; either
+ *    version 3.0 of the License, or (at your option) any later version.
  *   
  *    This library is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -28,7 +28,7 @@ package net.sf.JRecord.cg.schema;
 import net.sf.JRecord.cg.common.CCode;
 
 public class JavaDetails {
-	private final String cobolName, extensionName, javaName, className;
+	private final String cobolName, extensionName, javaName, className, constantName;
 
 	protected JavaDetails(String cobolName) {
 		super();
@@ -39,6 +39,7 @@ public class JavaDetails {
 		this.extensionName = CCode.toSuffix(b);
 		this.javaName = CCode.toFieldName(b);
 		this.className = CCode.toClassName(b);
+		this.constantName = CCode.toConstant(b);
 	}
 
 	/**
@@ -67,6 +68,14 @@ public class JavaDetails {
 	 */
 	public final String getClassName() {
 		return className;
+	}
+
+ 
+	/**
+	 * @return the constantName
+	 */
+	public final String getConstantName() {
+		return constantName;
 	}
 	
 	

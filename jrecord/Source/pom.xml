@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.sf</groupId>
     <artifactId>jrecord</artifactId>
-    <version>0.80.8h</version>
+    <version>0.81</version>
     <packaging>pom</packaging>
 
     <properties>

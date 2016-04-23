@@ -1,3 +1,28 @@
+/*  -------------------------------------------------------------------------
+ *
+ *            Sub-Project: JRecord IOBuilder examples
+ *    
+ *    Sub-Project purpose: Examples of using JRecord IOBuilders
+ *                        to perform IO on Cobol Data files
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+      
 package net.sf.JRecord.zExamples.iob.csv;
 
 
@@ -48,23 +73,24 @@ public final class XmplLineIO5n {
           // When reading a Csv without names on the first line:
           // 1) use FileStructure = Constants.IO_TEXT_LINE
           // 2) you must define the fields
-        	AbstractLineReader reader = JRecordInterface1.CSV.newIOBuilder("\t", "\"")
-       				.setFileOrganization(Constants.IO_TEXT_LINE)
-        			.defineFields()
-						.addCsvField("KEYCODE-NO",  Type.ftChar, 0)
-						.addCsvField("Store-NO",    Type.ftNumAnyDecimal, 0)
-						.addCsvField("Date",        Type.ftNumAnyDecimal, 0)
-						.addCsvField("Dept-NO",     Type.ftNumAnyDecimal, 0)
-						.addCsvField("Qty-Sold",    Type.ftNumAnyDecimal, 0)
-						.addCsvField("Sale-Price",  Type.ftNumAnyDecimal, 0)
-					.endOfRecord()
+        	AbstractLineReader reader = JRecordInterface1.CSV
+        			.newIOBuilder("\t", "\"")
+       					.setFileOrganization(Constants.IO_UNICODE_TEXT)
+       					.defineFields()
+       						.addCsvField("KEYCODE-NO",  Type.ftChar, 0)
+       						.addCsvField("Store-NO",    Type.ftNumAnyDecimal, 0)
+       						.addCsvField("Date",        Type.ftNumAnyDecimal, 0)
+       						.addCsvField("Dept-NO",     Type.ftNumAnyDecimal, 0)
+       						.addCsvField("Qty-Sold",    Type.ftNumAnyDecimal, 0)
+       						.addCsvField("Sale-Price",  Type.ftNumAnyDecimal, 0)
+						.endOfRecord()
 					.newReader(salesFile);
       	  // Define the output record (with the fields)
       	  // without names on the first line:
       	  // 1) use FileStructure = Constants.IO_TEXT_LINE
           // 2) you must define the fields
         	ICsvIOBuilder outIOBlbdr = JRecordInterface1.CSV.newIOBuilder(";", "\"")
-       				.setFileOrganization(Constants.IO_TEXT_LINE)
+       				.setFileOrganization(Constants.IO_UNICODE_TEXT)
 					.defineFields()
 						.addCsvField(FLD_SKU,   Type.ftChar, 0)
 						.addCsvField(FLD_STORE, Type.ftNumAnyDecimal, 0)

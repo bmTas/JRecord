@@ -7,14 +7,14 @@
  *    
  *                 Author: Bruce Martin
  *    
- *                License: GPL
+ *                License: GPL 3 or later
  *                
  *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
  *   
  *    This library is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU Lesser General Public
- *    License as published by the Free Software Foundation; either
- *    version 2.1 of the License, or (at your option) any later version.
+ *    modify it under the terms of the GNU General Public License
+ *    as published by the Free Software Foundation; either
+ *    version 3.0 of the License, or (at your option) any later version.
  *   
  *    This library is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -32,12 +32,12 @@ import java.util.List;
 import java.util.TreeSet;
 
 import net.sf.JRecord.Common.FieldDetail;
-import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Option.Options;
 import net.sf.JRecord.cg.common.CCode;
+import net.sf.JRecord.cgen.defc.IRecordDetail4gen;
 
 
 /**
@@ -46,7 +46,7 @@ import net.sf.JRecord.cg.common.CCode;
  *
  */
 public class RecordDef extends JavaDetails {
-	private final RecordDetail record;
+	private final IRecordDetail4gen record;
 	
 	private final ArrayList<FieldDef> fields = new ArrayList<FieldDef>();
 	
@@ -60,7 +60,7 @@ public class RecordDef extends JavaDetails {
 	 * 
 	 * @param record standard Record Description
 	 */
-	public RecordDef(RecordDetail record) {
+	public RecordDef(IRecordDetail4gen record) {
 		super(record.getRecordName()); 
 		this.record = record;
 		
@@ -81,41 +81,41 @@ public class RecordDef extends JavaDetails {
 			field = record.getField(i);
 			fldName = field.getName();
 			lcFldName = field.getName().toLowerCase();
-			Integer num = fieldsUsed.get(lcFldName);
-			if (num == null) {
-				num = Integer.valueOf(1);
-			} else {
-				fldName = fldName + num; 
-				num = num + 1;
-			}
-			fieldsUsed.put(lcFldName, num);
-			
-
-			
-			ai = null;
-			if (fldName.indexOf('(') > 0) {
-				ai = ArrayElement.newArrayItem(fldName);
-				fieldDef = new FieldDef(fldName, field, ai);
-				
-				if (arrayMap.containsKey(ai.arrayName)) {
-					ad = arrayMap.get(ai.arrayName);
-					ad.addDetails(ai, fieldDef);
+			if (! "filler".equals(lcFldName)){
+				Integer num = fieldsUsed.get(lcFldName);
+				if (num == null) {
+					num = Integer.valueOf(1);
 				} else {
-					ad = new ArrayDetails(ai, fieldDef);
-					arrayMap.put(ai.arrayName, ad);
-					arrayDetailsList.add(ad);
+					fldName = fldName + num; 
+					num = num + 1;
 				}
-			} else {
-				fieldDef = new FieldDef(fldName, field, ai);
-			}
-			
-			fields.add(fieldDef);
-			
-			String jType = fieldDef.getJavaType();
-			if ("BigDecimal".equals(jType)) {
-				importSet.add("java.math.BigDecimal");
-			} else if ("BigInteger".equals(jType)) {
-				importSet.add("java.math.BigInteger");
+				fieldsUsed.put(lcFldName, num);
+				
+				ai = null;
+				if (fldName.indexOf('(') > 0) {
+					ai = ArrayElement.newArrayItem(fldName);
+					fieldDef = new FieldDef(fldName, field, ai);
+					
+					if (arrayMap.containsKey(ai.arrayName)) {
+						ad = arrayMap.get(ai.arrayName);
+						ad.addDetails(ai, fieldDef);
+					} else {
+						ad = new ArrayDetails(ai, fieldDef);
+						arrayMap.put(ai.arrayName, ad);
+						arrayDetailsList.add(ad);
+					}
+				} else {
+					fieldDef = new FieldDef(fldName, field, ai);
+				}
+				
+				fields.add(fieldDef);
+				
+				String jType = fieldDef.getJavaType();
+				if ("BigDecimal".equals(jType)) {
+					importSet.add("java.math.BigDecimal");
+				} else if ("BigInteger".equals(jType)) {
+					importSet.add("java.math.BigInteger");
+				}
 			}
 		}
 		
@@ -183,7 +183,7 @@ public class RecordDef extends JavaDetails {
 	/**
 	 * @return the record
 	 */
-	public final RecordDetail getRecord() {
+	public final IRecordDetail4gen getRecord() {
 		return record;
 	}
 
@@ -201,7 +201,7 @@ public class RecordDef extends JavaDetails {
 		if (fields.size() <= limit) {
 			return fields;
 		}
-		ArrayList<FieldDef> r = new ArrayList<>(limit);
+		ArrayList<FieldDef> r = new ArrayList<FieldDef>(limit);
 		for (int i = 0; i < limit; i++) {
 			r.add(fields.get(i));
 		}

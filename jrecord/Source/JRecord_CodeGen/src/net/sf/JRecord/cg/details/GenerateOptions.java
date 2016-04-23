@@ -7,14 +7,14 @@
  *    
  *                 Author: Bruce Martin
  *    
- *                License: GPL
+ *                License: GPL 3 or later
  *                
  *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
  *   
  *    This library is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU Lesser General Public
- *    License as published by the Free Software Foundation; either
- *    version 2.1 of the License, or (at your option) any later version.
+ *    modify it under the terms of the GNU General Public License
+ *    as published by the Free Software Foundation; either
+ *    version 3.0 of the License, or (at your option) any later version.
  *   
  *    This library is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -31,9 +31,10 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.Properties;
 
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
@@ -45,14 +46,18 @@ import net.sf.JRecord.cg.schema.LayoutDef;
 import net.sf.JRecord.def.IO.builders.IIOBuilder;
 import net.sf.JRecord.utilityClasses.ParseArguments;
 
-public class GenerateOptions implements ArgNames {
+public class GenerateOptions implements ArgNames, IGenerateOptions {
+	private static final String JAVA_POJO_TEMPLATE = "javaPojo";
+	private static final String OPT_REQUIRE_PACKAGE_ID = "requirePackageId";
+	private static final String OPT_SPLIT_ON_REDEF = "splitOnRedef";
+
 	private static final Opts DEFAULT_FILE_ORG = new Opts("Constants.IO_*", "Constants.IO_*", "", Constants.IO_DEFAULT);
 
 	private static final Opts[] TEMPLATE_OPTIONS = {
-		new Opts("ioBuilder",  "", "Generate example code using JRecord IO Builders"),
-		new Opts("ioBuilderFieldNameClass",  "", "Generate example code using JRecord IO Builders + Field Name Class"),
-		new Opts("ioBuilderWithSchemaClass", "", "Generate example code using JRecord IO Builders + Schema details"),
-		new Opts("javaPojo",   "", "Generate java classes for each Cobol Record"),
+		new Opts("basic",  "", "Generate example code using JRecord IO Builders"),
+		new Opts("standard",  "", "Generate example code using JRecord IO Builders + Field Name Class"),
+		new Opts("schemaClass", "", "Generate example code using JRecord IO Builders + Schema details"),
+		new Opts(JAVA_POJO_TEMPLATE,   "", "Generate java classes for each Cobol Record"),
 	};
 	private static final Opts[] LOAD_SCHEMA_OPTS = {
 		new Opts("inLine",   "", "Create a SchemaClass in code"),
@@ -76,14 +81,16 @@ public class GenerateOptions implements ArgNames {
 
 	
 	private boolean ok = true;
-	public final String template, schemaName, schemaShortName, packageId, packageDir, font, outputDir, currentDate;
-	public final boolean inLineSchema, LoadSchemaFromFile;
+	private final String template, schemaName, schemaShortName, packageId, packageDir, font, outputDir, currentDate, currentDateTime;
+	private final boolean inLineSchema, LoadSchemaFromFile;
 	
-	public final Set<String> generateOptions = new HashSet<String>(10);
-	public final Opts io, splitOption;
-	public final LayoutDef schemaDefinition;
+	private final Map<String, String> generateOptions = new HashMap<String, String>(10);
+	private final Opts io, splitOption;
+	private final LayoutDef schemaDefinition;
 	
-	public final boolean dropCopybookName, xmlSchema;
+	private final boolean dropCopybookName, xmlSchema;
+	
+	private final Properties templateProperties;
 	
 	public GenerateOptions(ParseArguments pa) {
 		List<String> generateOpts = pa.getArgList(OPT_GENERATE);
@@ -91,21 +98,31 @@ public class GenerateOptions implements ArgNames {
 		String dropVal = pa.getArg(OPT_DROP_COPYBOOK_NAME, "");
 		
 
-		template = decode(pa, OPT_TEMPLATE, false, "javaPojo", TEMPLATE_OPTIONS);
+		template = decodeTemplate(pa.getArg(OPT_TEMPLATE));
+		templateProperties = getProperties(template);
+		
 		schemaName   = required(pa, OPT_SCHEMA);
 		if (schemaName == null) {
 			schemaShortName = "";
 		} else {
 			schemaShortName = (new File(schemaName)).getName();
 		}
-		if ("ioBuilder".equals(template)) {
+//		if (BASIC_TEMPLATE.equals(template)) {
+		if (hasOption(OPT_REQUIRE_PACKAGE_ID)) {
+			packageId = required(pa, OPT_PACKAGE);
+		} else {
+		
 			String s = pa.getArg(OPT_PACKAGE);
 			if (s == null) {
 				s = "";
 			}
 			packageId = s;
-		} else {
-			packageId = required(pa, OPT_PACKAGE);
+		}
+		if (! hasOption(OPT_SPLIT_ON_REDEF)) {
+			if (splitVal != null && splitVal.length() > 0) {
+				System.out.println("Split does is not supported for " + template + " !!!");
+				ok = false;
+			}
 		}
 		
 		if (packageId == null) {
@@ -124,25 +141,21 @@ public class GenerateOptions implements ArgNames {
 		font = pa.getArg(OPT_FONT_NAME, "");
 		outputDir = pa.getArg(OPT_OUTPUT_DIR, ".");
 		
-		if ("javaPojo".equals(template)) {
-			if (generateOpts == null || generateOpts.size() == 0) {
-				for (Opts o : GENERATE_OPTS) {
-					generateOptions.add(o.option);
-				}
-			} else {
-				for (String s : generateOpts) {
-					generateOptions.add(decode(s, OPT_GENERATE, false, "", GENERATE_OPTS));
-				}
-			}
-			
-			if (splitVal != null && splitVal.length() > 0) {
-				System.out.println("Split does not work for javaPojo generation !!! ");
-				ok = false;
-			}
-		} else if (generateOpts != null){
-			generateOptions.addAll(generateOpts);
-		}
 		
+		if (generateOpts != null) {
+			for (String s : generateOpts) {
+				String key = s;
+				String v = s;
+				int pos = s.indexOf('.');
+				if (pos > 0) {
+					key = s.substring(0, pos);
+					v = s.substring(pos+1);
+				}
+				generateOptions.put(key.toLowerCase(), v);
+			}
+		} else {
+			loadDefaultOptions();
+		}
 		
 		LayoutDef t = null;
 		
@@ -174,13 +187,34 @@ public class GenerateOptions implements ArgNames {
 		
 		schemaDefinition = t;
 		
-		SimpleDateFormat df = new SimpleDateFormat("d MMM yyyy H:m:s");
-		currentDate = df.format(new Date());
+		Date date = new Date();
+		currentDateTime = new SimpleDateFormat("d MMM yyyy H:m:s").format(date);
+		currentDate = new SimpleDateFormat("d MMM yyyy").format(date);
+	}
+	
+	private String decodeTemplate(String template) {
+		if (template == null || template.length() == 0) {
+			template = JAVA_POJO_TEMPLATE;
+		}
+		return template;
+	}
+	
+	private Properties getProperties(String template)  {
+		Properties p = new Properties();
+		try {
+			p.load(this.getClass().getResourceAsStream("/net/sf/JRecord/cg/velocity/" + template + "/Generate.properties"));
+		} catch (IOException e) {
+			ok = false;
+			System.out.println();
+			System.out.println("Could not Load Template: " + e);
+			System.out.println();
+		}
+		return p;
 	}
 	
 	private void processError(Exception e) {
 		System.out.println();
-		System.out.println(" Could not process the copybook (schema): " + e);
+		System.out.println("Could not process the copybook (schema): " + e);
 		System.out.println();
 		ok = false;
 	}
@@ -222,30 +256,63 @@ public class GenerateOptions implements ArgNames {
 		return defaultVal;
 	}
 	
-	private String decode(ParseArguments pa, String key, boolean printMsg, String defaultVal, Opts[] opts) {
-		return decode(pa.getArg(key), key, printMsg, defaultVal, opts);
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#hasOption(java.lang.String)
+	 */
+	@Override
+	public boolean hasOption(String opt) {
+		return ! "N".equals(templateProperties.get(opt));
 	}
 	
-	private String decode(String v, String key, boolean printMsg, String defaultVal, Opts[] opts) {
+	private void loadDefaultOptions() {
+		String arrayKey = "defaultOpts.";
+		String countStr = templateProperties.getProperty(arrayKey + '0');
 		
-		if (v != null) {
-			Opts o = decodeAsOpt(v, key, printMsg, null, opts);
-			if (o != null) {
-				if (o.code == null || o.code.length() == 0) {
-					return o.option;
+		if (countStr != null && countStr.length() > 0) {
+			try {
+				int count = Integer.parseInt(countStr);
+				for (int i = 1; i <= count; i++) {
+					String key = arrayKey + i;
+					String k = templateProperties.getProperty(key);
+					String v = templateProperties.getProperty(key + ".val");
+					if (v == null) {
+						v = k;
+					}
+					if (k != null) {
+						generateOptions.put(k, v);
+					}
 				}
-				return o.code;
-			}
-			if (printMsg) {
-				System.out.println("Invalid value " + v + " for argument " + key);
-				ok = false;
+			} catch (NumberFormatException e) {
 			}
 			
-			return v;
 		}
-		
-		return defaultVal;
+				
 	}
+	
+//	private String decode(ParseArguments pa, String key, boolean printMsg, String defaultVal, Opts[] opts) {
+//		return decode(pa.getArg(key), key, printMsg, defaultVal, opts);
+//	}
+//	
+//	private String decode(String v, String key, boolean printMsg, String defaultVal, Opts[] opts) {
+//		
+//		if (v != null) {
+//			Opts o = decodeAsOpt(v, key, printMsg, null, opts);
+//			if (o != null) {
+//				if (o.code == null || o.code.length() == 0) {
+//					return o.option;
+//				}
+//				return o.code;
+//			}
+//			if (printMsg) {
+//				System.out.println("Invalid value " + v + " for argument " + key);
+//				ok = false;
+//			}
+//			
+//			return v;
+//		}
+//		
+//		return defaultVal;
+//	}
 
 	private Opts decodeAsOpt(ParseArguments pa, String key, boolean printMsg, Opts defaultOption, Opts[] opts) {
 		return decodeAsOpt(pa.getArg(key), key, printMsg, defaultOption, opts);
@@ -255,8 +322,7 @@ public class GenerateOptions implements ArgNames {
 		
 		if (v != null) {
 			for (Opts o : opts) {
-				if (o.option.equalsIgnoreCase(v)) {
-					
+				if (o.option.equalsIgnoreCase(v)) {	
 					return o;
 				}
 			}
@@ -271,6 +337,11 @@ public class GenerateOptions implements ArgNames {
 
 	public static void printOptions() {
 		System.out.println();
+		System.out.println(" -------------------------------------------------------");
+		System.out.println("Program: CodeGen");
+		System.out.println("Purpose: Generate Skelton JRecord Code from a Cobol Copybook");
+		System.out.println();
+		System.out.println(" -------------------------------------------------------");
 		System.out.println("Program Options:");
 		System.out.println();
 		System.out.println("    -Template:\tWhich template to generate");
@@ -281,10 +352,15 @@ public class GenerateOptions implements ArgNames {
 		printList(LOAD_SCHEMA_OPTS);
 		System.out.println("    " + OPT_FILE_ORGANISATION + ":\tWhat sort of file will be read ???");
 		printList(FILE_ORGANISATION_OPTS);
+		System.out.println("    " + OPT_SPLIT + ":\tHow to split the copybook up");
+		printList(SPLIT_OPTS);
+		System.out.println("    " + OPT_FONT_NAME + ":\tFont (characterset name");
+		System.out.println("    " + OPT_DROP_COPYBOOK_NAME + ":\tWhether to Drop the copybook name from the start of field names");
 		System.out.println("    " + OPT_LOAD_SCHEMA + ":\tWether to generate a Schema (LayoutDetail) class or not");
 		printList(LOAD_SCHEMA_OPTS);
 		System.out.println("    " + OPT_GENERATE + ":\tWhich skeltons to generate, for template=javaPojo:");
 		printList(GENERATE_OPTS);
+		System.out.println("    " + OPT_OUTPUT_DIR + ":\tOutput directory");
 		System.out.println();
 		System.out.println("    -h -?:\tList options");
 		System.out.println();
@@ -297,107 +373,119 @@ public class GenerateOptions implements ArgNames {
 	}
 
 
-	/**
-	 * @return the ok
-	 */
 	public final boolean isOk() {
 		return ok;
 	}
 	
-	/**
-	 * @return the schemaName
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getSchemaName()
 	 */
+	@Override
 	public final String getSchemaName() {
 		return schemaName;
 	}
 
-	/**
-	 * @return the template
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getTemplate()
 	 */
+	@Override
 	public final String getTemplate() {
 		return template;
 	}
 
-	/**
-	 * @return the packageId
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getPackageId()
 	 */
+	@Override
 	public final String getPackageId() {
 		return packageId;
 	}
 
-	/**
-	 * @return the packageDir
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getPackageDir()
 	 */
+	@Override
 	public final String getPackageDir() {
 		return packageDir;
 	}
 
-	/**
-	 * @return the font
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getFont()
 	 */
+	@Override
 	public final String getFont() {
 		return font;
 	}
 
-	/**
-	 * @return the outputDir
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getOutputDir()
 	 */
+	@Override
 	public final String getOutputDir() {
 		return outputDir;
 	}
 
-	/**
-	 * @return the inLineSchema
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#isInLineSchema()
 	 */
+	@Override
 	public final boolean isInLineSchema() {
 		return inLineSchema;
 	}
 
-	/**
-	 * @return the loadSchemaFromFile
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#isLoadSchemaFromFile()
 	 */
+	@Override
 	public final boolean isLoadSchemaFromFile() {
 		return LoadSchemaFromFile;
 	}
 
-	/**
-	 * @return the generateOptions
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getGenerateOptions()
 	 */
-	public final Set<String> getGenerateOptions() {
+	@Override
+	public final Map<String, String> getGenerateOptions() {
 		return generateOptions;
 	}
 
-	/**
-	 * @return the io
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getIo()
 	 */
+	@Override
 	public final Opts getIo() {
 		return io;
 	}
 
-	/**
-	 * @return the splitOption
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getSplitOption()
 	 */
+	@Override
 	public final Opts getSplitOption() {
 		return splitOption;
 	}
 
-	/**
-	 * @return the schemaDefinition
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getSchemaDefinition()
 	 */
+	@Override
 	public final LayoutDef getSchemaDefinition() {
 		return schemaDefinition;
 	}
 
-	/**
-	 * @return the dropCopybookName
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#isDropCopybookName()
 	 */
+	@Override
 	public final boolean isDropCopybookName() {
 		return dropCopybookName;
 	}
 
-	/**
-	 * @return the xmlSchema
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#isXmlSchema()
 	 */
+	@Override
 	public final boolean isXmlSchema() {
 		return xmlSchema;
 	}
@@ -446,17 +534,28 @@ public class GenerateOptions implements ArgNames {
 		}
 	}
 
-	/**
-	 * @return the schemaShotName
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getSchemaShortName()
 	 */
+	@Override
 	public final String getSchemaShortName() {
 		return schemaShortName;
 	}
 
-	/**
-	 * @return the currentDate
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getCurrentDate()
 	 */
+	@Override
 	public final String getCurrentDate() {
 		return currentDate;
 	}
+	
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getCurrentDateTime()
+	 */
+	@Override
+	public final String getCurrentDateTime() {
+		return currentDateTime;
+	}
+
 }

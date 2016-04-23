@@ -6,6 +6,34 @@
  * # Version 0.56 Bruce Martin 2007/01/16
  *   - remove unused field editorStatus
  */
+/*  -------------------------------------------------------------------------
+ *
+ *                Project: JRecord
+ *    
+ *    Sub-Project purpose: Provide support for reading Cobol-Data files 
+ *                        using a Cobol Copybook in Java.
+ *                         Support for reading Fixed Width / Binary / Csv files
+ *                        using a Xml schema.
+ *                         General Fixed Width / Csv file processing in Java.
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+
 package net.sf.JRecord.Details;
 
 import java.util.ArrayList;
@@ -28,8 +56,10 @@ import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.Types.TypeManager;
+import net.sf.JRecord.cgen.defc.IRecordDetail4gen;
 import net.sf.JRecord.detailsSelection.Convert;
 import net.sf.JRecord.detailsSelection.FieldSelectX;
+import net.sf.JRecord.detailsSelection.RecordSelection;
 
 
 
@@ -60,7 +90,7 @@ import net.sf.JRecord.detailsSelection.FieldSelectX;
  * @author Bruce Martin
  * @version 0.55
  */
-public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinition {
+public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinition, IRecordDetail4gen {
 
 //	private static final   ArrayList<DependingOn> EMPTY_DEPENDING_ON = new ArrayList<DependingOn>(0);
 	
@@ -88,7 +118,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 
 	//private String selectionField;
 	//private String selectionValue;
-	private RecordSelection recordSelection = new RecordSelection(this);
+	private RecordSelection recordSelection = new RecordSelection();
     private final IRecordPositionOption recordPositionOption;
 
 	private String delimiter;

@@ -1,3 +1,31 @@
+/*  -------------------------------------------------------------------------
+ *
+ *                Project: JRecord
+ *    
+ *    Sub-Project purpose: Provide support for reading Cobol-Data files 
+ *                        using a Cobol Copybook in Java.
+ *                         Support for reading Fixed Width / Binary / Csv files
+ *                        using a Xml schema.
+ *                         General Fixed Width / Csv file processing in Java.
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+
 package net.sf.JRecord.External;
 
 import java.util.ArrayList;
@@ -6,6 +34,7 @@ import java.util.List;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.External.Def.AbstractUpdatableRecord;
 import net.sf.JRecord.External.Def.DependingOn;
 import net.sf.JRecord.External.Def.ExternalField;
@@ -86,6 +115,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
   private boolean defaultRecord = false;
   private boolean embeddedCr    = false;  //private String tstField = "";
   private boolean initToSpaces  = false;  // for backward compatibility
+  private RecordDecider recordDecider = null;
   //private String tstFieldValue = "";
 
 
@@ -293,6 +323,20 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
   }
 
   /**
+ * @return the recordDecider
+ */
+final RecordDecider getRecordDecider() {
+	return recordDecider;
+}
+
+/**
+ * @param recordDecider the recordDecider to set
+ */
+public final void setRecordDecider(RecordDecider recordDecider) {
+	this.recordDecider = recordDecider;
+}
+
+/**
    *  This method gets the vaule of Description
    * @return record description
    */

@@ -1,3 +1,31 @@
+/*  -------------------------------------------------------------------------
+ *
+ *                Project: JRecord
+ *    
+ *    Sub-Project purpose: Provide support for reading Cobol-Data files 
+ *                        using a Cobol Copybook in Java.
+ *                         Support for reading Fixed Width / Binary / Csv files
+ *                        using a Xml schema.
+ *                         General Fixed Width / Csv file processing in Java.
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+
 package net.sf.JRecord.IO.builders;
 
 import java.io.FileInputStream;
@@ -16,6 +44,7 @@ import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.CharLineProvider;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
+import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
@@ -39,9 +68,10 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 	private static final TextLog DEFAULT_LOG = new TextLog();
 	
 	@SuppressWarnings("unchecked")
-	final IOB self = (IOB) this;
+	protected final IOB self = (IOB) this;
 	private LayoutDetail layout = null;
 	private LineProvider lineProvider;
+	private RecordDecider recordDecider=null;
 	Map<String, RecordUpdate> recordSelectionMap = null;
 
 	int dialect;
@@ -111,6 +141,7 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 	}
 
 	
+
 	/**
 	 * @return the fileOrganization
 	 */
@@ -285,6 +316,15 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 
 
 	/**
+	 * @param recordDecider the recordDecider to set
+	 */
+	public final IOB setRecordDecider(RecordDecider recordDecider) {
+		this.recordDecider = recordDecider;
+		return self;
+	}
+
+
+	/**
 	 * @param initToSpaces the initToSpaces to set
 	 */
 	public final IOB setInitToSpaces(boolean initToSpaces) {
@@ -308,6 +348,8 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 
 	public final ExternalRecord getExternalRecord() throws IOException  {			
 		ExternalRecord schema =  getExternalRecordImpl();
+		
+		schema.setRecordDecider(recordDecider);
 		//schema.setFontName(getFont());
 		
 		if (fileOrganization >= 0) {
@@ -328,7 +370,7 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 					if (recUpdate.selection != null) {	
 						record.setRecordSelection(recUpdate.selection);
 					}
-					
+		
 					if (recUpdate.positionCode != null) {
 						record.setRecordPositionOption(recUpdate.positionCode);
 					}
@@ -339,7 +381,7 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 				}
 			}
 		}
-		
+
 		return schema; 
 	}
 	

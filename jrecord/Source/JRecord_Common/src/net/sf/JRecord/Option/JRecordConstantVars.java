@@ -1,3 +1,28 @@
+/*  -------------------------------------------------------------------------
+ *
+ *            Sub-Project: JRecord Common
+ *    
+ *    Sub-Project purpose: Common Low-Level Code shared between 
+ *                        the JRecord and Record Projects
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+      
 package net.sf.JRecord.Option;
 
 import net.sf.JRecord.Common.Constants;
@@ -62,7 +87,8 @@ public class JRecordConstantVars {
     public final int IO_VB_OPEN_COBOL		 = Constants.IO_VB_OPEN_COBOL;                                                                               
     public final int IO_BIN_TEXT			 = Constants.IO_BIN_TEXT;
     public final int IO_FIXED_LENGTH_CHAR	 = Constants.IO_FIXED_LENGTH_CHAR		        ;
-                                                                                                
+    public final int IO_VBS					 = Constants.IO_VBS;
+                                                                                               
                                                                                                 
     public final int IO_CONTINOUS_NO_LINE_MARKER = Constants.IO_CONTINOUS_NO_LINE_MARKER;
                                                                                                  

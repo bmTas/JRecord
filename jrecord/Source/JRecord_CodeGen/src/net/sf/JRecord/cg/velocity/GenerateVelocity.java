@@ -7,14 +7,14 @@
  *    
  *                 Author: Bruce Martin
  *    
- *                License: GPL
+ *                License: GPL 3 or later
  *                
  *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
  *   
  *    This library is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU Lesser General Public
- *    License as published by the Free Software Foundation; either
- *    version 2.1 of the License, or (at your option) any later version.
+ *    modify it under the terms of the GNU General Public License
+ *    as published by the Free Software Foundation; either
+ *    version 3.0 of the License, or (at your option) any later version.
  *   
  *    This library is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -42,7 +42,7 @@ import org.apache.velocity.app.event.EventCartridge;
 import org.apache.velocity.app.event.implement.IncludeRelativePath;
 
 import net.sf.JRecord.Common.Conversion;
-import net.sf.JRecord.cg.details.GenerateOptions;
+import net.sf.JRecord.cg.details.IGenerateOptions;
 import net.sf.JRecord.cg.schema.RecordDef;
 
 
@@ -53,13 +53,14 @@ public class GenerateVelocity {
 	private static final String OPT = ".opt.";
 	private static final String SKEL_PREF = "skel.";
 	
-	public GenerateVelocity(GenerateOptions opts) {
+	public GenerateVelocity(IGenerateOptions opts) {
+		
 		ResourceBundle rb = ResourceBundle.getBundle(
-				"net.sf.JRecord.cg.velocity." + opts.template + ".Generate",
+				"net.sf.JRecord.cg.velocity." + opts.getTemplate() + ".Generate",
 				Locale.getDefault(),
 				GenerateVelocity.class.getClassLoader());
 		if (rb == null) {
-			System.out.println("Template: " +  opts.template + " does not exist !!!");
+			System.out.println("Template: " +  opts.getTemplate() + " does not exist !!!");
 			return;
 		}
 		
@@ -70,7 +71,7 @@ public class GenerateVelocity {
 		}
 	}
 	
-	private void generate(GenerateOptions opts, ResourceBundle rb) throws Exception {
+	private void generate(IGenerateOptions opts, ResourceBundle rb) throws Exception {
 		int optCount;
 		int skelCount = Integer.parseInt(rb.getString(SKEL_PREF + "0"));
 		String mod, outputFile, s;
@@ -84,7 +85,7 @@ public class GenerateVelocity {
 				optCount = Integer.parseInt(s);
 				for (int j = 1; j <= optCount; j++) {
 					s = getString(rb, SKEL_PREF + i + OPT + j);
-					if (opts.generateOptions.contains(s.toLowerCase())) {
+					if (opts.getGenerateOptions().containsKey(s.toLowerCase())) {
 						gen = true;
 						break;
 					}
@@ -94,12 +95,12 @@ public class GenerateVelocity {
 			if (gen) {
 				String genAt  =  getString(rb, SKEL_PREF + i + ".genAt");
 				if (genAt != null && "record".equals(genAt.toLowerCase())) {
-					for (RecordDef r : opts.schemaDefinition.getRecords()) {
-						outputFile = expand(opts, r, opts.outputDir + "/" + getString(rb,  SKEL_PREF + i + OUTPUT_FILE));
+					for (RecordDef r : opts.getSchemaDefinition().getRecords()) {
+						outputFile = expand(opts, r, opts.getOutputDir() + "/" + getString(rb,  SKEL_PREF + i + OUTPUT_FILE));
 						genSkel(mod, outputFile, opts, r);
 					}
 				} else {
-					outputFile = expand(opts, null, opts.outputDir + "/" + getString(rb,  SKEL_PREF + i + OUTPUT_FILE));
+					outputFile = expand(opts, null, opts.getOutputDir() + "/" + getString(rb,  SKEL_PREF + i + OUTPUT_FILE));
 					genSkel(mod, outputFile, opts, null);
 				}
 			}
@@ -113,10 +114,10 @@ public class GenerateVelocity {
 		return null;
 	}
 	
-	private String expand(GenerateOptions opts, RecordDef r, String s) {
+	private String expand(IGenerateOptions opts, RecordDef r, String s) {
 		StringBuilder b = new StringBuilder(s);
-		Conversion.replace(b, "&suffix.", opts.schemaDefinition.getExtensionName() );
-		Conversion.replace(b, "&directory.", opts.packageDir);
+		Conversion.replace(b, "&suffix.", opts.getSchemaDefinition().getExtensionName() );
+		Conversion.replace(b, "&directory.", opts.getPackageDir());
 		if (r != null) {
 			Conversion.replace(b, "&recordSuffix.", r.getExtensionName() );
 		}
@@ -132,7 +133,7 @@ public class GenerateVelocity {
      *
      * @throws Exception any error that occurs
      */
-    public final void genSkel(String templateFile, String outputFile, GenerateOptions opts,  RecordDef r )
+    public final void genSkel(String templateFile, String outputFile, IGenerateOptions opts,  RecordDef r )
     throws Exception {
 
         /*
@@ -224,7 +225,8 @@ public class GenerateVelocity {
     				b.append(s).append('\n');
     			}
     		}
-    	} catch (IOException ex) {   	
+    	} catch (IOException ex) { 
+    		
     		throw new RuntimeException(ex);
 
     	}

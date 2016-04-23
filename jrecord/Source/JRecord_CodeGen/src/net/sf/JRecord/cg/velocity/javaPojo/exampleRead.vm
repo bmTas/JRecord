@@ -9,13 +9,13 @@ package ${generateOptions.packageId}.example;
 #*  *##set( $sep = "        ")    
 #*  *##foreach($f in ${r.getFields(11)})
 #*      *##if (! ${f.isArrayItem()})
-                      ${sep}saleRecord.get${f.extensionName}()
+                      ${sep}line.get${f.extensionName}()
 #*            *##set( $sep = '+ " " + ')    
 #*      *##end
 #*  *##end
 #*  *##foreach($a in ${r.getArrayDetailsList()}) 
 #*      *##if (! ${f.isArrayItem()})	
-                      ${sep}saleRecord.get${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()})
+                      ${sep}line.get${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()})
 #*      *##end
 #*  *##end
 #end	
@@ -23,9 +23,9 @@ package ${generateOptions.packageId}.example;
 import net.sf.JRecord.cgen.def.IReader;
 
 #*  *##set( $r = ${generateOptions.schemaDefinition.getRecords().get(0)})                     
-import example.pojo.data.Line${r.extensionName}JR;                                         
-import example.pojo.data.Line${r.extensionName}Pojo;                                         
-import example.pojo.io.IOBuilder${generateOptions.schemaDefinition.extensionName};
+import ${generateOptions.packageId}.data.Line${r.extensionName}JR;                                         
+import ${generateOptions.packageId}.data.Line${r.extensionName}Pojo;                                         
+import ${generateOptions.packageId}.io.IOBuilder${generateOptions.schemaDefinition.extensionName};
 
 	
 
@@ -52,7 +52,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
     
     public void byteArrayReader() {
 
-    	Line${r.extensionName}JR saleRecord;
+    	Line${r.extensionName}JR line;
         int lineNum = 0;
 
         System.out.println();
@@ -63,7 +63,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
             IOBuilder${generateOptions.schemaDefinition.extensionName} ioBldr = new IOBuilder${generateOptions.schemaDefinition.extensionName}(copybookName);
             IReader<Line${r.extensionName}JR> reader = ioBldr.newReader(salesFile);  
 
-            while ((saleRecord = reader.read()) != null) {
+            while ((line = reader.read()) != null) {
                 lineNum += 1;
                 System.out.println(
 #*          *##printFields()  
@@ -81,7 +81,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
     
     public void pojoArrayReader() {
 
-    	Line${r.extensionName}Pojo saleRecord;
+    	Line${r.extensionName}Pojo line;
         int lineNum = 0;
         
         System.out.println();
@@ -92,7 +92,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
             IOBuilder${generateOptions.schemaDefinition.extensionName} ioBldr = new IOBuilder${generateOptions.schemaDefinition.extensionName}(copybookName);
             IReader<Line${r.extensionName}Pojo> reader = ioBldr.newPojoReader(salesFile);  
 
-            while ((saleRecord = reader.read()) != null) {
+            while ((line = reader.read()) != null) {
                 lineNum += 1;
                 System.out.println(
 #*          *##printFields()  
@@ -111,7 +111,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
     
     public static void main(String[] args) {
         Read${generateOptions.schemaDefinition.extensionName} t = new Read${generateOptions.schemaDefinition.extensionName}();
-    	
+
     	t.byteArrayReader();
    	t.pojoArrayReader();
     }

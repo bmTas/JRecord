@@ -11,9 +11,9 @@ import java.io.IOException;
 import net.sf.JRecord.cgen.def.IWriter;
 
 #*  *##set( $r = ${generateOptions.schemaDefinition.getRecords().get(0)})                                                            
-import example.pojo.def.I${r.extensionName};
-import example.pojo.def.I${r.extensionName}Pojo;
-import example.pojo.io.IOBuilder${generateOptions.schemaDefinition.extensionName};
+import ${generateOptions.packageId}.def.I${r.extensionName};
+import ${generateOptions.packageId}.def.I${r.extensionName}Pojo;
+import ${generateOptions.packageId}.io.IOBuilder${generateOptions.schemaDefinition.extensionName};
 
 
 /**

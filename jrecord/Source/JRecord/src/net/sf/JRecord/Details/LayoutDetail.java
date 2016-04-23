@@ -11,6 +11,34 @@
  * Version 0.61 (2007/03/29)
  *    - CSV Split for when there a blank columns in the CSV file
  */
+/*  -------------------------------------------------------------------------
+ *
+ *                Project: JRecord
+ *    
+ *    Sub-Project purpose: Provide support for reading Cobol-Data files 
+ *                        using a Cobol Copybook in Java.
+ *                         Support for reading Fixed Width / Binary / Csv files
+ *                        using a Xml schema.
+ *                         General Fixed Width / Csv file processing in Java.
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+
 package net.sf.JRecord.Details;
 
 import java.util.HashMap;
@@ -33,6 +61,7 @@ import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.Option.Options;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
+import net.sf.JRecord.cgen.defc.ILayoutDetails4gen;
 
 
 
@@ -81,7 +110,7 @@ import net.sf.JRecord.Types.TypeManager;
  * @version 0.55
  *
  */
-public class LayoutDetail implements IBasicFileSchema {
+public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	
 
 	private String layoutName;
@@ -93,7 +122,7 @@ public class LayoutDetail implements IBasicFileSchema {
 	private String fontName = "";
 	private String eolString;
 	//private TypeManager typeManager;
-	private RecordDecider decider;
+	private final RecordDecider decider;
 
 	private HashMap<String, IFieldDetail> fieldNameMap = null;
 	private HashMap<String, IFieldDetail> recordFieldNameMap = null;
@@ -167,6 +196,8 @@ public class LayoutDetail implements IBasicFileSchema {
 		this.decider       = pRecordDecider;
 		this.fileStructure = pFileStructure;
 		this.recordCount   = pRecords.length;
+//		this.setDecider(pRecordDecider);
+		
 
 		if (fontName == null) {
 		    fontName = "";
@@ -276,6 +307,12 @@ public class LayoutDetail implements IBasicFileSchema {
 
 	    this.headerTrailerRecords = hasFilePosRecords;
 	    csvLayout = csv;
+	    
+//	    this.setDecider(pRecordDecider);
+		if (decider != null && decider instanceof IRecordDeciderX) {
+		((IRecordDeciderX) decider).setLayout(this);
+	}
+
 	}
 
 
@@ -593,12 +630,16 @@ public class LayoutDetail implements IBasicFileSchema {
     }
 
 
-    /**
-	 * @param decider the decider to set
-	 */
-	protected final void setDecider(RecordDecider decider) {
-		this.decider = decider;
-	}
+//    /**
+//	 * @param decider the decider to set
+//	 */
+//	protected final void setDecider(RecordDecider decider) {
+//		this.decider = decider;
+//		
+//		if (decider != null && decider instanceof IRecordDeciderX) {
+//			((IRecordDeciderX) decider).setLayout(this);
+//		}
+//	}
 
 
 	/**

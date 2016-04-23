@@ -45,7 +45,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
     public Read${generateOptions.schemaDefinition.extensionName}() {
         super();
 
-        AbstractLine saleRecord;
+        AbstractLine line;
         int lineNum = 0;
 
         try {
@@ -71,24 +71,24 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
 #*  *##set( $sep = "        ")    
 #*  *##foreach($f in ${r.getFields(11)})
 #*      *##if (! ${f.isArrayItem()})
-                      ${sep}saleRecord.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
+                      ${sep}line.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
 #*            *##set( $sep = '+ " " + ')    
 #*      *##end
 #*  *##end
 #*  *##foreach($a in ${r.getArrayDetailsList()}) 
 #*      *##if (! ${f.isArrayItem()})	
-                      ${sep}saleRecord.getFieldValue(r${r.extensionName}.array${a.getFirstElement().extensionName}.get(${a.getZeroArrayIndex()})).asString()
+                      ${sep}line.getFieldValue(r${r.extensionName}.array${a.getFirstElement().extensionName}.get(${a.getZeroArrayIndex()})).asString()
 #*      *##end
 #*  *##end
 #end	
-            while ((saleRecord = reader.read()) != null) {
+            while ((line = reader.read()) != null) {
                 lineNum += 1;
 #*  *##if (${generateOptions.schemaDefinition.getRecords().size()} == 1)
 #*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
                 System.out.println(
 #*          *##printFields()  
 ###*          *##foreach($f in ${r.getFields(11)}) 
-##                      ${sep}saleRecord.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
+##                      ${sep}line.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
 ###*              *##set( $sep = '+ " " + ')    
 ###*          *##end
                    );
@@ -99,7 +99,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
                    System.out.println(
 #*          *##printFields()  
 ###*          *##foreach($f in ${r.getFields(11)}) 
-##                      ${sep}saleRecord.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
+##                      ${sep}line.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
 ###*              *##set( $sep = '+ " " + ')    
 ###*          *##end
                    );

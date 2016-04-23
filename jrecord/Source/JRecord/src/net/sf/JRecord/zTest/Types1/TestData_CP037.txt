@@ -127,8 +127,8 @@ Num Sign Separate Leading                      9  4 0 0        +000     4ef0f0f0
                                                9  4 0 -255     -255     60f2f5f5        
                                                9  4 0 -256     -256     60f2f5f6        
                                                9  4 0 -257     -257     60f2f5f7        
-Num Sign Separate Leading                      9  4 1 1.1      +1.1     4ef14bf1        
-                                               9  4 1 -2.1     -2.1     60f24bf1        
+Num Sign Separate Leading                      9  4 1 1.1      +011     4ef0f1f1        
+                                               9  4 1 -2.1     -021     60f0f2f1        
 Num Sign Separate Trailing                    10  4 0 0        000+     f0f0f04e        
                                               10  4 0 5        005+     f0f0f54e        
                                               10  4 0 10       010+     f0f1f04e        
@@ -144,8 +144,8 @@ Num Sign Separate Trailing                    10  4 0 0        000+     f0f0f04e
                                               10  4 0 -255     255-     f2f5f560        
                                               10  4 0 -256     256-     f2f5f660        
                                               10  4 0 -257     257-     f2f5f760        
-Num Sign Separate Trailing                    10  4 1 1.1      1.1+     f14bf14e        
-                                              10  4 1 -2.1     2.1-     f24bf160        
+Num Sign Separate Trailing                    10  4 1 1.1      011+     f0f1f14e        
+                                              10  4 1 -2.1     021-     f0f2f160        
 Number any decimal                            19  4 0 0           0     404040f0        
                                               19  4 0 5           5     404040f5        
                                               19  4 0 10         10     4040f1f0        
@@ -361,7 +361,7 @@ Num (Right Just space padded, "," Decimal) +  43  4 0 0          +0     40404ef0
 Num (Right Just space padded, "," Decimal) +  43  4 1 1.1      +1,1     4ef16bf1        
                                               43  4 1 -2.1     -2,1     60f26bf1        
                                               43  4 1 54.3     54,3     f5f46bf3        
-Num Sign Sep Leading Assumed Dec              44  4 0 0        +000     4ef0f0f0        
+Num Sign Sep Leading Actual Dec               44  4 0 0        +000     4ef0f0f0        
                                               44  4 0 5        +005     4ef0f0f5        
                                               44  4 0 10       +010     4ef0f1f0        
                                               44  4 0 32       +032     4ef0f3f2        
@@ -376,9 +376,9 @@ Num Sign Sep Leading Assumed Dec              44  4 0 0        +000     4ef0f0f0
                                               44  4 0 -255     -255     60f2f5f5        
                                               44  4 0 -256     -256     60f2f5f6        
                                               44  4 0 -257     -257     60f2f5f7        
-Num Sign Sep Leading Assumed Dec              44  4 1 1.1      +011     4ef0f1f1        
-                                              44  4 1 -2.1     -021     60f0f2f1        
-Num Sign Sep Trailing Assumed Dec             45  4 0 0        000+     f0f0f04e        
+Num Sign Sep Leading Actual Dec               44  4 1 1.1      +1.1     4ef14bf1        
+                                              44  4 1 -2.1     -2.1     60f24bf1        
+Num Sign Sep Trailing Actual Dec              45  4 0 0        000+     f0f0f04e        
                                               45  4 0 5        005+     f0f0f54e        
                                               45  4 0 10       010+     f0f1f04e        
                                               45  4 0 32       032+     f0f3f24e        
@@ -393,5 +393,5 @@ Num Sign Sep Trailing Assumed Dec             45  4 0 0        000+     f0f0f04e
                                               45  4 0 -255     255-     f2f5f560        
                                               45  4 0 -256     256-     f2f5f660        
                                               45  4 0 -257     257-     f2f5f760        
-Num Sign Sep Trailing Assumed Dec             45  4 1 1.1      011+     f0f1f14e        
-                                              45  4 1 -2.1     021-     f0f2f160        
+Num Sign Sep Trailing Actual Dec              45  4 1 1.1      1.1+     f14bf14e        
+                                              45  4 1 -2.1     2.1-     f24bf160        

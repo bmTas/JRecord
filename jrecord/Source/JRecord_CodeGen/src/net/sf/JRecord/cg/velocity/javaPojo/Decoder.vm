@@ -2,8 +2,8 @@ package ${generateOptions.packageId}.io;
 #incl("schema/CommentSchema.pvm")
 
 import net.sf.JRecord.cgen.def.IDecoder;
-import example.pojo.data.Line${currentRecord.extensionName}JR;
-import example.pojo.schema.Schema${currentRecord.extensionName};
+import ${generateOptions.packageId}.data.Line${currentRecord.extensionName}JR;
+import ${generateOptions.packageId}.schema.Schema${currentRecord.extensionName};
 
 /**
  * This class coverts an array of bytes to a Line${currentRecord.extensionName}JR

@@ -8,7 +8,7 @@
  */
 -->
 
-<project name="JRecord" default="build">
+<project name="JRecord_Cbl2Xml" default="build">
 
 	<property name="src.dir" location="src" />
 	<property name="build.dir" location="build" />

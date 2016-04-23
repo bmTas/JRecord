@@ -1,3 +1,31 @@
+/*  -------------------------------------------------------------------------
+ *
+ *                Project: JRecord
+ *    
+ *    Sub-Project purpose: Provide support for reading Cobol-Data files 
+ *                        using a Cobol Copybook in Java.
+ *                         Support for reading Fixed Width / Binary / Csv files
+ *                        using a Xml schema.
+ *                         General Fixed Width / Csv file processing in Java.
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+
 package net.sf.JRecord.zTest.External;
 
 
@@ -7,6 +35,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import junit.framework.TestCase;
+import net.sf.JRecord.Details.AbstractLine;
+import net.sf.JRecord.Details.IRecordDeciderX;
+import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.CopybookWriter;
 import net.sf.JRecord.External.ExternalRecord;
@@ -170,6 +202,24 @@ public class TstRecordEditXmlParser extends TestCase {
 		assertEquals("1.8 Check Field Name = 'Pack Qty'; actual=" + f.getName(), "Pack Qty", f.getName());
 		assertEquals("1.9 Check Field Pos=3 actual=" + f.getPos(), 3 , f.getPos());
 		assertEquals("1.A Check Field Type=8 actual=" + f.getType(), 8, f.getType());
+		
+		RecordDecider rd = new RecordDecider() {
+			@Override public int getPreferedIndex(AbstractLine line) {
+				return 0;
+			}
+		};
+		
+		copybook.setRecordDecider(rd);
+		
+		assertTrue(copybook.asLayoutDetail().getDecider() == rd);
+
+		RDX rdx = new RDX();
+		
+		copybook.setRecordDecider(rdx);
+		LayoutDetail schema = copybook.asLayoutDetail();
+		assertTrue(schema.getDecider() == rdx);
+		assertTrue(rdx.schema == schema);
+
 	}
 
 	private void checkCopybook(ExternalRecord copybook) {
@@ -233,5 +283,18 @@ public class TstRecordEditXmlParser extends TestCase {
 
 		return ret.toString();
 	//	InputS
+	}
+	
+	private class RDX implements IRecordDeciderX {
+		LayoutDetail schema;
+		
+		@Override public int getPreferedIndex(AbstractLine line) {
+			return 0;
+		}
+		
+		@Override
+		public void setLayout(LayoutDetail layout) {
+			schema = layout;
+		}
 	}
 }

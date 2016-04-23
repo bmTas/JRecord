@@ -8,7 +8,7 @@ public class TstIoBldrSchemaGen01 {
 	public static void main(String[] args) {
 
 		String[] arguments1 = {
-				ArgNames.OPT_TEMPLATE, "ioBuilderWithSchemaClass",
+				ArgNames.OPT_TEMPLATE, "schemaClass",
 				ArgNames.OPT_PACKAGE, "example.ioBuilderWithSchema",
 				ArgNames.OPT_SCHEMA, TstIoBldrSchemaGen01.class.getResource("DTAR020.cbl").getFile(),
 				ArgNames.OPT_FILE_ORGANISATION, "FixedWidth",
@@ -20,7 +20,7 @@ public class TstIoBldrSchemaGen01 {
 		Generate.main(arguments1);
 
 		String[] arguments2 = {
-				ArgNames.OPT_TEMPLATE, "ioBuilderWithSchemaClass",
+				ArgNames.OPT_TEMPLATE, "schemaClass",
 				ArgNames.OPT_PACKAGE, "example.ioBuilderWithSchema",
 				ArgNames.OPT_SCHEMA, TstIoBldrSchemaGen01.class.getResource("ams_PO_Download.Xml").getFile(),
 				ArgNames.OPT_OUTPUT_DIR, "G:/Temp/Gen/ioBuilderSchema"
@@ -30,7 +30,7 @@ public class TstIoBldrSchemaGen01 {
 
 		
 		String[] arguments3 = {
-				ArgNames.OPT_TEMPLATE, "ioBuilderWithSchemaClass",
+				ArgNames.OPT_TEMPLATE, "schemaClass",
 				ArgNames.OPT_PACKAGE, "example.ioBuilderWithSchema",
 				ArgNames.OPT_SCHEMA, TstIoBldrSchemaGen01.class.getResource("MultiRecordTest.cbl").getFile(),
 				ArgNames.OPT_FILE_ORGANISATION, "FixedWidth",
@@ -41,7 +41,7 @@ public class TstIoBldrSchemaGen01 {
 		Generate.main(arguments3);
 		
 		String[] arguments4 = {
-				ArgNames.OPT_TEMPLATE, "ioBuilderWithSchemaClass",
+				ArgNames.OPT_TEMPLATE, "schemaClass",
 				ArgNames.OPT_PACKAGE, "example.ioBuilderWithSchema",
 				ArgNames.OPT_SCHEMA, TstIoBldrSchemaGen01.class.getResource("ArrayCopybook.cbl").getFile(),
 				ArgNames.OPT_FILE_ORGANISATION, "FixedWidth",

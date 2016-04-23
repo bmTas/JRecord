@@ -1,3 +1,31 @@
+/*  -------------------------------------------------------------------------
+ *
+ *                Project: JRecord
+ *    
+ *    Sub-Project purpose: Provide support for reading Cobol-Data files 
+ *                        using a Cobol Copybook in Java.
+ *                         Support for reading Fixed Width / Binary / Csv files
+ *                        using a Xml schema.
+ *                         General Fixed Width / Csv file processing in Java.
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+
 package net.sf.JRecord.schema;
 
 import java.util.ArrayList;
@@ -24,16 +52,7 @@ import net.sf.JRecord.schema.jaxb.Item;
  * @author Bruce Martin
  *
  */
-public class UpdateSchemaItems {
-	
-	public static final int D_NO_DUPLICATES = 1;
-	public static final int D_NO_DUPLICATES_IN_RECORD = 2;
-	public static final int D_DUPLICATES = 3;
-	
-    public static final int RO_LEAVE_ASIS = 0;
-    public static final int RO_MINUS_TO_UNDERSCORE = 1; 
-	public static final int RO_CAMEL_CASE = 2;
- 
+public class UpdateSchemaItems implements ISchemaInformation {
 	
 	private static final Map<String, Integer> EMPTY_RECORD_MAP = new HashMap<String, Integer>(0);
 	
@@ -88,7 +107,7 @@ public class UpdateSchemaItems {
 		this.copybookName1 = copybookName + "-";
 		this.copybookName2 = copybookName + "_";
 		this.varRenameOption = varRenameOption;
-		this.items = copybook.getItem();
+		this.items = copybook.getCobolItems();
 		this.arrayChecks = arrayChecks;
 
 		
@@ -117,7 +136,7 @@ public class UpdateSchemaItems {
 			String usage = item.getUsage();
 			boolean redef = redefined || isPresent(item.getRedefined())  || isPresent(item.getRedefines());
 			item.names = new ArrayList<String>(levels);
-			item.isRedefined = redef;
+			item.fieldRedefined = redef;
 			
 			if (redef && (! this.redefinedBinaryField) && isPresent(usage)) {
 				String lcUsage = usage.toLowerCase();
@@ -140,20 +159,20 @@ public class UpdateSchemaItems {
 				}
 				
 				if (ucName != null && ucName.length() > 0) {
-					item.arrayCheck = arrayChecks.get(ucName);
+					item.arrayValidation = arrayChecks.get(ucName);
 				}
 				arrayItems.put(item.nameToUse.toUpperCase(), item);
 			}
-			if (item.getItem().size() > 0) {
-				update(item.getItem(), newIndexs, firstArraySize, levels, redef);
+			if (item.getChildItems().size() > 0) {
+				update(item.getChildItems(), newIndexs, firstArraySize, levels, redef);
 			} else if ("filler".equalsIgnoreCase(name)) {
 			} else if (newIndexs == 0) {
 				item.itemType = Item.TYPE_FIELD;
 				itemCount += 1;
 				if (dup) {
-					item.fieldDef = schema.getGroupField(levels.toArray(new String[levels.size()]));
+					item.fieldDefinition = schema.getGroupField(levels.toArray(new String[levels.size()]));
 				} else {
-					item.fieldDef = schema.getFieldFromName(item.fieldName);
+					item.fieldDefinition = schema.getFieldFromName(item.fieldName);
 				}
 			} else if (newIndexs > 4) {
 				throw new RuntimeException("To many array indexs: " + newIndexs + ", only 1 to 4 are supported");
@@ -168,7 +187,7 @@ public class UpdateSchemaItems {
 					fields[i] = schema.getGroupField(levels.toArray(new String[levels.size()]));
 				}
 				
-				item.arrayDef = new ArrayFieldDefinition((RecordDetail)fields[0].getRecord(), firstArraySize, fields);
+				item.arrayDefinition = new ArrayFieldDefinition((RecordDetail)fields[0].getRecord(), firstArraySize, fields);
 			}
 			levels.remove(levels.size() - 1);
 		}
@@ -178,13 +197,18 @@ public class UpdateSchemaItems {
 		return s != null && s.length() > 0;
 	}
 
-	/**
-	 * @return the arrayItems
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.ISchemaDetails#getArrayItems()
 	 */
+	@Override
 	public final Map<String, Item> getArrayItems() {
 		return arrayItems;
 	}
 
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.ISchemaDetails#getRecordHierarchyMap()
+	 */
+	@Override
 	public final Map<String, Integer> getRecordHierarchyMap() {
 		
 		maxRecordLevel = -4;
@@ -208,6 +232,10 @@ public class UpdateSchemaItems {
 		return EMPTY_RECORD_MAP;
 	}
 	
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.ISchemaDetails#getRecordIndex(java.lang.String)
+	 */
+	@Override
 	public final int getRecordIndex(String name) {
 		int r = 1;
 		if (schema.getRecordCount() > 1) {
@@ -220,9 +248,10 @@ public class UpdateSchemaItems {
 		}
 		return r;
 	}
-	/**
-	 * @return the maxRecordLevel
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.ISchemaDetails#getMaxRecordHierarchyLevel()
 	 */
+	@Override
 	public final int getMaxRecordHierarchyLevel() {
 		if (maxRecordLevel == Integer.MIN_VALUE) {
 			getRecordHierarchyMap();
@@ -230,9 +259,10 @@ public class UpdateSchemaItems {
 		return maxRecordLevel;
 	}
 
-	/**
-	 * @return the duplicateFieldsStatus
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.ISchemaDetails#getDuplicateFieldsStatus()
 	 */
+	@Override
 	public final int getDuplicateFieldsStatus() {
 		initDuplicateStatus();
 		return duplicateFieldsStatus;
@@ -285,11 +315,10 @@ public class UpdateSchemaItems {
 		}
 	}
 	
-	/**
-	 * Reformat the Cobol name (if required) 
-	 * @param name Cobol field name
-	 * @return reformatted field name
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.ISchemaDetails#updateName(java.lang.String)
 	 */
+	@Override
 	public String updateName(String name) {
 		int l = name.length();
 		StringBuilder b;
@@ -339,9 +368,10 @@ public class UpdateSchemaItems {
 	
 	
 	
-	/**
-	 * @return the fieldLookup
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.ISchemaDetails#getFieldLookup()
 	 */
+	@Override
 	public final IGetRecordFieldByName getFieldLookup() {
 		if (fieldLookup == null) {
 			fieldLookup = updateLookup(
@@ -351,17 +381,18 @@ public class UpdateSchemaItems {
 		return fieldLookup;
 	}
 	
-	/**
-	 * @return the redefinedBinaryField
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.ISchemaDetails#isRedefinedBinaryField()
 	 */
+	@Override
 	public final boolean isRedefinedBinaryField() {
 		return redefinedBinaryField;
 	}
 
 	private FieldLookup updateLookup(FieldLookup tl, List<Item> items) {
 		for (Item item : items) {
-			if (item.getItem().size() > 0) {
-				updateLookup(tl, item.getItem()); 
+			if (item.getChildItems().size() > 0) {
+				updateLookup(tl, item.getChildItems()); 
 			} else if (tl.recFields == null || ! tl.schema.getDuplicateFieldNames().contains(item.fieldName.toUpperCase())) {
 				tl.fields.put(item.nameToUse.toUpperCase(), item);
 			} else {
@@ -402,8 +433,8 @@ public class UpdateSchemaItems {
 			}
 			
 			if (itm != null) {
-				if (itm.fieldDef != null) {
-					return itm.fieldDef;
+				if (itm.fieldDefinition != null) {
+					return itm.fieldDefinition;
 				}
 				if (indexs == null || indexs.length == 0) { return null; }
 				
@@ -417,7 +448,7 @@ public class UpdateSchemaItems {
 				
 				String n = b.append(')').toString();
 				if (schema.getDuplicateFieldNames().contains(n.toUpperCase())) {
-					return itm.arrayDef.getField(indexs);
+					return itm.arrayDefinition.getField(indexs);
 				}
 				return schema.getFieldFromName(n);
 			}

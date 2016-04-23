@@ -1,9 +1,31 @@
+/*  -------------------------------------------------------------------------
+ *
+ *            Sub-Project: JRecord IOBuilder examples
+ *    
+ *    Sub-Project purpose: Examples of using JRecord IOBuilders
+ *                        to perform IO on Cobol Data files
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+      
 package net.sf.JRecord.zExamples.iob.cobol.multiRecord;
 
-import java.io.IOException;
-
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
@@ -14,20 +36,8 @@ import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
 
 /**
- * <b>Purpose:</b> This program demonstrates adding Record-Selection-Criteria to a Cobol-Copybook.
- * <br>Also it is an example of processing Multiple record types in a file
+ * <b>Purpose:</b> This program demonstrates reading a multi-record cobol file
  * 
- * <p>The key to doing this is to update the <b>ExternalRecord</b>. The <b>ExternalRecord</b> is essentially a 
- * <b>"Builder"</b> class for the <b>LayoutDetail</b> (record-schema) class. My background is not Java so I 
- * do not always no the correct OO terminology.
- * 
- * <pre>
- * This testing can also be done in Java code, See:
- * *  AmsReceipt01 - processing with just Java code no Record-Selection-Criteria. This will use less 
- *                   resources than using the  Record-Selection-Criteria   
- * *  AmsReceipt03 - Combines Record-Selection-Details from a Xml file with Field Details from 
- *                   a Cobol Copybook
- *</pre>                   
  *                   
  * @author Bruce Martin
  *
@@ -35,10 +45,8 @@ import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 public class AmsReceipt01 {
 
 	
-	private static final String copybookFileName = "AmsReceipt.cbl";
-	
-	//private LayoutDetail schema;
-	private ICobolIOBuilder ioBldr;
+	private static final String copybookFileName = "amsPoDownload.cbl";
+	private static final String dataFileName = "Ams_PODownload_20041231.txt";
 	
     public static void main(String[] args) throws Exception {
     	new AmsReceipt01();
@@ -46,92 +54,38 @@ public class AmsReceipt01 {
     
     
     private AmsReceipt01() throws Exception {
-    	loadRecordDefinition();
-    	
-    	readFile();
-    }
-    
-    
-    /**
-     * Load RecordLayout (schema) from the Cobol copybook
-     * @throws Exception
-     */
-    private void loadRecordDefinition() throws Exception{
-    	
+      	
     	String copyName = this.getClass().getResource(copybookFileName).getFile();
- 
-    	ioBldr = JRecordInterface1.COBOL
+    	String poFile   = this.getClass().getResource(dataFileName).getFile();
+    	AbstractLine l;
+  
+    	AbstractLineReader r = JRecordInterface1.COBOL
     				.newIOBuilder(copyName)
     					.setDialect(ICopybookDialects.FMT_FUJITSU)
-    					.setSplitCopybook(CopybookLoader.SPLIT_REDEFINE)
-    					;
-    }
-    
-    
-    private void readFile() throws IOException, RecordException {
-    	
-    	AbstractLineReader r = ioBldr.newReader("G:\\Users\\BruceTst01\\RecordEditor_HSQL\\SampleFiles\\Ams_Receipt_05AUG08190103.txt");
-    	AbstractLine l;
-    	String id;
+    				.newReader(poFile);
     	
     	while ((l = r.read()) != null) {
-    		id = l.getFieldValue("STDR-RECORD-TYPE").asString();
-    		if ("FH".equals(id)) {
-    			System.out.println("fh: " 
-    					+         l.getFieldValue("STDR-FH-CRD-DD").asString()
-    					+ " / " + l.getFieldValue("STDR-FH-CRD-MM").asString()
-    					+ " / " + l.getFieldValue("STDR-FH-CRD-CC").asString()
-    					+         l.getFieldValue("STDR-FH-CRD-YY").asString()
+    		String id = l.getFieldValue("Record-Type").asString();
+    		if ("H1".equals(id)) {
+    			System.out.println("PO: " 
+    					+         l.getFieldValue("PO").asString()
+    					+ " "   + l.getFieldValue("Vendor").asString()
     			);
-    		} else if ("RH".equals(id)) {
-       			System.out.println("rh: " 
-    					+       l.getFieldValue("BRAND-ID-RH").asString()
-    					+ " " + l.getFieldValue("ORDER-NO-RH").asString()
-    					+ " " + l.getFieldValue("RECEIPT-LOCN-RH").asString()
-    					+ " " + l.getFieldValue("RECEIPT-NO-RH").asString()
-   			);
+    		} else if ("D1".equals(id)) {
+       			System.out.println("\tProduct: " 
+    					+       l.getFieldValue("Product").asString()
+    					+ "\t" + l.getFieldValue("Product-Name").asString()
+       			);
+    		} else if ("S1".equals(id)) {
+       			System.out.println("\t\tLocation: " 
+    					+       l.getFieldValue("DC-Number (1)").asString()
+    					+ " " + l.getFieldValue("Pack-Quantity (1)").asString()
+    					+ "\t" + l.getFieldValue("DC-Number (2)").asString()
+    					+ " " + l.getFieldValue("Pack-Quantity (2)").asString()
+      			);
     		}
     	}
     	r.close();
     }
     
-    
-    /**
-     * This method adds a Record-Selection-Test to a Record, three times.
-     * The 3 tests will be will be combined with a boolean AND operator   
-     *  
-     * @param extlayoutCBL Group or parent record
-     * @param recordName name of the record to be update
-     * @param fieldName Field to Test
-     * @param value value to be tested
-     */
-    @SuppressWarnings("unused")
-	private static void addFieldTest3times(ExternalRecord extlayoutCBL, String recordName, String fieldName, String value) {
-    	int idx = findRecordIndex(extlayoutCBL, recordName);
-    	
-    	if (idx < 0) {
-    		System.out.println("Record " + recordName + " was not found");
-    	} else {
-    		// This add a test to the record three times.
-    		// The 3 tests will be joined with a logical AND
-    		// Obviously this would only make sense if the tests where different.
-    		// I did not have any sensible examples handy
-    		extlayoutCBL.getRecord(idx).addTstField(fieldName, value);
-    		extlayoutCBL.getRecord(idx).addTstField(fieldName, value);
-       		extlayoutCBL.getRecord(idx).addTstField(fieldName, value);
-    	}
-    }
-
-    private static int findRecordIndex(ExternalRecord extlayoutCBL, String recordName) {
-    	int ret = -1;
-    	
-    	for (int i = 0; i < extlayoutCBL.getNumberOfRecords(); i++) {
-    		if (recordName.equalsIgnoreCase(extlayoutCBL.getRecord(i).getRecordName())) {
-    			ret = i;
-    			break;
-    		}
-    	}
-    	
-    	return ret;
-    }
- }
+}

@@ -1,6 +1,6 @@
 package example;
 ##  
-##   Read Example Standard JRecord
+##   Read Example JRecord using Schema-Fields
 ##
 ##   Author: Bruce Martin
 ##
@@ -18,6 +18,11 @@ import net.sf.JRecord.IO.AbstractLineReader;
 ##import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 ###*  *##end                                           
 
+###*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                     
+##import ${generateOptions.packageId}.schema.Record${r.extensionName};
+###*  *##end
+import ${generateOptions.packageId}.schema.FieldNames${generateOptions.schemaDefinition.extensionName};
+	
 
 /**
  * Read Cobol file using a Cobol Copybook (${generateOptions.schemaDefinition.extensionName}).
@@ -40,11 +45,11 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
     public Read${generateOptions.schemaDefinition.extensionName}() {
         super();
 
-        AbstractLine saleRecord;
+        AbstractLine line;
         int lineNum = 0;
 
         try {
-#incl("schema/DclIOBuilder.pvm")         
+#incl("schema/DclIOBuilder.pvm")        
 ###*  *##if (${generateOptions.isXmlSchema()})
 ##            IIOBuilder iob = JRecordInterface1.SCHEMA_XML
 ##                                       .newIOBuilder(copybookName);
@@ -56,29 +61,46 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
 ##                                           .setSplitCopybook(${generateOptions.splitOption.code})
 ##                                           .setDropCopybookNameFromFields(${generateOptions.dropCopybookName});  
 ###*  *##end                                           
+
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                     
+            FieldNames${generateOptions.schemaDefinition.extensionName}.Record${r.extensionName} r${r.extensionName} = FieldNames${generateOptions.schemaDefinition.extensionName}.RECORD_${r.constantName};
+#*  *##end                                           
             AbstractLineReader reader = iob.newReader(salesFile);
- 
-            while ((saleRecord = reader.read()) != null) {
+#macro (printFields)
+#*  *##set( $sep = "        ")    
+#*  *##foreach($f in ${r.getFields(11)})
+#*      *##if (! ${f.isArrayItem()})
+                      ${sep}line.getFieldValue(r${r.extensionName}.${f.javaName}).asString()
+#*            *##set( $sep = '+ " " + ')    
+#*      *##end
+#*  *##end
+#*  *##foreach($a in ${r.getArrayDetailsList()}) 
+#*      *##if (! ${f.isArrayItem()})	
+                      ${sep}line.getFieldValue(r${r.extensionName}.${a.getFirstElement().javaName}.get(${a.getZeroArrayIndex()})).asString()
+#*      *##end
+#*  *##end
+#end	
+            while ((line = reader.read()) != null) {
                 lineNum += 1;
 #*  *##if (${generateOptions.schemaDefinition.getRecords().size()} == 1)
 #*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
-#*          *##set( $sep = "        ")    
                 System.out.println(
-#*          *##foreach($f in ${r.getFields(11)}) 
-                      ${sep}saleRecord.getFieldValue("${f.fieldDetail.getLookupName()}").asString()
-#*              *##set( $sep = '+ " " + ')    
-#*          *##end
+#*          *##printFields()  
+###*          *##foreach($f in ${r.getFields(11)}) 
+##                      ${sep}line.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
+###*              *##set( $sep = '+ " " + ')    
+###*          *##end
                    );
 #*      *##end                        
 #*  *##else	
 #*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
-#*          *##set( $sep = "        ")    
                 if (/* ${r.record.recordName} */) {
                    System.out.println(
-#*          *##foreach($f in ${r.getFields(11)}) 
-                      ${sep}saleRecord.getFieldValue("${f.fieldDetail.getLookupName()}").asString()
-#*              *##set( $sep = '+ " " + ')    
-#*          *##end
+#*          *##printFields()  
+###*          *##foreach($f in ${r.getFields(11)}) 
+##                      ${sep}line.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
+###*              *##set( $sep = '+ " " + ')    
+###*          *##end
                    );
                 }
 #*      *##end                        

@@ -5,12 +5,37 @@
  * Created on 27/08/2005
  *
  */
+/*  -------------------------------------------------------------------------
+ *
+ *            Sub-Project: JRecord Common
+ *    
+ *    Sub-Project purpose: Common Low-Level Code shared between 
+ *                        the JRecord and Record Projects
+ *    
+ *                 Author: Bruce Martin
+ *    
+ *                License: LGPL 2.1 or latter
+ *                
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *   
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *   
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+      
 package net.sf.JRecord.ByteIO;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigInteger;
+
 
 
 
@@ -44,12 +69,12 @@ public class VbByteReader extends AbstractByteReader {
 	 * 2 bytes (hex zero)
 	 */
 	private byte[] rdw = new byte[4];
-	private byte[] rdwLength = new byte[2];
+//	private byte[] rdwLength = new byte[2];
 
 
 	private boolean containsBlockLength = false;
 	private byte[] bdw = new byte[4];
-	private byte[] bdwLength = new byte[2];
+//	private byte[] bdwLength = new byte[2];
 
 
 	private int blockLength = -1;
@@ -119,17 +144,19 @@ public class VbByteReader extends AbstractByteReader {
 
         lineNumber += 1;
         if (readBuffer(stream, rdw) > 0) {
-            if (rdw[2] != 0 || rdw[3] != 0) {
+//            rdwLength[0] = rdw[0];
+//            rdwLength[1] = rdw[1];
+//
+//        	int lineLength = (new BigInteger(rdwLength)).intValue() - rdwAdjust;
+        	int lineLength = ((rdw[0] & 0xFF) << 8) + (rdw[1] & 0xFF) - rdwAdjust;
+            if (rdw[2] != 0  || rdw[3] != 0) {
+//              if ((rdw[2] != 0 &&  rdw[2] != 1 && rdw[2] != 2) || rdw[3] != 0) {
                 throw new IOException(
                           "Invalid Record Descriptor word at line "
-                        + lineNumber
+                        + lineNumber + " " + lineLength + "\t" + rdw[2] + " " + rdw[3]
                       );
             }
 
-            rdwLength[0] = rdw[0];
-            rdwLength[1] = rdw[1];
-
-        	int lineLength = (new BigInteger(rdwLength)).intValue() - rdwAdjust;
         	if (lineLength < 0) {
         		throw new IOException("Invalid Line Length: " + lineLength + " For line " + lineNumber); 
         	}
@@ -158,13 +185,16 @@ public class VbByteReader extends AbstractByteReader {
     			bytesReadFromBlock = 4;
         		if ((readBuffer(stream, bdw) > 0)) {
         			if (bdw[0] >= 0) {
-        	            bdwLength[0] = bdw[0];
-        	            bdwLength[1] = bdw[1];
-
-        	        	blockLength = (new BigInteger(bdwLength)).intValue();
+//        	            bdwLength[0] = bdw[0];
+//        	            bdwLength[1] = bdw[1];
+//
+//        	        	blockLength = (new BigInteger(bdwLength)).intValue();
+        	        	blockLength = ((bdw[0] & 0xFF) << 8) + (bdw[1] & 0xFF);
         			} else {
         				bdw[0] &= LAST_7_BITS_SET;
-        	        	blockLength = (new BigInteger(bdw)).intValue();
+        				blockLength = ((bdw[0] & 0xFF) << 24) + ((bdw[1] & 0xFF) << 16) 
+								+ ((bdw[2] & 0xFF) << 8) + ((bdw[3] & 0xFF));
+ //       	        	blockLength = (new BigInteger(bdw)).intValue();
         			}
         		}
         	} catch (Exception e) {

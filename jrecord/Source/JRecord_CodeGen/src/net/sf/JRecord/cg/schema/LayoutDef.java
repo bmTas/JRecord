@@ -7,14 +7,14 @@
  *    
  *                 Author: Bruce Martin
  *    
- *                License: GPL
+ *                License: GPL 3 or later
  *                
  *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
  *   
  *    This library is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU Lesser General Public
- *    License as published by the Free Software Foundation; either
- *    version 2.1 of the License, or (at your option) any later version.
+ *    modify it under the terms of the GNU General Public License
+ *    as published by the Free Software Foundation; either
+ *    version 3.0 of the License, or (at your option) any later version.
  *   
  *    This library is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -28,8 +28,8 @@ package net.sf.JRecord.cg.schema;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.cg.common.CCode;
+import net.sf.JRecord.cgen.defc.ILayoutDetails4gen;
 
 /**
  * Class to represent a schema for use in Code Generation
@@ -37,10 +37,10 @@ import net.sf.JRecord.cg.common.CCode;
  *
  */
 public class LayoutDef extends JavaDetails {
-	private final LayoutDetail schema;
+	private final ILayoutDetails4gen schema;
 	private final ArrayList<RecordDef> records = new ArrayList<RecordDef>();
 	
-	public LayoutDef(LayoutDetail schema) {
+	public LayoutDef(ILayoutDetails4gen schema) {
 		super(schema.getLayoutName());
 		this.schema = schema;
 		
@@ -54,7 +54,7 @@ public class LayoutDef extends JavaDetails {
 	 * get the actual schema
 	 * @return the schema
 	 */
-	public final LayoutDetail getSchema() {
+	public final ILayoutDetails4gen getSchema() {
 		return schema;
 	}
 

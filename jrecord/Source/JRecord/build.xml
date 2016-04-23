@@ -88,7 +88,8 @@
 				<!--exclude name="net/sf/JRecord/zExamples/sharedUtilities/*"/!-->
 				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Cobol2CsvA*"/>
 				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Csv2Cobol*"/>
-				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Fixed2Csv*"/>
+				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Csv2Cobol*"/>
+				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Z*"/>
 			</fileset>
 		</jar>
 		<jar destfile="${Csv2Cobol.jar}" filesonly="true">
@@ -102,6 +103,7 @@
 				<!--exclude name="net/sf/JRecord/zExamples/sharedUtilities/*"/!-->
 				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Cobol2Csv*"/>
 				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Fixed2Csv*"/>
+				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Z*"/>
 			</fileset>
 		</jar>
 		<jar destfile="${Cobol2Cobol.jar}" filesonly="true">

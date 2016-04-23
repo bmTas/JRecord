@@ -43,7 +43,7 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
 
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                     
 ###    private Record${r.extensionName} r${r.extensionName};
-    private FieldNames${generateOptions.schemaDefinition.extensionName}.Record${r.extensionName} r${r.extensionName} = FieldNames${generateOptions.schemaDefinition.extensionName}.record${r.extensionName};
+    private FieldNames${generateOptions.schemaDefinition.extensionName}.Record${r.extensionName} r${r.extensionName} = FieldNames${generateOptions.schemaDefinition.extensionName}.RECORD_${r.constantName};
 
 #*  *##end                                           
     

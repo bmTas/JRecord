@@ -7,7 +7,7 @@ public class TstIoBldrGen02 {
 
 	private static final String PACKAGE_NAME = "example.ioBuilder.nameClass";
 	private static final String GENERATE_DIR = "G:/Temp/Gen/ioBuilderFN";
-	private static final String IO_BUILDER_FIELD_NAME_CLASS = "ioBuilderFieldNameClass";
+	private static final String IO_BUILDER_FIELD_NAME_CLASS = "standard";
 
 	public static void main(String[] args) {
 
