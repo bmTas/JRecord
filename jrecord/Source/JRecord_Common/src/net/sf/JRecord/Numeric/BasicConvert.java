@@ -36,9 +36,9 @@ import net.sf.cb2xml.def.Cb2xmlConstants;
  *
  */public class BasicConvert implements Convert {
 
-    private int identifier;
+    private final int identifier;
 
-    private int binId;
+    private final int binId;
     private boolean usePositiveInteger;
 
     private int defaultVbFileStructure = Constants.IO_DEFAULT;
@@ -67,9 +67,7 @@ import net.sf.cb2xml.def.Cb2xmlConstants;
  		}
     	identifier = id;
 
-
         binId = binaryId;
-
     }
 
 
@@ -176,7 +174,7 @@ import net.sf.cb2xml.def.Cb2xmlConstants;
     			||  picture.indexOf('.') >= 0) {
     		lType = Type.ftNumRightJustified;
     	} else {
-    		lType = CommonCode.commonTypeChecks(binId, usage, picture, signed, signSeperate, signPosition);
+    		lType = CommonCode.commonTypeChecks(identifier, usage, picture, signed, signSeperate, signPosition);
     	}
 
     	return lType;

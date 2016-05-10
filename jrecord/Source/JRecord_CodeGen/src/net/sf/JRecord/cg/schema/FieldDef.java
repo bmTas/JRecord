@@ -40,8 +40,8 @@ public class FieldDef extends JavaDetails {
 	public final String javaType;
 
 
-	public FieldDef(String cobolName, FieldDetail fieldDef, ArrayElement ai) {
-		super(cobolName);
+	public FieldDef(String cobolName, FieldDetail fieldDef, ArrayElement ai, String schemaName) {
+		super(cobolName, schemaName);
 		this.fieldDetail = fieldDef;
 		this.arrayDetails = ai;
 		this.javaType = CCode.typeToJavaType(fieldDetail.getType(), fieldDetail.getLen(), fieldDetail.getDecimal());

@@ -1,20 +1,20 @@
 package test.gen;
 
 import net.sf.JRecord.cg.Generate;
-import net.sf.JRecord.cg.details.ArgNames;
+import net.sf.JRecord.cg.details.ArgumentOption;
 
 public class TstPojoGen01 {
 
 	public static void main(String[] args) {
 
 		String[] arguments1 = {
-				ArgNames.OPT_TEMPLATE, "javaPojo",
-				ArgNames.OPT_PACKAGE, "example.pojo",
-				ArgNames.OPT_SCHEMA, TstPojoGen01.class.getResource("DTAR020.cbl").getFile(),
-				ArgNames.OPT_FILE_ORGANISATION, "FixedWidth",
-				ArgNames.OPT_FONT_NAME, "CP037",
-				ArgNames.OPT_DROP_COPYBOOK_NAME, "true",
-				ArgNames.OPT_OUTPUT_DIR, "G:/Temp/Gen/Pojo"
+				ArgumentOption.OPT_TEMPLATE, "javaPojo",
+				ArgumentOption.OPT_PACKAGE, "example.pojo",
+				ArgumentOption.OPT_SCHEMA, TstPojoGen01.class.getResource("DTAR020.cbl").getFile(),
+				ArgumentOption.OPT_FILE_ORGANISATION, "FixedWidth",
+				ArgumentOption.OPT_FONT_NAME, "CP037",
+				ArgumentOption.OPT_DROP_COPYBOOK_NAME, "true",
+				ArgumentOption.OPT_OUTPUT_DIR, "G:/Temp/Gen/Pojo"
 		};
 		
 		Generate.main(arguments1);
@@ -41,11 +41,11 @@ public class TstPojoGen01 {
 		Generate.main(arguments3);
 */
 		String[] arguments4 = {
-				ArgNames.OPT_TEMPLATE, "javaPojo",
-				ArgNames.OPT_PACKAGE, "example.pojo",
-				ArgNames.OPT_SCHEMA, TstPojoGen01.class.getResource("ArrayCopybook.cbl").getFile(),
-				ArgNames.OPT_FILE_ORGANISATION, "FixedWidth",
-				ArgNames.OPT_OUTPUT_DIR, "G:/Temp/Gen/Pojo"
+				ArgumentOption.OPT_TEMPLATE, "javaPojo",
+				ArgumentOption.OPT_PACKAGE, "example.pojo",
+				ArgumentOption.OPT_SCHEMA, TstPojoGen01.class.getResource("ArrayCopybook.cbl").getFile(),
+				ArgumentOption.OPT_FILE_ORGANISATION, "FixedWidth",
+				ArgumentOption.OPT_OUTPUT_DIR, "G:/Temp/Gen/Pojo"
 		};
 		
 		Generate.main(arguments4);

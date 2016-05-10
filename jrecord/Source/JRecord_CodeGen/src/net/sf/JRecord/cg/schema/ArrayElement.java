@@ -41,13 +41,13 @@ public final class ArrayElement extends JavaDetails {
 	}
 	final int specialLevel;
 	
-	public static ArrayElement newArrayItem(String arrayElement) {
+	public static ArrayElement newArrayItem(String arrayElement, String schemaName) {
 		arrayElement = arrayElement.trim();
 		int idx = arrayElement.indexOf('(');
-		return new ArrayElement(arrayElement.substring(0, idx - 1), idx, arrayElement);
+		return new ArrayElement(arrayElement.substring(0, idx - 1), idx, arrayElement, schemaName);
 	}
-	private ArrayElement(String arrayName, int idx, String arrayElement) {
-		super(arrayName);
+	private ArrayElement(String arrayName, int idx, String arrayElement, String schemaName) {
+		super(arrayName, schemaName);
 		this.arrayName = arrayName;
 		
 		StringTokenizer t = new StringTokenizer(arrayElement.substring(idx+1, arrayElement.length() - 1), ",");

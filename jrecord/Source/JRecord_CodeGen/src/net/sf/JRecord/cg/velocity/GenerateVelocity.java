@@ -26,6 +26,8 @@
 package net.sf.JRecord.cg.velocity;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,13 +35,15 @@ import java.io.InputStreamReader;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.event.EventCartridge;
 import org.apache.velocity.app.event.implement.IncludeRelativePath;
+import org.apache.velocity.exception.ParseErrorException;
 
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.cg.details.IGenerateOptions;
@@ -50,42 +54,42 @@ public class GenerateVelocity {
 	
 	private static final String OUTPUT_FILE = ".output";
 	private static final String TEMPLATE = ".template";
-	private static final String OPT = ".opt.";
+	private static final String IF = ".if.";
 	private static final String SKEL_PREF = "skel.";
+	
+	public final List<GeneratedSkel> generatedFiles = new ArrayList<>();
 	
 	public GenerateVelocity(IGenerateOptions opts) {
 		
-		ResourceBundle rb = ResourceBundle.getBundle(
-				"net.sf.JRecord.cg.velocity." + opts.getTemplate() + ".Generate",
-				Locale.getDefault(),
-				GenerateVelocity.class.getClassLoader());
-		if (rb == null) {
-			System.out.println("Template: " +  opts.getTemplate() + " does not exist !!!");
-			return;
-		}
-		
+	
 		try {
-			generate(opts, rb);
+			generate(opts);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private void generate(IGenerateOptions opts, ResourceBundle rb) throws Exception {
+	private void generate(IGenerateOptions opts) throws Exception {
 		int optCount;
-		int skelCount = Integer.parseInt(rb.getString(SKEL_PREF + "0"));
+		Properties templateProperties = opts.getTemplateDtls().templateProperties;
+		int skelCount = Integer.parseInt(templateProperties.getProperty(SKEL_PREF + "0"));
 		String mod, outputFile, s;
 		for (int i = 1; i <= skelCount; i++) {
 			boolean gen = false;
-			mod =  getString(rb, SKEL_PREF + i + TEMPLATE);
-			s = getString(rb, SKEL_PREF + i + OPT + "0");
+			mod =  Conversion.replace(
+								getString(templateProperties, SKEL_PREF + i + TEMPLATE),
+								"&template.", 
+								opts.getTemplateDtls().getTemplate()
+				   ).toString();
+								
+			s = getString(templateProperties, SKEL_PREF + i + IF + "0");
 			if (s == null || s.length() == 0) {
 				gen = true;
 			} else {
 				optCount = Integer.parseInt(s);
 				for (int j = 1; j <= optCount; j++) {
-					s = getString(rb, SKEL_PREF + i + OPT + j);
-					if (opts.getGenerateOptions().containsKey(s.toLowerCase())) {
+					s = getString(templateProperties, SKEL_PREF + i + IF + j);
+					if (opts.getTemplateDtls().getGenerateOptions().containsKey(s.toLowerCase())) {
 						gen = true;
 						break;
 					}
@@ -93,23 +97,40 @@ public class GenerateVelocity {
 			}
 			
 			if (gen) {
-				String genAt  =  getString(rb, SKEL_PREF + i + ".genAt");
+				String genAt  =  getString(templateProperties, SKEL_PREF + i + ".genAt");
+				String fileExtension = getString(templateProperties,  SKEL_PREF + i + OUTPUT_FILE);
+				String fileDescription = getString(templateProperties,  SKEL_PREF + i + ".description");
+				int st = fileExtension.indexOf('/');
+				int en = fileExtension.lastIndexOf('/');
+				String extra = "";
+				if (st >= 0 && en > st) {
+					StringBuilder b = new StringBuilder()
+											.append('.')
+											.append(fileExtension.substring(st+1, en));
+				    extra = Conversion.replace(b, "/", ".").toString();
+				}
+				String outputDir = opts.getOutputDir();
+				if ((! outputDir.endsWith("/")) && (! outputDir.endsWith("\\")) ) {
+					outputDir = outputDir + "/";
+				}
 				if (genAt != null && "record".equals(genAt.toLowerCase())) {
 					for (RecordDef r : opts.getSchemaDefinition().getRecords()) {
-						outputFile = expand(opts, r, opts.getOutputDir() + "/" + getString(rb,  SKEL_PREF + i + OUTPUT_FILE));
-						genSkel(mod, outputFile, opts, r);
+						outputFile = expand(opts, r, outputDir + fileExtension);
+						genSkel(mod, outputFile, opts, r, extra);
+					    generatedFiles.add(new GeneratedSkel(outputFile, expand(opts, r, fileExtension), fileDescription));
 					}
 				} else {
-					outputFile = expand(opts, null, opts.getOutputDir() + "/" + getString(rb,  SKEL_PREF + i + OUTPUT_FILE));
-					genSkel(mod, outputFile, opts, null);
+					outputFile = expand(opts, null, outputDir + fileExtension);
+					genSkel(mod, outputFile, opts, null, extra);
+				    generatedFiles.add(new GeneratedSkel(outputFile, expand(opts, null, fileExtension), fileDescription));
 				}
 			}
 		}
 	}
 	
-	private String getString(ResourceBundle rb, String key) {
+	private String getString(Properties rb, String key) {
 		if (rb.containsKey(key)) {
-			return rb.getString(key);
+			return rb.getProperty(key);
 		}
 		return null;
 	}
@@ -118,9 +139,11 @@ public class GenerateVelocity {
 		StringBuilder b = new StringBuilder(s);
 		Conversion.replace(b, "&suffix.", opts.getSchemaDefinition().getExtensionName() );
 		Conversion.replace(b, "&directory.", opts.getPackageDir());
+		Conversion.replace(b, "&template.", opts.getTemplateDtls().getTemplate());
 		if (r != null) {
 			Conversion.replace(b, "&recordSuffix.", r.getExtensionName() );
 		}
+		Conversion.replace(b, "//", "/");
 		return b.toString();
 	}
 	
@@ -130,11 +153,11 @@ public class GenerateVelocity {
      * @param templateFile file to be generated
      * @param writer output writer
      * @param context variable definitions
+     * @throws IOException 
      *
      * @throws Exception any error that occurs
      */
-    public final void genSkel(String templateFile, String outputFile, IGenerateOptions opts,  RecordDef r )
-    throws Exception {
+    public final void genSkel(String templateFile, String outputFile, IGenerateOptions opts,  RecordDef r, String packageExtension ) throws IOException {
 
         /*
          *  get the Template object.  This is the parsed version of your
@@ -153,52 +176,52 @@ public class GenerateVelocity {
 		ec.addEventHandler(new IncludeRelativePath());
 
 		context.put("generateOptions", opts);
+		context.put("packageId", opts.getPackageId() + packageExtension);
 		if (r != null) {
 			context.put("currentRecord", r);
 		}
 		context.attachEventCartridge(ec);
-
-//        VelocityEngine e = new VelocityEngine();
-//      
-//        e.init();
-//        
-//            //e.setProperty(Velocity.RESOURCE_LOADER, s1);
-//            //templateFile = templateFile.substring(idx + 1);
-//        //e.setProperty(Velocity.RESOURCE_LOADER, "classpath"); 
-//        //e.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
-//
-//        e.setProperty(Velocity.FILE_RESOURCE_LOADER_PATH, "classpath"); 
-//
-//        template = e.getTemplate(templateFile, "UTF8");
 		
 		Files.createDirectories(Paths.get(outputFile).getParent());
 		Writer writer = new FileWriter(outputFile);
 
 		System.out.println("Template: " + templateFile);
-        Velocity.evaluate( context, writer, "log tag name", getTemplateFromResource(templateFile));
- 
-        /*
-         *  Now have the template engine process your template using the
-         *  data placed into the context.  Think of it as a  'merge'
-         *  of the template and the data to produce the output stream.
-         */
-
-//
-//        if (template != null) {
-//            template.merge(context, writer);
-//        }
-
-        /*
-         *  flush and cleanup
-         */
-
-        writer.flush();
-        writer.close();
+		
+		ArrayList<SkelLineNum> skelLines = new ArrayList<SkelLineNum>();
+		try {
+			Velocity.evaluate( context, writer, "log tag name", loadTemplate(skelLines, opts, templateFile));
+		} catch(ParseErrorException pe) {
+			String errorText = pe.toString();
+			int idx1 = errorText.indexOf("line");
+			if (idx1 > 0) {
+				int idx2 = errorText.indexOf(",", idx1 + 5);
+				if (idx2 > 0) {
+					try {
+						int lineNo = Integer.parseInt(errorText.substring(idx1 + 5, idx2).trim());
+						int i = 0;
+						while (i < skelLines.size() && lineNo > skelLines.get(i).lineCount) {
+							lineNo -= skelLines.get(i).lineCount;
+							i += 1;
+						}
+						errorText = errorText.substring(0, idx1)
+								+ "line "
+								+ (skelLines.get(i).lineCountStart + lineNo) + " of " + skelLines.get(i).name
+								+ errorText.substring(idx2);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			throw new RuntimeException(errorText);
+		} finally {
+	        writer.flush();
+	        writer.close();
+		}
     }
 
-    private String getTemplateFromResource(final String templatePath) {
+    private String loadTemplate(List<SkelLineNum> skelLines, IGenerateOptions opts, final String templatePath) {
     	StringBuilder b = new StringBuilder();
-    	getTemplateFromResource(b, templatePath);
+    	loadTemplate(b, skelLines, opts, templatePath);
     	return b.toString();
     }
 
@@ -207,11 +230,29 @@ public class GenerateVelocity {
 	 * @param b
 	 * @throws RuntimeException
 	 */
-	private void getTemplateFromResource(StringBuilder b, final String templatePath) throws RuntimeException {
+	private void loadTemplate(StringBuilder b, List<SkelLineNum> skelLines, IGenerateOptions opts, final String templatePath) {
+		BufferedReader r = null;
 		try { 	
-    		InputStream in = this.getClass().getResourceAsStream(templatePath);   	
-    		BufferedReader r = new BufferedReader(new InputStreamReader(in));
+			InputStream in = null;
+			String templateDir = opts.getTemplateDtls().templateDir;
+			if (templateDir != null && templateDir.length() > 0) {
+				char lastChar = templateDir.charAt(templateDir.length() - 1);
+				if (lastChar != '/' && lastChar != '\\') {
+					templateDir = templateDir + '/';
+				}
+				File f = new File(templateDir + templatePath);
+				if (f.exists()) {
+					in = new FileInputStream(f);
+				}
+			} 
+			if (in == null) {
+				in = this.getClass().getResourceAsStream(opts.getTemplateDtls().templateBase + templatePath);
+			} 
     		String s;
+    		
+    		SkelLineNum lineNumHolder = new SkelLineNum(templatePath, 0);
+			skelLines.add(lineNumHolder);
+    		r = new BufferedReader(new InputStreamReader(in));
     		while ((s = r.readLine()) != null) {
     			if (s.trim().startsWith("#incl(")) {
     				s = s.trim();
@@ -219,16 +260,37 @@ public class GenerateVelocity {
     				//System.out.print("~~>>" + s + "<<");
     				s = s.substring(1, s.length() - 1);
     				//System.out.println("\t~~>>" + s + "<<");
-    				getTemplateFromResource(b, s);
+    				loadTemplate(b, skelLines, opts, s);
+    				lineNumHolder = new SkelLineNum(templatePath, lineNumHolder.lineCountStart + lineNumHolder.lineCount + 1);
     				
+    				skelLines.add(lineNumHolder);
     			} else {
     				b.append(s).append('\n');
+    				lineNumHolder.lineCount += 1;
     			}
     		}
     	} catch (IOException ex) { 
-    		
     		throw new RuntimeException(ex);
-
+    	} finally {
+    		if (r != null) {
+	    		try {
+					r.close();
+				} catch (IOException e) {
+					throw new RuntimeException(e);
+				}
+    		}
     	}
+	}
+	
+	private static class SkelLineNum {
+		private final String name;
+		private int lineCount = 0;
+		private final int lineCountStart;
+		
+		protected SkelLineNum(String name, int start) {
+			this.name = name;
+			this.lineCountStart = start;
+		}
+		
 	}
 }

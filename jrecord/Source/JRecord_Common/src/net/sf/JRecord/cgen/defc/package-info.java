@@ -1,12 +1,16 @@
+/**
+ * 
+ */
+/**
+ * @author Bruce01
+ *
+ */
 /*  -------------------------------------------------------------------------
  *
- *                Project: JRecord
+ *            Sub-Project: JRecord Common
  *    
- *    Sub-Project purpose: Provide support for reading Cobol-Data files 
- *                        using a Cobol Copybook in Java.
- *                         Support for reading Fixed Width / Binary / Csv files
- *                        using a Xml schema.
- *                         General Fixed Width / Csv file processing in Java.
+ *    Sub-Project purpose: Common Low-Level Code shared between 
+ *                        the JRecord and Record Projects
  *    
  *                 Author: Bruce Martin
  *    
@@ -25,9 +29,5 @@
  *    GNU Lesser General Public License for more details.
  *
  * ------------------------------------------------------------------------ */
-
-package net.sf.JRecord.cgen.def;
-
-public interface IDecoder<T> {
-	public abstract T decode(byte[] rec);
-}
+      
+package net.sf.JRecord.cgen.defc;

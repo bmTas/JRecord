@@ -34,6 +34,7 @@ import net.sf.JRecord.Numeric.Convert;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 
+@SuppressWarnings("deprecation")
 public class BasicConversion implements AbstractConversion {
 
 	private static final int numberOfEntries;
@@ -96,7 +97,6 @@ public class BasicConversion implements AbstractConversion {
 	 * Basic Type / Format conversion (for use in JRecord; RecordEditor has
 	 * its own (database based conversion).
 	 */
-	@SuppressWarnings("deprecation")
 	public BasicConversion() {
 		TypeManager manager = TypeManager.getInstance();
 		typeNames = new String[manager.getNumberOfTypes()];
@@ -147,6 +147,7 @@ public class BasicConversion implements AbstractConversion {
 		setName(Type.ftBinaryBigEndianPositive  , "Binary Integer Big Endian (only +ve)", "Binary Integer Big Endian (only +ve )");
 		setName(Type.ftPositiveBinaryBigEndian  , "Positive Integer Big Endian", "Positive Integer (Big Endian)");
 		setName(Type.ftFjZonedNumeric  , "Fujitsu Zoned Numeric");
+		setName(Type.ftGnuCblZonedNumeric  , "GNU Cobol Zoned Numeric");
 
 
 		setName(Type.ftRmComp, "Rm Cobol Comp");

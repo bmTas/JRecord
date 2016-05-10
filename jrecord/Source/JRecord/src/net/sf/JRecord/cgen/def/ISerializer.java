@@ -26,48 +26,14 @@
  *
  * ------------------------------------------------------------------------ */
 
-package net.sf.JRecord.cgen.impl;
+package net.sf.JRecord.cgen.def;
 
-import java.io.IOException;
-
-import net.sf.JRecord.ByteIO.AbstractByteReader;
-import net.sf.JRecord.cgen.def.IAsPojo;
-import net.sf.JRecord.cgen.def.IReader;
-
-public class PojoReaderWrapper1<Line> implements IReader<Line> {
-
-	public static <Line> PojoReaderWrapper1<Line> newReader(AbstractByteReader reader, IAsPojo<Line> converter) {
-		return new PojoReaderWrapper1<Line>(reader, converter);
-	}
-	
-	private final AbstractByteReader reader;
-	private final IAsPojo<Line> converter;
-	
-	private PojoReaderWrapper1(AbstractByteReader reader, IAsPojo<Line> converter) {
-		super();
-		this.reader = reader;
-		this.converter = converter;
-	}
-
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.cgen.def.IReader#read()
-	 */
-	@Override
-	public Line read() throws IOException {
-		byte[] in = reader.read();
-		if (in == null) {
-			return null;
-		}
-		converter.setData(in);
-		return converter.asPojo();
-	}
-
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.cgen.def.IReader#close()
-	 */
-	@Override
-	public void close() throws IOException {
-		reader.close();
-	}
-
+/**
+ * Class to convert a (Line Object) to an array of bytes.
+ * @author Bruce Martin
+ *
+ * @param <Line> Line Object
+ */
+public interface ISerializer<Line> {
+	public abstract byte[] serialize(Line rec);
 }

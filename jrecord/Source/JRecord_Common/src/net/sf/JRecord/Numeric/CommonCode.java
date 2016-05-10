@@ -30,7 +30,7 @@ import net.sf.JRecord.Types.Type;
 public class CommonCode {
 
 	public static int commonTypeChecks(
-			int binaryFormat, String usage, String picture, boolean signed, boolean signSeperate,
+			int dialect, String usage, String picture, boolean signed, boolean signSeperate,
 			String signPosition) {
 		int iType = 0;
 		if (signed ||  picture.startsWith("S")) {
@@ -47,10 +47,11 @@ public class CommonCode {
 					iType = Type.ftSignSepTrailActualDecimal;
 				}
 			} else {
-				if (binaryFormat == ICopybookDialects.FMT_MAINFRAME) {
-					iType = Type.ftZonedNumeric;
-				} else {
-					iType = Type.ftFjZonedNumeric;
+				iType = Type.ftGnuCblZonedNumeric;
+				switch (dialect) {
+				case ICopybookDialects.FMT_MAINFRAME: 				iType = Type.ftZonedNumeric;		break;
+				case ICopybookDialects.FMT_FUJITSU:
+				case ICopybookDialects.FMT_FUJITSU_COMMA_DECIMAL:	iType = Type.ftFjZonedNumeric;		break;		
 				}
 			}
 		} else {

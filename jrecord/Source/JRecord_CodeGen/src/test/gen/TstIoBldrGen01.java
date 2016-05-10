@@ -1,38 +1,38 @@
 package test.gen;
 
 import net.sf.JRecord.cg.Generate;
-import net.sf.JRecord.cg.details.ArgNames;
+import net.sf.JRecord.cg.details.ArgumentOption;
 
 public class TstIoBldrGen01 {
 
 	public static void main(String[] args) {
 
 		String[] arguments1 = {
-				ArgNames.OPT_TEMPLATE, "basic",
-				ArgNames.OPT_SCHEMA, TstIoBldrGen01.class.getResource("DTAR020.cbl").getFile(),
-				ArgNames.OPT_FILE_ORGANISATION, "FixedWidth",
-				ArgNames.OPT_FONT_NAME, "CP037",
-				ArgNames.OPT_DROP_COPYBOOK_NAME, "true",
-				ArgNames.OPT_OUTPUT_DIR, "G:/Temp/Gen/ioBuilder"
+				ArgumentOption.OPT_TEMPLATE, "basic",
+				ArgumentOption.OPT_SCHEMA, TstIoBldrGen01.class.getResource("DTAR020.cbl").getFile(),
+				ArgumentOption.OPT_FILE_ORGANISATION, "FixedWidth",
+				ArgumentOption.OPT_FONT_NAME, "CP037",
+				ArgumentOption.OPT_DROP_COPYBOOK_NAME, "true",
+				ArgumentOption.OPT_OUTPUT_DIR, "G:/Temp/Gen/ioBuilder"
 		};
 		
 		Generate.main(arguments1);
 
 		String[] arguments2 = {
-				ArgNames.OPT_TEMPLATE, "basic",
-				ArgNames.OPT_SCHEMA, TstIoBldrGen01.class.getResource("ams_PO_Download.Xml").getFile(),
-				ArgNames.OPT_OUTPUT_DIR, "G:/Temp/Gen/ioBuilder"
+				ArgumentOption.OPT_TEMPLATE, "basic",
+				ArgumentOption.OPT_SCHEMA, TstIoBldrGen01.class.getResource("ams_PO_Download.Xml").getFile(),
+				ArgumentOption.OPT_OUTPUT_DIR, "G:/Temp/Gen/ioBuilder"
 		};
 		
 		Generate.main(arguments2);
 
 		
 		String[] arguments3 = {
-				ArgNames.OPT_TEMPLATE, "basic",
-				ArgNames.OPT_SCHEMA, TstIoBldrGen01.class.getResource("MultiRecordTest.cbl").getFile(),
-				ArgNames.OPT_FILE_ORGANISATION, "FixedWidth",
-				ArgNames.OPT_SPLIT, "01",
-				ArgNames.OPT_OUTPUT_DIR, "G:/Temp/Gen/ioBuilder"
+				ArgumentOption.OPT_TEMPLATE, "basic",
+				ArgumentOption.OPT_SCHEMA, TstIoBldrGen01.class.getResource("MultiRecordTest.cbl").getFile(),
+				ArgumentOption.OPT_FILE_ORGANISATION, "FixedWidth",
+				ArgumentOption.OPT_SPLIT, "01",
+				ArgumentOption.OPT_OUTPUT_DIR, "G:/Temp/Gen/ioBuilder"
 		};
 		
 		Generate.main(arguments3);

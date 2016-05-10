@@ -119,7 +119,7 @@ public class TstCobol1 extends TestCase {
 
 
 	public void testSignedConversion() throws RecordException {
-		int[] intelTypes = {41, 31, 15, 15, 7, 24, 6, 29, 6, 29, };
+		int[] intelTypes = {46, 31, 15, 15, 7, 24, 6, 29, 6, 29, };
 		int[] mainframeTypes = {32, 31, 35, 35, 7, 24, 6, 29, 6, 29, };
 
 		System.out.println();
@@ -152,7 +152,7 @@ public class TstCobol1 extends TestCase {
 			Type t = m.getType(field.getType());
 
 			assertTrue("Field: " + field.getName(), (t instanceof TypeNum && (! ((TypeNum) t).isPositive())));
-			assertEquals("Field Type: " + field.getName(), types[i], field.getType());
+			assertEquals("Field Type: " + field.getName() + " " + cobolDialect, types[i], field.getType());
 		}
 
 	}

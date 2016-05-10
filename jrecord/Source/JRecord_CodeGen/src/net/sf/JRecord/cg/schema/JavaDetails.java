@@ -30,10 +30,24 @@ import net.sf.JRecord.cg.common.CCode;
 public class JavaDetails {
 	private final String cobolName, extensionName, javaName, className, constantName;
 
-	protected JavaDetails(String cobolName) {
+	protected JavaDetails(String cobolName, String copybookName) {
 		super();
 		
-		StringBuilder b = CCode.cobolName2JavaName(cobolName);
+		StringBuilder b;
+		String adjCobolName = cobolName==null? "" :cobolName;
+		
+		if (copybookName != null && copybookName.length() > 0) {
+			String lcAdjCobolName = adjCobolName.toLowerCase();
+			String lcCopybookName = copybookName.toLowerCase();
+			if (lcAdjCobolName.length() > lcCopybookName.length() && lcAdjCobolName.startsWith(lcCopybookName)) {
+				adjCobolName = adjCobolName.substring(copybookName.length());
+				if (lcAdjCobolName.startsWith("-") || lcAdjCobolName.startsWith("_")) {
+					adjCobolName = adjCobolName.substring(1);
+				}
+			} 
+		}
+		
+		b = CCode.cobolName2JavaName(adjCobolName);
 		this.cobolName = cobolName;
 	
 		this.extensionName = CCode.toSuffix(b);

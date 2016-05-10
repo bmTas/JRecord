@@ -313,7 +313,7 @@ public class GenericNumericDefinition implements NumericDefinition, Convert {
                ||  picture.indexOf('.') >= 0) {
         	ret = Type.ftNumRightJustified;
         } else {
-        	ret = CommonCode.commonTypeChecks(binId, usage, picture, signed, signSeperate, signPosition);
+        	ret = CommonCode.commonTypeChecks(identifier, usage, picture, signed, signSeperate, signPosition);
         }
 
 		return ret;

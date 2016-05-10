@@ -35,7 +35,7 @@ import net.sf.JRecord.Types.Type;
 public class LoadConversion {
 
 	private final static int[] STANDARD_TYPES = {
-		Type.ftFjZonedNumeric,
+		Type.ftFjZonedNumeric,  Type.ftGnuCblZonedNumeric,
 		Type.ftBinaryBigEndian, Type.ftFloat, Type.ftDouble, Type.ftPackedDecimal,
 		Type.ftBinaryBigEndian, Type.ftBinaryInt
 	};
@@ -54,6 +54,7 @@ public class LoadConversion {
 		typeConversion.put("f",    Type.ftFloat);
 		typeConversion.put("d",    Type.ftDouble);
 		typeConversion.put("mvszd",Type.ftZonedNumeric);
+		typeConversion.put("zd9",  Type.ftGnuCblZonedNumeric);
 		typeConversion.put("zd",   Type.ftFjZonedNumeric);
 		typeConversion.put("rm",   Type.ftRmComp);
 		typeConversion.put("rmp",  Type.ftRmCompPositive);

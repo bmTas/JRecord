@@ -28,8 +28,7 @@
 
 package net.sf.JRecord.cgen.def;
 
-public interface IAsPojo<line> {
+public interface IAsPojo<Line> {
 
-	public abstract line asPojo();
-	public abstract void setData(byte[] bytes);
+	public abstract Line asPojo();
 }

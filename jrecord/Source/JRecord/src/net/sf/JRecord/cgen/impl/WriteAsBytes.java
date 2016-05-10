@@ -34,16 +34,16 @@ import java.io.OutputStream;
 import net.sf.JRecord.ByteIO.AbstractByteWriter;
 import net.sf.JRecord.ByteIO.ByteIOProvider;
 import net.sf.JRecord.Common.IBasicFileSchema;
-import net.sf.JRecord.cgen.def.IEncoder;
+import net.sf.JRecord.cgen.def.ISerializer;
 import net.sf.JRecord.cgen.def.IWriter;
 
 public class WriteAsBytes<T> implements IWriter<T> {
 	
-	private final IEncoder<T> encoder;
+	private final ISerializer<T> serializer;
 	private final AbstractByteWriter writer;
 
-	public WriteAsBytes(IBasicFileSchema schema, IEncoder<T> encoder) {
-		this.encoder = encoder;
+	public WriteAsBytes(IBasicFileSchema schema, ISerializer<T> serializer) {
+		this.serializer = serializer;
 		this.writer = ByteIOProvider.getInstance().getByteWriter(schema);
 	}
 	
@@ -60,7 +60,7 @@ public class WriteAsBytes<T> implements IWriter<T> {
 	
 	@Override
 	public void write(T record) throws IOException {
-		writer.write(encoder.encode(record));
+		writer.write(serializer.serialize(record));
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class WriteAsBytes<T> implements IWriter<T> {
 		writer.close();
 	}
 
-	public static <TT extends Object> WriteAsBytes<TT> newReader(IBasicFileSchema schema, IEncoder<TT> encoder) {
-		return new WriteAsBytes<TT>(schema, encoder);
+	public static <TT extends Object> WriteAsBytes<TT> newReader(IBasicFileSchema schema, ISerializer<TT> serializer) {
+		return new WriteAsBytes<TT>(schema, serializer);
 	}
 }

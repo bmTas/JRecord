@@ -151,7 +151,8 @@ public class TypeManager {
 
             types[Type.ftBit]					= new TypeBit();
 
-            types[Type.ftFjZonedNumeric]		= new TypeFjZoned();
+            types[Type.ftFjZonedNumeric]		= new TypeFjZoned(true);
+            types[Type.ftGnuCblZonedNumeric]    = new TypeFjZoned(false);
 
 //            types[Type.ftCharRestOfFixedRecord] = new TypeCharRestOfFixedRecord();
             types[Type.ftCharRestOfRecord]		= new TypeCharRestOfRecord();

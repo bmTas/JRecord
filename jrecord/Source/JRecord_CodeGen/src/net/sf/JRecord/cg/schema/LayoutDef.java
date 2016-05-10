@@ -25,9 +25,12 @@
       
 package net.sf.JRecord.cg.schema;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.JRecord.Common.CommonBits;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.cg.common.CCode;
 import net.sf.JRecord.cgen.defc.ILayoutDetails4gen;
 
@@ -39,14 +42,24 @@ import net.sf.JRecord.cgen.defc.ILayoutDetails4gen;
 public class LayoutDef extends JavaDetails {
 	private final ILayoutDetails4gen schema;
 	private final ArrayList<RecordDef> records = new ArrayList<RecordDef>();
+	private final String schemaName, schemaShortName;
+	private final boolean xmlSchema;
 	
-	public LayoutDef(ILayoutDetails4gen schema) {
-		super(schema.getLayoutName());
+	public LayoutDef(ILayoutDetails4gen schema, String schemaName) {
+		super(schema.getLayoutName(), Conversion.getCopyBookId(schemaName));
 		this.schema = schema;
+		this.schemaName = schemaName;
+		this.xmlSchema = schemaName.toLowerCase().endsWith(".xml");
+		if (this.schemaName == null) {
+			schemaShortName = "";
+		} else { 
+			schemaShortName = (new File(schemaName)).getName();
+		}
 		
-		records.ensureCapacity(schema.getRecordCount());
+		schemaName = Conversion.getCopyBookId(schemaName);
+		records.ensureCapacity(schema.getRecordCount()); 
 		for (int i = 0; i < schema.getRecordCount(); i++) {
-			records.add(new RecordDef( schema.getRecord(i) ));
+			records.add(new RecordDef( schema.getRecord(i), schemaName ));
 		}
 	}
 
@@ -75,4 +88,49 @@ public class LayoutDef extends JavaDetails {
 		return CCode.getJRecordIoTypeName(schema.getFileStructure());
 	}
 
+	/**
+	 * @return the schemaName
+	 */
+	public final String getSchemaName() {
+		return schemaName;
+	}
+
+	/**
+	 * @return the schemaShortName
+	 */
+	public final String getSchemaShortName() {
+		return schemaShortName;
+	}
+
+	/**
+	 * @return the xmlSchema
+	 */
+	public final boolean isXmlSchema() {
+		return xmlSchema;
+	}
+
+	/**
+	 * @return
+	 * @see net.sf.JRecord.cgen.defc.ILayoutDetails4gen#getDelimiter()
+	 */
+	public String getDelimiter() {
+		String d = schema.getDelimiter();
+		if ("\t".equals(d)) {
+			d = "\\t";
+		}
+		return d;
+	}
+
+	public String getQuote() {
+		String q = records.get(0).getRecord().getQuote();
+		if ("\"".equals(q)) {
+			q = "\\\"";
+		}
+		
+		return q;
+	}
+	
+	public boolean areFieldNamesOnTheFirstLine() {
+		return CommonBits.areFieldNamesOnTheFirstLine(schema.getFileStructure());
+	}
 }

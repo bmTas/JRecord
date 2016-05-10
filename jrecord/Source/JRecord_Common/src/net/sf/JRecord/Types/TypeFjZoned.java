@@ -51,6 +51,7 @@ public class TypeFjZoned extends TypeNum {
 	private static int positiveFjDiff = '@' - '0';
 	private static int negativeFjDiff = 'P' - '0';
 
+	private final boolean overtypePositive;
     /**
      * Define Fujitsu Zoned Decimal Type
      *
@@ -58,8 +59,9 @@ public class TypeFjZoned extends TypeNum {
      * and what is to be displayed on the screen for Fujitsu Zoned Decimal
      * fields.
      */
-    public TypeFjZoned() {
+    public TypeFjZoned(boolean overtypePositive) {
         super(false, true, true, false, false, false);
+        this.overtypePositive = overtypePositive;
     }
 
 
@@ -92,7 +94,7 @@ public class TypeFjZoned extends TypeNum {
     
 	@Override
 	public String formatValueForRecord(IFieldDetail field, String value) {
-		String val = toFjZoned(checkValue(field, toNumberString(value)));
+		String val = toAsciiZoned(checkValue(field, toNumberString(value)));
 		if (field.isFixedFormat()) {
 			return Conversion.padFront(val, field.getLen() - val.length(), '0');
 		}
@@ -101,13 +103,13 @@ public class TypeFjZoned extends TypeNum {
 
 
 	/**
-	 * Convert a num to a Fujitsu Zoned Number String
+	 * Convert a num to a Fujitsu/Ascii Zoned Number String
 	 *
 	 * @param num  Numeric string
 	 *
 	 * @return number-string
 	 */
-	private String toFjZoned(String num) {
+	private String toAsciiZoned(String num) {
 
 		String ret;
 		if (num == null || (ret = num.trim()).length() == 0 || ret.equals("-") || ret.equals("+")) {
@@ -133,7 +135,7 @@ public class TypeFjZoned extends TypeNum {
 
             if (lastChar < '0' || lastChar > '9') {
                 // throw ...
-            } else {
+            } else if (overtypePositive) {
                 lastChar = (char) (lastChar + positiveFjDiff);
             }
 
@@ -143,6 +145,7 @@ public class TypeFjZoned extends TypeNum {
 
 		return ret;
 	}
+
 
     /**
      * Convert a Fujitsu Zoned Number String to a number string

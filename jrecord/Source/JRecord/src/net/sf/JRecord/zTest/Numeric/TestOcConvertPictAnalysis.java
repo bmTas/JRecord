@@ -66,8 +66,8 @@ public class TestOcConvertPictAnalysis  extends TestCase{
         chkPict("-9,999.9",Type.ftNumRightJustified);
         chkPict("99,999.9",Type.ftNumRightJustified);
         chkPict("+9,999.9",Type.ftNumRightJustified);
-        chkPict("S9999V99",Type.ftFjZonedNumeric);
-        chkPict("s9999v99",Type.ftFjZonedNumeric);
+        chkPict("S9999V99",Type.ftGnuCblZonedNumeric);
+        chkPict("s9999v99",Type.ftGnuCblZonedNumeric);
         chkPict("9999V99",Type.ftAssumedDecimalPositive);
         chkPict("9999v99",Type.ftAssumedDecimalPositive);
 
@@ -88,7 +88,7 @@ public class TestOcConvertPictAnalysis  extends TestCase{
         chkPict("Z,ZZ9",Type.ftNumRightJustified);
 
         chkPict("-9,999",Type.ftNumRightJustified);
-        chkPict("S9999",Type.ftFjZonedNumeric);
+        chkPict("S9999",Type.ftGnuCblZonedNumeric);
         chkPict("99999",Type.ftNumZeroPaddedPositive);
 
         chkPict("+9,999",Type.ftNumRightJustified);
@@ -113,8 +113,8 @@ public class TestOcConvertPictAnalysis  extends TestCase{
         chkPict("-9,999.",Type.ftNumRightJustified);
         chkPict("99,999.",Type.ftNumRightJustified);
         chkPict("+9,999.",Type.ftNumRightJustified);
-        chkPict("S9999V",Type.ftFjZonedNumeric);
-        chkPict("s9999v",Type.ftFjZonedNumeric);
+        chkPict("S9999V",Type.ftGnuCblZonedNumeric);
+        chkPict("s9999v",Type.ftGnuCblZonedNumeric);
         chkPict("9999V",Type.ftAssumedDecimalPositive);
 
         chkPict("99-99-99",Type.ftChar);

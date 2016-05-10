@@ -9,15 +9,7 @@ package example;
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineReader;
-#IoBldrImport()
-###*  *##if (${generateOptions.isXmlSchema()})
-##import net.sf.JRecord.def.IO.builders.IIOBuilder;
-###*  *##else	
-##import net.sf.JRecord.Common.Constants;
-##import net.sf.JRecord.External.CopybookLoader;
-##import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
-###*  *##end                                           
-
+#IoBldrImport()                                        
 
 /**
  * Read Cobol file using a Cobol Copybook (${generateOptions.schemaDefinition.extensionName}).
@@ -32,7 +24,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
     private String testDir        = "G:/temp/";
     private String salesFile      = testDir + "DTAR020.bin";
 #*    private String salesFileOut   = testDir + "DTAR020out.bin";*#
-    private String copybookName   = "${generateOptions.schemaName}"; 
+    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName}"; 
  
     /**
      * Example of LineReader  classes

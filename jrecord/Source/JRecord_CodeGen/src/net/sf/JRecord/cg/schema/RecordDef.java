@@ -60,8 +60,8 @@ public class RecordDef extends JavaDetails {
 	 * 
 	 * @param record standard Record Description
 	 */
-	public RecordDef(IRecordDetail4gen record) {
-		super(record.getRecordName()); 
+	public RecordDef(IRecordDetail4gen record, String schemaName) {
+		super(record.getRecordName(), schemaName); 
 		this.record = record;
 		
 		int fieldCount = record.getFieldCount();
@@ -93,8 +93,8 @@ public class RecordDef extends JavaDetails {
 				
 				ai = null;
 				if (fldName.indexOf('(') > 0) {
-					ai = ArrayElement.newArrayItem(fldName);
-					fieldDef = new FieldDef(fldName, field, ai);
+					ai = ArrayElement.newArrayItem(fldName, schemaName);
+					fieldDef = new FieldDef(fldName, field, ai, schemaName);
 					
 					if (arrayMap.containsKey(ai.arrayName)) {
 						ad = arrayMap.get(ai.arrayName);
@@ -105,7 +105,7 @@ public class RecordDef extends JavaDetails {
 						arrayDetailsList.add(ad);
 					}
 				} else {
-					fieldDef = new FieldDef(fldName, field, ai);
+					fieldDef = new FieldDef(fldName, field, ai, schemaName);
 				}
 				
 				fields.add(fieldDef);

@@ -104,7 +104,7 @@ public class TstCobolIOBuilder02 extends TestCase {
 			createField("Numeric-comp-5-fld-4", 17, 2, Type.ftBinaryInt),
 			createField("pcomp-fld-2", 19, 1, Type.ftBinaryBigEndianPositive),
 			createField("pcomp-fld-4", 20, 2, Type.ftBinaryBigEndianPositive),
-			createField("pic9-fld-5", 22, 5, Type.ftFjZonedNumeric),
+			createField("pic9-fld-5", 22, 5, Type.ftGnuCblZonedNumeric), //Type.ftFjZonedNumeric),
 		}, {
 			createField("Numeric-comp-fld-2", 1, 1, Type.ftBinaryBigEndian),
 			createField("Numeric-comp-fld-4", 2, 2, Type.ftBinaryBigEndian),
@@ -115,7 +115,7 @@ public class TstCobolIOBuilder02 extends TestCase {
 			createField("Numeric-comp-5-fld-4", 15, 2, Type.ftBinaryInt),
 			createField("pcomp-fld-2", 17, 1, Type.ftBinaryBigEndianPositive),
 			createField("pcomp-fld-4", 18, 2, Type.ftBinaryBigEndianPositive),
-			createField("pic9-fld-5", 20, 5, Type.ftFjZonedNumeric),
+			createField("pic9-fld-5", 20, 5, Type.ftGnuCblZonedNumeric), //Type.ftFjZonedNumeric),
 		},
 	};
 	
@@ -189,7 +189,8 @@ public class TstCobolIOBuilder02 extends TestCase {
 				for (int d : DIALECTS) {
 					check(	bldr,
 							new CblBldrOptions(d, FILE_STRUCTURES[k], dropRecordName, FONTS[j]),
-							expected[i++]
+							expected[i++],
+							FONTS[j] + " ~ " + (i-1) + ", " + d
 							);
 				}
 			}
@@ -234,7 +235,7 @@ public class TstCobolIOBuilder02 extends TestCase {
 //		}
 //	}
 
-	private void check(ICobolIOBuilder bldr, CblBldrOptions opts, FieldDetail[] expected) throws IOException {
+	private void check(ICobolIOBuilder bldr, CblBldrOptions opts, FieldDetail[] expected, String id) throws IOException {
 		bldr.setDialect(opts.dialect)
 		    .setDropCopybookNameFromFields(opts.dropCopybookNameFromFields)
 		    .setFileOrganization(opts.fileOrganization)
@@ -261,7 +262,7 @@ public class TstCobolIOBuilder02 extends TestCase {
 				assertEquals(eField.getName(), field.getName());
 				assertEquals(eField.getPos(),  field.getPos());
 				assertEquals(eField.getLen(),  field.getLen());
-				assertEquals(eField.getType(), field.getType());
+				assertEquals(id, eField.getType(), field.getType());
 				assertEquals(opts.font, field.getFontName());
 			}
 		}

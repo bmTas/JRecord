@@ -1,0 +1,89 @@
+package ${packageId};
+##  
+##   Write Example JRecord with Generated class
+##
+##   Author: Bruce Martin
+##
+#incl("schema/CommentExample.pvm")
+
+import java.io.IOException;
+
+import net.sf.JRecord.JRecordInterface1;
+import net.sf.JRecord.Details.AbstractLine;
+#IoBldrImport()
+
+import net.sf.JRecord.IO.AbstractLineWriter;
+
+
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                     
+import ${generateOptions.packageId}.data.Line${r.extensionName}JR;
+#*  *##end                                           
+
+
+/**
+ * Write Cobol file using a Cobol Copybook (${generateOptions.schemaDefinition.extensionName}).
+ *
+ * This Generated program is intended as an example of using JRecord
+ * rather than a useful program (that compiles - it wont).
+ * You should regard it as a starting point and modify 
+ * it according to needs
+ */
+public final class Write${generateOptions.schemaDefinition.extensionName} {
+
+    private String testDir        = "G:/temp/";
+    private String salesFileOut   = testDir + "DTAR020out.bin";
+    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName}"; 
+
+    #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                             
+           Line${r.extensionName}JR line${r.extensionName}JR = new Line${r.extensionName}JR();
+#*  *##end                                           
+
+                                        
+    
+    /**
+     * Example of LineReader  classes
+     */
+    public Write${generateOptions.schemaDefinition.extensionName}() {
+        super();
+
+        try {
+#incl("schema/DclIOBuilder.pvm")     
+            AbstractLineWriter writer = iob.newWriter(salesFileOut);
+ 
+#*  *##set( $sep = "        ")    
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+            writer.write(create${r.extensionName}(iob, data));
+#*  *##end                       
+
+            writer.close();
+        } catch (Exception e) {
+             System.out.println();
+
+            e.printStackTrace();
+        }
+    }
+
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+    private AbstractLine create${r.extensionName}(${ioBldr} iob, UserData data) throws IOException {
+        AbstractLine line = iob.newLine();    
+        line${r.extensionName}JR.setLine(line);
+        
+#*      *##foreach($f in ${r.getFields()}) 
+#*          *##if (! ${f.isArrayItem()})
+        line${r.extensionName}JR.set${f.extensionName}(data. ...);  
+#*          *##end
+#*      *##end
+	
+#*      *##foreach($a in ${r.getArrayDetailsList()}) 
+        line${r.extensionName}JR.set${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()}, data. ...);  
+#*      *##end
+    
+        return line;
+    }
+
+#*  *##end
+    public static void main(String[] args) {
+        new Write${generateOptions.schemaDefinition.extensionName}();
+    }
+}
+

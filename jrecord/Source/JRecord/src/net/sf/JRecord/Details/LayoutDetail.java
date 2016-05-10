@@ -877,7 +877,8 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	 * get the field delimiter
 	 * @return the field delimeter
 	 */
-    public String getDelimiter() {
+    @Override
+	public String getDelimiter() {
         return delimiter;
     }
 
@@ -1012,6 +1013,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 		return initByte;
 	}
 
+	@Override
 	public final boolean isCsvLayout() {
 		return csvLayout;
 	}

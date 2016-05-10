@@ -536,6 +536,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	/**
 	 * @see net.sf.JRecord.Common.AbstractRecord#getQuote()
 	 */
+    @Override
     public String getQuote() {
         return quote;
     }

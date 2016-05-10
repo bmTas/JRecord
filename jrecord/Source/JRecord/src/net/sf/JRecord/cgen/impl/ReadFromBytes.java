@@ -34,16 +34,16 @@ import java.io.InputStream;
 import net.sf.JRecord.ByteIO.AbstractByteReader;
 import net.sf.JRecord.ByteIO.ByteIOProvider;
 import net.sf.JRecord.Common.IBasicFileSchema;
-import net.sf.JRecord.cgen.def.IDecoder;
+import net.sf.JRecord.cgen.def.IDeserializer;
 import net.sf.JRecord.cgen.def.IReader;
 
 public class ReadFromBytes<T> implements IReader<T> {
 
-	public final IDecoder<T> encoder;
+	public final IDeserializer<T> deserializer;
 	public final AbstractByteReader reader;
 	
-	public ReadFromBytes(IBasicFileSchema schema, IDecoder<T> decoder) {
-		this.encoder = decoder;
+	public ReadFromBytes(IBasicFileSchema schema, IDeserializer<T> deserializer) {
+		this.deserializer = deserializer;
 		this.reader = ByteIOProvider.getInstance().getByteReader(schema);
 	}
 	
@@ -63,7 +63,7 @@ public class ReadFromBytes<T> implements IReader<T> {
 		if (value == null) {
 			return null;
 		}
-		return encoder.decode(value);
+		return deserializer.deserialize(value);
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class ReadFromBytes<T> implements IReader<T> {
 		reader.close();
 	}
 	
-	public static <TT extends Object> ReadFromBytes<TT> newReader(IBasicFileSchema schema, IDecoder<TT> decoder) {
-		return new ReadFromBytes<TT>(schema, decoder);
+	public static <TT extends Object> ReadFromBytes<TT> newReader(IBasicFileSchema schema, IDeserializer<TT> deserializer) {
+		return new ReadFromBytes<TT>(schema, deserializer);
 	}
 }

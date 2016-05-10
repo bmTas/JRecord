@@ -300,7 +300,14 @@ public class XmlCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
                 processCopybook(pCopyBook, lCopyBookPref, element);
                 break;
             default:
-                processCopybook(pCopyBook, lCopyBookPref, element);
+            	String topLevel = getTopLevel(element);
+            	if ("1".equals(topLevel)) {
+            		processCopybook(pCopyBook, lCopyBookPref, element);
+            	} else {
+                    createRecord(pCopyBook, pCopyBook, STR_YES);
+
+                    insertXMLcopybook(lCopyBookPref, element);          		
+            	}
             }
 
             commonDetails = null;
@@ -412,6 +419,13 @@ public class XmlCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
     
     
     private void scanCopybook4Level(Element element) {
+    	String lvl = getTopLevel(element);
+    	if (lvl != null) {
+    		splitAtLevel = lvl;
+    	}
+    }
+    
+    private String getTopLevel(Element element) {
         NodeList lNodeList = element.getChildNodes();
         while (lNodeList.getLength() == 1) {
         	lNodeList = lNodeList.item(0).getChildNodes();
@@ -427,11 +441,11 @@ public class XmlCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
                 Element childElement = (Element) node;
                 String attrLevel = childElement.getAttribute(Cb2xmlConstants.LEVEL);
 				if (! attrLevel.equals("88")) {
-					splitAtLevel = Conversion.numTrim(attrLevel);
+					return Conversion.numTrim(attrLevel);
                 }
             }
         }
-   	
+        return null;
     }
 
     /**

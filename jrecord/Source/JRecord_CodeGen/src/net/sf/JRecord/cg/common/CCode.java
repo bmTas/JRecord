@@ -164,7 +164,7 @@ public class CCode {
 	
 	@SuppressWarnings("deprecation")
 	private static void initTypeNames() {
-		if (JAVA_TYPE_NAME[0] == null || JAVA_TYPE_NAME [Type.ftHtmlField ] == null) {		
+		if (JAVA_TYPE_NAME [Type.ftHtmlField ] == null) {		
 			JAVA_TYPE_NAME [Type.ftChar                     ] = "ftChar";
 			JAVA_TYPE_NAME [Type.ftCharRightJust            ] = "ftCharRightJust";
 			JAVA_TYPE_NAME [Type.ftCharNullTerminated       ] = "ftCharNullTerminated";
@@ -244,7 +244,7 @@ public class CCode {
 
 	public static String getRecordTypeName(int recType) {
 		
-		if (RECORD_TYPES[RECORD_TYPES.length - 1] == null) {
+		if (RECORD_TYPES[Constants.rtFixedLengthRecords] == null) {
 		    RECORD_TYPES[Constants.rtBinaryRecord         ] = "rtBinaryRecord";        
 		    RECORD_TYPES[Constants.rtRecordLayout         ] = "rtRecordLayout";        
 		    RECORD_TYPES[Constants.rtDelimited            ] = "rtDelimited";           
@@ -265,7 +265,7 @@ public class CCode {
 
 	public static String getDialectName(int dialect) {
 		
-		if (RECORD_TYPES[RECORD_TYPES.length - 1] == null) {
+		if (DIALECT[ICopybookDialects.FMT_FUJITSU_COMMA_DECIMAL] == null) {
 		    DIALECT[ICopybookDialects.FMT_INTEL]                   = "FMT_INTEL";
 		    DIALECT[ICopybookDialects.FMT_MAINFRAME]               = "FMT_MAINFRAME";
 		    DIALECT[ICopybookDialects.FMT_FUJITSU]                 = "FMT_FUJITSU";

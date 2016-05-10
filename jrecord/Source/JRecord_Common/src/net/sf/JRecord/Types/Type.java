@@ -113,6 +113,7 @@ public interface Type {
 	public static final int ftFjZonedNumeric     = 41;
 	public static final int ftNumRightJustCommaDp   = 42;
 	public static final int ftNumRightJustCommaDpPN = 43;
+	public static final int ftGnuCblZonedNumeric    = 46;
 	
 	/**
 	 * Use ftMultiLineChar instead

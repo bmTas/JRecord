@@ -28,7 +28,7 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
 
     private String testDir        = "G:/temp/";
     private String salesFileOut   = testDir + "DTAR020out.bin";
-    private String copybookName   = "${generateOptions.schemaName}";                                       
+    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName}";                                       
     
     /**
      * Example of LineReader  classes
@@ -42,7 +42,7 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
             IOBuilder${generateOptions.schemaDefinition.extensionName} ioBldr = new IOBuilder${generateOptions.schemaDefinition.extensionName}(copybookName);
             IWriter<I${r.extensionName}> writer = ioBldr.newWriter(salesFileOut);  
   
-            writer.write(create${r.extensionName}(ioBldr.newJrLine(), data));                   
+            writer.write(create${r.extensionName}(ioBldr.new${r.extensionName}JrLine(), data));                   
 
             writer.close();
         } catch (Exception e) {
@@ -58,7 +58,7 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
             IOBuilder${generateOptions.schemaDefinition.extensionName} ioBldr = new IOBuilder${generateOptions.schemaDefinition.extensionName}(copybookName);
             IWriter<I${r.extensionName}> writer = ioBldr.newWriter(salesFileOut + "2");  
   
-            writer.write(create${r.extensionName}(ioBldr.newPojoLine(), data));                   
+            writer.write(create${r.extensionName}(ioBldr.new${r.extensionName}PojoLine(), data));                   
 
             writer.close();
         } catch (Exception e) {

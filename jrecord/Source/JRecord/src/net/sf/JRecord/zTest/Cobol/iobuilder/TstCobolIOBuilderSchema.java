@@ -84,7 +84,7 @@ public class TstCobolIOBuilderSchema extends TestCase {
 				bldType("BldrTst-comp-5-l9", 27, 4, 0, 15, ""),
 				bldType("BldrTst-Record-Type", 31, 1, 0, 0, ""),
 				bldType("BldrTst-char-field", 32, 4, 0, 0, ""),
-				bldType("BldrTst-Zoned", 36, 4, 0, 41, ""),
+				bldType("BldrTst-Zoned", 36, 4, 0, 46, ""),
 			},
 		};
 
@@ -108,7 +108,7 @@ public class TstCobolIOBuilderSchema extends TestCase {
 			{
 				bldType("BldrTst-Record-Type", 1, 1, 0, 0, ""),
 				bldType("BldrTst-char-field", 2, 4, 0, 0, ""),
-				bldType("BldrTst-Zoned", 6, 4, 0, 41, ""),
+				bldType("BldrTst-Zoned", 6, 4, 0, 46, ""),
 			},
 		};
 

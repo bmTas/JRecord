@@ -100,6 +100,7 @@ public class TstTypesGeneral extends TestCase {
 	 	Type.ftRmCompPositive,
 
 	 	Type.ftFjZonedNumeric,
+	 	Type.ftGnuCblZonedNumeric,
 	};
 
 	public static final int[] BINARY_TYPES = {
@@ -298,6 +299,7 @@ public class TstTypesGeneral extends TestCase {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void tstSet(String[] values, String charset, int typeId, AbstractLine l, FieldDetail fld, boolean skipForChar) throws RecordException {
 		Type t = TypeManager.getInstance().getType(typeId);
 		

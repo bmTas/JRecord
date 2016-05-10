@@ -1,4 +1,4 @@
-#*  *##if (${generateOptions.isXmlSchema()})
+#*  *##if (${generateOptions.getSchemaDefinition().isXmlSchema()})
             IIOBuilder iob = JRecordInterface1.SCHEMA_XML
                                        .newIOBuilder(copybookName);
 #*  *##else

@@ -1,4 +1,5 @@
-package ${generateOptions.packageId}.schema;
+package ${packageId};
+##${generateOptions.packageId}.schema;
 #incl("schema/CommentFieldName.pvm")
 
 #*  *##set ($toAdd = "yes")

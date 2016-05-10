@@ -395,3 +395,22 @@ Num Sign Sep Trailing Actual Dec              45  4 0 0        000+     f0f0f04e
                                               45  4 0 -257     257-     f2f5f760        
 Num Sign Sep Trailing Actual Dec              45  4 1 1.1      1.1+     f14bf14e        
                                               45  4 1 -2.1     2.1-     f24bf160        
+GNU Cobol Zoned Numeric                       46  4 0 0        0000     f0f0f0f0        
+                                              46  4 0 5        0005     f0f0f0f5        
+                                              46  4 0 10       0010     f0f0f1f0        
+                                              46  4 0 32       0032     f0f0f3f2        
+                                              46  4 0 432      0432     f0f4f3f2        
+                                              46  4 0 6543     6543     f6f5f4f3        
+                                              46  4 0 -5       000U     f0f0f0e4        
+                                              46  4 0 -10      001P     f0f0f1d7        
+                                              46  4 0 -32      003R     f0f0f3d9        
+                                              46  4 0 -432     043R     f0f4f3d9        
+                                              46  4 0 255      0255     f0f2f5f5        
+                                              46  4 0 256      0256     f0f2f5f6        
+                                              46  4 0 257      0257     f0f2f5f7        
+                                              46  4 0 -255     025U     f0f2f5e4        
+                                              46  4 0 -256     025V     f0f2f5e5        
+                                              46  4 0 -257     025W     f0f2f5e6        
+GNU Cobol Zoned Numeric                       46  4 1 1.1      0011     f0f0f1f1        
+                                              46  4 1 -2.1     002Q     f0f0f2d8        
+                                              46  4 1 54.3     0543     f0f5f4f3        

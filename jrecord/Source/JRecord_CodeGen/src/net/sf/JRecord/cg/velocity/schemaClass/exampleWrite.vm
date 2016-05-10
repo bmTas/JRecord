@@ -11,14 +11,7 @@ import java.io.IOException;
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Details.AbstractLine;
 #IoBldrImport()
-###*  *##if (${generateOptions.isXmlSchema()})
-###*      *##set ($ioBldr = "IIOBuilder")
-###*  *##else
-###*      *##set ($ioBldr = "ICobolIOBuilder")
-##import net.sf.JRecord.Common.Constants;
-##import net.sf.JRecord.External.CopybookLoader;
-###*  *##end                                           
-##import net.sf.JRecord.def.IO.builders.${ioBldr};
+
 import net.sf.JRecord.IO.AbstractLineWriter;
 
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                     
@@ -39,7 +32,7 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
 
     private String testDir        = "G:/temp/";
     private String salesFileOut   = testDir + "DTAR020out.bin";
-    private String copybookName   = "${generateOptions.schemaName}"; 
+    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName}"; 
 
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                     
     private Record${r.extensionName} r${r.extensionName};

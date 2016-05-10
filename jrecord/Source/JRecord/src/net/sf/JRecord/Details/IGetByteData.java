@@ -28,12 +28,14 @@
 
 package net.sf.JRecord.Details;
 
+import net.sf.JRecord.Common.IGetData;
+
 /**
  * Class can return a Record (line) as an array of bytes
  * @author Bruce Martin
  *
  */
-public interface IGetByteData {
+public interface IGetByteData extends IGetData {
 
 	/**
 	 * @return Returns the record (line) as an array of bytes.

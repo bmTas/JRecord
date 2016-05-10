@@ -233,7 +233,7 @@ public class ArrayDetails {
 		String sep = "";
 		
 		for (int i = 0; i < sizes.length; i++) {
-			b.append(sep).append(sizes[i]);
+			b.append(sep).append((sizes[i]+1));
 			sep = ", ";
 		}
 		
