@@ -167,7 +167,7 @@ public class TstCblDataToXml03 {
 		}
 		return Cobol2GroupXml.newCobol2Xml(copybookFileName)
 					      .setFileOrganization(Constants.IO_BIN_TEXT)
-					      .setDialect(ICopybookDialects.FMT_INTEL)
+					      .setDialect(ICopybookDialects.FMT_FUJITSU)
 					      .setSplitCopybook(split);
 	}
 

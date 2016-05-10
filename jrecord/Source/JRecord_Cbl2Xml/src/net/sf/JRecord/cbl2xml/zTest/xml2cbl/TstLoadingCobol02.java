@@ -97,7 +97,7 @@ public class TstLoadingCobol02 extends TestCase {
 			createField("Numeric-comp-5-fld-4", 17, 2, Type.ftBinaryInt),
 			createField("pcomp-fld-2", 19, 1, Type.ftBinaryBigEndianPositive),
 			createField("pcomp-fld-4", 20, 2, Type.ftBinaryBigEndianPositive),
-			createField("pic9-fld-5", 22, 5, Type.ftFjZonedNumeric),
+			createField("pic9-fld-5", 22, 5, Type.ftGnuCblZonedNumeric),
 		}, {
 			createField("Numeric-comp-fld-2", 1, 1, Type.ftBinaryBigEndian),
 			createField("Numeric-comp-fld-4", 2, 2, Type.ftBinaryBigEndian),
@@ -108,7 +108,7 @@ public class TstLoadingCobol02 extends TestCase {
 			createField("Numeric-comp-5-fld-4", 15, 2, Type.ftBinaryInt),
 			createField("pcomp-fld-2", 17, 1, Type.ftBinaryBigEndianPositive),
 			createField("pcomp-fld-4", 18, 2, Type.ftBinaryBigEndianPositive),
-			createField("pic9-fld-5", 20, 5, Type.ftFjZonedNumeric),
+			createField("pic9-fld-5", 20, 5, Type.ftGnuCblZonedNumeric),
 		},
 	};
 	
