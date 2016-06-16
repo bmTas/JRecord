@@ -977,7 +977,7 @@ public class XmlCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
                 lRet = lDecimalStr.length();
             }
             
-            if (lRet > 0 && (type == Type.ftSignSeparateTrail || type == Type.ftSignSepTrailActualDecimal)) {
+            if (lRet > 0 && (pFormat.endsWith("+") || pFormat.endsWith("-"))) {
             	lRet -= 1;
             }
         }

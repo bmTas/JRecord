@@ -89,6 +89,7 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 	private CobolSchemaDetails cobolDtls = null;
 	
 	private List<Item> cobolItems = null;
+	private String rootRecord;
 	
 	
 	
@@ -171,7 +172,7 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 		return this;
 	}
 	
-	
+
 	/**
 	 * @see ICobolSchemaDetails#setTagFormat(int)
 	 */
@@ -182,6 +183,19 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 		return super.self;
 	}
 
+	/**
+	 * @return the rootRecordName
+	 */
+	public final String getRootRecord() {
+		return rootRecord;
+	}
+
+
+	public final T setRootRecord(String recordName) {
+		this.rootRecord = recordName;
+		
+		return super.self;
+	}
 
 
 	/**

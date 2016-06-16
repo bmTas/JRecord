@@ -448,7 +448,22 @@ public class Item implements IItem {
         return position;
     }
 
-    /**
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.schema.jaxb.IItem#getPosition(int[], int)
+	 */
+	@Override
+	public int getPosition(int[] indexs) {
+		int p = position;
+		if (indexs != null && arrayDefinition != null) {
+			for (int i = 0; i < indexs.length; i++) {
+				p += arrayDefinition.getArrayElementSize(i) * indexs[i];
+			}
+		}
+
+		return p;
+	}
+
+	/**
      * Sets the value of the position property.
      * 
      */

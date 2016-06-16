@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.XmlConstants;
@@ -320,5 +321,10 @@ public abstract class ListLine extends BaseLine {
 	@Override
 	public boolean isDefined(int rec, int pos) {
 		return fields != null && pos < fields.size() && fields.get(pos) != null;
+	}
+
+	@Override
+	public void setData(byte[] newVal) {
+		setData(Conversion.toString(newVal, layout.getFontName()));
 	}
 }

@@ -113,7 +113,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		
 		duplicateFieldNames = schema.getDuplicateFieldNames();
 		
-		update(items, 0, -1, new ArrayList<String>(45), false);
+		update(items, 0, new int[99], new int[99], new ArrayList<String>(45), false);
 		
 		if (schema.getRecordCount() < 2) {
 			recordMap = null;
@@ -125,7 +125,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		}
 	}
 	
-	private void update(List<Item> itemList, int indexs, int firstArraySize, ArrayList<String> levels, boolean redefined) {
+	private void update(List<Item> itemList, int indexs, int[] arraySizes, int[] elementSize, ArrayList<String> levels, boolean redefined) {
 		 
 		for (Item item : itemList) {
 			String name = item.getName();
@@ -135,6 +135,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 			int newIndexs = indexs;
 			String usage = item.getUsage();
 			boolean redef = redefined || isPresent(item.getRedefined())  || isPresent(item.getRedefines());
+			boolean hasOccurs = item.getOccurs() != null && item.getOccurs() > 0;
 			item.names = new ArrayList<String>(levels);
 			item.fieldRedefined = redef;
 			
@@ -151,12 +152,14 @@ public class UpdateSchemaItems implements ISchemaInformation {
 			item.nameToUse = updateName(name);
 
 			levels.add(item.fieldName);
-			if (item.getOccurs() != null && item.getOccurs() > 1) {
+			if (hasOccurs) {
+				arraySizes[indexs] = item.getOccurs();
+				elementSize[indexs] = item.getStorageLength();
 				newIndexs += 1;
 				//System.out.println(item.getName() + " " + newIndexs);
-				if (firstArraySize < 0) {
-					firstArraySize = item.getOccurs();
-				}
+//				if (firstArraySize < 0) {
+//					firstArraySize = item.getOccurs();
+//				}
 				
 				if (ucName != null && ucName.length() > 0) {
 					item.arrayValidation = arrayChecks.get(ucName);
@@ -164,7 +167,10 @@ public class UpdateSchemaItems implements ISchemaInformation {
 				arrayItems.put(item.nameToUse.toUpperCase(), item);
 			}
 			if (item.getChildItems().size() > 0) {
-				update(item.getChildItems(), newIndexs, firstArraySize, levels, redef);
+				if (hasOccurs) {
+					item.arrayDefinition = new ArrayFieldDefinition(null, ucName, item.getPosition(), newIndexs, arraySizes, elementSize);
+				}
+				update(item.getChildItems(), newIndexs, arraySizes, elementSize, levels, redef); 
 			} else if ("filler".equalsIgnoreCase(name)) {
 			} else if (newIndexs == 0) {
 				item.itemType = Item.TYPE_FIELD;
@@ -187,7 +193,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 					fields[i] = schema.getGroupField(levels.toArray(new String[levels.size()]));
 				}
 				
-				item.arrayDefinition = new ArrayFieldDefinition((RecordDetail)fields[0].getRecord(), firstArraySize, fields);
+				item.arrayDefinition = new ArrayFieldDefinition((RecordDetail)fields[0].getRecord(), arraySizes[0], fields);
 			}
 			levels.remove(levels.size() - 1);
 		}

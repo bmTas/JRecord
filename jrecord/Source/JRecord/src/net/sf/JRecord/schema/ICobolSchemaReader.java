@@ -97,12 +97,12 @@ public interface ICobolSchemaReader  extends  Icb2xmlLoadOptions  {
 	@Override public abstract ICobolSchemaReader setDropCopybookNameFromFields(boolean dropCopybookNameFromFields);
 
 	/**
-	 * Set The Format  of Xml
-	 * @param tagFormat How to format Cobol-names as Xml-Tags, valuies<ul>
-	 * <li><b>Cbl2XmlValues.RO_LEAVE_ASIS</b> (Default) Keep the Cobol variable name
-	 * <li><b>Cbl2XmlValues.RO_MINUS_TO_UNDERSCORE</b> Convert Minus (-) to underscore (_) in Cobol name.
+	 * Set The Format  of Output Tag
+	 * @param tagFormat How to reformat Cobol-names, valuies<ul>
+	 * <li><b>IReformatFieldNames.RO_LEAVE_ASIS</b> (Default) Keep the Cobol variable name
+	 * <li><b>IReformatFieldNames.RO_MINUS_TO_UNDERSCORE</b> Convert Minus (-) to underscore (_) in Cobol name.
 	 * Cobol-Var-Name ==&gt; Cobol_Var_Name
-	 * <li><b>Cbl2XmlValues.RO_CAMEL_CASE</b> Camel case conversion Cobol-Var-Name ==&gt; cobolVarName
+	 * <li><b>IReformatFieldNames.RO_CAMEL_CASE</b> Camel case conversion Cobol-Var-Name ==&gt; cobolVarName
 	 * </ul>
 	 * @return this 
 	 */

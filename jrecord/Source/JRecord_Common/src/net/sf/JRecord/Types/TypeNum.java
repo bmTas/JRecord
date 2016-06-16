@@ -436,12 +436,13 @@ public class TypeNum extends TypeChar {
 	                val = val.substring(1);
 	            }
 	            if (val.lastIndexOf('.') >= 0) {
-	            	val = new BigDecimal(val).toString();
+	            	//val = new BigDecimal(val).toString();
 	            	
 	            	val = val.substring(0, val.lastIndexOf('.'));
 	            }
 	            new BigInteger(val);
 	        } catch (final Exception ex) {
+	        	ex.printStackTrace();
 	            throw new RecordException(field.getName() + " Invalid Integer :" + val + ": ~ " + ex);
 	        }
 	    } else {

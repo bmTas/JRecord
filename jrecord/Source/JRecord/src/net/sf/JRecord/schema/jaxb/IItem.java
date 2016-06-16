@@ -135,6 +135,13 @@ public interface IItem {
 	public abstract int getPosition();
 
 	/**
+	 * Get position for array field
+	 * @param indexs
+	 * @return
+	 */
+	public abstract int getPosition(int[] indexs);
+
+	/**
 	 * Gets the value of the redefined property.
 	 * 
 	 * @return

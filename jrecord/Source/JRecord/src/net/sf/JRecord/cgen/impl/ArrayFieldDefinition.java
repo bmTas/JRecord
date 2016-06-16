@@ -32,6 +32,7 @@ import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.External.Def.DependingOnDtls;
+import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.cgen.def.IArray1Dimension;
 import net.sf.JRecord.cgen.def.IArray2Dimension;
 import net.sf.JRecord.cgen.def.IArray3Dimension;
@@ -54,7 +55,7 @@ public class ArrayFieldDefinition implements IArray1Dimension, IArray2Dimension,
 		sizeAdj[0] = fd[0].getPos() - firstField.getPos();
 		for (int i = 1; i < sizeAdj.length; i++) {
 			sizeAdj[i] = fd[i].getPos() - firstField.getPos();
-			lengths[0] = sizeAdj[i - 1] / sizeAdj[i];
+			lengths[i] = sizeAdj[i - 1] / sizeAdj[i];
 		}
 		
 
@@ -63,6 +64,18 @@ public class ArrayFieldDefinition implements IArray1Dimension, IArray2Dimension,
 			depOn = ((FieldDetail) firstField).getDependingOnDtls();
 		}
 		dependingOnDtls = depOn;
+	}
+	
+	public ArrayFieldDefinition(RecordDetail rec, String name, int pos, int size, int[] maxIdx, int[] elementSizes) {
+		this.record = rec;
+		sizeAdj = new int[size];
+		lengths = new int[size];
+		dependingOnDtls = null;
+		firstField = FieldDetail.newFixedWidthField(name + " (0)", Type.ftChar, pos, elementSizes[size - 1], 0, "");
+		for (int i = 0; i < size; i++) {
+			sizeAdj[i] = elementSizes[i];
+			lengths[i] = maxIdx[i];
+		}
 	}
 
 	/* (non-Javadoc)
@@ -96,12 +109,17 @@ public class ArrayFieldDefinition implements IArray1Dimension, IArray2Dimension,
 					+ (indexs == null? 0 : indexs.length));
 		}
 		int p = indexs[0] * sizeAdj[0] + firstField.getPos();
-		StringBuilder b = new StringBuilder(firstField.getName())
+		String name = firstField.getName();
+		int np = name.indexOf('(');
+		if (np > 0) {
+			name = name.substring(0, np-1);
+		}
+		StringBuilder b = new StringBuilder(name)
 								.append(" (")
-								.append(Integer.toString((indexs[0] + 1)));
+								.append(Integer.toString((indexs[0])));
 		for (int i = 1; i < sizeAdj.length; i++) {
 			p += indexs[i] * sizeAdj[i]; 
-			b.append(", ").append(Integer.toString((indexs[i] + 1)));
+			b.append(", ").append(Integer.toString((indexs[i])));
 		}
 		b.append(")");
 	
@@ -152,6 +170,11 @@ public class ArrayFieldDefinition implements IArray1Dimension, IArray2Dimension,
 		return lengths[indexNumber];
 	}
 
+	@Override
+	public int getArrayElementSize(int indexNumber) {
+		return sizeAdj[indexNumber];
+	}
+	
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.cgen.def.IArrayAnyDimension#getIndexCount()
 	 */

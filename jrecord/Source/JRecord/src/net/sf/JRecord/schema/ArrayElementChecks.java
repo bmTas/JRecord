@@ -52,22 +52,22 @@ public class ArrayElementChecks {
 	public static final ArrayElementChecks INSTANCE = new ArrayElementChecks();
 	
 
-	private final IArrayItemCheck checkForSpaces = new SpaceCheck(IArrayItemCheck.R_SKIP, false); 
-	private final IArrayItemCheck stopAtSpaces   = new SpaceCheck(IArrayItemCheck.R_STOP, false); 
+	private static final IArrayItemCheck checkForSpaces = new SpaceCheck(IArrayItemCheck.R_SKIP, false); 
+	private static final IArrayItemCheck stopAtSpaces   = new SpaceCheck(IArrayItemCheck.R_STOP, false); 
 	
-	private final IArrayItemCheck checkForSpacesZeros = new SpaceCheck(IArrayItemCheck.R_SKIP, true); 
-	private final IArrayItemCheck stopAtSpacesZeros   = new SpaceCheck(IArrayItemCheck.R_STOP, true); 
+	private static final IArrayItemCheck checkForSpacesZeros = new SpaceCheck(IArrayItemCheck.R_SKIP, true); 
+	private static final IArrayItemCheck stopAtSpacesZeros   = new SpaceCheck(IArrayItemCheck.R_STOP, true); 
 	
 	/**
 	 * Class to skip array item (if low values (Hex Zero's - x00))
 	 */
-	private final IArrayItemCheck checkForLowValues  = new Check4byte((byte) 0, IArrayItemCheck.R_SKIP);
-	private final IArrayItemCheck stopAtLowValues    = new Check4byte((byte) 0, IArrayItemCheck.R_STOP);
+	private static final IArrayItemCheck checkForLowValues  = new Check4byte((byte) 0, IArrayItemCheck.R_SKIP);
+	private static final IArrayItemCheck stopAtLowValues    = new Check4byte((byte) 0, IArrayItemCheck.R_STOP);
 	/**
 	 * Class to skip array item (if high values (0xFF))
 	 */
-	private final IArrayItemCheck checkForHighValues = new Check4byte((byte) 0xFF, IArrayItemCheck.R_SKIP);
-	private final IArrayItemCheck stopAtHighValues   = new Check4byte((byte) 0xFF, IArrayItemCheck.R_STOP);
+	private static final IArrayItemCheck checkForHighValues = new Check4byte((byte) 0xFF, IArrayItemCheck.R_SKIP);
+	private static final IArrayItemCheck stopAtHighValues   = new Check4byte((byte) 0xFF, IArrayItemCheck.R_STOP);
 	
 	/**
 	 * Create item to check an array index
@@ -168,7 +168,7 @@ public class ArrayElementChecks {
 		@Override
 		public int checkItem(AbstractLine line, IItem item, int[] indexs, int index) {
 			int length = item.getStorageLength();
-			int pos = item.getPosition() + length * index - 1;
+			int pos = item.getPosition(indexs) + length * index - 1;
 			if (line instanceof Line) {
 				byte[] bytes = ((Line) line).getData();
 				for (int i = 0; i < length; i++) {
@@ -197,7 +197,7 @@ public class ArrayElementChecks {
 			Integer occurs = item.getOccurs();
 			if (line instanceof Line && occurs != null && occurs > count) {
 				int length = item.getStorageLength();
-				int pos = item.getPosition() + length * count - 1;
+				int pos = item.getPosition(indexs) + length * count - 1;
 				int end  = (occurs - count) * length; 
 				byte[] bytes = ((Line) line).getData();
 				Arrays.fill(bytes, pos, pos + end, checkByte);
@@ -220,7 +220,12 @@ public class ArrayElementChecks {
 		@Override
 		public int checkItem(AbstractLine line, IItem item, int[] indexs, int index) {
 			int length = item.getStorageLength();
-			int pos = item.getPosition() + length * index - 1;
+			int pos = item.getPosition(indexs) + length * index - 1;
+			int[] xxx = new int[indexs.length + 1];
+			System.arraycopy(indexs, 0, xxx, 0, indexs.length);
+			xxx[indexs.length] = index;
+			
+//			System.out.println("~~ " + indexs.length + " ~ " + item.getPosition(xxx) + " " + item.getPosition(indexs) + " " + (length * index - 1));
 			if (line instanceof Line) {
 				byte[] bytes = ((Line) line).getData();
 				byte spaceByte = line.getLayout().getSpaceByte();
@@ -230,6 +235,7 @@ public class ArrayElementChecks {
 					|| (checkZero && bytes[pos + i] == zeroByte)) {
 						
 					} else {
+//						System.out.println("+++ > " + i + ">" + line.getFullLine().substring(pos, pos + length) + "<");
 						return IArrayItemCheck.R_PROCESS;
 					}
 				}
@@ -267,7 +273,7 @@ public class ArrayElementChecks {
 			if (occurs == null || occurs <= count) {
 			} else {
 				int length = item.getStorageLength();
-				int pos = item.getPosition() + length * count - 1;
+				int pos = item.getPosition(indexs) + length * count - 1;
 				int end  = (occurs - count) * length; 
 				if (line instanceof Line && occurs != null && occurs > count) {		
 					byte spaceByte = line.getLayout().getSpaceByte();

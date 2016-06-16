@@ -31,8 +31,6 @@ package net.sf.JRecord.Details;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-import net.sf.JRecord.Common.Conversion;
-
 public class CsvLine extends ListLine {
 
 
@@ -77,10 +75,6 @@ public class CsvLine extends ListLine {
 				.getParser()
 				.formatFieldList(
 						fields, record, record.getFieldTypes());
-	}
-	
-	public void setData(byte[] newVal) {
-		setData(Conversion.toString(newVal, layout.getFontName()));
 	}
 	
 	@Override

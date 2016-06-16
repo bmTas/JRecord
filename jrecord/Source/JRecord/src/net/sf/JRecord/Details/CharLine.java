@@ -186,6 +186,12 @@ public class CharLine extends BasicLine implements AbstractLine {
 	public void replace(byte[] rec, int start, int len) {
 
 	}
+	
+	@Override
+	public void setData(byte[] newVal) {
+		setData(Conversion.toString(newVal, layout.getFontName()));
+	}
+
 
 	@Override
 	public void setData(String newVal) {

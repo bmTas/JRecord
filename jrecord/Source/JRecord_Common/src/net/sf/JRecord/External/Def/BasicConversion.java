@@ -25,6 +25,7 @@
       
 package net.sf.JRecord.External.Def;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import net.sf.JRecord.Common.Constants;
@@ -41,6 +42,7 @@ public class BasicConversion implements AbstractConversion {
 	private static String[] names = new String [30] ;
     private static String[] externalNames = new String [30] ;
     private static int[] keys = new int[40];
+    private static int[] keysIdx = new int[200];
 
     static {
        int i = 0; 
@@ -82,9 +84,18 @@ public class BasicConversion implements AbstractConversion {
         keys[i] = Constants.IO_XML_BUILD_LAYOUT;       externalNames[i] = "XML_Build_Layout";       names[i++] = "XML - Build Layout";
         keys[i] = Constants.IO_CONTINOUS_NO_LINE_MARKER;       externalNames[i] = "Continuous";  		    names[i++] = "Continuous no eol marker";
         keys[i] = Constants.IO_VBS;                    externalNames[i] = "Mainframe_VBS";            names[i++] = "Variable Block Spanned (VBS)";
-       keys[i] = Constants.NULL_INTEGER;              externalNames[i] = null;                     names[i] = null;
+        keys[i] = Constants.NULL_INTEGER;              externalNames[i] = null;                     names[i] = null;
         
         numberOfEntries = i;
+        
+        Arrays.fill(keysIdx, -1);
+        
+        for (int j = 0; j < numberOfEntries; j++) {
+        	int idx = keys[j];
+        	if (idx >= 0 && keysIdx[idx] < 0) {
+        		keysIdx[idx] = j;
+        	}
+        }
     }
     
 	private String[] typeNames ;
@@ -305,9 +316,15 @@ public class BasicConversion implements AbstractConversion {
 	 * @see net.sf.JRecord.IO.AbstractLineIOProvider#getStructureName(int)
 	 */
     public static String getStructureName(int fileStructure) {
-    	for (int i = 0; i < keys.length && keys[i] != Constants.NULL_INTEGER; i++) {
-    		if (keys[i] == fileStructure) {
-    			return externalNames[i];
+//    	for (int i = 0; i < keys.length && keys[i] != Constants.NULL_INTEGER; i++) {
+//    		if (keys[i] == fileStructure) {
+//    			return externalNames[i];
+//    		}
+//    	}
+    	if (fileStructure >= 0 && fileStructure < keysIdx.length ) {
+    		int idx = keysIdx[fileStructure];
+    		if (idx >= 0) {
+    			return externalNames[idx];
     		}
     	}
     	return "";

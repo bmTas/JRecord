@@ -137,6 +137,11 @@ public interface AbstractLine extends AbstractIndexedLine {
      * @param newVal new value for the line
      */
     public abstract void setData(String newVal);
+    /**
+     * Set the line value to the supplied byte array
+     * @param newVal new value for the line
+     */
+    public abstract void setData(byte[] newVal);
 
     /**
      * Set the record Layout - Description of the Line

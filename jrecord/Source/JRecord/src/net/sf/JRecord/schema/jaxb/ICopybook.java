@@ -54,7 +54,7 @@ public interface ICopybook {
 	 * 
 	 * 
 	 */
-	public abstract List<Item> getCobolItems();
+	public abstract List<? extends IItem> getCobolItems();
 
 	/**
 	 * Gets the value of the filename property.

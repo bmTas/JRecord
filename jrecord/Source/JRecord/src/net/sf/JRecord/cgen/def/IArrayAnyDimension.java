@@ -48,6 +48,13 @@ public interface IArrayAnyDimension {
 	 * @return maximum number of items allowed for the specified index
 	 */
 	public abstract int getArrayLength(int indexNumber);
+
+	/**
+	 * 
+	 * @param indexNumber Index number
+	 * @return size of array element for this index
+	 */
+	public abstract int getArrayElementSize(int indexNumber);
 	
 	/**
 	 * Get the number of Array index's
