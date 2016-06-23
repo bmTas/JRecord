@@ -429,7 +429,7 @@ public class TypeNum extends TypeChar {
 		}
 	    int decimal = field.getDecimal();
 	    
-		if (decimal == 0 && couldBeLong) {
+		if (decimal == 0 && couldBeLong && (val.indexOf('e') < 0 && val.indexOf('E') < 0 )) {
 	        try {
 	            val = val.trim();
 	            if (val.startsWith("+")) {

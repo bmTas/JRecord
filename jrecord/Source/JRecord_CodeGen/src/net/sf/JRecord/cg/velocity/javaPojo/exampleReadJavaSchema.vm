@@ -5,20 +5,21 @@ package ${generateOptions.packageId}.example;
 ##   Author: Bruce Martin
 ##
 #incl("schema/CommentExample.pvm")
-#macro (printFields)
-#*  *##set( $sep = "        ")    
-#*  *##foreach($f in ${r.getFields(11)})
-#*      *##if (! ${f.isArrayItem()})
-                      ${sep}line.get${f.extensionName}()
-#*            *##set( $sep = '+ " " + ')    
-#*      *##end
-#*  *##end
-#*  *##foreach($a in ${r.getArrayDetailsList()}) 
-#*      *##if (! ${f.isArrayItem()})	
-                      ${sep}line.get${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()})
-#*      *##end
-#*  *##end
-#end	
+#incl("$std.schema/CommonMacros.vm")
+###macro (printFieldsJavaPojo)
+###*  *##set( $sep = "        ")    
+###*  *##foreach($f in ${r.getFields(11)})
+###*      *##if (! ${f.isArrayItem()})
+##                      ${sep}line.get${f.extensionName}()
+###*            *##set( $sep = '+ " " + ')    
+###*      *##end
+###*  *##end
+###*  *##foreach($a in ${r.getArrayDetailsList()}) 
+###*      *##if (! ${f.isArrayItem()})	
+##                      ${sep}line.get${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()})
+###*      *##end
+###*  *##end
+###end	
 
 import net.sf.JRecord.cgen.def.IReader;
 
@@ -64,7 +65,7 @@ public final class ReadJavaSchema${generateOptions.schemaDefinition.extensionNam
             while ((line = reader.read()) != null) {
                 lineNum += 1;
                 System.out.println(
-#*          *##printFields()  
+#*          *##printFieldsJavaPojo()  
                    );
             }
 
@@ -74,7 +75,7 @@ public final class ReadJavaSchema${generateOptions.schemaDefinition.extensionNam
             System.out.println();
 
             e.printStackTrace();
-        }
+        }                                        
     }
     
     public void pojoArrayReader() {
@@ -86,14 +87,14 @@ public final class ReadJavaSchema${generateOptions.schemaDefinition.extensionNam
         System.out.println(" ------ Reading via POJO ------");
         System.out.println();
 
-        try {
+        try {                                                                
             IOBuilder${generateOptions.schemaDefinition.extensionName} ioBldr = new IOBuilder${generateOptions.schemaDefinition.extensionName}();
             IReader<Line${r.extensionName}Pojo> reader = ioBldr.newPojoReader(salesFile);  
 
             while ((line = reader.read()) != null) {
                 lineNum += 1;
                 System.out.println(
-#*          *##printFields()  
+#*          *##printFieldsJavaPojo()  
                    );
             }
 

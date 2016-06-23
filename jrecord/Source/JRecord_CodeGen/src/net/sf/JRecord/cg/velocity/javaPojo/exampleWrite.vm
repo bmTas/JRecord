@@ -28,7 +28,7 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
 
     private String testDir        = "G:/temp/";
     private String salesFileOut   = testDir + "DTAR020out.bin";
-    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName}";                                       
+    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName.getJavaFileName()}";                                       
     
     /**
      * Example of LineReader  classes

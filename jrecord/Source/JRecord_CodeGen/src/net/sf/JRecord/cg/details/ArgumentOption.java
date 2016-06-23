@@ -27,21 +27,26 @@ package net.sf.JRecord.cg.details;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.External.CopybookLoader;
+import net.sf.JRecord.External.Def.BasicConversion;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 
 public class ArgumentOption {
-	public static final String OPT_SCHEMA = "-Schema";
+	public static final ArgumentOption MAINFRAME_DIALECT = new ArgumentOption("Mainframe",      "ICopybookDialects.FMT_MAINFRAME",     "Mainframe Cobol", ICopybookDialects.FMT_MAINFRAME);
+	public static final String OPT_SCHEMA   = "-Schema";
 	public static final String OPT_TEMPLATE_DIRECTORY = "-TemplateDirectory";
 	public static final String OPT_TEMPLATE = "-Template";
-	public static final String OPT_SPLIT = "-split";
+	public static final String OPT_SPLIT    = "-split";
 	public static final String OPT_GENERATE = "-Generate";
+	public static final String OPT_DIALECT  = "-Dialect";
 	public static final String OPT_FILE_ORGANISATION = "-FileOrganisation";
 	public static final String OPT_LOAD_SCHEMA = "-loadSchema";
-	public static final String OPT_PACKAGE = "-package";
+	public static final String OPT_PACKAGE  = "-package";
 	
 	public static final String OPT_DROP_COPYBOOK_NAME = "-DropCopybookName";
 	public static final String OPT_FONT_NAME = "-font";
 	
 	public static final String OPT_OUTPUT_DIR = "-outputDirectory";
+	public static final String OPT_RECSEL  = "-recordSelection";
 
 	
 	public static final String JAVA_POJO_TEMPLATE = "javaPojo";
@@ -70,26 +75,49 @@ public class ArgumentOption {
 	};
 
 	public static final ArgumentOption[] FILE_ORGANISATION_OPTS = {
-		new ArgumentOption("Text",         "Constants.IO_BIN_TEXT",     "Standard Windows/Unix text file (single byte characterset)", Constants.IO_BIN_TEXT),
-		new ArgumentOption("FixedWidth",   "Constants.IO_FIXED_LENGTH", "File where lines (records) are the same length no \\n", Constants.IO_FIXED_LENGTH),
-		new ArgumentOption("Mainframe_VB", "Constants.IO_VB",           "Mainframe VB, file consists of <record-length><record-data>", Constants.IO_VB)};
+		newFileStructureOpt("Text",         "Constants.IO_BIN_TEXT",     "Standard Windows/Unix text file (single byte characterset)", 	Constants.IO_BIN_TEXT),
+		newFileStructureOpt("FixedWidth",   "Constants.IO_FIXED_LENGTH", "File where lines (records) are the same length no \\n", Constants.IO_FIXED_LENGTH),
+		newFileStructureOpt("Mainframe_VB", "Constants.IO_VB",           "Mainframe VB, file consists of <record-length><record-data>", Constants.IO_VB),
+	    newFileStructureOpt("GNU_COBOL_VB", "Constants.IO_VB_GNU_COBOL", "Gnu Cobol VB, file consists of <record-length><record-data>", Constants.IO_VB_GNU_COBOL)};
 
-	
-	public final String option, code, description;
+	public static final ArgumentOption[] DIALECT_OPTS = {
+		MAINFRAME_DIALECT,
+		new ArgumentOption("Fujitsu",        "ICopybookDialects.FMT_FUJITSU",       "Fujitsu Cobol",   ICopybookDialects.FMT_FUJITSU),
+		new ArgumentOption("GNU",            "ICopybookDialects.FMT_GNU_COBOL",     "Gnu Cobol",       ICopybookDialects.FMT_GNU_COBOL),
+		new ArgumentOption("GNU_Microfocus", "ICopybookDialects.FMT_GNU_COBOL_MF",  "Gnu Cobol (Micro Focus mode)", ICopybookDialects.FMT_GNU_COBOL_MF),
+		new ArgumentOption("GNU_FS2000",     "ICopybookDialects.FMT_FS2000",        "Gnu Cobol (FS2000 mode)", ICopybookDialects.FMT_FS2000),
+	};
+	public final String option, code, utlCode, description, cbl2csvCode;
 	public final int id;
+	
 	
 	public static ArgumentOption stdTemplateArg(String option, String description) {
 		return new ArgumentOption(option, option, description, 0);
+	}
+	
+	public static ArgumentOption newFileStructureOpt(String option, String code, String description, int id) {
+		return new ArgumentOption(option, code, description, id, BasicConversion.getStructureName(id));
 	}
 	public ArgumentOption(String option, String code, String description) {
 		this(option, code, description, 0);
 	}
 	public ArgumentOption(String option, String code, String description, int id) {
+		this(option, code, description, id, "");
+	}
+	public ArgumentOption(String option, String code, String description, int id, String cbl2csvCode) {
 		super();
 		this.option = option;
 		this.code = code;
 		this.description = description;
 		this.id = id;
+		this.cbl2csvCode = cbl2csvCode;
+		
+		String u = code;
+		int idx;
+		if (u != null && (idx = u.indexOf('.')) >= 0) {
+			u = u.substring(idx + 1);
+		}
+		utlCode = u;
 	}
 	
 	/**
@@ -107,6 +135,12 @@ public class ArgumentOption {
 	}
 	
 	/**
+	 * @return the utlCode
+	 */
+	public final String getUtlCode() {
+		return utlCode;
+	}
+	/**
 	 * @return the description
 	 */
 	public final String getDescription() {
@@ -118,6 +152,12 @@ public class ArgumentOption {
 	 */
 	public final int getId() {
 		return id;
+	}
+	/**
+	 * @return the cbl2csvCode
+	 */
+	public final String getCbl2csvCode() {
+		return cbl2csvCode;
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

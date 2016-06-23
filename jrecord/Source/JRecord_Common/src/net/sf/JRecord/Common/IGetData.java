@@ -31,5 +31,8 @@ package net.sf.JRecord.Common;
  *
  */
 public interface IGetData {
+	/**
+	 * @return Returns the record (line) as an array of bytes.
+	 */
 	public abstract byte[] getData();
 }

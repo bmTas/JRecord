@@ -32,12 +32,13 @@ public class ParseArgs extends ParseArguments   {
 	private static final String[] SINGLE_ARGS = {
 		ArgumentOption.OPT_SCHEMA, ArgumentOption.OPT_PACKAGE, ArgumentOption.OPT_TEMPLATE, 
 		ArgumentOption.OPT_TEMPLATE_DIRECTORY,
+		ArgumentOption.OPT_DIALECT,
 		ArgumentOption.OPT_FILE_ORGANISATION,
 		ArgumentOption.OPT_LOAD_SCHEMA, "-h", "-?", "-help", ArgumentOption.OPT_SPLIT,
 		ArgumentOption.OPT_FONT_NAME, ArgumentOption.OPT_DROP_COPYBOOK_NAME, ArgumentOption.OPT_OUTPUT_DIR
 	};
 	private static final String[] MULTI_ARGS = {
-		ArgumentOption.OPT_GENERATE
+		ArgumentOption.OPT_RECSEL, ArgumentOption.OPT_GENERATE
 	};
 	
 	public ParseArgs(String... args) {

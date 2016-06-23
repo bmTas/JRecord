@@ -1,0 +1,43 @@
+#macro (printFieldsFieldNameClass)
+#*  *##set( $sep = "        ")    
+#*  *##foreach($f in ${r.getFields(11)})
+#*      *##if (! ${f.isArrayItem()})
+                      ${sep}line.getFieldValue(r${r.extensionName}.${f.javaName}).asString()
+#*            *##set( $sep = '+ " " + ')    
+#*      *##end
+#*  *##end
+#*  *##foreach($a in ${r.getArrayDetailsList()}) 
+#*      *##if (! ${f.isArrayItem()})	
+                      ${sep}line.getFieldValue(r${r.extensionName}.${a.getFirstElement().javaName}.get(${a.getZeroArrayIndex()})).asString()
+#*      *##end
+#*  *##end
+#end
+#macro (printFieldsJavaPojo)
+#*  *##set( $sep = "        ")    
+#*  *##foreach($f in ${r.getFields(11)})
+#*      *##if (! ${f.isArrayItem()})
+                      ${sep}line.get${f.extensionName}()
+#*            *##set( $sep = '+ " " + ')    
+#*      *##end
+#*  *##end
+#*  *##foreach($a in ${r.getArrayDetailsList()}) 
+#*      *##if (! ${f.isArrayItem()})	
+                      ${sep}line.get${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()})
+#*      *##end
+#*  *##end
+#end
+#macro (printFieldsWrapper)
+#*  *##set( $sep = "        ")    
+#*  *##foreach($f in ${r.getFields(11)})
+#*      *##if (! ${f.isArrayItem()})     
+                      ${sep}line${r.extensionName}JR.get${f.extensionName}() 
+#*            *##set( $sep = '+ " " + ')    
+#*      *##end
+#*  *##end
+#*  *##foreach($a in ${r.getArrayDetailsList()}) 
+#*      *##if (! ${f.isArrayItem()})
+                      ${sep}line${r.extensionName}JR.get${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()})
+#*      *##end
+#*  *##end
+#end	
+	

@@ -14,13 +14,13 @@ import ${imp};
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.IGetByteData;
 import net.sf.JRecord.Details.Line;
-#*  *##if (${generateOptions.getTemplateDtls().getTemplateDtls().getGenerateOption("genpojo")})
+#*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("genpojo")})
 import net.sf.JRecord.cgen.def.IAsPojo;
 	
 import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
 import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;  
 
-## // genpojo : ${generateOptions.getTemplateDtls().getTemplateDtls().getGenerateOption("genpojo")}
+## // genpojo : ${generateOptions.getTemplateDtls().getGenerateOption("genpojo")}
 public class Line${currentRecord.extensionName}JR 
 implements I${currentRecord.extensionName}Pojo, IGetByteData, IAsPojo<Line${currentRecord.extensionName}Pojo> {
 #*  *##else
@@ -29,7 +29,7 @@ public class Line${currentRecord.extensionName}JR implements IGetByteData {
     
     private AbstractLine line; 
 
-    private FieldNames${generateOptions.schemaDefinition.extensionName}.Record${currentRecord.extensionName} fn
+    private static FieldNames${generateOptions.schemaDefinition.extensionName}.Record${currentRecord.extensionName} fn
                    = FieldNames${generateOptions.schemaDefinition.extensionName}.RECORD_${currentRecord.constantName};
 
 #*  *##foreach($a in ${currentRecord.getArraySameSize()}) 
@@ -39,7 +39,7 @@ public class Line${currentRecord.extensionName}JR implements IGetByteData {
 
 #*  *##foreach($f in ${currentRecord.getFields()}) 
 #*      *##if (! ${f.isArrayItem()})
-#*          *##if (${generateOptions.getTemplateDtls().getTemplateDtls().getGenerateOption("genpojo")})	
+#*          *##if (${generateOptions.getTemplateDtls().getGenerateOption("genpojo")})	
     @Override
 #*          *##end
     public ${f.getJavaType()} get${f.extensionName}() {
@@ -50,7 +50,7 @@ public class Line${currentRecord.extensionName}JR implements IGetByteData {
 #*          *##end
     }
     
-#*          *##if (${generateOptions.getTemplateDtls().getTemplateDtls().getGenerateOption("genpojo")})	
+#*          *##if (${generateOptions.getTemplateDtls().getGenerateOption("genpojo")})	
     @Override
 #*          *##end
     public void set${f.extensionName}(${f.getJavaType()} value) {
@@ -61,7 +61,7 @@ public class Line${currentRecord.extensionName}JR implements IGetByteData {
 #*  *##end
 
 #*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
-#*      *##if (${generateOptions.getTemplateDtls().getTemplateDtls().getGenerateOption("genpojo")})	
+#*      *##if (${generateOptions.getTemplateDtls().getGenerateOption("genpojo")})	
     @Override
 #*      *##end
     public ${a.getFirstFieldDef().getJavaType()}  get${a.getFirstElement().extensionName}(${a.getIndexParameters()}) {
@@ -73,7 +73,7 @@ public class Line${currentRecord.extensionName}JR implements IGetByteData {
     }
     
     
-#*      *##if (${generateOptions.getTemplateDtls().getTemplateDtls().getGenerateOption("genpojo")})	
+#*      *##if (${generateOptions.getTemplateDtls().getGenerateOption("genpojo")})	
     @Override
 #*      *##end
     public void set${a.getFirstElement().extensionName}(${a.getIndexParameters()}, ${a.getFirstFieldDef().getJavaType()} value) {
@@ -108,7 +108,11 @@ public class Line${currentRecord.extensionName}JR implements IGetByteData {
     	line = l;
     	return this;
     }
-#*  *##if (${generateOptions.getTemplateDtls().getTemplateDtls().getGenerateOption("genpojo")})	
+    
+    public AbstractLine getLine() {
+        return line;
+    }
+#*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("genpojo")})	
     
     public Line${currentRecord.extensionName}Pojo asPojo() {
         Line${currentRecord.extensionName}Pojo l = new Line${currentRecord.extensionName}Pojo();

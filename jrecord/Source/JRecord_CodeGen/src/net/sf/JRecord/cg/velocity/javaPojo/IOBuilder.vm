@@ -2,7 +2,7 @@ package ${generateOptions.packageId}.io;
 #incl("schema/CommentSchema.pvm")
 #macro(schemaDef)
                     .setSplitCopybook(${generateOptions.getSplitOption().getCode()})
-                    .setFileOrganization(${generateOptions.getIo().getCode()})
+                    .setFileOrganization(${generateOptions.getFileStructureCode().getCode()})
                     .setDropCopybookNameFromFields(${generateOptions.isDropCopybookName()})
                     .setFont("${generateOptions.getFont()}");
 #end
@@ -45,7 +45,7 @@ public class IOBuilder${generateOptions.schemaDefinition.extensionName} {
         bldr = JRecordInterface1.COBOL.newIOBuilder(copybookFileName)
 #schemaDef
 ##                    .setSplitCopybook(${generateOptions.getSplitOption()})
-##                    .setFileOrganization(${generateOptions.getIo()})
+##                    .setFileOrganization(${generateOptions.getFileStructureCode()})
 ##                    .setFont(${generateOptions.getFont()});
         schema${generateOptions.schemaDefinition.extensionName} = new Schema${generateOptions.schemaDefinition.extensionName}(bldr.getLayout());
     }

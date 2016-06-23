@@ -208,7 +208,7 @@ public class TstTypesSetValues extends TestCase {
 			bb = t.setField(bytes, 1, fldDef, numValues[j][0]);
 					
 			v = t.getField(bb, 1, fldDef);
-			assertEquals(id + numValues[j][0] + " " + decimalPlaces + ", " + j, numValues[j][decimalPlaces+1], v.toString());
+			assertEquals(id + ":" + j + " " + numValues[j][0] + " " + decimalPlaces + ", " + j, numValues[j][decimalPlaces+1], v.toString());
 			
 			if (t instanceof TypeNum && ! ((TypeNum) t).isPositive()) {
 				//TODO: Here

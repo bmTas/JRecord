@@ -34,7 +34,7 @@
  *
  * ------------------------------------------------------------------------ */
 
-package net.sf.JRecord.schema.jaxb;
+package net.sf.JRecord.schema.jaxb; 
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +70,10 @@ import net.sf.JRecord.schema.IArrayItemCheck;
  *       &lt;attribute name="assumed-digits" type="{http://www.w3.org/2001/XMLSchema}int" />
  *       &lt;attribute name="depending-on" type="{http://www.w3.org/2001/XMLSchema}token" />
  *       &lt;attribute name="display-length" use="required" type="{http://www.w3.org/2001/XMLSchema}int" />
+ *       &lt;attribute name="editted-numeric" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+ *       &lt;attribute name="inherited-usage" type="{http://www.w3.org/2001/XMLSchema}boolean" />
  *       &lt;attribute name="insert-decimal-point" type="{http://www.w3.org/2001/XMLSchema}boolean" />
+ *       &lt;attribute name="justified" type="{http://www.w3.org/2001/XMLSchema}token" />
  *       &lt;attribute name="level" use="required" type="{http://www.w3.org/2001/XMLSchema}token" />
  *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}anySimpleType" />
  *       &lt;attribute name="numeric" type="{http://www.w3.org/2001/XMLSchema}boolean" />
@@ -150,8 +153,16 @@ public class Item implements IItem {
     protected String dependingOn;
     @XmlAttribute(name = "display-length", required = true)
     protected int displayLength;
+    @XmlAttribute(name = "editted-numeric")
+    protected Boolean edittedNumeric;
+    @XmlAttribute(name = "inherited-usage")
+    protected Boolean inheritedUsage;
     @XmlAttribute(name = "insert-decimal-point")
     protected Boolean insertDecimalPoint;
+    @XmlAttribute(name = "justified")
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "token")
+    protected String justified;
     @XmlAttribute(name = "level", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     @XmlSchemaType(name = "token")
@@ -297,6 +308,18 @@ public class Item implements IItem {
     }
 
     /**
+     * Gets the value of the edittedNumeric property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isEdittedNumeric() {
+        return edittedNumeric;
+    }
+    
+    /**
      * Gets the value of the insertDecimalPoint property.
      * 
      * @return
@@ -318,6 +341,18 @@ public class Item implements IItem {
      */
     public void setInsertDecimalPoint(Boolean value) {
         this.insertDecimalPoint = value;
+    }
+
+    /**
+     * Gets the value of the justified property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getJustified() {
+        return justified;
     }
 
     /* (non-Javadoc)

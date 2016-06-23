@@ -26,20 +26,24 @@
 package net.sf.JRecord.cg.details;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
-import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
+import net.sf.JRecord.cg.schema.CodeGenFileName;
 import net.sf.JRecord.cg.schema.LayoutDef;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.def.IO.builders.IIOBuilder;
 import net.sf.JRecord.utilityClasses.ParseArguments;
 
 public class GenerateOptions implements IGenerateOptions {
 //	private static final String JAVA_POJO_TEMPLATE = "javaPojo";
-
+	private static final CodeGenFileName EMPTY_FILE_NAME = new CodeGenFileName("");
+	
 	private static final ArgumentOption DEFAULT_FILE_ORG = new ArgumentOption("Constants.IO_*", "Constants.IO_*", "", Constants.IO_DEFAULT);
 
 	private static final ArgumentOption[] TEMPLATE_OPTIONS = ArgumentOption.TEMPLATE_OPTIONS;
@@ -60,7 +64,7 @@ public class GenerateOptions implements IGenerateOptions {
 	private final String packageId, packageDir, font, outputDir;
 	
 //	private final Map<String, String> generateOptions = new HashMap<String, String>(10);
-	private final ArgumentOption io, splitOption;
+	private final ArgumentOption io, splitOption, dialect;
 	private final LayoutDef schemaDefinition;
 	
 	private final boolean dropCopybookName;
@@ -72,6 +76,7 @@ public class GenerateOptions implements IGenerateOptions {
 	public GenerateOptions(ParseArguments pa) {
 		List<String> generateOpts = pa.getArgList(ArgumentOption.OPT_GENERATE);
 		String splitVal = pa.getArg(ArgumentOption.OPT_SPLIT);
+		String dialectVal = pa.getArg(ArgumentOption.OPT_DIALECT);
 		String dropVal = pa.getArg(ArgumentOption.OPT_DROP_COPYBOOK_NAME, "");
 				
 		String schemaName   = required(pa, ArgumentOption.OPT_SCHEMA);
@@ -117,11 +122,26 @@ public class GenerateOptions implements IGenerateOptions {
 		checkFor(pa, ArgumentOption.OPT_LOAD_SCHEMA, true, false,  LOAD_SCHEMA_OPTS);
 		io = decodeAsOpt(pa, ArgumentOption.OPT_FILE_ORGANISATION, true, DEFAULT_FILE_ORG, FILE_ORGANISATION_OPTS);
 		splitOption = decodeAsOpt(splitVal, ArgumentOption.OPT_SPLIT, false, SPLIT_OPTS[0], SPLIT_OPTS);
+		dialect = decodeAsOpt(dialectVal, ArgumentOption.OPT_DIALECT, false, ArgumentOption.MAINFRAME_DIALECT, ArgumentOption.DIALECT_OPTS);
 		
 		dropCopybookName = dropVal != null && dropVal.toLowerCase().startsWith("t");
 		font = pa.getArg(ArgumentOption.OPT_FONT_NAME, "");
 		outputDir = pa.getArg(ArgumentOption.OPT_OUTPUT_DIR, ".");
 		
+		List<RecordSelect> recordSelect = new ArrayList<RecordSelect>(10);
+
+		List<String> recSelList = pa.getArgList(ArgumentOption.OPT_RECSEL);
+		if (recSelList != null && recSelList.size() > 0) {
+			RecordSelect recSel;
+
+			for (String s : recSelList) {
+				recordSelect.add((recSel = new RecordSelect(s)));
+				if (! recSel.ok()) {
+					System.out.println("Invalid Record Selection=" + s);
+				}
+			}
+		}
+
 		if (generateOpts != null) {
 			for (String s : generateOpts) {
 				String key = s;
@@ -146,12 +166,17 @@ public class GenerateOptions implements IGenerateOptions {
 			if (xmlSchema) {
 				ioBldr = JRecordInterface1.SCHEMA_XML.newIOBuilder(schemaName);
 			} else {
-				ioBldr = JRecordInterface1.COBOL.newIOBuilder(schemaName)
-						.setDialect(ICopybookDialects.FMT_MAINFRAME)
+				ICobolIOBuilder cblIbBldr= JRecordInterface1.COBOL.newIOBuilder(schemaName)
+						.setDialect(dialect.id)
 						.setSplitCopybook(splitOption.id)
 						.setFileOrganization(io.id)
 						.setDropCopybookNameFromFields(dropCopybookName)
 						.setFont(font);
+				for (RecordSelect rs : recordSelect) {
+					cblIbBldr.setRecordSelection(rs.recordName, newFieldSelection(rs.fieldName, "=", rs.value));
+				}
+
+				ioBldr = cblIbBldr;
 			}
 			try {
 				t = new LayoutDef(ioBldr.getLayout(), schemaName);
@@ -320,12 +345,15 @@ public class GenerateOptions implements IGenerateOptions {
 		System.out.println(" -------------------------------------------------------");
 		System.out.println("Program Options:");
 		System.out.println();
+		System.out.println("    " + ArgumentOption.OPT_TEMPLATE_DIRECTORY + ":\tDirectory for user written Templates");
 		System.out.println("    -Template:\tWhich template to generate");
 		printList(TEMPLATE_OPTIONS);
 		System.out.println("    -Schema:\tCobol copybook/Xml schema to generate code for");
 		System.out.println("    " + ArgumentOption.OPT_PACKAGE + ":\tJava Package Id");
 		System.out.println("    " + ArgumentOption.OPT_LOAD_SCHEMA + ":\tWether to generate a Schema (LayoutDetail) class or not");
 		printList(LOAD_SCHEMA_OPTS);
+		System.out.println("    " + ArgumentOption.OPT_DIALECT + ":\tCobol Dialect ???");
+		printList(ArgumentOption.DIALECT_OPTS);
 		System.out.println("    " + ArgumentOption.OPT_FILE_ORGANISATION + ":\tWhat sort of file will be read ???");
 		printList(FILE_ORGANISATION_OPTS);
 		System.out.println("    " + ArgumentOption.OPT_SPLIT + ":\tHow to split the copybook up");
@@ -333,7 +361,7 @@ public class GenerateOptions implements IGenerateOptions {
 		System.out.println("    " + ArgumentOption.OPT_FONT_NAME + ":\tFont (characterset name");
 		System.out.println("    " + ArgumentOption.OPT_DROP_COPYBOOK_NAME + ":\tWhether to Drop the copybook name from the start of field names");
 		System.out.println("    " + ArgumentOption.OPT_LOAD_SCHEMA + ":\tWether to generate a Schema (LayoutDetail) class or not");
-		printList(LOAD_SCHEMA_OPTS);
+//		printList(LOAD_SCHEMA_OPTS);
 //		System.out.println("    " + OPT_GENERATE + ":\tWhich skeltons to generate, for template=javaPojo:");
 //		printList(GENERATE_OPTS);
 		System.out.println("    " + ArgumentOption.OPT_OUTPUT_DIR + ":\tOutput directory");
@@ -354,6 +382,14 @@ public class GenerateOptions implements IGenerateOptions {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getDataFileName()
+	 */
+	@Override
+	public CodeGenFileName getDataFileName() {
+		return EMPTY_FILE_NAME;
+	}
+
 	@Override
 	public final TemplateDtls getTemplateDtls() {
 		return templateDtls;
@@ -382,7 +418,8 @@ public class GenerateOptions implements IGenerateOptions {
 	public final String getFont() {
 		return font;
 	}
-
+	
+	
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getOutputDir()
 	 */
@@ -396,7 +433,7 @@ public class GenerateOptions implements IGenerateOptions {
 	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getIo()
 	 */
 	@Override
-	public final ArgumentOption getIo() {
+	public final ArgumentOption getFileStructureCode() {
 		return io;
 	}
 
@@ -406,6 +443,14 @@ public class GenerateOptions implements IGenerateOptions {
 	@Override
 	public final ArgumentOption getSplitOption() {
 		return splitOption;
+	}
+
+	/**
+	 * @return the dialect
+	 */
+	@Override
+	public final ArgumentOption getDialect() {
+		return dialect;
 	}
 
 	/* (non-Javadoc)
@@ -423,4 +468,28 @@ public class GenerateOptions implements IGenerateOptions {
 	public final boolean isDropCopybookName() {
 		return dropCopybookName;
 	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getConstantValues()
+	 */
+	@Override
+	public ConstantVals getConstantValues() {
+		return ConstantVals.CONSTANT_VALUES;
+	}
+	
+    
+    public static ExternalFieldSelection newFieldSelection(String fieldName, String op, String value) {
+    	ExternalFieldSelection r = new ExternalFieldSelection(fieldName, value, op);
+    	r.setCaseSensitive(false);
+    	return r;
+    }
+   
+//    public static ExternalGroupSelection<ExternalSelection> newAnd(ExternalSelection... selections) {
+//    	return ExternalGroupSelection.newAnd(selections);
+//    }
+//    
+//    public static ExternalGroupSelection<ExternalSelection> newOr(ExternalSelection... selections) {
+//    	return ExternalGroupSelection.newOr(selections);
+//    }
+
 }

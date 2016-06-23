@@ -1,5 +1,5 @@
-package example;
-##  
+package ${packageId};
+##
 ##   Read Example JRecord using Schema-Fields
 ##
 ##   Author: Bruce Martin
@@ -12,23 +12,21 @@ import net.sf.JRecord.IO.AbstractLineReader;
 #IoBldrImport()
 
 import ${generateOptions.packageId}.schema.FieldNames${generateOptions.schemaDefinition.extensionName};
-	
+
 
 /**
  * Read Cobol file using a Cobol Copybook (${generateOptions.schemaDefinition.extensionName}).
  *
  * This Generated program is intended as an example of using JRecord
  * rather than a useful program (that compiles - it wont).
- * You should regard it as a starting point and modify 
+ * You should regard it as a starting point and modify
  * it according to needs
  */
 public final class Read${generateOptions.schemaDefinition.extensionName} {
 
-    private String testDir        = "G:/temp/";
-    private String salesFile      = testDir + "DTAR020.bin";
-#*    private String salesFileOut   = testDir + "DTAR020out.bin";*#
-    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName}"; 
- 
+    private String dataFile     = "${generateOptions.getDataFileName().getJavaFileName()}";
+    private String copybookName = "${generateOptions.getSchemaDefinition().schemaName.getJavaFileName()}";
+
     /**
      * Example of LineReader  classes
      */
@@ -39,62 +37,73 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
         int lineNum = 0;
 
         try {
-#incl("schema/DclIOBuilder.pvm")        
-###*  *##if (${generateOptions.isXmlSchema()})
-##            IIOBuilder iob = JRecordInterface1.SCHEMA_XML
-##                                       .newIOBuilder(copybookName);
-###*  *##else
-##            ICobolIOBuilder iob = JRecordInterface1.COBOL
-##                                       .newIOBuilder(copybookName)
-##                                           .setFont("${generateOptions.font}")
-##                                           .setFileOrganization(${generateOptions.io.code})
-##                                           .setSplitCopybook(${generateOptions.splitOption.code})
-##                                           .setDropCopybookNameFromFields(${generateOptions.dropCopybookName});  
-###*  *##end                                           
+#incl("schema/DclIOBuilder.pvm")
 
-#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                     
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})
             FieldNames${generateOptions.schemaDefinition.extensionName}.Record${r.extensionName} r${r.extensionName} = FieldNames${generateOptions.schemaDefinition.extensionName}.RECORD_${r.constantName};
-#*  *##end                                           
-            AbstractLineReader reader = iob.newReader(salesFile);
+#*  *##end 
+            AbstractLineReader reader = iob.newReader(dataFile);
 #macro (printFields)
-#*  *##set( $sep = "        ")    
+#*  *##set( $sep = "        ")
 #*  *##foreach($f in ${r.getFields(11)})
 #*      *##if (! ${f.isArrayItem()})
                       ${sep}line.getFieldValue(r${r.extensionName}.${f.javaName}).asString()
-#*            *##set( $sep = '+ " " + ')    
+#*            *##set( $sep = '+ " " + ')
 #*      *##end
 #*  *##end
-#*  *##foreach($a in ${r.getArrayDetailsList()}) 
-#*      *##if (! ${f.isArrayItem()})	
+#*  *##foreach($a in ${r.getArrayDetailsList()})
+#*      *##if (! ${f.isArrayItem()})
                       ${sep}line.getFieldValue(r${r.extensionName}.${a.getFirstElement().javaName}.get(${a.getZeroArrayIndex()})).asString()
 #*      *##end
 #*  *##end
-#end	
+#end
             while ((line = reader.read()) != null) {
                 lineNum += 1;
 #*  *##if (${generateOptions.schemaDefinition.getRecords().size()} == 1)
-#*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+#*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})
                 System.out.println(
-#*          *##printFields()  
-###*          *##foreach($f in ${r.getFields(11)}) 
+#*          *##printFields()
+###*          *##foreach($f in ${r.getFields(11)})
 ##                      ${sep}line.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
-###*              *##set( $sep = '+ " " + ')    
+###*              *##set( $sep = '+ " " + ')
 ###*          *##end
                    );
-#*      *##end                        
-#*  *##else	
-#*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
-                if (/* ${r.record.recordName} */) {
+#*      *##end
+#*  *##else
+#*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})
+#*          *##if (${r.getRecordSelection()})
+#*              *##set ($const = ${generateOptions.getConstantValues()})
+###macro (genSelect $recSel $sp)
+###* *##if (${recSel.getType()} == ${const.TYPE_ATOM})
+##                  $sp "${recSel.getValue()}".equals(line.getFieldValue(r${r.extensionName}.${recSel.field.javaName}).asString())
+###* *##else
+##                  $sp (
+###*      *##set($sep = "   ")
+###*      *##foreach ( $rs in  ${recSel.getItems()})
+###genSelect($rs, $sep)
+###*          *##set($sep = " ${recSel.getBooleanOperator()}")
+###*      *##end
+##                    )
+###* *##end
+###end
+                if (
+#*      *##set($sp = "")
+#genSelect(${r.getRecordSelection()}, $sp)
+                )  {
+
+#*          *##else
+                if (/* ${r.record.recordName}  */) {
+#*          *##end
                    System.out.println(
-#*          *##printFields()  
-###*          *##foreach($f in ${r.getFields(11)}) 
+#*          *##printFields()
+###*          *##foreach($f in ${r.getFields(11)})
 ##                      ${sep}line.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
-###*              *##set( $sep = '+ " " + ')    
+###*              *##set( $sep = '+ " " + ')
 ###*          *##end
                    );
                 }
-#*      *##end                        
-#*  *##end                        
+#*      *##end
+#*  *##end
             }
 
             reader.close();
@@ -105,7 +114,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
             e.printStackTrace();
         }
     }
-    
+
     public static void main(String[] args) {
         new Read${generateOptions.schemaDefinition.extensionName}();
     }

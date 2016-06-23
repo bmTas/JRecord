@@ -83,6 +83,19 @@ public interface Icb2xml2Xml extends Icb2xmlLoadOptions {
 
 	@Override public abstract Icb2xml2Xml setInitToSpaces(boolean initToSpaces);
 
+	/**
+	 * Setup check on wether to write Array Item.
+	 * @param arrayName Array name
+	 * @param check check to be performed; predefined checks include<ul>
+	 * <li><b>ArrayElementChecks.INSTANCE.newSkipSpaces()</b> Skip array element if it is all spaces
+	 * <li><b>ArrayElementChecks.INSTANCE.newStopAtSpaces()</b> Stop processin array elements if the current element spaces
+	 * <li><b>ArrayElementChecks.INSTANCE.newSkipSpacesZeros()</b> Skip array element if it is all spaces/zeros
+	 * <li><b>ArrayElementChecks.INSTANCE.newSkipLowValues()</b> Skip array element if it is low values
+	 * <li><b>ArrayElementChecks.INSTANCE.newIndexCheck(arraySizeVariableName)</b> process array based on the array size
+	 * <li>many others
+	 * </ul>
+	 * @return this Builder
+	 */
 	public abstract Icb2xml2Xml setArrayCheck(String arrayName, IArrayItemCheck check);
 
 	/**

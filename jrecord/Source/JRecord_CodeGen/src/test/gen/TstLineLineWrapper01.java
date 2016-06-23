@@ -24,7 +24,6 @@ public class TstLineLineWrapper01 {
 				ArgumentOption.OPT_PACKAGE, "amsPoDownload.lineWrapper",
 				ArgumentOption.OPT_SCHEMA, TstLineLineWrapper01.class.getResource("ams_Po_Download.cbl").getFile(),
 				ArgumentOption.OPT_FILE_ORGANISATION, "FixedWidth",
-				ArgumentOption.OPT_FONT_NAME, "CP037",
 				ArgumentOption.OPT_SPLIT, "01",
 				ArgumentOption.OPT_OUTPUT_DIR, "G:/Temp/Gen/lineWrapper"
 		};

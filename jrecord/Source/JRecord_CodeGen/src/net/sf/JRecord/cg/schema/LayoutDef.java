@@ -42,13 +42,14 @@ import net.sf.JRecord.cgen.defc.ILayoutDetails4gen;
 public class LayoutDef extends JavaDetails {
 	private final ILayoutDetails4gen schema;
 	private final ArrayList<RecordDef> records = new ArrayList<RecordDef>();
-	private final String schemaName, schemaShortName;
+	private final String schemaShortName;
 	private final boolean xmlSchema;
+	private final CodeGenFileName schemaName;
 	
 	public LayoutDef(ILayoutDetails4gen schema, String schemaName) {
 		super(schema.getLayoutName(), Conversion.getCopyBookId(schemaName));
 		this.schema = schema;
-		this.schemaName = schemaName;
+		this.schemaName = new CodeGenFileName(schemaName);
 		this.xmlSchema = schemaName.toLowerCase().endsWith(".xml");
 		if (this.schemaName == null) {
 			schemaShortName = "";
@@ -91,7 +92,7 @@ public class LayoutDef extends JavaDetails {
 	/**
 	 * @return the schemaName
 	 */
-	public final String getSchemaName() {
+	public final CodeGenFileName getSchemaName() {
 		return schemaName;
 	}
 
@@ -132,5 +133,13 @@ public class LayoutDef extends JavaDetails {
 	
 	public boolean areFieldNamesOnTheFirstLine() {
 		return CommonBits.areFieldNamesOnTheFirstLine(schema.getFileStructure());
+	}
+	
+	public boolean areThereColumnNames() {
+		return areFieldNamesOnTheFirstLine()
+			|| (   schema.getRecordCount() > 0
+				&& schema.getRecord(0).getFieldCount() > 0
+				&& ! "A".equals(schema.getRecord(0).getField(0).getName())
+				);
 	}
 }

@@ -25,6 +25,8 @@
       
 package net.sf.JRecord.cg;
 
+import java.io.IOException;
+
 import net.sf.JRecord.cg.details.GenerateOptions;
 import net.sf.JRecord.cg.details.ParseArgs;
 import net.sf.JRecord.cg.velocity.GenerateVelocity;
@@ -40,7 +42,11 @@ public class Generate {
 			GenerateOptions opts = new GenerateOptions(pa);
 			
 			if (opts.isOk()) {
-				new GenerateVelocity(opts);
+				try {
+					new GenerateVelocity(opts);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

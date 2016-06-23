@@ -24,14 +24,8 @@
 
 package net.sf.JRecord.cbl2xml.def;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
@@ -92,10 +86,10 @@ public interface ICobol2Xml  extends  Icb2xml2Xml  {
 	/**
 	 * Set The Format  of Xml
 	 * @param tagFormat How to format Cobol-names as Xml-Tags, valuies<ul>
-	 * <li><b>Cbl2XmlValues.RO_LEAVE_ASIS</b> (Default) Keep the Cobol variable name
-	 * <li><b>Cbl2XmlValues.RO_MINUS_TO_UNDERSCORE</b> Convert Minus (-) to underscore (_) in Cobol name.
+	 * <li><b>IReformatFieldNames.RO_LEAVE_ASIS</b> (Default) Keep the Cobol variable name
+	 * <li><b>IReformatFieldNames.RO_MINUS_TO_UNDERSCORE</b> Convert Minus (-) to underscore (_) in Cobol name.
 	 * Cobol-Var-Name ==&gt; Cobol_Var_Name
-	 * <li><b>Cbl2XmlValues.RO_CAMEL_CASE</b> Camel case conversion Cobol-Var-Name ==&gt; cobolVarName
+	 * <li><b>IReformatFieldNames.RO_CAMEL_CASE</b> Camel case conversion Cobol-Var-Name ==&gt; cobolVarName
 	 * </ul>
 	 * @return this 
 	 */
@@ -119,57 +113,57 @@ public interface ICobol2Xml  extends  Icb2xml2Xml  {
 	 */
 	public abstract ICobol2Xml setRecordParent(String recordName, String parentName);
 	
-	/**
-	 * Convert Cobol Data File to Xml file
-	 * 
-	 * @param cobolFileName input Cobol-Data file name
-	 * @param xmlFileName output Xml-Data file name
-	 * 
-	 * @throws IOException 
-	 * @throws JAXBException
-	 * @throws XMLStreamException
-	 */
-	public void cobol2xml(String cobolFileName, String xmlFileName)  
-			throws  IOException, JAXBException, XMLStreamException;
-	
-	/**
-	 * Convert Cobol Data File to Xml file
-	 * 
-	 * @param cobolStream
-	 * @param xmlStream
-	 * 
-	 * @throws IOException
-	 * @throws JAXBException
-	 * @throws XMLStreamException
-	 */
-	public void cobol2xml(InputStream cobolStream, OutputStream xmlStream)
-			throws IOException, JAXBException, XMLStreamException;
-
-	/**
-	 * Convert Input Xml-Data to Cobol Data-File
-	 * 
-	 * @param xmlFileName Input Xml-File name 
-	 * @param cobolFileName Ouput Cobol-Data File name
-	 * 
-	 * @throws IOException
-	 * @throws JAXBException
-	 * @throws XMLStreamException
-	 */
-	public void xml2Cobol(String xmlFileName, String cobolFileName)
-			throws IOException, JAXBException, XMLStreamException;
-
-	/**
-	 * Convert a Xml-Data in to a Cobol Data 
-	 * @param xmlStream Input Xml Data
-	 * @param cobolStream Output Cobol data
-	 * 
-	 * @throws IOException
-	 * @throws JAXBException
-	 * @throws XMLStreamException
-	 */
-	public void xml2Cobol(InputStream xmlStream, OutputStream cobolStream)
-			throws IOException, JAXBException,
-			XMLStreamException;
+//	/**
+//	 * Convert Cobol Data File to Xml file
+//	 * 
+//	 * @param cobolFileName input Cobol-Data file name
+//	 * @param xmlFileName output Xml-Data file name
+//	 * 
+//	 * @throws IOException 
+//	 * @throws JAXBException
+//	 * @throws XMLStreamException
+//	 */
+//	public void cobol2xml(String cobolFileName, String xmlFileName)  
+//			throws  IOException, JAXBException, XMLStreamException;
+//	
+//	/**
+//	 * Convert Cobol Data File to Xml file
+//	 * 
+//	 * @param cobolStream
+//	 * @param xmlStream
+//	 * 
+//	 * @throws IOException
+//	 * @throws JAXBException
+//	 * @throws XMLStreamException
+//	 */
+//	public void cobol2xml(InputStream cobolStream, OutputStream xmlStream)
+//			throws IOException, JAXBException, XMLStreamException;
+//
+//	/**
+//	 * Convert Input Xml-Data to Cobol Data-File
+//	 * 
+//	 * @param xmlFileName Input Xml-File name 
+//	 * @param cobolFileName Ouput Cobol-Data File name
+//	 * 
+//	 * @throws IOException
+//	 * @throws JAXBException
+//	 * @throws XMLStreamException
+//	 */
+//	public void xml2Cobol(String xmlFileName, String cobolFileName)
+//			throws IOException, JAXBException, XMLStreamException;
+//
+//	/**
+//	 * Convert a Xml-Data in to a Cobol Data 
+//	 * @param xmlStream Input Xml Data
+//	 * @param cobolStream Output Cobol data
+//	 * 
+//	 * @throws IOException
+//	 * @throws JAXBException
+//	 * @throws XMLStreamException
+//	 */
+//	public void xml2Cobol(InputStream xmlStream, OutputStream cobolStream)
+//			throws IOException, JAXBException,
+//			XMLStreamException;
 
 	/**
 	 * 

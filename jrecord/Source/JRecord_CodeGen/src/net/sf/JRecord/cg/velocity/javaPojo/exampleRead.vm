@@ -5,20 +5,21 @@ package ${generateOptions.packageId}.example;
 ##   Author: Bruce Martin
 ##
 #incl("schema/CommentExample.pvm")
-#macro (printFields)
-#*  *##set( $sep = "        ")    
-#*  *##foreach($f in ${r.getFields(11)})
-#*      *##if (! ${f.isArrayItem()})
-                      ${sep}line.get${f.extensionName}()
-#*            *##set( $sep = '+ " " + ')    
-#*      *##end
-#*  *##end
-#*  *##foreach($a in ${r.getArrayDetailsList()}) 
-#*      *##if (! ${f.isArrayItem()})	
-                      ${sep}line.get${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()})
-#*      *##end
-#*  *##end
-#end	
+#incl("$std.schema/CommonMacros.vm")
+###macro (printFieldsJavaPojo)
+###*  *##set( $sep = "        ")    
+###*  *##foreach($f in ${r.getFields(11)})
+###*      *##if (! ${f.isArrayItem()})
+##                      ${sep}line.get${f.extensionName}()
+###*            *##set( $sep = '+ " " + ')    
+###*      *##end
+###*  *##end
+###*  *##foreach($a in ${r.getArrayDetailsList()}) 
+###*      *##if (! ${f.isArrayItem()})	
+##                      ${sep}line.get${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()})
+###*      *##end
+###*  *##end
+###end	
 
 import net.sf.JRecord.cgen.def.IReader;
 
@@ -42,7 +43,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
     private String testDir        = "G:/temp/";
     private String salesFile      = testDir + "DTAR020.bin";
 #*    private String salesFileOut   = testDir + "DTAR020out.bin";*#
-    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName}"; 
+    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName.getJavaFileName()}"; 
  
     /**
      * Example of LineReader  classes
@@ -66,7 +67,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
             while ((line = reader.read()) != null) {
                 lineNum += 1;
                 System.out.println(
-#*          *##printFields()  
+#*          *##printFieldsJavaPojo()  
                    );
             }
 
@@ -95,7 +96,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
             while ((line = reader.read()) != null) {
                 lineNum += 1;
                 System.out.println(
-#*          *##printFields()  
+#*          *##printFieldsJavaPojo()  
                    );
             }
 

@@ -1,4 +1,4 @@
-package example;
+package ${packageId};
 ##  
 ##   Write Example JRecord with Schema-Fields
 ##
@@ -32,7 +32,7 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
 
     private String testDir        = "G:/temp/";
     private String salesFileOut   = testDir + "DTAR020out.bin";
-    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName}"; 
+    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName.getJavaFileName()}"; 
 
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                     
     private Record${r.extensionName} r${r.extensionName};
@@ -46,16 +46,6 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
 
         try {
 #incl("schema/DclIOBuilder.pvm")      
-###*  *##if (${generateOptions.isXmlSchema()})
-##                                       .newIOBuilder(copybookName);
-###*  *##else	
-##            ICobolIOBuilder iob = JRecordInterface1.COBOL
-##                                       .newIOBuilder(copybookName)
-##                                           .setFont("${generateOptions.font}")
-##                                           .setFileOrganization(${generateOptions.io.code})
-##                                           .setSplitCopybook(${generateOptions.splitOption.code})
-##                                           .setDropCopybookNameFromFields(${generateOptions.dropCopybookName});  
-###*  *##end                                           
             Schema${generateOptions.schemaDefinition.extensionName} schema${generateOptions.schemaDefinition.extensionName}
                     = new Schema${generateOptions.schemaDefinition.extensionName}(iob.getLayout()); 
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                     

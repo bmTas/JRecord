@@ -27,6 +27,7 @@ package net.sf.JRecord.cg.schema;
 
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.cg.common.CCode;
 
 /**
@@ -38,6 +39,7 @@ public class FieldDef extends JavaDetails {
 	private final IFieldDetail fieldDetail;
 	private final ArrayElement arrayDetails;
 	public final String javaType;
+	private String value = null;
 
 
 	public FieldDef(String cobolName, FieldDetail fieldDef, ArrayElement ai, String schemaName) {
@@ -84,6 +86,28 @@ public class FieldDef extends JavaDetails {
 		return "as" + javaType.substring(0, 1).toUpperCase() + javaType.substring(1);
 	}
 
+	/**
+	 * @return the value
+	 */
+	public final String getValue() {
+		return value;
+	}
+
+	/**
+	 * @param value the value to set
+	 */
+	public final void setValue(String value) {
+		this.value = value;
+	}
+	
+	/**
+	 * 
+	 * @return is it a primitive (short / int / long / double) numeric type 
+	 */
+	public final boolean isPrimitiveNumeric() {
+		return TypeManager.isNumeric(fieldDetail.getType()) && fieldDetail.getDecimal() == 0;
+	}
+
 	public final String getFieldInitialise() {
 		String ret = "0";
 		if ("String".equals(javaType)) {
@@ -93,5 +117,4 @@ public class FieldDef extends JavaDetails {
 		}
 		return ret;
 	}
-
 }

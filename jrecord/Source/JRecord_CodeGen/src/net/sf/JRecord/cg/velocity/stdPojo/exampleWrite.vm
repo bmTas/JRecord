@@ -1,5 +1,5 @@
 package ${packageId};
-##  
+##
 ##   Write Example JRecord with Generated class
 ##
 ##   Author: Bruce Martin
@@ -15,9 +15,9 @@ import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineWriter;
 
 
-#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                     
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})
 import ${generateOptions.packageId}.data.Line${r.extensionName}JR;
-#*  *##end                                           
+#*  *##end
 
 
 /**
@@ -25,21 +25,21 @@ import ${generateOptions.packageId}.data.Line${r.extensionName}JR;
  *
  * This Generated program is intended as an example of using JRecord
  * rather than a useful program (that compiles - it wont).
- * You should regard it as a starting point and modify 
+ * You should regard it as a starting point and modify
  * it according to needs
  */
 public final class Write${generateOptions.schemaDefinition.extensionName} {
 
-    private String testDir        = "G:/temp/";
-    private String salesFileOut   = testDir + "DTAR020out.bin";
-    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName}"; 
 
-    #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                             
-           Line${r.extensionName}JR line${r.extensionName}JR = new Line${r.extensionName}JR();
-#*  *##end                                           
+    private String outputFileName = "";
+    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName.getJavaFileName()}";
 
-                                        
-    
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})
+    private Line${r.extensionName}JR line${r.extensionName}JR = new Line${r.extensionName}JR();
+#*  *##end
+
+
+
     /**
      * Example of LineReader  classes
      */
@@ -47,13 +47,13 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
         super();
 
         try {
-#incl("schema/DclIOBuilder.pvm")     
-            AbstractLineWriter writer = iob.newWriter(salesFileOut);
- 
-#*  *##set( $sep = "        ")    
-#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+#incl("schema/DclIOBuilder.pvm")
+            AbstractLineWriter writer = iob.newWriter(outputFileName);
+
+#*  *##set( $sep = "        ")
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})
             writer.write(create${r.extensionName}(iob, data));
-#*  *##end                       
+#*  *##end
 
             writer.close();
         } catch (Exception e) {
@@ -63,21 +63,29 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
         }
     }
 
-#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})
     private AbstractLine create${r.extensionName}(${ioBldr} iob, UserData data) throws IOException {
-        AbstractLine line = iob.newLine();    
+        AbstractLine line = iob.newLine();
         line${r.extensionName}JR.setLine(line);
-        
-#*      *##foreach($f in ${r.getFields()}) 
+
+#*      *##foreach($f in ${r.getFields()})
 #*          *##if (! ${f.isArrayItem()})
-        line${r.extensionName}JR.set${f.extensionName}(data. ...);  
+#*              *##if (${f.getValue()})
+#*                  *##if (${f.isPrimitiveNumeric()})
+        line${r.extensionName}JR.set${f.extensionName}(${f.getValue()});
+#*                  *##else
+        line${r.extensionName}JR.set${f.extensionName}("${f.getValue()}");
+#*                  *##end
+#*              *##else
+        line${r.extensionName}JR.set${f.extensionName}(data. ...);
+#*              *##end
 #*          *##end
 #*      *##end
-	
-#*      *##foreach($a in ${r.getArrayDetailsList()}) 
-        line${r.extensionName}JR.set${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()}, data. ...);  
+
+#*      *##foreach($a in ${r.getArrayDetailsList()})
+        line${r.extensionName}JR.set${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()}, data. ...);
 #*      *##end
-    
+
         return line;
     }
 

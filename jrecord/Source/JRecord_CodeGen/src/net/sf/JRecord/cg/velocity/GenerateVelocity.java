@@ -47,6 +47,7 @@ import org.apache.velocity.exception.ParseErrorException;
 
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.cg.details.IGenerateOptions;
+import net.sf.JRecord.cg.details.TemplateDtls;
 import net.sf.JRecord.cg.schema.RecordDef;
 
 
@@ -57,19 +58,19 @@ public class GenerateVelocity {
 	private static final String IF = ".if.";
 	private static final String SKEL_PREF = "skel.";
 	
-	public final List<GeneratedSkel> generatedFiles = new ArrayList<>();
+	public final List<GeneratedSkel> generatedFiles = new ArrayList<GeneratedSkel>();
 	
-	public GenerateVelocity(IGenerateOptions opts) {
+	public GenerateVelocity(IGenerateOptions opts) throws IOException {
 		
 	
-		try {
+//		try {
 			generate(opts);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 	
-	private void generate(IGenerateOptions opts) throws Exception {
+	private void generate(IGenerateOptions opts) throws IOException  {
 		int optCount;
 		Properties templateProperties = opts.getTemplateDtls().templateProperties;
 		int skelCount = Integer.parseInt(templateProperties.getProperty(SKEL_PREF + "0"));
@@ -81,13 +82,13 @@ public class GenerateVelocity {
 								"&template.", 
 								opts.getTemplateDtls().getTemplate()
 				   ).toString();
-								
+
 			s = getString(templateProperties, SKEL_PREF + i + IF + "0");
 			if (s == null || s.length() == 0) {
 				gen = true;
 			} else {
 				optCount = Integer.parseInt(s);
-				for (int j = 1; j <= optCount; j++) {
+				for (int j = 1; j <= optCount; j++) { 
 					s = getString(templateProperties, SKEL_PREF + i + IF + j);
 					if (opts.getTemplateDtls().getGenerateOptions().containsKey(s.toLowerCase())) {
 						gen = true;
@@ -157,7 +158,8 @@ public class GenerateVelocity {
      *
      * @throws Exception any error that occurs
      */
-    public final void genSkel(String templateFile, String outputFile, IGenerateOptions opts,  RecordDef r, String packageExtension ) throws IOException {
+    public final void genSkel(String templateFile, String outputFile, IGenerateOptions opts, RecordDef r, String packageExtension ) 
+    throws IOException {
 
         /*
          *  get the Template object.  This is the parsed version of your
@@ -230,12 +232,16 @@ public class GenerateVelocity {
 	 * @param b
 	 * @throws RuntimeException
 	 */
-	private void loadTemplate(StringBuilder b, List<SkelLineNum> skelLines, IGenerateOptions opts, final String templatePath) {
+	private void loadTemplate(StringBuilder b, List<SkelLineNum> skelLines, IGenerateOptions opts, String templatePath) {
 		BufferedReader r = null;
 		try { 	
 			InputStream in = null;
 			String templateDir = opts.getTemplateDtls().templateDir;
-			if (templateDir != null && templateDir.length() > 0) {
+			if (templatePath.startsWith("$std.")) {
+				templatePath = templatePath.substring(5);
+				in = this.getClass().getResourceAsStream(TemplateDtls.DEFAULT_TEMPLATE_BASE + templatePath);
+			}
+			if (in == null && templateDir != null && templateDir.length() > 0) {
 				char lastChar = templateDir.charAt(templateDir.length() - 1);
 				if (lastChar != '/' && lastChar != '\\') {
 					templateDir = templateDir + '/';
@@ -246,8 +252,16 @@ public class GenerateVelocity {
 				}
 			} 
 			if (in == null) {
-				in = this.getClass().getResourceAsStream(opts.getTemplateDtls().templateBase + templatePath);
+				String name = opts.getTemplateDtls().templateBase + templatePath;
+				in = this.getClass().getResourceAsStream(name);
 			} 
+			if (in == null && (! TemplateDtls.DEFAULT_TEMPLATE_BASE.equals(opts.getTemplateDtls().templateBase))) {
+				in = this.getClass().getResourceAsStream(TemplateDtls.DEFAULT_TEMPLATE_BASE + templatePath);
+			} 
+			if (in == null) {
+				throw new RuntimeException("Template not found: " + templatePath + ", searched: "
+						+ templateDir + ", " + opts.getTemplateDtls().templateBase);
+			}
     		String s;
     		
     		SkelLineNum lineNumHolder = new SkelLineNum(templatePath, 0);

@@ -1,5 +1,7 @@
 package ${generateOptions.packageId}.data;
 
+#incl("schema/CommentSchema.pvm")
+
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
 import ${generateOptions.packageId}.def.I${r.extensionName};  
 import ${generateOptions.packageId}.def.I${r.extensionName}Upd;  
@@ -20,9 +22,9 @@ public class Code${generateOptions.schemaDefinition.extensionName} {
 #*          *##set($n = "from.get${as.get(0).getFirstElement().extensionName}ArrayLength")
 ${as.get(0).getForLoops("${n}")}	
 #*          *##foreach($a in ${as}) 
-                       to.set${a.getFirstElement().extensionName}(
-                              ${a.getCallIndexParameters()},  
-                              from.get${a.getFirstElement().extensionName}(${a.getCallIndexParameters()}));
+            to.set${a.getFirstElement().extensionName}(
+                   ${a.getCallIndexParameters()},  
+                   from.get${a.getFirstElement().extensionName}(${a.getCallIndexParameters()}));
 #*          *##end
 ${as.get(0).getEndForLoops()}	
 #*      *##end

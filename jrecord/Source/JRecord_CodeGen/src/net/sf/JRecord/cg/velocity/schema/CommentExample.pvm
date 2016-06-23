@@ -1,5 +1,6 @@
  /*
   *   Example program for ${generateOptions.getSchemaDefinition().schemaShortName}
+  *   This class uses the JRecord project (https://sourceforge.net/projects/jrecord/)
   * -------------------------------------------------------------------
   *        
   * *------------- Keep this notice in your final code ---------------
@@ -8,7 +9,7 @@
   * *     from Copybook: ${generateOptions.getSchemaDefinition().schemaShortName}
   * *          Template: ${generateOptions.getTemplateDtls().template}
   * *             Split: ${generateOptions.getSplitOption().option}   
-  * * File Organization: ${generateOptions.getIo().option}   
+  * * File Organization: ${generateOptions.getFileStructureCode().option}   
   * *              Font: ${generateOptions.font}
   * *   
   * *    CodeGen Author: Bruce Martin
@@ -38,3 +39,17 @@ import net.sf.JRecord.External.CopybookLoader;
 #*  *##end
 import net.sf.JRecord.def.IO.builders.${ioBldr};
 #end
+#macro (genSelect $recSel $sp)
+#* *##if (${recSel.getType()} == ${const.TYPE_ATOM})
+                  $sp "${recSel.getValue()}".equals(line.getFieldValue(r${r.extensionName}.${recSel.field.javaName}).asString())
+#* *##else
+                  $sp (
+#*      *##set($sep = "   ")
+#*      *##foreach ( $rs in  ${recSel.getItems()})
+#genSelect($rs, $sep)
+#*          *##set($sep = " ${recSel.getBooleanOperator()}")
+#*      *##end
+                   )
+#* *##end
+#end
+

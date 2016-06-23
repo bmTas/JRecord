@@ -1,4 +1,4 @@
-package example;
+package ${packageId};
 #incl("schema/CommentExample.pvm")
 
 import net.sf.JRecord.JRecordInterface1;
@@ -32,7 +32,7 @@ public final class ReadJavaSchema${generateOptions.schemaDefinition.extensionNam
     public ReadJavaSchema${generateOptions.schemaDefinition.extensionName}() {
         super();
 
-        AbstractLine saleRecord;
+        AbstractLine line;
         int lineNum = 0;
 
         try {
@@ -46,12 +46,12 @@ public final class ReadJavaSchema${generateOptions.schemaDefinition.extensionNam
 #macro (printFields)
 #*          *##foreach($f in ${r.getFields(11)}) 
 #*              *##if (! ${f.isArrayItem()})
-                      ${sep}saleRecord.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
+                      ${sep}line.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
 #*                  *##set( $sep = '+ " " + ')    
 #*              *##end
 #*          *##end
 #end	
-            while ((saleRecord = reader.read()) != null) {
+            while ((line = reader.read()) != null) {
                 lineNum += 1;
 #*  *##if (${generateOptions.schemaDefinition.getRecords().size()} == 1)
 #*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 

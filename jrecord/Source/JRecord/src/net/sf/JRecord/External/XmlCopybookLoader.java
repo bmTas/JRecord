@@ -868,8 +868,11 @@ public class XmlCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
             iType = Type.ftCharNullPadded;
         } else if ("null-terminated".equals(usage)) {
             iType = Type.ftCharNullTerminated;
-        } else if ("right-just".equals(usage)) {
-            iType = Type.ftCharRightJust;
+        } else {	
+        	String just = getStringAttribute(element, Cb2xmlConstants.JUSTIFIED);
+        	if (just != null && just.length() > 0) {
+               iType = Type.ftCharRightJust;
+        	}
         }
 
         ExternalField externalField = new ExternalField(

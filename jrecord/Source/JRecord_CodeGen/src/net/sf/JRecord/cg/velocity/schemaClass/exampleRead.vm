@@ -1,4 +1,4 @@
-package example;
+package ${packageId};
 ##  
 ##   Read Example JRecord using Schema-Fields
 ##
@@ -31,7 +31,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
     private String testDir        = "G:/temp/";
     private String salesFile      = testDir + "DTAR020.bin";
 #*    private String salesFileOut   = testDir + "DTAR020out.bin";*#
-    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName}"; 
+    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName.getJavaFileName()}"; 
  
     /**
      * Example of LineReader  classes
@@ -44,17 +44,6 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
 
         try {
 #incl("schema/DclIOBuilder.pvm")        
-###*  *##if (${generateOptions.isXmlSchema()})
-##            IIOBuilder iob = JRecordInterface1.SCHEMA_XML
-##                                       .newIOBuilder(copybookName);
-###*  *##else
-##            ICobolIOBuilder iob = JRecordInterface1.COBOL
-##                                       .newIOBuilder(copybookName)
-##                                           .setFont("${generateOptions.font}")
-##                                           .setFileOrganization(${generateOptions.io.code})
-##                                           .setSplitCopybook(${generateOptions.splitOption.code})
-##                                           .setDropCopybookNameFromFields(${generateOptions.dropCopybookName});  
-###*  *##end                                           
             Schema${generateOptions.schemaDefinition.extensionName} schema${generateOptions.schemaDefinition.extensionName}
                     = new Schema${generateOptions.schemaDefinition.extensionName}(iob.getLayout()); 
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                     

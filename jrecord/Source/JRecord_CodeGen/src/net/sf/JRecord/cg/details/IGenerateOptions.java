@@ -1,5 +1,6 @@
 package net.sf.JRecord.cg.details;
 
+import net.sf.JRecord.cg.schema.CodeGenFileName;
 import net.sf.JRecord.cg.schema.LayoutDef;
 
 public interface IGenerateOptions {
@@ -8,6 +9,13 @@ public interface IGenerateOptions {
 	 * @return the schemaDefinition
 	 */
 	public abstract LayoutDef getSchemaDefinition();
+
+	
+	/**
+	 * 
+	 * @return name of the Data file (if known
+	 */
+	public abstract CodeGenFileName getDataFileName();
 
 	
 	/**
@@ -30,7 +38,7 @@ public interface IGenerateOptions {
 	 * @return the font
 	 */
 	public abstract String getFont();
-
+	
 	/**
 	 * @return the outputDir
 	 */
@@ -39,16 +47,21 @@ public interface IGenerateOptions {
 	/**
 	 * @return the io
 	 */
-	public abstract ArgumentOption getIo();
+	public abstract ArgumentOption getFileStructureCode();
 
 	/**
 	 * @return the splitOption
 	 */
 	public abstract ArgumentOption getSplitOption();
 
+	public abstract ArgumentOption getDialect();
+
 	/**
 	 * @return the dropCopybookName
 	 */
 	public abstract boolean isDropCopybookName();
+	
+	public abstract ConstantVals getConstantValues();
+
 
 }

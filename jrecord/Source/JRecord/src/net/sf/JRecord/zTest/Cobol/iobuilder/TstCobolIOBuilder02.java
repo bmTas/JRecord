@@ -53,6 +53,9 @@ public class TstCobolIOBuilder02 extends TestCase {
     private static final String[] JAVA_TYPE_NAME = new String[Type.LAST_SYSTEM_TYPE];
 
     private static final String COPYBOOK_NAME = TstConstants.COBOL_DIRECTORY + "Numeric.cbl";
+    private static final String RIGHTJUST_COPYBOOK = TstConstants.COBOL_DIRECTORY + "RightJust.cbl";
+
+    
 	private static final String[] FONTS = {
 		Conversion.DEFAULT_ASCII_CHARSET,
 		"cp037"
@@ -72,6 +75,13 @@ public class TstCobolIOBuilder02 extends TestCase {
 		Constants.IO_VB_OPEN_COBOL,
 	};
 	
+	
+	private static final FieldDetail[] RIGHT_JUST_FIELDS = {	
+			createField("Field-Right-Justified", 1, 20, Type.ftCharRightJust),
+			createField("Field-Justified", 21, 20, Type.ftCharRightJust),
+			createField("Field-1", 41, 20, Type.ftChar),
+	};
+
 	private static final FieldDetail[][] FIELDS = {{
 			createField("Numeric-comp-fld-2", 1, 2, Type.ftBinaryBigEndian),
 			createField("Numeric-comp-fld-4", 3, 2, Type.ftBinaryBigEndian),
@@ -126,6 +136,14 @@ public class TstCobolIOBuilder02 extends TestCase {
 	   	Arrays.fill(JAVA_TYPE_NAME, null);
 	}
 
+	public void testRightJustified() throws IOException {
+		check(	JRecordInterface1.COBOL.newIOBuilder(RIGHTJUST_COPYBOOK),
+				new CblBldrOptions(ICopybookDialects.FMT_MAINFRAME, Constants.IO_FIXED_LENGTH, false, ""),
+				RIGHT_JUST_FIELDS,
+				"Right-Just"
+				);
+
+	}
 	
 	public void test01() throws IOException {
 		tst(getFileIOBuilder(), false);

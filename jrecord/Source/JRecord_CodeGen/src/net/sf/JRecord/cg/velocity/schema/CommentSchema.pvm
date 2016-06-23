@@ -5,7 +5,7 @@
   * *     from Copybook: ${generateOptions.getSchemaDefinition().schemaShortName}
   * *          Template: ${generateOptions.getTemplateDtls().template}
   * *             Split: ${generateOptions.getSplitOption().option}   
-  * * File Organization: ${generateOptions.getIo().option}   
+  * * File Organization: ${generateOptions.getFileStructureCode().option}   
   * *              Font: ${generateOptions.font}
   * *   
   * *    CodeGen Author: Bruce Martin
@@ -16,7 +16,8 @@
   *   * Fix CodeGen and rerun CodeGen
   *
   *   Please supply any program fixes/enhancements/documentation
-  *   back to the JRecord  project so other people can benefit !!!
+  *   back to the JRecord project (https://sourceforge.net/projects/jrecord/)
+  *   so other people can benefit !!!
   * 
   *
   *          Bruce Martin (JRecord / CodeGen Author) 

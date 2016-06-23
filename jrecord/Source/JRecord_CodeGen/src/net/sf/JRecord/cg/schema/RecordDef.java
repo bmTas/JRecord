@@ -28,7 +28,9 @@ package net.sf.JRecord.cg.schema;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 import net.sf.JRecord.Common.FieldDetail;
@@ -54,7 +56,13 @@ public class RecordDef extends JavaDetails {
 	private final List<ArrayDetails> arrayDetailsList = new ArrayList<ArrayDetails>();
 	private final List<List<ArrayDetails>> arraySameSize = new ArrayList<List<ArrayDetails>>();
 	private final List<String> importList;
+	private final ExternalSelection recordSelection;
+	private final boolean defaultRecord;
+	private final Set<String> validOps = new HashSet<String>(Arrays.asList(
+			"=", "!=", ">", "<", ">=", "<="
+	));
 
+	
 	/**
 	 * Class to describe one record type in a file for use in code generation
 	 * 
@@ -146,6 +154,9 @@ public class RecordDef extends JavaDetails {
 			}
 			arraySameSize.add(currList);
 		}
+		
+		recordSelection = parseRecSel(record.getRecordSelection().getRecSel());
+		defaultRecord = record.getRecordSelection().isDefaultRecord();
 	}
 
 	public void expandSel(StringBuilder b, ExternalSelection sel, int level) {
@@ -247,4 +258,72 @@ public class RecordDef extends JavaDetails {
 	public final List<String> getImportList() {
 		return importList;
 	}
+	
+	/**
+	 * @return the recordSelection
+	 */
+	public final ExternalSelection getRecordSelection() {
+		return recordSelection;
+	}
+
+	/**
+	 * @return the defaultRecord
+	 */
+	public final boolean isDefaultRecord() {
+		return defaultRecord;
+	}
+
+	private ExternalSelection parseRecSel(ExternalSelection sel) {
+		if (sel == null) {return null;}
+		ExternalSelection ret = null;
+		switch (sel.getType()) {
+		case ExternalSelection.TYPE_ATOM:
+			ExternalFieldSelection f = (ExternalFieldSelection) sel;
+			String op = f.getOperator();
+			FieldDef field = null;
+			for (FieldDef fld : fields) {
+				if (f.getFieldName().equalsIgnoreCase(fld.getFieldDetail().getName())) {
+					field = fld;
+					break;
+				}
+			}
+			if (field != null && validOps.contains(op)) {
+				if (field.getValue() == null) {
+					field.setValue(f.getFieldValue());
+				}
+				ret = new FieldSelection(field, op, f.getFieldValue());
+			}
+			break;
+		case ExternalSelection.TYPE_AND:
+			ret = parseGroup(sel, "&&");
+			break;
+		case ExternalSelection.TYPE_OR:
+			ret = parseGroup(sel, "||");
+			break;
+		
+		}
+		
+		return ret;
+	}
+	
+	private ExternalSelection parseGroup(ExternalSelection sel, String boolOp) {
+		@SuppressWarnings("unchecked")
+		ExternalGroupSelection<? extends ExternalSelection> gs = (ExternalGroupSelection<? extends ExternalSelection>) sel;
+		ArrayList<ExternalSelection> list = new ArrayList<ExternalSelection>(gs.getSize());
+		ExternalSelection childSel;
+		
+		for (int i = 0; i < gs.getSize(); i++ ) {
+			childSel = parseRecSel(gs.get(i));
+			if (childSel != null) {
+				list.add(childSel);
+			}
+		}
+		
+		switch (list.size()) {
+		case 0: return null;
+		case 1: return list.get(0);
+		}
+		return new GroupSelection(gs.getType(), boolOp, list);
+	}
+
 }

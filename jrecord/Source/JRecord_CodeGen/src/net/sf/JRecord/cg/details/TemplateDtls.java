@@ -1,9 +1,11 @@
 package net.sf.JRecord.cg.details;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,16 +14,17 @@ import java.util.Properties;
 
 public class TemplateDtls {
 	
-	private static final String DEFAULT_TEMPLATE_BASE = "/net/sf/JRecord/cg/velocity/";
+	public static final String DEFAULT_TEMPLATE_BASE = "/net/sf/JRecord/cg/velocity/";
 	public static final String GENERATE_PROPERTIES = "Generate.properties";
 	public static final String T_REQUIRE_PACKAGE_ID = "requirePackageId";
 	public static final String T_SPLIT_ALLOWED = "splitAllowed";
 
 	
-	public final String template, templateDir, templateBase;
+	public final String template, templateDir, templateBase, language;
 	public final Map<String, Object> generateOptions = new HashMap<String, Object>(10);
 	public final Properties templateProperties;
 	private boolean ok = true;
+	private boolean inTemplateBase = false;
 	
 	private String currentDate, currentDateTime;
 
@@ -37,18 +40,41 @@ public class TemplateDtls {
 			if (endChar != '/' && endChar != '\\') {
 				t = t + '/';
 			}
+			templateDir = t;
 			if (isEmpty(template) && (new File(t + GENERATE_PROPERTIES)).exists()) {
 				File f = new File(t);
 				template = f.getName();
 				templateDir = f.getParent();
 				useTemplateDir = true;
-			}
+			} 
+		}
+		if (templateBase == null) {
+			templateBase = DEFAULT_TEMPLATE_BASE;
 		}
 		this.templateBase = templateBase;
 		this.templateDir = templateDir;
 		this.template = template;
-		templateProperties = getProperties(t, useTemplateDir, template);
+		templateProperties = getProperties(templateDir, useTemplateDir, template);
 		loadOptions("Opts.");
+		
+		String s = templateProperties.getProperty("skel.1.output");
+		String l = "unknown";
+		int pos;
+		if (! isEmpty(s)) {
+			s = s.toLowerCase();
+			if (s.endsWith(".java")) {
+				l = "Java";
+			} else if (s.endsWith(".py")) {
+				l = "Python";
+			} else if (s.endsWith(".rb")) {
+				l = "Ruby";
+			} else if (s.endsWith(".jjs") || s.endsWith(".javascript")) {
+				l = "JavaScript";
+			} else if ((pos = s.lastIndexOf('.')) >= 0) {
+				l = s.substring(pos + 1);
+			}
+		}
+		language = l;
 	}
 	
 	private boolean isEmpty(String s) {
@@ -65,15 +91,50 @@ public class TemplateDtls {
 				stream = new FileInputStream(filePropertiesName );
 			} else {
 				stream = this.getClass().getResourceAsStream(templateBase + template + '/' + GENERATE_PROPERTIES);
+				inTemplateBase = true;
+			}
+			if (stream == null) {
+				System.out.println();
+				System.out.println("Could not Load Template: " + template);
+				System.out.println();
+				throw new RuntimeException("Could not load properties file for Template:" + template);
 			}
 			p.load(stream);				
 		} catch (IOException e) {
 			ok = false;
 			System.out.println();
-			System.out.println("Could not Load Template: " + e);
+			System.out.println("Could not Load Template: " + template);
+			System.out.println(e);
 			System.out.println();
 		}
 		return p;
+	}
+	
+	public final String getDescriptionHtml() {
+		InputStream stream;
+		StringBuffer html = new StringBuffer();
+		String descHtml = "Description.html";
+
+		try {
+			if (inTemplateBase) {
+				stream = this.getClass().getResourceAsStream(templateBase + template + '/' + descHtml);
+			} else {
+				stream = new FileInputStream(templateDir + template + '/' + descHtml);
+			}
+
+			if (stream != null) {
+				BufferedReader r = new BufferedReader(new InputStreamReader(stream));
+				String line;
+				while ((line = r.readLine()) != null) {
+					html.append(line).append('\n');
+				}
+				r.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return html.toString();
 	}
 
 	/* (non-Javadoc)
