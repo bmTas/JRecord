@@ -84,7 +84,7 @@ public class TstCobolIoProvider extends TestCase {
 		assertTrue(((LineReaderWrapper) lineReader).getReader() instanceof VbByteReader);
 		lineReader.close();
 		
-		lineReader = ioProvider.getLineReader(Constants.IO_VB_OPEN_COBOL, ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE, copybookName, filename);
+		lineReader = ioProvider.getLineReader(Constants.IO_VB_GNU_COBOL, ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE, copybookName, filename);
 
 		System.out.println(lineReader.getClass().getName());
 		System.out.println(((LineReaderWrapper) lineReader).getReader().getClass().getName());
@@ -122,7 +122,7 @@ public class TstCobolIoProvider extends TestCase {
 		assertTrue(((LineReaderWrapper) lineReader).getReader() instanceof VbByteReader);
 		lineReader.close();
 		
-		lineReader = ioProvider.getLineReader(Constants.IO_VB_OPEN_COBOL, ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE, Cb2xmlConstants.USE_STANDARD_COLUMNS, copybookName, filename);
+		lineReader = ioProvider.getLineReader(Constants.IO_VB_GNU_COBOL, ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE, Cb2xmlConstants.USE_STANDARD_COLUMNS, copybookName, filename);
 
 		System.out.println(lineReader.getClass().getName());
 		System.out.println(((LineReaderWrapper) lineReader).getReader().getClass().getName());

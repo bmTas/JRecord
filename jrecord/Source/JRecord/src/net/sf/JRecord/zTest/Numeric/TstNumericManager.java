@@ -48,8 +48,8 @@ public class TstNumericManager extends TestCase {
 
 		for (int i = 0; i < openCob.length; i++) {
 			c = m.getConverter4code(openCob[i]);
-			assertEquals("Open Cobol " + c.getName() + " " + i,
-					Constants.IO_VB_OPEN_COBOL, c.getFileStructure(true, true));
+			assertEquals("GNU Cobol " + c.getName() + " " + i,
+					Constants.IO_VB_GNU_COBOL, c.getFileStructure(true, true));
 		}
 		assertEquals("Mainframe", Constants.IO_VB, m.getConverter4code(ICopybookDialects.FMT_MAINFRAME).getFileStructure(true, true));
 		assertEquals("Fujitsu", Constants.IO_VB_FUJITSU, m.getConverter4code(ICopybookDialects.FMT_FUJITSU).getFileStructure(true, true));

@@ -143,4 +143,17 @@ public interface ICobolIOBuilder extends IIOBuilder, Icb2xmlLoadOptions {
 	 * <br><b>Note: </b> The default is <b>false</b>
 	 */
 	public abstract ICobolIOBuilder setDropCopybookNameFromFields(boolean dropCopybookNameFromFields);
+	
+	/**
+	 * Controls wether fillers are kept in the layout.
+	 * 
+	 * 
+	 * @param keepFillers keep fillers in the layout
+	 * @return this for further updates
+	 * 
+	 * @deprecated While you can use this option, I suggest
+	 * you try and avoid it (i.e. name the filler fields).
+	 */
+	public abstract ICobolIOBuilder setKeepFillers(boolean keepFillers);
+
 }

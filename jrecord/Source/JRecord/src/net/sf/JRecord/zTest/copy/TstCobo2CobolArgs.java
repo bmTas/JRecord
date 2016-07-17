@@ -91,7 +91,7 @@ public class TstCobo2CobolArgs extends TestCase {
 		int[] structures = {
 				Constants.IO_DEFAULT, Constants.IO_FIXED_LENGTH, Constants.IO_FIXED_LENGTH_CHAR,
 				Constants.IO_BIN_TEXT, Constants.IO_TEXT_LINE, Constants.IO_UNICODE_TEXT,
-				Constants.IO_VB, Constants.IO_VB_FUJITSU, Constants.IO_VB_OPEN_COBOL,
+				Constants.IO_VB, Constants.IO_VB_FUJITSU, Constants.IO_VB_GNU_COBOL,
 		};
 		for (int fileOrganisation : structures) {
 			String[] a = {

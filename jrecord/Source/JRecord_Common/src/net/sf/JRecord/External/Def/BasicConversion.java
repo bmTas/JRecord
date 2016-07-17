@@ -52,7 +52,7 @@ public class BasicConversion implements AbstractConversion {
  	   String rdLineBin = "Line based Binary";
  	   String rdVb = "Mainframe VB (rdw based) Binary";
  	   String rdVbDump = "Mainframe VB Dump: includes Block length";
-   	   String rdOcVb = "Open Cobol VB";
+//   	   String rdOcVb = "Open Cobol VB";
 
     	
         keys[i] = Constants.IO_DEFAULT;                externalNames[i] = "Default";                 names[i++] = rdDefault;
@@ -65,7 +65,7 @@ public class BasicConversion implements AbstractConversion {
         keys[i] = Constants.IO_VB;                     externalNames[i] = "Mainframe_VB";            names[i++] = rdVb;
         keys[i] = Constants.IO_VB_DUMP;                externalNames[i] = "Mainframe_VB_As_RECFMU";  names[i++] = rdVbDump;
         keys[i] = Constants.IO_VB_FUJITSU;             externalNames[i] = "FUJITSU_VB";              names[i++] = "Fujitsu Variable Binary";
-        keys[i] = Constants.IO_VB_OPEN_COBOL;          externalNames[i] = "Open_Cobol_VB";           names[i++] = rdOcVb;
+        keys[i] = Constants.IO_VB_GNU_COBOL;           externalNames[i] = "Gnu_Cobol_VB";            names[i++] = "GNU Cobol VB";
         keys[i] = Constants.IO_MICROFOCUS;             externalNames[i] = "Microfocus_Format";       names[i++] = "Experimental Microfocus Header File";
         keys[i] = Constants.IO_UNKOWN_FORMAT;          externalNames[i] = "UNKOWN_FORMAT";           names[i++] = "Unknown File Format";
         keys[i] = Constants.IO_WIZARD;                 externalNames[i] = "FILE_WIZARD";             names[i++] = "File Wizard";
@@ -76,7 +76,7 @@ public class BasicConversion implements AbstractConversion {
         keys[i] = Constants.IO_BIN_NAME_1ST_LINE;      externalNames[i] = "Byte_Text_NAME_1ST_LINE"; names[i++] = "Text IO (byte Based) name 1st Line";
         keys[i] = Constants.IO_UNICODE_NAME_1ST_LINE;  externalNames[i] = "UNICODE_CSV_NAME_1ST_LINE";  names[i++] = "Unicode Name on 1st line";
         keys[i] = Constants.IO_UNICODE_CSV_NAME_1ST_LINE;externalNames[i] = "UNICODE_CSV_NAME_1ST_LINE_EMBEDDED_CR";      names[i++] = "Unicode Name on 1st line (Embedded Cr)";
-
+ 
         keys[i] = Constants.IO_UNICODE_NAME_1ST_LINE;  externalNames[i] = "UNICODE_CSV_NAME_1ST_LINE_"; names[i++] = "Unicode Name on 1st line";
         keys[i] = Constants.IO_GENERIC_CSV;            externalNames[i] = "CSV_GENERIC";            names[i++] = "Generic CSV (Choose details at run time)";
 
@@ -84,8 +84,9 @@ public class BasicConversion implements AbstractConversion {
         keys[i] = Constants.IO_XML_BUILD_LAYOUT;       externalNames[i] = "XML_Build_Layout";       names[i++] = "XML - Build Layout";
         keys[i] = Constants.IO_CONTINOUS_NO_LINE_MARKER;       externalNames[i] = "Continuous";  		    names[i++] = "Continuous no eol marker";
         keys[i] = Constants.IO_VBS;                    externalNames[i] = "Mainframe_VBS";            names[i++] = "Variable Block Spanned (VBS)";
+        keys[i] = Constants.IO_VB_GNU_COBOL;           externalNames[i] = "Open_Cobol_VB";           names[i++] = "Open Cobol VB";;
         keys[i] = Constants.NULL_INTEGER;              externalNames[i] = null;                     names[i] = null;
-        
+       
         numberOfEntries = i;
         
         Arrays.fill(keysIdx, -1);
@@ -94,6 +95,7 @@ public class BasicConversion implements AbstractConversion {
         	int idx = keys[j];
         	if (idx >= 0 && keysIdx[idx] < 0) {
         		keysIdx[idx] = j;
+ //       		System.out.println("---->>> " + idx + ", " + j + "\t" + externalNames[j] + "\t!\t" + names[j]);
         	}
         }
     }
@@ -324,6 +326,7 @@ public class BasicConversion implements AbstractConversion {
     	if (fileStructure >= 0 && fileStructure < keysIdx.length ) {
     		int idx = keysIdx[fileStructure];
     		if (idx >= 0) {
+//    			System.out.println("===> " + fileStructure + ", " + idx + " " + externalNames[idx]);
     			return externalNames[idx];
     		}
     	}

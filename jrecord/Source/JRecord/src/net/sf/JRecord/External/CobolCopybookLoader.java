@@ -306,8 +306,20 @@ public class CobolCopybookLoader implements CopybookLoader, ICobolCopybookLoader
 	 * @param dropCopybookFromFieldNames
 	 * @see net.sf.JRecord.External.XmlCopybookLoader#setDropCopybookFromFieldNames(boolean)
 	 */
+    @Override
 	public final void setDropCopybookFromFieldNames(
 			boolean dropCopybookFromFieldNames) {
 		xmlLoader.setDropCopybookFromFieldNames(dropCopybookFromFieldNames);
 	}
+
+	/**
+	 * @param keepFiller
+	 * @see net.sf.JRecord.External.XmlCopybookLoader#setKeepFillers(boolean)
+	 */
+    @Override
+	public void setKeepFillers(boolean keepFiller) {
+		xmlLoader.setKeepFillers(keepFiller);
+	}
+	
+	
 }

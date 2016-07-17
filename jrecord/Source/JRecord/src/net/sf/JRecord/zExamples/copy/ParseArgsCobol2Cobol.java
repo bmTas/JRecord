@@ -146,7 +146,7 @@ public class ParseArgsCobol2Cobol {
                 + "\t: Mainframe VB File including BDW (block descriptor word)");
         System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_VB_FUJITSU)
                 + "\t: Fujitsu Cobol VB File "); 
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_VB_OPEN_COBOL)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_VB_GNU_COBOL)
                 + "\t: Gnu Cobol VB File "); 
         System.out.println("    " + ARG_INPUT_FONT   + "\t: Input font or character set");
         System.out.println("    " + ARG_IN_BINARY + "\t: Cobol Dialect");

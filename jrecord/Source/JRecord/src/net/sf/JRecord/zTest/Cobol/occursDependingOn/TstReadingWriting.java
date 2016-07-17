@@ -74,7 +74,7 @@ public class TstReadingWriting extends TestCase {
 	
 	
 	public void test08()  throws IOException, RecordException {
-		tstSales("OccursDepending5.cbl", Constants.IO_VB_OPEN_COBOL, false);
+		tstSales("OccursDepending5.cbl", Constants.IO_VB_GNU_COBOL, false);
 	}
 	
 	private void tst(String copybook, int fileOrg) throws IOException, RecordException {

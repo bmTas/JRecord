@@ -82,15 +82,15 @@ public class ConversionManager implements AbstractManager {
 		registerConverter(fujitsuConverter);
         registerConverter(new BasicConvert(ICopybookDialects.FMT_BIG_ENDIAN, "Big-Endian (Old)", ICopybookDialects.FMT_BIG_ENDIAN, MAINFRAME_BIN_SIZES, false));
 
-        registerConverter(new OpenCobol(ICopybookDialects.FMT_OPEN_COBOL, "Open Cobol Little Endian (Intel)", BIN_SIZES_1248, BIN_SIZES_1248));
-        registerConverter(new OpenCobol(ICopybookDialects.FMT_FS2000, "Open Cobol bs2000 Little Endian (Intel)",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
-        registerConverter(new OpenCobol(ICopybookDialects.FMT_OPEN_COBOL_MVS, "Open Cobol MVS Little Endian (Intel)",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
-        registerConverter(new OpenCobol(ICopybookDialects.FMT_OC_MICRO_FOCUS, "Open Cobol Micro Focus (Intel)",  BIN_SIZES_1_TO_8, NO_SYNC, 1 , 1));
+        registerConverter(new OpenCobol(ICopybookDialects.FMT_OPEN_COBOL, "GNU Cobol Little Endian (Intel)", BIN_SIZES_1248, BIN_SIZES_1248));
+        registerConverter(new OpenCobol(ICopybookDialects.FMT_FS2000, "GNU Cobol bs2000 Little Endian (Intel)",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
+        registerConverter(new OpenCobol(ICopybookDialects.FMT_OPEN_COBOL_MVS, "GNU Cobol MVS Little Endian (Intel)",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
+        registerConverter(new OpenCobol(ICopybookDialects.FMT_OC_MICRO_FOCUS, "GNU Cobol Micro Focus (Intel)",  BIN_SIZES_1_TO_8, NO_SYNC, 1 , 1));
 
-        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_OPEN_COBOL_BE, "Open Cobol Big Endian", BIN_SIZES_1248, BIN_SIZES_1248));
-        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_FS2000_BE, "Open Cobol bs2000 Big Endian",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
-        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_OPEN_COBOL_MVS_BE, "Open Cobol MVS Big Endian",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
-        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_OC_MICRO_FOCUS_BE, "Open Cobol Micro Focus Big E",  BIN_SIZES_1_TO_8, NO_SYNC, 1 , 1));
+        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_OPEN_COBOL_BE, "GNU Cobol Big Endian", BIN_SIZES_1248, BIN_SIZES_1248));
+        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_FS2000_BE, "GNU Cobol bs2000 Big Endian",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
+        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_OPEN_COBOL_MVS_BE, "GNU Cobol MVS Big Endian",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
+        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_OC_MICRO_FOCUS_BE, "GNU Cobol Micro Focus Big E",  BIN_SIZES_1_TO_8, NO_SYNC, 1 , 1));
         registerConverter(new CommaDecimal(ICopybookDialects.FMT_MAINFRAME_COMMA_DECIMAL, mainframeConverter));
         registerConverter(new CommaDecimal(ICopybookDialects.FMT_FUJITSU_COMMA_DECIMAL, fujitsuConverter));
         //registerConverter(new MicroFocusCobol());
@@ -190,12 +190,12 @@ public class ConversionManager implements AbstractManager {
     private static class OpenCobol extends BasicConvert {
     	public OpenCobol(int id, String name,  int[] binarySizes, int[] syncAt) {
     		super(id,  name, ICopybookDialects.FMT_BIG_ENDIAN, binarySizes, syncAt, true, 4, 8);
-    		setDefaultVbFileStructure(Constants.IO_VB_OPEN_COBOL);
+    		setDefaultVbFileStructure(Constants.IO_VB_GNU_COBOL);
     	}
 
     	public OpenCobol(int id, String name,  int[] binarySizes, int[] syncAt, int floatSync, int doubleSync) {
     		super(id,  name, ICopybookDialects.FMT_BIG_ENDIAN, binarySizes, syncAt, true, floatSync, doubleSync);
-    		setDefaultVbFileStructure(Constants.IO_VB_OPEN_COBOL);
+    		setDefaultVbFileStructure(Constants.IO_VB_GNU_COBOL);
     	}
 
     	public int getTypeIdentifier(String usage, String picture, boolean signed,
@@ -220,12 +220,12 @@ public class ConversionManager implements AbstractManager {
     private static class OpenCobolBE extends BasicConvert {
     	public OpenCobolBE(int id, String name,  int[] binarySizes, int[] syncAt) {
     		super(id,  name, ICopybookDialects.FMT_BIG_ENDIAN, binarySizes, syncAt, true, 4, 8);
-    		setDefaultVbFileStructure(Constants.IO_VB_OPEN_COBOL);
+    		setDefaultVbFileStructure(Constants.IO_VB_GNU_COBOL);
    	}
 
     public OpenCobolBE(int id, String name,  int[] binarySizes, int[] syncAt, int floatSync, int doubleSync) {
     		super(id,  name, ICopybookDialects.FMT_BIG_ENDIAN, binarySizes, syncAt, true, floatSync, doubleSync);
-    		setDefaultVbFileStructure(Constants.IO_VB_OPEN_COBOL);
+    		setDefaultVbFileStructure(Constants.IO_VB_GNU_COBOL);
     	}
     }
 }

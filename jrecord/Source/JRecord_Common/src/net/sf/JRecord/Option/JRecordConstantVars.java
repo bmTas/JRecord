@@ -84,7 +84,7 @@ public class JRecordConstantVars {
     public final int IO_VB					 = Constants.IO_VB;
     public final int IO_VB_DUMP				 = Constants.IO_VB_DUMP;
     public final int IO_VB_FUJITSU			 = Constants.IO_VB_FUJITSU;
-    public final int IO_VB_OPEN_COBOL		 = Constants.IO_VB_OPEN_COBOL;                                                                               
+    public final int IO_VB_GNU_COBOL		 = Constants.IO_VB_GNU_COBOL;                                                                               
     public final int IO_BIN_TEXT			 = Constants.IO_BIN_TEXT;
     public final int IO_FIXED_LENGTH_CHAR	 = Constants.IO_FIXED_LENGTH_CHAR		        ;
     @SuppressWarnings("deprecation")

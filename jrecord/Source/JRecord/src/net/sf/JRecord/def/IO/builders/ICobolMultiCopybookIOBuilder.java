@@ -144,6 +144,9 @@ public interface ICobolMultiCopybookIOBuilder extends  ICobolIOBuilder {
 	 * @return IOBuilder for further definition (fluid style)
 	 */
 	public abstract ICobolMultiCopybookIOBuilder setRecordSelectionCurrentCopybook(	ExternalSelection recordSelection);
+	
+	@Override public abstract ICobolMultiCopybookIOBuilder setKeepFillers(boolean keepFillers);
+
 
 
 }

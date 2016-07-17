@@ -87,7 +87,7 @@ public class CobolIoProvider {
      * @param copybookFilename name of the Copybook (or schema file).
      * @param cobolDialect Cobol Dialect. Values include:<ul>
      *   <li><b>ICopybookDialects.FMT_MAINFRAME</b> - Mainframe cobol
-     *   <li><b>ICopybookDialects.FMT_OPEN_COBOL</b> - Open cobol (or GNU Cobol as it is now known).
+     *   <li><b>ICopybookDialects.FMT_GNU_COBOL</b> - GNU cobol 
      *   <li><b>ICopybookDialects.FMT_FUJITSU</b> - Old Free Fujitsu Cobol 3. 
      * </ul>
      * 
@@ -115,7 +115,7 @@ public class CobolIoProvider {
      * @param copybookName name of the Cobol-Copybook.
      * @param cobolDialect Cobol Dialect. Values include:<ul>
      *   <li><b>ICopybookDialects.FMT_MAINFRAME</b> - Mainframe cobol
-     *   <li><b>ICopybookDialects.FMT_OPEN_COBOL</b> - Open cobol (or GNU Cobol as it is now known).
+     *   <li><b>ICopybookDialects.FMT_GNU_COBOL</b> - GNU Cobol 
      *   <li><b>ICopybookDialects.FMT_FUJITSU</b> - Old Free Fujitsu Cobol 3. 
      * </ul>
      * 

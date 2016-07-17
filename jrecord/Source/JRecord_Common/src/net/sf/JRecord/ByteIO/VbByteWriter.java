@@ -33,7 +33,7 @@
 package net.sf.JRecord.ByteIO;
 
 /**
- * Write Array of bytes to either a Mainframe VB file or a Open Cobol VB file. A VB file consists of
+ * Write Array of bytes to either a Mainframe VB file or a GNU Cobol VB file. A VB file consists of
  * 
  * {RDW 1}Data for the Line 1{RDW 1}Data for the Line...
  *
@@ -43,7 +43,7 @@ package net.sf.JRecord.ByteIO;
  *  2 Byte Record Length (Big Endian)
  *  2 Bytes - hex zero.
  *
- * <b>Note:</b> Mainframe RDW includes the RDW length (4 bytes) open cobol's does not 
+ * <b>Note:</b> Mainframe RDW includes the RDW length (4 bytes) GNU cobol's does not 
  * 
  * @author Bruce Martin
  *

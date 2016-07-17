@@ -67,7 +67,7 @@ public class TstIOProvider extends TestCase {
 		new RWDetails(Constants.IO_VB           , LineReaderWrapper.class, VbByteReader.class),       
 		new RWDetails(Constants.IO_VB_DUMP      , LineReaderWrapper.class, VbDumpByteReader.class),       
 		new RWDetails(Constants.IO_VB_FUJITSU   , LineReaderWrapper.class, FujitsuVbByteReader.class),       
-		new RWDetails(Constants.IO_VB_OPEN_COBOL, LineReaderWrapper.class, VbByteReader.class),       
+		new RWDetails(Constants.IO_VB_GNU_COBOL, LineReaderWrapper.class, VbByteReader.class),       
 		new RWDetails(Constants.IO_BIN_TEXT     , BinTextReader.class,     ByteTextReader.class),
 	};
 	
@@ -76,7 +76,7 @@ public class TstIOProvider extends TestCase {
 		new RWDetails(Constants.IO_VB           , LineReaderWrapper.class, VbByteReader.class),       
 		new RWDetails(Constants.IO_VB_DUMP      , LineReaderWrapper.class, VbDumpByteReader.class),       
 		new RWDetails(Constants.IO_VB_FUJITSU   , LineReaderWrapper.class, FujitsuVbByteReader.class),       
-		new RWDetails(Constants.IO_VB_OPEN_COBOL, LineReaderWrapper.class, VbByteReader.class),       
+		new RWDetails(Constants.IO_VB_GNU_COBOL, LineReaderWrapper.class, VbByteReader.class),       
 		new RWDetails(Constants.IO_BIN_TEXT     , LineReaderWrapper.class, ByteTextReader.class),
 	};
 
@@ -85,7 +85,7 @@ public class TstIOProvider extends TestCase {
 		new RWDetails(Constants.IO_VB           , LineWriterWrapper.class, VbByteWriter.class),       
 		new RWDetails(Constants.IO_VB_DUMP      , LineWriterWrapper.class, VbDumpByteWriter.class),       
 		new RWDetails(Constants.IO_VB_FUJITSU   , LineWriterWrapper.class, FujitsuVbByteWriter.class),       
-		new RWDetails(Constants.IO_VB_OPEN_COBOL, LineWriterWrapper.class, VbByteWriter.class),       
+		new RWDetails(Constants.IO_VB_GNU_COBOL, LineWriterWrapper.class, VbByteWriter.class),       
 		new RWDetails(Constants.IO_BIN_TEXT     , BinTextWriter.class, ByteTextWriter.class),
 	};
 

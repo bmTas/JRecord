@@ -150,7 +150,7 @@ public class TstSetAttributes01 extends TestCase {
 				Constants.IO_NAME_1ST_LINE, 
 				Constants.IO_FIXED_LENGTH, Constants.IO_FIXED_LENGTH_RECORDS,
 				Constants.IO_VB, Constants.IO_VB_DUMP, Constants.IO_VB_FUJITSU,
-				Constants.IO_VB_OPEN_COBOL
+				Constants.IO_VB_GNU_COBOL
 		};
 		
 		for (int fs : fileStructures) {
@@ -278,7 +278,7 @@ public class TstSetAttributes01 extends TestCase {
 				Constants.IO_NAME_1ST_LINE, 
 				Constants.IO_FIXED_LENGTH, Constants.IO_FIXED_LENGTH_RECORDS,
 				Constants.IO_VB, Constants.IO_VB_DUMP, Constants.IO_VB_FUJITSU,
-				Constants.IO_VB_OPEN_COBOL
+				Constants.IO_VB_GNU_COBOL
 		};
 		ByteArrayInputStream is = new ByteArrayInputStream(new byte[]{});
 		

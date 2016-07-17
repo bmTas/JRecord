@@ -341,7 +341,7 @@ public class TstCobolIoBuilderIO extends TestCase {
 	 */
 	private void tstGnuCobolVBWriter(ICobolIOBuilder ioBuilder)
 			throws IOException, RecordException {
-		ioBuilder	.setFileOrganization(Constants.IO_VB_OPEN_COBOL)
+		ioBuilder	.setFileOrganization(Constants.IO_VB_GNU_COBOL)
 					.setFont("CP037");
 		
 		List<AbstractLine> lines = getLines(ioBuilder);

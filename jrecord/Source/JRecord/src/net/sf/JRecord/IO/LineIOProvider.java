@@ -104,7 +104,7 @@ public class LineIOProvider implements AbstractManager {
     	Constants.IO_VB,
     	Constants.IO_VB_DUMP,
     	Constants.IO_VB_FUJITSU,
-    	Constants.IO_VB_OPEN_COBOL};
+    	Constants.IO_VB_GNU_COBOL};
     /**
      * Was used in the RecordEditor, not needed for jarecord
      */
@@ -117,7 +117,7 @@ public class LineIOProvider implements AbstractManager {
 	   String rdLineBin = "Line based Binary";
 	   String rdVb = "Mainframe VB (rdw based) Binary";
 	   String rdVbDump = "Mainframe VB Dump: includes Block length";
-	   String rdOcVb = "Open Cobol VB";
+	   String rdOcVb = "GNU Cobol VB";
 
 	   FILE_STRUCTURE_NAME = new String[] {
 			   rdDefault,
@@ -444,7 +444,7 @@ public class LineIOProvider implements AbstractManager {
 //    	case Constants.IO_VB:	
 //    	case Constants.IO_VB_DUMP:	
 //    	case Constants.IO_VB_FUJITSU:	
-//    	case Constants.IO_VB_OPEN_COBOL:	
+//    	case Constants.IO_VB_GNU_COBOL:	
 //    		return DEFAULT_PROVIDER;
       	}
     	if (CommonBits.getLineType(fileStructure) == CommonBits.LT_TEXT) {

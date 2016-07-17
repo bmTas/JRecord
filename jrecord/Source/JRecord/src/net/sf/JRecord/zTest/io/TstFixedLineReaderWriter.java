@@ -101,7 +101,9 @@ public class TstFixedLineReaderWriter extends TestCase {
 						b[j]);
 			}
 			for (int j = en1; j < en2; j++) {
-				assertEquals("Tst2: " + size + " - "+ i + ", " + j, 0, b[j]);
+				if (b[j] != 32) { //Space
+					assertEquals("Tst2: " + size + " - "+ i + ", " + j, 0, b[j]);
+				}
 			}
 		}
 	}
@@ -125,7 +127,9 @@ public class TstFixedLineReaderWriter extends TestCase {
 					assertEquals(expected[j], b[j]);
 				}
 				for (int j = expected.length; j < b.length; j++) {
-					assertEquals(0, b[j]);
+					if (b[j] != 32) { //Space
+						assertEquals(0, b[j]);
+					}
 				}
 				assertEquals(size, b.length);
 				i += 1;

@@ -249,9 +249,10 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 		switch (pLayoutType) {
 			case Constants.rtGroupOfBinaryRecords:
 			case Constants.rtFixedLengthRecords:
-			case Constants.rtBinaryRecord:
+//			case Constants.rtBinaryRecord:
 			    binary = true;
 			break;
+			case Constants.rtBinaryRecord:
             case Constants.rtGroupOfRecords:
 			case Constants.rtRecordLayout:
 				binary = binaryField;

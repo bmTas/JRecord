@@ -38,12 +38,12 @@ import net.sf.cb2xml.def.NumericDefinition;
  *
  * BasicNumericDefinition("Mainframe", BasicNumericDefinition.MAINFRAME_SIZES, BasicNumericDefinition.MAINFRAME_SYNC, false, 4, 4)
  * BasicNumericDefinition("Fujitsu", BasicNumericDefinition.FUJITSU_SIZES, BasicNumericDefinition.FUJITSU_SYNC, true, 4, 8)
- * BasicNumericDefinition("Open Cobol", BasicNumericDefinition.OPEN_COBOL_SIZES, BasicNumericDefinition.OPEN_COBOL_SYNC, true, 4, 8)
- * BasicNumericDefinition("Open Cobol bs2000", BasicNumericDefinition.BS2000_SIZES, BasicNumericDefinition.BS2000_SYNC, true, 4, 8)
- * BasicNumericDefinition("Open Cobol MVS", BasicNumericDefinition.OPEN_COBOL_MVS_SIZES,
- *                                    BasicNumericDefinition.OPEN_COBOL_MVS_SYNC, true, 4, 8)
- * BasicNumericDefinition("Open Cobol Micro Focus", BasicNumericDefinition.MICROFOCUS_SIZES,
- *                                     BasicNumericDefinition.MICROFOCUS_SIZES_SYNC, , true, 1, 1)
+ * BasicNumericDefinition("GNU Cobol", BasicNumericDefinition.OPEN_COBOL_SIZES, BasicNumericDefinition.OPEN_COBOL_SYNC, true, 4, 8)
+ * BasicNumericDefinition("GNU Cobol bs2000", BasicNumericDefinition.BS2000_SIZES, BasicNumericDefinition.BS2000_SYNC, true, 4, 8)
+ * BasicNumericDefinition("GNU Cobol MVS", BasicNumericDefinition.OPEN_COBOL_MVS_SIZES,
+ *                                   BasicNumericDefinition.OPEN_COBOL_MVS_SYNC, true, 4, 8)
+ * BasicNumericDefinition("GNU Cobol Micro Focus", BasicNumericDefinition.MICROFOCUS_SIZES,
+ *                                   BasicNumericDefinition.MICROFOCUS_SIZES_SYNC, , true, 1, 1)
  *
  *
  * @author bm

@@ -48,6 +48,8 @@ public class CblIOBuilderMultiSchemaBase<IOB> extends CblIOBuilderBase<IOB> impl
 	private final String copybookname;
 	final ICopybookLoaderStream loader;
 	final ArrayList<ICreateExternal> copybooks = new ArrayList<ICreateExternal>();
+	
+	boolean keepFillers = false;
 
 
 	/**
@@ -99,7 +101,9 @@ public class CblIOBuilderMultiSchemaBase<IOB> extends CblIOBuilderBase<IOB> impl
 			throw new RecordException("No copybooks have been specified");
 		}
 		if (loader instanceof ISetDropCopybookName) { 
-			((ISetDropCopybookName) loader).setDropCopybookFromFieldNames(super.dropCopybookNameFromFields);
+			ISetDropCopybookName xLoader = (ISetDropCopybookName) loader;
+			xLoader.setDropCopybookFromFieldNames(super.dropCopybookNameFromFields);
+			xLoader.setKeepFillers(keepFillers);
 		}
 		try {
 			 
@@ -147,6 +151,15 @@ public class CblIOBuilderMultiSchemaBase<IOB> extends CblIOBuilderBase<IOB> impl
 		return super.self;
 	}
 	
+	/**
+	 * @param keepFillers the keepFillers to set
+	 */
+	public final IOB setKeepFillers(boolean keepFillers) {
+		this.keepFillers = keepFillers;
+		
+		return super.self;
+	}
+
 	public IOB setRecordSelectionCurrentCopybook(ExternalSelection recordSelection) {
 		if (copybooks.size() == 0) {
 			throw new RuntimeException("You can only use setRecordSelectionCurrentCopybook after you have added a copybook !!!");

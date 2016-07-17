@@ -273,7 +273,7 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
                 + "\t: Mainframe VB File including BDW (block descriptor word)");
         System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_VB_FUJITSU)
                 + "\t: Fujitsu Cobol VB File "); 
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_VB_OPEN_COBOL)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_VB_GNU_COBOL)
                 + "\t: Gnu Cobol VB File "); 
         //System.out.println("        " +  Common.NAME_1ST_LINE_IO
         //      + " : CSV file with names on first line");

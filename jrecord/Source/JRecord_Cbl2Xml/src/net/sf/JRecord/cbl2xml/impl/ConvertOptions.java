@@ -63,8 +63,10 @@ public class ConvertOptions {
 	private static final Opts[] FILE_ORGANISATION_OPTS = {
 		new Opts("Text", "    ", "Standard Windows/Unix text file (single byte characterset)", Constants.IO_BIN_TEXT),
 		new Opts("FixedWidth",   "File where lines (records) are the same length no \\n", Constants.IO_FIXED_LENGTH),
+		new Opts("UnicodeText", "    ", "Standard Windows/Unix Unicode text file", Constants.IO_UNICODE_TEXT),
+		new Opts("FixedText", "    ", "Fixed width Text (possibly unicode)", Constants.IO_FIXED_LENGTH_CHAR),
 		new Opts("Mainframe_VB", "Mainframe VB, file consists of <record-length><record-data>", Constants.IO_VB),
-		new Opts("GNUCobol_VB",  "GNU Cobol VB, file consists of <record-length><record-data>", Constants.IO_VB_OPEN_COBOL)
+		new Opts("GNUCobol_VB",  "GNU Cobol VB, file consists of <record-length><record-data>", Constants.IO_VB_GNU_COBOL)
 	};
 
 	private static final Opts[] DIALECT_OPTS = {

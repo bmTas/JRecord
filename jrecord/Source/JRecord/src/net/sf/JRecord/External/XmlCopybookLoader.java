@@ -130,6 +130,8 @@ public class XmlCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
     private ArrayList<String> groupName;
     
     boolean dropCopybookFromFieldNames = CommonBits.isDropCopybookFromFieldNames();
+    
+    boolean keepFiller = false;
 
 
     /**
@@ -315,7 +317,10 @@ public class XmlCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
             if (parentLayout == null) {
                 parentLayout = currentLayout;
             }
-            parentLayout.dropFiller();
+            
+            if (! keepFiller) {
+            	parentLayout.dropFiller();
+            }
 
             boolean multipleRecordLengths = false,
                     binary = false;
@@ -1027,5 +1032,15 @@ public class XmlCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
 	public final void setDropCopybookFromFieldNames(
 			boolean dropCopybookFromFieldNames) {
 		this.dropCopybookFromFieldNames = dropCopybookFromFieldNames;
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.External.ISetDropCopybookName#setKeepFillers(boolean)
+	 */
+	@Override
+	public void setKeepFillers(boolean keepFiller) {
+		this.keepFiller = keepFiller;
 	}
 }

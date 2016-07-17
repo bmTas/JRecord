@@ -62,7 +62,7 @@ public class TstLoadingCobol02 extends TestCase {
 		Constants.IO_FIXED_LENGTH,
 		Constants.IO_VB,
 		Constants.IO_VB_DUMP,
-		Constants.IO_VB_OPEN_COBOL,
+		Constants.IO_VB_GNU_COBOL,
 	};
 	
 	private static final FieldDetail[][] FIELDS = {{

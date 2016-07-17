@@ -43,4 +43,6 @@ public interface ISetDropCopybookName {
 	 */
 	public abstract void setSaveCb2xmlDocument(boolean saveCb2xml);
 
+	
+	public abstract void setKeepFillers(boolean keepFiller);
 }

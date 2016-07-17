@@ -149,7 +149,7 @@ public class TstCobolIOBuilderSchema extends TestCase {
 		
 		tstFileBldr(data2);
 		TstData data3 = new TstData("test01b", Cb2xmlConstants.USE_STANDARD_COLUMNS, ICopybookDialects.FMT_MAINFRAME, 
-				Constants.IO_VB_OPEN_COBOL, CopybookLoader.SPLIT_NONE, "", false,
+				Constants.IO_VB_GNU_COBOL, CopybookLoader.SPLIT_NONE, "", false,
 				test01);
 		
 		tstFileBldr(data3);
