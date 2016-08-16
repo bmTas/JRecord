@@ -60,6 +60,8 @@ import junit.framework.TestCase;
  */
 public class TstCobolIoBuilderIO extends TestCase {
 
+	private static final int DTAR020_RECORD_LENGTH = 27;
+
 	private static final String[][] EXPECTED = {
 		{"63604808", "20", "40118", "170", "1", "4.87"},
 		{"69684558", "20", "40118", "280", "1", "19.00"},
@@ -190,11 +192,11 @@ public class TstCobolIoBuilderIO extends TestCase {
     	chkDTAR020_Layout(l);
 	}
 
-	   private void chkDTAR020_Layout(LayoutDetail l) { 	
+    private void chkDTAR020_Layout(LayoutDetail l) { 	
 	    	assertEquals(EXPECTED_DTAR020.length, l.getRecord(0).getFieldCount());
 	    	assertEquals("CP037", l.getFontName());
 	    	assertEquals(1, l.getRecordCount());
-	    	assertEquals(27, l.getMaximumRecordLength());
+	    	assertEquals(DTAR020_RECORD_LENGTH, l.getMaximumRecordLength());
 	    	assertEquals(Constants.IO_FIXED_LENGTH, l.getFileStructure());
 	    	assertEquals(Constants.rtBinaryRecord, l.getLayoutType());
 	 }
@@ -208,8 +210,8 @@ public class TstCobolIoBuilderIO extends TestCase {
 											.setFileOrganization(Constants.IO_FIXED_LENGTH)
 											.setFont("CP037");
 		String dataFile = this.getClass().getResource("DTAR020_tst1.bin").getFile();
-		check(ioBuilder.newReader(dataFile));
-		check(ioBuilder.newReader(new FileInputStream(dataFile)));
+		tstReader(ioBuilder.newReader(dataFile));
+		tstReader(ioBuilder.newReader(new FileInputStream(dataFile)));
 	}
 	
 	
@@ -222,8 +224,40 @@ public class TstCobolIoBuilderIO extends TestCase {
 											.setFileOrganization(Constants.IO_FIXED_LENGTH)
 											.setFont("CP037");
 		String dataFile = this.getClass().getResource("DTAR020_tst1.bin").getFile();
-		check(ioBuilder.newReader(dataFile));
-		check(ioBuilder.newReader(new FileInputStream(dataFile)));
+		tstReader(ioBuilder.newReader(dataFile));
+		tstReader(ioBuilder.newReader(new FileInputStream(dataFile)));
+	}
+
+	public void testReader3() throws FileNotFoundException, IOException, RecordException {
+		tstFixedLengthReader(DTAR020_RECORD_LENGTH);
+		tstFixedLengthReader(31);
+		tstFixedLengthReader(37);
+		tstFixedLengthReader(-11);
+	}
+
+	/**
+	 * @param recordLength
+	 * @throws IOException
+	 * @throws RecordException
+	 */
+	public void tstFixedLengthReader(int recordLength) throws IOException,
+			RecordException {
+		ICobolIOBuilder ioBuilder = JRecordInterface1.COBOL
+				.newIOBuilder(new ByteArrayInputStream(COPBOOK_BYTES), "DTAR020")
+					.setFileOrganization(Constants.IO_FIXED_LENGTH)
+					.setRecordLength(recordLength)
+					.setFont("CP037");
+		//String dataFile = this.getClass().getResource("DTAR020_tst1.bin").getFile();
+		
+		int reclen = Math.max(DTAR020_RECORD_LENGTH, recordLength);
+		assertEquals(recordLength, ioBuilder.getExternalRecord().getRecordLength());
+		assertEquals(reclen, ioBuilder.getLayout().getMaximumRecordLength());
+
+		
+		List<AbstractLine> lines = getLines(ioBuilder);
+		byte[] bytes = writeList(ioBuilder, lines);
+
+		tstReader(ioBuilder.newReader(new ByteArrayInputStream(bytes)));
 	}
 
 	/**
@@ -234,7 +268,7 @@ public class TstCobolIoBuilderIO extends TestCase {
 				.newIOBuilder(new ByteArrayInputStream(COPBOOK_BYTES), "DTAR020")
 					.setFileOrganization(Constants.IO_FIXED_LENGTH)
 					.setFont("CP037");
-		tstWrite(ioBuilder);
+		tstWrite(ioBuilder, DTAR020_RECORD_LENGTH);
 	}
 
 	/**
@@ -245,10 +279,39 @@ public class TstCobolIoBuilderIO extends TestCase {
 				.newIOBuilder(new ByteArrayInputStream(COPBOOK_BYTES), "DTAR020")
 					.setFileOrganization(Constants.IO_FIXED_LENGTH)
 					.setFont("CP037");
-		tstWrite(ioBuilder);
+		tstWrite(ioBuilder, DTAR020_RECORD_LENGTH);
 	}
 
-	private void tstWrite(ICobolIOBuilder ioBuilder) throws IOException, RecordException {
+	public void testFixedWriter3() throws IOException, RecordException {
+		tstFixedWidthWriter(DTAR020_RECORD_LENGTH);
+		tstFixedWidthWriter(37);
+		tstFixedWidthWriter(31);
+		tstFixedWidthWriter(-121);
+	}
+
+	/**
+	 * @param recordLength
+	 * @throws IOException
+	 * @throws RecordException
+	 */
+	public void tstFixedWidthWriter(int recordLength) throws IOException,
+			RecordException {
+		ICobolIOBuilder ioBuilder = JRecordInterface1.COBOL
+				.newIOBuilder(new ByteArrayInputStream(COPBOOK_BYTES), "DTAR020")
+					.setFileOrganization(Constants.IO_FIXED_LENGTH)
+					.setRecordLength(recordLength)
+					.setFont("CP037");
+		
+		int reclen = Math.max(DTAR020_RECORD_LENGTH, recordLength);
+		assertEquals(recordLength, ioBuilder.getExternalRecord().getRecordLength());
+		assertEquals(reclen, ioBuilder.getLayout().getMaximumRecordLength());
+	
+		
+		tstWrite(ioBuilder, DTAR020_RECORD_LENGTH);
+	}
+
+
+	private void tstWrite(ICobolIOBuilder ioBuilder, int tstLength) throws IOException, RecordException {
 		List<AbstractLine> lines = getLines(ioBuilder);
 		byte[] bytes = writeList(ioBuilder, lines);
 		int recordLength = ioBuilder.getLayout().getMaximumRecordLength();
@@ -256,14 +319,23 @@ public class TstCobolIoBuilderIO extends TestCase {
 		
 		for (int i = 0; i < lines.size(); i++) {
 			System.arraycopy(bytes, i* recordLength, rec, 0, recordLength);
-			assertTrue("Testing Line: " + i, Arrays.equals(lines.get(i).getData(), rec));
+			boolean ok = true;
+			byte[] b = lines.get(i).getData();
+			
+			for (int j = 0; j < tstLength; j++) {
+				if (b[j] != rec[j]) {
+					ok = false;
+					System.out.println("  ** Char: " + j + " " + b[j] + " <> " + rec[j]);
+				}
+			}
+			assertTrue("Testing Line: " + i, ok);
 		}
 		
-		check(ioBuilder.newReader(new ByteArrayInputStream(bytes)));
+		tstReader(ioBuilder.newReader(new ByteArrayInputStream(bytes)));
 		
 		String tempFile = TstConstants.TEMP_DIRECTORY + "fbDTAR020_tst1.bin";
 		writeLines(lines, ioBuilder.newWriter(tempFile));
-		check(ioBuilder.newReader(tempFile));
+		tstReader(ioBuilder.newReader(tempFile));
 	}
 	
 	/**
@@ -299,7 +371,7 @@ public class TstCobolIoBuilderIO extends TestCase {
 		int recordLength = ioBuilder.getLayout().getMaximumRecordLength();
 		byte[] rec = new byte[recordLength];
 
-		check(ioBuilder.newReader(new ByteArrayInputStream(bytes)));
+		tstReader(ioBuilder.newReader(new ByteArrayInputStream(bytes)));
 
 		for (int i = 0; i < lines.size(); i++) {
 			int recordStart = i * (recordLength + 4);
@@ -313,8 +385,8 @@ public class TstCobolIoBuilderIO extends TestCase {
 		
 		String tempFile = TstConstants.TEMP_DIRECTORY + "vbDTAR020_tst1.bin";
 		writeLines(lines, ioBuilder.newWriter(tempFile));
-		check(ioBuilder.newReader(tempFile));
-		check(ioBuilder.newReader(new FileInputStream(tempFile)));
+		tstReader(ioBuilder.newReader(tempFile));
+		tstReader(ioBuilder.newReader(new FileInputStream(tempFile)));
 	}
 	
 	
@@ -349,7 +421,7 @@ public class TstCobolIoBuilderIO extends TestCase {
 		int recordLength = ioBuilder.getLayout().getMaximumRecordLength();
 		byte[] rec = new byte[recordLength];
 
-		check(ioBuilder.newReader(new ByteArrayInputStream(bytes)));
+		tstReader(ioBuilder.newReader(new ByteArrayInputStream(bytes)));
 
 		for (int i = 0; i < lines.size(); i++) {
 			int recordStart = i * (recordLength + 4);
@@ -400,7 +472,7 @@ public class TstCobolIoBuilderIO extends TestCase {
 		return lines;
 	}
 	
-	private void check(AbstractLineReader r) throws IOException {
+	private void tstReader(AbstractLineReader r) throws IOException {
 		LayoutDetail schema = r.getLayout();
 		RecordDetail rec = schema.getRecord(0);
 		AbstractLine line;

@@ -206,6 +206,15 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 				if (s != null && ! "".equals(s)) {
 					childRec.setSystemName(s);
 				}
+				
+				s = line.getFieldValueIfExists(Constants.RE_XML_RECORDLENTH).asString();
+				if (s != null && ! "".equals(s)) {
+					try {
+						childRec.setRecordLength(Integer.parseInt(s));
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
+					}
+				}
 				//rec.setSystem((int) line.getFieldValue(Constants.RE_XML_COPYBOOK).asLong());
 	
 	

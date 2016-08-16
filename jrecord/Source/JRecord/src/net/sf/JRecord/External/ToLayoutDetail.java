@@ -130,7 +130,8 @@ public class ToLayoutDetail {
 	            recordDefinition.getRecordDecider(),
 	            recordDefinition.getFileStructure(),
 	            null,
-	            recordDefinition.isInitToSpaces());
+	            recordDefinition.isInitToSpaces(),
+	            recordDefinition.getRecordLength());
 	}
 
 

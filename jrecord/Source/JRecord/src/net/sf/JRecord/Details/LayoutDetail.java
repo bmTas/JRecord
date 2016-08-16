@@ -57,11 +57,13 @@ import net.sf.JRecord.CsvParser.ICsvLineParser;
 import net.sf.JRecord.CsvParser.BinaryCsvParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.CsvParser.ParserManager;
+import net.sf.JRecord.IO.builders.SchemaIOBuilder;
 import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.Option.Options;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.cgen.defc.ILayoutDetails4gen;
+import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
 
 
 
@@ -166,7 +168,8 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	        		   final RecordDecider pRecordDecider,
 	        		   final int pFileStructure) 
 	{
-		this(pLayoutName, pRecords, pDescription, pLayoutType, pRecordSep, pEolIndicator, pFontName, pRecordDecider, pFileStructure, null, false);
+		this(	pLayoutName, pRecords, pDescription, pLayoutType, pRecordSep, pEolIndicator, 
+				pFontName, pRecordDecider, pFileStructure, null, false, -1);
 	}
 	
 	public LayoutDetail(final String pLayoutName,
@@ -179,7 +182,8 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
  		   final RecordDecider pRecordDecider,
  		   final int pFileStructure,
  		   final IRecordPositionOption rpOpt,
- 		         boolean  initToSpaces) {
+ 		         boolean  initToSpaces,
+ 		         int recordLength) {
 	    super();
 
         int i, j;
@@ -303,7 +307,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 			maxSize = java.lang.Math.max(maxSize, records[i].getLength());
 			minSize = java.lang.Math.min(minSize, records[i].getMinumumPossibleLength());
 		}
-		maxPossibleLength = maxSize;
+		maxPossibleLength = recordLength>= 0 ? recordLength : maxSize;
 		minPossibleLength = minSize;
 
 	    this.headerTrailerRecords = hasFilePosRecords;
@@ -1124,5 +1128,14 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 		}
 		return f;
 	}
+	
+	/**
+	 * Convert it the ExternalRecord Into an IOBuilder
+	 * @return
+	 */
+	public final ISchemaIOBuilder asIOBuilder() {
+		return SchemaIOBuilder.newSchemaIOBuilder(this);
+	}
+
 }
 

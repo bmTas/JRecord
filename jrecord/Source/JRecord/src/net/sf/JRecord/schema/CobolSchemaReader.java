@@ -43,7 +43,7 @@ import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
-import net.sf.JRecord.External.Cb2xmlDocument;
+import net.sf.JRecord.Extern.Cb2xmlDocument;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;

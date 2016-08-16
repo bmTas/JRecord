@@ -177,6 +177,13 @@ public class RecordEditorXmlWriter implements CopybookWriter {
     	   toPrint = ((ExternalGroupSelection) xSel).getSize() > 0;
        }
        writeAttr(writer, Constants.RE_XML_LINE_NO_FIELD_NAME, copybook.getLineNumberOfFieldNames(), 0);
+       int recordLength = copybook.getRecordLength();
+       int maxLength = getRecLength(copybook);
+         
+       
+       if (recordLength > 0 && recordLength != maxLength) {
+    	   writeAttr(writer, Constants.RE_XML_RECORDLENTH, recordLength, 0);
+       }
 
        if (copybook.getNumberOfRecords() > 0) {
     	   writer.writeStartElement(Constants.RE_XML_RECORDS);
@@ -210,6 +217,19 @@ public class RecordEditorXmlWriter implements CopybookWriter {
        writer.writeEndElement();
  	}
 
+	private int getRecLength(ExternalRecord r) {
+		int ret = 0;
+		if (r.getNumberOfRecordFields() > 0) {
+			ExternalField recordField = r.getRecordField(r.getNumberOfRecordFields() - 1);
+			ret = recordField.getPos() + recordField.getLen() - 1;
+		}
+     
+        for (int i = 0; i < r.getNumberOfRecords(); i++) {
+		   ret = Math.max(ret, getRecLength(r. getRecord(i)));
+	    }
+        return ret;
+	}
+	
 	private String encodeDelim(String delim) {
 		if ("\t".equals(delim)) {
 			delim = "<TAB>";

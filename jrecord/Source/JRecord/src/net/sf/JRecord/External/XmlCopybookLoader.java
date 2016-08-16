@@ -64,6 +64,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.Extern.Cb2xmlDocument;
 import net.sf.JRecord.External.Def.DependingOn;
 import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.External.Def.ExternalField;
@@ -132,6 +133,7 @@ public class XmlCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
     boolean dropCopybookFromFieldNames = CommonBits.isDropCopybookFromFieldNames();
     
     boolean keepFiller = false;
+    private final boolean useJRecordNaming = true;
 
 
     /**
@@ -269,8 +271,12 @@ public class XmlCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
     		system   = systemId;
     		parentLayout = null;
 
+            if (useJRecordNaming) {
+    			lCopyBookPref = pCopyBook.toUpperCase() + "-";
+    		} else {
+    			lCopyBookPref = pCopyBook + "-";
+    		}
 
-            lCopyBookPref = pCopyBook.toUpperCase() + "-";
             this.splitCopybook = pSplitCopybook;
 
             this.redefinedField = "";
@@ -339,7 +345,7 @@ public class XmlCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
             }
             parentLayout.setFileStructure(numTranslator.getFileStructure(multipleRecordLengths, binary));
             freeDBs(pDbIdx);
-            
+       
             if (saveCb2xml) {
             	parentLayout.addCb2xmlDocument(new Cb2xmlDocument(pSplitCopybook, splitAtLevel, pCopyBookXml));
             }
@@ -715,8 +721,11 @@ public class XmlCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
         }
 
 
-//        name = copyBookPref.trim() + recordName.trim();
+		if (useJRecordNaming) {
         name = recordName.trim();
+    	} else {
+     	   name = copyBookPref.trim() + recordName.trim();
+		}
         if (!copyBookPref.endsWith("-") && !copyBookPref.endsWith("_")) {
             name = copyBookPref + " " + recordName;
         }

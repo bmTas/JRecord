@@ -61,7 +61,7 @@ public abstract class ListLine extends BaseLine {
 	
 	        try { ret = super.clone(); } catch (Exception e) {}
 	
-	        if (! (ret instanceof XmlLine)) {
+	        if (! (ret instanceof ListLine)) {
 	        	XmlLine line = new XmlLine(layout, preferredLayout);
 	        	for (int i = 0; i < fields.size(); i++) {
 	//        		Object o = fields.get(i);

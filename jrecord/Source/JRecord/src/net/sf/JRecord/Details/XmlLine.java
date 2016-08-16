@@ -97,6 +97,7 @@ public class XmlLine extends ListLine {
         //   	System.out.print("getField " + recordIdx + " " + fieldIdx);
            	if (useField4Index && recordIdx < layout.getRecordCount()
            	&& fieldIdx < layout.getRecord(recordIdx).getFieldCount()
+       	&& fieldIdx >= 0
            	&& layout.getRecord(recordIdx).getField(fieldIdx).getPos() >= 0) {
            		idx = layout.getRecord(recordIdx).getField(fieldIdx).getPos();
            	}

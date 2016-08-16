@@ -83,6 +83,7 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 	int fileOrganization = Constants.NULL_INTEGER;
 	boolean dropCopybookNameFromFields = false;
 	Boolean initToSpaces = null;
+	int recordLength = -1;
 	 
 	
     AbsSSLogger log = DEFAULT_LOG; 
@@ -323,6 +324,12 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 		return self;
 	}
 
+	
+	public IOB setRecordLength(int recordLength) {
+		this.recordLength = recordLength;
+		return self;
+	}
+
 
 	/**
 	 * @param initToSpaces the initToSpaces to set
@@ -348,8 +355,9 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 
 	public final ExternalRecord getExternalRecord() throws IOException  {			
 		ExternalRecord schema =  getExternalRecordImpl();
-		
+				
 		schema.setRecordDecider(recordDecider);
+		schema.setRecordLength(recordLength);
 		//schema.setFontName(getFont());
 		
 		if (fileOrganization >= 0) {

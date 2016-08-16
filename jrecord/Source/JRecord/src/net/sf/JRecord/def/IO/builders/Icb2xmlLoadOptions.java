@@ -259,6 +259,13 @@ public interface Icb2xmlLoadOptions {
 	public abstract Icb2xmlLoadOptions setRecordSelection(String recordName, ExternalSelection selectionCriteria);
 	
 	/**
+	 * Set the Record Length for a fixed width file
+	 * @param recordLength Record Length 
+	 * @return this item for more updates
+	 */
+	public abstract Icb2xmlLoadOptions setRecordLength(int recordLength);
+
+	/**
 	 * Assign a class that can work out what type of record it is
 	 * @param recordDecider a Record-Decider
 	 * @return this

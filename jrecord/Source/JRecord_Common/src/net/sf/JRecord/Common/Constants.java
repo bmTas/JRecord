@@ -196,6 +196,7 @@ public interface Constants {
 	public static final String RE_XML_PARENT      = "PARENT";
 	public static final String RE_XML_QUOTE       = "QUOTE";
 	public static final String RE_XML_RECORDNAME  = "RECORDNAME";
+	public static final String RE_XML_RECORDLENTH = "RECORDLENGTH";
 	public static final String RE_XML_RECORDTYPE  = "RECORDTYPE";
 	public static final String RE_XML_EMBEDDED_CR = "EMBEDDEDCR";
 	public static final String RE_XML_INIT_SPACES = "INITSPACES";

@@ -47,7 +47,9 @@ public class CsvIOBuilder extends CblIOBuilderBase<ICsvIOBuilder> implements ICs
 	private CsvIOBuilder(String delim, String quote) {
 
 		super(0);
-		setFileOrganization(Constants.IO_UNICODE_NAME_1ST_LINE);
+		super.setFileOrganization(Constants.IO_UNICODE_NAME_1ST_LINE);
+		super.setFont("");
+
 		record.setQuote(quote);
 		record.setDelimiter(delim);
 		record.setRecordType(Constants.rtDelimitedAndQuote);

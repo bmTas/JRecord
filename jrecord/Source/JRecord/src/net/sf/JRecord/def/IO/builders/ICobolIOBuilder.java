@@ -98,6 +98,8 @@ public interface ICobolIOBuilder extends IIOBuilder, Icb2xmlLoadOptions {
 	@Override public abstract ICobolIOBuilder setRecordParent(String recordName, String parentName);
 
 	@Override public abstract ICobolIOBuilder setRecordDecider(RecordDecider recordDecider);
+	
+	@Override public abstract ICobolIOBuilder setRecordLength(int recordLength);
 
 	/**
 	 * Cobol is a column-sensitive language; Traditionally columns 1-5 are used for line-numbers (or version comment)

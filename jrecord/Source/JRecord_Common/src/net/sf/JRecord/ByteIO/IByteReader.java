@@ -49,7 +49,7 @@ public interface IByteReader {
 	public abstract void open(InputStream inputStream) throws IOException;
 
 	/**
-	 * Read one line from the input file
+	 * Read one line from the input file as an array of bytes
 	 *
 	 * @return line read in
 	 *
