@@ -32,17 +32,27 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ICopybookLoaderStream;
 import net.sf.JRecord.External.ISetDropCopybookName;
+import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 
 public abstract class CreateExternalBase {
 	final IGetLoader parent;
+	private final String recordName;
+	private ExternalRecord lastExternalRecord;
 
 	int splitCopybook = CopybookLoader.SPLIT_NONE;
 	private ExternalSelection recordSelection = null;
+	private IStartingPosition startPosition = new IStartingPosition() {		
+		@Override public int calculateStartingPosition() {
+			return 0;
+		}
+	};
+	
 
-	protected CreateExternalBase(IGetLoader parent) {
+	protected CreateExternalBase(IGetLoader parent, String name) {
 		super();
 		this.parent = parent;
+		this.recordName = name;
 	}
 
 	
@@ -62,6 +72,13 @@ public abstract class CreateExternalBase {
 		doCheck();
 	}
 	
+	
+	
+	public final void setStartPosition(IStartingPosition startPosition) {
+		this.startPosition = startPosition;
+	}
+
+
 	private void doCheck() {
 		if (recordSelection != null && splitCopybook != CopybookLoader.SPLIT_NONE) {
 			throw new RuntimeException("A record selection can only be specified when split=None");
@@ -76,15 +93,43 @@ public abstract class CreateExternalBase {
 			((ISetDropCopybookName) loader).setDropCopybookFromFieldNames(parent.isDropCopybookNameFromFields());
 		}
 
-		ExternalRecord r = createExternalRecordImp();
+		lastExternalRecord = createExternalRecordImp();
 		
 		if (recordSelection != null) {
-			r.setRecordSelection(recordSelection);
+			lastExternalRecord.setRecordSelection(recordSelection);			
+		}
+		int startAdj = startPosition.calculateStartingPosition();
+		if (startAdj > 0) {
+			adjustFields(lastExternalRecord, startAdj);
 		}
 		
-		return r;
+		return lastExternalRecord;
+	}
+	
+	
+	
+	public ExternalRecord getLastExternalRecord() {
+		return lastExternalRecord;
+	}
+
+	public void clearLastRecord() {
+		lastExternalRecord = null;
+	}
+
+	public String getRecordName() {
+		return recordName;
+	}
+
+
+	private void adjustFields(ExternalRecord r, int adj) {
+		for (int i = 0; i < r.getNumberOfRecords(); i++) {
+			adjustFields(r.getRecord(i), adj);
+		}
+		for (int i = 0; i < r.getNumberOfRecordFields(); i++) {
+			ExternalField f = r.getRecordField(i);
+			f.setPos(f.getPos() + adj);
+		}
 	}
 	
 	public abstract ExternalRecord createExternalRecordImp() throws Exception;
-
 }

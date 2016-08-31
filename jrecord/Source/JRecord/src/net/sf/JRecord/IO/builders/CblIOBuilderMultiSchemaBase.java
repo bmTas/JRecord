@@ -38,12 +38,14 @@ import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ICopybookLoaderStream;
 import net.sf.JRecord.External.ISetDropCopybookName;
+import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 
 
-public class CblIOBuilderMultiSchemaBase<IOB> extends CblIOBuilderBase<IOB> implements IGetLoader  { 
+public class CblIOBuilderMultiSchemaBase<IOB>
+extends CblIOBuilderBase<IOB> implements IGetLoader  { 
 
 	private final String copybookname;
 	final ICopybookLoaderStream loader;
@@ -123,6 +125,9 @@ public class CblIOBuilderMultiSchemaBase<IOB> extends CblIOBuilderBase<IOB> impl
 						}
 					}
 				}
+				for (ICreateExternal copybookdef : copybooks) {
+					copybookdef.clearLastRecord();
+				}
 				
 				return rec;
 			}
@@ -141,10 +146,7 @@ public class CblIOBuilderMultiSchemaBase<IOB> extends CblIOBuilderBase<IOB> impl
 	 * @see net.sf.JRecord.def.IO.ICobolIOBuilder#setSplitCopybook(int)
 	 */
 	public IOB setSplitCopybook(int splitCopybook) {
-		if (copybooks.size() == 0) {
-			throw new RuntimeException("You can only use setSplitCopybook after you have added a copybook !!!");
-		}
-		copybooks.get(copybooks.size() - 1).setSplitCopybook(splitCopybook);
+		getLast().setSplitCopybook(splitCopybook);
 		super.setSplitCopybook(splitCopybook);
 		clearLayout();
 		
@@ -159,16 +161,34 @@ public class CblIOBuilderMultiSchemaBase<IOB> extends CblIOBuilderBase<IOB> impl
 		
 		return super.self;
 	}
+	
+	public final IOB setStartingPosition(int position) {
+		getLast().setStartPosition(new IntStartingPos(position));
+		clearLayout();
+		
+		return super.self;
+	}
 
+	
+	public final IOB setStartingPositionToField(String recordName, String fieldName) {
+		getLast().setStartPosition(new FieldStartingPos(recordName, fieldName));
+		clearLayout();
+		
+		return super.self;
+	}
 	public IOB setRecordSelectionCurrentCopybook(ExternalSelection recordSelection) {
+		getLast().setRecordSelection(recordSelection);
+		clearLayout();
+		
+		return super.self;
+	}
+	
+	
+	private ICreateExternal getLast() {
 		if (copybooks.size() == 0) {
 			throw new RuntimeException("You can only use setRecordSelectionCurrentCopybook after you have added a copybook !!!");
 		}
-		copybooks.get(copybooks.size() - 1).setRecordSelection(recordSelection);
-		clearLayout();
-		
-		return super.self; 
-
+		return copybooks.get(copybooks.size() - 1);
 	}
 
 	/* (non-Javadoc)
@@ -204,5 +224,48 @@ public class CblIOBuilderMultiSchemaBase<IOB> extends CblIOBuilderBase<IOB> impl
 	@Override
 	public final AbsSSLogger getLog() {
 		return log;
+	}
+	
+	private static class IntStartingPos implements IStartingPosition {
+		int position;
+		
+		IntStartingPos(int pos) {
+			position = pos;
+		}
+		
+		public int calculateStartingPosition() {
+			return position - 1;
+		}
+	}
+	
+	private class FieldStartingPos implements IStartingPosition {
+		final String recordName, fieldName;
+		final int index;
+		
+
+		public FieldStartingPos(String recordName, String fieldName) {
+			super();
+			this.recordName = recordName;
+			this.fieldName = fieldName;
+			for (int i = 0; i < copybooks.size() - 1; i++) {
+				ICreateExternal c = copybooks.get(i);
+				if (recordName.equals(c.getRecordName())) {
+					index = i;
+					return;
+				}
+			}
+			throw new RecordException("Record: " + recordName + " was not found");
+		}
+		
+		public int calculateStartingPosition() {
+			ICreateExternal c = copybooks.get(index);
+			ExternalRecord xr = c.getLastExternalRecord();
+			ExternalField f = xr.getRecordField(fieldName);
+			if (f == null) {
+				throw new RecordException("Field: " + fieldName + " was not found in record " + recordName);
+			}	
+			
+			return f.getPos() - 1;
+		}
 	}
 }

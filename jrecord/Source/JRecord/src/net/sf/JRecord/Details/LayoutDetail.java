@@ -57,13 +57,11 @@ import net.sf.JRecord.CsvParser.ICsvLineParser;
 import net.sf.JRecord.CsvParser.BinaryCsvParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.CsvParser.ParserManager;
-import net.sf.JRecord.IO.builders.SchemaIOBuilder;
 import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.Option.Options;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.cgen.defc.ILayoutDetails4gen;
-import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
 
 
 
@@ -1128,14 +1126,5 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 		}
 		return f;
 	}
-	
-	/**
-	 * Convert it the ExternalRecord Into an IOBuilder
-	 * @return
-	 */
-	public final ISchemaIOBuilder asIOBuilder() {
-		return SchemaIOBuilder.newSchemaIOBuilder(this);
-	}
-
 }
 

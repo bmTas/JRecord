@@ -44,7 +44,7 @@ public class CreateExternalFromReader  extends CreateExternalBase  implements IC
 	
 
 	public CreateExternalFromReader(IGetLoader parent, Reader reader, String copybookName) {
-		super(parent);
+		super(parent, copybookName);
 		this.copybookName = copybookName;
 		this.reader = reader;
 	} 

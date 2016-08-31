@@ -130,4 +130,19 @@ public interface Icb2xmlMultiFileIOBuilder extends  Icb2xmlIOBuilder {
 	@Override public abstract Icb2xmlMultiFileIOBuilder setRecordPositionCode(
 			String recordName, IRecordPositionOption positionOption);
 
+	/**
+	 * Set the starting position for current copybook
+	 * @param position starting position
+	 * @return IOBuilder for further definition (fluid style)
+	 */
+	public abstract Icb2xmlMultiFileIOBuilder setStartingPosition(int position) ;
+
+	/**
+	 * Set the starting position relative to a field
+	 * @param recordName Record holding the field
+	 * @param fieldName name of the field
+	 * @return IOBuilder for further definition (fluid style)
+	 */
+	public abstract Icb2xmlMultiFileIOBuilder setStartingPositionToField(String recordName, String fieldName);
+
 }

@@ -48,5 +48,12 @@ public interface ICreateExternal {
 	public abstract void setSplitCopybook(int splitCopybook);
 	
 	public abstract void setRecordSelection(ExternalSelection recordSelection);
-
+	
+	public abstract void setStartPosition(IStartingPosition startPosition);
+	
+	public abstract String getRecordName();
+	
+	public abstract ExternalRecord getLastExternalRecord();
+	
+	public abstract void clearLastRecord();
 }

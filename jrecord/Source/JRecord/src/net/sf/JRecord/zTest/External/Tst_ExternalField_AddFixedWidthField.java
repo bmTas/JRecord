@@ -343,12 +343,12 @@ public class Tst_ExternalField_AddFixedWidthField extends TestCase {
 	private void doTest(FieldAdjustmentOptions adj, ExternalField[][] expected, int adjAmount) throws IOException {
 
 		for (int i = 0; i <= FIELD_COUNT; i++) {
-			ExternalRecord externalRec = getXRecord();
-			ExternalField field = new ExternalField(POSITIONS[i] + adjAmount, 5, "name", "", Type.ftChar, 0, 0, "", "", "", 0);
-			int idx = externalRec.addFixedWidthField(field, adj);
+			ExternalRecord r = getXRecord();
+			ExternalField fld = new ExternalField(POSITIONS[i] + adjAmount, 5, "name", "", Type.ftChar, 0, 0, "", "", "", 0);
+			int idx = r.addFixedWidthField(fld, adj);
 			String id = Integer.toString(i);
 			
-			CommonTestCode.compare(id, expected==null?null:expected[i], externalRec.getRecordFields());
+			CommonTestCode.compare(id, expected==null?null:expected[i], r.getRecordFields());
 			
 			if (adjAmount == 0) {
 				assertEquals(id, i, idx);

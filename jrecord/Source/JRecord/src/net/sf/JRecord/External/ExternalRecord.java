@@ -37,6 +37,7 @@ import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.Extern.BaseExternalRecord;
 import net.sf.JRecord.External.Def.ExternalField;
+import net.sf.JRecord.IO.builders.SchemaIOBuilder;
 
 
 /**
@@ -557,6 +558,18 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	 */
 	public final LayoutDetail asLayoutDetail() {
 		return ToLayoutDetail.getInstance().getLayout(this);
+	}
+
+	
+	/**
+	 * Convert it the ExternalRecord Into an IOBuilder
+	 * @return
+	 */
+	public final net.sf.JRecord.def.IO.builders.ISchemaIOBuilder asIOBuilder() {
+		LayoutDetail layoutDetail = this.asLayoutDetail();
+		return layoutDetail==null
+				? null
+				: SchemaIOBuilder.newSchemaIOBuilder(layoutDetail);
 	}
 
 

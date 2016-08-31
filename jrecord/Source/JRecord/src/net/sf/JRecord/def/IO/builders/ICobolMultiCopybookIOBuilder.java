@@ -148,5 +148,19 @@ public interface ICobolMultiCopybookIOBuilder extends  ICobolIOBuilder {
 	@Override public abstract ICobolMultiCopybookIOBuilder setKeepFillers(boolean keepFillers);
 
 
+	/**
+	 * Set the starting position for current copybook
+	 * @param position starting position
+	 * @return IOBuilder for further definition (fluid style)
+	 */
+	public abstract ICobolMultiCopybookIOBuilder setStartingPosition(int position) ;
+
+	/**
+	 * Set the starting position relative to a field
+	 * @param recordName Record holding the field
+	 * @param fieldName name of the field
+	 * @return IOBuilder for further definition (fluid style)
+	 */
+	public abstract ICobolMultiCopybookIOBuilder setStartingPositionToField(String recordName, String fieldName);
 
 }

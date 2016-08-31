@@ -81,6 +81,37 @@ public class XmlLine extends ListLine {
 	    }
 	}
 	
+	/**
+	 * @see java.lang.Object#clone()
+	 */
+	public Object clone() {
+        Object ret = null;
+
+        try { ret = super.clone(); } catch (Exception e) {}
+
+        if (! (ret instanceof XmlLine)) {
+        	XmlLine line = new XmlLine(layout, preferredLayout);
+        	for (int i = 0; i < fields.size(); i++) {
+//        		Object o = fields.get(i);
+//        		if (o != null
+//        		&& ! (o instanceof String
+//        		   || o instanceof Boolean
+//        		   || o instanceof BigInteger
+//        		   || o instanceof BigDecimal)) {
+//					   o = o.toString();
+//				}
+        		try {
+        			line.setRawField(preferredLayout, i, fields.get(i));
+        		} catch (Exception e) {
+				}
+        	}
+        	ret = line;
+        }
+
+        return ret;
+	}
+
+
 
 	/**
 	 * @see net.sf.JRecord.Details.AbstractLine#getFullLine()

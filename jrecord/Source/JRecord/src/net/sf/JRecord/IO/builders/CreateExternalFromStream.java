@@ -43,7 +43,7 @@ public class CreateExternalFromStream  extends CreateExternalBase  implements IC
 	
 
 	public CreateExternalFromStream(IGetLoader parent, InputStream inStream, String copybookName) {
-		super(parent);
+		super(parent, copybookName);
 		this.copybookName = copybookName;
 		this.inStream = inStream;
 	} 

@@ -38,7 +38,7 @@ public class CreateExternalFromFile extends CreateExternalBase implements ICreat
 	
 
 	public CreateExternalFromFile(IGetLoader parent, String copybookFilename) {
-		super(parent); 
+		super(parent, copybookFilename); 
 		this.copybookFilename = copybookFilename;
 	} 
 

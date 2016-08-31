@@ -30,11 +30,8 @@ package net.sf.JRecord.Extern;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.Def.AbstractUpdatableRecord;
 import net.sf.JRecord.External.Def.DependingOn;
 import net.sf.JRecord.External.Def.ExternalField;
@@ -791,6 +788,23 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 		DependingOn.addChild(dependingOn, child);
 	}
 
+	/**
+	 * Add a list of fields
+	 * @param flds fields to add
+	 */
+	public void addRecordFields(List<? extends ExternalField> flds) {
+		loadFields();
+		fields.addAll(flds);
+	}
+	
+	/**
+	 * Remove one field
+	 * @param index index of the field to be removed
+	 */
+	public void removeRecordField(int index) {
+		loadFields();
+		fields.remove(index);
+	}
 
 	/**
 	 * Get a field (via its index)
@@ -800,6 +814,22 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	public ExternalField getRecordField(int index) {
 		loadFields();
 	    return fields.get(index);
+	}
+	
+	public ExternalField getRecordField(String name) {
+		if (name != null) {
+			for (ExternalField f : fields) {
+				if (name.equalsIgnoreCase(f.getName())) {
+					return f;
+				}
+			}
+			ExternalField f;
+			for (xRecord r :subRecords) {
+				f = r.getRecordField(name);
+				if (f != null) { return f;}
+			}
+		}
+		return null;
 	}
 
 //	/**
@@ -891,16 +921,16 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 //		
 //		return idx;
 //	}
-	
-	private void insertField(int idx, ExternalField fld, int adj, boolean adjPositions ) {
-		fields.add(idx, fld);
-		
-		if (adjPositions && adj > 0) {
-			for (int j = idx+1; j < fields.size(); j++) {
-				
-			}
-		}
-	}
+//	
+//	private void insertField(int idx, ExternalField fld, int adj, boolean adjPositions ) {
+//		fields.add(idx, fld);
+//		
+//		if (adjPositions && adj > 0) {
+//			for (int j = idx+1; j < fields.size(); j++) {
+//				
+//			}
+//		}
+//	}
 	
 	
 	/**
