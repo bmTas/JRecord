@@ -61,9 +61,9 @@ public interface Type {
 
     public static final int BASE_16 = 16;
 
-    public  static final int USER_RANGE_START    = 1000;
-    public  static final int DEFAULT_USER_RANGE_SIZE = 75;
-    public  static final int LAST_SYSTEM_TYPE    = 150;
+    public static final int USER_RANGE_START    = 1000;
+    public static final int DEFAULT_USER_RANGE_SIZE = 75;
+    public static final int LAST_SYSTEM_TYPE    = 150;
 
 	public static final int NULL_INT             = -121;
 
@@ -130,6 +130,7 @@ public interface Type {
 
 	public static final int ftCharRestOfFixedRecord = 80;
 	public static final int ftCharRestOfRecord   = 81;
+	public static final int ftCharNoTrim		 = 82;
 
 	public static final int ftProtoField         = 91;
 	public static final int ftAvroField          = 91;
@@ -148,6 +149,9 @@ public interface Type {
 	public static final int ftMultiLineEdit      = 117;
 	public static final int ftMultiLineChar      = 118; /* used in PO / Tip Files */
 	public static final int ftHtmlField          = 119;
+	
+	public static final int ftRecordEditorType   = 130;
+	public static final int ftNumOrEmpty         = 131;
 
 	public static final int NT_TEXT              = 1;
 	public static final int NT_DATE              = 11;

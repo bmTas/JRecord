@@ -42,6 +42,7 @@ import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
+import net.sf.JRecord.zTest.Common.CommonCodeFields;
 import net.sf.JRecord.zTest.Common.TstConstants;
 import junit.framework.TestCase;
 
@@ -131,9 +132,9 @@ public class TstCobolIOBuilder02 extends TestCase {
 	
 
 	public void testRightJustified() throws IOException {
-		CommonCode.check(	
+		CommonCodeFields.check(	
 				JRecordInterface1.COBOL.newIOBuilder(RIGHTJUST_COPYBOOK),
-				new CommonCode.CblBldrOptions(ICopybookDialects.FMT_MAINFRAME, Constants.IO_FIXED_LENGTH, false, ""),
+				new CommonCodeFields.CblBldrOptions(ICopybookDialects.FMT_MAINFRAME, Constants.IO_FIXED_LENGTH, false, ""),
 				RIGHT_JUST_FIELDS,
 				"Right-Just"
 				);
@@ -200,9 +201,9 @@ public class TstCobolIOBuilder02 extends TestCase {
 			for (int k = 0; k < FILE_STRUCTURES.length; k++) {
 				int i = 0;
 				for (int d : DIALECTS) {
-					CommonCode.check(	
+					CommonCodeFields.check(	
 							bldr,
-							new CommonCode.CblBldrOptions(d, FILE_STRUCTURES[k], dropRecordName, FONTS[j]),
+							new CommonCodeFields.CblBldrOptions(d, FILE_STRUCTURES[k], dropRecordName, FONTS[j]),
 							expected[i++],
 							FONTS[j] + " ~ " + (i-1) + ", " + d
 							);

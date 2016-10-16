@@ -47,7 +47,6 @@ import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.Line;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.External.ToLayoutDetail;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.TstConstants;
 
@@ -96,12 +95,12 @@ public class TstLineBin extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        LayoutDetail copyBook = ToLayoutDetail.getInstance().getLayout(
+        LayoutDetail copyBook = 
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "",
                         ICopybookDialects.FMT_MAINFRAME, 0, null
-                ));
+                ).asLayoutDetail();
 
         line = new Line(copyBook, rec);
     }
@@ -149,12 +148,12 @@ public class TstLineBin extends TestCase {
         //assertEquals("27 GetField - Bit 1byte ", "10000000", line.getField(0, 26));
         //assertEquals("28 GetField - Bit 2byte ", "1000000110000011", line.getField(0, 27));
 
-        LayoutDetail copyBook1 = ToLayoutDetail.getInstance().getLayout(
+        LayoutDetail copyBook1 = 
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "",
                         ICopybookDialects.FMT_MAINFRAME, 0, null
-                ));
+                ).asLayoutDetail();
 
         AbstractLine line1 = new Line(copyBook1, rec);
 
@@ -175,7 +174,7 @@ public class TstLineBin extends TestCase {
         assertEquals("GetFieldText - Character Field ", "    qwerty", line.getFieldText(0, 1));
 
  //       assertEquals("GetFieldText - 4 >> ", "ChWï¿½", line.getFieldText(0, 4));
- //       assertEquals("GetFieldText - 4 >> ", "ChWÏ", line.getFieldText(0, 4));
+ //       assertEquals("GetFieldText - 4 >> ", "ChWï¿½", line.getFieldText(0, 4));
         assertEquals("GetFieldText - 4 >> ", new String(b), line.getFieldText(0, 4));
         assertEquals("GetFieldText - 5 >> ", "3456", line.getFieldText(0, 5));
         assertEquals("GetFieldText - 6 >> ", "     123", line.getFieldText(0, 6));
@@ -237,12 +236,12 @@ public class TstLineBin extends TestCase {
         //assertEquals("27 GetFieldValue - Bit 1byte ", "10000000", line.getFieldValue(0, 26));
         //assertEquals("28 GetFieldValue - Bit 2byte ", "1000000110000011", line.getFieldValue(0, 27));
 
-        LayoutDetail copyBook1 = ToLayoutDetail.getInstance().getLayout(
+        LayoutDetail copyBook1 = 
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "",
                         ICopybookDialects.FMT_MAINFRAME, 0, null
-                ));
+                ).asLayoutDetail();
 
         AbstractLine line1 = new Line(copyBook1, rec);
 
@@ -284,12 +283,12 @@ public class TstLineBin extends TestCase {
         //assertEquals("27 GetFieldValue - Bit 1byte ", "10000000", line.getFieldValue(0, 26));
         //assertEquals("28 GetFieldValue - Bit 2byte ", "1000000110000011", line.getFieldValue(0, 27));
 
-        LayoutDetail copyBook1 = ToLayoutDetail.getInstance().getLayout(
+        LayoutDetail copyBook1 = 
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "",
                         ICopybookDialects.FMT_MAINFRAME, 0, null
-                ));
+                ).asLayoutDetail();
 
         AbstractLine line1 = new Line(copyBook1, rec);
 
@@ -423,12 +422,12 @@ public class TstLineBin extends TestCase {
     }
 
     public void testSetFieldMainframe() throws Exception {
-        LayoutDetail copyBook1 = ToLayoutDetail.getInstance().getLayout(
+        LayoutDetail copyBook1 = 
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "",
                         ICopybookDialects.FMT_MAINFRAME, 0, null
-                ));
+                ).asLayoutDetail();
 
         line = new Line(copyBook1, rec);
 
@@ -742,12 +741,12 @@ public class TstLineBin extends TestCase {
      * @return Mainframe Line
      */
     private AbstractLine defMainframeRec() throws Exception {
-        LayoutDetail dtar0020 = ToLayoutDetail.getInstance().getLayout(
+        LayoutDetail dtar0020 = 
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookDTAR020 + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "cp037",
                         ICopybookDialects.FMT_MAINFRAME, 0, null
-                ));
+                ).asLayoutDetail();
         return new Line(dtar0020,
                 		recDtar020);
     }

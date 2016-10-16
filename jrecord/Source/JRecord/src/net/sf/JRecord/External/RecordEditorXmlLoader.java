@@ -31,6 +31,7 @@ package net.sf.JRecord.External;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 
 import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.Constants;
@@ -40,13 +41,13 @@ import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.Def.AbstractConversion;
 import net.sf.JRecord.External.Def.ExternalField;
+import net.sf.JRecord.External.base.ExternalConversion;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.IO.XmlLineReader;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Log.TextLog;
-import net.sf.JRecord.Numeric.ICopybookDialects;
 
 /**
  * Class to Load a RecordLayout (Record or Line Description)
@@ -71,11 +72,11 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 			String copyBookName, int splitCopybook, int dbIdx, String font,
 			int copybookFormat, int binaryFormat, int systemId, AbsSSLogger log)
 			throws IOException {
-		return (new RecordEditorXmlLoaderImp()).loadCopyBook(inputStream, copyBookName);
+		return (new RecordEditorXmlLoaderImp()).loadCopyBook(inputStream, copyBookName, font, log);
 	}
 	
 	public ExternalRecord loadCopyBook(InputStream is, String layoutName) throws IOException {
-		return (new RecordEditorXmlLoaderImp()).loadCopyBook(is, layoutName); 
+		return (new RecordEditorXmlLoaderImp()).loadCopyBook(is, layoutName, "", null); 
 	}
 
 	/* (non-Javadoc)
@@ -91,6 +92,14 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 
 	
 	
+	@Override
+	public ExternalRecord loadCopyBook(Reader reader, String copyBookName, int splitCopybook, int dbIdx, String font,
+			int copybookFormat, int binaryFormat, int systemId, AbsSSLogger log) throws IOException {
+		return (new RecordEditorXmlLoaderImp()).loadCopyBook(reader, copyBookName, font, null);
+	}
+
+
+
 	private static class RecordEditorXmlLoaderImp extends BaseCopybookLoader { 
 		
 		private String lastGroupDetails = null;
@@ -104,44 +113,56 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 			int splitCopybookOption, int dbIdx, String font, int copybookFormat, int binFormat,
 			int systemId, AbsSSLogger log) throws Exception {
 	
-	        int rt = Constants.rtRecordLayout;
-	        if (binFormat == ICopybookDialects.FMT_MAINFRAME) {
-	            rt = Constants.rtBinaryRecord;
-	        }
-	
-	        ExternalRecord rec = ExternalRecord.getNullRecord(
-	        		Conversion.getCopyBookId(copyBookFile),
-	                rt,
-	                font);
-	        rec.setNew(true);
+	        ExternalRecord rec = createXRecord(Conversion.getCopyBookId(copyBookFile), font);
 	
 	        XmlLineReader r = new XmlLineReader(true);
 			r.open(copyBookFile);
-			insertRecord(log, null, rec, r, dbIdx);
+			insertRecord(TextLog.getLog(log), null, rec, r, dbIdx);
 	        r.close();
 	
 	        return rec;
 		}
 	
 
-		public ExternalRecord loadCopyBook(InputStream is, String layoutName) throws IOException {
+		public ExternalRecord loadCopyBook(InputStream is, String layoutName, String font, AbsSSLogger log) throws IOException {
 	
-		        int rt = Constants.rtRecordLayout;
-	
-		        ExternalRecord rec = ExternalRecord.getNullRecord(
-		        		layoutName,
-		                rt,
-		                "");
-		        rec.setNew(true);
+		        ExternalRecord rec = createXRecord(layoutName, font);
 	
 		        XmlLineReader r = new XmlLineReader(true);
 				r.open(is, (LayoutDetail) null);
-				insertRecord(new TextLog(), null, rec, r, AbstractConversion.USE_DEFAULT_IDX);
+				insertRecord(TextLog.getLog(log), null, rec, r, AbstractConversion.USE_DEFAULT_IDX);
+		        r.close();
+	
+		        return rec;
+		}
+
+
+		private ExternalRecord createXRecord(String layoutName, String font) {
+			int rt = Constants.rtRecordLayout;
+
+			ExternalRecord rec = ExternalRecord.getNullRecord(
+					layoutName,
+			        rt,
+			        font);
+	        rec.setNew(true);
+
+			return rec;
+		}
+	
+
+		public ExternalRecord loadCopyBook(Reader reader, String layoutName, String font, AbsSSLogger log) throws IOException {
+	
+		        ExternalRecord rec = createXRecord(layoutName, font);
+	
+		        XmlLineReader r = new XmlLineReader(true);
+				r.open(reader, (LayoutDetail) null);
+				insertRecord(TextLog.getLog(log), null, rec, r, AbstractConversion.USE_DEFAULT_IDX);
 		        r.close();
 	
 		        return rec;
 		}
 	
+
 	
 		/**
 		 * Add  an External-Record (Sub-Record) to an External-Record
@@ -181,7 +202,11 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 				childRec.setFileStructure(
 						ExternalConversion.getFileStructure(
 								dbIdx, line.getFieldValue(Constants.RE_XML_FILESTRUCTURE).asString()));
-				childRec.setFontName(line.getFieldValueIfExists(Constants.RE_XML_FONTNAME).asString());
+				
+				Object o = line.getField(Constants.RE_XML_FONTNAME);
+				if ( o != null ) {
+					childRec.setFontName(o.toString());
+				}
 				childRec.setListChar(line.getFieldValueIfExists(Constants.RE_XML_LISTCHAR).asString());
 				childRec.setParentName(line.getFieldValueIfExists(Constants.RE_XML_PARENT).asString());
 				childRec.setQuote(line.getFieldValueIfExists(Constants.RE_XML_QUOTE).asString());
@@ -304,7 +329,7 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 							cobolName =line.getFieldValueIfExists(Constants.RE_XML_COBOLNAME).asString();
 						} catch (Exception e) {}
 						fld = new ExternalField(
-							getIntFld(line, Constants.RE_XML_POS),
+							getIntFld(line, Constants.RE_XML_POS, Constants.NULL_INTEGER),
 							len,
 							fldName,
 							line.getFieldValueIfExists(Constants.RE_XML_DESCRIPTION).asString(),
@@ -402,21 +427,21 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 	
 		}
 	
-		/**
-		 * Get integer field from the line
-		 * @param line line to access
-		 * @param fldName field name required
-		 * @return requested field
-		 * @throws Exception any error
-		 */
-		private int getIntFld(AbstractLine line, String fldName) throws Exception {
-			try {
-				return line.getFieldValueIfExists(fldName).asInt();
-			} catch (Exception e) {
-				System.out.println("Error getting field " + fldName + ": " + e.getMessage() );
-				throw(e);
-			}
-		}
+//		/**
+//		 * Get integer field from the line
+//		 * @param line line to access
+//		 * @param fldName field name required
+//		 * @return requested field
+//		 * @throws Exception any error
+//		 */
+//		private int getIntFld(AbstractLine line, String fldName) throws Exception {
+//			try {
+//				return line.getFieldValueIfExists(fldName).asInt();
+//			} catch (Exception e) {
+//				System.out.println("Error getting field " + fldName + ": " + e.getMessage() );
+//				throw(e);
+//			}
+//		}
 	
 	
 		/**
@@ -442,7 +467,7 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 	public static ExternalRecord getExternalRecord(String xml, String name) throws Exception {
 		ByteArrayInputStream bs = new ByteArrayInputStream(xml.getBytes());
 
-		return (new RecordEditorXmlLoaderImp()).loadCopyBook(bs, name);
+		return (new RecordEditorXmlLoaderImp()).loadCopyBook(bs, name, "", null);
 	}
 	
 }

@@ -43,7 +43,6 @@ import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.External.ToLayoutDetail;
 import net.sf.JRecord.IO.builders.CblIOBuilderMultiSchema;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
@@ -214,14 +213,15 @@ public class CobolIoProvider {
         if (numericType == ICopybookDialects.FMT_MAINFRAME) {
             font = "cp037";
         }
-       	LayoutDetail copyBook = ToLayoutDetail.getInstance().getLayout(
+       	LayoutDetail copyBook = 
        	     copybookInt.loadCopyBook(
                         copybookName,
                         splitOption, 0, font,
                         copybookFormat,
                         numericType, 0, null
                 ).setFileStructure(fileStructure)
-        );
+       	     	 .asLayoutDetail()
+        ;
 
 //       	if (provider == null) {
 //       		provider = LineIOProvider.getInstance().getLineProvider(fileStructure, font);

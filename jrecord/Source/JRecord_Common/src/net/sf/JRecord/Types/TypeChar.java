@@ -66,10 +66,11 @@ public class TypeChar implements Type {
 
     private boolean numeric = false;
     private final boolean hasPadByteOveride;
+    private final boolean trim;
 
 
     public TypeChar(final boolean leftJustified) {
-    	this(leftJustified, false);
+    	this(leftJustified, false, false, false, true);
     }
     
     /**
@@ -81,11 +82,12 @@ public class TypeChar implements Type {
      * @param leftJustified left justified option
      */
     public TypeChar(final boolean leftJustified, boolean padByteOveride) {
-        super();
+        this(leftJustified, padByteOveride, false, false, true);
 
-        leftJust = leftJustified;
-        binary = false;
-        hasPadByteOveride = padByteOveride;
+//        leftJust = leftJustified;
+//        binary = false;
+//        hasPadByteOveride = padByteOveride;
+//        this.trim = false;
     }
 
 
@@ -98,12 +100,17 @@ public class TypeChar implements Type {
      * @param binaryField wether this is a binary field
      */
     public TypeChar(final boolean leftJustified, final boolean binaryField, final boolean num) {
+    	this(leftJustified, false, binaryField, num, true);
+    }
+    
+    public TypeChar(final boolean leftJustified, boolean padByteOveride, final boolean binaryField, final boolean num, boolean trim) {
         super();
 
         leftJust = leftJustified;
         binary   = binaryField;
         numeric  = num;
-        hasPadByteOveride = false;
+        hasPadByteOveride = padByteOveride;
+        this.trim = trim;
     }
 
 
@@ -155,9 +162,9 @@ public class TypeChar implements Type {
 		String s = Conversion.getString(record, position - 1,
 		        getFieldEnd(position, currField, record),
 		        currField.getFontName());
-		String pad = getPadCh();
+		String pad = " ";
 		
-		if (pad != null && pad.length() > 0 && s.endsWith(pad)) {
+		if (trim && s.endsWith(pad)) {
 			int idx = s.length() - 1;
 			char ch = pad.charAt(0); 
 			while(idx >= 0 && s.charAt(idx) == ch) {
@@ -189,7 +196,7 @@ public class TypeChar implements Type {
 	        int ret = java.lang.Math.min(position + currField.getLen() - 1, record.length);
 	        String fontName = currField.getFontName();
 	        
-	        if (hasPadByteOveride || Conversion.isSingleByte(fontName)) {
+	        if (trim && (hasPadByteOveride || Conversion.isSingleByte(fontName))) {
 				byte padByte = getPadByte(fontName);
 	
 		        while (ret > 0 && (record[ret - 1] == padByte)) {
@@ -270,9 +277,9 @@ public class TypeChar implements Type {
 		return getBytes(" ", font)[0];
 	}
 	
-	protected final String getPadCh() {
-		return " ";
-	}
+//	private final String getPadCh() {
+//		return " ";
+//	}
 	
 	
 	/**

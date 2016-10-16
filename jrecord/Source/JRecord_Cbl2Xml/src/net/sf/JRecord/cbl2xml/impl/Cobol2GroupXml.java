@@ -51,7 +51,7 @@ import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.CobolCopybookLoader;
-import net.sf.JRecord.External.ICobolCopybookLoader;
+import net.sf.JRecord.External.ICopybookLoaderCobol;
 import net.sf.JRecord.External.XmlCopybookLoader;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
@@ -93,14 +93,14 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 
 	
 	
-	private Cobol2GroupXml(String copybookFilename, ICobolCopybookLoader loader) {
+	private Cobol2GroupXml(String copybookFilename, ICopybookLoaderCobol loader) {
 		super(Conversion.getCopyBookId(copybookFilename), loader);
 		loader.setSaveCb2xmlDocument(true);
 		super.addCopyBook(copybookFilename);
 		//ioBuilder = new CblIOBuilderMultiSchema(copybookFilename, loader, ICopybookDialects.FMT_MAINFRAME);
 	}
 
-	private Cobol2GroupXml(InputStream is, String copybookname, ICobolCopybookLoader loader) {
+	private Cobol2GroupXml(InputStream is, String copybookname, ICopybookLoaderCobol loader) {
 		super(copybookname, loader);
 		loader.setSaveCb2xmlDocument(true);
 		
@@ -108,7 +108,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 		//ioBuilder = new CblIOBuilderMultiSchema(is, copybookname, loader, ICopybookDialects.FMT_MAINFRAME);
 	}
 
-	private Cobol2GroupXml(Reader copybookReader, String copybookname, ICobolCopybookLoader loader) {
+	private Cobol2GroupXml(Reader copybookReader, String copybookname, ICopybookLoaderCobol loader) {
 		super(copybookname, loader);
 		loader.setSaveCb2xmlDocument(true);
 		

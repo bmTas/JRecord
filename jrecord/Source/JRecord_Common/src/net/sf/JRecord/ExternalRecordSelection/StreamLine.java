@@ -53,6 +53,7 @@ public class StreamLine<Selection extends ExternalSelection> {
 	 */
 	public final Selection streamLine(Selection sel) {
 		if (sel instanceof ExternalGroupSelection) {
+			@SuppressWarnings("unchecked")
 			ExternalGroupSelection<Selection> grp = (ExternalGroupSelection<Selection>) sel;
 			if (grp.size() == 1) {
 				return streamLine(grp.get(0));

@@ -87,6 +87,7 @@ public class TstTypesGeneral extends TestCase {
 	 	Type.ftFloat,
 	 	Type.ftDouble,
 	 	Type.ftNumAnyDecimal,
+	 	Type.ftNumOrEmpty,
 	 	Type.ftPositiveNumAnyDecimal,
 	 	Type.ftBit,
 
@@ -178,6 +179,8 @@ public class TstTypesGeneral extends TestCase {
 					assertEquals("Assign NULL to number: " + i, "0", typeManager.getType(i).getField(b, fld.getPos(), fld).toString());
 				} else if (i == Type.ftHex) {
 					assertEquals("Assign NULL to number: " + i, "00000000", typeManager.getType(i).getField(b, fld.getPos(), fld).toString());
+				} else if (i == Type.ftCharNoTrim) {
+					assertEquals("Assign NULL to char: " + i, "    ", typeManager.getType(i).getField(b, fld.getPos(), fld).toString());
 				} else {
 					assertEquals("Assign NULL to char: " + i, "", typeManager.getType(i).getField(b, fld.getPos(), fld).toString());
 				}
@@ -317,14 +320,27 @@ public class TstTypesGeneral extends TestCase {
 				
 				//System.out.print("\t" + i);
 				AbstractFieldValue fieldValue = l.getFieldValue(fld);
+				String actualValue = fieldValue.asString();
 				switch (typeId) {
 				case Type.ftCharRightJust:
 					if (fld.isFixedFormat()) {
-						assertEquals(charset + " Test number: " + typeId, "    ".substring(v.length()) + v, fieldValue.asString());
+						assertEquals(charset + " Test number: " + typeId, "    ".substring(v.length()) + v, actualValue);
 						break;
 					}
+				case Type.ftCharNoTrim:
+//					if (v.length() < 4 && v.equals(actualValue)) {
+//						System.out.print("* " + fld.isFixedFormat());
+//						if (fld.isFixedFormat()) {
+//							actualValue = fieldValue.asString();
+//						}
+//					} else {
+					if (fld.isFixedFormat()) {
+						assertEquals(charset + " Test number: " + typeId, v + "    ".substring(v.length()), actualValue);
+					}
+					
+					break;
 				default:
-					assertEquals(charset + " Test number: " + typeId, v, fieldValue.asString());
+					assertEquals(charset + " Test number: " + typeId, v, actualValue);
 				}
 				
 				if (t.isBinary() || skipForChar 

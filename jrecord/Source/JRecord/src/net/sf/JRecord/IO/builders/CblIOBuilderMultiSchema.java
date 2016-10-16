@@ -34,10 +34,11 @@ import java.io.InputStream;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.External.ICopybookLoaderStream;
 import net.sf.JRecord.def.IO.builders.ICobolMultiCopybookIOBuilder;
+import net.sf.JRecord.def.IO.builders.IFileIOBuilder;
 import net.sf.JRecord.def.IO.builders.Icb2xmlMultiFileIOBuilder;
 
 public class CblIOBuilderMultiSchema extends CblIOBuilderMultiSchemaBase<CblIOBuilderMultiSchema>
-implements ICobolMultiCopybookIOBuilder, Icb2xmlMultiFileIOBuilder {
+implements ICobolMultiCopybookIOBuilder, Icb2xmlMultiFileIOBuilder, IFileIOBuilder {
 
 	/**
 	 * Create a IOBuilder for a file based Copybook (schema)

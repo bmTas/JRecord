@@ -28,9 +28,7 @@
 
 package net.sf.JRecord.Details;
 
-import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.Types.Type;
 
 /**
@@ -101,32 +99,39 @@ public class FieldValue extends BaseFieldValue implements IFieldValue {
 	}
 	
 	public boolean isFieldInRecord() {
+		
 		IFieldDetail fld = field;
 		
 		if (recordNum >= 0) {
 			fld = theLine.getLayout().getField(recordNum, fieldNum);
 		}
-		
-		boolean ret = fld != null;
-		DependingOnDtls depOn;
-		
-		if (fld != null && fld instanceof FieldDetail) { 
-			depOn = ((FieldDetail) fld).getDependingOnDtls();
-			
-			try {
-				while (depOn != null) {
-					if (depOn.index >= theLine.getFieldValue(depOn.dependingOn.getVariableName()).asInt()) {
-						return false;
-					}
-					depOn = depOn.parent;
-				}
-			} catch (Exception e) {
-				ret = false;
-			}
-			
-		}
-		
-		return ret;
+		if (fld == null) { return false; }
+		return theLine.isFieldInLine(fld);
+//		IFieldDetail fld = field;
+//		
+//		if (recordNum >= 0) {
+//			fld = theLine.getLayout().getField(recordNum, fieldNum);
+//		}
+//		
+//		boolean ret = fld != null;
+//		DependingOnDtls depOn;
+//		
+//		if (fld != null && fld instanceof FieldDetail) { 
+//			depOn = ((FieldDetail) fld).getDependingOnDtls();
+//			
+//			try {
+//				while (depOn != null) {
+//					if (depOn.index >= theLine.getFieldValue(depOn.dependingOn.getVariableName()).asInt()) {
+//						return false;
+//					}
+//					depOn = depOn.parent;
+//				}
+//			} catch (Exception e) {
+//				ret = false;
+//			}
+//		}
+//		
+//		return ret;
 	}
 
 	/**

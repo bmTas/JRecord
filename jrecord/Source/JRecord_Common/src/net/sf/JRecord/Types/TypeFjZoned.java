@@ -60,7 +60,7 @@ public class TypeFjZoned extends TypeNum {
      * fields.
      */
     public TypeFjZoned(boolean overtypePositive) {
-        super(false, true, true, false, false, false);
+        super(false, true, true, false, false, false, false);
         this.overtypePositive = overtypePositive;
     }
 

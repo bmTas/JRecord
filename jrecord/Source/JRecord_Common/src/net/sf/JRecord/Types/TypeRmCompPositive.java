@@ -33,7 +33,7 @@ import net.sf.JRecord.Common.IFieldDetail;
 public class TypeRmCompPositive extends TypeNum {
 
 	public TypeRmCompPositive() {
-		super(false, true, true, true, true, true);
+		super(false, true, true, true, true, true, false);
 	}
 
 

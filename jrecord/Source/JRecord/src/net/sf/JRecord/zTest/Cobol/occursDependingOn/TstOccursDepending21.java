@@ -29,6 +29,8 @@
 package net.sf.JRecord.zTest.Cobol.occursDependingOn;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.AbstractFieldValue;
@@ -104,17 +106,17 @@ public class TstOccursDepending21 extends TestCase {
 		boolean normal = copybookFile.endsWith("1.cbl");
 		for (int i = 0; i < 52; i++) {
 			int j = 12;
-//			for (int j = 0; j <= 12; j++) {
-				for (int week = 1; week < 6; week++) {
-						tstLine(ioBuilder.newLine(), i, j, week, 0, normal);
-					
-				}
+//			for (int j = 6; j <= 12; j++) {
+			for (int week = 1; week < 6; week++) {
+				tstLine(ioBuilder.newLine(), i, j, week, 0, normal);
+			}
 //			}
 		}
 	}
 	
 
 	private void tstLine(AbstractLine line, int purchaseCount, int salesCount, int week, int day, boolean normalPos) throws RecordException {
+		String idm = purchaseCount + "~" + salesCount + ":" + week + " ~ ";
 		LayoutDetail layout = line.getLayout();
 		IFieldDetail weekNoFld = layout.getFieldFromName(WEEK_NO);
 		IFieldDetail monthFld = layout.getFieldFromName(MONTHS);
@@ -130,10 +132,17 @@ public class TstOccursDepending21 extends TestCase {
 		
 		@SuppressWarnings("deprecation")
 		int pos = dayFld.getEnd() + 1;
+		ArrayList<IFieldDetail> l = new ArrayList<IFieldDetail>(200);
+		
+		
 		line.getFieldValue(weekNoFld).set(purchaseCount);
 				
-		check(line, layout.getFieldFromName("Location-Number"));
-		check(line, layout.getFieldFromName("Location-Name"));
+		check(l, line, layout.getFieldFromName("Location-Number"));
+		check(l, line, layout.getFieldFromName("Location-Name"));
+		
+		l.add(monthFld);
+		l.add(weekCountFld);
+		l.add(dayFld);
 
 		for (int i = 0; i < salesCount; i++) {
 			
@@ -141,37 +150,78 @@ public class TstOccursDepending21 extends TestCase {
 			IFieldDetail countFld = layout.getFieldFromName("sales-count (" + i + ")");
 			IFieldDetail valueFld = layout.getFieldFromName("sales-value (" + i + ")");
 			for (int w = 0; w < week; w++) {
-				pos = check(line, layout.getFieldFromName("daily-sales (" + i + ", " + w + ")"), pos);
+				pos = check(l, line, layout.getFieldFromName("daily-sales (" + i + ", " + w + ")"), pos);
 			}
 			if (i == 1) {
 				System.out.print('*');
 			}
-			pos = check(line, countFld, pos);
-			pos = check(line, valueFld, pos);
+			pos = check(l, line, countFld, pos);
+			pos = check(l, line, valueFld, pos);
+			for (int w = week; w < 5; w++) {
+				assertFalse("Week: " + week + " " +i +", " + w, 
+						line.isFieldInLine(layout.getFieldFromName("daily-sales (" + i + ", " + w + ")")));
+			}
 		}
+//		for (int i =  salesCount; i < 12; i++) {			
+//			assertFalse(line.isFieldInLine(layout.getFieldFromName("sales-count (" + i + ")")));
+//			assertFalse(line.isFieldInLine(layout.getFieldFromName("sales-value (" + i + ")")));
+//			for (int w = 0; w < 6; w++) {
+//				assertFalse("SalesCount: " + salesCount + " " + i + ", " + w, 
+//						line.isFieldInLine(layout.getFieldFromName("daily-sales (" + i + ", " + w + ")")));
+//			}
+//		}
 
-		pos = check(line, layout.getFieldFromName("total-sales"), pos);
-		pos = check(line, layout.getFieldFromName(WEEK_NO), pos);		
+		pos = check(l, line, layout.getFieldFromName("total-sales"), pos);
+		pos = check(l, line, layout.getFieldFromName(WEEK_NO), pos);		
 	
 
 		for (int i = 0; i < purchaseCount; i++) {
-			pos = check(line, layout.getFieldFromName("purchase-count (" + i + ")"), pos);
-			pos = check(line, layout.getFieldFromName("purchase-value (" + i + ")"), pos);
+			IFieldDetail countFld = layout.getFieldFromName("purchase-count (" + i + ")");
+			IFieldDetail valueFld = layout.getFieldFromName("purchase-value (" + i + ")");
+			pos = check(l, line, countFld, pos);
+			pos = check(l, line, valueFld, pos);
 		}
+		
 
-		pos = check(line, layout.getFieldFromName("total-purchase-count"), pos);
-		pos = check(line, layout.getFieldFromName("total-purchase-value"), pos);
+		for (int i = purchaseCount; i < 52; i++) {
+			IFieldDetail countFld = layout.getFieldFromName("purchase-count (" + i + ")");
+			IFieldDetail valueFld = layout.getFieldFromName("purchase-value (" + i + ")");
+
+			assertFalse(line.isFieldInLine(countFld));
+			assertFalse(line.isFieldInLine(valueFld));
+		}
+		
+		
+
+		pos = check(l, line, layout.getFieldFromName("total-purchase-count"), pos);
+		pos = check(l, line, layout.getFieldFromName("total-purchase-value"), pos);
+
+		Code.checkFieldIteratore(line, idm, l);
+
+//		//System.out.println();
+//		//System.out.println();
+//		int i = 0;
+//		while (fi.hasNext()) {
+//			AbstractFieldValue fv = fi.next();
+//			if (fv.getFieldDetail() != l.get(i)) {
+//				//System.out.println(fv.getFieldDetail().getName() + " \t" + l.get(i).getName() );
+//				assertEquals(fv.getFieldDetail().getName(), l.get(i).getName() );
+//			}
+//			i += 1;
+//		}
 
 		
 //		System.out.println("** line: " + purchaseCount + " " + salesCount + " length=" + line.getData().length);
 	}
 
-	private void check(AbstractLine line, IFieldDetail fld) throws RecordException {
-		check(line, fld, fld.getPos());
+	private void check(List<IFieldDetail> fieldList, AbstractLine line, IFieldDetail fld) throws RecordException {
+		check(fieldList, line, fld, fld.getPos());
 	}
 	
-	private int check(AbstractLine line, IFieldDetail fld, int pos) throws RecordException {
+	private int check(List<IFieldDetail> fieldList, AbstractLine line, IFieldDetail fld, int pos) throws RecordException {
 		String id = fld.getName();
+		fieldList.add(fld);
+		
 		assertEquals(id, pos, fld.calculateActualPosition(line));
 		int end = pos + fld.getLen() - 1;
 		assertEquals(id, end, fld.calculateActualEnd(line));
@@ -183,6 +233,8 @@ public class TstOccursDepending21 extends TestCase {
 				setAndCheck(line, fld, i);
 			}
 		}
+		assertTrue(line.isFieldInLine(fld));
+
 		return end + 1;
 	}
 	

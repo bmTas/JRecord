@@ -33,19 +33,24 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 
 import junit.framework.TestCase;
+import net.sf.JRecord.Common.CommonBits;
+import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.External.CopybookWriter;
 import net.sf.JRecord.External.ExternalRecord;
-import net.sf.JRecord.External.RecordEditorCSVWriter;
 import net.sf.JRecord.External.RecordEditorCsvLoader;
 import net.sf.JRecord.External.Def.ExternalField;
+import net.sf.JRecord.External.base.CopybookWriter;
+import net.sf.JRecord.External.base.RecordEditorCSVWriter;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Log.TextLog;
+import net.sf.JRecord.Types.Type;
+import net.sf.JRecord.zTest.Common.CommonCodeFields;
 import net.sf.JRecord.zTest.Common.IO;
-import net.sf.JRecord.zTest.Common.TstConstants;
+import net.sf.JRecord.zTest.Common.TstConstants; 
 
 /**
  * Testing RecordEditorCSVReader/Writer classes
@@ -105,16 +110,109 @@ public class TstRecordEditCsvParser extends TestCase {
 			"101	50	Product Name		0	0	0	",
 	};
 
+	private FieldDetail[] SKU_FIELDS = {
+			CommonCodeFields.createField("Record Type", 1, 2, 0, Type.ftChar),
+			CommonCodeFields.createField("Pack Qty", 3, 9, 4, Type.ftAssumedDecimal),
+			CommonCodeFields.createField("Pack Cost", 12, 13, 4, Type.ftAssumedDecimal),
+			CommonCodeFields.createField("APN", 25, 13, 0, Type.ftNumZeroPadded),
+			CommonCodeFields.createField("Filler", 38, 1, 0, Type.ftChar),
+			CommonCodeFields.createField("Product", 39, 8, 0, Type.ftNumZeroPadded),
+			CommonCodeFields.createField("pmg dtl tech key", 72, 15, 0, Type.ftChar),
+			CommonCodeFields.createField("Case Pack id", 87, 15, 0, Type.ftChar),
+			CommonCodeFields.createField("Product Name", 101, 50, 0, Type.ftChar),
+	};
 	
 	public void testLoadCopyBook1() throws Exception {
 		
 		System.out.println("Test 1");
 		AbsSSLogger log = new TextLog();
-		IO.writeAFile(poSkuFileName, poDetailSkuLines, eol);
-		CopybookLoader l = new RecordEditorCsvLoader("\t");
-		ExternalRecord copybook = l.loadCopyBook(poSkuFileName, 0, 0, "", 0, 0, log);
+		//IO.writeAFile(poSkuFileName, poDetailSkuLines, eol);
+		RecordEditorCsvLoader.Tab l = new RecordEditorCsvLoader.Tab();
+		ExternalRecord copybook = l.loadCopyBook(new StringReader(concatenate(poDetailSkuLines)), "poDtl_Sku.Txt", 
+				0, 0, "", CommonBits.getDefaultCobolTextFormat(),  0, 0, log);
 		
 		checkSkuCopybook(copybook);
+		
+		CommonCodeFields.checkFields("Po_Dtl_Sku", "", SKU_FIELDS, copybook.asLayoutDetail().getRecord(0));
+	}
+	
+	public void testLoadCopyBookVariations() throws Exception {
+		String[][] SkuLines = {
+			{
+					"Record	0	1	<Tab>	0		N	ams PO Download: Detail",
+					"	2	Record Type		0	0	0	",
+					"	9	Pack Qty		8	4	0	",
+					"	13	Pack Cost		8	4	0	",
+					"	13	APN		7	0	0	",
+					"	1	Filler		0	0	0	",
+					"	8	Product		7	0	0	",
+					"72	15	pmg dtl tech key		0	0	0	",
+					"	15	Case Pack id		0	0	0	",
+					"101	50	Product Name		0	0	0	",
+			},
+			{
+				"Record	0	1	<Tab>	0		N	ams PO Download: Detail",
+				"1		Record Type		0	0	0	",
+				"3		Pack Qty		8	4	0	",
+				"12		Pack Cost		8	4	0	",
+				"25		APN		7	0	0	",
+				"38		Filler		0	0	0	",
+				"39	8	Product		7	0	0	",
+				"72		pmg dtl tech key		0	0	0	",
+				"87	15	Case Pack id		0	0	0	",
+				"101	50	Product Name		0	0	0	",
+			},
+			{
+				"Record	0	1	<Tab>	0		N	ams PO Download: Detail",
+				"		Record Type		0	0	0	",
+				"3	9	Pack Qty		8	4	0	",
+				"		Pack Cost		8	4	0	",
+				"25	13	APN		7	0	0	",
+				"		Filler		0	0	0	",
+				"39	8	Product		7	0	0	",
+				"72		pmg dtl tech key		0	0	0	",
+				"87	15	Case Pack id		0	0	0	",
+				"101	50	Product Name		0	0	0	",
+			},
+			{
+				"Record	0	1	<Tab>	0		N	ams PO Download: Detail",
+				"1	2	Record Type		0	0	0	",
+				"		Pack Qty		8	4	0	",
+				"12	13	Pack Cost		8	4	0	",
+				"		APN		7	0	0	",
+				"38	1	Filler		0	0	0	",
+				"	8	Product		7	0	0	",
+				"72	15	pmg dtl tech key		0	0	0	",
+				"	15	Case Pack id		0	0	0	",
+				"101	50	Product Name		0	0	0	",
+			}
+		};
+		
+		System.out.println("Test Variations");
+		AbsSSLogger log = new TextLog();
+		//IO.writeAFile(poSkuFileName, poDetailSkuLines, eol);
+		RecordEditorCsvLoader.Tab l = new RecordEditorCsvLoader.Tab();
+		int i = 0;
+		
+		for (String[] lines : SkuLines) {
+			ExternalRecord copybook = l.loadCopyBook(new StringReader(concatenate(lines)), "poDtl_Sku.Txt", 
+					0, 0, "", CommonBits.getDefaultCobolTextFormat(),  0, 0, log);
+
+			CommonCodeFields.checkFields("Po_Dtl_Sku: " + (i++), "", SKU_FIELDS, copybook.asLayoutDetail().getRecord(0));
+		}
+
+	}
+	
+	private String concatenate(String[] lines) {
+		String sep = "";
+		StringBuilder b = new StringBuilder();
+		
+		for (String s: lines) {
+			b.append(sep).append(s);
+			sep = "\n";
+		}
+		
+		return b.toString();
 	}
 	
 	
@@ -125,7 +223,7 @@ public class TstRecordEditCsvParser extends TestCase {
 		IO.writeAFile(poFileName, poDetailLines, eol);
 		IO.writeAFile(poHeaderFileName, poDetailHeaderLines, eol);
 		IO.writeAFile(poSkuFileName, poDetailSkuLines, eol);
-		CopybookLoader l = new RecordEditorCsvLoader("\t");
+		RecordEditorCsvLoader.Tab l = new RecordEditorCsvLoader.Tab();
 		ExternalRecord copybook = l.loadCopyBook(poFileName, 0, 0, "", 0, 0, log);
 		
 		checkCopybook(copybook);
@@ -139,8 +237,8 @@ public class TstRecordEditCsvParser extends TestCase {
 		IO.writeAFile(poFileName, poDetailLines, eol);
 		IO.writeAFile(poHeaderFileName, poDetailHeaderLines, eol);
 		IO.writeAFile(poSkuFileName, poDetailSkuLines, eol);
-		CopybookLoader l = new RecordEditorCsvLoader("\t");
-		CopybookLoader l1= new RecordEditorCsvLoader(",");
+		CopybookLoader l = new RecordEditorCsvLoader.Tab(); 
+		CopybookLoader l1= new RecordEditorCsvLoader.Comma();
 		CopybookWriter w = new RecordEditorCSVWriter(",");
 		ExternalRecord copybook = l.loadCopyBook(poFileName, 0, 0, "", 0, 0, log);
 		
@@ -158,7 +256,7 @@ public class TstRecordEditCsvParser extends TestCase {
 		IO.writeAFile(poFileName, poDetailLines, eol);
 		IO.writeAFile(poHeaderFileName, poDetailHeaderLines, eol);
 		IO.writeAFile(poSkuFileName, poDetailSkuLines, eol);
-		CopybookLoader l = new RecordEditorCsvLoader("\t");
+		CopybookLoader l = new RecordEditorCsvLoader.Tab();
 
 		CopybookWriter w = new RecordEditorCSVWriter("\t");
 		ExternalRecord copybook = l.loadCopyBook(poFileName, 0, 0, "", 0, 0, log);

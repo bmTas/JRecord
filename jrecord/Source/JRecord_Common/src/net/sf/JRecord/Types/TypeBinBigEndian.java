@@ -63,7 +63,7 @@ public class TypeBinBigEndian extends TypeNum {
      * @param isPositive wether it is a positive integer
      */
     public TypeBinBigEndian(final boolean isPositive) {
-        super(false, true, true, isPositive, true, true);
+        super(false, true, true, isPositive, true, true, false);
         positiveStorage = isPositive;
     }
 
@@ -76,7 +76,7 @@ public class TypeBinBigEndian extends TypeNum {
      * @param isPositive wether it is a positive integer
      */
     public TypeBinBigEndian(final boolean isPositive, boolean positiveStore) {
-        super(false, true, true, isPositive, true, true);
+        super(false, true, true, isPositive, true, true, false);
         this.positiveStorage = positiveStore;
     }
 

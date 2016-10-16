@@ -9,6 +9,7 @@ import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
+import net.sf.JRecord.zTest.Common.CommonCodeFields;
 import junit.framework.TestCase;
 
 
@@ -82,9 +83,9 @@ public class TstCobolIOBuilderKeepFiller extends TestCase {
 							.setFileOrganization(Constants.IO_VB )
 							.setKeepFillers(true);
 		
-		CommonCode.CblBldrOptions opts = new CommonCode.CblBldrOptions(
+		CommonCodeFields.CblBldrOptions opts = new CommonCodeFields.CblBldrOptions(
 				ICopybookDialects.FMT_MAINFRAME, Constants.IO_VB , false, "");
-		CommonCode.check(bldr, opts, EXPECTED_1, "keep_1");
+		CommonCodeFields.check(bldr, opts, EXPECTED_1, "keep_1");
 	}
 	
 	
@@ -100,9 +101,9 @@ public class TstCobolIOBuilderKeepFiller extends TestCase {
 		for (int i = 0; i < expected.length; i++) {
 			expected[i] = EXPECTED_1[i*2];
 		}
-		CommonCode.CblBldrOptions opts = new CommonCode.CblBldrOptions(
+		CommonCodeFields.CblBldrOptions opts = new CommonCodeFields.CblBldrOptions(
 				ICopybookDialects.FMT_MAINFRAME, Constants.IO_VB , false, "");
-		CommonCode.check(bldr, opts, expected, "Drop_1");
+		CommonCodeFields.check(bldr, opts, expected, "Drop_1");
 	}
 	public void testDropFiller02() throws IOException {
 		FieldDetail[] expected = new FieldDetail[EXPECTED_1.length / 2 + 1];
@@ -116,9 +117,9 @@ public class TstCobolIOBuilderKeepFiller extends TestCase {
 		for (int i = 0; i < expected.length; i++) {
 			expected[i] = EXPECTED_1[i*2];
 		}
-		CommonCode.CblBldrOptions opts = new CommonCode.CblBldrOptions(
+		CommonCodeFields.CblBldrOptions opts = new CommonCodeFields.CblBldrOptions(
 				ICopybookDialects.FMT_MAINFRAME, Constants.IO_VB , false, "");
-		CommonCode.check(bldr, opts, expected, "Drop_1");
+		CommonCodeFields.check(bldr, opts, expected, "Drop_1");
 	}
 	
 	
@@ -130,9 +131,9 @@ public class TstCobolIOBuilderKeepFiller extends TestCase {
 							.setFileOrganization(Constants.IO_VB )
 							.setKeepFillers(true);
 		
-		CommonCode.CblBldrOptions opts = new CommonCode.CblBldrOptions(
+		CommonCodeFields.CblBldrOptions opts = new CommonCodeFields.CblBldrOptions(
 				ICopybookDialects.FMT_MAINFRAME, Constants.IO_VB , false, "");
-		CommonCode.check(bldr, opts, EXPECTED_2, "01");
+		CommonCodeFields.check(bldr, opts, EXPECTED_2, "01");
 	}
 	
 	public void testDropFiller03() throws IOException {
@@ -146,9 +147,9 @@ public class TstCobolIOBuilderKeepFiller extends TestCase {
 		for (int i = 0; i < expected.length; i++) {
 			expected[i] = EXPECTED_2[i*2];
 		}
-		CommonCode.CblBldrOptions opts = new CommonCode.CblBldrOptions(
+		CommonCodeFields.CblBldrOptions opts = new CommonCodeFields.CblBldrOptions(
 				ICopybookDialects.FMT_MAINFRAME, Constants.IO_VB , false, "");
-		CommonCode.check(bldr, opts, expected, "Drop_1");
+		CommonCodeFields.check(bldr, opts, expected, "Drop_1");
 	}
 	public void testDropFiller04() throws IOException {
 		FieldDetail[] expected = new FieldDetail[EXPECTED_1.length / 2 + 1];
@@ -162,9 +163,9 @@ public class TstCobolIOBuilderKeepFiller extends TestCase {
 		for (int i = 0; i < expected.length; i++) {
 			expected[i] = EXPECTED_2[i*2];
 		}
-		CommonCode.CblBldrOptions opts = new CommonCode.CblBldrOptions(
+		CommonCodeFields.CblBldrOptions opts = new CommonCodeFields.CblBldrOptions(
 				ICopybookDialects.FMT_MAINFRAME, Constants.IO_VB , false, "");
-		CommonCode.check(bldr, opts, expected, "Drop_1");
+		CommonCodeFields.check(bldr, opts, expected, "Drop_1");
 	}
 	
 	
@@ -180,9 +181,9 @@ public class TstCobolIOBuilderKeepFiller extends TestCase {
 		
 		System.arraycopy(EXPECTED_1, 0, expected, 0, EXPECTED_1.length);
 		expected[EXPECTED_1.length] = EXTRA_FIELD_1;
-		CommonCode.CblBldrOptions opts = new CommonCode.CblBldrOptions(
+		CommonCodeFields.CblBldrOptions opts = new CommonCodeFields.CblBldrOptions(
 				ICopybookDialects.FMT_MAINFRAME, Constants.IO_VB , false, "");
-		CommonCode.check(bldr, opts, expected, "keep_1");
+		CommonCodeFields.check(bldr, opts, expected, "keep_1");
 	}
 
 	public void testDropFiller12() throws IOException {
@@ -197,9 +198,9 @@ public class TstCobolIOBuilderKeepFiller extends TestCase {
 			expected[i] = EXPECTED_1[i*2];
 		}
 		expected[expected.length-1] = EXTRA_FIELD_1;
-		CommonCode.CblBldrOptions opts = new CommonCode.CblBldrOptions(
+		CommonCodeFields.CblBldrOptions opts = new CommonCodeFields.CblBldrOptions(
 				ICopybookDialects.FMT_MAINFRAME, Constants.IO_VB , false, "");
-		CommonCode.check(bldr, opts, expected, "Drop_1");
+		CommonCodeFields.check(bldr, opts, expected, "Drop_1");
 	}
 
 
@@ -214,9 +215,9 @@ public class TstCobolIOBuilderKeepFiller extends TestCase {
 		
 		System.arraycopy(EXPECTED_2, 0, expected, 0, EXPECTED_1.length);
 		expected[EXPECTED_2.length] = EXTRA_FIELD_2;
-		CommonCode.CblBldrOptions opts = new CommonCode.CblBldrOptions(
+		CommonCodeFields.CblBldrOptions opts = new CommonCodeFields.CblBldrOptions(
 				ICopybookDialects.FMT_MAINFRAME, Constants.IO_VB , false, "");
-		CommonCode.check(bldr, opts, expected, "keep_1");
+		CommonCodeFields.check(bldr, opts, expected, "keep_1");
 	}
 
 	public void testDropFiller14() throws IOException {
@@ -231,9 +232,9 @@ public class TstCobolIOBuilderKeepFiller extends TestCase {
 			expected[i] = EXPECTED_2[i*2];
 		}
 		expected[expected.length-1] = EXTRA_FIELD_2;
-		CommonCode.CblBldrOptions opts = new CommonCode.CblBldrOptions(
+		CommonCodeFields.CblBldrOptions opts = new CommonCodeFields.CblBldrOptions(
 				ICopybookDialects.FMT_MAINFRAME, Constants.IO_VB , false, "");
-		CommonCode.check(bldr, opts, expected, "Drop_1");
+		CommonCodeFields.check(bldr, opts, expected, "Drop_1");
 	}
 
 	private static FieldDetail createField(String name, int pos, int len, int type) {

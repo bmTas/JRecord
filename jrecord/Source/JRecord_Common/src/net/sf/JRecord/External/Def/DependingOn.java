@@ -33,29 +33,87 @@ import net.sf.JRecord.Common.AbstractRecordX;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 
+
+/**
+ * This class represents one <b>Cobol Occurs depending on</b> clause.
+ * Any <i>child</i> Occurs depending clauses are stored in children.
+ * 
+ * <pre>
+ *         05 A1    occurs depending on ..
+ *            ...
+ *            07 A11    occurs depending on ..
+ *            ...
+ *            07 A12    occurs depending on ..
+ * </pre>
+ * 
+ * is represented as the following class structure
+ * 
+ * <pre>
+ * 
+ *    DependingOn
+ *      * variableName = A1
+ *        
+ *                   +-----  DependingOn
+ *                   |            variableName = A11
+ *      * children=  |
+ *                   |
+ *                   +-----  DependingOn
+ *                                variableName = A12 
+ * 
+ * <pre>
+ * 
+ * @author Bruce Martin
+ *
+ */
 public class DependingOn {
 	private static final Pattern OF_SPLIT = Pattern.compile("\\sOF\\s", Pattern.CASE_INSENSITIVE);
-	private final String variableName;
+	
+	private final String variableName, variableNameNoIndex;
 	private final int position, occursLength, occursMax, occursMaxLength;
-	private List<DependingOn> children = null;
+	        final List<IDependingOnIndexDtls> indexDtls;
+	//private List<DependingOn> children = null;
+	
 	private IFieldDetail field;
+	int fieldNumber;
+	
+	
+	private boolean complicatedDependingOn = false;
+
+	//private int reliableCalculationsTo;
 //	private DependingOn parent = null;
 	
-	 
-	public DependingOn(String variableName, int position, int occursLength, int occursMax) {
+	/**
+	 * This class represents one <b>Cobol Occurs depending on</b> clause.
+     * Any <i>child</i> Occurs depending clauses are stored in children.
+     *  
+	 * @param variableName Cobol field name
+	 * @param position     position in the record (assuming all occurs depending at there max)
+	 * @param occursLength Length of occurs (assuming no child occurs at max)
+	 * @param occursMax    Maximum number of occurs
+	 */
+	public DependingOn(String variableName, String variableNameNoIndex, int position, int occursLength, int occursMax) {
 		super();
 		this.variableName = variableName;
+		this.variableNameNoIndex = variableNameNoIndex;
 		this.position = position;
 		this.occursLength = occursLength;
 		this.occursMax = occursMax;
 		this.occursMaxLength = occursLength * occursMax;
+		this.indexDtls = new ArrayList<IDependingOnIndexDtls>(occursMax);
+		//this.complicatedOdDef = ! variableName
 	}
 
 	/**
 	 * @return the children
 	 */
 	public final List<DependingOn> getChildren() {
-		return children;
+		if (indexDtls == null || indexDtls.size() == 0) { return null; }
+		return indexDtls.get(0).getChildren();
+		//return children;
+	}
+
+	public List<IDependingOnIndexDtls> getIndexDtls() {
+		return indexDtls;
 	}
 
 	/**
@@ -100,6 +158,14 @@ public class DependingOn {
 		return field;
 	}
 
+	public int getFieldNumber() {
+		return fieldNumber;
+	}
+
+	public boolean isComplicatedDependingOn() {
+		return complicatedDependingOn;
+	}
+
 	/**
 	 * @return the occursMaxLength
 	 */
@@ -107,58 +173,135 @@ public class DependingOn {
 		return occursMaxLength;
 	}
 	
-	public final void addChild(DependingOn child) {
-		children = addChild(children, child);
-	}
+//	public final void addChild(DependingOn child) {
+//		children = addChild(children, child);
+//	}
 	
 	
-	public static List<DependingOn> addChild(List<DependingOn> childList, DependingOn child) {
-		if (childList == null) {
-			childList = new ArrayList<DependingOn>(3);
-		} else { 
-			for (DependingOn c : childList) {
-				if (c.position <= child.position
-				&& c.position + c.occursMaxLength > child.position) {
-//					child.parent = c;
-					c.addChild(child);
-					return childList;
-				}
-			}
-		}
-		
-		childList.add(child);
-		return childList;
-	}
+//	public final boolean addNextIndex(DependingOn child) {
+//		if (children != null && children.size() > 0) {
+//			for (DependingOn c : children) {
+//				if (c.variableNameNoIndex.equalsIgnoreCase(child.variableNameNoIndex)) {
+//					DependingOn next  = c;
+//					while (next.nextIndex != null) {
+////						if (next.position <= child.position
+////						&& next.position + next.occursMaxLength > child.position) {
+////							next.addNextIndex(child);
+////							return;
+////						}
+//						next = next.nextIndex;
+//					}
+//					next.nextIndex = child;
+//					return true;
+//				} else 	if (c.position <= child.position
+//						&& c.position + c.occursMaxLength > child.position) {
+//					if (c.addNextIndex(child)) {
+//						return true;
+//					}
+//				}
+//			}
+//		}
+//		return false;
+//	}
 
-	
+//	/**
+//	 * add a 'child' to a list of children
+//	 * 
+//	 * @param childList current child list
+//	 * @param child to add to the list
+//	 * 
+//	 * @return updated list
+//	 */
+//	public static List<DependingOn> addChild(List<DependingOn> childList, DependingOn child) {
+//		if (childList == null) {
+//			childList = new ArrayList<DependingOn>(3);
+//		} else { 
+//			for (DependingOn c : childList) {
+//				if (c.position <= child.position
+//				&& c.position + c.occursMaxLength > child.position) {
+////					child.parent = c;
+//					c.addChild(child);
+//					return childList;
+//				}
+//			}
+//		}
+//		
+//		childList.add(child);
+//		return childList;
+//	}
+
+//	public static void addNextIndex(List<DependingOn> childList, DependingOn child) {
+//		if (childList != null) {
+//			for (DependingOn c : childList) {
+//				if (c.position <= child.position
+//				&& c.position + c.occursMaxLength > child.position) {
+////					child.parent = c;
+//					if (c.addNextIndex(child)) {
+//						return;
+//					}
+//				}
+//			}
+//		}
+//
+//	}
+
+	/**
+	 * update occurs depending field details
+	 * 
+	 * @param rec record to search.
+	 */
 	public void updateField(AbstractRecordX<? extends IFieldDetail> rec) {
-		try {
-			String[] groups = OF_SPLIT.split(variableName);
-			if (groups == null || groups.length < 2) {
-				field = rec.getField(variableName);
-			} else {
-				String[] groupsNS = new String[groups.length];
-				for (int i = 0; i < groups.length; i++) {
-					groupsNS[groups.length - i] = groups[i];
-				}
-				field = rec.getGroupField(groupsNS);
-			}
-		} catch (Exception e) {
-			throw new RuntimeException("Error With Occurs Depending On Field: " + variableName, e);
-		}
-		
 		if (field == null) {
-			throw new RuntimeException("Error With Occurs Depending On Field: " + variableName);
-		}
-		
-		if (field instanceof FieldDetail) {
-			((FieldDetail) field).setOccursDependingOnValue(true);
-		}
-		
-		if (children != null) {
-			for (DependingOn c : children) {
-				c.updateField(rec);
+			try {
+				String[] groups = OF_SPLIT.split(variableName);
+				if (groups == null || groups.length < 2) {
+					field = rec.getField(variableName);
+				} else {
+					String[] groupsNS = new String[groups.length];
+					for (int i = 0; i < groups.length; i++) {
+						groupsNS[groups.length - i] = groups[i];
+					}
+					field = rec.getGroupField(groupsNS);
+				}
+			} catch (Exception e) {
+				throw new RuntimeException("Error With Occurs Depending On Field: " + variableName, e);
+			}
+			
+			if (field == null) {
+				throw new RuntimeException("Error With Occurs Depending On Field: " + variableName);
+			}
+			
+			if (field instanceof FieldDetail) {
+				((FieldDetail) field).setOccursDependingOnValue(true);
+			}
+			
+			
+			for (IDependingOnIndexDtls idxDtls : indexDtls) {
+				idxDtls.updateFieldInChildren(rec);
+			}
+
+			List<DependingOn> children2 = indexDtls.get(0).getChildren();
+			if (children2 != null && children2.size() > 0) {
+				for (DependingOn c : children2) {
+					//c.updateField(rec);
+					complicatedDependingOn 	 =   complicatedDependingOn
+											||   c.complicatedDependingOn
+											|| ! c.variableName.equalsIgnoreCase(c.variableNameNoIndex);
+				}
+				
 			}
 		}
 	}
+		
+//		DependingOn next  = nextIndex;
+//		while (next != null) {
+//			if (variableName.equalsIgnoreCase(next.variableName)) {
+//				next.field = field;
+//			} else {
+//				next.updateField(rec);
+//			}
+//			next = next.nextIndex;
+//		}
+		//System.out.print(true);
+//	}
 }

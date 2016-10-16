@@ -53,7 +53,7 @@ import org.w3c.dom.Document;
  * @author Bruce Martin
  *
  */
-public class CobolCopybookLoader implements CopybookLoader, ICobolCopybookLoader {
+public class CobolCopybookLoader implements ICopybookLoaderCobol {
 
     private static final String PROBLEM_LOADING_COPYBOOK = "Error Converting Cobol Copybook: {0}    Cause:\n{1}";
 	private static boolean available = true;
@@ -233,6 +233,7 @@ public class CobolCopybookLoader implements CopybookLoader, ICobolCopybookLoader
         return ret;
     }
 
+    @Override
     public final ExternalRecord loadCopyBook(Reader reader, //Document copyBookXml,
             String copyBookName,
 		  		int splitCopybook,

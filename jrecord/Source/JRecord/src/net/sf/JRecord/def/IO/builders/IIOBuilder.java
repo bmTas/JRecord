@@ -64,7 +64,7 @@ public interface IIOBuilder extends ISchemaIOBuilder{
 	public abstract IIOBuilder setFileOrganization(int fileOrganization);
 
 	/**
-	 * Set the character-set (font)
+	 * Set the default character-set (font)
 	 * 
 	 * @param font the font (or character set) of the File e.g CP037 is US-EBCDIC, CP273 is German EBCDIC
 	 */

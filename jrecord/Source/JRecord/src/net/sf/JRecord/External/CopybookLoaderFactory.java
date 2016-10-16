@@ -267,10 +267,12 @@ public class CopybookLoaderFactory {
             final int binFormat,
             final AbsSSLogger log)
 	throws Exception {
-		return ToLayoutDetail.getInstance().getLayout(
-				getLoader(loaderId).loadCopyBook(copyBookFile, splitCopybookOption,
-				AbstractConversion.USE_DEFAULT_IDX, font, binFormat, 0, log)
-		);
+		return
+			getLoader(loaderId).loadCopyBook(
+					copyBookFile, splitCopybookOption,
+					AbstractConversion.USE_DEFAULT_IDX, font, binFormat, 0, log)
+				.asLayoutDetail()
+		;
 	}
 
 

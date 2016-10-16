@@ -43,7 +43,6 @@ import net.sf.JRecord.ByteIO.VbDumpByteWriter;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.External.ToLayoutDetail;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.IO;
 import net.sf.JRecord.zTest.Common.TstConstants;
@@ -99,24 +98,24 @@ public class TstRecordVbDumpIOWriter extends TestCase {
 
 
     public void testBinWrite1() throws Exception {
-        copyBook = ToLayoutDetail.getInstance().getLayout(
+        copyBook = 
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + dtar020CopybookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "cp037",
                         ICopybookDialects.FMT_MAINFRAME, 0, null
-                ));
+                ).asLayoutDetail();
 
         tst1file(dtar020Lines, copyBook);
     }
 
 
     public void testBinWrite2() throws Exception {
-        copyBook = ToLayoutDetail.getInstance().getLayout(
+        copyBook = 
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + dtar107CopybookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "cp037",
                         ICopybookDialects.FMT_MAINFRAME, 0, null
-                ));
+                ).asLayoutDetail();
 
         tst1file(TstData.DTAR107_LINES, copyBook);
     }

@@ -36,6 +36,9 @@ public class Convert {
 //		lvl = 0;
 		return convertI(sel, recDef);
 	}
+	
+	
+	@SuppressWarnings("unchecked")
 	private RecordSel convertI(ExternalSelection sel, /*AbstractRecordX<? extends IFieldDetail>*/ IGetFieldByName recDef) {
 		RecordSel ret=null;
 		ExternalGroupSelection<ExternalSelection> g;

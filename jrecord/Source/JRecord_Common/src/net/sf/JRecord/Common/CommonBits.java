@@ -166,9 +166,9 @@ public class CommonBits {
         case Constants.IO_BIN_NAME_1ST_LINE:
         case Constants.IO_NAME_1ST_LINE:
         case Constants.IO_BIN_CSV_NAME_1ST_LINE:
-        case Constants.IO_UNICODE_CSV_NAME_1ST_LINE:
         case Constants.IO_UNICODE_NAME_1ST_LINE:
-        	ret = true;
+        case Constants.IO_UNICODE_CSV_NAME_1ST_LINE:
+        	 ret = true;
 		}
 		return ret;
 	}

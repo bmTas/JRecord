@@ -186,8 +186,9 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 
 	@Override
 	public final void close() throws IOException {
-		in.close();
-
+		if (in != null) {
+			in.close();
+		}
 		in=null;
 	}
 

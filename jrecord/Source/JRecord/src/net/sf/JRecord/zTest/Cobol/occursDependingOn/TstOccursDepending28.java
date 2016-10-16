@@ -29,8 +29,9 @@
 package net.sf.JRecord.zTest.Cobol.occursDependingOn;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
@@ -81,6 +82,7 @@ public class TstOccursDepending28 extends TestCase {
 	
 
 	private void tstLine(AbstractLine line, int purchaseCount, int salesCount, int week, int day, int hour, boolean normalPos) throws RecordException {
+		String idm = purchaseCount + "~" + salesCount + ":" + week + " ~ ";
 		LayoutDetail layout = line.getLayout();
 		IFieldDetail weekNoFld = layout.getFieldFromName(WEEK_NO);
 		IFieldDetail monthFld = layout.getFieldFromName(MONTHS);
@@ -96,10 +98,17 @@ public class TstOccursDepending28 extends TestCase {
 		line.getFieldValue(hourFld).set(hour);
 		@SuppressWarnings("deprecation")
 		int pos = hourFld.getEnd() + 1;
+		ArrayList<IFieldDetail> l = new ArrayList<IFieldDetail>(200);
+
 		line.getFieldValue(weekNoFld).set(purchaseCount);
 				
-		check(line, layout.getFieldFromName("Location-Number"));
-		check(line, layout.getFieldFromName("Location-Name"));
+		check(l, line,layout.getFieldFromName("Location-Number"));
+		check(l, line,layout.getFieldFromName("Location-Name"));
+
+		l.add(monthFld);
+		l.add(weekCountFld);
+		l.add(dayFld);
+		l.add(hourFld);
 
 		for (int i = 0; i < salesCount; i++) {
 			IFieldDetail countFld = layout.getFieldFromName("sales-count (" + i + ")");
@@ -110,78 +119,95 @@ public class TstOccursDepending28 extends TestCase {
 			for (int w = 0; w < week; w++) {
 				for (int d = 0; d < day; d++) {
 					for (int h = 0; h < hour; h++) {
-						pos = check(line, layout.getFieldFromName("daily-sales (" + i + ", " + w + ", " + d + ", " + h + ")"), pos);
+						pos = check(l, line,layout.getFieldFromName("daily-sales (" + i + ", " + w + ", " + d + ", " + h + ")"), pos);
 					}
 				}
 			}
 			for (int w = 0; w < week; w++) {
 				for (int d = 0; d < day; d++) {
 					for (int h = 0; h < hour; h++) {
-						pos = check(line, layout.getFieldFromName("daily-value (" + i + ", " + w + ", " + d + ", " + h + ")"), pos);
+						pos = check(l, line,layout.getFieldFromName("daily-value (" + i + ", " + w + ", " + d + ", " + h + ")"), pos);
 					}
 				}
 			}
-			pos = check(line, countFld, pos);
-			pos = check(line, valueFld, pos);
+			pos = check(l, line,countFld, pos);
+			pos = check(l, line,valueFld, pos);
 		}
 
-		pos = check(line, layout.getFieldFromName("total-sales"), pos);
-		pos = check(line, layout.getFieldFromName(WEEK_NO), pos);		
+		pos = check(l, line,layout.getFieldFromName("total-sales"), pos);
+		pos = check(l, line,layout.getFieldFromName(WEEK_NO), pos);		
 	
 
 		for (int i = 0; i < purchaseCount; i++) {
 			for (int w = 0; w < week; w++) {
 				for (int d = 0; d < day; d++) {
 					for (int h = 0; h < hour; h++) {
-						pos = check(line, layout.getFieldFromName("daily-purch (" + i + ", " + w + ", " + d + ", " + h + ")"), pos);
-						pos = check(line, layout.getFieldFromName("daily-purch-val (" + i + ", " + w + ", " + d + ", " + h + ")"), pos);
+						pos = check(l, line,layout.getFieldFromName("daily-purch (" + i + ", " + w + ", " + d + ", " + h + ")"), pos);
+						pos = check(l, line,layout.getFieldFromName("daily-purch-val (" + i + ", " + w + ", " + d + ", " + h + ")"), pos);
 					}
 				}
 			}
-			pos = check(line, layout.getFieldFromName("purchase-count (" + i + ")"), pos);
-			pos = check(line, layout.getFieldFromName("purchase-value (" + i + ")"), pos);
+			pos = check(l, line,layout.getFieldFromName("purchase-count (" + i + ")"), pos);
+			pos = check(l, line,layout.getFieldFromName("purchase-value (" + i + ")"), pos);
 		}
 
-		pos = check(line, layout.getFieldFromName("total-purchase-count"), pos);
-		pos = check(line, layout.getFieldFromName("total-purchase-value"), pos);
+		pos = check(l, line,layout.getFieldFromName("total-purchase-count"), pos);
+		pos = check(l, line,layout.getFieldFromName("total-purchase-value"), pos);
 
-		
+
+		Code.checkFieldIteratore(line, idm, l);
+
 		System.out.println("** line: " + purchaseCount + " " + salesCount + " length=" + line.getData().length);
 	}
 
-	private void check(AbstractLine line, IFieldDetail fld) throws RecordException {
-		check(line, fld, fld.getPos());
+	private void check(List<IFieldDetail> fieldList, AbstractLine line, IFieldDetail fld) throws RecordException {
+		check(fieldList, line, fld, fld.getPos());
 	}
 	
-	private int check(AbstractLine line, IFieldDetail fld, int pos) throws RecordException {
-		String id = fld.getName();
-		assertEquals(id, pos, fld.calculateActualPosition(line));
-		int end = pos + fld.getLen() - 1;
-		assertEquals(id, end, fld.calculateActualEnd(line));
+	private int check(List<IFieldDetail> fieldList, AbstractLine line, IFieldDetail fld, int pos) throws RecordException {
 		
-		if (WEEK_NO.equalsIgnoreCase(fld.getName()) || MONTHS.equalsIgnoreCase(fld.getName())) {
-			
-		} else {
-			for (int i = 0; i < 4; i++) {
-				setAndCheck(line, fld, i);
-			}
+		int calculatedPosition = fld.calculateActualPosition(line);
+		if (pos != calculatedPosition) {
+			//calculatedPosition = fld.calculateActualPosition(line);
+			assertEquals(fld.getName(), pos, calculatedPosition);
 		}
-		return end + 1;
-	}
-	
-	private void setAndCheck(AbstractLine line, IFieldDetail fld, int value) throws RecordException {
 		
-		AbstractFieldValue fieldValue = line.getFieldValue(fld);
-		fieldValue.set(value);
-		if (fieldValue.isNumeric()) {
-			if (fld.getDecimal() == 0) {
-				assertEquals(value, fieldValue.asInt());
-			} else {
-				assertEquals(Integer.toString(value) + ".00", fieldValue.asString());
-			}
-		} else {
-			assertEquals(Integer.toString(value), fieldValue.asString());
-		}
+		return Code.check(fieldList, line, fld, calculatedPosition);
 	}
+
+//	private void check(AbstractLine line, IFieldDetail fld) throws RecordException {
+//		check(line, fld, fld.getPos());
+//	}
+//	
+//	private int check(AbstractLine line, IFieldDetail fld, int pos) throws RecordException {
+//		String id = fld.getName();
+//		assertEquals(id, pos, fld.calculateActualPosition(line));
+//		int end = pos + fld.getLen() - 1;
+//		assertEquals(id, end, fld.calculateActualEnd(line));
+//		
+//		if (WEEK_NO.equalsIgnoreCase(fld.getName()) || MONTHS.equalsIgnoreCase(fld.getName())) {
+//			
+//		} else {
+//			for (int i = 0; i < 4; i++) {
+//				setAndCheck(line, fld, i);
+//			}
+//		}
+//		return end + 1;
+//	}
+//	
+//	private void setAndCheck(AbstractLine line, IFieldDetail fld, int value) throws RecordException {
+//		
+//		AbstractFieldValue fieldValue = line.getFieldValue(fld);
+//		fieldValue.set(value);
+//		if (fieldValue.isNumeric()) {
+//			if (fld.getDecimal() == 0) {
+//				assertEquals(value, fieldValue.asInt());
+//			} else {
+//				assertEquals(Integer.toString(value) + ".00", fieldValue.asString());
+//			}
+//		} else {
+//			assertEquals(Integer.toString(value), fieldValue.asString());
+//		}
+//	}
 
 }

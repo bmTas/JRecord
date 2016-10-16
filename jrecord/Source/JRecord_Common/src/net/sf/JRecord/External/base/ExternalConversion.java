@@ -1,32 +1,29 @@
 /*  -------------------------------------------------------------------------
  *
- *                Project: JRecord
+ *            Sub-Project: RecordEditor's version of JRecord 
  *    
- *    Sub-Project purpose: Provide support for reading Cobol-Data files 
- *                        using a Cobol Copybook in Java.
- *                         Support for reading Fixed Width / Binary / Csv files
- *                        using a Xml schema.
- *                         General Fixed Width / Csv file processing in Java.
+ *    Sub-Project purpose: Low-level IO and record translation  
+ *                        code + Cobol Copybook Translation
  *    
  *                 Author: Bruce Martin
  *    
- *                License: LGPL 2.1 or latter
+ *                License: GPL 2.1 or later
  *                
  *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
  *   
  *    This library is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU Lesser General Public
- *    License as published by the Free Software Foundation; either
+ *    modify it under the terms of the GNU General Public License
+ *    as published by the Free Software Foundation; either
  *    version 2.1 of the License, or (at your option) any later version.
  *   
  *    This library is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *    GNU Lesser General Public License for more details.
+ *    GNU General Public License for more details.
  *
  * ------------------------------------------------------------------------ */
-
-package net.sf.JRecord.External;
+      
+package net.sf.JRecord.External.base;
 
 import java.util.ArrayList;
 
@@ -35,7 +32,6 @@ import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.External.Def.AbstractConversion;
 import net.sf.JRecord.External.Def.BasicConversion;
-import net.sf.JRecord.IO.LineIOProvider;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 
@@ -157,7 +153,7 @@ public final class ExternalConversion {
 	public final static int getFileStructure(int dbIdx, String fileStructureStr) {
 		int fileStructure = Constants.NULL_INTEGER;
 
-		fileStructure = LineIOProvider.getInstance().getStructure(fileStructureStr);
+		fileStructure = BasicConversion.getStructure(fileStructureStr);
 
 		if (fileStructure == Constants.NULL_INTEGER) {
 			try {
@@ -244,7 +240,7 @@ public final class ExternalConversion {
 	public final static String getFileStructureAsString(int dbIdx, int fileStructure) {
 		String fileStructureStr = "";
 
-		fileStructureStr = LineIOProvider.getInstance().getStructureName(fileStructure);
+		fileStructureStr = BasicConversion.getStructureName(fileStructure);
 
 		if ("".equals(fileStructureStr) && fileStructure >= 0) {
 			try {

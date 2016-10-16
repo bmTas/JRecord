@@ -174,6 +174,8 @@ public interface Icb2xmlLoadOptions {
 
 
 	/**
+	 * set the font (character set) of the file.
+	 * 
 	 * @param font the font (or character set) of the File e.g CP037 is US-EBCDIC, CP273 is German EBCDIC
 	 */
 	public abstract Icb2xmlLoadOptions setFont(String font);

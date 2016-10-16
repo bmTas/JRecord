@@ -43,11 +43,11 @@ import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
-import net.sf.JRecord.Extern.Cb2xmlDocument;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
-import net.sf.JRecord.External.ICobolCopybookLoader;
+import net.sf.JRecord.External.ICopybookLoaderCobol;
+import net.sf.JRecord.External.base.Cb2xmlDocument;
 import net.sf.JRecord.IO.builders.CblIOBuilderMultiSchemaBase;
 import net.sf.JRecord.Option.IReformatFieldNames;
 import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
@@ -93,7 +93,7 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 	
 	
 	
-	protected CobolSchemaReader(String copybookName, ICobolCopybookLoader loader) {
+	protected CobolSchemaReader(String copybookName, ICopybookLoaderCobol loader) {
 		super(copybookName, loader);
 		loader.setSaveCb2xmlDocument(true);
 	}

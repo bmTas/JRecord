@@ -41,7 +41,7 @@ import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDetail;
-import net.sf.JRecord.External.RecordEditorXmlWriter;
+import net.sf.JRecord.External.base.RecordEditorXmlWriter;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.Log.TextLog;
 import net.sf.JRecord.Numeric.ICopybookDialects;

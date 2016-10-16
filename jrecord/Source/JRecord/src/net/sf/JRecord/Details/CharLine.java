@@ -196,6 +196,7 @@ public class CharLine extends BasicLine implements AbstractLine {
 	@Override
 	public void setData(String newVal) {
 		data = newVal;
+		clearOdBuffers();
 	}
 
 
@@ -219,6 +220,9 @@ public class CharLine extends BasicLine implements AbstractLine {
 			} 
 			updateData(field.calculateActualPosition(this), len, s);
 			
+			
+			super.checkForOdUpdate(field);
+
 		} else {
 	        ICsvLineParser parser = ParserManager.getInstance().get(field.getRecord().getRecordStyle());
 	        Type typeVal = TypeManager.getSystemTypeManager().getType(typeId);
@@ -241,6 +245,8 @@ public class CharLine extends BasicLine implements AbstractLine {
 	@Override
 	public void setFieldText(int recordIdx, int fieldIdx, String value) {
 		FieldDetail fldDef = layout.getRecord(recordIdx).getField(fieldIdx);
+		
+		super.checkForOdUpdate(fldDef);
 
 		updateData(fldDef.calculateActualPosition(this), fldDef.getLen(), value);
 	}

@@ -166,6 +166,7 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
 					java.lang.Math.min(len, data.length));
 		super.preferredLayoutAlt = Constants.NULL_INTEGER;
 		super.preferredLayout = Constants.NULL_INTEGER;
+		clearOdBuffers();
 	}
 
 
@@ -380,15 +381,22 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
 	 */
 	@Override
 	public void setData(byte[] data) {
+		replaceDataValue(data);
+	}
+
+
+
+	private void replaceDataValue(byte[] data) {
 		this.data = data;
+		super.preferredLayoutAlt = Constants.NULL_INTEGER;
+		super.preferredLayout = Constants.NULL_INTEGER;
+		clearOdBuffers();
 	}
 
 
 
 	public final void setData(String newVal) {
-	    data = Conversion.getBytes(newVal, layout.getFontName());
-		super.preferredLayoutAlt = Constants.NULL_INTEGER;
-		super.preferredLayout = Constants.NULL_INTEGER;
+		replaceDataValue(Conversion.getBytes(newVal, layout.getFontName()));
 	}
 
 
@@ -440,6 +448,8 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
 //            System.out.println("~~ " + field.calculateActualEnd(this));
 			data = TypeManager.getSystemTypeManager().getType(type)
 				.setField(getData(), pos, field, value);
+			
+			super.checkForOdUpdate(field);
         } else  {
             data = layout.setCsvField(getData(), type, field, value);
         }
@@ -494,6 +504,7 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
             for (i = j; i >= start; i--) {
                 data[i] = 0;
             }
+            super.checkForOdUpdate(field);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RecordException("Error saving Hex value: {0}", e.getMessage());
@@ -510,6 +521,7 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
         for (int i = field.calculateActualPosition(this) - 1; i < en; i++) {
         	data[i] = val;
         }
+        super.checkForOdUpdate(field);
 	}
 
 	/**
@@ -522,7 +534,7 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
 	
 	@Override
 	public boolean isDefined(IFieldDetail field) {
-		if (this.data == null || data.length <= field.getPos()) {
+		if (this.data == null || data.length <= field.getPos() || ! super.isFieldInLine(field)) {
 			return false;
 		}
 		boolean ret = false;
@@ -530,7 +542,8 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
 		if (t instanceof TypeNum) {
 			ret = ((TypeNum) t).isDefined(this, data, field);
 		} else {
-			ret = ! TypeChar.isHexZero(data, field.getPos(), field.getLen());
+			int pos = field.calculateActualPosition(this);
+			ret = ! TypeChar.isHexZero(data, pos, field.getLen());
 		}
 		return ret;
 	}

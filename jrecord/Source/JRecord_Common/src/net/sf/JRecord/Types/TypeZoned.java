@@ -79,11 +79,11 @@ public class TypeZoned extends TypeNum {
      * fields.
      */
     public TypeZoned() {
-        super(false, true, true, false, false, false);
+        super(false, true, true, false, false, false, false);
     }
 
     public TypeZoned(boolean positive) {
-        super(false, true, true, positive, false, false);
+        super(false, true, true, positive, false, false, false);
     }
 
     /**

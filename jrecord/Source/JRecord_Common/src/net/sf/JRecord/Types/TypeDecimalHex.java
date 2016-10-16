@@ -74,7 +74,7 @@ public class TypeDecimalHex extends TypeNum {
      * </ol>
      */
     public TypeDecimalHex(final int typeId) {
-        super(false, true, true, true, true, true);
+        super(false, true, true, true, true, true, false);
 
         isNumeric = typeId == Type.ftDecimal;
         setNumeric(isNumeric);

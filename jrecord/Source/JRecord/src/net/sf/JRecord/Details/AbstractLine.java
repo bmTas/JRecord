@@ -339,4 +339,12 @@ public interface AbstractLine extends AbstractIndexedLine {
      * @return wether the field exists in the line
      */
     public boolean isDefined(IFieldDetail fld);
+
+	/**
+	 * This basically checks to see if 
+	 * @param fd field to check
+	 * @return wether this field is actual present
+	 */
+
+	boolean isFieldInLine(IFieldDetail fd);
 }

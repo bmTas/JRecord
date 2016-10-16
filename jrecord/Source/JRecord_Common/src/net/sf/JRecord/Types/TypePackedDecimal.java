@@ -65,11 +65,11 @@ public class TypePackedDecimal extends TypeNum {
      * fields.
      */
     public TypePackedDecimal() {
-        super(false, true, true, false, true, false);
+        super(false, true, true, false, true, false, false);
     }
 
     public TypePackedDecimal(boolean positive) {
-        super(false, true, true, positive, true, false);
+        super(false, true, true, positive, true, false, false);
     }
 
     /**

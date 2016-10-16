@@ -398,7 +398,7 @@ public class Copy {
 			System.err.println();
 			e.printStackTrace();
 			
-			throw new RuntimeException("Error at Line: " + lineNumber + " " + e, e);
+			throw new RuntimeException("Error at Line: " + lineNumber, e);
 		} finally {
 			writer.close();
 			reader.close();

@@ -118,6 +118,7 @@ public interface ISchemaIOBuilder extends INewLineCreator {
 	public abstract AbstractLineReader newReader(InputStream datastream)
 			throws IOException;
 
+	
 	/**
 	 * Create LineWriter for a supplied filename
 	 * 

@@ -29,14 +29,25 @@
 package net.sf.JRecord.zTest.Cobol.occursDependingOn;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.TestCase;
+import net.sf.JRecord.Common.AbstractFieldValue;
+import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
+import net.sf.JRecord.Details.FieldIterator;
 import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.occursDepending.IOccursDependingPositionCalculation;
+import net.sf.JRecord.occursDepending.ODCalculationComplex;
 
 public class Code {
+	
+	public static final String MONTHS_FIELD_NAME = "months";
+	public static final String WEEK_NO_FIELD_NAME = "week-no";
+
 	private static final BigDecimal BD_1p1 = new BigDecimal("1.1");
 	private static final BigDecimal BD_3p1 = new BigDecimal("3.1");
 	private static final BigDecimal BD_5p1 = new BigDecimal("5.1");
@@ -106,12 +117,12 @@ public class Code {
 	
 	
 	public static void checkLine(AbstractLine line, int purchaseCount, int salesCount) throws RecordException {
-		String storeName = "Store " + salesCount + ", " + purchaseCount;
-		System.out.println("** line: " + purchaseCount + " " + salesCount + " length=" + line.getData().length 
-				+ " " + storeName
-				+ " " + salesCount + " ~ " + line.getFieldValue("months").asInt()
-				+ " " + purchaseCount + " ~ " + line.getFieldValue("week-no").asInt()
-		);
+//		String storeName = "Store " + salesCount + ", " + purchaseCount;
+//		System.out.println("** line: " + purchaseCount + " " + salesCount + " length=" + line.getData().length 
+//				+ " " + storeName
+//				+ " " + salesCount + " ~ " + line.getFieldValue("months").asInt()
+//				+ " " + purchaseCount + " ~ " + line.getFieldValue("week-no").asInt()
+//		);
 
 		checkSalesRecord(line, purchaseCount, salesCount, true);
 
@@ -119,7 +130,7 @@ public class Code {
 		TestCase.assertEquals(count, line.getFieldValue("total-purchase-count").asInt());
 		
 		BigDecimal expected = BigDecimal.valueOf(count).multiply(BD_5p1).setScale(2, BigDecimal.ROUND_HALF_UP);
-		System.out.println(expected + " " + count + " " + (count * 5.1) + " " );
+//		System.out.println(expected + " " + count + " " + (count * 5.1) + " " );
 		TestCase.assertEquals(expected, line.getFieldValue("total-purchase-value").asBigDecimal()); 
 		for (int i = 0; i < purchaseCount; i++) {
 			TestCase.assertEquals(i + salesCount, line.getFieldValue("purchase-count (" + i + ")").asInt());
@@ -168,5 +179,76 @@ public class Code {
 		}
 	}
 
+	public static int check(List<IFieldDetail> fieldList, AbstractLine line, IFieldDetail fld, int pos) throws RecordException {
+		String id = fld.getName();
+		fieldList.add(fld);
+		
+		if (pos != fld.calculateActualPosition(line)) {
+			TestCase.assertEquals(id + " :- " + fld.getPos(), pos, fld.calculateActualPosition(line));
+		}
+		int end = pos + fld.getLen() - 1;
+		TestCase.assertEquals(id, end, fld.calculateActualEnd(line));
+		
+		if (WEEK_NO_FIELD_NAME.equalsIgnoreCase(fld.getName()) || MONTHS_FIELD_NAME.equalsIgnoreCase(fld.getName())) {
+			
+		} else {
+			for (int i = 0; i < 4; i++) {
+				setAndCheck(line, fld, i);
+			}
+		}
+		
+		if (! line.isFieldInLine(fld)) {
+			TestCase.assertTrue(fld.getName(), line.isFieldInLine(fld));
+		}
+		TestCase.assertTrue(fld.getName(), line.getFieldValue(fld).isFieldInRecord());
+
+		return end + 1;
+	}
+	
+	private static void setAndCheck(AbstractLine line, IFieldDetail fld, int value) throws RecordException {
+		
+		AbstractFieldValue fieldValue = line.getFieldValue(fld);
+		fieldValue.set(value);
+		if (fieldValue.isNumeric()) {
+			if (fld.getDecimal() == 0) {
+				TestCase.assertEquals(value, fieldValue.asInt());
+			} else {
+				TestCase.assertEquals(Integer.toString(value) + ".00", fieldValue.asString());
+			}
+		} else {
+			TestCase.assertEquals(Integer.toString(value), fieldValue.asString());
+		}
+	}
+
+	
+
+	private static IOccursDependingPositionCalculation odCalc2;
+	private static LayoutDetail lastLayout;
+
+	public static void checkFieldIteratore(AbstractLine line, String tstId, ArrayList<IFieldDetail> l) {
+		FieldIterator fi = line.getFieldIterator(0);
+		int i = 0;
+		
+		LayoutDetail layout = line.getLayout();
+		if (layout != lastLayout) {
+			odCalc2 = new ODCalculationComplex(layout.getRecord(0).getDependingOn());
+			lastLayout = layout;
+		}
+		while (fi.hasNext()) {
+			AbstractFieldValue fv = fi.next();
+			FieldDetail fieldDetail = (FieldDetail) fv.getFieldDetail();
+			if (fieldDetail != l.get(i)) {
+				TestCase.assertEquals(fieldDetail.getName(), l.get(i).getName() );
+			}
+
+			if (i == 7 && tstId.startsWith("1~0:1")) {
+				System.out.print('*');
+			}
+			TestCase.assertEquals(tstId + i + ") " + fieldDetail.getName(),
+					fieldDetail.calculateActualPosition(line), 
+					odCalc2.calculateActualPosition(line, fieldDetail.getDependingOnDtls(), fieldDetail.getPos()));
+			i += 1;
+		}
+	}
 
 }

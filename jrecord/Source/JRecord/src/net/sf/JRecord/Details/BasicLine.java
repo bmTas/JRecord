@@ -246,6 +246,26 @@ public abstract class BasicLine extends BaseLine implements AbstractLine {
 
 	   	setField(field, val);
 	}
+	
+	/**
+	 * Check for Occurs depending size field update
+	 * 
+	 * @param field field being updated
+	 * @param value new field value
+	 */
+	protected final void checkForOdUpdate(IFieldDetail field) {
+		if (field != null) {
+			for (int i = 0; i < layout.getRecordCount(); i++) {
+				layout.getRecord(i).checkForSizeFieldUpdate(this, field);
+			}		
+		}
+	}
+	
+	protected final void clearOdBuffers() {
+		for (int i = 0; i < layout.getRecordCount(); i++) {
+			layout.getRecord(i).clearOdBuffers(this);
+		}		
+	}
 
 	/**
      * Set the line provider
@@ -265,4 +285,5 @@ public abstract class BasicLine extends BaseLine implements AbstractLine {
 	public final boolean isDefined(int recIdx, int fldIdx) {
 		return isDefined(layout.getRecord(recIdx).getField(fldIdx));
 	}
+	
 }

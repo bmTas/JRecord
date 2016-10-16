@@ -73,6 +73,7 @@ public class TypeNum extends TypeChar {
 //	private static final int BASE_10 = 10;
 	private final boolean couldBeHexZero;
     private final boolean adjustTheDecimal;
+    protected final boolean couldBeEmpty;
     private boolean couldBeLong = true;
     private final boolean positive;
     private boolean usePositiveSign = false;
@@ -156,6 +157,7 @@ public class TypeNum extends TypeChar {
             padChar = "0";
         }
         adjustTheDecimal = adjDecimal;
+        couldBeEmpty = false;
 
         couldBeLong = typeId != Type.ftNumLeftJustified;
     }
@@ -185,12 +187,14 @@ public class TypeNum extends TypeChar {
             		  final boolean couldBeALong,
             		  final boolean isPositive,
             		  final boolean binary,
-            		  final boolean couldBeHexHero) {
+            		  final boolean couldBeHexHero,
+            		  final boolean numCouldBeEmpty) {
         super(leftJustified, binary, true);
         adjustTheDecimal = adjustDecimal;
         couldBeLong = couldBeALong;
         positive = isPositive;
         this.couldBeHexZero = couldBeHexHero;
+        this.couldBeEmpty = numCouldBeEmpty;
         this.decimalPoint = '.';
     }
 
@@ -424,11 +428,15 @@ public class TypeNum extends TypeChar {
 				throws RecordException {
 
 
+		if (couldBeEmpty && (val == null || val.trim().length() == 0)) {
+			return "";
+		}
 		if (val == null || val == CommonBits.NULL_VALUE) {
 			val = "0";
 		}
 	    int decimal = field.getDecimal();
 	    
+	   
 		if (decimal == 0 && couldBeLong && (val.indexOf('e') < 0 && val.indexOf('E') < 0 )) {
 	        try {
 	            val = val.trim();

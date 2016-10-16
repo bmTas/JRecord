@@ -52,7 +52,6 @@ import net.sf.JRecord.Details.Line;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.External.ToLayoutDetail;
 import net.sf.JRecord.IO.XmlLineReader;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.zTest.Common.TstConstants;
@@ -102,13 +101,13 @@ public class TstXmlLine extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        LayoutDetail iCopyBook = ToLayoutDetail.getInstance().getLayout(
+        LayoutDetail iCopyBook = 
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "",
                         ICopybookDialects.FMT_MAINFRAME, 0, null
                         //ICopybookDialects.FMT_INTEL, 0, null
-                ));
+                ).asLayoutDetail();
 
         line = getAsXml(new Line(iCopyBook, rec), "");
     }
@@ -156,12 +155,12 @@ public class TstXmlLine extends TestCase {
         //assertEquals("27 GetField - Bit 1byte ", "10000000", getLineField( 26));
         //assertEquals("28 GetField - Bit 2byte ", "1000000110000011", getLineField( 27));
 
-        LayoutDetail copyBook1 = ToLayoutDetail.getInstance().getLayout(
+        LayoutDetail copyBook1 = 
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "",
                         ICopybookDialects.FMT_MAINFRAME, 0, null
-                ));
+                ).asLayoutDetail();
 
         AbstractLine line1 = new Line(copyBook1, rec);
 
@@ -171,7 +170,8 @@ public class TstXmlLine extends TestCase {
         assertEquals("22 GetField - Mainframe Long ", "100000000000000000", line1.getField(0, 21));
     }
 
-    private Object getLineField(int fld) {
+    @SuppressWarnings("deprecation")
+	private Object getLineField(int fld) {
     	return line.getField(1, fld + xmlTotal);
     }
 
@@ -219,12 +219,12 @@ public class TstXmlLine extends TestCase {
         //assertEquals("27 GetFieldValue - Bit 1byte ", "10000000", line.getFieldValue(1, xmlTotal + 26));
         //assertEquals("28 GetFieldValue - Bit 2byte ", "1000000110000011", line.getFieldValue(1, xmlTotal + 27));
 
-        LayoutDetail copyBook1 = ToLayoutDetail.getInstance().getLayout(
+        LayoutDetail copyBook1 = 
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "",
                         ICopybookDialects.FMT_MAINFRAME, 0, null
-                ));
+                ).asLayoutDetail();
 
         AbstractLine line1 = getAsXml(new Line(copyBook1, rec), "_2");
 
@@ -275,12 +275,12 @@ public class TstXmlLine extends TestCase {
         //assertEquals("27 GetFieldValue - Bit 1byte ", "10000000", line.getFieldValue(0, 26));
         //assertEquals("28 GetFieldValue - Bit 2byte ", "1000000110000011", line.getFieldValue(0, 27));
 
-        LayoutDetail copyBook1 = ToLayoutDetail.getInstance().getLayout(
+        LayoutDetail copyBook1 = 
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookName + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "",
                         ICopybookDialects.FMT_MAINFRAME, 0, null
-                ));
+                ).asLayoutDetail();
 
         AbstractLine line1 = getAsXml(new Line(copyBook1, rec), "_2");
 
@@ -486,12 +486,12 @@ public class TstXmlLine extends TestCase {
      * @return Mainframe Line
      */
     private AbstractLine defMainframeRec() throws Exception {
-        LayoutDetail dtar0020 = ToLayoutDetail.getInstance().getLayout(
+        LayoutDetail dtar0020 = 
                 copybookInt.loadCopyBook(
                         TstConstants.COBOL_DIRECTORY + copyBookDTAR020 + ".cbl",
                         CopybookLoader.SPLIT_NONE, 0, "cp037",
                         ICopybookDialects.FMT_MAINFRAME, 0, null
-                ));
+                ).asLayoutDetail();
         return new Line(dtar0020,
                 		recDtar020);
     }

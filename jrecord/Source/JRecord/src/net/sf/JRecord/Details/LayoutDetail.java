@@ -41,6 +41,8 @@
 
 package net.sf.JRecord.Details;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -298,7 +300,8 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 		        }
 	    	}
 	    }
-	    
+
+	    //List<E>
 	    int maxSize = 0;
 	    int minSize = recordCount > 0 ? Integer.MAX_VALUE: 0;
 		for (i = 0; i < recordCount; i++) {
@@ -380,10 +383,16 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	 * Get all the record Details.
 	 *
 	 * @return all the record layouts
-	 * @deprecated use getRecord instead
+	 * @deprecated use getRecordsAsList or getRecord instead
 	 */
 	public RecordDetail[] getRecords() {
 		return records;
+	}
+	
+	public List<RecordDetail> getRecordsAsList() {
+		return Collections.unmodifiableList(
+						Arrays.asList(records)
+		);
 	}
 
 	/**

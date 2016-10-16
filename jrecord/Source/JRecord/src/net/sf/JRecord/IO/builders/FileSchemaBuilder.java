@@ -37,11 +37,10 @@ import java.io.Reader;
 import net.sf.JRecord.External.CopybookLoaderFactory;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ICopybookLoaderStream;
-import net.sf.JRecord.External.RecordEditorXmlWriter;
+import net.sf.JRecord.External.base.RecordEditorXmlWriter;
 import net.sf.JRecord.Log.TextLog;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.def.IO.builders.ICobolCopybookIOProvider;
-import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.def.IO.builders.IIOCopybookProvider;
 import net.sf.JRecord.def.IO.builders.Icb2xmlIOProvider;
 
@@ -94,7 +93,7 @@ public class FileSchemaBuilder implements ICobolCopybookIOProvider, IIOCopybookP
 	 * @see net.sf.JRecord.def.IO.builders.ICobolCopybookIOProvider#newIOBuilder(java.io.Reader, java.lang.String)
 	 */
 	@Override
-	public ICobolIOBuilder newIOBuilder(Reader copybookReader, String copybookName) {
+	public CblIOBuilderMultiSchema newIOBuilder(Reader copybookReader, String copybookName) {
 		try {
 			CblIOBuilderMultiSchema ret = new CblIOBuilderMultiSchema(
 					 copybookName, 

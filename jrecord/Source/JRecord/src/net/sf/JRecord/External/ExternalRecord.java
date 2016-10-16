@@ -31,13 +31,16 @@ package net.sf.JRecord.External;
 import java.util.Collections;
 import java.util.Comparator;
 
+import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.Details.LayoutGetFieldByName;
 import net.sf.JRecord.Details.RecordDecider;
-import net.sf.JRecord.Extern.BaseExternalRecord;
+import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.External.Def.ExternalField;
-import net.sf.JRecord.IO.builders.SchemaIOBuilder;
+import net.sf.JRecord.External.base.BaseExternalRecord;
 
 
 /**
@@ -557,8 +560,133 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	 *
 	 */
 	public final LayoutDetail asLayoutDetail() {
-		return ToLayoutDetail.getInstance().getLayout(this);
+//		return ToLayoutDetail.getInstance().getLayout(this);
+	    LayoutDetail ret = null;
+
+	    RecordDetail[] records;
+	    String recordSepString = this.getRecSepList();
+
+	    String fontName = this.getFontName();
+	    byte[] recordSep = CommonBits.getEolBytes( this.getRecordSep(), recordSepString, fontName);
+	    
+	    this.setParentsFromName();
+
+		
+		if (this.getNumberOfRecords() == 0) {
+	        records = new RecordDetail[1];
+	        records[0] = this.toRecordDetail();
+	        records[0].updateRecordSelection(this.getRecordSelection(), records[0]);
+//		    ExternalSelection recordSelection = recordDefinition.getRecordSelection();
+//		    if (recordSelection != null && recordSelection.getSize() > 0) {
+//		    	layouts[0].getRecordSelection().setRecSel((new Convert()).convert(recordSelection, layouts[0]));
+//		    }
+	        ret = genSchema(records, recordSepString, recordSep);
+	    } else {
+	        records = new RecordDetail[this.getNumberOfRecords()];
+	        for (int i = 0; i < records.length; i++) {
+	            records[i] = this.getRecord(i).toRecordDetail();
+	        }    
+
+	        ret = genSchema(records, recordSepString, recordSep);
+		    for (int i = 0; i < records.length; i++) {
+		    	records[i].updateRecordSelection(
+		    			this.getRecord(i).getRecordSelection(), 
+		    			new LayoutGetFieldByName(ret,  records[i]));
+//			    ExternalSelection recordSelection = this.getRecord(i).getRecordSelection();
+//			    if (recordSelection != null && recordSelection.getSize() > 0) {
+//			    	layouts[i].getRecordSelection().setRecSel(
+//			    			(new Convert()).convert(recordSelection, new GetField(ret,  layouts[i])));
+//			    }
+		    }
+	    }
+	
+	    ret.setDelimiter(this.getDelimiter());
+	    //ret.setLineNumberOfFieldNames(recordDefinition.getLineNumberOfFieldNames());
+
+	    return ret;
 	}
+
+	
+
+	/**
+	 * @param recordDefinition  Schema-Builder (External schema definitions
+	 * @param recordDefs Record Definitions
+	 * @param recordSepString Record (or line) separator (String)
+	 * @param recordSep Record Separator (bytes)
+	 * @return requested schema (Layoutdetail - internal schema format)
+	 */
+	private LayoutDetail genSchema(
+			RecordDetail[] recordDefs, String recordSepString, byte[] recordSep) {
+		return new LayoutDetail(this.getRecordName(),
+	            recordDefs,
+	            this.getDescription(),
+	            this.getRecordType(),
+	            recordSep,
+	            recordSepString,
+	            this.getFontName(),
+	            this.getRecordDecider(),
+	            this.getFileStructure(),
+	            null,
+	            this.isInitToSpaces(),
+	            this.getRecordLength());
+	}
+
+
+	/**
+	 * converts an ExtendedRecord (ie used for storage of records externally)
+	 * to the format used in the record editor
+	 *
+	 * @param def record definition
+	 *
+	 * @return the same definition as used in the record editor
+	 */
+	private RecordDetail toRecordDetail() {
+	    FieldDetail[] fields = new FieldDetail[this.getNumberOfRecordFields()];
+	    ExternalField fieldRec;
+	    int i;
+
+	    int[][] posLength = super.getPosLength();
+	    for (i = 0; i < fields.length; i++) {
+	        fieldRec = this.getRecordField(i);
+	        fields[i] = new FieldDetail(fieldRec.getName(),
+	                fieldRec.getDescription(), fieldRec.getType(),
+	                fieldRec.getDecimal(), this.getFontName(), 0, fieldRec.getParameter());
+
+	        if (posLength[LENGTH_IDX][i] < 0) {
+	        	fields[i].setPosOnly(posLength[POSITION_IDX][i]);
+	        } else {
+	        	fields[i].setPosLen(posLength[POSITION_IDX][i], posLength[LENGTH_IDX][i]);
+	        }
+
+	        fields[i].setGroupName(fieldRec.getGroup());
+	        fields[i].setDependingOnDtls(fieldRec.getDependOnDtls());
+
+		    String s = fieldRec.getDefault();
+		    if (s != null && ! "".equals(s)) {
+		    	fields[i].setDefaultValue(s);
+		    }
+	    }
+
+
+	    RecordDetail ret = new RecordDetail(this.getRecordName(),
+	            this.getRecordPositionOption(),
+//	    		this.getTstField(), this.getTstFieldValue(),
+	            this.getRecordType(), this.getDelimiter(), this.getQuote(),
+	            this.getFontName(), fields, this.getRecordStyle());
+	    ret.setParentRecordIndex(this.getParentRecord());
+	    ret.setDependingOn(this.getDependingOnDefinition());
+
+//	    if (def.getRecordSelection() != null && def.getRecordSelection().getSize() > 0) {
+//	    	ret.getRecordSelection().setRecSel((new Convert()).convert(def.getRecordSelection(), ret));
+//	    }
+
+	    if (this.isDefaultRecord()) {
+	    	ret.getRecordSelection().setDefaultRecord(true);
+	    }
+
+	    return ret;
+	}
+
 
 	
 	/**
@@ -569,27 +697,10 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 		LayoutDetail layoutDetail = this.asLayoutDetail();
 		return layoutDetail==null
 				? null
-				: SchemaIOBuilder.newSchemaIOBuilder(layoutDetail);
+				: net.sf.JRecord.IO.builders.SchemaIOBuilder.newSchemaIOBuilder(layoutDetail);
 	}
 
 
-	//	/**
-	//	 * For internal use - Get parent record name (may not be set)
-	//	 * @return parent name
-	//	 */
-	//	private String getParentName() {
-	//		return parentName;
-	//	}
-
-
-
-	//	/**
-	//	 * @param e cb2xml document details
-	//	 * @see java.util.ArrayList#add(java.lang.Object)
-	//	 */
-	//	public void addCb2xmlDocument(Cb2xmlDocument e) {
-	//		cb2xmlDocuments.add(e);
-	//	}
 
 
 	public static IFixedWidthSchemaBuilder newFixedWidthRecord(String name, int fileStructure, String fontName) {

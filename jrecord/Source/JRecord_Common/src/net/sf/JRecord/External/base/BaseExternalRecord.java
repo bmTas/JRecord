@@ -26,14 +26,16 @@
  *
  * ------------------------------------------------------------------------ */
 
-package net.sf.JRecord.Extern;
+package net.sf.JRecord.External.base;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.External.Def.AbstractUpdatableRecord;
 import net.sf.JRecord.External.Def.DependingOn;
+import net.sf.JRecord.External.Def.DependingOnDefinition;
 import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
@@ -86,51 +88,55 @@ import net.sf.JRecord.Types.TypeManager;
  */
 public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> extends AbstractUpdatableRecord {
 
-  private int recordId;
-  private int initRecordId; 
-  private String recordName;
-  private String description;
-  private int recordType;
-  private int system;
-  private String systemName = null;
-  private String listChar;
-  private String copyBook;
-  private String delimiter;
-  private String quote;
-  private int posRecInd;
-  private String recSepList;
-  private byte[] recordSep;
-  private String fontName;
-  private int recordStyle;
-  private int fileStructure;
-  private int lineNumberOfFieldNames = 1;
-  private int recordLength = -1;
+	protected static final int POSITION_IDX = 0;
+	protected static final int LENGTH_IDX = 1;
+	private int recordId;
+	private int initRecordId; 
+	private String recordName;
+	private String description;
+	private int recordType;
+	private int system;
+	private String systemName = null;
+	private String listChar;
+	private String copyBook;
+	private String delimiter;
+	private String quote;
+	private int posRecInd;
+	private String recSepList;
+	private byte[] recordSep;
+	private String fontName;
+	private int recordStyle;
+	private int fileStructure;
+	private int lineNumberOfFieldNames = 1;
+	private int recordLength = -1;
 
-  private ExternalSelection recSelect;
-  private IRecordPositionOption recordPosistionOption = null;
-  //private ArrayList<TstField> tstFields = null;
-  private boolean defaultRecord = false;
-  private boolean embeddedCr    = false;  //private String tstField = "";
-  private boolean initToSpaces  = false;  // for backward compatibility
+	private ExternalSelection recSelect;
+	private IRecordPositionOption recordPosistionOption = null;
+	//private ArrayList<TstField> tstFields = null;
+	private boolean defaultRecord = false;
+	private boolean embeddedCr    = false;  //private String tstField = "";
+	private boolean initToSpaces  = false;  // for backward compatibility
+//	private boolean fileStructureUpdated = false; 
 //  private RecordDecider recordDecider = null;
   //private String tstFieldValue = "";
 
 
 
-  private int parentRecord = -1;
+	private int parentRecord = -1;
 
-  private String parentName = null;
+	private String parentName = null;
 
 
-  protected ArrayList<xRecord> subRecords = new ArrayList<xRecord>();
-  protected ArrayList<ExternalField> fields = new ArrayList<ExternalField>();
-  private ArrayList<DependingOn> dependingOn = new ArrayList<DependingOn>(3);
+	protected ArrayList<xRecord> subRecords = new ArrayList<xRecord>();
+	protected ArrayList<ExternalField> fields = new ArrayList<ExternalField>();
+	private ArrayList<DependingOn> dependingOn = new ArrayList<DependingOn>(3);
+	private DependingOnDefinition dependingOnDef;
 
-//  private int lastPosition = -1;
-  
-  private ArrayList<Cb2xmlDocument> cb2xmlDocuments = new ArrayList<Cb2xmlDocument>();
-  @SuppressWarnings("unchecked")
-  private final xRecord self = (xRecord) this;
+	//  private int lastPosition = -1;
+
+	private ArrayList<Cb2xmlDocument> cb2xmlDocuments = new ArrayList<Cb2xmlDocument>();
+	@SuppressWarnings("unchecked")
+	private final xRecord self = (xRecord) this;
 
   /**
    * Create External Record Definition
@@ -581,17 +587,18 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
    *
    * @param val value to be assigned to Canonical_Name
    */
-  public void setFontName(String val) {
+  public xRecord setFontName(String val) {
 
       if ((val == null || "".equals(val))
       && (fontName == null || "".equals(fontName))) {
-          return;
+          return self;
       }
 
       if ((val == null) || (! val.equals(fontName)) || (updateStatus == NULL_INT_VALUE)) {
            fontName = val;
            updateStatus = UPDATED;
       }
+      return self;
   }
 
   /**
@@ -639,14 +646,20 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 
       if ((val != fileStructure) || (updateStatus == NULL_INT_VALUE)) {
            fileStructure = val;
+ //          fileStructureUpdated = true;
            updateStatus = UPDATED;
       }
       
       return self;
   }
 
+//
+//  public boolean isFileStructureUpdated() {
+//	return fileStructureUpdated;
+//  }
 
-  /**
+
+/**
    * Add a sub-record to this record
    * @param o record to add
    * @return wether added correctly
@@ -785,8 +798,9 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	}
 	
 	public void addDependingOn(DependingOn child) {
-		DependingOn.addChild(dependingOn, child);
+		dependingOn.add(child);
 	}
+
 
 	/**
 	 * Add a list of fields
@@ -1022,6 +1036,7 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 		addTstField(tstField, ExternalFieldSelection.EQUALS_OPERATOR, value);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addTstField(String tstField, String op, String value) {
 
 		if (recSelect == null) {
@@ -1045,12 +1060,12 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	 * @deprecated Use getTstFields
 	 */
 	public String getTstFieldValue() {
-			ExternalFieldSelection f = getFirstSelection(recSelect);
-			if (f == null) {
-				return null;
-			} else {
-				return f.getFieldValue();
-			}
+		ExternalFieldSelection f = getFirstSelection(recSelect);
+		if (f == null) {
+			return null;
+		} else {
+			return f.getFieldValue();
+		}
 	}
 
 
@@ -1063,6 +1078,7 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 		 return ret;
 	 }
 
+	 @SuppressWarnings("rawtypes")
 	 private ExternalFieldSelection getFirstSelection(ExternalSelection s) {
 
 		 if (s == null) {
@@ -1235,11 +1251,16 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	/**
 	 * @return the dependingOn
 	 */
-	public final ArrayList<DependingOn> getDependingOn() {
-		return dependingOn;
+	public final DependingOnDefinition getDependingOnDefinition() {
+		if (dependingOnDef == null) {
+			dependingOnDef = new DependingOnDefinition(dependingOn);
+		}
+		return dependingOnDef;
 	}
+	
 	public final void newDependingOn() {
 		dependingOn = new ArrayList<DependingOn>();
+		dependingOnDef = null;
 	}
 	
 
@@ -1385,4 +1406,58 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 		return cb2xmlDocuments.addAll(c);
 	}
 
+	/**
+	 * create a Position / length array
+	 * @return Position / length
+	 */
+	protected int[][] getPosLength() {
+		int[][] ret = new int[2][];
+		ret[POSITION_IDX] = new int[fields.size()];
+		ret[LENGTH_IDX] = new int[fields.size()];
+		
+		if (recordType == Constants.rtDelimited || recordType == Constants.rtDelimitedAndQuote) {
+			int lastPos = 0;
+
+			for (int i = 0; i < fields.size(); i++) {
+				int pos = fields.get(i).getPos();
+				if (pos < 0) {
+					lastPos += 1;
+				} else {
+					lastPos = pos;
+				}
+				
+				ret[LENGTH_IDX][i] = Constants.NULL_INTEGER;
+				ret[POSITION_IDX][i] = lastPos;
+			}
+		} else {
+			int lastPos = 0;
+			int lastLen = 1;
+
+			for (int i = 0; i < fields.size(); i++) {
+				ExternalField fld = fields.get(i);
+				int pos = fld.getPos();
+				if (pos < 0) {
+					if (lastLen <= 0) {
+						throw new RuntimeException("Error Field: " + i + " " + fld.getName()
+								+": Can not calculate position");
+					}
+					lastPos += lastLen;
+				} else {
+					if (lastLen <= 0 && i > 0) {
+						ret[LENGTH_IDX][i-1] = pos - lastPos;
+					}
+					lastPos = pos;
+				}
+				
+				lastLen = fld.getLen();
+				ret[LENGTH_IDX][i] = lastLen;
+				ret[POSITION_IDX][i] = lastPos;
+			}
+			if (lastLen < 0) {
+				ret[LENGTH_IDX][ret[LENGTH_IDX].length - 1] = 1;
+			}
+		}
+		
+		return ret;
+	}
 }

@@ -67,8 +67,8 @@ public class CreateExternalFromReader  extends CreateExternalBase  implements IC
 		
 		ICopybookLoaderStream loader = parent. getLoader();
 		
-		if (loader instanceof net.sf.JRecord.External.CobolCopybookLoader) {
-			return ((net.sf.JRecord.External.CobolCopybookLoader)loader)
+		if (loader instanceof ICopybookLoaderStream) {
+			return ((ICopybookLoaderStream)loader)
 				.loadCopyBook(new StringReader(copybookStr), copybookName, splitCopybook, 0, 
 						parent.getFont(), parent.getCopybookFileFormat(), 
 						parent.getDialect(), 0, parent.getLog());

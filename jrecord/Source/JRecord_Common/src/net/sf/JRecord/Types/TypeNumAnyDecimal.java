@@ -33,8 +33,8 @@ import net.sf.JRecord.Common.RecordException;
 
 public class TypeNumAnyDecimal extends TypeNum {
 
-	public TypeNumAnyDecimal(boolean isPositive) {
-		super(false, false, true, isPositive, false, false);
+	public TypeNumAnyDecimal(boolean isPositive, boolean couldBeEmpty) {
+		super(false, false, true, isPositive, false, false, couldBeEmpty);
 	}
 
 
@@ -60,6 +60,10 @@ public class TypeNumAnyDecimal extends TypeNum {
 	 */
 	@Override
 	public String formatValueForRecord(IFieldDetail field, String val) {
+
+		if (super.couldBeEmpty && (val == null || val.trim().length() == 0)) {
+			return "";
+		}
 
         try {
             new BigDecimal(Conversion.numTrim(val));

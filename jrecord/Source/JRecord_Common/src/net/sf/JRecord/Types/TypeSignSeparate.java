@@ -62,7 +62,7 @@ public class TypeSignSeparate extends TypeNum {
      * @param typeId Type Identifier
      */
     public TypeSignSeparate(final int typeId) {
-        super(false, true, true, false, false, false);
+        super(false, true, true, false, false, false, false);
 
         isLeadingSign = (typeId == Type.ftSignSeparateLead || typeId == Type.ftSignSepLeadActualDecimal);
         isActualDecimal = (typeId == Type.ftSignSepLeadActualDecimal || typeId == Type.ftSignSepTrailActualDecimal);
@@ -179,7 +179,7 @@ public class TypeSignSeparate extends TypeNum {
         ret = numSignSeparate.trim();
         if (isLeadingSign) {
             if (ret.length() > 0 && ret.charAt(0) == '+') {
-            	ret = ret.substring(1);    
+            	ret = ret.substring(1);
             }
         } else {
 			int lastIdx = ret.length() - 1;
@@ -190,9 +190,8 @@ public class TypeSignSeparate extends TypeNum {
         }
 
         if ("-".equals(sign)) {
-            ret = sign + ret;
+        	ret = sign + ret;
         }
-
         return ret;
 
     }

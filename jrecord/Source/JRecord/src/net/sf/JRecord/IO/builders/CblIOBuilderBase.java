@@ -78,9 +78,11 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
     //final int copybookType;
 
 	int splitCopybook = CopybookLoader.SPLIT_NONE;
+	private String defaultFont = null;
 	private String font = null;
 	int copybookFileFormat = 1; // actually Cb2xmlConstants.USE_STANDARD_COLUMNS;
 	int fileOrganization = Constants.NULL_INTEGER;
+//	int defaultFileOrganization = Constants.NULL_INTEGER;
 	boolean dropCopybookNameFromFields = false;
 	Boolean initToSpaces = null;
 	int recordLength = -1;
@@ -128,9 +130,17 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 	 */
 	public IOB setFont(String font) {
 		this.font = font;
+		this.defaultFont = font;
 		clearLayout();
 		return self;
 	}
+
+	public IOB setDefaultFont(String defaultFont) {
+		this.defaultFont = defaultFont;
+		clearLayout();
+		return self;
+	}
+
 
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.IO.IIOBuilder#setCopybookFileFormat(int)
@@ -147,8 +157,18 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 	 * @return the fileOrganization
 	 */
 	protected int getFileOrganization() {
+//		if (fileOrganization < 0 && defaultFileOrganization >= 0) {
+//			return defaultFileOrganization;
+//		}
 		return fileOrganization;
 	}
+//
+//	public IOB setDefaultFileOrganization(int defaultFileOrganization) {
+//		this.defaultFileOrganization = defaultFileOrganization;
+//		clearLayout();
+//		return self;
+//	}
+
 
 	/**
 	 * @param fileOrganization the fileOrganization to set
@@ -287,6 +307,9 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 				fileOrganization,
 				getFont(),
 				dropCopybookNameFromFields,
+				//defaultFileOrganization,
+				defaultFont
+				
 		};
 		 
 		return r;
@@ -341,9 +364,17 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 
 
 	public String getFont() {
-		String f = font;
+		return deriveActualFont(font == null ? defaultFont : font);
+	}
+	
+//	public String getDefaultFont() {	
+//		return deriveActualFont(defaultFont);
+//	}
+//
+
+	private String deriveActualFont(String f) {
 		
-		if (font == null) {
+		if (f == null) {
 			f = "";
 			if (Conversion.DEFAULT_CHARSET_DETAILS.isMultiByte
 			&&  CommonBits.getLineType(fileOrganization) == CommonBits.LT_BYTE) {
@@ -360,8 +391,15 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 		schema.setRecordLength(recordLength);
 		//schema.setFontName(getFont());
 		
+		if (font != null) {
+			schema.setFontName(font);
+		}
+		
 		if (fileOrganization >= 0) {
 			schema.setFileStructure(fileOrganization);
+//		} else if (defaultFileOrganization >= 0 && schema.getFileStructure() <= 0 
+//				&& schema.isFileStructureUpdated() == false) {
+//			schema.setFileStructure(defaultFileOrganization);
 		}
 		
 		if (initToSpaces == null) {

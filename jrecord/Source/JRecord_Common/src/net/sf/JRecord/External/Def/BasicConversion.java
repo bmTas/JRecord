@@ -121,10 +121,12 @@ public class BasicConversion implements AbstractConversion {
 
 		setName(Type.ftChar  , "Char");
 		setName(Type.ftNumAnyDecimal  , "Number any decimal", "NumAnyDecimal");
+		setName(Type.ftNumOrEmpty  , "Number any decimal or Empty", "NumberOrEmpty");
 		setName(Type.ftPositiveNumAnyDecimal  , "PositiveNumAnyDecimal", "Number (+ve) any decimal");
 		setName(Type.ftCharRightJust      , "Char (right justified)");
 		setName(Type.ftCharNullTerminated , "Char Null terminated");
 		setName(Type.ftCharNullPadded     , "Char Null padded");
+		setName(Type.ftCharNoTrim         , "Char (no Trim)");
 		setName(Type.ftHex                , "Hex Field");
 		setName(Type.ftNumLeftJustified   , "Num (Left Justified)");
 		setName(Type.ftNumRightJustified  , "Num (Right Justified space padded)");
@@ -189,6 +191,7 @@ public class BasicConversion implements AbstractConversion {
 		setName(Type.ftCharMultiLine  , "Char (Multi-Line)");
 		setName(Type.ftHtmlField  , "Html Field");
 		setName(Type.ftArrayField, "Array Field");
+		setName(Type.ftRecordEditorType, "RecordEditor_Type");
 		
 		ConversionManager dialectMgr = ConversionManager.getInstance();
 		
@@ -207,12 +210,14 @@ public class BasicConversion implements AbstractConversion {
 	 * @param type type Id
 	 * @param name Type Name
 	 */
-	private void setName(int type, String name) {
+	private Integer setName(int type, String name) {
 		typeNames[TypeManager.getInstance().getIndex(type)] = name;
-		typeNumbers.put(name.toLowerCase(), Integer.valueOf(type));
+		Integer typeId = Integer.valueOf(type);
+		typeNumbers.put(name.toLowerCase(), typeId);
 		if (name.length() > 40) {
-			typeNumbers.put(name.toLowerCase().substring(0, 40), Integer.valueOf(type));
+			typeNumbers.put(name.toLowerCase().substring(0, 40), typeId);
 		}
+		return typeId;
 	}
 
 	/**
@@ -221,10 +226,10 @@ public class BasicConversion implements AbstractConversion {
 	 * @param name Type Name
 	 */
 	private void setName(int type, String name, String altname) {
-		setName(type, name);
-		typeNumbers.put(altname.toLowerCase(), Integer.valueOf(type));
+		Integer typeId = setName(type, name);
+		typeNumbers.put(altname.toLowerCase(), typeId);
 		if (altname.length() > 40) {
-			typeNumbers.put(altname.toLowerCase().substring(0, 40), Integer.valueOf(type));
+			typeNumbers.put(altname.toLowerCase().substring(0, 40), typeId);
 		}
 	}
 

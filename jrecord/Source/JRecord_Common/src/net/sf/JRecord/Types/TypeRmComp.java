@@ -35,7 +35,7 @@ public class TypeRmComp extends TypeNum {
 	public final static int NEGATIVE = 13; // x'0d'
 	
 	public TypeRmComp() {
-		super(false, true, true, false, true, true);
+		super(false, true, true, false, true, true, false);
 	}
 
 

@@ -66,7 +66,7 @@ public class TypeBinLittleEndian extends TypeNum {
      * @param isPositive whether it is a positive integer
      */
     public TypeBinLittleEndian(final boolean isPositive) {
-        super(false, true, true, isPositive, true, true);
+        super(false, true, true, isPositive, true, true, false);
         positiveStorage = isPositive;
     }
 
@@ -81,7 +81,7 @@ public class TypeBinLittleEndian extends TypeNum {
      * @param positiveStorage wether to use positive or signed storage
      */
     public TypeBinLittleEndian(final boolean isPositive, boolean positiveStorage) {
-        super(false, true, true, isPositive, true, true);
+        super(false, true, true, isPositive, true, true, false);
         this.positiveStorage = positiveStorage;
     }
 

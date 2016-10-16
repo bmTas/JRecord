@@ -29,7 +29,10 @@
 package net.sf.JRecord.zTest.Cobol.occursDependingOn;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import junit.framework.TestCase;
 import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IFieldDetail;
@@ -39,7 +42,6 @@ import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.IO.CobolIoProvider;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
-import junit.framework.TestCase;
 
 /**
  * Test Occurs depending on with one nested occurs !!!
@@ -84,6 +86,7 @@ public class TstOccursDepending25 extends TestCase {
 	
 
 	private void tstLine(AbstractLine line, int purchaseCount, int salesCount, int week, int day, boolean normalPos) throws RecordException {
+		String idm = purchaseCount + "~" + salesCount + ":" + week + " ~ ";
 		LayoutDetail layout = line.getLayout();
 		IFieldDetail weekNoFld = layout.getFieldFromName(WEEK_NO);
 		IFieldDetail monthFld = layout.getFieldFromName(MONTHS);
@@ -97,13 +100,19 @@ public class TstOccursDepending25 extends TestCase {
 		line.getFieldValue(dayFld).set(day);
 		@SuppressWarnings("deprecation")
 		int pos = dayFld.getEnd() + 1;
+		ArrayList<IFieldDetail> l = new ArrayList<IFieldDetail>(200);
+		
 		line.getFieldValue(weekNoFld).set(purchaseCount);
 				
-		check(line, layout.getFieldFromName("Location-Number"));
-		check(line, layout.getFieldFromName("Location-Name"));
+		check(l, line, layout.getFieldFromName("Location-Number"));
+		check(l, line, layout.getFieldFromName("Location-Name"));
+
+		l.add(monthFld);
+		l.add(weekCountFld);
+		l.add(dayFld);
 
 		for (int i = 0; i < salesCount; i++) {
-			System.out.println("==> " + purchaseCount + ", sc=" + salesCount + ", week=" + week + " " + i);
+			//System.out.println("==> " + purchaseCount + ", sc=" + salesCount + ", week=" + week + " " + i);
 			IFieldDetail countFld = layout.getFieldFromName("sales-count (" + i + ")");
 			IFieldDetail valueFld = layout.getFieldFromName("sales-value (" + i + ")");
 			if (i == 1 && salesCount==2 && week==2) {
@@ -111,36 +120,51 @@ public class TstOccursDepending25 extends TestCase {
 			}
 			for (int w = 0; w < week; w++) {
 				for (int d = 0; d < day; d++) {
-					pos = check(line, layout.getFieldFromName("daily-sales (" + i + ", " + w + ", " + d + ")"), pos);
+					pos = check(l, line, layout.getFieldFromName("daily-sales (" + i + ", " + w + ", " + d + ")"), pos);
 				}
 			}
-			pos = check(line, countFld, pos);
-			pos = check(line, valueFld, pos);
+			pos = check(l, line, countFld, pos);
+			pos = check(l, line, valueFld, pos);
 		}
 
-		pos = check(line, layout.getFieldFromName("total-sales"), pos);
-		pos = check(line, layout.getFieldFromName(WEEK_NO), pos);		
+		pos = check(l, line, layout.getFieldFromName("total-sales"), pos);
+		pos = check(l, line, layout.getFieldFromName(WEEK_NO), pos);		
 	
 
 		for (int i = 0; i < purchaseCount; i++) {
-			pos = check(line, layout.getFieldFromName("purchase-count (" + i + ")"), pos);
-			pos = check(line, layout.getFieldFromName("purchase-value (" + i + ")"), pos);
+			pos = check(l, line, layout.getFieldFromName("purchase-count (" + i + ")"), pos);
+			pos = check(l, line, layout.getFieldFromName("purchase-value (" + i + ")"), pos);
 		}
 
-		pos = check(line, layout.getFieldFromName("total-purchase-count"), pos);
-		pos = check(line, layout.getFieldFromName("total-purchase-value"), pos);
+		pos = check(l, line, layout.getFieldFromName("total-purchase-count"), pos);
+		pos = check(l, line, layout.getFieldFromName("total-purchase-value"), pos);
 
-		
+
+		Code.checkFieldIteratore(line, idm, l);
+
+//		FieldIterator fi = line.getFieldIterator(0);
+//		int i = 0;
+//		while (fi.hasNext()) {
+//			AbstractFieldValue fv = fi.next();
+//			if (fv.getFieldDetail() != l.get(i)) {
+//				//System.out.println(fv.getFieldDetail().getName() + " \t" + l.get(i).getName() );
+//				assertEquals(fv.getFieldDetail().getName(), l.get(i).getName() );
+//			}
+//			i += 1;
+//		}
+	
 //		System.out.println("** line: " + purchaseCount + " " + salesCount + " length=" + line.getData().length);
 	}
 
-	private void check(AbstractLine line, IFieldDetail fld) throws RecordException {
-		check(line, fld, fld.getPos());
+	private void check(List<IFieldDetail> fieldList, AbstractLine line, IFieldDetail fld) throws RecordException {
+		check(fieldList, line, fld, fld.getPos());
 	}
 	
-	private int check(AbstractLine line, IFieldDetail fld, int pos) throws RecordException {
+	private int check(List<IFieldDetail> fieldList, AbstractLine line, IFieldDetail fld, int pos) throws RecordException {
 		String id = fld.getName();
 		int calculatedPosition = fld.calculateActualPosition(line);
+		fieldList.add(fld);
+		
 		if (pos != calculatedPosition) {
 			calculatedPosition = fld.calculateActualPosition(line);
 			assertEquals(id, pos, calculatedPosition);
@@ -155,6 +179,9 @@ public class TstOccursDepending25 extends TestCase {
 				setAndCheck(line, fld, i);
 			}
 		}
+		assertTrue(line.getFieldValue(fld).isFieldInRecord());
+
+		assertTrue(line.isFieldInLine(fld));
 		return end + 1;
 	}
 	

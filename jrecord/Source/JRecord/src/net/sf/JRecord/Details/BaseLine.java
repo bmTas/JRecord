@@ -28,7 +28,9 @@
 
 package net.sf.JRecord.Details;
 
+import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.External.Def.DependingOnDtls;
 
 public abstract class BaseLine implements AbstractLine {
 
@@ -113,6 +115,48 @@ public abstract class BaseLine implements AbstractLine {
 	 */
 	@Override public final FieldIterator getFieldIterator(int recordNumber) {
 		return new FieldIterator(this, recordNumber);
+	}
+	
+	
+	/**
+	 * This basically checks to see if 
+	 * @param fd
+	 * @return
+	 */
+	@Override public final boolean isFieldInLine(IFieldDetail field) {
+		if (field == null) { return false; }
+		if ( field instanceof FieldDetail) { 
+			DependingOnDtls dependingOnDtls = ((FieldDetail) field).getDependingOnDtls();
+			if (dependingOnDtls != null) {
+				DependingOnDtls[] tree = dependingOnDtls.getTree();
+				for (int i = 0; i < tree.length; i++){
+					dependingOnDtls = tree[i];
+		        	if (dependingOnDtls.dependingOn == null || dependingOnDtls.dependingOn.getField() == null) {
+		        		System.out.print('*');
+		        	}
+		            Object v;
+					//try {
+						v = this.getField(dependingOnDtls.dependingOn.getField());
+//					} catch (Exception e) {
+//						System.out.println();
+//						e.printStackTrace();
+//						throw new RuntimeException(e);
+//					}      
+		            
+		            String s;
+		            if (v == null || ((s= v.toString()).length() == 0))  {
+		            	return false;
+		            }
+		            
+					int count = Integer.parseInt(s);
+		
+		            if (dependingOnDtls.index >= count) {
+		                return false;
+		            }
+		        }
+			}
+		}
+        return true;
 	}
 
 	/**

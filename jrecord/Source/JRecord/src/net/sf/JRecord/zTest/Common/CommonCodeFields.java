@@ -1,4 +1,4 @@
-package net.sf.JRecord.zTest.Cobol.iobuilder;
+package net.sf.JRecord.zTest.Common;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -10,7 +10,7 @@ import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
-public class CommonCode {
+public class CommonCodeFields {
 
     private static final String[] JAVA_TYPE_NAME = new String[Type.LAST_SYSTEM_TYPE];
 
@@ -78,46 +78,90 @@ public class CommonCode {
 	}
 
 	public static void check(ICobolIOBuilder bldr, CblBldrOptions opts, FieldDetail[] expected, String id) throws IOException {
+		String font = opts.font;
 		bldr.setDialect(opts.dialect)
 		    .setDropCopybookNameFromFields(opts.dropCopybookNameFromFields)
 		    .setFileOrganization(opts.fileOrganization)
-		    .setFont(opts.font);
+		    .setFont(font);
 		LayoutDetail l = bldr.getLayout();
 		RecordDetail record = l.getRecord(0);
 		
 		TestCase.assertEquals(opts.fileOrganization, l.getFileStructure());
-		TestCase.assertEquals(opts.font, l.getFontName());
+		TestCase.assertEquals(font, l.getFontName());
 	
+		checkFields(id, font, expected, record);
+	}
+
+	public static void checkFields(String id, String font, FieldDetail[] expected, RecordDetail record) {
 		if (expected == null) System.out.println("\t}, {");
 		for (int i = 0; i < record.getFieldCount(); i++) {
 			FieldDetail field = record.getField(i);
 			if (expected == null) {
 				System.out.println(
-						  "\t\tcreateField(\"" + field.getName()
+						  "\t\tCommonCodeFields.createField(\"" + field.getName()
 						+ "\", " + field.getPos()
 						+ ", "   + field.getLen()
-						+ ", "   + CommonCode.getJRecordTypeName(field.getType())
+						+ ", "   + field.getDecimal()
+						+ ", "   + CommonCodeFields.getJRecordTypeName(field.getType())
 						+ "),"
 				);
 			} else {
 				FieldDetail eField = expected[i];
-				TestCase.assertEquals(eField.getName(), field.getName());
-				TestCase.assertEquals(eField.getPos(),  field.getPos());
-				TestCase.assertEquals(eField.getLen(),  field.getLen());
+				String idx = id + " " + i + ": " + eField.getName();
+				TestCase.assertEquals(idx, eField.getName(), field.getName());
+				TestCase.assertEquals(idx, eField.getPos(),  field.getPos());
+				TestCase.assertEquals(idx, eField.getLen(),  field.getLen());
+				TestCase.assertEquals(idx, eField.getType(), field.getType());
+				TestCase.assertEquals(idx, eField.getDecimal(), field.getDecimal());
+				TestCase.assertEquals(idx, font, field.getFontName());
+			}
+		}
+	}
+	
+
+	public static void checkCsvFields(String id, String font, FieldDetail[] expected, RecordDetail record) {
+		if (expected == null) System.out.println("\t}, {");
+		for (int i = 0; i < record.getFieldCount(); i++) {
+			FieldDetail field = record.getField(i);
+			if (expected == null) {
+				System.out.println(
+						  "\t\tCommonCodeFields.createCsvField(\"" + field.getName()
+						+ "\", " + field.getPos()
+						+ ", "   + field.getDecimal()
+						+ ", "   + CommonCodeFields.getJRecordTypeName(field.getType())
+						+ "),"
+				);
+			} else {
+				FieldDetail eField = expected[i];
+				TestCase.assertEquals(id, eField.getName(), field.getName());
+				TestCase.assertEquals(id, eField.getPos(),  field.getPos());
+				//TestCase.assertEquals(id, eField.getLen(),  field.getLen());
+				TestCase.assertEquals(id, eField.getDecimal(), field.getDecimal());
 				TestCase.assertEquals(id, eField.getType(), field.getType());
-				TestCase.assertEquals(opts.font, field.getFontName());
+				TestCase.assertEquals(id, font, field.getFontName());
 			}
 		}
 	}
 
+
 	
+	public static FieldDetail createField(String name, int pos, int len, int decimal, int type) {
+		return FieldDetail.newFixedWidthField(name, type, pos, len, decimal, "");
+	}
+
+	
+	public static FieldDetail createCsvField(String name, int pos, int decimal, int type) {
+		return FieldDetail.newCsvField(name, type, pos, decimal, "");
+	}
+
+
 	public static class CblBldrOptions {
 		public final int dialect, fileOrganization;
 		public final boolean dropCopybookNameFromFields;
 		public final String font;
 		
 		
-		protected CblBldrOptions(int dialect, int fileOrganization,
+		public CblBldrOptions(int dialect, int fileOrganization,
 				boolean dropCopybookNameFromFields, String font) {
 			super();
 			this.dialect = dialect;

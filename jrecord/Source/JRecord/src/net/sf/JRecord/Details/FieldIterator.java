@@ -53,6 +53,8 @@ public class FieldIterator implements Iterable<AbstractFieldValue>, Iterator<Abs
 		this.recordNo = recordNum;
 
 		this.recordDef = line.getLayout().getRecord(recordNum);
+		
+		toNextField();
 	}
 
 	/**
@@ -85,7 +87,15 @@ public class FieldIterator implements Iterable<AbstractFieldValue>, Iterator<Abs
 	 */
 	@Override
 	public AbstractFieldValue next() {
-		return new FieldValue(line, recordNo, fieldNo++);
+		AbstractFieldValue ret =  new FieldValue(line, recordNo, fieldNo++);
+		toNextField();
+		return ret;
+	}
+	
+	private void toNextField() {
+		while (fieldNo < recordDef.getFieldCount() && ! line.isFieldInLine(recordDef.getField(fieldNo))) {
+			fieldNo += 1;
+		}
 	}
 
 	/* (non-Javadoc)

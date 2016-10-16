@@ -26,7 +26,7 @@
  *
  * ------------------------------------------------------------------------ */
 
-package net.sf.JRecord.External;
+package net.sf.JRecord.External.base;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -36,6 +36,7 @@ import java.io.OutputStreamWriter;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.External.Def.ExternalField;
+import net.sf.JRecord.External.base.ExternalConversion;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Log.TextLog;
 
@@ -76,7 +77,7 @@ public class RecordEditorCSVWriter implements CopybookWriter {
 	 * @see net.sf.JRecord.External.CopybookWriter#writeCopyBook(java.lang.String, net.sf.JRecord.External.ExternalRecord, net.sf.JRecord.Log.AbsSSLogger)
 	 */
 	@Override
-	public String writeCopyBook(String directory, ExternalRecord copybook,
+	public String writeCopyBook(String directory, BaseExternalRecord<?> copybook,
 			AbsSSLogger log) throws Exception {
 		String fileName;
 		
@@ -99,14 +100,14 @@ public class RecordEditorCSVWriter implements CopybookWriter {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void writeCopyBook(OutputStream outStream, ExternalRecord copybook,
+	public void writeCopyBook(OutputStream outStream, BaseExternalRecord<?> copybook,
 			AbsSSLogger log) throws Exception {
 
 		int i;
 		
 //		if (copybook.getNumberOfRecordFields()> 0) {
 		ExternalField field;
-		ExternalRecord sr;
+		BaseExternalRecord<?> sr;
 		String description;
 		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
 		

@@ -58,6 +58,8 @@ public class TstCobolIOBuilder01 extends TestCase {
 		"fileOrganization",
 		"font",
 		"dropCopybookNameFromFields",
+		"defaultFileOrganization",
+		"defaultFont"
 	};
 	
 	private int[] dialects = {
@@ -76,7 +78,8 @@ public class TstCobolIOBuilder01 extends TestCase {
 	public void testDefaultValues1() {
 		Object[] attrs = {
 				ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-				Constants.NULL_INTEGER, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE		
+				Constants.NULL_INTEGER, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE,
+				null		
 		};
 		checkAttributes(new CblIoBldr(ICopybookDialects.FMT_MAINFRAME).getAttrs(), attrs);
 		checkAttributes(
@@ -121,7 +124,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 		for (int fs : fileStructures) {
 			Object[] attrs = {
 					ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-					fs, "", Boolean.FALSE		
+					fs, "", Boolean.FALSE, null			
 			};
 			CblIoBldr cblIoBldr = new CblIoBldr(ICopybookDialects.FMT_MAINFRAME);
 			cblIoBldr.setFileOrganization(fs);
@@ -163,7 +166,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 			for (int d : dialects) {
 				Object[] attrs1 = {
 						d, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-						fs, "", Boolean.FALSE		
+						fs, "", Boolean.FALSE, null			
 				};
 				cblIoBldr = new CblIoBldr(d);
 				cblIoBldr.setFileOrganization(fs);
@@ -211,7 +214,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 		for (int fs : fileStructures) {
 			Object[] attrs = {
 					ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-					fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE		
+					fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE,  null			
 			};
 			CblIoBldr cblIoBldr = new CblIoBldr(ICopybookDialects.FMT_MAINFRAME);
 			cblIoBldr.setFileOrganization(fs);
@@ -245,7 +248,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 			for (int d : dialects) {
 				Object[] attrs1 = {
 						d, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-						fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE		
+						fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null			
 				};
 				cblIoBldr = new CblIoBldr(d);
 				cblIoBldr.setFileOrganization(fs);
@@ -273,7 +276,8 @@ public class TstCobolIOBuilder01 extends TestCase {
 	public void testDefaultValues21() {
 		Object[] attrs = {
 				ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-				Constants.NULL_INTEGER, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE		
+				Constants.NULL_INTEGER, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE,
+				null
 		};
 		ByteArrayInputStream is = new ByteArrayInputStream(new byte[]{});
 		checkAttributes(
@@ -314,7 +318,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 		for (int fs : fileStructures) {
 			Object[] attrs = {
 					ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-					fs, "", Boolean.FALSE		
+					fs, "", Boolean.FALSE, null		
 			};
 			CblIoBldr cblIoBldr = new CblIoBldr(ICopybookDialects.FMT_MAINFRAME);
 			cblIoBldr.setFileOrganization(fs);
@@ -350,7 +354,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 			for (int d : dialects) {
 				Object[] attrs1 = {
 						d, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-						fs, "", Boolean.FALSE		
+						fs, "", Boolean.FALSE, null			
 				};
 				cblIoBldr = new CblIoBldr(d);
 				cblIoBldr.setFileOrganization(fs);
@@ -391,7 +395,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 		for (int fs : fileStructures) {
 			Object[] attrs = {
 					ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-					fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE		
+					fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE,  null	
 			};
 			CblIoBldr cblIoBldr = new CblIoBldr(ICopybookDialects.FMT_MAINFRAME);
 			cblIoBldr.setFileOrganization(fs);
@@ -428,7 +432,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 			for (int d : dialects) {
 				Object[] attr1 = {
 						d, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-						fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE		
+						fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE,  null			
 				};
 				cblIoBldr = new CblIoBldr(d);
 				cblIoBldr.setFileOrganization(fs);
@@ -506,7 +510,10 @@ public class TstCobolIOBuilder01 extends TestCase {
 
 	private void checkAttributes(Object[] expected, Object[] attrs) {
 		for (int i = 0; i < expected.length; i++) {
-			assertEquals( ATTR_NAMES[i], expected[i], attrs[i]);
+			assertEquals( 
+					ATTR_NAMES[i],
+					expected[i], 
+					attrs[i]);
 		}
 	}
 	
@@ -527,8 +534,24 @@ public class TstCobolIOBuilder01 extends TestCase {
 
 
 		@SuppressWarnings("deprecation")
-		public Object[] getAttrs() {
+		public Object[] getAttrs() { 
 			return super.getAllAttributes();
 		}
+
+
+//		@Override
+//		public IFileIOBuilder setDefaultFont(String defaultFont) {
+//			// TODO Auto-generated method stub
+//			return super.setDefaultFont(defaultFont);
+//		} 
+//
+//
+//		@Override
+//		public IFileIOBuilder setDefaultFileOrganisation(int fileOrganisation) {
+//			super.setDefaultFileOrganization(fileOrganisation); //   setDefautlFileOrganization(fileOrganisation)
+//			return this;
+//		}
+		
+		
 	}
 }

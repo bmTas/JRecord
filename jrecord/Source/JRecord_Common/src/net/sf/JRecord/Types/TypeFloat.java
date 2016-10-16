@@ -67,7 +67,7 @@ public class TypeFloat extends TypeNum {
      * and what is to be displayed on the screen for Float or Double fields
      */
     public TypeFloat() {
-        super(true, false, false, false, true, true);
+        super(true, false, false, false, true, true, false);
     }
 
     /**

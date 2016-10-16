@@ -140,6 +140,7 @@ public class TstTypesSetValues extends TestCase {
 		toTest[Type.ftFloat] = false;
 		toTest[Type.ftDouble] = false;
 		toTest[Type.ftNumAnyDecimal] = false;
+		toTest[Type.ftNumOrEmpty] = false;
 		toTest[Type.ftPositiveNumAnyDecimal] = false;
 		toTest[Type.ftBit] = false;
 	

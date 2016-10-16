@@ -31,6 +31,7 @@ package net.sf.JRecord.def.IO.builders;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Reader;
 
 import net.sf.JRecord.External.ExternalRecord;
 
@@ -53,7 +54,7 @@ public interface IIOCopybookProvider {
 	 * These are the default values (which can be overriden with the appropriate set* method
 	 * @return requested IOBuilder
 	 */
-	public abstract IIOBuilder newIOBuilder(String schemaFileName);
+	public abstract IFileIOBuilder newIOBuilder(String schemaFileName);
 
 	/**
 	 * Create a new IOBulder for a RecordEditor-Xml stream.
@@ -64,9 +65,18 @@ public interface IIOCopybookProvider {
 	 * These are the default values (which can be overriden with the appropriate set* method
 	 * @return requested IOBuilder
 	 */
-	public abstract IIOBuilder newIOBuilder(
+	public abstract IFileIOBuilder newIOBuilder(
 			InputStream schemaStream, String schemaName);
 	
+	/**
+	 * Create IO Builder with reader
+	 * @param xmlReader RecordEditor-Xml Reader
+	 * @param Name of the Schema
+	 * @return IOBuilder
+	 */
+	public abstract IFileIOBuilder newIOBuilder(
+			Reader xmlReader, String copybookName);
+
 	/**
 	 * Exporting a {@link ExternalRecord} to an Xml-File
 	 * 

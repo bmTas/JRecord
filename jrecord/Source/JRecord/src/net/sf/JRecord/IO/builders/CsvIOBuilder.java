@@ -57,6 +57,7 @@ public class CsvIOBuilder extends CblIOBuilderBase<ICsvIOBuilder> implements ICs
 
 	@Override
 	protected ExternalRecord getExternalRecordImpl() throws IOException {
+	
 		record.setFontName(super.getFont());
 		return record;
 	}
@@ -90,7 +91,6 @@ public class CsvIOBuilder extends CblIOBuilderBase<ICsvIOBuilder> implements ICs
 		return this;
 	}
 
-	
 	
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.def.IO.builders.ICsvIOBuilder#setParser(int)
