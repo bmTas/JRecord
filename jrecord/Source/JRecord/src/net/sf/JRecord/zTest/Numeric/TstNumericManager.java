@@ -38,8 +38,8 @@ public class TstNumericManager extends TestCase {
 
 	public void testManagerVbFileStructure() {
 		int[] openCob = {
-				ICopybookDialects.FMT_OPEN_COBOL,     ICopybookDialects.FMT_OPEN_COBOL_BE,
-				ICopybookDialects.FMT_OPEN_COBOL_MVS, ICopybookDialects.FMT_OPEN_COBOL_MVS_BE,
+				ICopybookDialects.FMT_GNU_COBOL,     ICopybookDialects.FMT_GNU_COBOL_BE,
+				ICopybookDialects.FMT_GNU_COBOL_MVS, ICopybookDialects.FMT_GNU_COBOL_MVS_BE,
 				ICopybookDialects.FMT_OC_MICRO_FOCUS, ICopybookDialects.FMT_OC_MICRO_FOCUS_BE,
 				ICopybookDialects.FMT_FS2000,         ICopybookDialects.FMT_FS2000_BE,
 		};

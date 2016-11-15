@@ -65,6 +65,7 @@ import net.sf.JRecord.schema.IGetRecordFieldByName;
 import net.sf.JRecord.schema.ISchemaInformation;
 import net.sf.JRecord.schema.jaxb.IItem;
 //import net.sf.JRecord.schema.jaxb.Item;
+import net.sf.JRecord.schema.jaxb.LineItemHelper;
 
 
 /**
@@ -190,6 +191,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
         }
        	XMLStreamWriter writer = f.createXMLStreamWriter(new OutputStreamWriter(xmlStream, STANDARD_FONT));
         List<? extends IItem> items = cobolSchemaDetails.cobolCopybook.getCobolItems(); 
+        LineItemHelper lineHelper = new LineItemHelper(schema);
         
         writer.writeStartDocument(STANDARD_FONT, "1.0"); 
         writer.writeStartElement(xmlMainElement);
@@ -197,12 +199,12 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
  		if (items.size() == 1) {
  			IItem item = items.get(0);
 	        while ((l = r.read()) != null) {
-	        	writeItem(writer, l, item, new IntStack());
+	        	writeItem(writer, lineHelper.setLine(l), item, new IntStack());
 	        }
         } else if (schema.getRecordCount() <= 1) {
 	        while ((l = r.read()) != null) {
 	        	writer.writeStartElement("Line");
-	        	writeItems(writer, l, items, new IntStack());
+	        	writeItems(writer, lineHelper.setLine(l), items, new IntStack());
 		        writer.writeEndElement();
 	        }
         } else if (schema.hasTreeStructure()) {
@@ -219,7 +221,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 				if (recordIdx < 0) {
 					throw new RecordException("Unknow Record Type for line number: " + lineNo + " " + l.getFullLine());
 				}
-				writeItem(writer, l, items.get(recordIdx), new IntStack());
+				writeItem(writer, lineHelper.setLine(l), items.get(recordIdx), new IntStack());
         	}
         }
 
@@ -253,7 +255,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 		IItem item = items.get(recIdx);
 		
 		writer.writeStartElement(item.getNameToUse());
-		writeAnItem(writer, rm.line, item, new IntStack());
+		writeAnItem(writer, rm.lineItemHelper, item, new IntStack());
 		
 		rm.read();
 		while (rm.line != null
@@ -264,7 +266,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 		
 		writer.writeEndElement();
 	}
-	private void writeItem(XMLStreamWriter writer, AbstractLine l, IItem item, IntStack indexs) throws XMLStreamException {
+	private void writeItem(XMLStreamWriter writer, LineItemHelper l, IItem item, IntStack indexs) throws XMLStreamException {
 
 		String name = item.getName();
 		if (name == null || item.getName().length() == 0 || "filler".equalsIgnoreCase(item.getName())) {
@@ -291,14 +293,14 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 	 * @param indexs
 	 * @throws XMLStreamException
 	 */
-	private void writeAnItem(XMLStreamWriter writer, AbstractLine l, IItem item,
+	private void writeAnItem(XMLStreamWriter writer, LineItemHelper l, IItem item,
 			IntStack indexs) throws XMLStreamException {
 		if (item.getItemType() == IItem.TYPE_GROUP) {
 			writeItems(writer, l, item.getChildItems(), indexs);
 		} else if (indexs.size == 0) {
-			writeText(writer, item, l.getFieldValue(item.getFieldDefinition()).asString());
+			writeText(writer, item, l.getFieldValue(item, null).asString());
 		} else {
-			writeText(writer, item, l.getFieldValue(item.getArrayDefinition().getField(indexs.toArray())).asString());
+			writeText(writer, item, l.getFieldValue(item, indexs.toArray()).asString());
 		}
 	}
 
@@ -377,26 +379,27 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 	 * @param indexs
 	 * @throws XMLStreamException
 	 */
-	private void writeArray(XMLStreamWriter writer, AbstractLine l, IItem item, String name,
+	private void writeArray(XMLStreamWriter writer, LineItemHelper l, IItem item, String name,
 			IntStack indexs) throws XMLStreamException {
-		int num = item.getOccurs();
-		String dependingOn = item.getDependingOn();
-
-		if (dependingOn != null && dependingOn.length() > 0) {
-			try {
-				num = l.getFieldValue(dependingOn).asInt();
-			} catch (Exception e) {
-			}
-		} else if (item.getArrayValidation() != null) {
-			num = item.getArrayValidation().getCount(l, item, indexs.toArray(), num);
-		}
+		int num = l.getArrayCount(item, indexs.toArray());
+//		String dependingOn = item.getDependingOn();
+//		IOccursDependingDetails fieldLookup = item.getDependingOnDetails();
+//
+//		if (fieldLookup.isDependingOnArray()) {
+//			try {
+//				num = fieldLookup.getValue(l);
+//			} catch (Exception e) {
+//			}
+//		} else if (item.getArrayValidation() != null) {
+//			num = item.getArrayValidation().getCount(l, item, indexs.toArray(), num);
+//		}
 		 
 		indexs.add(0);
 		int[] indexArray = indexs.toArray();
 		int id;
 		for (int i = 0; i < num; i++) {
 			if (item.getArrayValidation() != null
-			&& (id = item.getArrayValidation().checkItem(l, item, indexArray, i)) != IArrayItemCheck.R_PROCESS ) {
+			&& (id = l.checkArrayIndex(item, indexArray, i)) != IArrayItemCheck.R_PROCESS ) {
 				if (id == IArrayItemCheck.R_STOP) {
 					break;
 				}
@@ -407,7 +410,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 				} else {
 					indexArray[indexArray.length - 1] = i;
 
-					writer.writeCharacters(l.getFieldValue(item.getArrayDefinition().getField(indexArray)).asString());
+					writer.writeCharacters(l.getFieldValue(item, indexArray).asString());
 				}
 				writer.writeEndElement();
 			}
@@ -415,7 +418,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 		indexs.remove();
 	}
 	
-	private void writeItems(XMLStreamWriter writer, AbstractLine l, List<? extends IItem> items, IntStack indexs) throws XMLStreamException {
+	private void writeItems(XMLStreamWriter writer, LineItemHelper l, List<? extends IItem> items, IntStack indexs) throws XMLStreamException {
 		for (IItem item : items) {
 			writeItem(writer, l, item, indexs);
 		}
@@ -679,10 +682,12 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 		final LayoutDetail schema;
 		AbstractLine line;
 		int recordIdx, lineNumber = 0;
+		final LineItemHelper lineItemHelper;
 		ReadManager(AbstractLineReader r, LayoutDetail schema) {
 			super();
 			this.reader = r;
 			this.schema = schema;
+			lineItemHelper = new LineItemHelper(schema);
 		}
 		
 		void read() throws IOException {
@@ -690,6 +695,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 			if (line != null) {
 				lineNumber += 1;
 				recordIdx = line.getPreferredLayoutIdx();
+				lineItemHelper.setLine(line);
 			}
 		}
 	}

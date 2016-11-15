@@ -77,7 +77,8 @@ public class TstByteIoProvider extends TestCase {
             FujitsuVbByteWriter.class
     };
 
-    public void testIoProviderReaders() {
+    @SuppressWarnings("deprecation")
+	public void testIoProviderReaders() {
 
         for (int i = 0; i < ioIds.length; i++) {
             System.out.println("--> " + i + " " + ioIds[i]  + " " + classReaders[i].getName());

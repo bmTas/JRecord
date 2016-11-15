@@ -177,7 +177,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLinePar
     		s = "";
     	} else if  (quote != null && quote.length() > 0
 		        && (   (textFieldsInQuotes & (fieldType != Type.NT_NUMBER))
-		        	||	s.indexOf(lineDef.getDelimiter()) >= 0
+		        	||	s.indexOf(super.getDelimFromCsvDef(lineDef)) >= 0
 		//        	|| s.indexOf(quote) >= 0
 		        	|| s.startsWith(quote)
 		        	|| s.indexOf('\n') >= 0 || s.indexOf('\r') >= 0)) {
@@ -213,8 +213,9 @@ public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLinePar
 	 */
 	public final String[] split(String line, ICsvDefinition lineDefinition, int min) {
 
-		if ((lineDefinition.getDelimiter() == null || line == null)
-		||  ("".equals(lineDefinition.getDelimiter()))) {
+		String delimiter = super.getDelimFromCsvDef(lineDefinition);
+		if ((delimiter == null || line == null)
+		||  ("".equals(delimiter))) {
 			return null;
 		}
 
@@ -225,7 +226,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLinePar
 		boolean keep = true;
 		String quote = lineDefinition.getQuote();
 
-		tok = new StringTokenizer(line, lineDefinition.getDelimiter(), true);
+		tok = new StringTokenizer(line, delimiter, true);
 		len = tok.countTokens();
 		temp = new String[Math.max(len, min)];
 
@@ -235,7 +236,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLinePar
 		        temp[i] = tok.nextToken();
 //		        if (min == 4) System.out.print("->>" + (i) + " " + keep + " >" + temp[i]
 //		                        + "< >" + delimiter + "< ");
-		        if (lineDefinition.getDelimiter().equals(temp[i])) {
+		        if (delimiter.equals(temp[i])) {
 		            if (keep) {
 		                temp[i++] = "";
 		               // if (min == 4) System.out.print(" clear ");
@@ -265,7 +266,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLinePar
 		                //buf.delete(0, buf.length());
 		                keep = false;
 		            }
-		        } else if (lineDefinition.getDelimiter().equals(s)) {
+		        } else if (delimiter.equals(s)) {
 		            if (keep) {
 		                temp[i++] = "";
 		            }

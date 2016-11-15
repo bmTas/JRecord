@@ -82,14 +82,14 @@ public class ConversionManager implements AbstractManager {
 		registerConverter(fujitsuConverter);
         registerConverter(new BasicConvert(ICopybookDialects.FMT_BIG_ENDIAN, "Big-Endian (Old)", ICopybookDialects.FMT_BIG_ENDIAN, MAINFRAME_BIN_SIZES, false));
 
-        registerConverter(new OpenCobol(ICopybookDialects.FMT_OPEN_COBOL, "GNU Cobol Little Endian (Intel)", BIN_SIZES_1248, BIN_SIZES_1248));
+        registerConverter(new OpenCobol(ICopybookDialects.FMT_GNU_COBOL, "GNU Cobol Little Endian (Intel)", BIN_SIZES_1248, BIN_SIZES_1248));
         registerConverter(new OpenCobol(ICopybookDialects.FMT_FS2000, "GNU Cobol bs2000 Little Endian (Intel)",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
-        registerConverter(new OpenCobol(ICopybookDialects.FMT_OPEN_COBOL_MVS, "GNU Cobol MVS Little Endian (Intel)",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
+        registerConverter(new OpenCobol(ICopybookDialects.FMT_GNU_COBOL_MVS, "GNU Cobol MVS Little Endian (Intel)",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
         registerConverter(new OpenCobol(ICopybookDialects.FMT_OC_MICRO_FOCUS, "GNU Cobol Micro Focus (Intel)",  BIN_SIZES_1_TO_8, NO_SYNC, 1 , 1));
 
-        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_OPEN_COBOL_BE, "GNU Cobol Big Endian", BIN_SIZES_1248, BIN_SIZES_1248));
+        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_GNU_COBOL_BE, "GNU Cobol Big Endian", BIN_SIZES_1248, BIN_SIZES_1248));
         registerConverter(new OpenCobolBE(ICopybookDialects.FMT_FS2000_BE, "GNU Cobol bs2000 Big Endian",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
-        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_OPEN_COBOL_MVS_BE, "GNU Cobol MVS Big Endian",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
+        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_GNU_COBOL_MVS_BE, "GNU Cobol MVS Big Endian",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
         registerConverter(new OpenCobolBE(ICopybookDialects.FMT_OC_MICRO_FOCUS_BE, "GNU Cobol Micro Focus Big E",  BIN_SIZES_1_TO_8, NO_SYNC, 1 , 1));
         registerConverter(new CommaDecimal(ICopybookDialects.FMT_MAINFRAME_COMMA_DECIMAL, mainframeConverter));
         registerConverter(new CommaDecimal(ICopybookDialects.FMT_FUJITSU_COMMA_DECIMAL, fujitsuConverter));

@@ -716,7 +716,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
         		        		   field.getDecimal(), field.getFontName(),
         		        		   field.getFormat(), field.getParamater());
 
-            fldDef.setRecord(field.getRecord());
+            updateRecordInfo(field, fldDef);
 
             fldDef.setPosLen(1, rec.length);
 
@@ -734,6 +734,14 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
         return "";
     }
 
+	/**
+	 * @param field
+	 * @param fldDef
+	 */
+	public void updateRecordInfo(IFieldDetail field, FieldDetail fldDef) {
+		
+		fldDef.setRecord(field.getRecord());
+	}
 
     /**
      * Set a fields value

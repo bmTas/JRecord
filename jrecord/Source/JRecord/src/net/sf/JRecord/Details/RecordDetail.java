@@ -39,6 +39,7 @@ package net.sf.JRecord.Details;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import net.sf.JRecord.Common.AbstractIndexedLine;
@@ -141,6 +142,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	private RecordSelection recordSelection = new RecordSelection();
     private final IRecordPositionOption recordPositionOption;
 
+	private String delimiterUneditted;
 	private String delimiter;
 	private int    length = 0;
 	private int    minumumPossibleLength;
@@ -164,6 +166,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	private DependingOnDefinition dependingOn = null;
 	private int dependingOnLevel = DO_NONE;
 	private IOccursDependingPositionCalculation odCalculator = DEFAULT_POSITION_CALCULATOR;
+	private HashMap<String, ArrayDtls> arrays;
 
 
 
@@ -280,6 +283,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 		    fieldCount -= 1;
 		}
 
+		delimiterUneditted = pDelim;
 		delimiter = convertFieldDelim(pDelim);
 
 		//System.out.println("Quote 1 ==>" + pQuote + "<==");
@@ -556,9 +560,17 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
     }
 
     protected void setDelimiter(String delimiter) {
-		this.delimiter = delimiter;
+		this.delimiter = convertFieldDelim(delimiter);
+		this.delimiterUneditted = delimiter;
 	}
 
+
+	/**
+	 * @return the delimiterUneditted
+	 */
+	public final String getDelimiterUneditted() {
+		return delimiterUneditted;
+	}
 
 	/**
 	 * @see net.sf.JRecord.Common.AbstractRecord#getQuote()
@@ -628,10 +640,18 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 
 	public final static String convertFieldDelim(String pDelim) {
 		String delimiter = pDelim;
-		if ((pDelim == null) || (pDelim.trim().equalsIgnoreCase("<tab>"))) {
+		char ch;
+		if ((pDelim == null) || ((pDelim = pDelim.trim()).equalsIgnoreCase("<tab>"))) {
 			delimiter = "\t";
-		} else if (pDelim.trim().equalsIgnoreCase("<space>")) {
+		} else if (pDelim.equalsIgnoreCase("<space>")) {
 			delimiter = " ";
+		} else {
+			int delimLength = pDelim.length();
+			if (delimLength > 2 && delimLength < 7 && pDelim.charAt(0) == '\\'
+			&&((ch = pDelim.charAt(1)) == 'u' || ch == 'U')) {
+				char[] chars = { (char)Integer.parseInt(pDelim.substring(2), 16) };
+				delimiter = new String(chars);
+			}
 		}
 		return delimiter;
 	}
@@ -957,7 +977,10 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 		List<IFieldDetail> flds = getGroupFields(start, fieldNames);
 
 		switch (flds.size()) {
-		case 0: throw new RuntimeException("No Field Found");
+		case 0:
+			
+			throw new RuntimeException("No Field Found: "
+			+ (fieldNames== null || fieldNames.length==0? "" : fieldNames[fieldNames.length - 1]));
 		case 1: return flds.get(0);
 		}
 
@@ -1221,6 +1244,45 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 		return ParserManager.getInstance().get(getRecordStyle());
 	}
 
+	public final FieldDetail[] getArrayFields(FieldDetail field, String aname) {
+		if (arrays == null) {
+			arrays = new HashMap<String, RecordDetail.ArrayDtls>();
+			ArrayList<RecordDetail.ArrayDtls> arrayList = new ArrayList<RecordDetail.ArrayDtls>();
+			int pos;
+			for (int i = 0; i < fields.length; i++) {
+				if ((pos = fields[i].getName().indexOf('(')) > 0) {
+					String arrayName = fields[i].getName().substring(0, pos-1);
+					String id = (fields[i].getGroupName() +  arrayName).toLowerCase();
+					ArrayDtls dtls = arrays.get(id);
+					if (dtls == null) {
+						dtls = new ArrayDtls(fields[i].getGroupName(), arrayName);
+						arrays.put(id, dtls);
+						arrayList.add(dtls);
+					}
+					dtls.fieldList.add(fields[i]);
+				}
+			}
+			for (RecordDetail.ArrayDtls ad : arrayList) {
+				ad.fields = ad.fieldList.toArray(new FieldDetail[ad.fieldList.size()]);
+				ad.fieldList = null;
+			}
+		}
+		
+		RecordDetail.ArrayDtls a = arrays.get((field.getGroupName() + aname) .toLowerCase());
+		return a == null ? null : a.fields;
+	}
 
+	private static class ArrayDtls {
+		final String group, name;
+		ArrayList<FieldDetail> fieldList = new ArrayList<FieldDetail>(); 
+		FieldDetail[] fields;
+		protected ArrayDtls(String group, String name) {
+			super();
+			this.group = group;
+			this.name = name;
+		}
+		
+		
+	}
 
 }

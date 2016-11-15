@@ -104,6 +104,7 @@ public class FieldDetail implements IFieldDetail {
 	private final String paramater;
 	//private String quote;
 	private AbstractRecord record = DEFAULT_RECORD;
+	
 	private Object defaultValue = null;
 	private String groupName = "";
 	private boolean occursDependingOnValue = false;
@@ -375,7 +376,6 @@ public class FieldDetail implements IFieldDetail {
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.Common.IFieldDetail#setRecord(net.sf.JRecord.Common.AbstractRecord)
 	 */
-	@Override
 	public void setRecord(AbstractRecord record) {
 		this.record = record;
 	}

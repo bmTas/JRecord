@@ -154,7 +154,7 @@ public class ParseArgsCobol2Cobol {
         							  + "\t: Intel little endian ");
         System.out.println("        " + ICopybookDialects.FMT_MAINFRAME + " or " +ExternalConversion.getDialectName(ICopybookDialects.FMT_MAINFRAME)
         							  + "\t: Mainframe big endian (Default) ");
-        System.out.println("        " + ICopybookDialects.FMT_OPEN_COBOL + " or " + ExternalConversion.getDialectName(ICopybookDialects.FMT_OPEN_COBOL) + "\t: Gnu:Cobol ");
+        System.out.println("        " + ICopybookDialects.FMT_GNU_COBOL + " or " + ExternalConversion.getDialectName(ICopybookDialects.FMT_GNU_COBOL) + "\t: Gnu:Cobol ");
         System.out.println("        " + ICopybookDialects.FMT_FUJITSU + " or " + ExternalConversion.getDialectName(ICopybookDialects.FMT_FUJITSU)    + "\t: Fujitsu Cobol ");
         System.out.println();
         System.out.println("    " + ARG_OUT_FILE      + "  or " + ARG_OUT_FILE1    + " \t: Output file");

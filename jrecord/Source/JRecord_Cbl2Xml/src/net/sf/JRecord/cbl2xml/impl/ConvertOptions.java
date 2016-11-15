@@ -72,8 +72,8 @@ public class ConvertOptions {
 	private static final Opts[] DIALECT_OPTS = {
 		new Opts("Mainframe",    "Mainframe cobol",  ICopybookDialects.FMT_MAINFRAME),
 		new Opts("Futjitsu",     "Fujitsu PC cobol", ICopybookDialects.FMT_FUJITSU),
-		new Opts("GNUCobol",     "GNU Cobol (little endian, ie intel)",         ICopybookDialects.FMT_OPEN_COBOL),
-		new Opts("GNUCobolBE",   "GNU Cobol (big endian, ie IBM, Sun(oracle))", ICopybookDialects.FMT_OPEN_COBOL_BE),
+		new Opts("GNUCobol",     "GNU Cobol (little endian, ie intel)",         ICopybookDialects.FMT_GNU_COBOL),
+		new Opts("GNUCobolBE",   "GNU Cobol (big endian, ie IBM, Sun(oracle))", ICopybookDialects.FMT_GNU_COBOL_BE),
 	};
 
 	private static final Opts[] SPLIT_OPTS = {

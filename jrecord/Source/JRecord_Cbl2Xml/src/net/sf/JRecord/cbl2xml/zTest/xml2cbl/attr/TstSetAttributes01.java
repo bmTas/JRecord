@@ -53,13 +53,14 @@ public class TstSetAttributes01 extends TestCase {
 		"fileOrganization",
 		"font",
 		"dropCopybookNameFromFields",
+		"defaultFont"
 	};
 	
 	private int[] dialects = {
 			ICopybookDialects.FMT_MAINFRAME, ICopybookDialects.FMT_FS2000, ICopybookDialects.FMT_FS2000_BE,
 			ICopybookDialects.FMT_FUJITSU, ICopybookDialects.FMT_OC_MICRO_FOCUS,
-			ICopybookDialects.FMT_OPEN_COBOL, ICopybookDialects.FMT_OPEN_COBOL_BE,
-			ICopybookDialects.FMT_OPEN_COBOL_MVS,
+			ICopybookDialects.FMT_GNU_COBOL, ICopybookDialects.FMT_GNU_COBOL_BE,
+			ICopybookDialects.FMT_GNU_COBOL_MVS,
 	};
 //	int splitCopybook = CopybookLoader.SPLIT_NONE;
 //	String font = "";
@@ -71,7 +72,7 @@ public class TstSetAttributes01 extends TestCase {
 	public void testDefaultValues1() {
 		Object[] attrs = {
 				ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-				Constants.NULL_INTEGER, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE		
+				Constants.NULL_INTEGER, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null	
 		};
 		checkAttributes(
 				((CblIOBuilderBase)Cobol2Xml
@@ -102,7 +103,7 @@ public class TstSetAttributes01 extends TestCase {
 		for (int fs : fileStructures) {
 			Object[] attrs = {
 					ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-					fs, "", Boolean.FALSE		
+					fs, "", Boolean.FALSE, null		
 			};
 			checkAttributes(
 					((CblIOBuilderBase)Cobol2Xml
@@ -126,7 +127,7 @@ public class TstSetAttributes01 extends TestCase {
 			for (int d : dialects) {
 				Object[] attrs1 = {
 						d, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-						fs, "", Boolean.FALSE		
+						fs, "", Boolean.FALSE, null		
 				};
 				checkAttributes(
 						((CblIOBuilderBase)Cobol2Xml
@@ -156,7 +157,7 @@ public class TstSetAttributes01 extends TestCase {
 		for (int fs : fileStructures) {
 			Object[] attrs = {
 					ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-					fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE		
+					fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null		
 			};
 			checkAttributes(
 					((CblIOBuilderBase)Cobol2Xml
@@ -180,7 +181,7 @@ public class TstSetAttributes01 extends TestCase {
 			for (int d : dialects) {
 				Object[] attrs1 = {
 						d, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-						fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE		
+						fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null		
 				};
 				checkAttributes(
 						((CblIOBuilderBase)Cobol2Xml
@@ -197,7 +198,7 @@ public class TstSetAttributes01 extends TestCase {
 	public void testDefaultValues21() throws IOException {
 		Object[] attrs = {
 				ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-				Constants.NULL_INTEGER, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE		
+				Constants.NULL_INTEGER, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null	
 		};
 		ByteArrayInputStream is = new ByteArrayInputStream(new byte[]{});
 		checkAttributes(
@@ -230,7 +231,7 @@ public class TstSetAttributes01 extends TestCase {
 		for (int fs : fileStructures) {
 			Object[] attrs = {
 					ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-					fs, "", Boolean.FALSE		
+					fs, "", Boolean.FALSE, null
 			};
 			checkAttributes(
 					((CblIOBuilderBase)Cobol2Xml
@@ -254,7 +255,7 @@ public class TstSetAttributes01 extends TestCase {
 			for (int d : dialects) {
 				Object[] attrs1 = {
 						d, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-						fs, "", Boolean.FALSE		
+						fs, "", Boolean.FALSE, null	
 				};
 				checkAttributes(
 						((CblIOBuilderBase)Cobol2Xml
@@ -285,7 +286,7 @@ public class TstSetAttributes01 extends TestCase {
 		for (int fs : fileStructures) {
 			Object[] attrs = {
 					ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-					fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE		
+					fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null		
 			};
 			checkAttributes(
 					((CblIOBuilderBase)Cobol2Xml
@@ -310,7 +311,7 @@ public class TstSetAttributes01 extends TestCase {
 			for (int d : dialects) {
 				Object[] attr1 = {
 						d, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS,
-						fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE		
+						fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null	
 				};
 				checkAttributes(
 						((CblIOBuilderBase)Cobol2Xml
@@ -326,7 +327,7 @@ public class TstSetAttributes01 extends TestCase {
 
 	public void testAttrs01() {
 		Object[] attrs = {
-				ICopybookDialects.FMT_OPEN_COBOL, CopybookLoader.SPLIT_01_LEVEL,  Cb2xmlConstants.USE_COLS_6_TO_80,
+				ICopybookDialects.FMT_GNU_COBOL, CopybookLoader.SPLIT_01_LEVEL,  Cb2xmlConstants.USE_COLS_6_TO_80,
 				Constants.IO_BIN_CSV, "cp037", Boolean.TRUE
 		};
 		setAndCheckAttributes(attrs);
@@ -379,7 +380,10 @@ public class TstSetAttributes01 extends TestCase {
 
 	private void checkAttributes(Object[] expected, Object[] attrs) {
 		for (int i = 0; i < expected.length; i++) {
-			assertEquals( ATTR_NAMES[i], expected[i], attrs[i]);
+			assertEquals(
+					ATTR_NAMES[i], 
+					expected[i], 
+					attrs[i]);
 		}
 	}
 	

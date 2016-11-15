@@ -81,7 +81,7 @@ public class TstCobol extends TestCase {
 	
 	
 	public void testOpenCobol() throws Exception {
-		checkFiles("default/", "cpy", ICopybookDialects.FMT_OPEN_COBOL);
+		checkFiles("default/", "cpy", ICopybookDialects.FMT_GNU_COBOL);
 	}
 	
 	
@@ -96,7 +96,7 @@ public class TstCobol extends TestCase {
 
 	
 	public void testOpenCobolMvs() throws Exception {
-		checkFiles("mvs/", "mvs", ICopybookDialects.FMT_OPEN_COBOL_MVS);
+		checkFiles("mvs/", "mvs", ICopybookDialects.FMT_GNU_COBOL_MVS);
 	}
 
 	

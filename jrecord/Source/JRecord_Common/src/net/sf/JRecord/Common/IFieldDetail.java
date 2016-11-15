@@ -71,7 +71,7 @@ public interface IFieldDetail {
 
 	public abstract AbstractRecord getRecord();
 
-	public abstract void setRecord(AbstractRecord record);
+//	public abstract void setRecord(AbstractRecord record);
 
 	public abstract void setNameType(String newName, int newType);
 

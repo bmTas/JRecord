@@ -37,7 +37,7 @@ public interface ICopybookDialects {
 	public static final int FMT_GNU_COBOL_MF = 7;
 	public static final int FMT_GNU_COBOL_BE = 8;
 	public static final int FMT_FS2000_BE = 9;
-	public static final int FMT_OPEN_COBOL_MVS_BE = 10;
+	public static final int FMT_GNU_COBOL_MVS_BE = 10;
 	public static final int FMT_OC_MICRO_FOCUS_BE = 11;
 	public static final int FMT_MICRO_FOCUS = 21;
 	public static final int FMT_MAINFRAME_COMMA_DECIMAL = 31;
@@ -48,6 +48,7 @@ public interface ICopybookDialects {
 	public static final int FMT_OPEN_COBOL_MVS = FMT_GNU_COBOL_MVS;
 	public static final int FMT_OC_MICRO_FOCUS = FMT_GNU_COBOL_MF;
 	public static final int FMT_OPEN_COBOL_BE = FMT_GNU_COBOL_BE;
+	public static final int FMT_OPEN_COBOL_MVS_BE = FMT_GNU_COBOL_MVS_BE;
 
 
 }

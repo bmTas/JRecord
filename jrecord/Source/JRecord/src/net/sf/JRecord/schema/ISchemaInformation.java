@@ -69,9 +69,9 @@ public interface ISchemaInformation {
 	 *                  
 	 * The Record-Hierarchy Map will hold
 	 * 
-	 *   Purchase-Order  -->> 0  
-	 *   Pack-Record     -->> 1
-	 *   Location-Record -->> 2
+	 *   Purchase-Order  --> 0  
+	 *   Pack-Record     --> 1
+	 *   Location-Record --> 2
 	 *  
 	 * @return
 	 */

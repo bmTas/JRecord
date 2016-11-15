@@ -56,11 +56,11 @@ public class JRecordConstantVars {
     public final int FMT_MAINFRAME_COMMA_DECIMAL = ICopybookDialects.FMT_MAINFRAME_COMMA_DECIMAL;
     public final int FMT_FUJITSU_COMMA_DECIMAL	 = ICopybookDialects.FMT_FUJITSU_COMMA_DECIMAL;
        
-	public final int FMT_GNU_COBOL        = ICopybookDialects.FMT_OPEN_COBOL_BE;
+	public final int FMT_GNU_COBOL        = ICopybookDialects.FMT_OPEN_COBOL;
 	public final int FMT_GNU_COBOL_MVS    = ICopybookDialects.FMT_GNU_COBOL_MVS;
 	public final int FMT_GNU_COBOL_MF     = ICopybookDialects.FMT_GNU_COBOL_MF;
 
-	public final int FMT_GNU_COBOL_BE     = ICopybookDialects.FMT_GNU_COBOL;
+	public final int FMT_GNU_COBOL_BE     = ICopybookDialects.FMT_GNU_COBOL_BE;
 	public final int FMT_GNU_COBOL_BE_MVS = ICopybookDialects.FMT_OPEN_COBOL_MVS_BE;
 	public final int FMT_GNU_COBOL_BE_MF  = ICopybookDialects.FMT_OC_MICRO_FOCUS_BE;
     

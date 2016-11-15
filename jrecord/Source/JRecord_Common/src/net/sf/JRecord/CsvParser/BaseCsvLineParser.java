@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Types.Type;
 
 /**
@@ -70,7 +71,7 @@ public abstract class BaseCsvLineParser  {
 		ArrayList<String> ret = new ArrayList<String>();
 
         StringTokenizer tok = new StringTokenizer(
-                line, lineDef.getDelimiter(), false);
+                line, getDelimFromCsvDef(lineDef), false);
         String s;
         String quote = lineDef.getQuote();
 
@@ -95,6 +96,20 @@ public abstract class BaseCsvLineParser  {
 	}
 
 	/**
+	 * @param lineDef
+	 * @return
+	 */
+	protected final String getDelimFromCsvDef(ICsvDefinition lineDef) {
+		String delimiter = lineDef.getDelimiter();
+		if (delimiter == null || delimiter.length() < 5) {
+			
+		} else if (delimiter.startsWith("x'")) {
+			delimiter = Conversion.toString(new byte[] { Conversion.getByteFromHexString(delimiter) }, lineDef.getFontName());
+		}
+		return delimiter;
+	}
+
+	/**
 	 * Convert a list of column names into a line
 	 *
 	 * @param names list of column names
@@ -105,14 +120,14 @@ public abstract class BaseCsvLineParser  {
 		StringBuilder buf = new StringBuilder();
 		String currDelim = "";
 		String quote = lineDef.getQuote();
+        String delim = getDelimFromCsvDef(lineDef);
 
 		for (int i = 0; i < names.size(); i++) {
 	        buf.append(currDelim)
                .append(quote)
                .append(names.get(i))
                .append(quote);
-            currDelim = lineDef.getDelimiter();
-
+ 			currDelim = delim;
 		}
 
 		return buf.toString();
@@ -189,7 +204,7 @@ public abstract class BaseCsvLineParser  {
 			return "";
 		}
 		StringBuffer buf = new StringBuffer(fields[0]);
-	    String delimiter = lineDef.getDelimiter();
+	    String delimiter = getDelimFromCsvDef(lineDef);
 		for (int i = 1; i < fields.length; i++) {
 	        buf.append(delimiter);
 	        if (fields[i] != null) {

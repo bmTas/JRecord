@@ -82,7 +82,7 @@ public interface ICobolIOBuilder extends IIOBuilder, Icb2xmlLoadOptions {
 	 * Set the Cobol Dialect; Possible values include<ul>
 	 *   <li><b>ICopybookDialects.FMT_MAINFRAME</b> - Mainframe Cobol
 	 *   <li><b>ICopybookDialects.FMT_FUJITSU</b> - Written for the old Fujitsu Cobol 3 compiler
-	 *   <li><b>ICopybookDialects.FMT_OPEN_COBOL</b> - GNU Cobol (formerly Open Cobol) on a Little Endian machine (e.g Intel).
+	 *   <li><b>ICopybookDialects.FMT_GNU_COBOL</b> - GNU Cobol (formerly Open Cobol) on a Little Endian machine (e.g Intel).
 	 *   <li><b>ICopybookDialects.FMT_OC_MICRO_FOCUS_BE</b> -  GNU Cobol running in Microfocus compatibility mode on a Big Endian machine
 	 * </ul
 	 * @param dialect new Cobol Dialect

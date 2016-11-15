@@ -58,7 +58,7 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 			}
 		};
 	//private static int MAX_LINE_SIZE = 750;
-	private static int MAX_LINE_SIZE = BUFFER_SIZE*32;
+	private static int MAX_LINE_SIZE = BUFFER_SIZE*8;
 	private static final byte[] NO_EOL = EMPTY;
 	protected byte[] eol = null;
 

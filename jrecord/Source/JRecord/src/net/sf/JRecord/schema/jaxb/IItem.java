@@ -269,4 +269,18 @@ public interface IItem {
 
 	public abstract IArrayItemCheck getArrayValidation();
 
+	/**
+	 * temporary messure
+	 * @return
+	 */
+	@Deprecated
+	public int getSaveIndex();
+
+	/**
+	 * temporary messure
+	 * @return
+	 */
+	@Deprecated
+	public int getODArraySizeIdx();
+
 }

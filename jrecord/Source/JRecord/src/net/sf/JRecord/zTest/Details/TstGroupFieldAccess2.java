@@ -90,6 +90,7 @@ public class TstGroupFieldAccess2 extends TestCase {
 	};
 	private int recordIdx = schema.getRecordIndex("COMPANY-RECORD");
 
+	@SuppressWarnings("deprecation")
 	public void testFirstName1() {
 		int[][] fieldDetails = {
 				{46, 8, 0},
@@ -185,7 +186,7 @@ public class TstGroupFieldAccess2 extends TestCase {
 			record.getGroupField("FIRST-NAME~");
 			throw new RuntimeException("Should not get here");
 		} catch (Exception e) {
-			assertEquals("No Field Found", e.getMessage());
+			assertEquals("No Field Found: FIRST-NAME~", e.getMessage());
 		}
 	}
 	
@@ -235,14 +236,14 @@ public class TstGroupFieldAccess2 extends TestCase {
 			record.getGroupField("FIRST-NAME~");
 			throw new RuntimeException("Should not get here");
 		} catch (Exception e) {
-			assertEquals("No Field Found", e.getMessage());
+			assertEquals("No Field Found: FIRST-NAME~", e.getMessage());
 		}
 
 		try {
 			record.getGroupField("COMPANY-RECORD", "FIRST-NAME~");
 			throw new RuntimeException("Should not get here");
 		} catch (Exception e) {
-			assertEquals("No Field Found", e.getMessage());
+			assertEquals("No Field Found: FIRST-NAME~", e.getMessage());
 		}
 	}
 
@@ -308,11 +309,12 @@ public class TstGroupFieldAccess2 extends TestCase {
 			schema.getGroupField("COMPANY-RECORD", "FIRST-NAME~");
 			throw new RuntimeException("Should not get here");
 		} catch (Exception e) {
-			assertEquals("No Field Found", e.getMessage());
+			assertEquals("No Field Found: FIRST-NAME~", e.getMessage());
 		}
 	}
 
 
+	@SuppressWarnings("deprecation")
 	public void testLastName1() {
 		int[][] fieldDetails = {
 				{31, 15, 0},
@@ -405,7 +407,7 @@ public class TstGroupFieldAccess2 extends TestCase {
 			record.getGroupField("LAST-NAME~");
 			throw new RuntimeException("Should not get here");
 		} catch (Exception e) {
-			assertEquals("No Field Found", e.getMessage());
+			assertEquals("No Field Found: LAST-NAME~", e.getMessage());
 		}
 	}
 
@@ -453,7 +455,7 @@ public class TstGroupFieldAccess2 extends TestCase {
 			record.getGroupField("LAST-NAME~");
 			throw new RuntimeException("Should not get here");
 		} catch (Exception e) {
-			assertEquals("No Field Found", e.getMessage());
+			assertEquals("No Field Found: LAST-NAME~", e.getMessage());
 		}
 
 		try {
@@ -467,7 +469,7 @@ public class TstGroupFieldAccess2 extends TestCase {
 			record.getGroupField("COMPANY-RECORD", "LAST-NAME~");
 			throw new RuntimeException("Should not get here");
 		} catch (Exception e) {
-			assertEquals("No Field Found", e.getMessage());
+			assertEquals("No Field Found: LAST-NAME~", e.getMessage());
 		}
 	}
 	
@@ -530,7 +532,7 @@ public class TstGroupFieldAccess2 extends TestCase {
 			schema.getGroupField("COMPANY-RECORD", "LAST-NAME~");
 			throw new RuntimeException("Should not get here");
 		} catch (Exception e) {
-			assertEquals("No Field Found", e.getMessage());
+			assertEquals("No Field Found: LAST-NAME~", e.getMessage());
 		}
 	}
 

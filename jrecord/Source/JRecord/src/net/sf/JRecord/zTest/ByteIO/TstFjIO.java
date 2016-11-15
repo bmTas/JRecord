@@ -44,7 +44,6 @@ public class TstFjIO extends TestCase {
 	   public void testIO() throws Exception {
 		   byte[] b1 = initBytes(64000);
 		   byte[] b2 = initBytes(10);
-		   byte[] b;
 		   
 		   FujitsuVbByteReader reader = new FujitsuVbByteReader();
 		   FujitsuVbByteWriter writer = new FujitsuVbByteWriter();

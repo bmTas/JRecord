@@ -31,17 +31,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
-import java.math.BigDecimal;
 import java.net.URL;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.FactoryConfigurationError;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
 
 import net.sf.JRecord.Common.Conversion;
 import net.sf.cb2xml.util.XmlUtils;
@@ -121,7 +116,8 @@ public class Cb2XmlCode {
 					Assert.assertEquals(id + ", " + k, expected[k], xml2data[k] );
 				}
 			} else {
-				Assert.assertArrayEquals(id, expected, xml2data);
+				compare(id, new String(expected), new String(xml2data));
+				//Assert.assertArrayEquals(id, expected, xml2data);
 			} 
 		} else {
 			compare(id, new String(expected), new String(xml2data));
@@ -181,95 +177,95 @@ public class Cb2XmlCode {
 	}
 		
 
-	/**
-	 * @param data
-	 * @param stream
-	 * @return
-	 * @throws XMLStreamException
-	 * @throws FactoryConfigurationError
-	 */
-	private static boolean isEquivalent(Reader stream, byte[] data)
-			throws XMLStreamException, FactoryConfigurationError {
-		
-		XMLStreamReader parser1 = XMLInputFactory.newInstance().createXMLStreamReader(stream);
-		XMLStreamReader parser2 = XMLInputFactory.newInstance().createXMLStreamReader(new ByteArrayInputStream(data));
-		String spaces = "                                                                                                        ";
-		int type1 = -1, type2;
-
-		StringBuilder b1 = new StringBuilder();
-		StringBuilder b2 = new StringBuilder();
-		
-		spaces = spaces + spaces + spaces;
-		type1 = parser1.next();
-		type2 = parser2.next();
-		while (parser1.hasNext()) {
-			if (type1 != type2) {
-				if (type1 == XMLStreamConstants.CHARACTERS && type2 == XMLStreamConstants.END_ELEMENT) {
-					b1.append(parser1.getText());
-					type1 = parser1.next();
-				} else if (type2 == XMLStreamConstants.CHARACTERS && type1 == XMLStreamConstants.END_ELEMENT) {
-					b2.append(parser2.getText());
-					type2 = parser2.next();
-				} else {
-					return false;
-				}
-			} else {
-				switch (type1) {
-	            case XMLStreamConstants.START_ELEMENT:             	
-	            	if (! parser1.getName().toString().equals(parser2.getName().toString())) {
-	            		return false;
-	            	}
-	            	
-	            	b1.setLength(0);
-	            	b2.setLength(0);
-	            	break;
-	            case XMLStreamConstants.END_ELEMENT:
-	            	String ss1 = b1.toString();
-	            	String ss2 = b2.toString();
-	            	
-	            	if (ss1.trim().equals(ss2.trim())) {
-	            	} else {
-	            		try {
-	            			BigDecimal bd1 = new BigDecimal(ss1.trim());
-	            			BigDecimal bd2 = new BigDecimal(ss2.trim());
-	            			if (! bd1.equals(bd2)) {
-	            				return false;
-	            			}
-	            		} catch (Exception e) {
-	            			return false;
-	            		}
-	            	}
-	            	break;
-	            case XMLStreamConstants.CHARACTERS:
-	
-	            	b1.append(parser1.getText());
-	               	b2.append(parser2.getText());
-	
-	            	break;
-//            case (XMLStreamConstants.START_DOCUMENT) :
-//            break;
-//            case (XMLStreamConstants.COMMENT) :
-//            break;
-//            case (XMLStreamConstants.DTD) :
-//            	break;
-//            case (XMLStreamConstants.ENTITY_REFERENCE) :
-//            	break;
-//            case (XMLStreamConstants.CDATA) :
-//              break;
-//            case (XMLStreamConstants.END_DOCUMENT): 
-//            	break;
-            	default:
-				}
-
-				type1 = parser1.next();
-				type2 = parser2.next();
-			}
-		}
-		
-		parser1.close();
-		parser2.close();
-		return true;
-	}
+//	/**
+//	 * @param data
+//	 * @param stream
+//	 * @return
+//	 * @throws XMLStreamException
+//	 * @throws FactoryConfigurationError
+//	 */
+//	private static boolean isEquivalent(Reader stream, byte[] data)
+//			throws XMLStreamException, FactoryConfigurationError {
+//		
+//		XMLStreamReader parser1 = XMLInputFactory.newInstance().createXMLStreamReader(stream);
+//		XMLStreamReader parser2 = XMLInputFactory.newInstance().createXMLStreamReader(new ByteArrayInputStream(data));
+//		String spaces = "                                                                                                        ";
+//		int type1 = -1, type2;
+//
+//		StringBuilder b1 = new StringBuilder();
+//		StringBuilder b2 = new StringBuilder();
+//		
+//		spaces = spaces + spaces + spaces;
+//		type1 = parser1.next();
+//		type2 = parser2.next();
+//		while (parser1.hasNext()) {
+//			if (type1 != type2) {
+//				if (type1 == XMLStreamConstants.CHARACTERS && type2 == XMLStreamConstants.END_ELEMENT) {
+//					b1.append(parser1.getText());
+//					type1 = parser1.next();
+//				} else if (type2 == XMLStreamConstants.CHARACTERS && type1 == XMLStreamConstants.END_ELEMENT) {
+//					b2.append(parser2.getText());
+//					type2 = parser2.next();
+//				} else {
+//					return false;
+//				}
+//			} else {
+//				switch (type1) {
+//	            case XMLStreamConstants.START_ELEMENT:             	
+//	            	if (! parser1.getName().toString().equals(parser2.getName().toString())) {
+//	            		return false;
+//	            	}
+//	            	
+//	            	b1.setLength(0);
+//	            	b2.setLength(0);
+//	            	break;
+//	            case XMLStreamConstants.END_ELEMENT:
+//	            	String ss1 = b1.toString();
+//	            	String ss2 = b2.toString();
+//	            	
+//	            	if (ss1.trim().equals(ss2.trim())) {
+//	            	} else {
+//	            		try {
+//	            			BigDecimal bd1 = new BigDecimal(ss1.trim());
+//	            			BigDecimal bd2 = new BigDecimal(ss2.trim());
+//	            			if (! bd1.equals(bd2)) {
+//	            				return false;
+//	            			}
+//	            		} catch (Exception e) {
+//	            			return false;
+//	            		}
+//	            	}
+//	            	break;
+//	            case XMLStreamConstants.CHARACTERS:
+//	
+//	            	b1.append(parser1.getText());
+//	               	b2.append(parser2.getText());
+//	
+//	            	break;
+////            case (XMLStreamConstants.START_DOCUMENT) :
+////            break;
+////            case (XMLStreamConstants.COMMENT) :
+////            break;
+////            case (XMLStreamConstants.DTD) :
+////            	break;
+////            case (XMLStreamConstants.ENTITY_REFERENCE) :
+////            	break;
+////            case (XMLStreamConstants.CDATA) :
+////              break;
+////            case (XMLStreamConstants.END_DOCUMENT): 
+////            	break;
+//            	default:
+//				}
+//
+//				type1 = parser1.next();
+//				type2 = parser2.next();
+//			}
+//		}
+//		
+//		parser1.close();
+//		parser2.close();
+//		return true;
+//	}
 
 	public static void compare(String id, Document doc, String fileName) throws IOException, SAXException, ParserConfigurationException {
 		compare(id, doc, fileToDom(fileName));

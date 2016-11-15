@@ -50,6 +50,7 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.External.Def.DependingOnDefinition;
 import net.sf.JRecord.cgen.def.IArrayAnyDimension;
 import net.sf.JRecord.schema.IArrayItemCheck;
 
@@ -120,6 +121,10 @@ public class Item implements IItem {
 	public IArrayItemCheck arrayValidation = null;
 	@XmlTransient
 	public boolean fieldRedefined = false;
+//	@XmlTransient
+//	public IOccursDependingDetails occursDependingValue = NullOccursDependingDtls.INSTANCE;
+	@XmlTransient
+	public DependingOnDefinition.SizeField saveDtls, arraySizeField;
 	
 
 	public void initFields(String name, List<Item> childItems) {
@@ -279,7 +284,17 @@ public class Item implements IItem {
         return dependingOn;
     }
 
-    /**
+    @Override
+    public int getSaveIndex() {
+    	return saveDtls == null ? -1 : saveDtls.fieldNumber;
+    }
+
+    @Override
+    public int getODArraySizeIdx() {
+    	return arraySizeField != null /*&& arraySizeField.indexedOD*/ ? arraySizeField.fieldNumber : -1;
+    }
+
+	/**
      * Sets the value of the dependingOn property.
      * 
      * @param value

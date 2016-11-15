@@ -112,7 +112,7 @@ public final class BasicCsvLineParserExtended extends BasicCsvLineParser impleme
     		s = "";
     	} else if  (quote != null && quote.length() > 0
 		        && ( (textFieldsInQuotes & (fieldType != Type.NT_NUMBER))
-			        ||	  s.indexOf(lineDef.getDelimiter()) >= 0
+			        ||	  s.indexOf(super.getDelimFromCsvDef(lineDef)) >= 0
 		        	|| s.indexOf(quote) >= 0
 		        	|| s.startsWith(quote)
 		        	|| s.indexOf('\n') >= 0 || s.indexOf('\r') >= 0)) {

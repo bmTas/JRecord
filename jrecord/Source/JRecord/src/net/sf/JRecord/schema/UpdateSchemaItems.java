@@ -34,10 +34,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDetail;
+import net.sf.JRecord.External.Def.DependingOnDefinition.SizeField;
 import net.sf.JRecord.cgen.impl.ArrayFieldDefinition;
+import net.sf.JRecord.cgen.impl.ArrayFieldDefinition1;
 import net.sf.JRecord.schema.jaxb.Copybook;
 import net.sf.JRecord.schema.jaxb.Item;
 
@@ -113,7 +116,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		
 		duplicateFieldNames = schema.getDuplicateFieldNames();
 		
-		update(items, 0, new int[99], new int[99], new ArrayList<String>(45), false);
+		updateMain(items, 0, new int[99], new int[99], null, new ArrayList<String>(45), false);
 		
 		if (schema.getRecordCount() < 2) {
 			recordMap = null;
@@ -125,78 +128,133 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		}
 	}
 	
-	private void update(List<Item> itemList, int indexs, int[] arraySizes, int[] elementSize, ArrayList<String> levels, boolean redefined) {
+	private void updateMain(List<Item> itemList, int indexs, int[] arraySizes, int[] elementSize, int[] currSize,
+			ArrayList<String> levels, boolean redefined) {
+		 
+		if (schema.getRecordCount() == 1) {
+			Map<String, SizeField> nameSizeFieldMap = schema.getRecord(0).getDependingOn().getNameSizeFieldMap();
+			for (int i = 0; i < itemList.size(); i++) {
+				updateItem(nameSizeFieldMap, indexs, arraySizes, elementSize, currSize, levels, redefined, itemList.get(i));
+			}
+		} else if (schema.getRecordCount() == itemList.size()){
+			for (int i = 0; i < itemList.size(); i++) {
+				Map<String, SizeField> nameSizeFieldMap = schema.getRecord(i).getDependingOn().getNameSizeFieldMap();
+				updateItem(nameSizeFieldMap, indexs, arraySizes, elementSize, currSize, levels, redefined, itemList.get(i));
+			}
+		} else {
+			Map<String, SizeField> nameSizeFieldMap = schema.getRecord(0).getDependingOn().getNameSizeFieldMap();
+			for (int i = 0; i < itemList.size(); i++) {
+				nameSizeFieldMap.putAll( schema.getRecord(i).getDependingOn().getNameSizeFieldMap());
+			}
+			for (int i = 0; i < itemList.size(); i++) {
+				updateItem(nameSizeFieldMap, indexs, arraySizes, elementSize, currSize, levels, redefined, itemList.get(i));
+			}
+		}
+	}
+	
+	private void update(
+			Map<String, SizeField> sfMap, List<Item> itemList,
+			int indexs, int[] arraySizes, int[] elementSize, int[] currSize, ArrayList<String> levels, boolean redefined) {
 		 
 		for (Item item : itemList) {
-			String name = item.getName();
-			name = name==null?"":name;
-			String ucName = name.toUpperCase();
-			boolean dup = duplicateFieldNames.contains(ucName);
-			int newIndexs = indexs;
-			String usage = item.getUsage();
-			boolean redef = redefined || isPresent(item.getRedefined())  || isPresent(item.getRedefines());
-			boolean hasOccurs = item.getOccurs() != null && item.getOccurs() > 0;
-			item.names = new ArrayList<String>(levels);
-			item.fieldRedefined = redef;
-			
-			if (redef && (! this.redefinedBinaryField) && isPresent(usage)) {
-				String lcUsage = usage.toLowerCase();
-				this.redefinedBinaryField = lcUsage.startsWith("comp") || lcUsage.startsWith("bin");
-			}
-			if (dropCopybook && name.length() > copybookName1.length()
-			&& (ucName.startsWith(copybookName1) || ucName.startsWith(copybookName2))) {
-				name = name.substring(copybookName1.length());
-			}
+			updateItem(sfMap, indexs, arraySizes, elementSize, currSize, levels, redefined, item);
+		}
+	}
 
-			item.fieldName = name;
-			item.nameToUse = updateName(name);
+	/**
+	 * @param indexs
+	 * @param arraySizes
+	 * @param elementSize
+	 * @param levels
+	 * @param redefined
+	 * @param item
+	 * @throws RuntimeException
+	 */
+	public void updateItem(
+			Map<String, SizeField> sfMap,
+			int indexs, int[] arraySizes, int[] elementSize, int[] currSizes,
+			ArrayList<String> levels, boolean redefined, Item item)
+			throws RuntimeException {
+		String name = item.getName();
+		name = name==null?"":name;
+		String ucName = name.toUpperCase();
+		boolean dup = duplicateFieldNames.contains(ucName);
+		int newIndexs = indexs;
+		String usage = item.getUsage();
+		boolean redef = redefined || isPresent(item.getRedefined())  || isPresent(item.getRedefines());
+		boolean hasOccurs = item.getOccurs() != null && item.getOccurs() > 0;
+		item.names = new ArrayList<String>(levels);
+		item.fieldRedefined = redef;
+		
+		if (redef && (! this.redefinedBinaryField) && isPresent(usage)) {
+			String lcUsage = usage.toLowerCase();
+			this.redefinedBinaryField = lcUsage.startsWith("comp") || lcUsage.startsWith("bin");
+		}
+		if (dropCopybook && name.length() > copybookName1.length()
+		&& (ucName.startsWith(copybookName1) || ucName.startsWith(copybookName2))) {
+			name = name.substring(copybookName1.length());
+		}
 
-			levels.add(item.fieldName);
-			if (hasOccurs) {
-				arraySizes[indexs] = item.getOccurs();
-				elementSize[indexs] = item.getStorageLength();
-				newIndexs += 1;
-				//System.out.println(item.getName() + " " + newIndexs);
+		item.fieldName = name;
+		item.nameToUse = updateName(name);
+
+		levels.add(item.fieldName);
+		if (hasOccurs) {
+			arraySizes[indexs] = item.getOccurs();
+			elementSize[indexs] = item.getStorageLength();
+			currSizes = new int[indexs + 1];
+			System.arraycopy(arraySizes, 0, currSizes, 0, currSizes.length);
+			newIndexs += 1;
+			//System.out.println(item.getName() + " " + newIndexs);
 //				if (firstArraySize < 0) {
 //					firstArraySize = item.getOccurs();
 //				}
-				
-				if (ucName != null && ucName.length() > 0) {
-					item.arrayValidation = arrayChecks.get(ucName);
-				}
-				arrayItems.put(item.nameToUse.toUpperCase(), item);
+			
+			if (ucName != null && ucName.length() > 0) {
+				item.arrayValidation = arrayChecks.get(ucName);
 			}
-			if (item.getChildItems().size() > 0) {
-				if (hasOccurs) {
-					item.arrayDefinition = new ArrayFieldDefinition(null, ucName, item.getPosition(), newIndexs, arraySizes, elementSize);
-				}
-				update(item.getChildItems(), newIndexs, arraySizes, elementSize, levels, redef); 
-			} else if ("filler".equalsIgnoreCase(name)) {
-			} else if (newIndexs == 0) {
-				item.itemType = Item.TYPE_FIELD;
-				itemCount += 1;
-				if (dup) {
-					item.fieldDefinition = schema.getGroupField(levels.toArray(new String[levels.size()]));
-				} else {
-					item.fieldDefinition = schema.getFieldFromName(item.fieldName);
-				}
-			} else if (newIndexs > 4) {
-				throw new RuntimeException("To many array indexs: " + newIndexs + ", only 1 to 4 are supported");
-			} else {
-				IFieldDetail[] fields = new IFieldDetail[newIndexs + 1];
-				itemCount += 1;
-				item.itemType = Item.TYPE_ARRAY;
-				//System.out.println("\t" + item.getName() + " " + newIndexs);
-				
-				for (int i = 0; i < fields.length; i++) {
-					levels.set(levels.size() - 1, item.fieldName + " " + ARRAY_INDEXS[newIndexs][i]);
-					fields[i] = schema.getGroupField(levels.toArray(new String[levels.size()]));
-				}
-				
-				item.arrayDefinition = new ArrayFieldDefinition((RecordDetail)fields[0].getRecord(), arraySizes[0], fields);
-			}
-			levels.remove(levels.size() - 1);
+			arrayItems.put(item.nameToUse.toUpperCase(), item);
 		}
+		String dependingOn = item.getDependingOn();
+		if (dependingOn != null && dependingOn.length() > 0) {
+			item.arraySizeField = sfMap.get(dependingOn.toLowerCase());
+		}
+		item.saveDtls = sfMap.get(item.fieldName.toLowerCase());
+		if (item.getChildItems().size() > 0) {
+			if (hasOccurs) {
+				item.arrayDefinition = new ArrayFieldDefinition(null, ucName, item.getPosition(), newIndexs, arraySizes, elementSize);
+			}
+			update(sfMap, item.getChildItems(), newIndexs, arraySizes, elementSize, currSizes, levels, redef); 
+		} else if ("filler".equalsIgnoreCase(name)) {
+		} else if (newIndexs == 0) {
+			item.itemType = Item.TYPE_FIELD;
+			itemCount += 1;
+			if (dup) {
+				item.fieldDefinition = schema.getGroupField(levels.toArray(new String[levels.size()]));
+			} else {
+				item.fieldDefinition = schema.getFieldFromName(item.fieldName);
+			}
+		} else if (newIndexs > 4) {
+			throw new RuntimeException("To many array indexs: " + newIndexs + ", only 1 to 4 are supported");
+		} else {
+			//FieldDetail[] fields = new FieldDetail[newIndexs + 1];
+			itemCount += 1;
+			item.itemType = Item.TYPE_ARRAY;
+			//System.out.println("\t" + item.getName() + " " + newIndexs);
+			
+			levels.set(levels.size() - 1, item.fieldName + " " + ARRAY_INDEXS[newIndexs][ARRAY_INDEXS[newIndexs].length-1]);
+			FieldDetail field = (FieldDetail) schema.getGroupField(levels.toArray(new String[levels.size()]));
+
+//			for (int i = 0; i < fields.length; i++) {
+//				levels.set(levels.size() - 1, item.fieldName + " " + ARRAY_INDEXS[newIndexs][i]);
+//				fields[i] = (FieldDetail) schema.getGroupField(levels.toArray(new String[levels.size()]));
+//			}
+			
+			RecordDetail record = (RecordDetail)field.getRecord();
+			item.arrayDefinition = new ArrayFieldDefinition1(record, currSizes,
+					record.getArrayFields(field, item.fieldName));
+		}
+		levels.remove(levels.size() - 1);
 	}
 	
 	private boolean isPresent(String s) {

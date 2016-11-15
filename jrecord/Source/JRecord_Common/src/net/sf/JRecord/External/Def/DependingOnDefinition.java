@@ -3,6 +3,7 @@ package net.sf.JRecord.External.Def;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.JRecord.Common.IFieldDetail;
 
@@ -18,6 +19,7 @@ public class DependingOnDefinition {
 	int sizeFieldCount = 0;
 	int moveableSizeFields = -1;
 	public HashMap<Integer, SizeField> sizeFields;
+	public ArrayList<SizeField> sizeFieldList;
 	
 	public DependingOnDefinition(List<DependingOn> dependOnList) {
 		super();
@@ -55,6 +57,21 @@ public class DependingOnDefinition {
 	public int getSizeFieldCount() {
 		return sizeFieldCount;
 	}
+	
+	public Map<String, SizeField> getNameSizeFieldMap() {
+		Map<String, SizeField> ret = new HashMap<String, SizeField>(sizeFieldCount * 2);
+		
+		for (SizeField sf : sizeFieldList) {
+			if (sf != null && sf.name != null) {
+				String key = sf.name.toLowerCase();
+				if (! ret.containsKey(key)) {
+					ret.put(key, sf);
+				}
+			}
+		}
+		
+		return ret;
+	}
 
 	public int getMoveableSizeFields() {
 		if (moveableSizeFields < 0) {
@@ -67,14 +84,14 @@ public class DependingOnDefinition {
 	public final void buildSizeFieldMap() {
 		
 		if (sizeFields == null) {
-			ArrayList<SizeField> sizeFldList = new ArrayList<SizeField>(sizeFieldCount+1);
+			sizeFieldList = new ArrayList<SizeField>(sizeFieldCount+1);
 			for (int i = sizeFieldCount; i >= 0; i--) {
-				sizeFldList.add(null);
+				sizeFieldList.add(null);
 			}
-			checkForMovingFields(dependOnList, sizeFldList);
+			checkForMovingFields(dependOnList, sizeFieldList);
 			
 			sizeFields = new HashMap<Integer, SizeField>(sizeFieldCount * 3 / 2);
-			for (SizeField sf : sizeFldList) {
+			for (SizeField sf : sizeFieldList) {
 				if (sf != null) {
 					sizeFields.put(sf.position, sf);
 				}
@@ -101,9 +118,14 @@ public class DependingOnDefinition {
 				if (field.getPos() > dependOnList.get(0).getPosition()) {
 					moveableSizeFields += 1;
 				}
-				
+
 				if (sizeFields.get(c.fieldNumber) == null) {
-					sizeFields.set(c.fieldNumber, new SizeField(field.getPos(), field.getLen()));
+					sizeFields.set(
+							c.fieldNumber,
+							new SizeField(
+									field.getPos(), c.fieldNumber, 
+									c.getVariableNameNoIndex(),
+									! c.getVariableNameNoIndex().equals(c.getVariableName()))); 
 				}
 
 				List<IDependingOnIndexDtls> indexDtls = c.getIndexDtls();
@@ -119,11 +141,15 @@ public class DependingOnDefinition {
 	public static class SizeField {
 		public final int position;
 		public final int fieldNumber;
+		public final String name;
+		public final boolean indexedOD;
 
-		public SizeField(int position, int fieldNumber) {
+		private SizeField(int position, int fieldNumber, String name, boolean indexedOD) {
 			super();
 			this.position = position;
 			this.fieldNumber = fieldNumber;
+			this.name = name;
+			this.indexedOD = indexedOD;
 		}
 	}
 }

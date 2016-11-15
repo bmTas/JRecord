@@ -37,7 +37,7 @@ import junit.framework.TestCase;
 
 public class TestOcConvertPictAnalysis  extends TestCase{
 
-	Convert bc = ConversionManager.getInstance().getConverter4code(ICopybookDialects.FMT_OPEN_COBOL);
+	Convert bc = ConversionManager.getInstance().getConverter4code(ICopybookDialects.FMT_GNU_COBOL);
 
 	public void testCharPictures() {
         chkPict("99/99/99", Type.ftChar);

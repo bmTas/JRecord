@@ -65,8 +65,8 @@ public class TstCobolIOBuilder01 extends TestCase {
 	private int[] dialects = {
 			ICopybookDialects.FMT_MAINFRAME, ICopybookDialects.FMT_FS2000, ICopybookDialects.FMT_FS2000_BE,
 			ICopybookDialects.FMT_FUJITSU, ICopybookDialects.FMT_OC_MICRO_FOCUS,
-			ICopybookDialects.FMT_OPEN_COBOL, ICopybookDialects.FMT_OPEN_COBOL_BE,
-			ICopybookDialects.FMT_OPEN_COBOL_MVS,
+			ICopybookDialects.FMT_GNU_COBOL, ICopybookDialects.FMT_GNU_COBOL_BE,
+			ICopybookDialects.FMT_GNU_COBOL_MVS,
 	};
 //	int splitCopybook = CopybookLoader.SPLIT_NONE;
 //	String font = "";
@@ -459,7 +459,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 
 	public void testAttrs01() {
 		Object[] attrs = {
-				ICopybookDialects.FMT_OPEN_COBOL, CopybookLoader.SPLIT_01_LEVEL,  Cb2xmlConstants.USE_COLS_6_TO_80,
+				ICopybookDialects.FMT_GNU_COBOL, CopybookLoader.SPLIT_01_LEVEL,  Cb2xmlConstants.USE_COLS_6_TO_80,
 				Constants.IO_BIN_CSV, "cp037", Boolean.TRUE
 		};
 		setAndCheckAttributes(attrs);

@@ -124,6 +124,13 @@ public class DependingOn {
 	}
 
 	/**
+	 * @return the variableNameNoIndex
+	 */
+	public final String getVariableNameNoIndex() {
+		return variableNameNoIndex;
+	}
+
+	/**
 	 * @return the position
 	 */
 	public final int getPosition() {

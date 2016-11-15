@@ -54,7 +54,7 @@ public class TstLoadingCobol02 extends TestCase {
 	private static final int[] DIALECTS = {
 		ICopybookDialects.FMT_MAINFRAME,
 		ICopybookDialects.FMT_FUJITSU,
-		ICopybookDialects.FMT_OPEN_COBOL,
+		ICopybookDialects.FMT_GNU_COBOL,
 		ICopybookDialects.FMT_OC_MICRO_FOCUS,
 	};
 	

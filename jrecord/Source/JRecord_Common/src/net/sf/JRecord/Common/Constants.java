@@ -148,6 +148,9 @@ public interface Constants {
     public static final int IO_PROTO_SINGLE_MESSAGE = 72;
     public static final int IO_PROTO_SD_DELIMITED   = 73;
     public static final int IO_PROTO_SD_SINGLE_MESSAGE = 74;
+    public static final int IO_PROTO_TEXT = 75;
+    public static final int IO_PROTO_JSON = 76;
+
     public static final int IO_THRIFT_FILE  = 81;
     public static final int IO_AVRO_FILE    = 91;
 

@@ -66,9 +66,12 @@ public final class DependingOnDtls implements IDependingOnIndexDtls {
 	private List<DependingOn> children = null;
 	private int reliableCalculationsTo;
 	
-	
 	public DependingOnDtls(DependingOn dependingOn, int index,
 			DependingOnDtls parent) {
+		this(dependingOn, index, parent, true);
+	}
+	public DependingOnDtls(DependingOn dependingOn, int index,
+			DependingOnDtls parent, boolean permanent) {
 		super();
 		this.dependingOn = dependingOn;
 		this.index = index;
@@ -76,14 +79,16 @@ public final class DependingOnDtls implements IDependingOnIndexDtls {
 		this.firstIdx = index == 0 
 				     && (parent == null || parent.firstIdx);
 		
-		if (parent != null && index == 0) {
-			if (parent.children == null) {
-				parent.children = new ArrayList<DependingOn>(3);
+		if (permanent) {
+			if (parent != null && index == 0) {
+				if (parent.children == null) {
+					parent.children = new ArrayList<DependingOn>(3);
+				}
+				parent.children.add(dependingOn);
 			}
-			parent.children.add(dependingOn);
+			
+			dependingOn.indexDtls.add(this);
 		}
-		
-		dependingOn.indexDtls.add(this);
 		
 		reliableCalculationsTo = dependingOn.getPosition() + dependingOn.getOccursLength() * (index + 1);
 	}

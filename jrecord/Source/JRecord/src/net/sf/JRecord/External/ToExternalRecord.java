@@ -106,7 +106,7 @@ public final class ToExternalRecord {
 
 		rec = new ExternalRecord(
 				id, name, "", record.getRecordType(),
-				system, "N", copybookName + "_" + name, getSeperator(record.getDelimiter()),
+				system, "N", copybookName + "_" + name, getSeperator(record.getDelimiterUneditted()),
 				record.getQuote(), 0, "default", layout.getRecordSep(), record.getFontName(),
 				record.getRecordStyle(), fixIOType(layout.getFileStructure()), embeddedCr
 		);

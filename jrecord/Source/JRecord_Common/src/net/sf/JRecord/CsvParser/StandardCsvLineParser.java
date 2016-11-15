@@ -115,7 +115,7 @@ public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLine
 		if (newValue == null) {
 			s = "";
 		}
-		String delimiter = lineDef.getDelimiter();
+		String delimiter = super.getDelimFromCsvDef(lineDef);
 		String quote = lineDef.getQuote();
 		int quoteLength = 1;
 		if (quote != null && quote.length() > 0) {
@@ -149,7 +149,7 @@ public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLine
 		if (s == null) {
 			s = "";
 		} else {
-			String delimiter = lineDef.getDelimiter();
+			String delimiter = super.getDelimFromCsvDef(lineDef);
 			String quote = lineDef.getQuote();
 			int quoteLength = 1;
 			if (quote != null && quote.length() > 0) {
@@ -199,7 +199,7 @@ public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLine
 		boolean lastCharQuote = false;
 		int currFieldNumber = 0;
 		int i = 0;
-		String delimiter = lineDef.getDelimiter();
+		String delimiter = super.getDelimFromCsvDef(lineDef);
 		String quote = lineDef.getQuote();
 		int quoteLength = 1;
 		if (quote != null && quote.length() > 0) {

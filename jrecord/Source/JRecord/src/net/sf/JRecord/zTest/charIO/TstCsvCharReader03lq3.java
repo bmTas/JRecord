@@ -106,8 +106,8 @@ public class TstCsvCharReader03lq3 extends TestCase {
 					for (int k = 0; k < CHARSETS.length; k++) {
 						for (int l = 0; l < files02.length; l++) {
 							String rest = i + ", " + j + ", " + CHARSETS[k] + ", " + l;
-							System.out.println();
-							System.out.println("  ---------------------------- ");
+//							System.out.println();
+//							System.out.println("  ---------------------------- ");
 							tstFile("02) " + rest,
 									new CsvCharReader(",", "''", "''''", false),
 									EOLS[i], EOLS[j], CHARSETS[k], files02[l]);
