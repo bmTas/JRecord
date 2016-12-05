@@ -38,6 +38,7 @@ import net.sf.JRecord.cbl2xml.impl.ConvertOptions;
 import net.sf.JRecord.cbl2xml.impl.RecordParent;
 import net.sf.JRecord.cbl2xml.impl.RecordSelect;
 import net.sf.JRecord.schema.ArrayElementChecks;
+import net.sf.JRecord.schema.jaxb.impl.AddPlusToNumeric;
 
 /**
  * This class creates the Cobol <==> Xml and cb2xml <==> Xml builders
@@ -99,6 +100,10 @@ public class Cobol2Xml  {
 				.setTagFormat(opts.tagFormat)
 				.setSplitCopybook(opts.split);
 
+		if (ConvertOptions.FORMAT_USE_PLUS_FOR_NUMERICS.equalsIgnoreCase(opts.formatText)) {
+			cbl2xml.setFormatField(AddPlusToNumeric.INSTANCE);
+		}
+		
 		for (RecordSelect rs : opts.recordSelect) {
 			cbl2xml.setRecordSelection(rs.recordName, Cobol2Xml.newFieldSelection(rs.fieldName, rs.value));
 		}

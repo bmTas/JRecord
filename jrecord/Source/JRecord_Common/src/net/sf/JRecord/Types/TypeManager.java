@@ -258,6 +258,14 @@ public class TypeManager {
 	public static boolean isNumeric(int typeId) {
 		return getInstance().getType(typeId).isNumeric();
 	}
+	
+	public static boolean isSignLeading(int typeId) {
+		Type type = getInstance().getType(typeId);
+		return type.isNumeric() 
+			&& (	(! (type instanceof TypeSignSeparate))
+				||	((TypeSignSeparate) type).isLeadingSign()
+				);
+	}
 
 	public static boolean isBinary(int typeId) {
 		Type type = getInstance().getType(typeId);

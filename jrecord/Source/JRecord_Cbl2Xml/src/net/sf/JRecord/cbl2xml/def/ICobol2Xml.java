@@ -32,6 +32,7 @@ import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
 import net.sf.JRecord.schema.IArrayItemCheck;
+import net.sf.JRecord.schema.jaxb.interfaces.IFormatField;
 
 
 /**
@@ -113,6 +114,8 @@ public interface ICobol2Xml  extends  Icb2xml2Xml  {
 	 */
 	public abstract ICobol2Xml setRecordParent(String recordName, String parentName);
 	
+	public abstract ICobol2Xml setFormatField(IFormatField formatField);
+
 //	/**
 //	 * Convert Cobol Data File to Xml file
 //	 * 

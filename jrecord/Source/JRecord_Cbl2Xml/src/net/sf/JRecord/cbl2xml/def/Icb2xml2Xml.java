@@ -38,6 +38,7 @@ import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.def.IO.builders.Icb2xmlLoadOptions;
 import net.sf.JRecord.schema.IArrayItemCheck;
+import net.sf.JRecord.schema.jaxb.interfaces.IFormatField;
 
 /**
  * Class To convert <i>Cobol Data Files</i> to/from <i>Xml Data files</i> using a cb2xml Xml-Schema,
@@ -191,6 +192,13 @@ public interface Icb2xml2Xml extends Icb2xmlLoadOptions {
 	public void xml2Cobol(InputStream xmlStream, OutputStream cobolStream)
 			throws IOException, JAXBException,
 			XMLStreamException;
+
+	/**
+	 * Set "formatField". This class will format the field-output prior to writing to a file.
+	 * @param formatField new formatField
+	 * @return
+	 */
+	public Icb2xml2Xml setFormatField(IFormatField formatField);
 
 
 }

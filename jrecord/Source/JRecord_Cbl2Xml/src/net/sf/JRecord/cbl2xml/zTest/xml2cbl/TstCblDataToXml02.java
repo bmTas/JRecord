@@ -41,23 +41,31 @@ import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.cbl2xml.impl.Cobol2GroupXml;
+import net.sf.JRecord.schema.jaxb.impl.AddPlusToNumeric;
+import net.sf.JRecord.schema.jaxb.impl.DoNothingFormat;
+import net.sf.JRecord.schema.jaxb.interfaces.IFormatField;
 
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
 public class TstCblDataToXml02 {
 
+	private static final String[] EMPTY_STRING_ARRAY = {};
+
+
 	private String[][] files ={
-			{"DTAR020.cbl",  "DTAR020.bin",  "DTAR020_DataN.xml", "N", "F"},
+			{"DTAR020.cbl",  "DTAR020.bin",  "DTAR020_DataN.xml", "N", "F", "DTAR020-KEYCODE-NO"},
 			{"DTAR107.cbl",  "DTAR107.bin",  "DTAR107_DataN.xml", "N", "F"},
 			{"DTAR192.cbl",  "DTAR192.bin",  "DTAR192_DataN.xml", "N", "F"},
 			{"DTAR1000.cbl", "DTAR1000.bin", "DTAR1000_DataN.xml","N", "V"},
-			{"FCUSDAT.cbl", "ZOS.FCUSTDAT_150.vb.bin", "ZOS.FCUSTDAT_150.xml","N", "V"},
-			{"DTAR020.cbl",  "DTAR020.bin",  "DTAR020_DataY.xml", "Y", "F"},
+			{"FCUSDAT.cbl", "ZOS.FCUSTDAT_150.vb.bin", "ZOS.FCUSTDAT_150.xml","N", "V", 
+						"CUSTOMER-PHONE", "TRANSACTION-DAY", "TRANSACTION-MONTH", "TRANSACTION-YEAR"},
+			{"DTAR020.cbl",  "DTAR020.bin",  "DTAR020_DataY.xml", "Y", "F", "KEYCODE-NO"},
 			{"DTAR107.cbl",  "DTAR107.bin",  "DTAR107_DataY.xml", "Y", "F"},
 			{"DTAR192.cbl",  "DTAR192.bin",  "DTAR192_DataY.xml", "Y", "F"},
 			{"DTAR1000.cbl", "DTAR1000.bin", "DTAR1000_DataY.xml","Y", "V"},
-			{"FCUSDAT.cbl", "ZOS.FCUSTDAT_150.vb.bin", "ZOS.FCUSTDAT_150.xml","N", "V"},
+			{"FCUSDAT.cbl", "ZOS.FCUSTDAT_150.vb.bin", "ZOS.FCUSTDAT_150.xml","N", "V", 
+				"CUSTOMER-PHONE", "TRANSACTION-DAY", "TRANSACTION-MONTH", "TRANSACTION-YEAR"},
 	};
 
 
@@ -69,6 +77,7 @@ public class TstCblDataToXml02 {
 		}
 	}
 	
+	@Test
 	public void testData2Xml_DTAR107() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
 		check(files[4]);
 	}
@@ -95,7 +104,7 @@ public class TstCblDataToXml02 {
 		copybookName = Cb2XmlCode.getFullName("cobol/" + d[0]);
 		dataName = Cb2XmlCode.getFullName(d[1]);
 		
-		byte[] doc = data2xml(dataName, copybookName, "Y".equalsIgnoreCase(d[3]),  "V".equalsIgnoreCase(d[4]));
+		byte[] doc = data2xml(dataName, copybookName, "Y".equalsIgnoreCase(d[3]),  "V".equalsIgnoreCase(d[4]), false);
 		
 		
 		//System.out.println(XmlUtils.domToString(doc));
@@ -104,10 +113,22 @@ public class TstCblDataToXml02 {
 		System.out.println(new String(doc));
 		
 		xmlDataName = Cb2XmlCode.getFullName("xml/" + d[2]);
-		Cb2XmlCode.compare("File: " + copybookName,  xmlDataName, doc);
+		String expectedXml = Cb2XmlCode.loadFile(xmlDataName, "\r\n", false);
+		Cb2XmlCode.compareXmlStr("File: " + copybookName,  expectedXml, doc);
+		
+		String[] check = EMPTY_STRING_ARRAY;
+		if (d.length > 5) {
+			check = new String[d.length - 5];
+			for (int i = 5; i < d.length; i++) {
+				check[i-5] = d[i];
+			}
+		}
+		
+		doc = data2xml(dataName, copybookName, "Y".equalsIgnoreCase(d[3]),  "V".equalsIgnoreCase(d[4]), true);
+		Cb2XmlCode.compareXmlStr("File: " + copybookName, Cb2XmlCode.addPlusToNumeric(expectedXml, check), doc);
 	} 
 	
-	private static byte[] data2xml(String dataFileName, String copybookFileName, boolean dropCopybookName, boolean vb) 
+	private static byte[] data2xml(String dataFileName, String copybookFileName, boolean dropCopybookName, boolean vb, boolean useAddPlus) 
 	throws FileNotFoundException, RecordException, IOException, JAXBException, XMLStreamException, SAXException, ParserConfigurationException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
@@ -116,12 +137,18 @@ public class TstCblDataToXml02 {
 			fileOrg = Constants.IO_VB;
 		}
 		
+		IFormatField formatField = DoNothingFormat.INSTANCE;
+		if (useAddPlus) {
+			formatField = AddPlusToNumeric.INSTANCE;
+		}
+		
 		Cobol2GroupXml.newCobol2Xml(copybookFileName)
 						  .setFileOrganization(fileOrg)
 						  .setXmlMainElement("copybook")
 						  .setFont("cp037")
 						  .setDialect(ICopybookDialects.FMT_MAINFRAME) // This is the default
 						  .setDropCopybookNameFromFields(dropCopybookName)
+						  .setFormatField(formatField)
 					  .cobol2xml(new FileInputStream(dataFileName), os);
 
 	    return os.toByteArray();

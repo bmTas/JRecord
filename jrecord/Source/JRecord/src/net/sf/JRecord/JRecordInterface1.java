@@ -78,6 +78,12 @@ public class JRecordInterface1 {
      *                  .setDialect(ICopybookDialects.FMT_FUJITSU)
      *              .newReader("Data-Filename");
      * }</pre> 
+     * 
+     * The CodeGen utility can generate basic JRecord code. It is available<ul>
+     * <li>as part of the <b>RecordEditor</b> see 
+     * <a href="http://record-editor.sourceforge.net/RecordEditorGenerate.htm#HDRJRECGEN">http://record-editor.sourceforge.net/RecordEditorGenerate.htm#HDRJRECGEN</a>
+     * <li>As a standalone download: <a href="https://sourceforge.net/projects/jrecord/files/jrecord_CodeGen/">https://sourceforge.net/projects/jrecord/files/jrecord_CodeGen/</a>
+     * </ul>
      */
     public static final ICobolCopybookIOProvider  COBOL = new FileSchemaBuilder(CopybookLoaderFactory.COBOL_LOADER); 
     

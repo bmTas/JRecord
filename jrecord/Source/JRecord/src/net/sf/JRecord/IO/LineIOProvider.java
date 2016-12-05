@@ -67,7 +67,11 @@ import net.sf.JRecord.charIO.StandardCharReader;
 /**
  * LineIOprovider - This class returns a LineIO class appropriate for
  * the supplied file structure. All the Files Structures are available as
- * Constants.IO_*
+ * Constants.IO_*.
+ * 
+ * <b>Note:</b> This is part of the "old JRecord Interface". 
+ * Most users  will be better off using {@link net.sf.JRecord.net.sf.JRecord.JRecordInterface1} to 
+ * create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes.
  *
  * <pre>
  * <b>Usage:</b>
@@ -182,14 +186,25 @@ public class LineIOProvider implements AbstractManager {
      * @param fileStructure File Structure of the required reader
      *
      * @return line reader
-     * @deprecated use {@link LineIOProvider#getLineReader(IBasicFileSchema)}
+     * @deprecated use {@link net.sf.JRecord.JRecordInterface1} to create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes.
+     * or use {@link LineIOProvider#getLineReader(IBasicFileSchema)}
      */
     public AbstractLineReader getLineReader(int fileStructure) {
         return getLineReader(fileStructure, getLineProvider(fileStructure, null));
     }
 
     /**
+     * <b>Note:</b> This is part of the "old JRecord Interface". 
+     * Most users  will be better off using {@link net.sf.JRecord.JRecordInterface1} to 
+     * create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes.
+     * 
+     * 
      * Get Reader for Simple-Schema
+     * 
+     *  
+     * <b>Note:</b> This is part of the "old JRecord Interface". 
+     * Most users  will be better off using {@link net.sf.JRecord.JRecordInterface1} to 
+     * create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes.
      * 
      * @param fs file-schema
      * 
@@ -200,6 +215,10 @@ public class LineIOProvider implements AbstractManager {
     }
     
     /**
+     * <b>Note:</b> This is part of the "old JRecord Interface". 
+     * Most users  will be better off using {@link net.sf.JRecord.JRecordInterface1} to 
+     * create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes.
+     * 
      * Get Reader for Simple-Schema
      * 
      * @param fs file-schema
@@ -258,7 +277,8 @@ public class LineIOProvider implements AbstractManager {
      * @param lineProvider Line-Provider used to create lines
      *
      * @return line reader
-     * @deprecated use {@link LineIOProvider#getLineReader(IBasicFileSchema)}
+     * @deprecated use use {@link net.sf.JRecord.JRecordInterface1} to create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes
+     * or {@link LineIOProvider#getLineReader(IBasicFileSchema)}
      */
     public AbstractLineReader getLineReader(int fileStructure,
             						   LineProvider lineProvider) {
@@ -305,13 +325,18 @@ public class LineIOProvider implements AbstractManager {
      * @param fileStructure File Structure
      *
      * @return record reader
-     * @deprecated use {@link LineIOProvider#getLineWriter(IBasicFileSchema)}
+     * @deprecated  use {@link net.sf.JRecord.JRecordInterface1} to create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes
+     * or {@link LineIOProvider#getLineWriter(IBasicFileSchema)}
      */
     public AbstractLineWriter getLineWriter(int fileStructure) {
     	return getLineWriter(fileStructure, null);
     }
 
-    /**
+    /** 
+     * <b>Note:</b> This is part of the "old JRecord Interface". 
+     * Most users  will be better off using {@link net.sf.JRecord.JRecordInterface1} to 
+     * create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes.
+
      * Get writer for the schema
      * 
      * @param schema file-schema to get reader for
@@ -323,6 +348,11 @@ public class LineIOProvider implements AbstractManager {
     }
 
     /**
+     *  
+     * <b>Note:</b> This is part of the "old JRecord Interface". 
+     * Most users  will be better off using {@link net.sf.JRecord.JRecordInterface1} to 
+     * create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes.
+     *
      * Gets a Record Writer Class for fileStructure / character-set,
      * This method will probably get depreciated in favour of {@link LineIOProvider#getLineWriter(IBasicFileSchema)} 
      * 

@@ -49,6 +49,7 @@ import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
 
 /**
+ * 
  * This Class Creates a line-reader or line-writer for a Cobol file (Cobol Copybook).
  *
  * <pre>
@@ -128,6 +129,11 @@ public class CobolIoProvider {
     
 
     /**
+     * <b>Note:</b> This is part of the "old JRecord Interface". 
+     * Most users  will be better off using {@link net.sf.JRecord.JRecordInterface1#COBOL} to 
+     * create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes or the 
+     * {@link CobolIoProvider#newIOBuilder(String)}}
+     * 
      * Creates a line reader for a Cobol file
      * 
      * @param fileStructure Structure of the input file
@@ -163,6 +169,11 @@ public class CobolIoProvider {
  }
 
     /**
+      * <b>Note:</b> This is part of the "old JRecord Interface". 
+     * Most users  will be better off using {@link net.sf.JRecord.JRecordInterface1#COBOL} to 
+     * create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes or the 
+     * {@link CobolIoProvider#newIOBuilder(String)}}
+     * 
      * Creates a line reader for a Cobol file
      * 
      * @param fileStructure Structure of the input file
@@ -187,6 +198,10 @@ public class CobolIoProvider {
     }
     
     /**
+     * <b>Note:</b> This is part of the "old JRecord Interface". 
+     * Most users  will be better off using {@link net.sf.JRecord.JRecordInterface1#COBOL} to 
+     * create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes or the 
+     * {@link CobolIoProvider#newIOBuilder(String)}}
      * Creates a line reader for a Cobol file
      * 
      * @param fileStructure Structure of the input file
@@ -236,6 +251,11 @@ public class CobolIoProvider {
 
 
     /**
+     * <b>Note:</b> This is part of the "old JRecord Interface". 
+     * Most users  will be better off using {@link net.sf.JRecord.JRecordInterface1#COBOL} to 
+     * create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes or the 
+     * {@link CobolIoProvider#newIOBuilder(String)}}
+     * 
      * Create a line writer for a Cobol File
      * 
      * @param fileStructure structure of the output file
@@ -252,6 +272,11 @@ public class CobolIoProvider {
  
 
      /**
+      * <b>Note:</b> This is part of the "old JRecord Interface". 
+      * Most users  will be better off using {@link net.sf.JRecord.JRecordInterface1#COBOL} to 
+      * create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes or the 
+      * {@link CobolIoProvider#newIOBuilder(String)}}
+      * 
       * Create a line writer for a Cobol File
       * 
       * @param schema File-Schema (or file definition)

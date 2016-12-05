@@ -153,6 +153,40 @@ public class Cb2XmlCode {
 		String s1 = loadFile(fileName, "\r\n", false);
 		compareXmlStr(id, s1, data);
 	}
+	
+	public static String addPlusToNumeric(String s, String[] skip) {
+		StringBuilder b = new StringBuilder((s.length() * 12) / 10);
+		StringBuilder w = new StringBuilder();
+		
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			b.append(c);
+			if (c == '>' && i+1 < s.length() && s.charAt(i+1) != '<') {
+				boolean num = true, match = false;
+				char ch;
+				for (int j = i + 1; num && ((ch = s.charAt(j)) != '<') && j < s.length(); j++) {
+					num = (ch >= '0' && ch <= '9') || ch == '.';
+				}
+				
+				if (num) {				
+					String check = w.toString();			
+					for (int j = 0; (! match) && j < skip.length; j++) {
+						match = check.equalsIgnoreCase(skip[j]);
+					}
+					
+					if ( ! match) {
+						b.append('+');
+					}
+				}
+			} else if (c == '<') {
+				w.delete(0, w.length());
+			} else {
+				w.append(c);
+			}
+		}
+		
+		return b.toString();
+	}
 
 	/**
 	 * @param id

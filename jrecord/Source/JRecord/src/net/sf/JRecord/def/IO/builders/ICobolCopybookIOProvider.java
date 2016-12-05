@@ -86,6 +86,14 @@ public interface ICobolCopybookIOProvider {
 	 *  <li><b>setCopybookFileFormat</b> - is a standard Column 6-72 or some other format
 	 *  <li><b>setFont</b> Set the font (character-set) used in the Data-File.
 	 *  </ul>
+	 *  
+	 *     
+     * The CodeGen utility can generate basic JRecord code. It is available<ul>
+     * <li>as part of the <b>RecordEditor</b> see 
+     * <a href="http://record-editor.sourceforge.net/RecordEditorGenerate.htm#HDRJRECGEN">http://record-editor.sourceforge.net/RecordEditorGenerate.htm#HDRJRECGEN</a>
+     * <li>As a standalone download: <a href="https://sourceforge.net/projects/jrecord/files/jrecord_CodeGen/">https://sourceforge.net/projects/jrecord/files/jrecord_CodeGen/</a>
+     * </ul>
+
 	 * 
 	 */
 	public abstract ICobolIOBuilder newIOBuilder(
@@ -133,6 +141,14 @@ public interface ICobolCopybookIOProvider {
 	 *  <li><b>setFont</b> Set the font (character-set) used in the Data-File.
 	 *  </ul>
 	 * 
+	 * 
+	 *    
+     * The CodeGen utility can generate basic JRecord code. It is available<ul>
+     * <li>as part of the <b>RecordEditor</b> see 
+     * <a href="http://record-editor.sourceforge.net/RecordEditorGenerate.htm#HDRJRECGEN">http://record-editor.sourceforge.net/RecordEditorGenerate.htm#HDRJRECGEN</a>
+     * <li>As a standalone download: <a href="https://sourceforge.net/projects/jrecord/files/jrecord_CodeGen/">https://sourceforge.net/projects/jrecord/files/jrecord_CodeGen/</a>
+     * </ul>
+
 	 */
 	public abstract ICobolIOBuilder newIOBuilder(
 			InputStream cobolCopybookStream, String copybookName);
@@ -142,6 +158,14 @@ public interface ICobolCopybookIOProvider {
 	 * @param copybookReader Cobol Copybook Reader
 	 * @param copybookName Name of the Cobol Copybook
 	 * @return Cobol IOBuilder
+	 * 
+	 *     * 
+     * The CodeGen utility can generate basic JRecord code. It is available<ul>
+     * <li>as part of the <b>RecordEditor</b> see 
+     * <a href="http://record-editor.sourceforge.net/RecordEditorGenerate.htm#HDRJRECGEN">http://record-editor.sourceforge.net/RecordEditorGenerate.htm#HDRJRECGEN</a>
+     * <li>As a standalone download: <a href="https://sourceforge.net/projects/jrecord/files/jrecord_CodeGen/">https://sourceforge.net/projects/jrecord/files/jrecord_CodeGen/</a>
+     * </ul>
+
 	 */
 	public abstract ICobolIOBuilder newIOBuilder(
 			Reader copybookReader, String copybookName);

@@ -49,6 +49,7 @@ import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
+import net.sf.JRecord.Details.IFieldValue;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.ICopybookLoaderCobol;
@@ -66,6 +67,8 @@ import net.sf.JRecord.schema.ISchemaInformation;
 import net.sf.JRecord.schema.jaxb.IItem;
 //import net.sf.JRecord.schema.jaxb.Item;
 import net.sf.JRecord.schema.jaxb.LineItemHelper;
+import net.sf.JRecord.schema.jaxb.impl.DoNothingFormat;
+import net.sf.JRecord.schema.jaxb.interfaces.IFormatField;
 
 
 /**
@@ -90,6 +93,8 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 	private XMLInputFactory  xmlInputFactory = null;
 	
 	private boolean skipValidation;
+	
+	private IFormatField formatField = DoNothingFormat.INSTANCE;
 
 
 	
@@ -173,6 +178,15 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 		return this;
 	}
 
+
+	/**
+	 * @param formatField the formatField to set
+	 */
+	@Override
+	public final ICobol2Xml setFormatField(IFormatField formatField) {
+		this.formatField = formatField;
+		return this;
+	}
 
 	@Override
 	public void cobol2xml(String cobolFileName, String xmlFileName) throws RecordException, IOException, JAXBException, XMLStreamException {
@@ -298,9 +312,9 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 		if (item.getItemType() == IItem.TYPE_GROUP) {
 			writeItems(writer, l, item.getChildItems(), indexs);
 		} else if (indexs.size == 0) {
-			writeText(writer, item, l.getFieldValue(item, null).asString());
+			writeText(writer, item, l.getFieldValue(item, null));
 		} else {
-			writeText(writer, item, l.getFieldValue(item, indexs.toArray()).asString());
+			writeText(writer, item, l.getFieldValue(item, indexs.toArray()));
 		}
 	}
 
@@ -310,8 +324,9 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 	 * @param s
 	 * @throws XMLStreamException
 	 */
-	public void writeText(XMLStreamWriter writer, IItem item, String s)
+	public void writeText(XMLStreamWriter writer, IItem item, IFieldValue fieldValue)
 			throws XMLStreamException {
+		String s = formatField.format(item, fieldValue.getFieldDetail(), fieldValue.asString());
 		int len;
 		if (s != null && (len = s.length() - 1) >= 0) {
 			if (s.charAt(len) == 0) {

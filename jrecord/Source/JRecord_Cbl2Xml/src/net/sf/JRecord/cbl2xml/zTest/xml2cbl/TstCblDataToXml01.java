@@ -38,11 +38,15 @@ import org.xml.sax.SAXException;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.RecordException;
+import net.sf.JRecord.cbl2xml.def.Icb2xml2Xml;
 import net.sf.JRecord.cbl2xml.impl.Cobol2GroupXml;
+import net.sf.JRecord.schema.jaxb.impl.AddPlusToNumeric;
 
 
 public class TstCblDataToXml01 {
 
+	private static final String[] EMPTY_STRING_ARRAY = {};
+	
 	private static final String LOC_DOWNLOAD_TXT = "Ams_LocDownload.txt";
 	private String[][] files ={
 			{"cb2xml_Output102a.xml", LOC_DOWNLOAD_TXT, "Ams_LocDownload_102.xml"},
@@ -60,7 +64,7 @@ public class TstCblDataToXml01 {
 			copybookName = Cb2XmlCode.getFullName("xmlCopybook/" + d[0]);
 			dataName = Cb2XmlCode.getFullName(d[1]);
 			
-			byte[] doc = data2xml(dataName, copybookName);
+			byte[] doc = data2xml(dataName, copybookName, false);
 			
 			
 			//System.out.println(XmlUtils.domToString(doc));
@@ -69,6 +73,26 @@ public class TstCblDataToXml01 {
 			
 			xmlDataName = Cb2XmlCode.getFullName("xml/" + d[2]);
 			Cb2XmlCode.compare("File: " + copybookName,  xmlDataName, doc);
+		}
+	}
+	
+	@Test
+	public void testData2XmlUseAddPo() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
+		String copybookName, dataName, xmlDataName;
+		for (String[] d : files) { 
+			copybookName = Cb2XmlCode.getFullName("xmlCopybook/" + d[0]);
+			dataName = Cb2XmlCode.getFullName(d[1]);
+			
+			byte[] doc = data2xml(dataName, copybookName, true);
+			
+			
+			//System.out.println(XmlUtils.domToString(doc));
+			System.out.println("Copybook: " + d[0] + " " + d[2]);
+			System.out.println();
+			
+			xmlDataName = Cb2XmlCode.getFullName("xml/" + d[2]);
+			String expectedXml = Cb2XmlCode.addPlusToNumeric(Cb2XmlCode.loadFile(xmlDataName, "\r\n", false), EMPTY_STRING_ARRAY);
+			Cb2XmlCode.compareXmlStr("File: " + copybookName,  expectedXml, doc);
 		}
 	} 
 
@@ -89,13 +113,19 @@ public class TstCblDataToXml01 {
 	
 
 	
-	private static byte[] data2xml(String dataFileName, String copybookFileName) 
+	private static byte[] data2xml(String dataFileName, String copybookFileName, boolean addPlusToNums) 
 	throws FileNotFoundException, RecordException, IOException, JAXBException, XMLStreamException, SAXException, ParserConfigurationException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
-		Cobol2GroupXml.newCb2Xml2Xml(copybookFileName)
+		Icb2xml2Xml xmlWriter = Cobol2GroupXml.newCb2Xml2Xml(copybookFileName)
 					  .setFileOrganization(Constants.IO_STANDARD_TEXT_FILE)
-					  .setXmlMainElement("copybook")
+					  .setXmlMainElement("copybook");
+		
+		if (addPlusToNums) {
+			xmlWriter.setFormatField(AddPlusToNumeric.INSTANCE);
+		}
+		
+		xmlWriter
 					  .cobol2xml(new FileInputStream(dataFileName), os);
 
 	    return os.toByteArray();

@@ -35,6 +35,8 @@ import net.sf.JRecord.cbl2xml.def.ICobol2Xml;
 import net.sf.JRecord.utilityClasses.ParseArguments;
  
 public class ConvertOptions {
+	public static final String FORMAT_USE_PLUS_FOR_NUMERICS = "usePlus";
+	
 	private static final Opts SPLIT_01 = new Opts("01",      "Split on 01",          ICobolSplitOptions.SPLIT_01_LEVEL);
 	private static final Opts SPLIT_NONE = new Opts("None",    "No Split",             ICobolSplitOptions.SPLIT_NONE);
 	public  static final String OPT_DROP_COPYBOOK_NAME = "-dropCopybookName";
@@ -46,6 +48,7 @@ public class ConvertOptions {
 	private static final String OPT_INPUT   = "-input";
 	private static final String OPT_CB2XML  = "-cb2xml";
 	private static final String OPT_COBOL   = "-cobol";
+	private static final String OPT_FORMAT  = "-formatText";
 	private static final String OPT_TAG     = "-tagFormat";
 	private static final String OPT_SPLIT   = "-split";
 	private static final String OPT_RECSEL  = "-recordSelection";
@@ -53,7 +56,7 @@ public class ConvertOptions {
 	private static final String[] VALID_ARGS = {
 		OPT_COBOL, OPT_CB2XML, OPT_INPUT, OPT_OUTPUT, OPT_FONT, OPT_MAIN_XML_TAG,
 		OPT_FILE_ORGANISATION, OPT_DIALECT, OPT_DROP_COPYBOOK_NAME, OPT_TAG,
-		OPT_SPLIT,
+		OPT_SPLIT, OPT_FORMAT,
 		"-h", "-help", "-?"
 	};
 	
@@ -82,7 +85,14 @@ public class ConvertOptions {
 		new Opts("Highest", "On Highest Repeating", ICobolSplitOptions.SPLIT_HIGHEST_REPEATING),
 	};
 	
-	public final String cobolCopybook, cb2xmlCopybook, inputFile, outputFile, font, mainXmlTag;
+
+	private static final Opts[] FORMAT_OPTS = {
+		new Opts(FORMAT_USE_PLUS_FOR_NUMERICS, "Use + for positive numerics", 0),
+	};
+
+	
+	public final String cobolCopybook, cb2xmlCopybook, inputFile, outputFile, font, mainXmlTag,
+		formatText;
 	public final int fileOrganisation, dialect, tagFormat, split;
 	public final boolean dropCopybookName, useCobol;
 	
@@ -104,6 +114,8 @@ public class ConvertOptions {
 		
 		fileOrganisation = decodeAsOpt(pArgs, OPT_FILE_ORGANISATION, false, FILE_ORGANISATION_OPTS[0], FILE_ORGANISATION_OPTS).id;
 		dialect = decodeAsOpt(pArgs, OPT_DIALECT, false, DIALECT_OPTS[0], DIALECT_OPTS).id;
+		
+		formatText = decodeAsOpt(pArgs, OPT_FORMAT, false, new Opts("", "", 0), FORMAT_OPTS).option;
 
 		String drop = pArgs.getArg(OPT_DROP_COPYBOOK_NAME, "").toLowerCase();
 		dropCopybookName = drop.startsWith("t") || drop.startsWith("y");

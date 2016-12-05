@@ -226,5 +226,13 @@ public class TypeSignSeparate extends TypeNum {
     return str.toString();
   }
 
+
+/**
+ * @return the isLeadingSign
+ */
+public final boolean isLeadingSign() {
+	return isLeadingSign;
+}
+
 }
 

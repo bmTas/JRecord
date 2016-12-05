@@ -34,8 +34,29 @@ import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.RecordEditorXmlLoader;
 import net.sf.JRecord.Log.TextLog;
 
+/**
+ * This class is used by some of the utilities. 
+ * Most users  will be better off using {@link net.sf.JRecord.JRecordInterface1#COBOL} to 
+ * create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes
+ * 
+ * @author Bruce Martin
+ *
+ */
 public class SchemaLoader {
 
+	/**
+	 * This method is used by several utilities. 
+	 * Most users  will be better off using {@link net.sf.JRecord.JRecordInterface1#COBOL} to 
+     * create {@link net.sf.JRecord.def.IO.builders.IIOBuilder} classes
+     * 
+	 * @param schemaFileName name of the schema/Cobol file
+	 * @param split Cobol split option
+	 * @param fontname character-set
+	 * @param binformat Cobol Dialect.
+	 * 
+	 * @return External Record
+	 * @throws Exception
+	 */
 	public static ExternalRecord loadSchema(String schemaFileName, int split, String fontname, int binformat) 
 	throws Exception  {
 		
