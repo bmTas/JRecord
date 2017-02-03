@@ -1420,7 +1420,7 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 
 			for (int i = 0; i < fields.size(); i++) {
 				int pos = fields.get(i).getPos();
-				if (pos < 0) {
+				if (pos <= 0) {
 					lastPos += 1;
 				} else {
 					lastPos = pos;
@@ -1436,7 +1436,7 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 			for (int i = 0; i < fields.size(); i++) {
 				ExternalField fld = fields.get(i);
 				int pos = fld.getPos();
-				if (pos < 0) {
+				if (pos <= 0) {
 					if (lastLen <= 0) {
 						throw new RuntimeException("Error Field: " + i + " " + fld.getName()
 								+": Can not calculate position");

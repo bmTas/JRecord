@@ -290,7 +290,9 @@ public abstract class ListLine extends BaseLine {
 	
 	@Override
 	public boolean isDefined(int rec, int pos) {
-		return fields != null && pos < fields.size() && fields.get(pos) != null;
+		return fields != null 
+			&& pos < fields.size() 
+			&& fields.get(pos) != null;
 	}
 
 	@Override

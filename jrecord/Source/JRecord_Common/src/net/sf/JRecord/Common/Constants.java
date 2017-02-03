@@ -65,7 +65,7 @@ public interface Constants {
 	public static final int rtGroupOfRecords       = 9;
 	public static final int rtGroupOfBinaryRecords = 10;
 	public static final int rtFixedLengthRecords   = 11;
-	public static final int rtProtoRecord         = rtRecordLayout;
+	public static final int rtProtoRecord          = rtRecordLayout;
 
 	public static final int FORMAT_DEFAULT  = 0;
 
@@ -112,6 +112,11 @@ public interface Constants {
     public static final int IO_WIZARD        = 22 /* RecordEditor Format */;
 
     public static final int IO_MICROFOCUS = 31;
+    
+    public static final int IO_FIXED_BYTE_ENTER_FONT = 35;
+    public static final int IO_FIXED_CHAR_ENTER_FONT = 36;
+    public static final int IO_TEXT_BYTE_ENTER_FONT  = 37;
+    public static final int IO_TEXT_CHAR_ENTER_FONT  = 38;
 
     public static final int IO_CSV              = 44;
     public static final int IO_BIN_CSV          = 45;

@@ -231,13 +231,14 @@ public class TypeChar implements Type {
 
         if (leftJust) {
 		    byte[] byteVal = getBytes(val, font);
-			if (val.length() >= len) {
+			int length = byteVal.length;
+			if (length >= len) {
 				System.arraycopy(byteVal, 0, record, pos, len);
 			} else {
 				//System.out.println("---> " + pos + " " + byteVal.length + " " + record.length + " " + val.length());
-				System.arraycopy(byteVal, 0, record, pos, val.length());
+				System.arraycopy(byteVal, 0, record, pos, length);
 				//padWith(record, pos + val.length(), len - val.length(), " ", font);
-				padByte(record, pos + val.length(), len - val.length(), getPadByte(font));
+				padByte(record, pos + length, len - length, getPadByte(font));
 			}
         } else {
             copyRightJust(record, val, pos, len, " ", font);

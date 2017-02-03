@@ -63,7 +63,7 @@ public final class ToExternalRecord {
 		if (layout.getRecordCount() > 0) {
 			//AbstractRecordDetail r = layout.getRecord(0);
 			//fldSep = r.getDelimiter();
-			quote = layout.getRecord(0).getQuote();
+			quote = layout.getRecord(0).getQuoteUneditted();
 		}
 		ExternalRecord rec = new ExternalRecord(
 				-1, copybookName, layout.getDescription(),
@@ -107,7 +107,7 @@ public final class ToExternalRecord {
 		rec = new ExternalRecord(
 				id, name, "", record.getRecordType(),
 				system, "N", copybookName + "_" + name, getSeperator(record.getDelimiterUneditted()),
-				record.getQuote(), 0, "default", layout.getRecordSep(), record.getFontName(),
+				record.getQuoteUneditted(), 0, "default", layout.getRecordSep(), record.getFontName(),
 				record.getRecordStyle(), fixIOType(layout.getFileStructure()), embeddedCr
 		);
 		rec.setNew(true);

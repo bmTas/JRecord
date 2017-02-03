@@ -82,7 +82,9 @@ public class ByteIOProvider {
      */
     public AbstractByteReader getByteReader(IBasicFileSchema schema) {
     	int fileStructure = schema.getFileStructure();
-		if (fileStructure == Constants.IO_BIN_TEXT) {
+		switch (fileStructure) {
+		case Constants.IO_TEXT_BYTE_ENTER_FONT:		
+		case Constants.IO_BIN_TEXT:		
     		return new ByteTextReader(schema.getFontName());
     	}
         return getByteReader(fileStructure, schema.getMaximumRecordLength());
@@ -101,12 +103,14 @@ public class ByteIOProvider {
     public AbstractByteReader getByteReader(int fileStructure, int length) {
 
        	switch(fileStructure) {
+       		case Constants.IO_FIXED_BYTE_ENTER_FONT:		
        		case Constants.IO_FIXED_LENGTH:		return new FixedLengthByteReader(length);
 			case Constants.IO_VBS: 				return new VbsByteReader(false, true);
 			case Constants.IO_VB: 				return new VbByteReader(false, true);
 			case Constants.IO_VB_DUMP:			return new VbDumpByteReader();
 			case Constants.IO_VB_FUJITSU:		return new FujitsuVbByteReader();
 			case Constants.IO_VB_GNU_COBOL:		return new VbByteReader(false, false);
+			case Constants.IO_TEXT_BYTE_ENTER_FONT:			
 			case Constants.IO_BIN_TEXT:			return new ByteTextReader();
 			case Constants.IO_MICROFOCUS:		return new MicroFocusByteReader();
 	    }

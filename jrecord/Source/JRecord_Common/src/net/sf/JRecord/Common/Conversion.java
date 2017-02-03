@@ -55,6 +55,7 @@ public final class Conversion {
 	public static final HoldEbcidicFlag DEFAULT_CHARSET_DETAILS = new HoldEbcidicFlag("");
 	private static String defaultSingleByteCharacterset = "";
 	private static boolean alwaysUseDefaultSingByteCharset = false;
+	private static final char[] TAB_ARRAY = {'\t'};
 
 	private static HoldEbcidicFlag holdEbcidicFlag = DEFAULT_CHARSET_DETAILS;
 	public static String DEFAULT_ASCII_CHARSET ;
@@ -257,7 +258,7 @@ public final class Conversion {
 	public static String getDecimal(final byte[] record, final int start, final int fin) {
 		int i;
 		String s;
-		StringBuffer ret = new StringBuffer("");
+		StringBuffer ret = new StringBuffer(fin - start);
 		int b;
 
 		for (i = start; i < fin; i++) {
@@ -316,7 +317,7 @@ public final class Conversion {
 
 		for (i = fin - 1; i >= start; i--) {
 			l = l << 8;
-			l |= toPostiveByte(record[i]);
+			l |= record[i] & 255;//toPostiveByte(record[i]);
 		}
 
 		return Long.toString(l);
@@ -354,7 +355,7 @@ public final class Conversion {
 	 */
 	public static String getBinaryInt(final byte[] record, final int start, final int fin) {
 			return (getLittleEndianBigInt(record, start, fin)).toString();
-
+			
 //		long l = 0;
 //		int len = fin - start;
 //
@@ -468,38 +469,38 @@ public final class Conversion {
 
 
 
-	/**
-	 * Convert the requested field to a Long
-	 *
-	 * @param record Full record from which the value is to be extracted
-	 * @param initial Initial Value
-	 * @param start Field start
-	 * @param fin Field End
-	 *
-	 * @return Field as a Long
-	 */
-	public static long getBin(byte[] record, long initial, final int start, final int fin) {
-		int i;
-		for (i = fin - 1; i >= start; i--) {
-			initial <<= 8;
-			initial |= toPostiveByte(record[i]);
-		}
-		return initial;
-	}
-
-
-	/**
-	 * Convert a Byte (-128 .. 127) to a Postive Byte (0 .. 255)
-	 * @param b input byte
-	 *
-	 * @return equivalent postive byte
-	 */
-	private static int toPostiveByte(byte b) {
-		return (b) & 255;
-//		if (b < 0) {
-//			return 256 + b;
+//	/**
+//	 * Convert the requested field to a Long
+//	 *
+//	 * @param record Full record from which the value is to be extracted
+//	 * @param initial Initial Value
+//	 * @param start Field start
+//	 * @param fin Field End
+//	 *
+//	 * @return Field as a Long
+//	 */
+//	public static long getBin(byte[] record, long initial, final int start, final int fin) {
+//		int i;
+//		for (i = fin - 1; i >= start; i--) {
+//			initial <<= 8;
+//			initial |= toPostiveByte(record[i]);
 //		}
-//		return b;
+//		return initial;
+//	}
+
+
+//	/**
+//	 * Convert a Byte (-128 .. 127) to a Postive Byte (0 .. 255)
+//	 * @param b input byte
+//	 *
+//	 * @return equivalent postive byte
+//	 */
+	private static int toPostiveByte(byte b) {
+//		return (b) & 255;
+		if (b < 0) {
+			return 256 + b;
+		}
+		return b;
 	}
 
 
@@ -563,16 +564,16 @@ public final class Conversion {
 	 */
 	public static void setLong(final byte[] record, int pos, int len, long val, boolean isPositive) {
 		int i;
-		long b;
 
 		checkLength(val, len, isPositive);
 
 		for (i = pos + len - 1; i >= pos; i--) {
-			b = val & 255;
-			if (b > 127) {
-				b = b - 256;
-			}
-			record[i] = long2byte(b);
+			record[i] = (byte) (val & 255);
+//			b = val & 255;
+//			if (b > 127) {
+//				b = b - 256;
+//			}
+//			record[i] = long2byte(b);
 
 			val = val >> 8;
 		}
@@ -654,28 +655,43 @@ public final class Conversion {
 	        						   int pos, int len,
 	        						   long val,
 	        						   boolean isPositive) {
-		byte[] bytes = BigInteger.valueOf(val).toByteArray();
 		int i;
 
-		if (bytes.length <= len) {
-			int base = pos + bytes.length - 1;
-			byte fill = BYTE_NO_BIT_SET;
-			if (val < 0) {
-				fill = BYTE_ALL_BITS_SET;
-			}
-			Arrays.fill(record, base, pos + len, fill);
+		checkLength(val, len, isPositive);
 
-			for (i = 0; i < bytes.length; i++) {
-				record[base - i] = bytes[i];
-			}
-		} else {
-			int base = pos + len - 1;
+		for (i = pos ; i <= pos + len - 1; i++) {
+			record[i] = (byte) (val & 255);
+//			b = val & 255;
+//			if (b > 127) {
+//				b = b - 256;
+//			}
+//			record[i] = long2byte(b);
 
-			checkLength(val, len, isPositive);
-			for (i = 0; i < len; i++) {
-				record[base - i] = bytes[i];
-			}
+			val = val >> 8;
 		}
+		
+//		byte[] bytes = BigInteger.valueOf(val).toByteArray();
+//		int i;
+//
+//		if (bytes.length <= len) {
+//			int base = pos + bytes.length - 1;
+//			byte fill = BYTE_NO_BIT_SET;
+//			if (val < 0) {
+//				fill = BYTE_ALL_BITS_SET;
+//			}
+//			Arrays.fill(record, base, pos + len, fill);
+//
+//			for (i = 0; i < bytes.length; i++) {
+//				record[base - i] = bytes[i];
+//			}
+//		} else {
+//			int base = pos + len - 1;
+//
+//			checkLength(val, len, isPositive);
+//			for (i = 0; i < len; i++) {
+//				record[base - i] = bytes[i];
+//			}
+//		}
 	}
 
 
@@ -687,19 +703,18 @@ public final class Conversion {
 	 *
 	 */
 	public static void checkLength(long val, int length, boolean isPositive) {
-		long t = val;
-		int i;
-		for (i = 1; i < length; i++) {
-		    t = t >> 8;
+		if (length == 8) { return; }
+		long t = val>=0? val : -(val + 1) ;
+		if (val != Long.MAX_VALUE) {
+			int m = length * 8;
+			if (isPositive) {
+				t = t >> m;
+			} else {
+				t = t >> (m - 1);
+			}
 		}
-		if (isPositive) {
-		    t = t >> 8;
-		} else {
-		    t = t >> 7;
-		}
-
-		if (t > 0) {
-			throw new RecordException("Field is to big");
+		if (t != 0) {
+			throw new RecordException("Field is to big: " + val + " ~ " + t);
 		}
 
 	}
@@ -822,7 +837,7 @@ public final class Conversion {
             lCopyBook = lCopyBook.substring(pos + 1);
         }
 
-        pos = lCopyBook.lastIndexOf(".");
+        pos = lCopyBook.indexOf('.');
         if (pos >= 0) {
             lCopyBook = lCopyBook.substring(0, pos);
         }
@@ -866,7 +881,7 @@ public final class Conversion {
     	byte[] ret = null;
 
     	if (s != null) {
-			if (s.startsWith("x'")) {
+			if (s.length() > 1 && (s.charAt(0) == 'x' || s.charAt(0) == 'X')) {
 				ret = new byte[] {Conversion.getByteFromHexString(s)};
 			} else {
 				ret = Conversion.getBytes(s, font);
@@ -876,16 +891,140 @@ public final class Conversion {
     }
 
     public static byte getByteFromHexString(String s) {
-		int b = Integer.parseInt(s.substring(2, 4), 16);
-		return long2byte(b);
+    	int len = s.length(); 
+		int end = s.endsWith("'") ? len-1 : len;
+		int st =  s.length()>1 && s.charAt(1) =='\'' ? 2 : 1;
+
+		int b = Integer.parseInt(s.substring(st, end), 16);
+		return (byte) b;
     }
 
-    public static byte long2byte(long i) {
-    	long b = i;
-		if (b > 127) {
-			b = b - 256;
+	/**
+	 * Decode the fieldDelimiter (keep hex strings e.g. x'00') as strings
+	 * @param pDelim delimiter string
+	 * @param fontName fontName
+	 * @return decoded fieldDelimiter
+	 */
+	public final static String decodeFieldDelim(String pDelim, String fontName) {
+		String delimiter = pDelim;
+
+		if ((pDelim == null)   
+		|| (pDelim = pDelim.trim()).equalsIgnoreCase("<tab>") || pDelim .equalsIgnoreCase("<default>")
+		|| "\\t".equals(pDelim)) {
+			delimiter = "\t";
+		} else if (pDelim.length() == 0 || delimiter.length() == 1 || pDelim.startsWith("x'") || pDelim.startsWith("X'")) {
+
+		} else if (pDelim.equalsIgnoreCase("<space>") ) {
+			delimiter = " ";			
+		} else {
+			delimiter = Conversion.decodeCharStr(pDelim, fontName);
 		}
-		return (byte) b;
+		return delimiter;
+	}
+
+	/**
+	 * The input to this method can be either:<ul>
+	 * <li>A single character
+	 * <li>A character represented in unicode format: \\u0001
+	 * (\\u followed by the character code in hex format).
+	 * </ul>
+	 * 
+	 * @param charId character id to be decoded
+	 * @return character decoded character.
+	 * @throws NumberFormatException
+	 */
+	public static String decodeCharStr(String charId, String font) {
+		int charLength = charId.length();
+		
+		if (charLength == 1) {
+			
+		} else if ("<tab>".equalsIgnoreCase(charId) || "<default>".equalsIgnoreCase(charId) || "\\t".equals(charId)) {
+			charId = "\t";
+		} else if ( "<space>".equalsIgnoreCase(charId) ) {
+			charId = " ";
+		} else if (charLength > 1 && charLength < 7 ) {
+			charId = new String(decodeChar(charId, font));
+		}
+		
+		return charId;
+	}
+	
+	public static String encodeCharStr(String delim) {
+		
+    	if ("\t".equals(delim)) {
+    		delim = "<Tab>";
+    	} else if ("\t".equals(" ")){
+    		delim = "<Space>";
+    	}
+
+    	return delim;
+	}
+
+	public static char[] decodeChar(String charId, String font) {
+		char[] ch = charId.toCharArray();
+		int charLength = charId.length();
+		
+		switch (charLength) {
+		case 0: throw new RuntimeException("A char string must have a length > 0");
+		case 1: 										break;
+		default:
+			char ch0 = charId.charAt(0);
+			char ch1 = charId.charAt(1);
+			switch (ch0) {
+			case '<':
+				if ("<tab>".equalsIgnoreCase(charId) || "<default>".equalsIgnoreCase(charId)) {
+					ch = TAB_ARRAY;
+				} else if ( "<space>".equalsIgnoreCase(charId) ) {
+					ch = new char[]{' '};
+				} 
+				break;
+			case '\\':
+				if ((ch1 == 'u' || ch1 == 'U')) {
+					ch = new char[]{(char) Integer.parseInt(charId.substring(2), 16)};
+				} else if  ((ch1 == 't' || ch1 == 'T')) {
+					ch = TAB_ARRAY;
+				}
+				break;
+			case 'x':
+			case 'X':
+				int end = charId.endsWith("'") ? charLength-1 : charLength;
+				if (ch1 == '\'') {
+					charId = charId.substring(2, end);
+				} else {
+					charId = charId.substring(1, end);
+				}
+				byte[] bytes = {(byte) Integer.parseInt(charId, 16)};
+				ch = toString(bytes, font).toCharArray();
+			}
+//			if ("<tab>".equalsIgnoreCase(charId) || "<default>".equalsIgnoreCase(charId)) {
+//				ch = TAB_ARRAY;
+//			} else if ( "<space>".equalsIgnoreCase(charId) ) {
+//				ch = new char[]{' '};
+//			} else if (charLength < 7) {
+//
+//				if (ch0 == '\\' && (ch1 == 'u' || ch1 == 'U')) {
+//					ch = new char[]{(char) Integer.parseInt(charId.substring(2), 16)};
+//				} else if  (ch0 == '\\' && (ch1 == 't' || ch1 == 'T')) {
+//					ch = TAB_ARRAY;
+//				} else if (charId.charAt(0) == 'x' || charId.charAt(0) == 'X') {
+//					int end = charId.endsWith("'") ? charLength-1 : charLength;
+//					if (ch1 == '\'') {
+//						charId = charId.substring(2, end);
+//					} else {
+//						charId = charId.substring(1, end);
+//					}
+//					byte[] bytes = {(byte) Integer.parseInt(charId, 16)};
+//					ch = toString(bytes, font).toCharArray();
+//				}
+//			}
+		}
+
+		return ch;
+	}
+
+
+    public static byte long2byte(long i) {
+		return (byte) i;
     }
 
 
@@ -1052,7 +1191,7 @@ public final class Conversion {
 
 			return (f > 1.0f);
 	    }
-
 	}
+	
 
 }

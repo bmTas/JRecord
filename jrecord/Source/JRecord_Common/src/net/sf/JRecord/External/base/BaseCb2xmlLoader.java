@@ -806,8 +806,7 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
             							String recordName,
             							String listChar) {
         int rt = Constants.rtRecordLayout;
-        if (binaryFormat == ICopybookDialects.FMT_MAINFRAME
-        ||  binaryFormat == ICopybookDialects.FMT_BIG_ENDIAN) {
+        if (binaryFormat == ICopybookDialects.FMT_MAINFRAME) {
             rt = Constants.rtBinaryRecord;
         }
 

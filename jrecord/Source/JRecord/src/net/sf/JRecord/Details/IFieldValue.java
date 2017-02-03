@@ -61,6 +61,14 @@ public interface IFieldValue extends AbstractFieldValue {
 	 */
 	public abstract boolean isLowValues();
 
+	
+	/**
+	 * Test the field value if it is spaces
+	 * @return wether the field is spaces
+	 */
+	public abstract boolean isSpaces();
+	
+	
 	/**
 	 * wether hex update operations (setHex setToHigh/Low Values)
 	 * are supported 

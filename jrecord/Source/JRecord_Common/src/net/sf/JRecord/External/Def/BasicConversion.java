@@ -39,8 +39,8 @@ import net.sf.JRecord.Types.TypeManager;
 public class BasicConversion implements AbstractConversion {
 
 	private static final int numberOfEntries;
-	private static String[] names = new String [30] ;
-    private static String[] externalNames = new String [30] ;
+	private static String[] names = new String [40] ;
+    private static String[] externalNames = new String [40] ;
     private static int[] keys = new int[40];
     private static int[] keysIdx = new int[200];
 
@@ -61,6 +61,7 @@ public class BasicConversion implements AbstractConversion {
         keys[i] = Constants.IO_UNICODE_TEXT;           externalNames[i] = "Text_Unicode";            names[i++] = "Text IO (Unicode)";
         keys[i] = Constants.IO_FIXED_LENGTH;           externalNames[i] = "Fixed_Length";            names[i++] = rdFixed;
         keys[i] = Constants.IO_FIXED_LENGTH_CHAR;      externalNames[i] = "Fixed_Length_Char";       names[i++] = "Fixed Length Char";
+        
         keys[i] = Constants.IO_BINARY_IBM_4680;        externalNames[i] = "Binary";                  names[i++] = rdLineBin;
         keys[i] = Constants.IO_VB;                     externalNames[i] = "Mainframe_VB";            names[i++] = rdVb;
         keys[i] = Constants.IO_VB_DUMP;                externalNames[i] = "Mainframe_VB_As_RECFMU";  names[i++] = rdVbDump;
@@ -86,7 +87,18 @@ public class BasicConversion implements AbstractConversion {
         keys[i] = Constants.IO_VBS;                    externalNames[i] = "Mainframe_VBS";            names[i++] = "Variable Block Spanned (VBS)";
         keys[i] = Constants.IO_VB_GNU_COBOL;           externalNames[i] = "Open_Cobol_VB";           names[i++] = "Open Cobol VB";;
         keys[i] = Constants.NULL_INTEGER;              externalNames[i] = null;                     names[i] = null;
-       
+
+        keys[i] = Constants.IO_FIXED_BYTE_ENTER_FONT;  externalNames[i] = "FIXED_BYTE_ENTER_FONT";   names[i++] = "Fixed Byte, enter font";
+        keys[i] = Constants.IO_FIXED_CHAR_ENTER_FONT;  externalNames[i] = "FIXED_CHAR_ENTER_FONT";   names[i++] = "Fixed Char, enter font";
+        keys[i] = Constants.IO_TEXT_BYTE_ENTER_FONT;   externalNames[i] = "TEXT_BYTE_ENTER_FONT";    names[i++] = "Text IO (Byte), Enter Font";
+        keys[i] = Constants.IO_TEXT_CHAR_ENTER_FONT;   externalNames[i] = "TEXT_CHAR_ENTER_FONT";    names[i++] = "Text IO (Char), Enter Font";
+        
+        if (i < keys.length) {
+        	keys[i] = Constants.NULL_INTEGER;
+        }
+
+        
+        
         numberOfEntries = i;
         
         Arrays.fill(keysIdx, -1);
@@ -350,7 +362,7 @@ public class BasicConversion implements AbstractConversion {
      * @return The file Structure
      */
     public static int getStructure(String name) {
-    	for (int i = 0; i < keys.length && keys[i] != Constants.NULL_INTEGER; i++) {
+    	for (int i = 0; i < numberOfEntries && keys[i] != Constants.NULL_INTEGER; i++) {
     		if (externalNames[i].equalsIgnoreCase(name)) {
     			return keys[i];
     		}

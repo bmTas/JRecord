@@ -60,6 +60,13 @@ public class FieldValueLine extends FieldValue {
 		return checkFor((byte) -1);
 	}
 	
+	
+	
+	@Override
+	public boolean isSpaces() {
+		return checkFor(theLine.getLayout().getSpaceByte());
+	}
+
 	private boolean checkFor(byte b) {
 		byte[] bytes = theLine.getFieldBytes(field);
 		

@@ -49,7 +49,7 @@ public class CsvDefinition implements ICsvDefinition {
 
 
 	public CsvDefinition(String delimiter, String quote) {
-		this(delimiter, quote, ICsvDefinition.NORMAL_SPLIT, -1,"", false);
+		this(delimiter, quote, ICsvDefinition.NORMAL_SPLIT, -1, Conversion.DEFAULT_ASCII_CHARSET, false);
 	}
 
 	public CsvDefinition(String delimiter, String quote, boolean embeddedCR) {

@@ -42,6 +42,8 @@ public interface AbstractRecord {
 	 */
 	public abstract String getQuote();
 
+	public abstract String getQuoteUneditted();
+
 	/**
 	 * @return the parentRecordIndex
 	 */

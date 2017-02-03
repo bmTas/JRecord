@@ -231,6 +231,7 @@ public class LineIOProvider implements AbstractManager {
     		lineProvider = getLineProvider(fileStructure, fs.getFontName());
     	}
 		switch (fileStructure) {
+		case Constants.IO_TEXT_BYTE_ENTER_FONT:
 		case Constants.IO_BIN_TEXT:		return new LineReaderWrapper(new ByteTextReader(fs.getFontName()));
 //       	case Constants.IO_BIN_TEXT:		return new BinTextReader(lLineProvider,  false);
        	case Constants.IO_BIN_NAME_1ST_LINE:
@@ -291,14 +292,16 @@ public class LineIOProvider implements AbstractManager {
 		//System.out.println(" ~~ IOProvider ~ " + fileStructure + " " + Constants.IO_GENERIC_CSV);
 
        	switch (fileStructure) {
-    	case Constants.IO_CONTINOUS_NO_LINE_MARKER:			return new ContinuousLineReader(lLineProvider);
+    	case Constants.IO_CONTINOUS_NO_LINE_MARKER:	return new ContinuousLineReader(lLineProvider);
     	case Constants.IO_BINARY_IBM_4680:			return new Binary4680LineReader(lLineProvider);
 
+		case Constants.IO_FIXED_CHAR_ENTER_FONT:
     	case Constants.IO_FIXED_LENGTH_CHAR:		return new FixedLengthTextReader(lLineProvider);
 
     	case Constants.IO_XML_BUILD_LAYOUT:
        	case Constants.IO_XML_USE_LAYOUT:			return new XmlLineReader(fileStructure == Constants.IO_XML_BUILD_LAYOUT);
 
+		case Constants.IO_TEXT_BYTE_ENTER_FONT:
        	case Constants.IO_BIN_TEXT:					return new BinTextReader(lLineProvider, false);
        	case Constants.IO_BIN_NAME_1ST_LINE:		return new BinTextReader(lLineProvider, true);
 
@@ -367,16 +370,21 @@ public class LineIOProvider implements AbstractManager {
     	switch (fileStructure) {
     	case Constants.IO_CONTINOUS_NO_LINE_MARKER:	return new ContinuousLineWriter();
     	case Constants.IO_BINARY_IBM_4680:			return new LineWriterWrapper(new BinaryByteWriter());
+    	
+    	case Constants.IO_FIXED_BYTE_ENTER_FONT:
     	case Constants.IO_FIXED_LENGTH:				return new FixedLengthWriter();
 
+    	case Constants.IO_FIXED_CHAR_ENTER_FONT:
       	case Constants.IO_FIXED_LENGTH_CHAR:		return new LineWriterWrapperChar(fileStructure);
     	case Constants.IO_XML_BUILD_LAYOUT:
        	case Constants.IO_XML_USE_LAYOUT:			return new XmlLineWriter();
 
+    	case Constants.IO_TEXT_BYTE_ENTER_FONT:
        	case Constants.IO_CSV:
        	case Constants.IO_BIN_CSV:
       	case Constants.IO_BIN_TEXT:					return new BinTextWriter(false);
        	case Constants.IO_BIN_NAME_1ST_LINE:		return new BinTextWriter(true);
+    	case Constants.IO_TEXT_CHAR_ENTER_FONT:
        	case Constants.IO_UNICODE_TEXT:
        	case Constants.IO_UNICODE_CSV:				return new TextLineWriter(false);
        	case Constants.IO_NAME_1ST_LINE:
@@ -469,7 +477,9 @@ public class LineIOProvider implements AbstractManager {
 //    	case Constants.IO_UNICODE_TEXT:
 //    		return CHAR_LINE_PROVIDER;
     		
-    	case Constants.IO_FIXED_LENGTH:
+    	case Constants.IO_FIXED_BYTE_ENTER_FONT:
+    	case Constants.IO_TEXT_BYTE_ENTER_FONT:
+       	case Constants.IO_FIXED_LENGTH:
     		return DEFAULT_PROVIDER;
 //    	case Constants.IO_VB:	
 //    	case Constants.IO_VB_DUMP:	

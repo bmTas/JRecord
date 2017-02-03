@@ -34,6 +34,7 @@ package net.sf.JRecord.schema;
 import java.util.List;
 
 import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.IO.builders.SchemaIOBuilder;
 import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
 import net.sf.JRecord.schema.jaxb.ICopybook;
 import net.sf.JRecord.schema.jaxb.IItem;
@@ -97,5 +98,9 @@ public final class CobolSchemaDetails {
 		this.cobolCopybook = cobolCopybook;
 		this.ioBuilder = ioBuilder;
 		this.copybookInformation = copybookDetails;
+	}
+	
+	public final ISchemaIOBuilder newIOBuilder() {
+		return SchemaIOBuilder.newSchemaIOBuilder(schema);
 	}
 }

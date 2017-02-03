@@ -147,7 +147,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	private int    length = 0;
 	private int    minumumPossibleLength;
 	private String fontName;
-	private String quote;
+	private final String quote, quoteUneditted;
 
 	private int    recordStyle;
 
@@ -272,7 +272,8 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 		this.recordType = pRecordType;
 
 		this.fields   = pFields;
-		this.quote    = pQuote;
+		this.quote    = Conversion.decodeCharStr(pQuote, pFontName);
+		this.quoteUneditted = pQuote;
 		this.fontName = pFontName;
 		this.recordStyle = pRecordStyle;
 		this.recordPositionOption  = rpOpt;
@@ -283,8 +284,9 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 		    fieldCount -= 1;
 		}
 
-		delimiterUneditted = pDelim;
-		delimiter = convertFieldDelim(pDelim);
+		setDelimiter(pDelim);
+		//delimiterUneditted = pDelim;
+		//delimiter = Conversion.decodeFieldDelim(pDelim, fontName);
 
 		//System.out.println("Quote 1 ==>" + pQuote + "<==");
 		for (j = 0; j < fieldCount; j++) {
@@ -560,7 +562,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
     }
 
     protected void setDelimiter(String delimiter) {
-		this.delimiter = convertFieldDelim(delimiter);
+		this.delimiter = Conversion.decodeFieldDelim(delimiter, fontName);
 		this.delimiterUneditted = delimiter;
 	}
 
@@ -596,6 +598,13 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 //		this.parentRecordIndex = parentRecordIndex;
 //	}
 
+
+	/**
+	 * @return the quoteUneditted
+	 */
+	public final String getQuoteUneditted() {
+		return quoteUneditted;
+	}
 
 	/**
 	 * @see net.sf.JRecord.Common.AbstractRecord#getRecordStyle()
@@ -637,25 +646,45 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	protected final void setNumberOfFieldsAdded(int numberOfFieldsAdded) {
 		this.numberOfFieldsAdded = numberOfFieldsAdded;
 	}
+//
+//	public final String convertFieldDelim(String pDelim) {
+//		String delimiter = pDelim;
+//
+//		if ((pDelim == null) || pDelim == "\t" || ((pDelim = pDelim.trim()).equalsIgnoreCase("<tab>"))) {
+//			delimiter = "\t";
+//		} else if (pDelim.equalsIgnoreCase("<space>")) {
+//			delimiter = " ";
+//		} else if (pDelim.length() == 0 || pDelim.startsWith("x'") || pDelim.startsWith("X'")) {
+//			
+//		} else {
+//			delimiter = Conversion.decodeCharStr(pDelim, fontName);
+//		}
+//		return delimiter;
+//	}
 
-	public final static String convertFieldDelim(String pDelim) {
-		String delimiter = pDelim;
-		char ch;
-		if ((pDelim == null) || ((pDelim = pDelim.trim()).equalsIgnoreCase("<tab>"))) {
-			delimiter = "\t";
-		} else if (pDelim.equalsIgnoreCase("<space>")) {
-			delimiter = " ";
-		} else {
-			int delimLength = pDelim.length();
-			if (delimLength > 2 && delimLength < 7 && pDelim.charAt(0) == '\\'
-			&&((ch = pDelim.charAt(1)) == 'u' || ch == 'U')) {
-				char[] chars = { (char)Integer.parseInt(pDelim.substring(2), 16) };
-				delimiter = new String(chars);
-			}
-		}
-		return delimiter;
-	}
-
+//	/**
+//	 * The input to this method can be either:<ul>
+//	 * <li>A single character
+//	 * <li>A character represented in unicode format: \\u0001
+//	 * (\\u followed by the character code in hex format).
+//	 * </ul>
+//	 * 
+//	 * @param charId character id to be decoded
+//	 * @return character decoded character.
+//	 * @throws NumberFormatException
+//	 */
+//	public static String decodeUnicodeChar(String charId) {
+//		char ch;
+//		int charLength = charId.length();
+//		
+//		if (charLength > 2 && charLength < 7 && charId.charAt(0) == '\\'
+//		&&((ch = charId.charAt(1)) == 'u' || ch == 'U')) {
+//			char[] chars = { (char)Integer.parseInt(charId.substring(2), 16) };
+//			charId = new String(chars);
+//		}
+//		return charId;
+//	}
+//
 	/**
 	 * @return the recordSelection
 	 */

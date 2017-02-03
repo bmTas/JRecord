@@ -100,11 +100,7 @@ public class FieldValue extends BaseFieldValue implements IFieldValue {
 	
 	public boolean isFieldInRecord() {
 		
-		IFieldDetail fld = field;
-		
-		if (recordNum >= 0) {
-			fld = theLine.getLayout().getField(recordNum, fieldNum);
-		}
+		IFieldDetail fld = getField();
 		if (fld == null) { return false; }
 		return theLine.isFieldInLine(fld);
 //		IFieldDetail fld = field;
@@ -134,16 +130,22 @@ public class FieldValue extends BaseFieldValue implements IFieldValue {
 //		return ret;
 	}
 
+	private IFieldDetail getField() {
+		IFieldDetail fld = field;
+		
+		if (recordNum >= 0) {
+			fld = theLine.getLayout().getField(recordNum, fieldNum);
+		}
+		return fld;
+	}
+
 	/**
 	 * @see IFieldValue#asHex()
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
 	public String asHex() {
-		IFieldDetail fld = field;
-		if (recordNum >= 0) {
-			fld = theLine.getLayout().getField(recordNum, fieldNum);
-		}
+		IFieldDetail fld = getField();
 		if (theLine instanceof BaseLine) {
 			return ((BaseLine) theLine).getField(Type.ftHex, fld).toString();
 		}
@@ -210,6 +212,26 @@ public class FieldValue extends BaseFieldValue implements IFieldValue {
 	@Override
 	public boolean isHighValues() {
 		return false;
+	}
+	
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public boolean isSpaces() {
+		IFieldDetail fld = getField();
+		String s;
+		if (theLine instanceof BaseLine) {
+			s = ((BaseLine) theLine).getField(Type.ftCharNoTrim, fld).toString();
+		} else {
+			s =  theLine.getLayout().getField(theLine.getData(),
+					Type.ftChar,
+					fld).toString();
+		}
+		for (int i = s.length()-1; i >= 0; i--) {
+			if (s.charAt(i) != ' ') return false;
+		}
+		
+		return s.length() > 0;// || fld.isFixedFormat();
 	}
 	
 	@Override

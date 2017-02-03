@@ -270,14 +270,14 @@ public interface IItem {
 	public abstract IArrayItemCheck getArrayValidation();
 
 	/**
-	 * temporary messure
+	 * temporary measure for <b>internal</b> use only. It <b>will be removed</b>.
 	 * @return
 	 */
 	@Deprecated
 	public int getSaveIndex();
 
 	/**
-	 * temporary messure
+	 * temporary measure for <b>internal</b> use only.  It <b>will be removed</b>.
 	 * @return
 	 */
 	@Deprecated

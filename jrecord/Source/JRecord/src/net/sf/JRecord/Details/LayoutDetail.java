@@ -253,10 +253,10 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 		switch (pLayoutType) {
 			case Constants.rtGroupOfBinaryRecords:
 			case Constants.rtFixedLengthRecords:
-//			case Constants.rtBinaryRecord:
+			case Constants.rtBinaryRecord:
 			    binary = true;
 			break;
-			case Constants.rtBinaryRecord:
+//			case Constants.rtBinaryRecord:
             case Constants.rtGroupOfRecords:
 			case Constants.rtRecordLayout:
 				binary = binaryField;
@@ -586,8 +586,6 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 		    ret = Constants.IO_FIXED_LENGTH;
 		} else if ( isBinCSV()) {
 			ret = Constants.IO_BIN_TEXT;
-		} else if (fontName != null && ! "".equals(fontName)){
-		    ret = Constants.IO_TEXT_LINE;
 		} else {
 			ret = checkTextType();
 		}
@@ -602,7 +600,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 			ret = Constants.IO_BIN_TEXT;
 		} else if (multiByteCharset) {
     		return Constants.IO_UNICODE_TEXT;
-		} else if (fontName != null && ! "".equals(fontName)){
+		} else if (fontName != null && ! "".equals(fontName) && ! fontName.equals(Conversion.getDefaultSingleByteCharacterset())){
 		    ret = Constants.IO_TEXT_LINE;
 		} else {
 			ret = Constants.IO_BIN_TEXT;
@@ -926,7 +924,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
      * @param delimiter new delimiter
      */
     public void setDelimiter(String delimiter) {
-    	String delim = RecordDetail.convertFieldDelim(delimiter);
+    	String delim = Conversion.decodeFieldDelim(delimiter, fontName);
     	if (this.records != null) {
     		for (int i=0; i < records.length; i++) {
     			records[i].setDelimiter(delim);

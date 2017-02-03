@@ -173,12 +173,53 @@ public class CommonBits {
 		return ret;
 	}
 	
+	public static boolean isEmbeddedCrSupported(int fileStructure) {
+		boolean ret = false;
+		switch (fileStructure) {
+		case Constants.IO_CSV_NAME_1ST_LINE:
+		case Constants.IO_CSV:
+        case Constants.IO_UNICODE_CSV_NAME_1ST_LINE:
+        case Constants.IO_BIN_CSV:
+        case Constants.IO_BIN_CSV_NAME_1ST_LINE:
+        	 ret = true;
+		}
+		return ret;
+		
+	}
+	
+	
+	public static boolean isFontRequired(int fileStructure) {
+		boolean ret = false;
+		switch (fileStructure) {
+		case Constants.IO_FIXED_BYTE_ENTER_FONT:
+		case Constants.IO_FIXED_CHAR_ENTER_FONT:
+        case Constants.IO_TEXT_BYTE_ENTER_FONT:
+        case Constants.IO_TEXT_CHAR_ENTER_FONT:
+        	 ret = true;
+		}
+		return ret;	
+	}
+	
+	public static int translateFileStructureToNotAskFont(int fileStructure) {
+		int ret = fileStructure;
+		switch (fileStructure) {
+		case Constants.IO_FIXED_BYTE_ENTER_FONT:	ret = Constants.IO_FIXED_LENGTH;		break;
+		case Constants.IO_FIXED_CHAR_ENTER_FONT:	ret = Constants.IO_FIXED_LENGTH_CHAR;	break;
+        case Constants.IO_TEXT_BYTE_ENTER_FONT:		ret = Constants.IO_BIN_TEXT;			break;
+        case Constants.IO_TEXT_CHAR_ENTER_FONT:		ret = Constants.IO_UNICODE_TEXT;		break;
+		}
+		return ret;	
+	}
+
+	
 	public static int getLineType(int fileStructure) {
     	switch (fileStructure) {
     	case Constants.IO_XML_BUILD_LAYOUT:
     	case Constants.IO_XML_USE_LAYOUT:   		
        		return LT_XML;
     	case Constants.IO_FIXED_LENGTH_CHAR:
+    	case Constants.IO_FIXED_CHAR_ENTER_FONT:
+    	case Constants.IO_TEXT_CHAR_ENTER_FONT:
     	case Constants.IO_UNICODE_CSV:
     	case Constants.IO_UNICODE_CSV_NAME_1ST_LINE:
     	case Constants.IO_UNICODE_NAME_1ST_LINE:

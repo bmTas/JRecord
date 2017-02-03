@@ -71,6 +71,14 @@ public class FieldDetail implements IFieldDetail {
 			return null;
 		}
 
+		/* (non-Javadoc)
+		 * @see net.sf.JRecord.Common.AbstractRecord#getQuoteUneditted()
+		 */
+		@Override
+		public String getQuoteUneditted() {
+			return null;
+		}
+
 		/**
 		 * @see net.sf.JRecord.Common.AbstractRecord#getRecordStyle()
 		 */
