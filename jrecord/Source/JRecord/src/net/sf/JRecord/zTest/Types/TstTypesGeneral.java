@@ -469,6 +469,9 @@ public class TstTypesGeneral extends TestCase {
 										+ " values: " + v1 + ", " + v2
 										+ " " + (l[k] instanceof CharLine);
 								setLine(l[k], i, v1, v2, fixed);
+								if (! l[0].getFullLine().equals(l[k].getFullLine())) {
+									setLine(l[k], i, v1, v2, fixed);
+								}
 								assertEquals(id, l[0].getFullLine(), l[k].getFullLine());
 							}
 						}

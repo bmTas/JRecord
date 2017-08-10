@@ -30,7 +30,15 @@ package net.sf.JRecord.cgen.def;
 
 import java.io.IOException;
 
-public interface IReader<T> {
-	public T read() throws IOException;
+
+/**
+ * Class to read an arbitary line from a file
+ * 
+ * @author Bruce Martin
+ *
+ * @param <Line> Class to be read from the file
+ */
+public interface IReader<Line> {
+	public Line read() throws IOException;
 	public void close() throws IOException;
 }

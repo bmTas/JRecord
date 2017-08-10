@@ -30,7 +30,7 @@ package net.sf.JRecord.zTest.Details.csv;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.RecordException;
-import net.sf.JRecord.CsvParser.ParserManager;
+import net.sf.JRecord.CsvParser.CsvParserManagerChar;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.CharLine;
 import net.sf.JRecord.Details.CsvLine;
@@ -55,7 +55,7 @@ public class TstCsvLines extends TestCase {
 	};
 	
 	public void testBasic1() throws RecordException {
-		LayoutDetail l = bldLayout1(ParserManager.BASIC_CSV_PARSER);
+		LayoutDetail l = bldLayout1(CsvParserManagerChar.BASIC_CSV_PARSER);
 		IUpdateFld u = new UpdateByIndex();
 		
 		doTst(l, 0, u);
@@ -63,7 +63,7 @@ public class TstCsvLines extends TestCase {
 	}
 	
 	public void testStandard1() throws RecordException {
-		LayoutDetail l = bldLayout1(ParserManager.STANDARD_CSV_PARSER);
+		LayoutDetail l = bldLayout1(CsvParserManagerChar.STANDARD_CSV_PARSER);
 		IUpdateFld u = new UpdateByIndex();
 		
 		doTst(l, 0, u);
@@ -72,7 +72,7 @@ public class TstCsvLines extends TestCase {
 
 	
 	public void testQuoteChar1() throws RecordException {
-		LayoutDetail l = bldLayout1(ParserManager.DB_CSV_PARSER);
+		LayoutDetail l = bldLayout1(CsvParserManagerChar.DB_CSV_PARSER);
 		IUpdateFld u = new UpdateByIndex();
 		
 		doTst(l, 0, u);
@@ -81,7 +81,7 @@ public class TstCsvLines extends TestCase {
 
 	
 	public void testBasic2() throws RecordException {
-		LayoutDetail l = bldLayout1(ParserManager.BASIC_CSV_PARSER);
+		LayoutDetail l = bldLayout1(CsvParserManagerChar.BASIC_CSV_PARSER);
 		IUpdateFld u = new UpdateByField();
 		
 		doTst(l, 0, u);
@@ -89,7 +89,7 @@ public class TstCsvLines extends TestCase {
 	}
 	
 	public void testStandard2() throws RecordException {
-		LayoutDetail l = bldLayout1(ParserManager.STANDARD_CSV_PARSER);
+		LayoutDetail l = bldLayout1(CsvParserManagerChar.STANDARD_CSV_PARSER);
 		IUpdateFld u = new UpdateByField();
 		
 		doTst(l, 0, u);
@@ -98,7 +98,7 @@ public class TstCsvLines extends TestCase {
 
 	
 	public void testQuoteChar2() throws RecordException {
-		LayoutDetail l = bldLayout1(ParserManager.DB_CSV_PARSER);
+		LayoutDetail l = bldLayout1(CsvParserManagerChar.DB_CSV_PARSER);
 		IUpdateFld u = new UpdateByField();
 		
 		doTst(l, 0, u);

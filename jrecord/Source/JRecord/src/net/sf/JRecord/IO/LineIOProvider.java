@@ -255,19 +255,21 @@ public class LineIOProvider implements AbstractManager {
     
 
 	private static IByteReader getCsvReader(IBasicFileSchema schema, boolean namesOnFirstLine) {
-		String quote = schema.getQuote();
+		String quote = schema.getQuoteDetails().asString();
 		if (quote == null || quote.length() == 0) {
 			return new ByteTextReader(schema.getFontName());
 		}
-		return new CsvByteReader(schema.getFontName(), schema.getDelimiter(), quote, quote + quote, namesOnFirstLine);
+		return new CsvByteReader(schema.getFontName(), 
+				schema.getDelimiterDetails().asBytes(), schema.getQuoteDetails().asBytes(), 
+				quote + quote, namesOnFirstLine);
 	}
 
 	private static ICharReader getCsvCharReader(IBasicFileSchema schema, boolean namesOnFirstLine) {
-		String quote = schema.getQuote();
+		String quote = schema.getQuoteDetails().asString();;
 		if (quote == null || quote.length() == 0) {
 			return new StandardCharReader();
 		}
-		return new CsvCharReader(schema.getDelimiter(), quote, quote + quote, namesOnFirstLine);
+		return new CsvCharReader(schema.getDelimiterDetails().asString(), quote, quote + quote, namesOnFirstLine);
 	}
 
     /**
@@ -446,7 +448,7 @@ public class LineIOProvider implements AbstractManager {
     }
 
     public LineProvider getLineProvider(IBasicFileSchema schema) {
-    	return getLineProvider(schema.getFileStructure(), schema.getFontName(), schema.isBinary());
+    	return getLineProvider(schema.getFileStructure(), schema.getFontName(), schema.useByteRecord());
     }
 
     /**

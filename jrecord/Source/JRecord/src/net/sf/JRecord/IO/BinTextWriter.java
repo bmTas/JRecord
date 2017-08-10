@@ -34,6 +34,7 @@ import java.io.OutputStream;
 import net.sf.JRecord.ByteIO.ByteTextWriter;
 import net.sf.JRecord.ByteIO.BinaryByteWriter;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.CsvParser.CsvParserManagerChar;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDetail;
@@ -87,12 +88,30 @@ public class BinTextWriter extends LineWriterWrapper {
 			if (names1stLine) {
 				LayoutDetail layout =  line.getLayout();
 				RecordDetail rec = layout.getRecord(0);
-				byte[] seperator =layout.getDelimiterBytes();
-				byte[] sep = {};
-				for (int i = 0; i < rec.getFieldCount(); i++) {
-					oStream.write(sep);
-					oStream.write(Conversion.getBytes(rec.getField(i).getName(), layout.getFontName()));
-					sep = seperator;
+				if (rec != null && rec.getFieldCount() > 0) {
+					byte[] seperator = layout.getDelimiterDetails().asBytes();
+					byte[] quote = layout.getQuoteDetails().asBytes();
+					boolean addQuotes = false;
+					if (quote != null && quote.length > 0 
+					&& CsvParserManagerChar.getInstance().get(rec.getRecordStyle()).isQuoteInColumnNames()) {
+						addQuotes = true;
+					}
+					if (addQuotes) {
+						byte[] sep = {};
+						for (int i = 0; i < rec.getFieldCount(); i++) {
+							oStream.write(sep);
+							oStream.write(quote);
+							oStream.write(Conversion.getBytes(rec.getField(i).getName(), layout.getFontName()));
+							oStream.write(quote);
+							sep = seperator;
+						}
+					} else {
+						oStream.write(Conversion.getBytes(rec.getField(0).getName(), layout.getFontName()));
+						for (int i = 1; i < rec.getFieldCount(); i++) {
+							oStream.write(seperator);
+							oStream.write(Conversion.getBytes(rec.getField(i).getName(), layout.getFontName()));
+						}
+					}
 				}
 				oStream.write(layout.getRecordSep());
 			}

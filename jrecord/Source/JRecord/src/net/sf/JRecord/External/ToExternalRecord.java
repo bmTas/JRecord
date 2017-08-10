@@ -58,12 +58,12 @@ public final class ToExternalRecord {
 //		System.out.println();
 //		System.out.println("layout type >> " + layout.getFileStructure());
 
-		String fldSep = layout.getDelimiter();
+		String fldSep = layout.getDelimiterDetails().jrDefinition();
 		String quote = "";
 		if (layout.getRecordCount() > 0) {
 			//AbstractRecordDetail r = layout.getRecord(0);
 			//fldSep = r.getDelimiter();
-			quote = layout.getRecord(0).getQuoteUneditted();
+			quote = layout.getRecord(0).getQuoteDefinition().jrDefinition();
 		}
 		ExternalRecord rec = new ExternalRecord(
 				-1, copybookName, layout.getDescription(),
@@ -106,8 +106,8 @@ public final class ToExternalRecord {
 
 		rec = new ExternalRecord(
 				id, name, "", record.getRecordType(),
-				system, "N", copybookName + "_" + name, getSeperator(record.getDelimiterUneditted()),
-				record.getQuoteUneditted(), 0, "default", layout.getRecordSep(), record.getFontName(),
+				system, "N", copybookName + "_" + name, getSeperator(record.getDelimiterDetails().jrDefinition()),
+				record.getQuoteDefinition().jrDefinition(), 0, "default", layout.getRecordSep(), record.getFontName(),
 				record.getRecordStyle(), fixIOType(layout.getFileStructure()), embeddedCr
 		);
 		rec.setNew(true);

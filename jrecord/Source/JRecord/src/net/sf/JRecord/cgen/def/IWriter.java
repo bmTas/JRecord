@@ -30,8 +30,14 @@ package net.sf.JRecord.cgen.def;
 
 import java.io.IOException;
 
-public interface IWriter<T> {
-	public abstract void write(T record) throws IOException;
+/**
+ * Class to define an arbitary line to a file
+ * @author Bruce Martin
+ *
+ * @param <Line> Class of the line to be written
+ */
+public interface IWriter<Line> {
+	public abstract void write(Line record) throws IOException;
 	public void close() throws IOException;
 
 }

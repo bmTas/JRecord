@@ -37,6 +37,14 @@ import net.sf.JRecord.Common.IBasicFileSchema;
 import net.sf.JRecord.cgen.def.ISerializer;
 import net.sf.JRecord.cgen.def.IWriter;
 
+
+/**
+ * This class writes a user pojo to a file as a Cobol Record.
+ * 
+ * @author Bruce Martin
+ *
+ * @param <T> User Pojo top be written to a Cobol Data file
+ */
 public class WriteAsBytes<T> implements IWriter<T> {
 	
 	private final ISerializer<T> serializer;

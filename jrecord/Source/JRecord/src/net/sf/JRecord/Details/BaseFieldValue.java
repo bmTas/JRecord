@@ -57,7 +57,7 @@ import net.sf.JRecord.Types.TypeManager;
  */
 public abstract class BaseFieldValue  {
 
-	final IFieldDetail field;
+	IFieldDetail field;
 
 
 	/**

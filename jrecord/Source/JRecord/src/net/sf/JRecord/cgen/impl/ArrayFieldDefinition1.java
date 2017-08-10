@@ -41,12 +41,12 @@ public class ArrayFieldDefinition1 implements IArray1Dimension, IArray2Dimension
 	//private final int[] sizeAdj, lengths, indexPos;
 	private final int[]  lengths, numberOfElements;
 	//private final FieldDetail firstField;
-	private final RecordDetail record;
+	//private final RecordDetail record;
 	private final FieldDetail[] fields;
 
 	
 	public ArrayFieldDefinition1(RecordDetail rec, int[] arrayLengths, FieldDetail[] fd) {
-		this.record = rec;
+		//this.record = rec;
 		//sizeAdj = new int[fd.length - 1];
 		this.lengths = arrayLengths;// new int[fd.length - 1];
 		numberOfElements = new int[lengths.length];

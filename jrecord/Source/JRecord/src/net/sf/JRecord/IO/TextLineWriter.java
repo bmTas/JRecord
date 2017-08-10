@@ -47,10 +47,10 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import net.sf.JRecord.Common.Constants;
-import net.sf.JRecord.CsvParser.ICsvLineParser;
+import net.sf.JRecord.CsvParser.ICsvCharLineParser;
 import net.sf.JRecord.CsvParser.BasicCsvLineParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
-import net.sf.JRecord.CsvParser.ParserManager;
+import net.sf.JRecord.CsvParser.CsvParserManagerChar;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDetail;
@@ -156,7 +156,7 @@ public class TextLineWriter extends AbstractLineWriter {
         int i;
        // FieldDetail[] fields = layout.getRecord(0).getFields();
         RecordDetail rec = layout.getRecord(0);
-        ICsvLineParser parser = ParserManager.getInstance().get(layout.getRecord(0).getRecordStyle());
+        ICsvCharLineParser parser = CsvParserManagerChar.getInstance().get(layout.getRecord(0).getRecordStyle());
         String delim = layout.getRecord(0).getDelimiter();
 
         String quote = "";
@@ -166,7 +166,7 @@ public class TextLineWriter extends AbstractLineWriter {
         if (parser == null) {
         	parser = BasicCsvLineParser.getInstance();
         } else if (parser.isQuoteInColumnNames()) {
-        	quote = layout.getRecord(0).getQuote();
+        	quote = layout.getRecord(0).getQuoteDefinition().asString();
         }
 
         for (i = 0; i < rec.getFieldCount(); i++) {

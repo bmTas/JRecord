@@ -37,6 +37,15 @@ import net.sf.JRecord.Common.IBasicFileSchema;
 import net.sf.JRecord.cgen.def.IDeserializer;
 import net.sf.JRecord.cgen.def.IReader;
 
+/**
+ * This class writes an object as bytes using 
+ * a deserializer to convert the object to an array of 
+ * bytes. It is used by IoBuilder
+ * 
+ * @author Bruce Martin
+ *
+ * @param <T> Object to be written to the file.
+ */
 public class ReadFromBytes<T> implements IReader<T> {
 
 	public final IDeserializer<T> deserializer;

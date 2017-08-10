@@ -158,7 +158,7 @@ public class TstCopy extends TestCase {
 		compare("Compare in & out 2: ", DTAR020_LINES, readStream(csvSchema2, outData2), false);
 		
 		compareCsv("Compare 3:", DTAR020_LINES, outData1, "\\|", true);
-		compareCsv("Compare 3:", DTAR020_LINES, outData2, csvSchema2.getDelimiter(), false);
+		compareCsv("Compare 3:", DTAR020_LINES, outData2, csvSchema2.getDelimiterDetails().jrDefinition(), false);
 	}
 	
 

@@ -36,7 +36,7 @@ package net.sf.JRecord.zExamples.cobol.toCsv;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
-import net.sf.JRecord.CsvParser.ParserManager;
+import net.sf.JRecord.CsvParser.CsvParserManagerChar;
 import net.sf.JRecord.External.base.ExternalConversion;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.utilityClasses.ParseArguments;
@@ -145,7 +145,7 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
 	    				ARG_OUTPUT_STRUCTURE, 
 	    				ARG_OUTPUT_STRUCTURE1, 
 	    				outDefault));
-	    csvParser = getOptionCode(args.getArg(ARG_CSV_PARSER, ""), csvParserOption, ParserManager.STANDARD_CSV_PARSER);
+	    csvParser = getOptionCode(args.getArg(ARG_CSV_PARSER, ""), csvParserOption, CsvParserManagerChar.STANDARD_CSV_PARSER);
 
 	    if ("doublequote".equalsIgnoreCase(tQuote)) {
 	    	tQuote = "\"";
@@ -318,14 +318,14 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
     
     public static Option[] getCsvParserOptions() {
     	    Option[] options = {
-    			new Option(ParserManager.BASIC_CSV_PARSER,        "Basic_Parser",    "Parse Csv - when a field starts with \" look for \"<FieldSeparator> or \"<eol> "),
-    			new Option(ParserManager.STANDARD_CSV_PARSER,     "Standard_Parser", "Parse CSV matching Quotes" ),
-    			new Option(ParserManager.DB_CSV_PARSER, "Standard_Parse_Quote_4_Char_Fields", "Standard Parser, add Quotes to all Char fields"),
-    			new Option(ParserManager.BASIC_QUOTED_COL_NAME_CSV_PARSER,    "Basic_Parser_Column_names_in_quotes",    "Basic Parser, Field (Column) names in Quotes"),
-    			new Option(ParserManager.STANDARD_QUOTED_COL_NAME_CSV_PARSER, "Standard_Parser_Column_names_in_quotes", "Standard Parser, Field (Column) names in Quotes"),
-    			new Option(ParserManager.DB_QUOTED_COL_NAME_CSV_PARSER,       "Standard_Parser_Quote_4_Char_Fields_Column_names_in_quotes", "Standard Parser, Char fields in Quotes,  Field (Column) names in Quotes"),
-    			new Option(ParserManager.BASIC_ENSURE_CORRECT_NO_FIELDS,      "Basic_Parser_Delimiter_all_fields",      "Basic Parser, Field Separator for all fields"),
-    			new Option(ParserManager.BASIC_ENSURE_CORRECT_NO_FIELDS_P1,   "Basic_Parser_Delimiter_all_fields+1",    "Basic Parser, Field Separator for all fields + extra Separator at the End-of-Line"),
+    			new Option(CsvParserManagerChar.BASIC_CSV_PARSER,        "Basic_Parser",    "Parse Csv - when a field starts with \" look for \"<FieldSeparator> or \"<eol> "),
+    			new Option(CsvParserManagerChar.STANDARD_CSV_PARSER,     "Standard_Parser", "Parse CSV matching Quotes" ),
+    			new Option(CsvParserManagerChar.DB_CSV_PARSER, "Standard_Parse_Quote_4_Char_Fields", "Standard Parser, add Quotes to all Char fields"),
+    			new Option(CsvParserManagerChar.BASIC_QUOTED_COL_NAME_CSV_PARSER,    "Basic_Parser_Column_names_in_quotes",    "Basic Parser, Field (Column) names in Quotes"),
+    			new Option(CsvParserManagerChar.STANDARD_QUOTED_COL_NAME_CSV_PARSER, "Standard_Parser_Column_names_in_quotes", "Standard Parser, Field (Column) names in Quotes"),
+    			new Option(CsvParserManagerChar.DB_QUOTED_COL_NAME_CSV_PARSER,       "Standard_Parser_Quote_4_Char_Fields_Column_names_in_quotes", "Standard Parser, Char fields in Quotes,  Field (Column) names in Quotes"),
+    			new Option(CsvParserManagerChar.BASIC_ENSURE_CORRECT_NO_FIELDS,      "Basic_Parser_Delimiter_all_fields",      "Basic Parser, Field Separator for all fields"),
+    			new Option(CsvParserManagerChar.BASIC_ENSURE_CORRECT_NO_FIELDS_P1,   "Basic_Parser_Delimiter_all_fields+1",    "Basic Parser, Field Separator for all fields + extra Separator at the End-of-Line"),
     	    };
         
         return options;

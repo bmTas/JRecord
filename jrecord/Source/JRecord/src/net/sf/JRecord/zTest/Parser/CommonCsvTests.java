@@ -31,12 +31,13 @@ package net.sf.JRecord.zTest.Parser;
 import java.util.List;
 
 import junit.framework.TestCase;
+import net.sf.JRecord.CsvParser.ICsvByteLineParser;
 import net.sf.JRecord.CsvParser.ICsvDefinition;
-import net.sf.JRecord.CsvParser.ICsvLineParser;
+import net.sf.JRecord.CsvParser.ICsvCharLineParser;
 
 public class CommonCsvTests {
 
-	public static void tstGetFieldList(String id, String[] lines, ICsvLineParser parser, ICsvDefinition csvDefinition, int fieldCount) {
+	public static void tstGetFieldList(String id, String[] lines, ICsvCharLineParser parser, ICsvDefinition csvDefinition, int fieldCount) {
 		System.out.println(id);
 		for (String s : lines) {
 			List<String> flds = parser.getFieldList(s, csvDefinition);
@@ -52,12 +53,29 @@ public class CommonCsvTests {
 	}
 	
 
-	public static void tstSetFieldList(String id, String[] lines, ICsvLineParser parser, ICsvDefinition csvDefinition, int fieldCount) {
-		tstSetFieldList(id, lines, lines.length, parser, csvDefinition, fieldCount);
+	public static void tstGetFieldListByte(String id, String[] lines, 
+			ICsvByteLineParser parser, ICsvDefinition csvDefinition, int fieldCount) {
+		System.out.println(id);
+		for (String s : lines) {
+			byte[] bytes = s.getBytes();
+			List<String> flds = parser.getFieldList(bytes, csvDefinition);
+			if (flds.size() != fieldCount) {
+				flds = parser.getFieldList(bytes, csvDefinition);
+				TestCase.assertEquals(id + " check counts: " + s, fieldCount, flds.size());
+			}
+			for (int i = 0; i < flds.size(); i++) {
+				TestCase.assertEquals(id + " Check: " + s + ", fieldNo=" + i, 
+						parser.getField(i, bytes, csvDefinition), flds.get(i) );
+			}
+		}
 	}
 	
 
-	public static void tstSetFieldList(String id, String[] lines, int num, ICsvLineParser parser, ICsvDefinition csvDefinition, int fieldCount) {
+	public static void tstSetFieldList(String id, String[] lines, ICsvCharLineParser parser, ICsvDefinition csvDefinition, int fieldCount) {
+		tstSetFieldList(id, lines, lines.length, parser, csvDefinition, fieldCount);
+	}
+	
+	public static void tstSetFieldList(String id, String[] lines, int num, ICsvCharLineParser parser, ICsvDefinition csvDefinition, int fieldCount) {
 		System.out.println(id);
 		for (int i = 0; i < num; i++) {
 			String s = lines[i];
@@ -65,6 +83,33 @@ public class CommonCsvTests {
 			TestCase.assertEquals(id + " check counts", fieldCount, flds.size());
 			TestCase.assertEquals(id + " check line: ", s, parser.formatFieldList(flds, csvDefinition, null));
 		}
+	}
+	
+	public static void tstSetFieldListByte(String id, String[] lines, 
+			ICsvByteLineParser parser, ICsvDefinition csvDefinition, int fieldCount) {
+		tstSetFieldListByte(id, lines, lines.length, parser, csvDefinition, fieldCount);
+	}
+
+	public static void tstSetFieldListByte(String id, String[] lines, int num, ICsvByteLineParser parser, ICsvDefinition csvDefinition, int fieldCount) {
+		System.out.println(id);
+		for (int i = 0; i < num; i++) {
+			String s = lines[i];
+			System.out.println(i + "\t" + s);
+			List<String> flds = parser.getFieldList(s.getBytes(), csvDefinition);
+			TestCase.assertEquals(id + " check counts", fieldCount, flds.size());
+			TestCase.assertEquals(id + " check line: ", s, new String(parser.formatFieldListByte(flds, csvDefinition, null)));
+		}
+	}
+
+	
+	
+	public static String toHex(char c) {
+		StringBuilder b = new StringBuilder(5).append("x'");
+		String s = Integer.toHexString(c);
+		if (s.length() == 1) {
+			b.append('0');
+		}
+		return b.append(s).append('\'').toString();
 	}
 
 }

@@ -32,9 +32,9 @@ import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.CsvParser.ICsvLineParser;
+import net.sf.JRecord.CsvParser.ICsvCharLineParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
-import net.sf.JRecord.CsvParser.ParserManager;
+import net.sf.JRecord.CsvParser.CsvParserManagerChar;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeChar;
 import net.sf.JRecord.Types.TypeManager;
@@ -224,7 +224,7 @@ public class CharLine extends BasicLine implements AbstractLine {
 			super.checkForOdUpdate(field);
 
 		} else {
-	        ICsvLineParser parser = ParserManager.getInstance().get(field.getRecord().getRecordStyle());
+	        ICsvCharLineParser parser = CsvParserManagerChar.getInstance().get(field.getRecord().getRecordStyle());
 	        Type typeVal = TypeManager.getSystemTypeManager().getType(typeId);
 	        String s = typeVal.formatValueForRecord(field, value.toString());
 
@@ -232,7 +232,7 @@ public class CharLine extends BasicLine implements AbstractLine {
             		parser.setField(field.calculateActualPosition(this) - 1,
             				typeVal.getFieldType(),
             				data,
-            				new CsvDefinition(layout.getDelimiter(), field.getQuote()), s);
+            				new CsvDefinition(layout.getDelimiterDetails(), field.getQuoteDefinition()), s);
 		}
 	}
 

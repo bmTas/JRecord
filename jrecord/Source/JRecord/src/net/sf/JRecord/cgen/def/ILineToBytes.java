@@ -28,15 +28,17 @@
 
 package net.sf.JRecord.cgen.def;
 
+import net.sf.JRecord.Common.IGetData;
+
 /**
  * Class to convert a line to an array of bytes
  * @author Bruce Martin
  *
  * @param <Line>
  */
-public interface ILineToBytes<Line> {
+public interface ILineToBytes<Line> extends IGetData {
 
 	public abstract void set(Line line);
 	
-	public abstract byte[] getData();
+//	public abstract byte[] getData();
 }

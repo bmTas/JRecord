@@ -49,10 +49,13 @@ import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.IGetFieldByName;
+import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.CsvParser.BasicCsvLineParser;
+import net.sf.JRecord.CsvParser.CsvParserManagerByte;
 import net.sf.JRecord.CsvParser.ICsvDefinition;
-import net.sf.JRecord.CsvParser.ICsvLineParser;
-import net.sf.JRecord.CsvParser.ParserManager;
+import net.sf.JRecord.CsvParser.ICsvCharLineParser;
+import net.sf.JRecord.CsvParser.CsvParserManagerChar;
+import net.sf.JRecord.CsvParser.ICsvByteLineParser;
 import net.sf.JRecord.External.Def.DependingOn;
 import net.sf.JRecord.External.Def.DependingOnDefinition;
 import net.sf.JRecord.External.Def.DependingOnDtls;
@@ -60,6 +63,7 @@ import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.cgen.defc.IRecordDetail4gen;
+import net.sf.JRecord.definitiuons.CsvCharDetails;
 import net.sf.JRecord.detailsSelection.Convert;
 import net.sf.JRecord.detailsSelection.FieldSelectX;
 import net.sf.JRecord.detailsSelection.RecordSelection;
@@ -142,14 +146,13 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	private RecordSelection recordSelection = new RecordSelection();
     private final IRecordPositionOption recordPositionOption;
 
-	private String delimiterUneditted;
-	private String delimiter;
+	private CsvCharDetails delimiter;
+	private final CsvCharDetails quote;
 	private int    length = 0;
 	private int    minumumPossibleLength;
 	private String fontName;
-	private final String quote, quoteUneditted;
 
-	private int    recordStyle;
+	private final int    recordStyle;
 
 	private int parentRecordIndex = Constants.NULL_INTEGER;
 
@@ -167,7 +170,9 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	private int dependingOnLevel = DO_NONE;
 	private IOccursDependingPositionCalculation odCalculator = DEFAULT_POSITION_CALCULATOR;
 	private HashMap<String, ArrayDtls> arrays;
-
+	
+	private final ICsvCharLineParser csvCharParser;
+	private final ICsvByteLineParser csvByteParser;
 
 
 	/**
@@ -272,8 +277,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 		this.recordType = pRecordType;
 
 		this.fields   = pFields;
-		this.quote    = Conversion.decodeCharStr(pQuote, pFontName);
-		this.quoteUneditted = pQuote;
+		this.quote    = CsvCharDetails.newQuoteDefinition(pQuote, pFontName);
 		this.fontName = pFontName;
 		this.recordStyle = pRecordStyle;
 		this.recordPositionOption  = rpOpt;
@@ -284,7 +288,8 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 		    fieldCount -= 1;
 		}
 
-		setDelimiter(pDelim);
+		setDelimiter(CsvCharDetails.newDelimDefinition(pDelim, fontName));
+		
 		//delimiterUneditted = pDelim;
 		//delimiter = Conversion.decodeFieldDelim(pDelim, fontName);
 
@@ -297,6 +302,9 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 		    }
 		}
 		minumumPossibleLength = length;
+		
+		csvByteParser = CsvParserManagerByte.getInstance().get(recordStyle);
+		csvCharParser = CsvParserManagerChar.getInstance().get(recordStyle);
 	}
 
 //	/**
@@ -556,31 +564,37 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
      * Get the Field Delimiter (ie Tab / Comma etc in CSV files)
      *
      * @return Returns the delimiter.
+     *
+     * @deprecated
      */
     public String getDelimiter() {
-        return delimiter;
+        return delimiter.asString();
     }
 
-    protected void setDelimiter(String delimiter) {
-		this.delimiter = Conversion.decodeFieldDelim(delimiter, fontName);
-		this.delimiterUneditted = delimiter;
-	}
-
-
-	/**
-	 * @return the delimiterUneditted
-	 */
-	public final String getDelimiterUneditted() {
-		return delimiterUneditted;
-	}
-
-	/**
-	 * @see net.sf.JRecord.Common.AbstractRecord#getQuote()
-	 */
     @Override
-    public String getQuote() {
-        return quote;
-    }
+	public CsvCharDetails getDelimiterDetails() {
+		return delimiter;
+	}
+
+	protected void setDelimiter(CsvCharDetails delimiter) {
+		this.delimiter = delimiter;//CsvCharDetails.newDelimDefinition(delimiter, fontName);
+	}
+
+
+//	/**
+//	 * @return the delimiterUneditted
+//	 */
+//	public final String getDelimiterUneditted() {
+//		return delimiterUneditted;
+//	}
+
+//	/**
+//	 * @see net.sf.JRecord.Common.AbstractRecord#getQuote()
+//	 */
+//    @Override
+//    public String getQuote() {
+//        return quote;
+//    }
 
 
 	/**
@@ -599,11 +613,16 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 //	}
 
 
-	/**
-	 * @return the quoteUneditted
-	 */
-	public final String getQuoteUneditted() {
-		return quoteUneditted;
+//	/**
+//	 * @return the quoteUneditted
+//	 */
+//	public final String getQuoteUneditted() {
+//		return quoteUneditted;
+//	}
+
+	@Override
+	public CsvCharDetails getQuoteDefinition() {
+		return quote;
 	}
 
 	/**
@@ -1004,16 +1023,51 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	
 	final IFieldDetail getGroupFieldX(int start, String...fieldNames) {
 		List<IFieldDetail> flds = getGroupFields(start, fieldNames);
-
-		switch (flds.size()) {
-		case 0:
-			
-			throw new RuntimeException("No Field Found: "
-			+ (fieldNames== null || fieldNames.length==0? "" : fieldNames[fieldNames.length - 1]));
-		case 1: return flds.get(0);
+		
+		IFieldDetail fld = checkForFldMatch(flds, fieldNames);
+		
+		if (fld != null) {
+			return fld;
+		}
+		
+		if (flds.size() == 0) {
+			throw new RecordException("No Field Found: "
+					+ (fieldNames== null || fieldNames.length==0? "" : fieldNames[fieldNames.length - 1]));
 		}
 
-		throw new RuntimeException("Found " + flds.size() + " fields named " + fieldNames[fieldNames.length-1] + "; there should be only one");
+		throw new RecordException("Found " + flds.size() + " fields named " + fieldNames[fieldNames.length-1] + "; there should be only one");
+	}
+
+	static IFieldDetail checkForFldMatch(List<IFieldDetail> flds, String... fieldNames) {
+		switch (flds.size()) {
+		case 0: break;
+		case 1: return flds.get(0);
+		default:
+			if (fieldNames.length > 1) {
+				String lastGroup = "." + fieldNames[fieldNames.length - 2].toLowerCase() + ".";
+				IFieldDetail fld = null;
+				int cmpSize = 1;
+				boolean multi = false;
+				for (int i = fieldNames.length - 2; i>= 0; i-- ) {
+					cmpSize += fieldNames[i].length() + 1;
+				}
+				for (IFieldDetail f : flds) {
+					String gn = ((FieldDetail) f).getGroupName().toLowerCase();
+					if (gn.endsWith(lastGroup)) {
+						if (cmpSize == gn.length()) {
+							return f;
+						}
+						multi = fld != null;
+						fld = f;
+					}
+				}
+				
+				if (! multi) {
+					return fld;
+				}
+			}
+		}
+		return null;
 	}
 
 	public final int[] getFieldTypes() {
@@ -1029,7 +1083,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	@Override
 	public int getDelimiterOrganisation() {
 		int delimiterOrganisation = ICsvDefinition.NORMAL_SPLIT;
-		ICsvLineParser parser =  getParser();
+		ICsvCharLineParser parser =  getParser();
 		if (parser != null && parser instanceof BasicCsvLineParser) {
 			BasicCsvLineParser bp = (BasicCsvLineParser) parser;
 			delimiterOrganisation = bp.delimiterOrganisation;
@@ -1269,8 +1323,12 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	}
 
 
-	public final ICsvLineParser getParser() {
-		return ParserManager.getInstance().get(getRecordStyle());
+	public ICsvByteLineParser getCsvByteParser() {
+		return csvByteParser;
+	}
+
+	public final ICsvCharLineParser getParser() {
+		return csvCharParser; 
 	}
 
 	public final FieldDetail[] getArrayFields(FieldDetail field, String aname) {

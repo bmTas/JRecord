@@ -272,6 +272,7 @@ public interface IItem {
 	/**
 	 * temporary measure for <b>internal</b> use only. It <b>will be removed</b>.
 	 * @return
+	 * @deprecated temporary measure for <b>internal</b> use only. It <b>will be removed</b>.
 	 */
 	@Deprecated
 	public int getSaveIndex();
@@ -279,6 +280,7 @@ public interface IItem {
 	/**
 	 * temporary measure for <b>internal</b> use only.  It <b>will be removed</b>.
 	 * @return
+	 * @deprecated temporary measure for <b>internal</b> use only. It <b>will be removed</b>.
 	 */
 	@Deprecated
 	public int getODArraySizeIdx();

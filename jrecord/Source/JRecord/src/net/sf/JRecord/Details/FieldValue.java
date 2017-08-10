@@ -258,4 +258,15 @@ public class FieldValue extends BaseFieldValue implements IFieldValue {
 		
 		throw new RuntimeException("Operation is not supported for a " + s);
 	}
+	
+	/**
+	 * Internal JRecord use only  !!!
+	 * 
+	 * @deprecated For use in JRecord CodeGen code - do not use other wise
+	 */
+	public final FieldValue setField(IFieldDetail field) {
+		super.field = field;
+		return this;
+	}
+	
 }

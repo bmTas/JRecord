@@ -252,6 +252,11 @@ public class TstBasicParserExtended extends TestCase {
 		CommonCsvTests.tstGetFieldList("1: ", lines1, p, LINES1_CSV_DEF, 3);
 		CommonCsvTests.tstGetFieldList("2: ", lines2, p, LINES2_CSV_DEF, 3);
 		CommonCsvTests.tstGetFieldList("3: ", lines3, p, LINES3_CSV_DEF, 3);
+		
+		CommonCsvTests.tstGetFieldListByte("0: ", lines0, p, LINES0_CSV_DEF, 3);
+		CommonCsvTests.tstGetFieldListByte("1: ", lines1, p, LINES1_CSV_DEF, 3);
+		CommonCsvTests.tstGetFieldListByte("2: ", lines2, p, LINES2_CSV_DEF, 3);
+		CommonCsvTests.tstGetFieldListByte("3: ", lines3, p, LINES3_CSV_DEF, 3);
 	}
 
 	
@@ -261,6 +266,11 @@ public class TstBasicParserExtended extends TestCase {
 		CommonCsvTests.tstSetFieldList("1: ", lines1, lines1.length - 1, p, LINES1_CSV_DEF, 3);
 		CommonCsvTests.tstSetFieldList("2: ", lines2, lines2.length - 1, p, LINES2_CSV_DEF, 3);
 		CommonCsvTests.tstSetFieldList("3: ", lines3, lines3.length - 1, p, LINES3_CSV_DEF, 3);
+		
+		CommonCsvTests.tstSetFieldListByte("0: ", lines0, p, LINES0_CSV_DEF, 3);
+		CommonCsvTests.tstSetFieldListByte("1: ", lines1, lines1.length - 1, p, LINES1_CSV_DEF, 3);
+		CommonCsvTests.tstSetFieldListByte("2: ", lines2, lines2.length - 1, p, LINES2_CSV_DEF, 3);
+		CommonCsvTests.tstSetFieldListByte("3: ", lines3, lines3.length - 1, p, LINES3_CSV_DEF, 3);
 	}
 
 //	public void testSplit() {

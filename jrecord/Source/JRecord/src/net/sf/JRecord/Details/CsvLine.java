@@ -28,7 +28,6 @@
 
 package net.sf.JRecord.Details;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class CsvLine extends ListLine {
@@ -51,19 +50,12 @@ public class CsvLine extends ListLine {
 
 	@Override
 	public byte[] getData() {
-		String s = getFullLine();
-		byte[] b;
+		RecordDetail record = layout.getRecord( getPrefIdx());
 		
-		if ("".equals(layout.getFontName())) {
-			b = s.getBytes();
-		} else {
-			try {
-				b = s.getBytes(layout.getFontName());
-			} catch (UnsupportedEncodingException e) {
-				throw new RuntimeException(e);
-			}
-		}
-		return b;
+		return record
+				.getCsvByteParser()
+					.formatFieldListByte(
+						fields, record, record.getFieldTypes());
 	}
 
 
@@ -87,6 +79,15 @@ public class CsvLine extends ListLine {
 
 	
 	
+
+	@Override
+	public void setData(byte[] newVal) {
+		RecordDetail record = layout.getRecord(getPrefIdx());
+
+		fields = new ArrayList<Object>(
+					record.getCsvByteParser().getFieldList(newVal, record));
+	}
+
 
 	@Override
 	protected final int getAdj() {

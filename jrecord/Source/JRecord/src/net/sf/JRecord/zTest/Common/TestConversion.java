@@ -249,7 +249,7 @@ public class TestConversion extends TestCase {
 		
 		for (String s : delims) {
 			byte[] expected = Conversion.getBytes(s, ascii);
-			byte[] actual = Conversion.getCsvDelimBytes(s, ascii);
+			byte[] actual = Conversion.getCsvDelimBytes(s, ascii, '\t');
 			
 			for (int i = 0; i < expected.length; i++) {
 				assertEquals(expected[i], actual[i]);
@@ -356,7 +356,7 @@ public class TestConversion extends TestCase {
 	}
 
 	private void checkCsvDelimBytes(int i, String x) {
-		byte[] csvDelimBytes = Conversion.getCsvDelimBytes(x, Conversion.DEFAULT_ASCII_CHARSET);
+		byte[] csvDelimBytes = Conversion.getCsvDelimBytes(x, Conversion.DEFAULT_ASCII_CHARSET, '\t');
 		assertEquals(x, (byte) i, csvDelimBytes[0]);
 		assertEquals(x, 1, csvDelimBytes.length);
 	}

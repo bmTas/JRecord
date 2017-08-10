@@ -29,12 +29,15 @@
 package net.sf.JRecord.zTest.Parser;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import net.sf.JRecord.Common.AbstractFieldValue;
+import net.sf.JRecord.Common.ByteArray;
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
-import net.sf.JRecord.CsvParser.ParserManager;
+import net.sf.JRecord.CsvParser.CsvParserManagerChar;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.CharLine;
 import net.sf.JRecord.Details.CsvLine;
@@ -102,18 +105,29 @@ public class TstCsv2 extends TestCase {
 
 	public void testCsvParser11() throws RecordException {
 		CommonBits.setUseCsvLine(false);
-		tstLine("Standard Line", new Line(getCsvLayout()));
+		tstLine("Standard Line a", new Line(getCsvLayout()));
+		tstLine("Standard Line b", new Line(getCsvLayoutByte()));
+		tstLineBin("Standard Line c", new Line(getCsvLayoutByte()));
+		tstLineBin("Standard Line d", new Line(getCsvLayout(Constants.IO_BIN_TEXT, "x'01'", "x'02'")));
+		tstLineBin2("Standard Line e", new Line(getCsvLayout(Constants.IO_BIN_TEXT, "x'01'", "x'02'")));
+		tstLineBin3("Standard Line e", new Line(getCsvLayout(Constants.IO_BIN_TEXT, "x'01'", "x'02'")));
 	}
 	
 	
 	public void testCsvParser12() throws RecordException {
 		CommonBits.setUseCsvLine(false);
 		tstLine("Char Line", new CharLine(getCsvLayout(), ""));
+		tstLine("Char Line", new CharLine(getCsvLayoutByte(), ""));
 	}
 	
 	public void testCsvParser13() throws RecordException {
 		CommonBits.setUseCsvLine(false);
 		tstLine("Csv Line", new CsvLine(getCsvLayout()));
+		tstLine("Csv Line", new CsvLine(getCsvLayoutByte()));
+		tstLineBin("Csv Line", new CsvLine(getCsvLayoutByte()));
+		tstLineBin("Standard Line", new CsvLine(getCsvLayout(Constants.IO_BIN_TEXT, "x'01'", "x'02'")));
+		tstLineBin2("Standard Line", new CsvLine(getCsvLayout(Constants.IO_BIN_TEXT, "x'01'", "x'02'")));
+		tstLineBin3("Standard Line", new CsvLine(getCsvLayout(Constants.IO_BIN_TEXT, "x'01'", "x'02'")));
 	}
 	
 	
@@ -127,6 +141,11 @@ public class TstCsv2 extends TestCase {
 	public void testCsvParser11a() throws RecordException {
 		CommonBits.setUseCsvLine(true);
 		tstLine("Standard Line", new Line(getCsvLayout()));
+		tstLine("Standard Line", new Line(getCsvLayoutByte()));
+		tstLineBin("Standard Line", new Line(getCsvLayoutByte()));
+		tstLineBin("Standard Line", new Line(getCsvLayout(Constants.IO_BIN_TEXT, "x'01'", "x'02'")));
+		tstLineBin2("Standard Line", new Line(getCsvLayout(Constants.IO_BIN_TEXT, "x'01'", "x'02'")));
+		tstLineBin3("Standard Line", new Line(getCsvLayout(Constants.IO_BIN_TEXT, "x'01'", "x'02'")));
 	}
 	
 	
@@ -141,6 +160,16 @@ public class TstCsv2 extends TestCase {
 	}
 	
 	
+	public void testCsvParser13b() throws RecordException {
+		CommonBits.setUseCsvLine(true);
+		tstLine("Csv Line", new CsvLine(getCsvLayoutByte()));
+		tstLineBin("Csv Line", new CsvLine(getCsvLayoutByte()));
+		tstLineBin("Standard Line", new CsvLine(getCsvLayout(Constants.IO_BIN_TEXT, "x'01'", "x'02'")));
+		tstLineBin2("Standard Line", new CsvLine(getCsvLayout(Constants.IO_BIN_TEXT, "x'01'", "x'02'")));
+		tstLineBin3("Standard Line", new CsvLine(getCsvLayout(Constants.IO_BIN_TEXT, "x'01'", "x'02'")));
+	}
+	
+	
 	public void testCsvRead11a() throws RecordException, IOException {
 		CommonBits.setUseCsvLine(true);
 
@@ -148,6 +177,18 @@ public class TstCsv2 extends TestCase {
 		tstReadArray("CsvRead1: ", getCsvLayout(Constants.IO_CSV), 0, CSV_LINES, CSV_LINES_ALT, CSV_LINE_FIELD);
 		
 		LayoutDetail schema = ExternalRecord.newCsvRecord("", Constants.IO_CSV_NAME_1ST_LINE, "", ",", "\"").asLayoutDetail();
+		tstReadArray("CsvRead1: ", schema, 1, CSV_LINES, CSV_LINES_ALT, CSV_LINE_FIELD);
+	}
+
+
+	public void testCsvRead11b() throws RecordException, IOException {
+		CommonBits.setUseCsvLine(true);
+
+		
+		tstReadArray("CsvRead1: ", getCsvLayoutByte(Constants.IO_CSV), 0, CSV_LINES, CSV_LINES, CSV_LINE_FIELD);
+		
+		LayoutDetail schema = ExternalRecord.newCsvRecord("", Constants.IO_CSV_NAME_1ST_LINE, "",
+				CommonCsvTests.toHex(','), CommonCsvTests.toHex('\"')).asLayoutDetail();
 		tstReadArray("CsvRead1: ", schema, 1, CSV_LINES, CSV_LINES_ALT, CSV_LINE_FIELD);
 	}
 
@@ -186,6 +227,40 @@ public class TstCsv2 extends TestCase {
 		CommonBits.setUseCsvLine(false);
 		tstLine2("Csv Line", new CsvLine(getCsvLayout2()));
 	}
+	
+	
+	public void testCsvParser21bin() throws RecordException {
+		CommonBits.setUseCsvLine(true);
+		tstLine2("Standard Line 2", new Line(getCsvLayout2byte()));
+	}
+	
+	
+	public void testCsvParser22bin() throws RecordException {
+		CommonBits.setUseCsvLine(true);
+		tstLine2("Char Line", new CharLine(getCsvLayout2byte(), ""));
+	}
+	
+	public void testCsvParser23bin() throws RecordException {
+		CommonBits.setUseCsvLine(true);
+		tstLine2("Csv Line", new CsvLine(getCsvLayout2byte()));
+	}
+	
+	
+	public void testCsvParser21aBin() throws RecordException {
+		CommonBits.setUseCsvLine(false);
+		tstLine2("Standard Line 2", new Line(getCsvLayout2byte()));
+	}
+	
+	
+	public void testCsvParser22aBin() throws RecordException {
+		CommonBits.setUseCsvLine(false);
+		tstLine2("Char Line", new CharLine(getCsvLayout2byte(), ""));
+	}
+	
+	public void testCsvParser23aBin() throws RecordException {
+		CommonBits.setUseCsvLine(false);
+		tstLine2("Csv Line", new CsvLine(getCsvLayout2byte()));
+	}
 
 	public void testCsvRead21() throws RecordException, IOException {
 		CommonBits.setUseCsvLine(false);
@@ -205,7 +280,28 @@ public class TstCsv2 extends TestCase {
 		
 		LayoutDetail schema = ExternalRecord.newCsvRecord("", Constants.IO_CSV_NAME_1ST_LINE, "", ",", "\"").asLayoutDetail();
 		tstReadArray(id, schema, 1, CSV_LINES2, CSV_LINES2_ALT, CSV_LINE_FIELD2);
+	}
 
+
+	public void testCsvRead21Bin() throws RecordException, IOException {
+		CommonBits.setUseCsvLine(false);
+		String id = "CsvRead1: ";
+		tstReadArray(id, getCsvLayoutByte(Constants.IO_CSV), 0, CSV_LINES2, CSV_LINE_FIELD2);
+		
+		LayoutDetail schema = ExternalRecord.newCsvRecord("", Constants.IO_CSV_NAME_1ST_LINE, "", 
+				CommonCsvTests.toHex(','), CommonCsvTests.toHex('\"')).asLayoutDetail();
+		tstReadArray(id, schema, 1, CSV_LINES2, CSV_LINE_FIELD2);
+	}
+
+
+	public void testCsvRead21aBin() throws RecordException, IOException {
+		CommonBits.setUseCsvLine(true);
+		String id = "CsvRead1: ";
+		tstReadArray(id, getCsvLayout(Constants.IO_CSV), 0, CSV_LINES2, CSV_LINES2_ALT, CSV_LINE_FIELD2);
+		
+		LayoutDetail schema = ExternalRecord.newCsvRecord("", Constants.IO_CSV_NAME_1ST_LINE, "", 
+				CommonCsvTests.toHex(','), CommonCsvTests.toHex('\"')).asLayoutDetail();
+		tstReadArray(id, schema, 1, CSV_LINES2, CSV_LINES2_ALT, CSV_LINE_FIELD2);
 	}
 
 
@@ -215,6 +311,10 @@ public class TstCsv2 extends TestCase {
 		
 		LayoutDetail schema = ExternalRecord.newCsvRecord("", Constants.IO_CSV_NAME_1ST_LINE, "", ",", "\"").asLayoutDetail();
 		tstReadArray(id, schema, 1, lines, expected);
+		
+		LayoutDetail schema1 = ExternalRecord.newCsvRecord("", Constants.IO_CSV_NAME_1ST_LINE, "",
+				CommonCsvTests.toHex(','), CommonCsvTests.toHex('\"')).asLayoutDetail();
+		tstReadArray(id, schema1, 1, lines, expected);
 	}
 
 	
@@ -250,8 +350,21 @@ public class TstCsv2 extends TestCase {
 	}
 	
 	private static LayoutDetail getCsvLayout(int filestructure) throws RecordException {
-		ParserManager.setUseNewCsvParsers(true);
-		return ExternalRecord.newCsvRecord("", filestructure, "", ",", "\"")
+		return getCsvLayout(filestructure, ",", "\"");
+	}
+	
+
+	private static LayoutDetail getCsvLayoutByte() throws RecordException {
+		return getCsvLayoutByte(Constants.IO_BIN_TEXT);
+	}
+	
+	private static LayoutDetail getCsvLayoutByte(int filestructure) throws RecordException {
+		return getCsvLayout(filestructure, CommonCsvTests.toHex(','), CommonCsvTests.toHex('\"'));
+	}
+	
+	private static LayoutDetail getCsvLayout(int filestructure, String delim, String quote) throws RecordException {
+		//ParserManager.setUseNewCsvParsers(true);
+		return ExternalRecord.newCsvRecord("", filestructure, "", delim, quote)
 					.addCsvField("Year", Type.ftChar, 0)
 					.addCsvField("Make", Type.ftChar, 0)
 					.addCsvField("Model", Type.ftChar, 0)
@@ -266,14 +379,26 @@ public class TstCsv2 extends TestCase {
 	}
 	
 	private static LayoutDetail getCsvLayout2(int filestructure) throws RecordException {
-		ParserManager.setUseNewCsvParsers(true);
+		return getCsvLayout2(filestructure, ",", "\"");
+	}
+	
+	private static LayoutDetail getCsvLayout2byte() throws RecordException {
+		return getCsvLayout2byte(Constants.IO_BIN_TEXT);
+	}
+	
+	private static LayoutDetail getCsvLayout2byte(int filestructure) throws RecordException {
+		return getCsvLayout2(filestructure, CommonCsvTests.toHex(','), CommonCsvTests.toHex('\"'));
+	}
+
+	private static LayoutDetail getCsvLayout2(int filestructure, String delim, String quote ) throws RecordException {
+		//ParserManager.setUseNewCsvParsers(true);
 		ExternalRecord rec =  ExternalRecord.newCsvRecord("", filestructure, "", ",", "\"")
 										.addCsvField("Field 1", Type.ftChar, 0)
 										.addCsvField("Field 2", Type.ftChar, 0)
 										.addCsvField("Field 3", Type.ftChar, 0)	
 									.asExternalRecord();
 		
-		rec.setRecordStyle(ParserManager.BASIC_TXT_INQUOTE);
+		rec.setRecordStyle(CsvParserManagerChar.BASIC_TXT_INQUOTE);
 
 		return rec.asLayoutDetail();
 	}
@@ -309,11 +434,123 @@ public class TstCsv2 extends TestCase {
 			for (int j = expected[0].length - 1; j>= 0; j--) {
 				l.getFieldValue(0, j).set(expected[i][j]);
 			}			
-			tstLine(id, data, data2, i, l.getFullLine());
-			
+			tstLine(id, data, data2, i, l.getFullLine());	
 		}
 	}
 	
+	
+	private void tstLineBin(String id, AbstractLine l) throws RecordException {
+		tstLine(id, l, convertArray(l, CSV_LINES), convertArray(l, CSV_LINES_ALT), CSV_LINE_FIELD);
+	}
+	
+	private byte[][] convertArray(AbstractLine l, String[] data) {
+		LayoutDetail layout = l.getLayout();
+		String f = Conversion.DEFAULT_ASCII_CHARSET;
+		byte delim = layout.getDelimiterDetails().asByte();
+		byte quote = layout.getQuoteDetails().asByte();
+		ByteArray ba = new ByteArray(50);
+		byte[][] ret = new byte[data.length][];
+		int count = 0;
+		
+		for (String s : data) {
+			byte[] b = Conversion.getBytes(s, f);
+			
+			ba.clear();
+			if (s == null) {
+				ret[count++] = null;
+			} else {
+				for (int i = 0; i < s.length(); i++) {
+					switch (s.charAt(i)) {
+					case ',' : ba.add(delim);				break;
+					case '\"': ba.add(quote);				break;
+					default:
+						ba.add(b[i]);
+					}
+				}
+				ret[count++] = ba.toByteArray();
+			}
+		}
+		return ret;
+	}
+	
+	
+	private void tstLineBin2(String id, AbstractLine l) throws RecordException {
+		String[][] fields = new String[CSV_LINE_FIELD.length][];
+		for (int i =0; i < fields.length; i++) {
+			fields[i] = CSV_LINE_FIELD[i].clone();
+			for (int j =0; j < fields[i].length; j++) {
+				if (fields[i][j].indexOf('\n') >= 0) {
+					fields[i][j] = Conversion.replace(fields[i][j], "\n", " ").toString();
+				}
+			}
+		}
+		tstLine(id, l, createLines(l, fields), new byte[fields.length][], fields);
+	}
+	
+	private void tstLineBin3(String id, AbstractLine l) throws RecordException {
+		String[][] fields = CSV_LINE_FIELD;
+		tstLine(id, l, createLines(l, fields), new byte[fields.length][], fields);
+	}
+
+	private byte[][] createLines(AbstractLine l, String[][] fields) {
+		LayoutDetail layout = l.getLayout();
+		String f = Conversion.DEFAULT_ASCII_CHARSET;
+		byte delim = layout.getDelimiterDetails().asByte();
+		byte quote = layout.getQuoteDetails().asByte();
+		ByteArray ba = new ByteArray(50);
+		byte[][] ret = new byte[fields.length][];
+		int count = 0;
+		
+		for (String[] fieldsInLine : fields) {
+			ba.clear();
+			ba.add(Conversion.getBytes(fieldsInLine[0], f));
+			for (int i = 1; i < fieldsInLine.length; i++) {
+				ba.add(delim);
+				if (fieldsInLine[i].indexOf('\n') > 0 || fieldsInLine[i].indexOf('\r') > 0) {
+					ba.add(quote).add(Conversion.getBytes(fieldsInLine[i], f)).add(quote);
+				} else {
+					ba.add(Conversion.getBytes(fieldsInLine[i], f));
+				}
+			}
+			
+			ret[count++] = ba.toByteArray();
+		}
+		return ret;
+	}
+
+	private void tstLine(String id, AbstractLine l, byte[][] data, byte[][] data2, String[][] expected) throws RecordException {
+		
+		for (int i = 0; i < data.length; i++) {
+			boolean doTest = true;
+			l.setData(data[i]);
+			for (int j = 0; j < expected[0].length; j++) {				
+				AbstractFieldValue fieldValue = l.getFieldValue(0, j);
+				String val = fieldValue.toString();
+				if (expected[i][j].equals( val)) {
+					
+				} else if(val.indexOf((char) 01) >= 0 || val.indexOf((char) 02) >= 0 ) {
+					 doTest = false;
+				} else {
+					assertEquals(id + " " + i + ", " + j, expected[i][j], val);
+				}
+			}
+			
+			if (doTest) {
+				l.setData("");
+				for (int j = 0; j < expected[0].length; j++) {
+					l.getFieldValue(0, j).set(expected[i][j]);
+				}			
+				tstLine(id, data, data2, i, l.getData());
+				
+				l.setData("");
+				for (int j = expected[0].length - 1; j>= 0; j--) {
+					l.getFieldValue(0, j).set(expected[i][j]);
+				}			
+				tstLine(id, data, data2, i, l.getData());	
+			}
+		}
+	}
+
 	private void tstLine(String id, String[] data, String[] data2,int i, String t) {
 		if (data2[i] == null) {
 			assertEquals(id + " #2 " + i, data[i], t);
@@ -321,4 +558,14 @@ public class TstCsv2 extends TestCase {
 			assertEquals(id + " #3 " + i, data2[i], t);
 		}
 	}
+	
+
+	private void tstLine(String id, byte[][] data, byte[][] data2,int i, byte[] t) {
+		if (data2[i] == null) {
+			assertTrue(id + " #2 " + i + " " + new String(t), Arrays.equals(data[i], t));
+		} else {
+			assertTrue(id + " #3 " + i, Arrays.equals(data2[i], t));
+		}
+	}
+
 }

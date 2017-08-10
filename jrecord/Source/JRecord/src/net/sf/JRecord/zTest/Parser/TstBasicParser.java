@@ -34,11 +34,17 @@ import net.sf.JRecord.CsvParser.CsvDefinition;
 
 public class TstBasicParser extends TestCase {
 
-	private static final CsvDefinition LINES0_CSV_DEF = new CsvDefinition(",", "");
+	private static final CsvDefinition CSV_DEF_COMMA = new CsvDefinition(",", "");
 
-	private static final CsvDefinition LINES1_CSV_DEF = new CsvDefinition(",", "'");
+	private static final CsvDefinition CSV_DEF_BAR_SINGLE_QUOTE = new CsvDefinition("|", "'");
 
-	private static final CsvDefinition LINES2_CSV_DEF = new CsvDefinition("|", "'");
+	private static final CsvDefinition CSV_DEF_COMMA_SINGLE_QUOTE = new CsvDefinition(",", "'");
+
+	private static final CsvDefinition LINES0_CSV_DEF = CSV_DEF_COMMA;
+
+	private static final CsvDefinition LINES1_CSV_DEF = CSV_DEF_COMMA_SINGLE_QUOTE;
+
+	private static final CsvDefinition LINES2_CSV_DEF = CSV_DEF_BAR_SINGLE_QUOTE;
 
 	private static final CsvDefinition LINES3_CSV_DEF = new CsvDefinition(",", "`~");
 
@@ -82,12 +88,12 @@ public class TstBasicParser extends TestCase {
 		int c;
 
 		for (int i = 0; i < lines1.length; i++) {
-			c = p.getFieldCount(lines1[i], new CsvDefinition(",", "'"));
-			assertEquals("Error in " + i + "a, count was " + c, c, 3);
-			c = p.getFieldCount(lines2[i], new CsvDefinition("|", "'"));
-			assertEquals("Error in " + i + "b, count was " + c, c, 3);
-			c = p.getFieldCount(lines0[i], new CsvDefinition(",", ""));
-			assertEquals("Error in " + i + "c, count was " + c, c, 3);
+			c = p.getFieldCount(lines1[i], CSV_DEF_COMMA_SINGLE_QUOTE);
+			assertEquals("Error in " + i + "a, count was " + c, 3, c);
+			c = p.getFieldCount(lines2[i], CSV_DEF_BAR_SINGLE_QUOTE);
+			assertEquals("Error in " + i + "b, count was " + c, 3, c);
+			c = p.getFieldCount(lines0[i], CSV_DEF_COMMA);
+			assertEquals("Error in " + i + "c, count was " + c, 3, c);
 		}
 	}
 
@@ -96,36 +102,36 @@ public class TstBasicParser extends TestCase {
 		String s;
 
 		for (int i = 1; i < lines1.length; i++) {
-			s = p.getField(0, lines1[i], new CsvDefinition("," , "'"));
+			s = p.getField(0, lines1[i], CSV_DEF_COMMA_SINGLE_QUOTE);
 			assertEquals("Error in " + i + "a, string was " + s, "f1" + i, s);
-			s = p.getField(0, lines2[i], new CsvDefinition("|" , "'"));
+			s = p.getField(0, lines2[i], CSV_DEF_BAR_SINGLE_QUOTE);
 			assertEquals("Error in " + i + "b, string was " + s, "f1" + i, s);
-			s = p.getField(0, lines0[i], new CsvDefinition("," , ""));
+			s = p.getField(0, lines0[i], CSV_DEF_COMMA);
 			assertEquals("Error in " + i + "c, string was " + s, "f1" + i, s);
 
-			s = p.getField(2, lines1[i], new CsvDefinition("," , "'"));
+			s = p.getField(2, lines1[i], CSV_DEF_COMMA_SINGLE_QUOTE);
 			assertEquals("Error in " + i + "d, string was " + s, "f3" + i, s);
-			s = p.getField(2, lines2[i], new CsvDefinition("|" , "'"));
+			s = p.getField(2, lines2[i], CSV_DEF_BAR_SINGLE_QUOTE);
 			assertEquals("Error in " + i + "e, string was " + s, "f3" + i, s);
-			s = p.getField(2, lines0[i], new CsvDefinition("," , ""));
+			s = p.getField(2, lines0[i], CSV_DEF_COMMA);
 			assertEquals("Error in " + i + "f, string was " + s, "f3" + i, s);
 
 		}
 
-		s = p.getField(1, lines1[1], new CsvDefinition("," , "'"));
+		s = p.getField(1, lines1[1], CSV_DEF_COMMA_SINGLE_QUOTE);
 		assertEquals("Error in 11a, string was " + s, "pt1, pt2, pt3", s);
-		s = p.getField(1, lines2[1], new CsvDefinition("|" , "'"));
+		s = p.getField(1, lines2[1], CSV_DEF_BAR_SINGLE_QUOTE);
 		assertEquals("Error in 11a, string was " + s, "pt1| pt2| pt3", s);
 
 
-		s = p.getField(1, lines1[2], new CsvDefinition("," , "'"));
+		s = p.getField(1, lines1[2], CSV_DEF_COMMA_SINGLE_QUOTE);
 		assertEquals("Error in 12a, string was " + s, "pt1, pt2, pt3'", s);
-		s = p.getField(1, lines2[2], new CsvDefinition("|" , "'"));
+		s = p.getField(1, lines2[2], CSV_DEF_BAR_SINGLE_QUOTE);
 		assertEquals("Error in 12a, string was " + s, "pt1| pt2| pt3'", s);
 
-		s = p.getField(1, lines1[3], new CsvDefinition("," , "'"));
+		s = p.getField(1, lines1[3], CSV_DEF_COMMA_SINGLE_QUOTE);
 		assertEquals("Error in 13a, string was " + s, "pt1, 'pt2' , pt3", s);
-		s = p.getField(1, lines2[3], new CsvDefinition("|" , "'"));
+		s = p.getField(1, lines2[3], CSV_DEF_BAR_SINGLE_QUOTE);
 		assertEquals("Error in 13a, string was " + s, "pt1| 'pt2' | pt3", s);
 	}
 
@@ -136,18 +142,18 @@ public class TstBasicParser extends TestCase {
 
 		for (int i = 0; i < lines1.length; i++) {
 			for (j = 0; j < 3; j++) {
-				s = p.setField(j, 0, lines1[i], new CsvDefinition(",", "'"),
-						p.getField(j, lines1[i], new CsvDefinition(",", "'")));
+				s = p.setField(j, 0, lines1[i], CSV_DEF_COMMA_SINGLE_QUOTE,
+						p.getField(j, lines1[i], CSV_DEF_COMMA_SINGLE_QUOTE));
 				System.out.println(i + "," + j + ">" + s);
 				System.out.println("   >" + lines1[i]);
 				assertEquals("Error in " + i +":" + j + "a got " + s, lines1[i], s);
 
-				s = p.setField(j,  0, lines2[i], new CsvDefinition("|", "'"),
-						p.getField(j, lines2[i], new CsvDefinition("|", "'")));
+				s = p.setField(j,  0, lines2[i], CSV_DEF_BAR_SINGLE_QUOTE,
+						p.getField(j, lines2[i], CSV_DEF_BAR_SINGLE_QUOTE));
 				assertEquals("Error in " + i +":" + j + "b got " + s, lines2[i], s);
 
-				s = p.setField(j,  0, lines0[i], new CsvDefinition(",", "'"),
-						p.getField(j, lines0[i], new CsvDefinition(",", "")));
+				s = p.setField(j,  0, lines0[i], CSV_DEF_COMMA_SINGLE_QUOTE,
+						p.getField(j, lines0[i], CSV_DEF_COMMA));
 				assertEquals("Error in " + i +":" + j + "c got " + s, lines0[i], s);
 }
 		}
@@ -163,11 +169,14 @@ public class TstBasicParser extends TestCase {
 	
 	public void testSetFieldList() {
 		BasicCsvLineParser p = BasicCsvLineParser.getInstance();
-		CommonCsvTests.tstSetFieldList("0: ", lines0, p, LINES0_CSV_DEF, 3);
-		CommonCsvTests.tstSetFieldList("1: ", lines1, p, LINES1_CSV_DEF, 3);
-		CommonCsvTests.tstSetFieldList("2: ", lines2, p, LINES2_CSV_DEF, 3);
-		CommonCsvTests.tstSetFieldList("3: ", lines3, p, LINES3_CSV_DEF, 3);
+		CommonCsvTests.tstGetFieldList("0: ", lines0, p, LINES0_CSV_DEF, 3);
+		CommonCsvTests.tstGetFieldList("1: ", lines1, p, LINES1_CSV_DEF, 3);
+		CommonCsvTests.tstGetFieldList("2: ", lines2, p, LINES2_CSV_DEF, 3);
+		CommonCsvTests.tstGetFieldList("3: ", lines3, p, LINES3_CSV_DEF, 3);
 	}
+
+	
+
 
 //	public void testSplit() {
 //		fail("Not yet implemented");
