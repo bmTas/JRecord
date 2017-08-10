@@ -1,0 +1,1608 @@
+{
+  "amsPoDownload" : [ {
+    "PO_Record" : {
+      "Record_Type" : "H1",
+      "Sequence_Number" : 45.349,
+      "Vendor" : 6060,
+      "PO" : 286225,
+      "Entry_Date" : "040909",
+      "beg01_code" : "00",
+      "Department" : "200",
+      "Expected_Reciept_Date" : "050102",
+      "Cancel_by_date" : "050107",
+      "Department_Name" : "LADIES KNI",
+      "Prcoess_Type" : "C",
+      "Order_Type" : "FT"
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 7.0000,
+      "Pack_Cost" : 0.0002,
+      "APN" : 2222500000000,
+      "Product" : 43314531,
+      "pmg_dtl_tech_key" : "2075359",
+      "Case_Pack_id" : "45614531",
+      "Product_Name" : "DONKEY 24-006607 SHWL WRAP CARD"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5043,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5065,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5076,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5079,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5151,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5072,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 4.0000,
+      "Pack_Cost" : 148.3200,
+      "APN" : 0,
+      "Product" : 5614944,
+      "pmg_dtl_tech_key" : "2075360",
+      "Case_Pack_id" : "5614944",
+      "Product_Name" : "MILK 24-006607 SHWL WRAP CARD"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5076,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5079,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 3331,
+        "Pack_Quantity" : 49440001
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 48.0000,
+      "Pack_Cost" : 148.3200,
+      "APN" : 0,
+      "Product" : 55615071,
+      "pmg_dtl_tech_key" : "2075361",
+      "Case_Pack_id" : "55615071",
+      "Product_Name" : "M.ROSE 24-006607 SHWL WRAP CARD"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5036,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5043,
+        "Pack_Quantity" : 5
+      }, {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 5
+      }, {
+        "DC_Number" : 3331,
+        "Pack_Quantity" : 50710003
+      }, {
+        "DC_Number" : 5065,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5069,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5076,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5079,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5094,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5128,
+        "Pack_Quantity" : 3
+      } ]
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5151,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5180,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5072,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5173,
+        "Pack_Quantity" : 2
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 4.0000,
+      "Pack_Cost" : 148.3200,
+      "APN" : 0,
+      "Product" : 55615156,
+      "pmg_dtl_tech_key" : "2075362",
+      "Case_Pack_id" : "55615156",
+      "Product_Name" : "AQUA 24-006607 SHWL WRAP CARD"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5043,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5065,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 3331,
+        "Pack_Quantity" : 51560001
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "PO_Record" : {
+      "Record_Type" : "H1",
+      "Sequence_Number" : 45.350,
+      "Vendor" : 6228,
+      "PO" : 222227,
+      "Entry_Date" : "040909",
+      "beg01_code" : "00",
+      "Department" : "200",
+      "Expected_Reciept_Date" : "050102",
+      "Cancel_by_date" : "050107",
+      "Department_Name" : "LADIES KNI",
+      "Prcoess_Type" : "C",
+      "Order_Type" : "FT"
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 16.0000,
+      "Pack_Cost" : 6228148.3200,
+      "APN" : 2222,
+      "Product" : 2224531,
+      "pmg_dtl_tech_key" : "2075348",
+      "Case_Pack_id" : "5614531",
+      "Product_Name" : "DONKEY 24-006607 SHWL WRAP CARD"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5019,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5037,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5074,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5078,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5085,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5091,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5093,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5095,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 51,
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5171,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5177,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5089,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5136,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5145,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5096,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 8.0000,
+      "Pack_Cost" : 148.3200,
+      "APN" : 0,
+      "Product" : 62224944,
+      "pmg_dtl_tech_key" : "2075349",
+      "Case_Pack_id" : "65614944",
+      "Product_Name" : "MILK 24-006607 SHWL WRAP CARD"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5019,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5037,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5078,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5091,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5093,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5129,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5177,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5145,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 108.0000,
+      "Pack_Cost" : 148.3200,
+      "APN" : 0,
+      "Product" : 62225071,
+      "pmg_dtl_tech_key" : "2075350",
+      "Case_Pack_id" : "65615071",
+      "Product_Name" : "M.ROSE 24-006607 SHWL WRAP CARD"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5015,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5019,
+        "Pack_Quantity" : 5
+      }, {
+        "DC_Number" : 5033,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5035,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5037,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5052,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5055,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5060,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5070,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5074,
+        "Pack_Quantity" : 4
+      } ]
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5078,
+        "Pack_Quantity" : 5
+      }, {
+        "DC_Number" : 5081,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5085,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5090,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5091,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5093,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5095,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5129,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5144,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5165,
+        "Pack_Quantity" : 2
+      } ]
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5303,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5169,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5170,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5171,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5177,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5016,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5089,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5136,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5011,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5046,
+        "Pack_Quantity" : 2
+      } ]
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5145,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5096,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5154,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5162,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5163,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5164,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5192,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5150,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5175,
+        "Pack_Quantity" : 2
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 8.0000,
+      "Pack_Cost" : 148.3200,
+      "APN" : 0,
+      "Product" : 52225156,
+      "pmg_dtl_tech_key" : "2075351",
+      "Case_Pack_id" : "55615156",
+      "Product_Name" : "M.ROSE 24-006607 SHWL WRAP CARD"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5019,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5037,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5078,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5091,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5093,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5129,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5177,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5145,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "PO_Record" : {
+      "Record_Type" : "H1",
+      "Sequence_Number" : 45.351,
+      "Vendor" : 6228,
+      "PO" : 222243,
+      "Entry_Date" : "040909",
+      "beg01_code" : "00",
+      "Department" : "200",
+      "Expected_Reciept_Date" : "050102",
+      "Cancel_by_date" : "050107",
+      "Department_Name" : "LADIES KNI",
+      "Prcoess_Type" : "C",
+      "Order_Type" : "FT"
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 6.0000,
+      "Pack_Cost" : 148.3200,
+      "APN" : 0,
+      "Product" : 45614531,
+      "pmg_dtl_tech_key" : "2075352",
+      "Case_Pack_id" : "45614531",
+      "Product_Name" : "DONKEY 24-006607 SHWL WRAP CARD"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5009,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5021,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5024,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5025,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5026,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5127,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 3.0000,
+      "Pack_Cost" : 148.3200,
+      "APN" : 0,
+      "Product" : 45614944,
+      "pmg_dtl_tech_key" : "2075353",
+      "Case_Pack_id" : "45614944",
+      "Product_Name" : "MILK 24-006607 SHWL WRAP CARD"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5009,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5021,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5127,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 44.0000,
+      "Pack_Cost" : 148.3200,
+      "APN" : 0,
+      "Product" : 45615071,
+      "pmg_dtl_tech_key" : "2075354",
+      "Case_Pack_id" : "45615071",
+      "Product_Name" : "M.ROSE 24-006607 SHWL WRAP CARD"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5009,
+        "Pack_Quantity" : 5
+      }, {
+        "DC_Number" : 5021,
+        "Pack_Quantity" : 5
+      }, {
+        "DC_Number" : 5024,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5025,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5026,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5047,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5077,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5127,
+        "Pack_Quantity" : 5
+      }, {
+        "DC_Number" : 5134,
+        "Pack_Quantity" : 4
+      }, {
+        "DC_Number" : 5142,
+        "Pack_Quantity" : 2
+      } ]
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5044,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5071,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5159,
+        "Pack_Quantity" : 2
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 3.0000,
+      "Pack_Cost" : 148.3200,
+      "APN" : 0,
+      "Product" : 45615156,
+      "pmg_dtl_tech_key" : "2075355",
+      "Case_Pack_id" : "35615156",
+      "Product_Name" : "AQUA 24-006607 SHWL WRAP CARD"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5009,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5021,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5127,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "PO_Record" : {
+      "Record_Type" : "H1",
+      "Sequence_Number" : 45.352,
+      "Vendor" : 5341,
+      "PO" : 294915,
+      "Entry_Date" : "041013",
+      "beg01_code" : "00",
+      "Department" : "475",
+      "Expected_Reciept_Date" : "041231",
+      "Cancel_by_date" : "050107",
+      "EDI_Type" : "P",
+      "Department_Name" : "WOMENS SHO",
+      "Prcoess_Type" : "C",
+      "Order_Type" : "FT"
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 30.0000,
+      "Pack_Cost" : 292.6800,
+      "APN" : 0,
+      "Product" : 45846680,
+      "pmg_dtl_tech_key" : "2120736",
+      "Case_Pack_id" : "45615156",
+      "Product_Name" : "CONCERTO BLACK LEATHER ANKLE BOOT"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5036,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5043,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5057,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5065,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5069,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5076,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5079,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5094,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5128,
+        "Pack_Quantity" : 3
+      } ]
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5151,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5180,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5072,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5173,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "PO_Record" : {
+      "Record_Type" : "H1",
+      "Sequence_Number" : 45.353,
+      "Vendor" : 5341,
+      "PO" : 294987,
+      "Entry_Date" : "041013",
+      "beg01_code" : "00",
+      "Department" : "475",
+      "Expected_Reciept_Date" : "041231",
+      "Cancel_by_date" : "050107",
+      "EDI_Type" : "P",
+      "Department_Name" : "WOMENS SHO",
+      "Prcoess_Type" : "C",
+      "Order_Type" : "FT"
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 29.0000,
+      "Pack_Cost" : 198.3600,
+      "APN" : 0,
+      "Product" : 45846772,
+      "pmg_dtl_tech_key" : "2121104",
+      "Case_Pack_id" : "5846772",
+      "Product_Name" : "ANGEL PINK SYNTHETIC MICRO SUEDE SLOUCH BOOT"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5036,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5043,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5057,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5065,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5069,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5076,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5079,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5094,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5128,
+        "Pack_Quantity" : 3
+      } ]
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5151,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5180,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5072,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5173,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 29.0000,
+      "Pack_Cost" : 198.3600,
+      "APN" : 0,
+      "Product" : 45847489,
+      "pmg_dtl_tech_key" : "2121627",
+      "Case_Pack_id" : "45847489",
+      "Product_Name" : "ANGEL PINK SYNTHETIC MICRO SUEDE SLOUCH BOOT"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5036,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5043,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5057,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5065,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5069,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5076,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5079,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5094,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5128,
+        "Pack_Quantity" : 3
+      } ]
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5151,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5180,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5072,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5173,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "PO_Record" : {
+      "Record_Type" : "H1",
+      "Sequence_Number" : 45.354,
+      "Vendor" : 5341,
+      "PO" : 295139,
+      "Entry_Date" : "041013",
+      "beg01_code" : "00",
+      "Department" : "475",
+      "Expected_Reciept_Date" : "041231",
+      "Cancel_by_date" : "050107",
+      "EDI_Type" : "P",
+      "Department_Name" : "WOMENS SHO",
+      "Prcoess_Type" : "C",
+      "Order_Type" : "FT"
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 25.0000,
+      "Pack_Cost" : 465.4800,
+      "APN" : 0,
+      "Product" : 45848707,
+      "pmg_dtl_tech_key" : "2179843",
+      "Case_Pack_id" : "45848707A",
+      "Product_Name" : "ANGEL PINK SYNTHETIC MICRO SUEDE SLOUCH BOOT"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5036,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5043,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5057,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5065,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5069,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5076,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5079,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5094,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5128,
+        "Pack_Quantity" : 2
+      } ]
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5151,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5180,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5072,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5173,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "PO_Record" : {
+      "Record_Type" : "H1",
+      "Sequence_Number" : 45.355,
+      "Vendor" : 5341,
+      "PO" : 303662,
+      "Entry_Date" : "041110",
+      "beg01_code" : "00",
+      "Department" : "310",
+      "Expected_Reciept_Date" : "041231",
+      "Cancel_by_date" : "050107",
+      "EDI_Type" : "P",
+      "Department_Name" : "YOUTH SHOE",
+      "Prcoess_Type" : "C",
+      "Order_Type" : "FT"
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 8.0000,
+      "Pack_Cost" : 82.1600,
+      "APN" : 0,
+      "Product" : 46164790,
+      "pmg_dtl_tech_key" : "2203070",
+      "Case_Pack_id" : "46164790B8",
+      "Product_Name" : "ANGEL PINK SYNTHETIC MICRO SUEDE SLOUCH BOOT     E"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5043,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5065,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5069,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5076,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5094,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5128,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5151,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 24.0000,
+      "Pack_Cost" : 112.9700,
+      "APN" : 0,
+      "Product" : 46164790,
+      "pmg_dtl_tech_key" : "2203056",
+      "Case_Pack_id" : "46164790",
+      "Product_Name" : "ANGEL PINK SYNTHETIC MICRO SUEDE SLOUCH BOOT     E"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5036,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5043,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5057,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5065,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5069,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5076,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5079,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5094,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5128,
+        "Pack_Quantity" : 2
+      } ]
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5151,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5180,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5072,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5173,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 7.0000,
+      "Pack_Cost" : 82.1600,
+      "APN" : 0,
+      "Product" : 46165360,
+      "pmg_dtl_tech_key" : "2203075",
+      "Case_Pack_id" : "46165360B8",
+      "Product_Name" : "CABERETCARAMEL MICRO SUEDE PEEP TOE"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5043,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5065,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5069,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5076,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5128,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5151,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 23.0000,
+      "Pack_Cost" : 112.9700,
+      "APN" : 0,
+      "Product" : 46165360,
+      "pmg_dtl_tech_key" : "2203072",
+      "Case_Pack_id" : "46165360",
+      "Product_Name" : "CABERETCARAMEL MICRO SUEDE PEEP TOE"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5036,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5043,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5057,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5065,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5069,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5076,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5079,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5094,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5128,
+        "Pack_Quantity" : 2
+      } ]
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5151,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5180,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5072,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5173,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "PO_Record" : {
+      "Record_Type" : "H1",
+      "Sequence_Number" : 45.356,
+      "Vendor" : 5341,
+      "PO" : 304100,
+      "Entry_Date" : "041111",
+      "beg01_code" : "00",
+      "Department" : "310",
+      "Expected_Reciept_Date" : "041231",
+      "Cancel_by_date" : "050107",
+      "EDI_Type" : "P",
+      "Department_Name" : "YOUTH SHOE",
+      "Prcoess_Type" : "C",
+      "Order_Type" : "FT"
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 8.0000,
+      "Pack_Cost" : 83.8400,
+      "APN" : 0,
+      "Product" : 45928553,
+      "pmg_dtl_tech_key" : "2203222",
+      "Case_Pack_id" : "45928553B8",
+      "Product_Name" : "CABERETCARAMEL MICRO SUEDE PEEP TOE"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5043,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5069,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5076,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5094,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5128,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5151,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5180,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 22.0000,
+      "Pack_Cost" : 125.7600,
+      "APN" : 0,
+      "Product" : 45928553,
+      "pmg_dtl_tech_key" : "2203219",
+      "Case_Pack_id" : "45928553",
+      "Product_Name" : "CABERETCARAMEL MICRO SUEDE PEEP TOE"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5036,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5043,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5057,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5065,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5069,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5076,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5079,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5094,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5128,
+        "Pack_Quantity" : 2
+      } ]
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5151,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5180,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5072,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5173,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 22.0000,
+      "Pack_Cost" : 125.7600,
+      "APN" : 0,
+      "Product" : 15935759,
+      "pmg_dtl_tech_key" : "2203223",
+      "Case_Pack_id" : "05935759",
+      "Product_Name" : "JAZZ DUSTY PINK HEELED PEEP TOE"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5036,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5043,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5057,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5065,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5069,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5076,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5079,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5094,
+        "Pack_Quantity" : 2
+      }, {
+        "DC_Number" : 5128,
+        "Pack_Quantity" : 2
+      } ]
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5151,
+        "Pack_Quantity" : 3
+      }, {
+        "DC_Number" : 5180,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5072,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5173,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  }, {
+    "Product_Record" : {
+      "Record_Type" : "D1",
+      "Pack_Qty" : 7.0000,
+      "Pack_Cost" : 83.8400,
+      "APN" : 0,
+      "Product" : 45935759,
+      "pmg_dtl_tech_key" : "2203224",
+      "Case_Pack_id" : "45935759B8",
+      "Product_Name" : "JAZZ DUSTY PINK HEELED PEEP TOE"
+    }
+  }, {
+    "Location_Record" : {
+      "Record_Type" : "S1",
+      "location" : [ {
+        "DC_Number" : 5043,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5045,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5069,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5076,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5094,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5128,
+        "Pack_Quantity" : 1
+      }, {
+        "DC_Number" : 5151,
+        "Pack_Quantity" : 1
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      }, {
+        "Pack_Quantity" : 0
+      } ]
+    }
+  } ]
+}
