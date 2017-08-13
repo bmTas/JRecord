@@ -41,7 +41,7 @@ import net.sf.JRecord.Types.Type;
  * @author Bruce Martin
  *
  */
-public abstract class BaseCsvLineParser  {
+public abstract class BaseCsvLineParser implements ICsvCharLineParser, ICsvByteLineParser {
 
 
     private final boolean quoteInColNames;
@@ -73,7 +73,7 @@ public abstract class BaseCsvLineParser  {
         StringTokenizer tok = new StringTokenizer(
                 line, getDelimFromCsvDef(lineDef), false);
         String s;
-        String quote = lineDef.getQuote();
+        String quote = lineDef.getQuoteDefinition().asString();
 
         if (quoteInColNames && quote != null && quote.length() > 0) {
 	        while (tok.hasMoreElements()) {
@@ -100,13 +100,13 @@ public abstract class BaseCsvLineParser  {
 	 * @return
 	 */
 	protected final String getDelimFromCsvDef(ICsvDefinition lineDef) {
-		String delimiter = lineDef.getDelimiter();
-		if (delimiter == null || delimiter.length() < 5) {
-			
-		} else if (delimiter.startsWith("x'")) {
-			delimiter = Conversion.toString(new byte[] { Conversion.getByteFromHexString(delimiter) }, lineDef.getFontName());
-		}
-		return delimiter;
+//		String delimiter = lineDef.getDelimiter();
+//		if (delimiter == null || delimiter.length() < 5) {
+//			
+//		} else if (delimiter.startsWith("x'")) {
+//			delimiter = Conversion.toString(new byte[] { Conversion.getByteFromHexString(delimiter) }, lineDef.getFontName());
+//		}
+		return lineDef.getDelimiterDetails().asString();
 	}
 
 	/**
@@ -119,16 +119,24 @@ public abstract class BaseCsvLineParser  {
 	public String getColumnNameLine(List<String> names, ICsvDefinition lineDef) {
 		StringBuilder buf = new StringBuilder();
 		String currDelim = "";
-		String quote = lineDef.getQuote();
+		String quote = lineDef.getQuoteDefinition().asString();
         String delim = getDelimFromCsvDef(lineDef);
 
-		for (int i = 0; i < names.size(); i++) {
-	        buf.append(currDelim)
-               .append(quote)
-               .append(names.get(i))
-               .append(quote);
- 			currDelim = delim;
-		}
+        if (quoteInColNames) {
+			for (int i = 0; i < names.size(); i++) {
+		        buf.append(currDelim)
+	               .append(quote)
+	               .append(names.get(i))
+	               .append(quote);
+	 			currDelim = delim;
+			}
+        } else {
+			for (int i = 0; i < names.size(); i++) {
+		        buf.append(currDelim)
+	               .append(names.get(i));
+	 			currDelim = delim;
+			}
+        }
 
 		return buf.toString();
 	}
@@ -136,7 +144,7 @@ public abstract class BaseCsvLineParser  {
 
 	public int getFileStructure(ICsvDefinition csvDefinition, boolean namesOnFirstLine, boolean bin) {
 		int ret = Constants.NULL_INTEGER;
-		String quote = csvDefinition.getQuote();
+		String quote = csvDefinition.getQuoteDefinition().asString();
 
 		if ((csvDefinition.isEmbeddedNewLine() || allowReturnInFields)
 		&& quote != null && quote.length() > 0) {
@@ -227,4 +235,50 @@ public abstract class BaseCsvLineParser  {
 	}
 	
 	protected abstract String formatField(String s, int fieldType, ICsvDefinition lineDef);
+
+	@Override
+	public String getField(int fieldNumber, byte[] line, ICsvDefinition csvDefinition) {
+		return getField(fieldNumber, toString(line, csvDefinition), csvDefinition);
+	}
+
+	protected String toString(byte[] line, ICsvDefinition csvDefinition) {
+		return Conversion.toString(line, csvDefinition.getFontName());
+	}
+
+	@Override
+	public byte[] setFieldByteLine(int fieldNumber, int fieldType, byte[] line, ICsvDefinition csvDefinition,
+			String newValue) {
+		
+		String fontname = csvDefinition.getFontName();
+		return Conversion.getBytes(
+				setField(fieldNumber, fieldType, Conversion.toString(line, fontname), csvDefinition, newValue), 
+				fontname);
+	}
+
+	@Override
+	public List<String> getFieldList(byte[] line, ICsvDefinition csvDefinition) {
+		return getFieldList(toString(line, csvDefinition), csvDefinition);
+	}
+
+	@Override
+	public List<String> getColumnNames(byte[] line, ICsvDefinition csvDefinition) {
+		return getColumnNames(toString(line, csvDefinition), csvDefinition);
+	}
+
+	@Override
+	public byte[] getColumnNameByteLine(List<String> names, ICsvDefinition csvDefinition) {
+		return Conversion.getBytes(
+				getColumnNameLine(names, csvDefinition),
+				csvDefinition.getFontName());
+	}
+
+	@Override
+	public byte[] formatFieldListByte(List<? extends Object> fields, ICsvDefinition csvDefinition, int[] fieldTypes) {
+
+		return Conversion.getBytes(
+				formatFieldList(fields, csvDefinition, fieldTypes),
+				csvDefinition.getFontName());
+	}
+	
+	
 }

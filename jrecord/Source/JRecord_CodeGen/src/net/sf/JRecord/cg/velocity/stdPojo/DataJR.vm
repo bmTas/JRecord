@@ -14,6 +14,7 @@ import ${imp};
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.IGetByteData;
 import net.sf.JRecord.Details.Line;
+import net.sf.JRecord.Details.CsvLine;
 #*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("genpojo")})
 import net.sf.JRecord.cgen.def.IAsPojo;
 	
@@ -24,6 +25,7 @@ import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;
 public class Line${currentRecord.extensionName}JR 
 implements I${currentRecord.extensionName}Pojo, IGetByteData, IAsPojo<Line${currentRecord.extensionName}Pojo> {
 #*  *##else
+
 public class Line${currentRecord.extensionName}JR implements IGetByteData {
 #*  *##end
     
@@ -97,8 +99,8 @@ public class Line${currentRecord.extensionName}JR implements IGetByteData {
     @Override
     public void setData(byte[] data) {
 
-        if (line instanceof Line) {
-            ((Line) line).setData(data);
+        if (line instanceof Line || line instanceof CsvLine) {
+            line.setData(data);
         } else {
             throw new RuntimeException("Invalid line for setdata");
         }

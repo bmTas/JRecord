@@ -9,6 +9,7 @@
 #*  *##foreach($a in ${r.getArrayDetailsList()}) 
 #*      *##if (! ${f.isArrayItem()})	
                       ${sep}line.getFieldValue(r${r.extensionName}.${a.getFirstElement().javaName}.get(${a.getZeroArrayIndex()})).asString()
+#*            *##set( $sep = '+ " " + ')    
 #*      *##end
 #*  *##end
 #end
@@ -21,9 +22,10 @@
 #*      *##end
 #*  *##end
 #*  *##foreach($a in ${r.getArrayDetailsList()}) 
-#*      *##if (! ${f.isArrayItem()})	
+##*      *##if (! ${f.isArrayItem()})	
                       ${sep}line.get${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()})
-#*      *##end
+#*            *##set( $sep = '+ " " + ')    
+##*      *##end
 #*  *##end
 #end
 #macro (printFieldsWrapper)
@@ -37,6 +39,7 @@
 #*  *##foreach($a in ${r.getArrayDetailsList()}) 
 #*      *##if (! ${f.isArrayItem()})
                       ${sep}line${r.extensionName}JR.get${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()})
+#*            *##set( $sep = '+ " " + ')    
 #*      *##end
 #*  *##end
 #end	

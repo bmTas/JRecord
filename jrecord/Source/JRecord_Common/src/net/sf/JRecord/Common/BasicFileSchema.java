@@ -29,6 +29,8 @@
       
 package net.sf.JRecord.Common;
 
+import net.sf.JRecord.definitiuons.CsvCharDetails;
+
 /**
  * 
  * A basicSchema class for use in testing
@@ -43,7 +45,8 @@ public class BasicFileSchema implements IBasicFileSchema {
 	public static int FT_OTHER = 4;
 	
 	private final int fileStructure, maximumRecordLength, layoutType;
-	private final String charset, delimiter, quote;
+	private final String charset;
+	private final CsvCharDetails delimiter, quote;
 	
 	
 	/**
@@ -99,8 +102,8 @@ public class BasicFileSchema implements IBasicFileSchema {
 		this.maximumRecordLength = maximumRecordLength;
 		this.layoutType = layoutType;
 		this.charset = charset;
-		this.delimiter = delimiter;
-		this.quote = quote;
+		this.delimiter = CsvCharDetails.newDelimDefinition(delimiter, charset);
+		this.quote = CsvCharDetails.newQuoteDefinition(quote, charset);
 	}
 
 	/* (non-Javadoc)
@@ -136,6 +139,14 @@ public class BasicFileSchema implements IBasicFileSchema {
 //	}
 
 	/* (non-Javadoc)
+	 * @see net.sf.JRecord.Common.IBasicFileSchema#useByteRecord()
+	 */
+	@Override
+	public boolean useByteRecord() {
+		return isBinary();
+	}
+
+	/* (non-Javadoc)
 	 * @see net.sf.JRecord.Common.IBasicFileSchema#getFontName()
 	 */
 	@Override
@@ -143,15 +154,20 @@ public class BasicFileSchema implements IBasicFileSchema {
 		return charset;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.Common.IBasicFileSchema#getDelimiter()
-	 */
+
+
 	@Override
-	public String getDelimiter() {
+	public CsvCharDetails getDelimiterDetails() {
 		return delimiter;
 	}
 
-//	/* (non-Javadoc)
+	@Override
+	public CsvCharDetails getQuoteDetails() {
+		// TODO Auto-generated method stub
+		return quote;
+	}
+
+	//	/* (non-Javadoc)
 //	 * @see net.sf.JRecord.Common.IBasicFileSchema#getDelimiterBytes()
 //	 */
 //	@Override
@@ -162,10 +178,10 @@ public class BasicFileSchema implements IBasicFileSchema {
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.Common.IBasicFileSchema#getQuote()
 	 */
-	@Override
-	public String getQuote() {
-		return quote;
-	}
+//	@Override
+//	public String getQuote() {
+//		return quote;
+//	}
 
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.Common.IBasicFileSchema#getMaximumRecordLength()

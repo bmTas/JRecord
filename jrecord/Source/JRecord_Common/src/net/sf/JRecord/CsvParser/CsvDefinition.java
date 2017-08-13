@@ -29,6 +29,7 @@
 package net.sf.JRecord.CsvParser;
 
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.definitiuons.CsvCharDetails;
 
 /**
  * @author mum
@@ -40,7 +41,8 @@ public class CsvDefinition implements ICsvDefinition {
 	private static final byte NO = 1;
 	private static final byte YES = 2;
 
-	private final String delimiter, quote, charset;
+	private final CsvCharDetails delimiter,quote;
+	private final String charset;
 	private final int delimiterOrganisation, numberOfFields;
 	private final boolean embeddedCR;
 
@@ -52,7 +54,15 @@ public class CsvDefinition implements ICsvDefinition {
 		this(delimiter, quote, ICsvDefinition.NORMAL_SPLIT, -1, Conversion.DEFAULT_ASCII_CHARSET, false);
 	}
 
-	public CsvDefinition(String delimiter, String quote, boolean embeddedCR) {
+	public CsvDefinition(CsvCharDetails delimiter, CsvCharDetails quote) {
+		this(delimiter, quote, ICsvDefinition.NORMAL_SPLIT, -1, delimiter.getFont(), false);
+	}
+
+//	public CsvDefinition(String delimiter, String quote, boolean embeddedCR) {
+//		this(delimiter, quote, ICsvDefinition.NORMAL_SPLIT, -1,"", embeddedCR);
+//	}
+
+	public CsvDefinition(CsvCharDetails delimiter, CsvCharDetails quote, boolean embeddedCR) {
 		this(delimiter, quote, ICsvDefinition.NORMAL_SPLIT, -1,"", embeddedCR);
 	}
 
@@ -64,6 +74,12 @@ public class CsvDefinition implements ICsvDefinition {
 
 	public CsvDefinition(String delimiter, String quote,
 			int delimiterOrganisation, int numberOfFields, String charset, boolean embeddedCR) {
+		this(CsvCharDetails.newDelimDefinition(delimiter, charset), CsvCharDetails.newQuoteDefinition(quote, charset), 
+				delimiterOrganisation, numberOfFields, charset, embeddedCR);
+	}
+
+	public CsvDefinition(CsvCharDetails delimiter, CsvCharDetails quote,
+			int delimiterOrganisation, int numberOfFields, String charset, boolean embeddedCR) {
 		super();
 		this.delimiter = delimiter;
 		this.quote = quote;
@@ -73,23 +89,33 @@ public class CsvDefinition implements ICsvDefinition {
 		this.embeddedCR = embeddedCR;
 	}
 
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.CsvParser.ILineDetails#getDelimiter()
-	 */
+//	/* (non-Javadoc)
+//	 * @see net.sf.JRecord.CsvParser.ILineDetails#getDelimiter()
+//	 */
+//	@Override
+//	public String getDelimiter() {
+//		return delimiter;
+//	}
+//
+//
+//	/* (non-Javadoc)
+//	 * @see net.sf.JRecord.CsvParser.ICsvDefinition#getQuote()
+//	 */
+//	@Override
+//	public String getQuote() {
+//		return quote;
+//	}
+
+
 	@Override
-	public String getDelimiter() {
+	public CsvCharDetails getDelimiterDetails() {
 		return delimiter;
 	}
 
-
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.CsvParser.ICsvDefinition#getQuote()
-	 */
 	@Override
-	public String getQuote() {
+	public CsvCharDetails getQuoteDefinition() {
 		return quote;
 	}
-
 
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.CsvParser.ILineDetails#getDelimiterOrganisation()

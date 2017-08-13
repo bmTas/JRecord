@@ -47,7 +47,7 @@ public class RecordRunTimeException extends RuntimeException {
 	 * @param msg Error Message
 	 */
 	public RecordRunTimeException(final String msg, Object[] parms) {
-		super(BasicTranslation.getTrans().convert(BasicTranslation.ST_ERROR, msg, parms));
+		super(BasicTranslation.getTrans().convertMsg(BasicTranslation.ST_ERROR, msg, parms));
 	}
 
 

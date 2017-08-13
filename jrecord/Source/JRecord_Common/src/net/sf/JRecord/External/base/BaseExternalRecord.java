@@ -128,7 +128,7 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 
 
 	protected ArrayList<xRecord> subRecords = new ArrayList<xRecord>();
-	protected ArrayList<ExternalField> fields = new ArrayList<ExternalField>();
+	protected ArrayList<ExternalField> fields = new ArrayList<ExternalField>(250);
 	private ArrayList<DependingOn> dependingOn = new ArrayList<DependingOn>(3);
 	private DependingOnDefinition dependingOnDef;
 

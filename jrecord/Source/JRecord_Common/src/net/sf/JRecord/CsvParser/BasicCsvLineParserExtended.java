@@ -35,15 +35,17 @@ import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Types.Type;
 
 /**
- * Basic CSV line parser. Basically
+ * Basic CSV line parser. Basically<br/>
  *
- *   - If the Field start with {Quote}; the fields is ended by {Quote}{Field-Seperator}
- *   - Otherwise the field ends with a {Field-Seperator}
- *
+ *   - If the Field start with {Quote}; the fields is ended by {Quote}{Field-Seperator}<br>
+ *   - Otherwise the field ends with a {Field-Seperator}<br/>
+ * <br>
+ * <b>Warning</b> - This class must be kept in sync with <b>BasicCsvByteLineParserExtended</b> class<br\>
+ * @see BasicCsvByteLineParserExtended
  * @author Bruce Martin
  *
  */
-public final class BasicCsvLineParserExtended extends BasicCsvLineParser implements ICsvLineParser {
+public final class BasicCsvLineParserExtended extends BasicCsvLineParser  {
 
     private static BasicCsvLineParserExtended instance = new BasicCsvLineParserExtended(false);
 
@@ -107,11 +109,11 @@ public final class BasicCsvLineParserExtended extends BasicCsvLineParser impleme
 
 	@Override
     protected String formatField(String s, int fieldType, ICsvDefinition lineDef) {
-    	String quote = lineDef.getQuote();
+    	String quote = lineDef.getQuoteDefinition().asString();
     	if (s == null) {
     		s = "";
     	} else if  (quote != null && quote.length() > 0
-		        && ( (textFieldsInQuotes & (fieldType != Type.NT_NUMBER))
+		        && ( (textFieldsInQuotes && (fieldType != Type.NT_NUMBER))
 			        ||	  s.indexOf(super.getDelimFromCsvDef(lineDef)) >= 0
 		        	|| s.indexOf(quote) >= 0
 		        	|| s.startsWith(quote)

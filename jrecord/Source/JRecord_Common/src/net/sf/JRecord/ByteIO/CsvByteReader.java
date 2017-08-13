@@ -28,6 +28,7 @@
       
 package net.sf.JRecord.ByteIO;
 
+import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Conversion;
 
 /**
@@ -35,6 +36,7 @@ import net.sf.JRecord.Common.Conversion;
  * Reads a file one line at a time (used for single byte character sets only).
  *`
  * @author Bruce Martin
+ *
  *
  */
 public class CsvByteReader extends BaseByteTextReader {
@@ -50,10 +52,10 @@ public class CsvByteReader extends BaseByteTextReader {
 	private boolean useStdEolCheck;
 
 
-	public CsvByteReader(String charSet, String fieldSep, String quote, String quoteEsc, boolean useStdEolCheck) {
+	public CsvByteReader(String charSet, byte[] fieldSep, byte[] quote, String quoteEsc, boolean useStdEolCheck) {
 		this(	null,
-				Conversion.getCsvDelimBytes(fieldSep, charSet),
-				Conversion.getBytes(quote, charSet),
+				fieldSep,
+				quote,
 				Conversion.getBytes(quoteEsc, charSet),
 				useStdEolCheck);
 
@@ -62,7 +64,7 @@ public class CsvByteReader extends BaseByteTextReader {
 
 	public CsvByteReader(byte[] eol, byte[] fieldSep, byte[] quote, byte[] quoteEsc, boolean useStdEolCheck) {
 		super();
-		super.eol = eol;
+		super.setEol(eol);
 		this.fieldSep = fieldSep;
 		this.quoteEsc = quoteEsc == null ? EMPTY : quoteEsc;
 		this.useStdEolCheck = useStdEolCheck;
@@ -255,19 +257,20 @@ public class CsvByteReader extends BaseByteTextReader {
 	}*/
 
 	protected final boolean checkFor(int pos, byte[] search) {
+		return CommonBits.checkFor(super.buffer, pos, search);
 		//System.out.println("!! " + pos + " " + (search.length - 1) );
-		if (search == null || pos < search.length - 1 || search.length == 0) {
-			return false;
-		}
-
-		int bufferStart = pos - search.length + 1;
-		for (int i = 0; i < search.length; i++) {
-			if (search[i] != super.buffer[bufferStart + i]) {
-				return false;
-			}
-		}
-
-		return true;
+//		if (search == null || pos < search.length - 1 || search.length == 0) {
+//			return false;
+//		}
+//
+//		int bufferStart = pos - search.length + 1;
+//		for (int i = 0; i < search.length; i++) {
+//			if (search[i] != super.buffer[bufferStart + i]) {
+//				return false;
+//			}
+//		}
+//
+//		return true;
 	}
 
 	private class NoQuoteEsc implements FindLines {

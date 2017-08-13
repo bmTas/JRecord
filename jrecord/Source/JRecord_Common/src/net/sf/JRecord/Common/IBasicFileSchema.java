@@ -25,6 +25,8 @@
       
 package net.sf.JRecord.Common;
 
+import net.sf.JRecord.definitiuons.CsvCharDetails;
+
 /**
  * <p>A minimal <i>File Schema</i> definition. It provides a
  * minimal set of definitions (like RecordLength & character=set)
@@ -50,6 +52,8 @@ public interface IBasicFileSchema {
 	 * @return wether it is a binary record
 	 */
 	public abstract boolean isBinary();
+	
+	public abstract boolean useByteRecord();
 
 //	public abstract boolean isBinCSV();
 
@@ -67,12 +71,25 @@ public interface IBasicFileSchema {
 	 * @return Canonical Name (ie Font name)
 	 */
 	public abstract String getFontName();
+//
+//	/**
+//	 * get the field delimiter
+//	 * @return the field delimeter
+//	 */
+//	public abstract String getDelimiter();
+
 
 	/**
-	 * get the field delimiter
-	 * @return the field delimeter
+	 * Get the field Delimiter
+	 * @return field Delimiter
 	 */
-	public abstract String getDelimiter();
+	public CsvCharDetails getDelimiterDetails();
+
+	/**
+	 * Get the Quote Details
+	 * @return Quote Details
+	 */
+	public CsvCharDetails getQuoteDetails();
 
 
 //	/**
@@ -81,11 +98,11 @@ public interface IBasicFileSchema {
 //	 */
 //	public abstract byte[] getDelimiterBytes();
 
-	/**
-	 * Get Quote (for CSV files)
-	 * @return get the Quote character
-	 */
-	public abstract String getQuote();
+//	/**
+//	 * Get Quote (for CSV files)
+//	 * @return get the Quote character
+//	 */
+//	public abstract String getQuote();
 	
 	/**
 	 * Get the maximum length of the Layout

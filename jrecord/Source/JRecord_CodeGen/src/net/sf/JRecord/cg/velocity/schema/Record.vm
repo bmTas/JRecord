@@ -15,6 +15,7 @@ package ${generateOptions.packageId}.schema;
 #end	
 #*  *##if (${currentRecord.getArrayDetailsList().size()} > 0)
 import net.sf.JRecord.cgen.impl.ArrayFieldDefinition;
+import net.sf.JRecord.cgen.impl.ArrayFieldDefinition1;
 import net.sf.JRecord.cgen.def.*;
 #*  *##end
 import net.sf.JRecord.Common.Constants;
@@ -66,7 +67,7 @@ public class Record${currentRecord.extensionName} {
       }
       record = new RecordDetail(RECORD_NAME,
                    ${currentRecord.getRecordPositionOptionStr()},
-                   ${currentRecord.getJRecordRecordType()}, t, "${currentRecord.record.getQuote()}",
+                   ${currentRecord.getJRecordRecordType()}, t, "${currentRecord.record.getQuoteDefinition().jrDefinition()}",
                    font, flds, ${currentRecord.record.getRecordStyle()});
       record.setParentRecordIndex( ${currentRecord.record.getParentRecordIndex()});
          
@@ -97,7 +98,24 @@ public class Record${currentRecord.extensionName} {
 #*      *##end
 #*  *##end
 
-#arrayDef
+#*#arrayDef
+#*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+        array${a.getFirstElement().extensionName} = new ArrayFieldDefinition1(
+#*      *##set ( $sep = '')
+                   record,
+                   new int[] {#*
+           *##foreach($count in ${a.getSizes()})#*
+               *##set ($c = ${count} + 1)#*
+           	   *#${sep}${c}#*
+               *##set ($sep = ', ')#*
+           *##end#*      *#},
+#*         *##set ( $sz =  ${a.getFieldDefs().size()} - 1)          	   
+                   record.getArrayFields(
+                       (FieldDetail)fld${a.getFieldDefs().get($sz).extensionName},
+                       "${a.getFirstElement().cobolName}")      
+        );
+#*  *##end
+
     }
     
     public void updateRecordSelection(LayoutDetail l) {

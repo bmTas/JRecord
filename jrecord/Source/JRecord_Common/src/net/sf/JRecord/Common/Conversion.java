@@ -256,24 +256,26 @@ public final class Conversion {
 	 * @return Field Value (Decimal)
 	 */
 	public static String getDecimal(final byte[] record, final int start, final int fin) {
+		return getDecimalSB(record, start, fin).toString();
+	}
+
+	public static StringBuilder getDecimalSB(final byte[] record, final int start, final int fin) {
 		int i;
 		String s;
-		StringBuffer ret = new StringBuffer(fin - start);
+		StringBuilder ret = new StringBuilder(3 + Math.max(0, 2 *(fin - start)));
 		int b;
 
 		for (i = start; i < fin; i++) {
-			b = toPostiveByte(record[i]);
+			b = ((int) 255) & record[i]; //toPostiveByte(record[i]);
 			s = Integer.toHexString(b);
 			if (s.length() == 1) {
 				ret.append('0');
 			}
 			ret.append(s);
-
 		}
 
-		return ret.toString();
+		return ret;
 	}
-
 
 	/**
 	 * Get field Value as a Bit String
@@ -401,29 +403,34 @@ public final class Conversion {
 	public static String getMainframePackedDecimal(final byte[] record,
 	        									   final int start,
 	        									   final int len) {
-	    String hex  = getDecimal(record, start, start + len);
+		StringBuilder hex  = getDecimalSB(record, start, start + len);
 	        //Long.toHexString(toBigInt(start, len).longValue());
-	    String ret  = "";
-	    String sign = "";
+	    String ret  = "0";
 
-	    if (! "".equals(hex)) {
-	        switch (hex.substring(hex.length() - 1).toLowerCase().charAt(0)) {
-	            case 'd' : sign = "-";
-	        	case 'a' :
-	        	case 'b' :
-	        	case 'c' :
-	        	case 'e' :
-	        	case 'f' :
-	        	    ret = sign + hex.substring(0, hex.length() - 1);
-	        	break;
-	        	default:
-	        	    ret = hex;
-	        }
+	    if (hex.length() > 0) {
+	    	switch (hex.charAt(hex.length() - 1)) {
+	    	case 'D':
+	    	case 'd' : hex.insert(0, '-');
+	    	case 'A' :
+	    	case 'B' :
+	    	case 'C' :
+	    	case 'E' :
+	    	case 'F' :
+	    	case 'a' :
+	    	case 'b' :
+	    	case 'c' :
+	    	case 'e' :
+	    	case 'f' :
+	    		hex.setLength(hex.length() - 1);
+	    		break;
+	    	default:
+	    	}
+    		ret = hex.toString();
 	    }
 
-	    if ("".equals(ret)) {
-	        ret = "0";
-	    }
+//	    if (ret.length() == 0) {
+//	        ret = "0";
+//	    }
 
 	    return ret;
 	}
@@ -877,18 +884,24 @@ public final class Conversion {
     }
 
 
-    public static byte[] getCsvDelimBytes(String s, String font) {
+    public static byte[] getCsvDelimBytes(String s, String font, char defaultChar) {
     	byte[] ret = null;
 
     	if (s != null) {
-			if (s.length() > 1 && (s.charAt(0) == 'x' || s.charAt(0) == 'X')) {
+			if (isHexDefinition(s)) {
 				ret = new byte[] {Conversion.getByteFromHexString(s)};
 			} else {
+				s = decodeCsvField(s, font, defaultChar);
 				ret = Conversion.getBytes(s, font);
 			}
     	}
 		return ret;
     }
+
+
+	public static boolean isHexDefinition(String s) {
+		return s.length() > 1 && (s.charAt(0) == 'x' || s.charAt(0) == 'X');
+	}
 
     public static byte getByteFromHexString(String s) {
     	int len = s.length(); 
@@ -899,13 +912,14 @@ public final class Conversion {
 		return (byte) b;
     }
 
+
 	/**
 	 * Decode the fieldDelimiter (keep hex strings e.g. x'00') as strings
 	 * @param pDelim delimiter string
 	 * @param fontName fontName
 	 * @return decoded fieldDelimiter
 	 */
-	public final static String decodeFieldDelim(String pDelim, String fontName) {
+	public final static String decodeCsvField(String pDelim, String fontName, char defaultChar) {
 		String delimiter = pDelim;
 
 		if ((pDelim == null)   
@@ -917,7 +931,7 @@ public final class Conversion {
 		} else if (pDelim.equalsIgnoreCase("<space>") ) {
 			delimiter = " ";			
 		} else {
-			delimiter = Conversion.decodeCharStr(pDelim, fontName);
+			delimiter = Conversion.decodeCharStr(pDelim, fontName, defaultChar);
 		}
 		return delimiter;
 	}
@@ -933,7 +947,7 @@ public final class Conversion {
 	 * @return character decoded character.
 	 * @throws NumberFormatException
 	 */
-	public static String decodeCharStr(String charId, String font) {
+	public static String decodeCharStr(String charId, String font, char defaultChar) {
 		int charLength = charId.length();
 		
 		if (charLength == 1) {
@@ -943,7 +957,7 @@ public final class Conversion {
 		} else if ( "<space>".equalsIgnoreCase(charId) ) {
 			charId = " ";
 		} else if (charLength > 1 && charLength < 7 ) {
-			charId = new String(decodeChar(charId, font));
+			charId = new String(decodeChar(charId, font, defaultChar));
 		}
 		
 		return charId;
@@ -960,7 +974,7 @@ public final class Conversion {
     	return delim;
 	}
 
-	public static char[] decodeChar(String charId, String font) {
+	public static char[] decodeChar(String charId, String font, char defaultChar) {
 		char[] ch = charId.toCharArray();
 		int charLength = charId.length();
 		
@@ -972,8 +986,10 @@ public final class Conversion {
 			char ch1 = charId.charAt(1);
 			switch (ch0) {
 			case '<':
-				if ("<tab>".equalsIgnoreCase(charId) || "<default>".equalsIgnoreCase(charId)) {
+				if ("<tab>".equalsIgnoreCase(charId) ) {
 					ch = TAB_ARRAY;
+				} else if ("<default>".equalsIgnoreCase(charId)) {
+					ch = new char[]{defaultChar}; 
 				} else if ( "<space>".equalsIgnoreCase(charId) ) {
 					ch = new char[]{' '};
 				} 

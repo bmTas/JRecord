@@ -25,6 +25,7 @@
       
 package net.sf.JRecord.cgen.defc;
 
+import net.sf.JRecord.definitiuons.CsvCharDetails;
 
 public interface ILayoutDetails4gen {
 
@@ -39,5 +40,5 @@ public interface ILayoutDetails4gen {
 
 	public abstract boolean isCsvLayout();
 
-	public abstract String getDelimiter();
+	public abstract CsvCharDetails getDelimiterDetails();
 }

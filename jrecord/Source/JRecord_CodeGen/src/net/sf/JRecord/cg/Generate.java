@@ -27,13 +27,15 @@ package net.sf.JRecord.cg;
 
 import java.io.IOException;
 
+import javax.xml.bind.JAXBException;
+
 import net.sf.JRecord.cg.details.GenerateOptions;
 import net.sf.JRecord.cg.details.ParseArgs;
 import net.sf.JRecord.cg.velocity.GenerateVelocity;
 
 public class Generate {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, JAXBException {
 		ParseArgs pa = new ParseArgs(args);
 
 		if (pa.get2Args("-h", "-help", pa.getArg("-?")) != null) {
@@ -42,11 +44,7 @@ public class Generate {
 			GenerateOptions opts = new GenerateOptions(pa);
 			
 			if (opts.isOk()) {
-				try {
-					new GenerateVelocity(opts);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				new GenerateVelocity(opts, "CodeGen");
 			}
 		}
 	}

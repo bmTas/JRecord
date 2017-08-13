@@ -35,7 +35,7 @@ import net.sf.JRecord.cg.common.CCode;
 import net.sf.JRecord.cgen.defc.ILayoutDetails4gen;
 
 /**
- * Class to represent a schema for use in Code Generation
+ * Class to represent a Layout (file schema) for use in Code Generation
  * @author Bruce Martin
  *
  */
@@ -46,8 +46,8 @@ public class LayoutDef extends JavaDetails {
 	private final boolean xmlSchema;
 	private final CodeGenFileName schemaName;
 	
-	public LayoutDef(ILayoutDetails4gen schema, String schemaName) {
-		super(schema.getLayoutName(), Conversion.getCopyBookId(schemaName));
+	public LayoutDef(ILayoutDetails4gen schema, String schemaName, String className) {
+		super(schema.getLayoutName(), Conversion.getCopyBookId(schemaName), className);
 		this.schema = schema;
 		this.schemaName = new CodeGenFileName(schemaName);
 		this.xmlSchema = schemaName.toLowerCase().endsWith(".xml");
@@ -60,7 +60,10 @@ public class LayoutDef extends JavaDetails {
 		schemaName = Conversion.getCopyBookId(schemaName);
 		records.ensureCapacity(schema.getRecordCount()); 
 		for (int i = 0; i < schema.getRecordCount(); i++) {
-			records.add(new RecordDef( schema.getRecord(i), schemaName ));
+			records.add(new RecordDef( 
+					schema.getRecord(i), 
+					schemaName ,
+					className == null ? null : schema.getRecord(i).getRecordName()));
 		}
 	}
 
@@ -80,17 +83,27 @@ public class LayoutDef extends JavaDetails {
 		return records;
 	}
 	
-	
+	/**
+	 * Get the JRecord Record-Type-Code
+	 * 
+	 * @return JRecord Record-Type-Code
+	 */
 	public String getJRecordLayoutType() {
 		return CCode.getRecordTypeName(schema.getLayoutType());
 	}
 	
+	/**
+	 * Get the JRecord IO-Code-name
+	 * @return
+	 */
 	public String getJRecordIoType() {
 		return CCode.getJRecordIoTypeName(schema.getFileStructure());
 	}
 
 	/**
-	 * @return the schemaName
+	 * Get the File Schema name (Cobol Copybook)
+	 * 
+	 * @return the Schema name (Cobol Copybook)
 	 */
 	public final CodeGenFileName getSchemaName() {
 		return schemaName;
@@ -111,19 +124,25 @@ public class LayoutDef extends JavaDetails {
 	}
 
 	/**
-	 * @return
+	 * Get the Csv field delimiter
+	 * 
+	 * @return Csv field delimiter
 	 * @see net.sf.JRecord.cgen.defc.ILayoutDetails4gen#getDelimiter()
 	 */
 	public String getDelimiter() {
-		String d = schema.getDelimiter();
+		String d = schema.getDelimiterDetails().jrDefinition();
 		if ("\t".equals(d)) {
 			d = "\\t";
 		}
 		return d;
 	}
 
+	/**
+	 * Get the Csv Quote char
+	 * @return Csv Quote char
+	 */
 	public String getQuote() {
-		String q = records.get(0).getRecord().getQuote();
+		String q = records.get(0).getRecord().getQuoteDefinition().jrDefinition();
 		if ("\"".equals(q)) {
 			q = "\\\"";
 		}
@@ -131,10 +150,18 @@ public class LayoutDef extends JavaDetails {
 		return q;
 	}
 	
+	/**
+	 * are field names are on the first line of a Csv file ??
+	 * @return if field names are on the first line of a Csv file
+	 */
 	public boolean areFieldNamesOnTheFirstLine() {
 		return CommonBits.areFieldNamesOnTheFirstLine(schema.getFileStructure());
 	}
 	
+	/**
+	 * wether Csv column names have been defined
+	 * @return wether Csv column names have been defined
+	 */
 	public boolean areThereColumnNames() {
 		return areFieldNamesOnTheFirstLine()
 			|| (   schema.getRecordCount() > 0

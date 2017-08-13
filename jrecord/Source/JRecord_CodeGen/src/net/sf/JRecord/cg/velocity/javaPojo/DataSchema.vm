@@ -1,0 +1,29 @@
+package ${packageId};
+#incl("schema/CommentSchema.pvm")
+
+import ${generateOptions.packageId}.def.Defs${generateOptions.schemaDefinition.extensionName};
+
+#*  *##set ( $implements = "" )
+#*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IDataSchema.vm")})
+#*      *##set ( $implements = "    implements I${generateOptions.schemaDefinition.extensionName}Schema " )
+import ${generateOptions.packageId}.def.I${generateOptions.schemaDefinition.extensionName}Schema;
+
+#*  *##end
+public abstract class Line${generateOptions.schemaDefinition.extensionName}Schema ${implements} {
+    private final Defs${generateOptions.schemaDefinition.extensionName}.Records record;
+    
+    protected Line${generateOptions.schemaDefinition.extensionName}Schema (Defs${generateOptions.schemaDefinition.extensionName}.Records record) {
+        this.record = record;
+    }
+    
+	public final Defs${generateOptions.schemaDefinition.extensionName}.Records generatedRecordType() {
+	    return record;
+	}
+	
+#foreach( $r in ${generateOptions.schemaDefinition.getRecords()})
+	public Line${r.extensionName}Pojo as${r.extensionName}() {
+	    return null;
+	}
+	
+#end
+}

@@ -260,26 +260,54 @@ public class TestConversion extends TestCase {
 	}
 	
 
-	public void testDecimal() {
-		
+	public void testPackedDecimal() {
+		char[] hexDigits = "0123456789abcdef".toCharArray();
 		byte[] bytes = {0,0,0};
 		for (byte v3 = 0; v3 < 10; v3++) {
 			bytes[1] =  v3;
 			for (int v2 = 0; v2 < 10; v2++) {
-				for (int v1 = 0; v1 < 10; v1++) {
+				for (int v1 = 10; v1 < 16; v1++) {
 					bytes[2] = (byte) (v2 * 16 + v1);
-					assertEquals(
-							new StringBuilder("000").append(v3).append(v2).append(v1).toString(), 
-							Conversion.getDecimal(bytes, 0, 3));
-					assertEquals(
-							new StringBuilder("0").append(v3).append(v2).append(v1).toString(), 
-							Conversion.getDecimal(bytes, 1, 3));
+					if (v1 != 13) {
+						assertEquals("id: " + v1,
+								new StringBuilder("000").append(v3).append(hexDigits[v2]).toString(), 
+								Conversion.getMainframePackedDecimal(bytes, 0, 3));
+						assertEquals(
+								new StringBuilder("0").append(v3).append(hexDigits[v2]).toString(), 
+								Conversion.getMainframePackedDecimal(bytes, 1, 2));
+					} else {
+						assertEquals("id: " + v2 + " "+ v1,
+								new StringBuilder("-000").append(v3).append(hexDigits[v2]).toString(), 
+								Conversion.getMainframePackedDecimal(bytes, 0, 3));
+						assertEquals(
+								new StringBuilder("-0").append(v3).append(hexDigits[v2]).toString(), 
+								Conversion.getMainframePackedDecimal(bytes, 1, 2));
+					}
 				}
 			}	
 		}
 	}
 	
-	
+
+	public void testDecimal() {
+		char[] hexDigits = "0123456789abcdef".toCharArray();
+		byte[] bytes = {0,0,0};
+		for (byte v3 = 0; v3 < 10; v3++) {
+			bytes[1] =  v3;
+			for (int v2 = 0; v2 < 16; v2++) {
+				for (int v1 = 0; v1 < 16; v1++) {
+					bytes[2] = (byte) (v2 * 16 + v1);
+					assertEquals(
+							new StringBuilder("000").append(v3).append(hexDigits[v2]).append(hexDigits[v1]).toString(), 
+							Conversion.getDecimal(bytes, 0, 3));
+					assertEquals(
+							new StringBuilder("0").append(v3).append(hexDigits[v2]).append(hexDigits[v1]).toString(), 
+							Conversion.getDecimal(bytes, 1, 3));
+				}
+			}	
+		}
+	}
+
 	public void testGetBitField() {
 		
 		byte[] bytes = {0,0,0};

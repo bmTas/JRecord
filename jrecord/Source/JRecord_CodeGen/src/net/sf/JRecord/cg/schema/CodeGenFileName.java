@@ -2,6 +2,12 @@ package net.sf.JRecord.cg.schema;
 
 import net.sf.JRecord.Common.Conversion;
 
+/**
+ * This class provides the File name in a variety of formats
+ * 
+ * @author Bruce Martin
+ *
+ */
 public final class CodeGenFileName {
 	public final String fileName;
 
@@ -11,6 +17,7 @@ public final class CodeGenFileName {
 	}
 
 	/**
+	 * Get the file-name (C:\MyDir\...)
 	 * @return the fileName
 	 */
 	public final String getFileName() {
@@ -19,6 +26,8 @@ public final class CodeGenFileName {
 
 
 	/**
+	 * Get the file name in Java format (C:/MyDir/...)
+	 * 
 	 * @return the fileName
 	 */
 	public final String getJavaFileName() {
@@ -27,6 +36,9 @@ public final class CodeGenFileName {
 
 
 	/**
+	 * Get the file name in escaped format 
+	 * so it can be used in a Java String (C:\\MyDir\\...)
+	 * 
 	 * @return the fileName
 	 */
 	public final String getEscapedFileName() {

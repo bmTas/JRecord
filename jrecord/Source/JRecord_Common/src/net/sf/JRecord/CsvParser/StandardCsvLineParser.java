@@ -37,7 +37,7 @@ import net.sf.JRecord.Types.Type;
  * @author Bruce Martin
  *
  */
-public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLineParser {
+public class StandardCsvLineParser extends BaseCsvLineParser  {
 
 	private boolean textFieldsInQuotes = false;
 	/**
@@ -72,7 +72,7 @@ public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLine
 
 
 	/**
-	 * @see net.sf.JRecord.CsvParser.ICsvLineParser#getField(int, String, ICsvDefinition)
+	 * @see net.sf.JRecord.CsvParser.ICsvCharLineParser#getField(int, String, ICsvDefinition)
 	 */
 	public String getField(int fieldNumber, String line, ICsvDefinition lineDef) {
 		String[] lineVals = split(fieldNumber, line, lineDef);
@@ -107,7 +107,7 @@ public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLine
 	}
 
 	/**
-	 * @see net.sf.JRecord.CsvParser.ICsvLineParser#setField(int, int, String, ICsvDefinition, String)
+	 * @see net.sf.JRecord.CsvParser.ICsvCharLineParser#setField(int, int, String, ICsvDefinition, String)
 	 */
 	public String setField(int fieldNumber, int fieldType, String line, ICsvDefinition lineDef, String newValue) {
 		String[] lineVals = split(fieldNumber, line, lineDef);
@@ -116,7 +116,7 @@ public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLine
 			s = "";
 		}
 		String delimiter = super.getDelimFromCsvDef(lineDef);
-		String quote = lineDef.getQuote();
+		String quote = lineDef.getQuoteDefinition().asString();
 		int quoteLength = 1;
 		if (quote != null && quote.length() > 0) {
 			quoteLength = quote.length();
@@ -150,7 +150,7 @@ public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLine
 			s = "";
 		} else {
 			String delimiter = super.getDelimFromCsvDef(lineDef);
-			String quote = lineDef.getQuote();
+			String quote = lineDef.getQuoteDefinition().asString();
 			int quoteLength = 1;
 			if (quote != null && quote.length() > 0) {
 				quoteLength = quote.length();
@@ -200,7 +200,7 @@ public class StandardCsvLineParser extends BaseCsvLineParser implements ICsvLine
 		int currFieldNumber = 0;
 		int i = 0;
 		String delimiter = super.getDelimFromCsvDef(lineDef);
-		String quote = lineDef.getQuote();
+		String quote = lineDef.getQuoteDefinition().asString();
 		int quoteLength = 1;
 		if (quote != null && quote.length() > 0) {
 			quoteLength = quote.length();

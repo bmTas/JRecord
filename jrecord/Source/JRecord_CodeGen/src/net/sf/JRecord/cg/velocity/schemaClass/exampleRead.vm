@@ -50,7 +50,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
             Record${r.extensionName} r${r.extensionName} = schema${generateOptions.schemaDefinition.extensionName}.record${r.extensionName};
 #*  *##end                                           
             AbstractLineReader reader = iob.newReader(salesFile);
-#macro (printFields)
+#macro (scPrtFields)
 #*  *##set( $sep = "        ")    
 #*  *##foreach($f in ${r.getFields(11)})
 #*      *##if (! ${f.isArrayItem()})
@@ -61,6 +61,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
 #*  *##foreach($a in ${r.getArrayDetailsList()}) 
 #*      *##if (! ${f.isArrayItem()})	
                       ${sep}line.getFieldValue(r${r.extensionName}.array${a.getFirstElement().extensionName}.get(${a.getZeroArrayIndex()})).asString()
+#*            *##set( $sep = '+ " " + ')    
 #*      *##end
 #*  *##end
 #end	
@@ -69,7 +70,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
 #*  *##if (${generateOptions.schemaDefinition.getRecords().size()} == 1)
 #*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
                 System.out.println(
-#*          *##printFields()  
+#*          *##scPrtFields()  
 ###*          *##foreach($f in ${r.getFields(11)}) 
 ##                      ${sep}line.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
 ###*              *##set( $sep = '+ " " + ')    
@@ -80,7 +81,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
 #*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
                 if (/* ${r.record.recordName} */) {
                    System.out.println(
-#*          *##printFields()  
+#*          *##scPrtFields()  
 ###*          *##foreach($f in ${r.getFields(11)}) 
 ##                      ${sep}line.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
 ###*              *##set( $sep = '+ " " + ')    

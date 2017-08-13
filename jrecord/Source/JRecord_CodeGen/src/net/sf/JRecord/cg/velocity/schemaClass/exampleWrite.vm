@@ -66,8 +66,20 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
         }
     }
 
+
+  /*
+   *   The following code contains sample assignments for every 
+   * field in the Cobol File. You should modify the code to suit
+   * your needs.
+   *   As I do not know where the data is coming from, I have used
+   * SourceOfDataForTheCobolFile instead. You should replace this with your
+   * class / classes  or remove it as needed.
+   *   To put it another way, it time for you to start Coding
+   */
+
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
-    private AbstractLine create${r.extensionName}(${ioBldr} iob, UserData data) throws IOException {
+    private AbstractLine create${r.extensionName}(${ioBldr} iob, SourceOfDataForTheCobolFile data) 
+    throws IOException {
         AbstractLine l = iob.newLine();    
         
 #*      *##foreach($f in ${r.getFields()}) 

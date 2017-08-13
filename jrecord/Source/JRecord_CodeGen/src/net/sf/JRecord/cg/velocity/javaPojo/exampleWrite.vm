@@ -69,7 +69,18 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
     }
 
  
-    private I${r.extensionName}Pojo create${r.extensionName}(I${r.extensionName}Pojo l, UserData data) throws IOException {
+  /*
+   *   The following code contains sample assignments for every 
+   * field in the Cobol File. You should modify the code to suit
+   * your needs.
+   *   As I do not know where the data is coming from, I have used
+   * SourceOfDataForTheCobolFile instead. You should replace this with your
+   * class / classes  or remove it as needed.
+   *   To put it another way, it time for you to start Coding
+   */
+   //TODO Update as required
+    private I${r.extensionName}Pojo create${r.extensionName}(I${r.extensionName}Pojo l, SourceOfDataForTheCobolFile data) 
+    throws IOException {
          
 #*      *##foreach($f in ${r.getFields()}) 
 #*          *##if (! ${f.isArrayItem()})	

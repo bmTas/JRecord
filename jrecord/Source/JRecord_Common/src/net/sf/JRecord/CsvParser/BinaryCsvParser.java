@@ -41,6 +41,9 @@ import net.sf.JRecord.Common.IFieldDetail;
  * 
  * @author Bruce Martin
  * @version 0.68
+ * 
+ * @deprecated Use <br\>ParserManagerByteLine.getInstance().get(ICsvParserIds.EXTENDED_BASIC_CSV_PARSER)<br\>
+ *       instead !!!!
  */
 
 public class BinaryCsvParser {
@@ -52,11 +55,17 @@ public class BinaryCsvParser {
     private int foundAt = 0;
 
     
-    public BinaryCsvParser(String delimiter) {
-    	look4 = Conversion.getByteFromHexString(delimiter); 
-    }
-
-    
+//    public BinaryCsvParser(String delimiter) {
+//    	look4 = Conversion.getByteFromHexString(delimiter); 
+//    }
+//
+    /**
+     * 
+     * @param delimiter
+     * 
+     *  @deprecated Use <br\>ParserManagerByteLine.getInstance().get(ICsvParserIds.EXTENDED_BASIC_CSV_PARSER)<br\>
+     *       instead !!!!
+     */
     public BinaryCsvParser(byte delimiter) {
     	look4 = delimiter; 
     }

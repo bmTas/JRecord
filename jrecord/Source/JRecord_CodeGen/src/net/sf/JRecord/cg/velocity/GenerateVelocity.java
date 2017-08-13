@@ -37,7 +37,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
+
+import javax.xml.bind.JAXBException;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -48,93 +49,140 @@ import org.apache.velocity.exception.ParseErrorException;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.cg.details.IGenerateOptions;
 import net.sf.JRecord.cg.details.TemplateDtls;
+import net.sf.JRecord.cg.details.jaxb.SkelGenDefinition;
+import net.sf.JRecord.cg.details.jaxb.Skelton;
 import net.sf.JRecord.cg.schema.RecordDef;
 
 
 public class GenerateVelocity {
 	
-	private static final String OUTPUT_FILE = ".output";
-	private static final String TEMPLATE = ".template";
-	private static final String IF = ".if.";
-	private static final String SKEL_PREF = "skel.";
+//	private static final String OUTPUT_FILE = ".output";
+//	private static final String TEMPLATE = ".template";
+//	private static final String IF = ".if.";
+//	private static final String SKEL_PREF = "skel.";
 	
-	public final List<GeneratedSkel> generatedFiles = new ArrayList<GeneratedSkel>();
+	public final List<GeneratedSkelDetails> generatedFiles = new ArrayList<GeneratedSkelDetails>();
 	
-	public GenerateVelocity(IGenerateOptions opts) throws IOException {
+	public GenerateVelocity(IGenerateOptions opts, Object sourceApp) throws IOException, JAXBException {
 		
 	
 //		try {
-			generate(opts);
+			generate(opts, sourceApp);
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
 	}
 	
-	private void generate(IGenerateOptions opts) throws IOException  {
-		int optCount;
-		Properties templateProperties = opts.getTemplateDtls().templateProperties;
-		int skelCount = Integer.parseInt(templateProperties.getProperty(SKEL_PREF + "0"));
-		String mod, outputFile, s;
-		for (int i = 1; i <= skelCount; i++) {
-			boolean gen = false;
-			mod =  Conversion.replace(
-								getString(templateProperties, SKEL_PREF + i + TEMPLATE),
-								"&template.", 
-								opts.getTemplateDtls().getTemplate()
-				   ).toString();
+	private void generate(IGenerateOptions opts, Object sourceApp) throws IOException, JAXBException  {
+		
+		SkelGenDefinition skeltonDetails = opts.getTemplateDtls().getSkeltons();
 
-			s = getString(templateProperties, SKEL_PREF + i + IF + "0");
-			if (s == null || s.length() == 0) {
-				gen = true;
-			} else {
-				optCount = Integer.parseInt(s);
-				for (int j = 1; j <= optCount; j++) { 
-					s = getString(templateProperties, SKEL_PREF + i + IF + j);
-					if (opts.getTemplateDtls().getGenerateOptions().containsKey(s.toLowerCase())) {
-						gen = true;
-						break;
-					}
-				}
-			}
-			
-			if (gen) {
-				String genAt  =  getString(templateProperties, SKEL_PREF + i + ".genAt");
-				String fileExtension = getString(templateProperties,  SKEL_PREF + i + OUTPUT_FILE);
-				String fileDescription = getString(templateProperties,  SKEL_PREF + i + ".description");
-				int st = fileExtension.indexOf('/');
-				int en = fileExtension.lastIndexOf('/');
-				String extra = "";
-				if (st >= 0 && en > st) {
-					StringBuilder b = new StringBuilder()
-											.append('.')
-											.append(fileExtension.substring(st+1, en));
-				    extra = Conversion.replace(b, "/", ".").toString();
-				}
-				String outputDir = opts.getOutputDir();
-				if ((! outputDir.endsWith("/")) && (! outputDir.endsWith("\\")) ) {
-					outputDir = outputDir + "/";
-				}
-				if (genAt != null && "record".equals(genAt.toLowerCase())) {
-					for (RecordDef r : opts.getSchemaDefinition().getRecords()) {
-						outputFile = expand(opts, r, outputDir + fileExtension);
-						genSkel(mod, outputFile, opts, r, extra);
-					    generatedFiles.add(new GeneratedSkel(outputFile, expand(opts, r, fileExtension), fileDescription));
-					}
-				} else {
-					outputFile = expand(opts, null, outputDir + fileExtension);
-					genSkel(mod, outputFile, opts, null, extra);
-				    generatedFiles.add(new GeneratedSkel(outputFile, expand(opts, null, fileExtension), fileDescription));
+		String outputFile;
+		String outputDir = opts.getOutputDir();
+		if ((! outputDir.endsWith("/")) && (! outputDir.endsWith("\\")) ) {
+			outputDir = outputDir + "/";
+		}
+
+		List<Skelton> skeltons = skeltonDetails.getLayoutSkeltons();
+		List<RecordDef> records = opts.getSchemaDefinition().getRecords();
+		if (skeltons != null) {
+			for (Skelton skel : skeltons) {
+				if (skel.generate) {
+						outputFile = expand(opts, null, outputDir + skel.getOutput());
+						genSkel(skel.getTemplateFileName(), outputFile, opts, null, skel.getPackageExtension(), sourceApp);
+					    generatedFiles.add(
+					    		new GeneratedSkelDetails(
+					    				outputFile, 
+					    				expand( opts, 
+					    						records != null && records.size() > 0 ? records.get(0) : null, 
+					    						skel.getOutput()), 
+					    						skel.getDescription()));
 				}
 			}
 		}
+		
+		skeltons = skeltonDetails.getRecordSkeltons();
+		if (skeltons != null) {
+			for (Skelton skel : skeltons) {
+				if (skel.generate) {
+					for (RecordDef r : records) {
+						outputFile = expand(opts, r, outputDir + skel.getOutput());
+						genSkel(skel.getTemplateFileName(), outputFile, opts, r, skel.getPackageExtension(), sourceApp);
+					    generatedFiles.add(
+					    		new GeneratedSkelDetails(
+					    				outputFile, 
+					    				expand(opts, r, skel.getOutput()), 
+					    				skel.getDescription()));
+					}				
+				}
+			}
+		}
+		
+//		int optCount;
+//
+//		Properties templateProperties = opts.getTemplateDtls().templateProperties;
+//		int skelCount = Integer.parseInt(templateProperties.getProperty(SKEL_PREF + "0"));
+//		String mod, outputFile, s;
+//		for (int i = 1; i <= skelCount; i++) {
+//			boolean gen = false;
+//			mod =  Conversion.replace(
+//								getString(templateProperties, SKEL_PREF + i + TEMPLATE),
+//								"&template.", 
+//								opts.getTemplateDtls().getTemplate()
+//				   ).toString();
+//
+//			s = getString(templateProperties, SKEL_PREF + i + IF + "0");
+//			if (s == null || s.length() == 0) {
+//				gen = true;
+//			} else {
+//				optCount = Integer.parseInt(s);
+//				for (int j = 1; j <= optCount; j++) { 
+//					s = getString(templateProperties, SKEL_PREF + i + IF + j);
+//					if (opts.getTemplateDtls().getGenerateOptions().containsKey(s.toLowerCase())) {
+//						gen = true;
+//						break;
+//					}
+//				}
+//			}
+//			
+//			if (gen) {
+//				String genAt  =  getString(templateProperties, SKEL_PREF + i + ".genAt");
+//				String fileExtension = getString(templateProperties,  SKEL_PREF + i + OUTPUT_FILE);
+//				String fileDescription = getString(templateProperties,  SKEL_PREF + i + ".description");
+//				int st = fileExtension.indexOf('/');
+//				int en = fileExtension.lastIndexOf('/');
+//				String extra = "";
+//				if (st >= 0 && en > st) {
+//					StringBuilder b = new StringBuilder()
+//											.append('.')
+//											.append(fileExtension.substring(st+1, en));
+//				    extra = Conversion.replace(b, "/", ".").toString();
+//				}
+//				String outputDir = opts.getOutputDir();
+//				if ((! outputDir.endsWith("/")) && (! outputDir.endsWith("\\")) ) {
+//					outputDir = outputDir + "/";
+//				}
+//				if (genAt != null && "record".equals(genAt.toLowerCase())) {
+//					for (RecordDef r : opts.getSchemaDefinition().getRecords()) {
+//						outputFile = expand(opts, r, outputDir + fileExtension);
+//						genSkel(mod, outputFile, opts, r, extra, sourceApp);
+//					    generatedFiles.add(new GeneratedSkel(outputFile, expand(opts, r, fileExtension), fileDescription));
+//					}
+//				} else {
+//					outputFile = expand(opts, null, outputDir + fileExtension);
+//					genSkel(mod, outputFile, opts, null, extra, sourceApp);
+//				    generatedFiles.add(new GeneratedSkel(outputFile, expand(opts, null, fileExtension), fileDescription));
+//				}
+//			}
+//		}
 	}
 	
-	private String getString(Properties rb, String key) {
-		if (rb.containsKey(key)) {
-			return rb.getProperty(key);
-		}
-		return null;
-	}
+//	private String getString(Properties rb, String key) {
+//		if (rb.containsKey(key)) {
+//			return rb.getProperty(key);
+//		}
+//		return null;
+//	}
 	
 	private String expand(IGenerateOptions opts, RecordDef r, String s) {
 		StringBuilder b = new StringBuilder(s);
@@ -158,7 +206,8 @@ public class GenerateVelocity {
      *
      * @throws Exception any error that occurs
      */
-    public final void genSkel(String templateFile, String outputFile, IGenerateOptions opts, RecordDef r, String packageExtension ) 
+    public final void genSkel(String templateFile, String outputFile, IGenerateOptions opts,
+    		RecordDef r, String packageExtension, Object sourceApp ) 
     throws IOException {
 
         /*
@@ -179,6 +228,7 @@ public class GenerateVelocity {
 
 		context.put("generateOptions", opts);
 		context.put("packageId", opts.getPackageId() + packageExtension);
+		context.put("SourceApplication", sourceApp);
 		if (r != null) {
 			context.put("currentRecord", r);
 		}

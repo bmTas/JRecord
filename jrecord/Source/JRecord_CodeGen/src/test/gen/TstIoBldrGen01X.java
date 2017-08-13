@@ -1,11 +1,15 @@
 package test.gen;
 
+import java.io.IOException;
+
+import javax.xml.bind.JAXBException;
+
 import net.sf.JRecord.cg.Generate;
 import net.sf.JRecord.cg.details.ArgumentOption;
 
 public class TstIoBldrGen01X {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, JAXBException {
 
 		String[] arguments1 = {
 				ArgumentOption.OPT_TEMPLATE, "basicX",

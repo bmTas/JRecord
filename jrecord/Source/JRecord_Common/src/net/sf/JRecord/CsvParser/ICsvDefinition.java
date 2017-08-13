@@ -25,6 +25,8 @@
       
 package net.sf.JRecord.CsvParser;
 
+import net.sf.JRecord.definitiuons.CsvCharDetails;
+
 public interface ICsvDefinition {
 
 	public int NORMAL_SPLIT = 1;
@@ -36,13 +38,13 @@ public interface ICsvDefinition {
 	 * Get the field Delimiter
 	 * @return field Delimiter
 	 */
-	public String getDelimiter();
+	public CsvCharDetails getDelimiterDetails();
 
 	/**
-	 * Get the Quote char
-	 * @return Quote char
+	 * Get the Quote Details
+	 * @return Quote Details
 	 */
-	public String getQuote();
+	public CsvCharDetails getQuoteDefinition();
 
 	/**
 	 * Get how the delimiter are organized (Normal, SEP_FOR_EVERY_FIELD, SEP_FOR_EVERY_FIELD_PLUS_END )

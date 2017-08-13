@@ -50,7 +50,57 @@ import net.sf.JRecord.schema.jaxb.interfaces.IFormatField;
 public interface Icb2xml2Xml extends Icb2xmlLoadOptions {
 	public static final String MAIN_XML_TAG = "CobolData";
 
-	@Override public abstract Icb2xml2Xml setFileOrganization(int fileOrganization);
+	/**
+	 * File Organization or File Structure (e.g. VB, Fixed Width Etc. Use Constants.IO_*
+	 * The main options are:<ul>
+	 *   <li><b>Constants.IO_DEFAULT</b> - JRecord will decide the actual method based on other values (The Default Value).
+	 *   It is generally better to explicitly set the File-Organisation (or file-Structure).
+	 *   <li><b>Constants.IO_STANDARD_TEXT_FILE</b> - Standard Windows/*nix/Mac text file using  \n, \n\r etc as a record (or line) delimiter.
+	 *   <li><b>Constants.IO_UNICODE_TEXT</b> - Standard Windows/*nix/Mac Unicode / double byte text file using  \n, \n\r etc 
+	 *   as a record (or line) delimiter. It ensures record are stored in character format (instead of bytes).
+	 *   <li><b>Constants.IO_FIXED_LENGTH</b> - Every Record (or line) is a standard Fixed length based on the Maximum
+	 *   schema (LayoutDetail) record length.
+	 *   <li><b>Constants.IO_FIXED_LENGTH_CHAR</b> - Fixed length character file (typically used for Fixed-Length unicode files).
+	 *   <li><b>Constants.IO_VB</b> - Mainframe VB (Variable Record length file). Records consist of a Record-Length followed by the Record-Data.
+	 *   <li><b>Constants.IO_VB_DUMP</b> - Raw Block format of a Mainframe-VB file. You get this format  if you specify RECFM=U when reading it on the mainframe.
+	 *   <li><b>Constants.IO_VB_GNU_COBOL</b> - GNU (open-Cobol) VB format.
+	 * </ul>
+	 *<pre>
+     *<b>Example:</b> 
+	 *      {@code
+     *      AbstractLineReader r = JRecordInterface1.COBOL
+     *              .newIOBuilder("file-name")
+     *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+     *}</pre> 
+     *
+     *
+     *<pre>
+	 *     <b>Variable Length</b> where the length is before the Record Data (IO_VB*):
+	 *     
+	 *           &lt;Record-LengthFixed-Sized-record-Data&lt;record-Data&gt;&lt;Record-Length&gt;&lt;record-Data&gt;&lt;Record-Length&gt;&lt;record-Data&gt;
+	 *           
+	 *          Record Record Data  	         
+	 *          Length ----+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8----+----9
+     *              11 = Record 1>
+     *              21 = Record 2 --------->
+     *              61 = Record 3 ------------------------------------------------->
+     *              25 = Record 4 ------------->
+	 *           
+	 *     <b>Fixed-Length</b> where all records a of a constant fixed Length (IO_FIXED_LENGTH and IO_FIXED_LENGTH_CHAR:
+	 *     
+	 *          &lt;Fixed-Sized-record-Data&gt;&lt;Fixed-Sized-record-Data&gt;&lt;Fixed-Sized-record-Data&gt;
+	 *          
+	 *          Fixed length file (Record Length = 15):
+	 *          
+	 *          ----+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8----+----9
+	 *          = Record 1 ---&gt;= Record 2 ---&gt;= Record 3 ---&gt;= Record 4 ---&gt;= Record 5 ---&gt;
+	 *          
+	 *     <b>CSV files</b> with \n embedded in Quotes is another variation
+	 * </pre>
+	 * 
+	 * @param fileOrganization File Organization (or File Structure)
+	 **/
+	public abstract Icb2xml2Xml setFileOrganization(int fileOrganization);
 
 	@Override public abstract Icb2xml2Xml setSplitCopybook(int splitCopybook);
 
@@ -58,7 +108,7 @@ public interface Icb2xml2Xml extends Icb2xmlLoadOptions {
 	/**
 	 * @param font the font (or character set) of the File e.g CP037 is US-EBCDIC, CP273 is German EBCDIC
 	 */
-	@Override public abstract Icb2xml2Xml setFont(String font);
+	public abstract Icb2xml2Xml setFont(String font);
 
 	@Override public abstract Icb2xml2Xml setRecordSelection(String recordName, ExternalSelection selectionCriteria);
 

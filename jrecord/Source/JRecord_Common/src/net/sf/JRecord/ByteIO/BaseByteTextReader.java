@@ -27,6 +27,7 @@ package net.sf.JRecord.ByteIO;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
@@ -60,7 +61,8 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 	//private static int MAX_LINE_SIZE = 750;
 	private static int MAX_LINE_SIZE = BUFFER_SIZE*8;
 	private static final byte[] NO_EOL = EMPTY;
-	protected byte[] eol = null;
+	protected byte[] eol = null,
+					 altEol = EMPTY;
 
 
 	protected final byte[] buffer = new byte[MAX_LINE_SIZE];
@@ -74,6 +76,7 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 
 	protected boolean check4cr = false;
 	protected boolean check4lf = false;
+	protected boolean check4crlf = false;
 
 	protected FindLines findLines = NO_EOL_FINDLINES;
 
@@ -91,6 +94,7 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 		eof = false;
 		check4lf = false;
 		check4cr = false;
+		check4crlf = false;
 
 
 		bytesInBuffer = readBuffer(in, buffer);
@@ -103,15 +107,25 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 			if (eolPos >= bytesInBuffer) {
 				eol = NO_EOL;
 			} else if (buffer[eolPos] ==  byteCR) {
-				eol = crBytes;
-				check4lf = true;
-			} else {
-				if (eolPos+1 < bytesInBuffer && buffer[eolPos+1] ==  byteCR) {
+				if (eolPos+1 < bytesInBuffer && buffer[eolPos+1] ==  byteLF) {
 					eol = lfcrBytes;
+					altEol = lfBytes;
+					check4crlf = true;
 				} else {
-					eol = lfBytes;
-					check4cr = true;
+					eol = crBytes;
+					check4lf = true;
 				}
+			} else {
+//				if (eolPos+1 < bytesInBuffer && buffer[eolPos+1] ==  byteCR) {
+//					eol = lfcrBytes;
+//					altEol = lfBytes;
+//					check4crlf = true;
+//				} else {
+					eol = lfBytes;
+					altEol = lfcrBytes;
+					check4cr = true;
+					
+//				}
 			}
 		}
 
@@ -156,18 +170,20 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 
 		int srcPos = lineArray[lno];
 
-		if (check4cr && srcPos < buffer.length && buffer[srcPos] == byteCR) {
+		if (srcPos < buffer.length && ((check4cr &&  buffer[srcPos] == byteCR) || (check4lf && buffer[srcPos] == byteLF))) {
 			srcPos += 1;
 			bytesRead += 1;
-		}
+		} 
 		if (eof) {
 			if (bytesInBuffer <= srcPos) {
 				return null;
 			}
 			ret = new byte[bytesInBuffer - srcPos];
-		} else {
+		} else { 
 			int eolLength = eol.length;
-			if (check4lf && (buffer[lineArray[lno+1] - eolLength - 1] == byteLF)) {
+			if (check4cr
+			&& (lno+1 < lineArray.length) && (lineArray[lno+1] - eolLength - 1 < buffer.length)
+			&& (buffer[lineArray[lno+1] - eolLength - 1] == byteCR)) {
 				eolLength += 1;
 			}
 			if (lno+1 < lineArray.length) {
@@ -197,6 +213,14 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 	 */
 	public final BaseByteTextReader setEol(byte[] eol) {
 		this.eol = eol;
+		if (Arrays.equals(eol, lfBytes)) {
+			altEol = lfcrBytes;
+			check4cr = true;
+		} else if (Arrays.equals(eol, lfcrBytes)) {
+			altEol = lfBytes;
+		} else if (Arrays.equals(eol, crBytes)) {
+			check4cr = true;
+		}
 		return this;
 	}
 
@@ -248,8 +272,8 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 		byte[] b = Conversion.getBytes("\r\n", charSet);
 
 		if (b[0] != byteLF || b[1] != byteCR) {
-			byteLF = b[0];
-			byteCR = b[1];
+			byteCR = b[0];
+			byteLF = b[1];
 
 			crBytes = new byte[] {byteCR};
 			lfBytes = new byte[] {byteLF};

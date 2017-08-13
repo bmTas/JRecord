@@ -46,17 +46,17 @@ import java.io.Reader;
  */
 public class CsvCharReader implements ICharReader {
 
-	private static final char[] CR_CHARS = {'\n'};
-	private static final char[] LFCR_CHARS = {'\r', '\n'};
-	private static final char[] LF_CHARS = {'\r'};
+	private static final char[] CR_CHARS = {'\r'};
+	private static final char[] CRLF_CHARS = {'\r', '\n'};
+	private static final char[] LF_CHARS = {'\n'};
 
 	private boolean useStdEolCheck;
 
 	private static final char[] EMPTY = {};
 	private static final char[] NO_EOL = EMPTY;
 
-	private final static char charLF = '\r';
-	private final static char charCR = '\n';
+	private final static char charLF = '\n';
+	private final static char charCR = '\r';
 
 	private static FindLines NO_EOL_FINDLINES = new  FindLines() {
 		@Override public void findLinesInBuffer(int start) {
@@ -157,7 +157,7 @@ public class CsvCharReader implements ICharReader {
 			if (! useStdEolCheck) {
 				char[] qEol1 = new char[quote.length + 1];
 				char[] qEol2 = new char[quote.length + 1];
-				char[] qEol3 = new char[quote.length +  LFCR_CHARS.length];
+				char[] qEol3 = new char[quote.length +  CRLF_CHARS.length];
 
 				SearchDtls searchDtls = new SearchDtls();
 
@@ -166,7 +166,7 @@ public class CsvCharReader implements ICharReader {
 				System.arraycopy(quote,           0, qEol2, 0, quote.length);
 				System.arraycopy(LF_CHARS,   0, qEol2,    quote.length, LF_CHARS.length);
 				System.arraycopy(quote,           0, qEol3, 0, quote.length);
-				System.arraycopy(LFCR_CHARS, 0, qEol3,    quote.length, LFCR_CHARS.length);
+				System.arraycopy(CRLF_CHARS, 0, qEol3,    quote.length, CRLF_CHARS.length);
 
 				FindLines eolSearch;
 				if (quoteEsc.length == 0) {
@@ -192,18 +192,23 @@ public class CsvCharReader implements ICharReader {
 			if (size >= charsInBuffer) {
 				eol = NO_EOL;
 			} else if (buffer[size] ==  charCR) {
-				eol = CR_CHARS;
-				check4lf = true;
-//				System.out.println("CR = CR "  + font);
-			} else {
-				if (size+1 < charsInBuffer && buffer[size+1] ==  charCR) {
-					eol = LFCR_CHARS;
+				if (size+1 < charsInBuffer && buffer[size+1] ==  charLF) {
+					eol = CRLF_CHARS;
 //					System.out.println("CR = LFCR " + font);
 				} else {
+					eol = CR_CHARS;
+					check4lf = true;
+//					System.out.println("CR = CR "  + font);
+				}
+			} else {
+//				if (size+1 < charsInBuffer && buffer[size+1] ==  charCR) {
+//					eol = CRLF_CHARS;
+////					System.out.println("CR = LFCR " + font);
+//				} else {
 					eol = LF_CHARS;
 					check4cr = true;
 //					System.out.println("CR = LF " + font);
-				}
+//				}
 			}
 		}
 
@@ -228,7 +233,7 @@ public class CsvCharReader implements ICharReader {
 		int lno = getLineNo();
 		int srcPos = lineArray[lno];
 
-		if (check4cr && srcPos < buffer.length && buffer[srcPos] == charCR) {
+		if (check4lf && srcPos < buffer.length && buffer[srcPos] == charLF) {
 			srcPos += 1;
 		}
 
@@ -239,7 +244,7 @@ public class CsvCharReader implements ICharReader {
 			ret = new char[charsInBuffer - srcPos];
 		} else {
 			int eolLength = eol.length;
-			if (check4lf && (buffer[lineArray[lno+1] - eolLength - 1] == charLF)) {
+			if (check4cr && (buffer[lineArray[lno+1] - eolLength - 1] == charCR)) {
 				eolLength += 1;
 			}
 //			System.out.println("--> " + lno + " ! "+ lineArray[lno+1] + " - " + srcPos + " - " + eolLength
@@ -285,10 +290,11 @@ public class CsvCharReader implements ICharReader {
 			System.arraycopy(eol,   0, quoteEol,    quote.length, eol.length);
 
 			if (check4lf) {
-				this.quoteEol2 = new char[quote.length + eol.length + 1];
+				this.quoteEol2 = new char[quote.length + 2];
 				System.arraycopy(quote, 0, quoteEol2, 0, quote.length);
-				quoteEol2[quote.length] = '\r';
-				System.arraycopy(eol,   0, quoteEol2,    quote.length+1, eol.length);
+				quoteEol2[quote.length] = '\n';
+				quoteEol2[quote.length+1] = '\r';
+				//System.arraycopy(eol,   0, quoteEol2,    quote.length+1, eol.length);
 			}
 
 //			String eols = "none ";
@@ -711,7 +717,7 @@ public class CsvCharReader implements ICharReader {
 		public boolean isQuoteEscEol(int quoteEscPos, int start) {
 			return (quoteEscPos == start - LF_CHARS.length
 					&&	(checkFor(start, LF_CHARS) || checkFor(start, CR_CHARS)))
-				|| (quoteEscPos == start - LFCR_CHARS.length && checkFor(start, LFCR_CHARS))
+				|| (quoteEscPos == start - CRLF_CHARS.length && checkFor(start, CRLF_CHARS))
 						;
 		}
 

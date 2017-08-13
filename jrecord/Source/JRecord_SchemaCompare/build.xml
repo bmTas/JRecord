@@ -1,0 +1,75 @@
+<!--
+/*************************************************************
+ * This file is part of RecordEditor.
+ * See the file "LICENSE" for copyright information and the
+ * terms and conditions for copying, distribution and
+ * modification of RecordEditor.
+ *************************************************************
+ */
+-->
+
+<project name="JRecord_Compare" default="build">
+
+	<property name="src.dir" location="src" />
+	<property name="build.dir" location="build" />
+	<property name="outputLib.dir" location="lib" />
+	<property name="docs.dir" location="docs" />
+	<property name="javadoc.dir" location="${docs.dir}/api" />
+	<property name="JRecCompare.jar" location="${outputLib.dir}/JRecordCompare.jar" />
+	<!--property name="Json2Cobol.jar" location="${outputLib.dir}/Json2Cobol.jar" /!-->
+	<property name="inputLib.dir" location="../../lib" />
+	<property name="JRecord.dir" location="../JRecord/build" />
+
+	<!--target name="JRecord" description="compile JRecord code" >
+		<ant dir="../JRecord" antfile="build.xml" output="buildout.txt" inheritall="false" />
+	</target-->
+
+
+	<target name="compile" description="compile code">
+	<!--echo file="${inputLib.dir}/SmallEditorFiles.txt"/-->
+
+		<mkdir dir="${build.dir}" />
+		<javac srcdir="${src.dir}" destdir="${build.dir}" optimize="false" target="1.5" source="1.5" debug="true">
+			<include name="net/sf/JRecord/**"/>
+			<classpath>
+				<filelist dir="../../workspace/cb2xml/lib">
+					<file name="cb2xml.jar"/>
+				</filelist>
+				<filelist dir="../../workspace/JRecord/lib">
+					<file name="JRecord.jar"/>
+				</filelist>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="build" depends="compile" description="build jar">
+		<mkdir dir="${outputLib.dir}" />
+		<jar destfile="${JRecCompare.jar}" filesonly="true">
+			<!--manifest>
+				<attribute name="Class-Path" value="cb2xml.jar JRecord.jar " />
+			    <attribute name="Main-Class" value="net.sf.cobolToJson.Data2Json"/>
+			</manifest!-->
+			<fileset dir="${build.dir}"/>
+			<fileset dir="src" >
+				<include name="net/sf/JRecord/test/schema/cobol/io/*.*cbl"/>
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="javadoc" description="javadoc">
+		<mkdir dir="${javadoc.dir}" />
+		<javadoc destdir="${javadoc.dir}">
+			<fileset dir="${src.dir}" />
+		</javadoc>
+	</target>
+
+	<target name="clean" description="clean">
+		<delete file="${Cobol2Json.jar}" />
+		<delete dir="${build.dir}" />
+		<delete dir="${outputLib.dir}" />
+		<delete dir="${javadoc.dir}" />
+	</target>
+
+
+
+</project>

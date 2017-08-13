@@ -27,6 +27,7 @@ package net.sf.JRecord.cgen.defc;
 
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Option.IRecordPositionOption;
+import net.sf.JRecord.definitiuons.CsvCharDetails;
 import net.sf.JRecord.detailsSelection.RecordSelection;
 
 public interface IRecordDetail4gen {
@@ -43,5 +44,5 @@ public interface IRecordDetail4gen {
 	
 	public int getRecordType();
 
-	public abstract String getQuote();
+	public abstract CsvCharDetails getQuoteDefinition();
 }

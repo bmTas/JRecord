@@ -43,7 +43,7 @@ public final class ReadJavaSchema${generateOptions.schemaDefinition.extensionNam
 #*  *##end
 	
             AbstractLineReader reader = iob.newReader(salesFile);
-#macro (printFields)
+#macro (scPrtFields)
 #*          *##foreach($f in ${r.getFields(11)}) 
 #*              *##if (! ${f.isArrayItem()})
                       ${sep}line.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
@@ -57,7 +57,7 @@ public final class ReadJavaSchema${generateOptions.schemaDefinition.extensionNam
 #*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
 #*          *##set( $sep = "        ")    
                 System.out.println(
-#*          *##printFields()  
+#*          *##scPrtFields()  
                 );
 #*      *##end                        
 #*  *##else	
@@ -65,7 +65,7 @@ public final class ReadJavaSchema${generateOptions.schemaDefinition.extensionNam
 #*          *##set( $sep = "        ")    
                 if (/* ${r.record.recordName} */) {
                    System.out.println(
-#*          *##printFields()  
+#*          *##scPrtFields()  
                    );
                 }
 #*      *##end                        

@@ -25,35 +25,51 @@
       
 package net.sf.JRecord.cg.schema;
 
-import net.sf.JRecord.cg.common.CCode;
+import net.sf.JRecord.cg.nameConversion.IFieldNameConversion;
+import net.sf.JRecord.cg.nameConversion.FieldNameConversionManager;
+
+//import net.sf.JRecord.cg.common.CCode;
 
 public class JavaDetails {
-	private final String cobolName, extensionName, javaName, className, constantName;
+	private final String cobolName, extensionName, javaName, className, constantName, sqlName,
+			standardisedName;
 
-	protected JavaDetails(String cobolName, String copybookName) {
+	protected JavaDetails(String cobolName, String copybookName, String classname) {
 		super();
 		
-		StringBuilder b;
-		String adjCobolName = cobolName==null? "" :cobolName;
+		IFieldNameConversion conversion = FieldNameConversionManager.getCurrentConversion();
+
+
+		String adjCobolName = conversion.toAdjCobolName(cobolName, copybookName);
+//		String adjCobolName = cobolName==null? "" :cobolName;
+//		
+//		if (copybookName != null && copybookName.length() > 0) {
+//			String lcAdjCobolName = adjCobolName.toLowerCase();
+//			String lcCopybookName = copybookName.toLowerCase();
+//			if (lcAdjCobolName.length() > lcCopybookName.length() && lcAdjCobolName.startsWith(lcCopybookName)) {
+//				adjCobolName = adjCobolName.substring(copybookName.length());
+//				if (lcAdjCobolName.startsWith("-") || lcAdjCobolName.startsWith("_")) {
+//					adjCobolName = adjCobolName.substring(1);
+//				}
+//			} 
+//		}
 		
-		if (copybookName != null && copybookName.length() > 0) {
-			String lcAdjCobolName = adjCobolName.toLowerCase();
-			String lcCopybookName = copybookName.toLowerCase();
-			if (lcAdjCobolName.length() > lcCopybookName.length() && lcAdjCobolName.startsWith(lcCopybookName)) {
-				adjCobolName = adjCobolName.substring(copybookName.length());
-				if (lcAdjCobolName.startsWith("-") || lcAdjCobolName.startsWith("_")) {
-					adjCobolName = adjCobolName.substring(1);
-				}
-			} 
-		}
 		
-		b = CCode.cobolName2JavaName(adjCobolName);
+		String name = conversion.cobolName2JavaName(adjCobolName);
 		this.cobolName = cobolName;
 	
-		this.extensionName = CCode.toSuffix(b);
-		this.javaName = CCode.toFieldName(b);
-		this.className = CCode.toClassName(b);
-		this.constantName = CCode.toConstant(b);
+		if (classname == null) {
+			this.extensionName = conversion.toSuffix(name);			
+			this.className = conversion.toClassName(name);
+		} else {
+			this.extensionName = conversion.toSuffix(classname);			
+			this.className = extensionName;
+		}
+		this.javaName = conversion.toFieldName(name);
+		this.constantName = conversion.toConstant(adjCobolName)
+				;
+		this.sqlName = conversion.toSqlName(adjCobolName);
+		this.standardisedName = conversion.string2JavaId(adjCobolName);
 	}
 
 	/**
@@ -90,6 +106,17 @@ public class JavaDetails {
 	 */
 	public final String getConstantName() {
 		return constantName;
+	}
+
+	/**
+	 * @return the sqlName
+	 */
+	public final String getSqlName() {
+		return sqlName;
+	}
+
+	public String getStandardisedName() {
+		return standardisedName;
 	}
 	
 	

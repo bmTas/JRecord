@@ -43,7 +43,7 @@ public class FieldDef extends JavaDetails {
 
 
 	public FieldDef(String cobolName, FieldDetail fieldDef, ArrayElement ai, String schemaName) {
-		super(cobolName, schemaName);
+		super(cobolName, schemaName, null);
 		this.fieldDetail = fieldDef;
 		this.arrayDetails = ai;
 		this.javaType = CCode.typeToJavaType(fieldDetail.getType(), fieldDetail.getLen(), fieldDetail.getDecimal());
@@ -106,6 +106,10 @@ public class FieldDef extends JavaDetails {
 	 */
 	public final boolean isPrimitiveNumeric() {
 		return TypeManager.isNumeric(fieldDetail.getType()) && fieldDetail.getDecimal() == 0;
+	}
+
+	public final boolean isNumeric() {
+		return TypeManager.isNumeric(fieldDetail.getType());
 	}
 
 	public final String getFieldInitialise() {

@@ -68,8 +68,8 @@ public class RecordDef extends JavaDetails {
 	 * 
 	 * @param record standard Record Description
 	 */
-	public RecordDef(IRecordDetail4gen record, String schemaName) {
-		super(record.getRecordName(), schemaName); 
+	public RecordDef(IRecordDetail4gen record, String schemaName, String className) {
+		super(record.getRecordName(), schemaName, className); 
 		this.record = record;
 		
 		int fieldCount = record.getFieldCount();
@@ -172,9 +172,9 @@ public class RecordDef extends JavaDetails {
 			char sep = '(';
 			
 			if (eg.getType() == ExternalSelection.TYPE_AND) {
-				b.append("ExternalGroupSelection.newAnd\n");
+				b.append("net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection.newAnd\n");
 			} else {
-				b.append("ExternalGroupSelection.newOr\n");
+				b.append("net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection.newOr\n");
 			}
 			for (int i = 0; i < eg.getElementCount(); i++) {
 				expandSel(b.append(sep), eg.get(i), level+1);
@@ -183,8 +183,9 @@ public class RecordDef extends JavaDetails {
 			b.append(indent).append("   )\n");
 		} else if (sel instanceof ExternalFieldSelection) {
 			ExternalFieldSelection ef = (ExternalFieldSelection) sel;
-			b.append("new ExternalFieldSelection(\"" 
-						+ ef.getFieldName() + "\", \"" + ef.getFieldValue()+ "\", \"" + ef.getOperator() + "\")\n");
+			b.append("net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection.newFieldSelection(\n" )
+			 .append(indent).append("false, \"" )
+			 .append( ef.getFieldName() + "\", \"" + ef.getOperator() + "\", \"" + ef.getFieldValue() + "\")\n");
 		} else {
 			throw new RuntimeException("Invalid Record Selection class: " + sel.getClass().getName());
 		}

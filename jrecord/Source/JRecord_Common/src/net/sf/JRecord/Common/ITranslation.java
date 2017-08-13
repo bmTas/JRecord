@@ -40,6 +40,6 @@ public interface ITranslation {
 	public String convert(int type, String s);
 	public String convert(String s);
 	public String convert(String s, String defaultStr);
-	public abstract String convert(int type, String s, Object[] params);
+	public abstract String convertMsg(int type, String s, Object... params);
 	public abstract String convert(int type, String s, String param);
 }

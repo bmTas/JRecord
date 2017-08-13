@@ -178,12 +178,13 @@ public class BaseRecordEditorCsvLoader<XRecord extends BaseExternalRecord<XRecor
         
         try {
             BufferedReader r = new BufferedReader(in);
+    		CsvDefinition csvDef = new CsvDefinition(delimiter, null);
             while ((s = r.readLine()) != null) {
                 if (!s.trim().startsWith("#")) {
                     //t = new StringTokenizer(s, seperator);
 
                 	for (j = 0; j < fields.length; j++) {
-                		fields[j] = t.getField(j, s, new CsvDefinition(delimiter, null));
+						fields[j] = t.getField(j, s, csvDef);
              //   		System.out.print("\t" + fields[j]);
                 		if (fields[j] == null) {
                 			fields[j] = "";

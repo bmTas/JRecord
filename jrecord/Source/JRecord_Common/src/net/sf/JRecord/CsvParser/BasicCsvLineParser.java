@@ -46,7 +46,7 @@ import net.sf.JRecord.Types.Type;
  * @author Bruce Martin
  *
  */
-public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLineParser {
+public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvCharLineParser {
 
     private static BasicCsvLineParser instance = new BasicCsvLineParser(false);
 	public final int delimiterOrganisation;
@@ -90,7 +90,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLinePar
     /**
      * Get a specific field from a line
      *
-     * @see ICsvLineParser#getField(int, String, ICsvDefinition)
+     * @see ICsvCharLineParser#getField(int, String, ICsvDefinition)
      */
     public final String getField(int fieldNumber, String line, ICsvDefinition lineDef) {
         String[] fields = split(line, lineDef, fieldNumber);
@@ -100,7 +100,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLinePar
         }
  //       String quote = lineDef.getQuote();
 
-        update4quote(fields, fieldNumber, lineDef.getQuote());
+        update4quote(fields, fieldNumber, lineDef.getQuoteDefinition().asString());
 //        if (isQuote(quote)
 //        && fields[fieldNumber].startsWith(quote)
 //        && fields[fieldNumber].endsWith(quote)) {
@@ -126,7 +126,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLinePar
     	if (fields == null) {
             return new ArrayList<String>(1);
         }
-		String quote = csvDefinition.getQuote();
+		String quote = csvDefinition.getQuoteDefinition().asString();
 		ArrayList<String> ret =  new ArrayList<String>(fields.length);
 		for (int i = 0; i < fields.length; i++) {
 			update4quote(fields, i, quote);
@@ -155,7 +155,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLinePar
     }
 
 	/**
-     * @see ICsvLineParser#setField(int, int, String, ICsvDefinition, String)
+     * @see ICsvCharLineParser#setField(int, int, String, ICsvDefinition, String)
      */
     public final String setField(int fieldNumber, int fieldType, String line, ICsvDefinition lineDef,
             String newValue) {
@@ -172,11 +172,11 @@ public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLinePar
     }
     
     protected String formatField(String s, int fieldType, ICsvDefinition lineDef) {
-    	String quote = lineDef.getQuote();
+    	String quote = lineDef.getQuoteDefinition().asString();
     	if (s == null) {
     		s = "";
-    	} else if  (quote != null && quote.length() > 0
-		        && (   (textFieldsInQuotes & (fieldType != Type.NT_NUMBER))
+    	} else if (quote != null && quote.length() > 0
+		        && (   (textFieldsInQuotes && (fieldType != Type.NT_NUMBER))
 		        	||	s.indexOf(super.getDelimFromCsvDef(lineDef)) >= 0
 		//        	|| s.indexOf(quote) >= 0
 		        	|| s.startsWith(quote)
@@ -224,7 +224,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvLinePar
 		int len, newLength, j;
 		String[] temp, ret;
 		boolean keep = true;
-		String quote = lineDefinition.getQuote();
+		String quote = lineDefinition.getQuoteDefinition().asString();
 
 		tok = new StringTokenizer(line, delimiter, true);
 		len = tok.countTokens();

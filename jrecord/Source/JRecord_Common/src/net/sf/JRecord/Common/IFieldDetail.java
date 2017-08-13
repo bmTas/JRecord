@@ -27,6 +27,7 @@ package net.sf.JRecord.Common;
 
 import net.sf.JRecord.Option.IOptionResult;
 import net.sf.JRecord.Option.IOptionType;
+import net.sf.JRecord.definitiuons.CsvCharDetails;
 
 /**
  * Description of one field in a Record (Line)
@@ -67,7 +68,7 @@ public interface IFieldDetail {
 
 	public abstract String getParamater();
 
-	public abstract String getQuote();
+	public abstract CsvCharDetails getQuoteDefinition();
 
 	public abstract AbstractRecord getRecord();
 

@@ -229,4 +229,20 @@ public class CommonBits {
     		return LT_BYTE;
     	}
 	}
+	
+	public static final boolean checkFor(byte[] buffer, int pos, byte[] search) {
+		//System.out.println("!! " + pos + " " + (search.length - 1) );
+		if (search == null || pos < search.length - 1 || pos >= buffer.length || search.length == 0) {
+			return false;
+		}
+
+		int bufferStart = pos - search.length + 1;
+		for (int i = 0; i < search.length; i++) {
+			if (search[i] != buffer[bufferStart + i]) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 }

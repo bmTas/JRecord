@@ -35,6 +35,28 @@ public class ExternalFieldSelection implements ExternalSelection {
 			operator=EQUALS_OPERATOR;
 	private boolean caseSensitive = true;
 	private static final String[] VALID_OPS = Constants.VALID_COMPARISON_OPERATORS;
+	
+	public static ExternalFieldSelection newFieldSelection(boolean caseSensitive, String name, String value) {
+		ExternalFieldSelection r = new ExternalFieldSelection(name, value);
+		r.setCaseSensitive(caseSensitive);
+		return r;
+	}
+	
+	public static ExternalFieldSelection newFieldSelection(boolean caseSensitive, String name, String op, String value) {
+		ExternalFieldSelection r = new ExternalFieldSelection(name, value, op);
+		r.setCaseSensitive(caseSensitive);
+		return r;
+	}
+	
+	public static ExternalFieldSelection newFieldSelection(String name, String value) {
+		ExternalFieldSelection r = new ExternalFieldSelection(name, value);
+		return r;
+	}
+	
+	public static ExternalFieldSelection newFieldSelection(String name, String op, String value) {
+		ExternalFieldSelection r = new ExternalFieldSelection(name, value, op);
+		return r;
+	}
 
 	public ExternalFieldSelection() {
 		super();

@@ -28,7 +28,6 @@ package net.sf.JRecord.cg.common;
 import java.util.Arrays;
 
 import net.sf.JRecord.Common.Constants;
-import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Option.ICobolSplitOptions;
 import net.sf.JRecord.Types.Type;
@@ -53,98 +52,142 @@ public class CCode {
     }
     
     
+//
+//	public static String toConstant(StringBuilder b) {
+//		b = Conversion.replace(new StringBuilder(b), "-", "_");
+//		return b.toString().toUpperCase();
+//    }
+//    
+//    
+//
+//	public static String toSqlName(String str) {
+//		StringBuilder b = new StringBuilder(str.toLowerCase());
+////		b = Conversion.replace(new StringBuilder(b), "-", "_");
+//		boolean toUpper = true;
+//		for (int i = 0; i < b.length(); i++) {
+//			char ch = b.charAt(i);
+//			switch (ch) {
+//			case '-' :
+//			case '_' :
+//				b.setCharAt(i, '_');
+//				toUpper = true;
+//				break;
+//			default:
+//				if (toUpper) {
+//					b.setCharAt(i, Character.toUpperCase(ch));
+//					toUpper = false;
+//				} 
+//			}
+//		}
+//		return b.toString();
+//    }
+//    
+//
+//	public static String toSuffix(String str) {
+//		StringBuilder b = new StringBuilder(str);
+//		if (b == null || b.length() == 0) {
+//			return "";
+//		}
+//		b.setCharAt(0, Character.toUpperCase(b.charAt(0)));
+//		return b.toString();
+//	}
+//	
+//	public static String toFieldName(String b) {
+//		return toJavaId(b, 'f');
+//	}
+//	
+//	public static String toClassName(String b) {
+//		return toJavaId(b, 'c');
+//	}
+//
+//	
+//	private static String toJavaId(String str, char pref) {
+//		StringBuilder b = new StringBuilder(str);
+//		if (b == null || b.length() == 0) {
+//			return "";
+//		}
+//		
+//		if ((b.charAt(0) >= 'A' && b.charAt(0) <= 'Z')) {
+//			b.setCharAt(0, Character.toLowerCase(b.charAt(0)));
+//		} else if (b.charAt(0) < 'a' || b.charAt(0) > 'z') {
+//			b.insert(0, pref);
+//		}
+//		return b.toString();
+//	}
+//
+//	public static String toJavaId(boolean isCobol, String name) {
+//		if (isCobol) {
+//			return cobolName2JavaName(name);
+//		}
+//		return string2JavaId(name);
+//	}
+//	
+//	public static String cobolName2JavaName(String cobolName) {
+//		return convertToPgmId(cobolName.toLowerCase(), cobolName.toUpperCase(), false).toString();
+//	}
+//
+//	
+//	public static String string2JavaId(String name) {
+//		return convertToPgmId(name, name.toUpperCase(), true).toString();
+//	}
+//
+//
+//
+//	private static StringBuilder convertToPgmId(String name, String ucCobolName, boolean keepSeperators) {
+//		int length = ucCobolName.length();
+//		StringBuilder b = new StringBuilder(length);
+//
+//		boolean toUCase = false; 
+//		char c;
+//		
+//		for (int i = 0; i < length; i++) {
+//			c = name.charAt(i);
+//			switch (c) {
+//			case ':':
+//			case ';':
+//			case '*':
+//			case '=':
+//			case '+':
+//			case '\'':
+//			case '\"':
+//			case '~':
+//			case '!':
+//			case '|':
+//			case '@':
+//			case '#':
+//			case '$':
+//			case '%':
+//			case ')':
+//			case '[':
+//			case ']':
+//				break;
+//			case '(':
+//			case ',':
+//				b.append('_');
+//				toUCase = false;
+//				break;
+//			case '.':
+//			case ' ':
+//			case '-':
+//			case '_':
+//				if (keepSeperators) {
+//					b.append('_');
+//				}
+//				toUCase = true;
+//				break;
+//			default:
+//				if (toUCase) {
+//					b.append(ucCobolName.charAt(i));
+//					toUCase = false;
+//				} else {
+//					b.append(c);
+//				}
+//			}
+//		}
+//		return b;
+//	}
+//	
 
-	public static String toConstant(StringBuilder b) {
-		b = Conversion.replace(new StringBuilder(b), "-", "_");
-		return b.toString().toUpperCase();
-    }
-    
-    
-
-	public static String toSuffix(StringBuilder b) {
-		if (b == null || b.length() == 0) {
-			return "";
-		}
-		b.setCharAt(0, Character.toUpperCase(b.charAt(0)));
-		return b.toString();
-	}
-	
-	public static String toFieldName(StringBuilder b) {
-		return toJavaId(b, 'f');
-	}
-	
-	public static String toClassName(StringBuilder b) {
-		return toJavaId(b, 'c');
-	}
-
-	
-	private static String toJavaId(StringBuilder b, char pref) {
-		if (b == null || b.length() == 0) {
-			return "";
-		}
-		
-		if ((b.charAt(0) >= 'A' && b.charAt(0) <= 'Z')) {
-			b.setCharAt(0, Character.toLowerCase(b.charAt(0)));
-		} else if (b.charAt(0) < 'a' || b.charAt(0) > 'z') {
-			b.insert(0, pref);
-		}
-		return b.toString();
-	}
-
-	
-	public static StringBuilder cobolName2JavaName(String cobolName) {
-		String lcCobolName = cobolName.toLowerCase();
-		String ucCobolName = cobolName.toUpperCase();
-		int length = cobolName.length();
-		StringBuilder b = new StringBuilder(length);
-
-		boolean toUCase = false; 
-		char c;
-		
-		for (int i = 0; i < length; i++) {
-			c = lcCobolName.charAt(i);
-			switch (c) {
-			case ':':
-			case ';':
-			case '.':
-			case '*':
-			case '=':
-			case '+':
-			case '\'':
-			case '\"':
-			case '~':
-			case '!':
-			case '|':
-			case '@':
-			case '#':
-			case '$':
-			case '%':
-			case ')':
-			case '[':
-			case ']':
-				break;
-			case '(':
-			case ',':
-				b.append('_');
-				toUCase = false;
-				break;
-			case ' ':
-			case '-':
-			case '_':
-				toUCase = true;
-				break;
-			default:
-				if (toUCase) {
-					b.append(ucCobolName.charAt(i));
-					toUCase = false;
-				} else {
-					b.append(c);
-				}
-			}
-		}
-		return b;
-	}
-	
 	/**
 	 * Get the JRecord-Constant Type name for a type. This is for use in code generation
 	 * 
@@ -169,6 +212,7 @@ public class CCode {
 			JAVA_TYPE_NAME [Type.ftCharRightJust            ] = "ftCharRightJust";
 			JAVA_TYPE_NAME [Type.ftCharNullTerminated       ] = "ftCharNullTerminated";
 			JAVA_TYPE_NAME [Type.ftCharNullPadded           ] = "ftCharNullPadded";
+			JAVA_TYPE_NAME [Type.ftCharNoTrim               ] = "ftCharNoTrim";
 			
 			JAVA_TYPE_NAME [Type.ftHex                      ] = "ftHex";
 			JAVA_TYPE_NAME [Type.ftNumLeftJustified         ] = "ftNumLeftJustified";
@@ -274,9 +318,9 @@ public class CCode {
 		    DIALECT[ICopybookDialects.FMT_FS2000]                  = "FMT_FS2000";
 		    DIALECT[ICopybookDialects.FMT_GNU_COBOL_MVS]           = "FMT_GNU_COBOL_MVS";
 		    DIALECT[ICopybookDialects.FMT_GNU_COBOL_MF]            = "FMT_GNU_COBOL_MF";
-		    DIALECT[ICopybookDialects.FMT_OPEN_COBOL_BE]           = "FMT_OPEN_COBOL_BE";
+		    DIALECT[ICopybookDialects.FMT_GNU_COBOL_BE]            = "FMT_GNU_COBOL_BE";
 		    DIALECT[ICopybookDialects.FMT_FS2000_BE]               = "FMT_FS2000_BE";                                                           
-		    DIALECT[ICopybookDialects.FMT_OPEN_COBOL_MVS_BE]       = "FMT_OPEN_COBOL_MVS_BE";
+		    DIALECT[ICopybookDialects.FMT_GNU_COBOL_MVS_BE]        = "FMT_GNU_COBOL_MVS_BE";
 		    DIALECT[ICopybookDialects.FMT_OC_MICRO_FOCUS_BE]       = "FMT_OC_MICRO_FOCUS_BE";
 		    DIALECT[ICopybookDialects.FMT_MICRO_FOCUS]             = "FMT_MICRO_FOCUS";                                           
 		    DIALECT[ICopybookDialects.FMT_MAINFRAME_COMMA_DECIMAL] = "FMT_MAINFRAME_COMMA_DECIMAL";
@@ -344,14 +388,17 @@ public class CCode {
 		    IO_TYPE [Constants.IO_DEFAULT              ] = "IO_DEFAULT";
 		    IO_TYPE [Constants.IO_STANDARD_TEXT_FILE   ] = "IO_STANDARD_TEXT_FILE";
 		    IO_TYPE [Constants.IO_FIXED_LENGTH_RECORDS ] = "IO_FIXED_LENGTH_RECORDS";
+		    IO_TYPE [Constants.IO_FIXED_BYTE_ENTER_FONT] = "IO_FIXED_LENGTH_RECORDS";
 		    IO_TYPE [Constants.IO_BINARY_IBM_4680      ] = "IO_BINARY_IBM_4680";
 		    IO_TYPE [Constants.IO_VB                   ] = "IO_VB";
 		    IO_TYPE [Constants.IO_VBS                  ] = "IO_VBS";
 		    IO_TYPE [Constants.IO_VB_DUMP              ] = "IO_VB_DUMP";
 		    IO_TYPE [Constants.IO_VB_FUJITSU           ] = "IO_VB_FUJITSU";
-		    IO_TYPE [Constants.IO_VB_OPEN_COBOL        ] = "IO_VB_OPEN_COBOL";
+		    IO_TYPE [Constants.IO_VB_GNU_COBOL         ] = "IO_VB_GNU_COBOL";
 		    IO_TYPE [Constants.IO_BIN_TEXT             ] = "IO_BIN_TEXT";
+		    IO_TYPE [Constants.IO_TEXT_BYTE_ENTER_FONT ] = "IO_BIN_TEXT";
 		    IO_TYPE [Constants.IO_FIXED_LENGTH_CHAR    ] = "IO_FIXED_LENGTH_CHAR";
+		    IO_TYPE [Constants.IO_FIXED_CHAR_ENTER_FONT] = "IO_FIXED_LENGTH_CHAR";
 		    IO_TYPE [Constants.IO_UNKOWN_FORMAT        ] = "IO_UNKOWN_FORMAT";
 		    IO_TYPE [Constants.IO_WIZARD               ] = "IO_WIZARD";                                         
 		    IO_TYPE [Constants.IO_MICROFOCUS           ] = "IO_MICROFOCUS";
@@ -376,6 +423,7 @@ public class CCode {
 		    IO_TYPE [Constants.IO_CONTINOUS_NO_LINE_MARKER   ] = "IO_CONTINOUS_NO_LINE_MARKER";
 		    IO_TYPE [Constants.IO_UNICODE_CSV_NAME_1ST_LINE  ] = "IO_UNICODE_CSV_NAME_1ST_LINE";
 		    IO_TYPE [Constants.IO_STANDARD_UNICODE_TEXT_FILE ] = "IO_STANDARD_UNICODE_TEXT_FILE";
+		    IO_TYPE [Constants.IO_TEXT_CHAR_ENTER_FONT       ] = "IO_STANDARD_UNICODE_TEXT_FILE";
 		    IO_TYPE [Constants.IO_PROTO_SD_SINGLE_MESSAGE    ] = "IO_PROTO_SD_SINGLE_MESSAGE";
 		}
 	}

@@ -10,6 +10,28 @@
 <tr><td>Font</td><td><b>${generateOptions.font}</b></td></tr>
 </table>
 <h2>Structure of the Generated Code</h2>
+<p>This code was generated using the <b>stdPojo</b> Template. This template generates, an Interface(with Getter/setter methods for the Cobol fields)
+for each Cobol Record. This interface has 2 implementing classes:<ul>
+ <li>One (<b>JR</b>) is implemented as a wrapper around a <b>JRecord</b> line class. This class has 2 methods
+ <b>toPojo</b> and <b>set</b> to convert to/from the equivalent pojo class.</li>
+ <li>The other (<b>Pojo</b>) is implemented with standard java classes. It does not reference JRecord.
+</ul>
+<p>For DTAR020 you would get:
+<pre>
+
+       <b>Interface                    Implementing class</b>
+       
+                             +---- <b>LineDtar020JR</b>      - DTAR020 implemented as a wrapper around a
+                             |     |           ^        JRecord Line 
+                             |     | <b>toPojo()</b>  | <b>set(ILineDtar020 dtar020)</b>
+     <b>ILineDtar020Upd</b>    -----+     |           |                   
+                             |     |           |
+                             |     V           | 
+                             +---- <b>LineDtar020Pojo</b>    - Dtar020 implemented using standard java
+                                                        types, it does not reference JRecord
+
+</pre> 
+<p>In general (where ${RecordName} is the record name) you get:</p> 
 <pre>
 
  Basically for each Cobol Record the following is generated
@@ -25,15 +47,17 @@
                              +---- <b>Line${RecordName}Pojo</b>    - Implemented using standard java
                                                               types, it does not reference JRecord
 
-</pre>                                                            
+</pre> 
+
+
 <p>The <b>toPojo</b> and <b>set</b> of <b>Line${RecordName}JR</b> can be used
 to convert one line into the other. There are other classes like the sample read and write 
 programs but the <b>Line</b> interfaces/classes are crucial.
 <p><b>Note:</b> ${RecordName} is the Record name, there will be ILine... Line...JR/Pojo generated for each
 record type in the file.
 <h2>Read${generateOptions.schemaDefinition.extensionName} and Write${generateOptions.schemaDefinition.extensionName} programs</h2>
-<p>The <a href="${generateOptions.getPackageDir()}Example/Read${generateOptions.schemaDefinition.extensionName}.java">Read${generateOptions.schemaDefinition.extensionName}.java</a>
-and <a href="${generateOptions.getPackageDir()}Example/Write${generateOptions.schemaDefinition.extensionName}.java">Write${generateOptions.schemaDefinition.extensionName}.java</a>
+<p>The <a href="${generateOptions.getPackageDir()}example/Read${generateOptions.schemaDefinition.extensionName}.java">Read${generateOptions.schemaDefinition.extensionName}.java</a>
+and <a href="${generateOptions.getPackageDir()}example/Write${generateOptions.schemaDefinition.extensionName}.java">Write${generateOptions.schemaDefinition.extensionName}.java</a>
 programs are sample read / write programs. They are not intended to be useful in them selves (they might not compile).
 They are intended to serve as a <b>base</b> from which you can <b>build upon</b>.
 #foreach( $r in ${generateOptions.schemaDefinition.getRecords()})
@@ -42,13 +66,13 @@ They are intended to serve as a <b>base</b> from which you can <b>build upon</b>
 has get.../set... methods for all the Cobol fields in the ${r.extensionName} Record Definition. 
 The Interface <a href="${generateOptions.getPackageDir()}def/I${r.extensionName}Pojo.java">I${r.extensionName}Pojo</a> is <b>implemented</b> by 2 classes:
 <ul>
- <li><a href="${generateOptions.getPackageDir()}Data/Line${r.extensionName}JR.java">Line${r.extensionName}JR.java</a> is Wrapper for a standard <i>JRecord Line</i> with the appropriate Getter/setter methods.
+ <li><a href="${generateOptions.getPackageDir()}data/Line${r.extensionName}JR.java">Line${r.extensionName}JR.java</a> is Wrapper for a standard <i>JRecord Line</i> with the appropriate Getter/setter methods.
 Behind the scenes it call the line.getFieldValue(..) ... methods to get/retrieve the values. There are the 2 other Methods for converting to/from a  <b>Line${r.extensionName}Pojo</b>:
   <ul>
     <li><b>toPojo()</b> method which converts this line into a <b>Line${r.extensionName}Pojo</b> class.
     <li><b>set(I${r.extensionName} value)</b> which will update the line with the values from a  <b>Line${r.extensionName}Pojo</b> line.
   </ul>
- <li><a href="${generateOptions.getPackageDir()}Data/Line${r.extensionName}Pojo.java">Line${r.extensionName}Pojo.java</a> implments the Interface using standard java types. It does not use or reference JRecord.
+ <li><a href="${generateOptions.getPackageDir()}data/Line${r.extensionName}Pojo.java">Line${r.extensionName}Pojo.java</a> implments the Interface using standard java types. It does not use or reference JRecord.
 </ul>
 
 <p>The <a href="${generateOptions.getPackageDir()}def/I${r.extensionName}Pojo.java">I${r.extensionName}Pojo</a> Interface extends 2 other interfaces:<ul>
@@ -58,16 +82,17 @@ get... methods.
 set... methods.
 </ul>
 
-<p>Finally there is the <a href="${generateOptions.getPackageDir()}Data/Code${generateOptions.schemaDefinition.extensionName}.java">Code.java</a> class that has methods to copy between to classes that implement the  
+<p>Finally there is the <a href="${generateOptions.getPackageDir()}data/Code${generateOptions.schemaDefinition.extensionName}.java">Code.java</a> class that has methods to copy between to classes that implement the  
 <a href="${generateOptions.getPackageDir()}def/I${r.extensionName}Pojo.java">I${r.extensionName}Pojo</a> interface.
 #end
+#set ( $r = ${generateOptions.schemaDefinition.getRecords().get(0)} )
 <h2>Other Generated classes</h2>
 <p>There are 2 other classes:</p>
 <table>
- <tr><td><a href="${generateOptions.getPackageDir()}Data/FieldNames${generateOptions.schemaDefinition.extensionName}.java">FieldNames${generateOptions.schemaDefinition.extensionName}</a></td>
+ <tr><td><a href="${generateOptions.getPackageDir()}data/FieldNames${generateOptions.schemaDefinition.extensionName}.java">FieldNames${generateOptions.schemaDefinition.extensionName}</a></td>
      <td>The is a static constant for each record
                 and each record-constant has all the fields defined</td</tr>
- <tr><td><a href="${generateOptions.getPackageDir()}Data/Code${generateOptions.schemaDefinition.extensionName}.java">Code${generateOptions.schemaDefinition.extensionName}</a></td>
+ <tr><td><a href="${generateOptions.getPackageDir()}data/Code${generateOptions.schemaDefinition.extensionName}.java">Code${generateOptions.schemaDefinition.extensionName}</a></td>
  <td>Contains code to assign (copy the values from) a I${r.extensionName} to a class that implements I${r.extensionName}Pojo.
 </table                
 

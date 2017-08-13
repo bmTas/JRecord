@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SkelGenDefinition>
+    <LayoutSkeltons>
+        <skelton description="Sample Read program" output="&amp;directory./example/Read&amp;suffix..java" template="&amp;template./exampleRead.vm"/>
+        <skelton description="Sample Write program" output="&amp;directory./example/Write&amp;suffix..java" template="&amp;template./exampleWrite.vm"/>
+        <skelton output="&amp;directory./data/FieldNames&amp;suffix..java" template="standard/FieldNames.vm"/>
+        <skelton description="Pojo IoBuilder class" output="&amp;directory./io/IoBuilder&amp;suffix..java" template="&amp;template./IoBuilder.vm"/>
+        <skelton 
+        	template="javaPojo/Defs.vm"
+        	output="&amp;directory./def/Defs&amp;suffix..java"
+        	description="Class holding Enum of Records and related code"/>
+        <skelton 
+        	template="javaPojo/DataSchema.vm"
+        	output="&amp;directory./data/Line&amp;suffix.Schema.java"
+        	description="Holds Schema Level Parent of all the record-pojo's"/>
+  </LayoutSkeltons>
+    <RecordSkeltons>
+        <skelton description="Java POJO class that represents the &quot;Cobol&quot; record" output="&amp;directory./data/Line&amp;recordSuffix.Pojo.java" template="javaPojo/DataPojo.vm"/>
+        <skelton 
+        	template="&amp;template./Convert.vm"
+        	output="&amp;directory./data/Convert&amp;recordSuffix..java"
+        	description="Convert Bytes/JRecord Line to/from pojo"/>
+    </RecordSkeltons>
+</SkelGenDefinition>

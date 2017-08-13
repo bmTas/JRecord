@@ -35,6 +35,7 @@ import net.sf.JRecord.Option.IOptionResult;
 import net.sf.JRecord.Option.IOptionType;
 import net.sf.JRecord.Option.OptionResult;
 import net.sf.JRecord.Option.OptionType;
+import net.sf.JRecord.definitiuons.CsvCharDetails;
 
 
 /**
@@ -64,19 +65,21 @@ public class FieldDetail implements IFieldDetail {
 			return 0;
 		}
 
-		/**
-		 * @see net.sf.JRecord.Common.AbstractRecord#getQuote()
-		 */
-		public String getQuote() {
-			return null;
-		}
+//		public String getQuote() {
+//			return null;
+//		}
 
-		/* (non-Javadoc)
-		 * @see net.sf.JRecord.Common.AbstractRecord#getQuoteUneditted()
-		 */
+//		/* (non-Javadoc)
+//		 * @see net.sf.JRecord.Common.AbstractRecord#getQuoteUneditted()
+//		 */
+//		@Override
+//		public String getQuoteUneditted() {
+//			return null;
+//		}
+
 		@Override
-		public String getQuoteUneditted() {
-			return null;
+		public CsvCharDetails getQuoteDefinition() {
+			return CsvCharDetails.DEFAULT_QUOTE;
 		}
 
 		/**
@@ -355,18 +358,24 @@ public class FieldDetail implements IFieldDetail {
 	 * @see net.sf.JRecord.Common.AbstractFieldDetails#getQuote()
 	 */
 
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.Common.IFieldDetail#getQuote()
-	 */
-	@Override
-	public String getQuote() {
-        return record.getQuote();
-    }
+//	/* (non-Javadoc)
+//	 * @see net.sf.JRecord.Common.IFieldDetail#getQuote()
+//	 */
+//	@Override
+//	public String getQuote() {
+//        return record.getQuote();
+//    }
 
 
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.Common.AbstractFieldDetails#getRecord()
 	 */
+
+	@Override
+	public CsvCharDetails getQuoteDefinition() {
+		return record.getQuoteDefinition();
+	}
+
 
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.Common.IFieldDetail#getRecord()

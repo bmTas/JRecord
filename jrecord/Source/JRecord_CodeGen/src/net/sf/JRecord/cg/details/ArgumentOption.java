@@ -30,6 +30,13 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.Def.BasicConversion;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 
+
+/**
+ * This class represents a JRecord-code in a variety of different formats
+ * 
+ * @author Bruce Martin
+ *
+ */
 public class ArgumentOption {
 	public static final ArgumentOption MAINFRAME_DIALECT = new ArgumentOption("Mainframe",      "ICopybookDialects.FMT_MAINFRAME",     "Mainframe Cobol", ICopybookDialects.FMT_MAINFRAME);
 	public static final String OPT_SCHEMA   = "-Schema";
@@ -52,16 +59,20 @@ public class ArgumentOption {
 	public static final String JAVA_POJO_TEMPLATE = "javaPojo";
 	public static final ArgumentOption TEMPLATE_JAVA_POJO = stdTemplateArg(JAVA_POJO_TEMPLATE,   "Generate java classes for each Cobol Record");
 	public static final ArgumentOption TEMPLATE_BASIC = stdTemplateArg("basic",  "Generate example code using JRecord IO Builders");
-	public static final ArgumentOption TEMPLATE_STD_POJO = stdTemplateArg("stdPojo",   "Generate java wrapper classes for each Cobol Record");
+	public static final ArgumentOption TEMPLATE_STD_POJO = stdTemplateArg("stdPojo",   "Generate java wrapper & pojo classes for each Cobol Record");
 	public static final ArgumentOption TEMPLATE_SCHEMA_CLASS = stdTemplateArg("schemaClass", "Generate example code using JRecord IO Builders + Schema details");
 	public static final ArgumentOption TEMPLATE_LINE_WRAPPER = stdTemplateArg("lineWrapper", "Generate Wrapper classes for JRecord-Lines");
 	public static final ArgumentOption TEMPLATE_STANDARD = stdTemplateArg("standard",  "Generate example code using JRecord IO Builders + Field Name Class");
+	public static final ArgumentOption TEMPLATE_POJO = stdTemplateArg("pojo",  "Generate pojo classes for each Cobol Record + IoBuilder");
+	public static final ArgumentOption TEMPLATE_POJO_INTERFACE = stdTemplateArg("pojoWithInterface",  "Generate pojo classes (with interfaces) for each Cobol Record + IoBuilder");
 
 	public static final ArgumentOption[] TEMPLATE_OPTIONS = {
 		TEMPLATE_STANDARD,
 		TEMPLATE_LINE_WRAPPER,
 		TEMPLATE_SCHEMA_CLASS,
 		TEMPLATE_STD_POJO,
+		TEMPLATE_POJO,
+		TEMPLATE_POJO_INTERFACE,
 		TEMPLATE_JAVA_POJO,
 		TEMPLATE_BASIC,
 	};
@@ -121,6 +132,7 @@ public class ArgumentOption {
 	}
 	
 	/**
+	 * CodeGen name for the option
 	 * @return the option
 	 */
 	public final String getOption() {
@@ -128,19 +140,24 @@ public class ArgumentOption {
 	}
 	
 	/**
-	 * @return the code
+	 * JRecord name for the option
+	 * @return the JRecord name for the option
 	 */
 	public final String getCode() {
 		return code;
 	}
 	
 	/**
-	 * @return the utlCode
+	 * Utility name (e.g. Cobol2Xml) for the object.
+	 * 
+	 * @return the Utility name (e.g. Cobol2Xml) for the object.
 	 */
 	public final String getUtlCode() {
 		return utlCode;
 	}
 	/**
+	 * Get the description for the option
+	 * 
 	 * @return the description
 	 */
 	public final String getDescription() {
@@ -148,12 +165,17 @@ public class ArgumentOption {
 	}
 	
 	/**
-	 * @return the id
+	 * HGet the JRecord Integer code for the object
+	 * 
+	 * @return the JRecord Integer code
 	 */
 	public final int getId() {
 		return id;
 	}
+	
 	/**
+	 * Get the Cobol2Csv name for the option
+	 * 
 	 * @return the cbl2csvCode
 	 */
 	public final String getCbl2csvCode() {

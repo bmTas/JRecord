@@ -28,8 +28,6 @@ package net.sf.JRecord.CsvParser;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.JRecord.Common.Conversion;
-
 public class CsvParser {
 
 	/**
@@ -58,7 +56,7 @@ public class CsvParser {
 //		int currFieldNumber = 0;
 		//int i = 0;
 		String delimiter = getDelimFromCsvDef(lineDef);
-		String quote = lineDef.getQuote();
+		String quote = lineDef.getQuoteDefinition().asString();
 //		int quoteLength = 1;
 //		if (quote != null && quote.length() > 0) {
 //			quoteLength = quote.length();
@@ -115,12 +113,7 @@ public class CsvParser {
 	 * @return
 	 */
 	protected final String getDelimFromCsvDef(ICsvDefinition lineDef) {
-		String delimiter = lineDef.getDelimiter();
-		if (delimiter == null || delimiter.length() < 5) {
-			
-		} else if (delimiter.startsWith("x'")) {
-			delimiter = Conversion.toString(new byte[] { Conversion.getByteFromHexString(delimiter) }, lineDef.getFontName());
-		}
+		String delimiter = lineDef.getDelimiterDetails().asString();
 		return delimiter;
 	}
 

@@ -26,6 +26,7 @@
 package net.sf.JRecord.Common;
 
 import net.sf.JRecord.External.Def.DependingOnDtls;
+import net.sf.JRecord.definitiuons.CsvCharDetails;
 
 /**
  * Very Basic RecordLayout interface. It is used by the field Definitions to get
@@ -40,9 +41,9 @@ public interface AbstractRecord {
 	 * Get quote
 	 * @return Get quote
 	 */
-	public abstract String getQuote();
+	public abstract CsvCharDetails getQuoteDefinition();
 
-	public abstract String getQuoteUneditted();
+//	public abstract String getQuoteUneditted();
 
 	/**
 	 * @return the parentRecordIndex

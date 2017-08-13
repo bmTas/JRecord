@@ -11,10 +11,22 @@ import java.util.Arrays;
 import ${imp};
 #*  *##end
 
+#*  *##set ( $interfaceTxt = "")
+#*  *##set ( $overide = "")
+#*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IDataPojo.vm")})
 import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
 import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;
 
-public class Line${currentRecord.extensionName}Pojo implements I${currentRecord.extensionName}Pojo {
+
+#*      *##set ( $interfaceTxt = "implements I${currentRecord.extensionName}Pojo")
+#*      *##set ( $overide = "@Override")
+#*  *##end
+#*  *##set ( $extends = "" )
+#*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/DataSchema.vm")})
+#*      *##set ( $extends = "extends Line${generateOptions.schemaDefinition.extensionName}Schema " )
+#*  *##end	
+
+public class Line${currentRecord.extensionName}Pojo ${extends} ${interfaceTxt} {
 
 #*  *##foreach($f in ${currentRecord.getFields()}) 
 #*      *##if (! ${f.isArrayItem()})	
@@ -31,46 +43,57 @@ public class Line${currentRecord.extensionName}Pojo implements I${currentRecord.
 #*  *##foreach($a in ${currentRecord.getArraySameSize()}) 
     private int[] length${a.get(0).getFirstElement().extensionName} = {${a.get(0).getSizesAsString()}};
 #*  *##end	
-
-#*  *##if (${currentRecord.getArrayDetailsList().size()} > 0)
+#*  *##if (${currentRecord.getArrayDetailsList().size()} > 0 || ${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/DataSchema.vm")})
     public Line${currentRecord.extensionName}Pojo() {
-#*      *##foreach($aa in ${currentRecord.getArraySameSize()})
-#*          *##set( $st = "")
-#*          *##set( $last = ${aa.get(0).getSizes().size()} - 1)
-#*          *##if( $last > 0)
-#*              *##foreach ($ii in [1 .. ${last}])
-#*                  *##set( $iim1 = $ii - 1)
+#*      *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/DataSchema.vm")})
+#*          *##set ( $extends = "extends Line${generateOptions.schemaDefinition.extensionName}Schema " )
+        super( ${generateOptions.packageId}.def.Defs${generateOptions.schemaDefinition.extensionName}
+                      .Records.${currentRecord.constantName} );
+                      
+#*      *##end	
+	
+#*      *##if (${currentRecord.getArrayDetailsList().size()} > 0)
+#*          *##foreach($aa in ${currentRecord.getArraySameSize()})
+#*              *##set( $st = "")
+#*              *##set( $last = ${aa.get(0).getSizes().size()} - 1)
+#*              *##if( $last > 0)
+#*                  *##foreach ($ii in [1 .. ${last}])
+#*                      *##set( $iim1 = $ii - 1)
         ${st}for (int idx${ii} = 0;idx${ii} < length${aa.get(0).getFirstElement().extensionName}[${iim1} - 1]; idx${ii}++) {
-#*                  *##foreach($a in $aa)
-#*                  *##set( $size = "length${aa.get(0).getFirstElement().extensionName}[${iim1}]")
+#*                      *##foreach($a in $aa)
+#*                          *##set( $size = "length${aa.get(0).getFirstElement().extensionName}[${iim1}]")
         ${st}    ${a.getFirstElement().javaName} #arrayIdx(${iim1}) = new ${a.getFirstFieldDef().getJavaType()}#foreach ($i in [$ii ..${a.getSizes().size()}])[${size}]#set($size = "")#end ;       	
-#*                  *##end#*
-                *##set( $st = "${st}    ")
+#*                      *##end#*
+                        *##set( $st = "${st}    ")
+#*                  *##end
 #*              *##end
-#*          *##end
-#*          *##foreach($a in ${aa})
+#*              *##foreach($a in ${aa})
         ${st}${a.getFirstElement().javaName} #arrayIdx(${last}) = new ${a.getFirstFieldDef().getJavaType()}[length${aa.get(0).getFirstElement().extensionName}[${last}]];       	
-#*          *##end
-#*          *##foreach($a in ${aa})
+#*              *##end
+#*              *##foreach($a in ${aa})
+#*                  *##if (${a.getFirstFieldDef().getJavaType()} == "short")
+        ${st}Arrays.fill(${a.getFirstElement().javaName} #arrayIdx(${last}), (short) ${a.getFirstFieldDef().getFieldInitialise()});      	
+#*                 *##else
         ${st}Arrays.fill(${a.getFirstElement().javaName} #arrayIdx(${last}), ${a.getFirstFieldDef().getFieldInitialise()});      	
-#*          *##end
-#*          *##if( $last > 0)
+#*                 *##end
+#*              *##end
+#*              *##if( $last > 0)
         #foreach($ii in [1 .. ${last}])}#end
+#*              *##end
+
 #*          *##end
-
-
 #*      *##end
     }
 #*  *##end
 
 #*  *##foreach($f in ${currentRecord.getFields()}) 
 #*      *##if (! ${f.isArrayItem()})
-    @Override
+    ${overide}
     public ${f.getJavaType()} get${f.extensionName}() {
         return ${f.javaName};
     }
     
-    @Override
+    ${overide}
     public void set${f.extensionName}(${f.getJavaType()} value) {
         this.${f.javaName} = value;
     }
@@ -79,12 +102,12 @@ public class Line${currentRecord.extensionName}Pojo implements I${currentRecord.
 #*  *##end
 
 #*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
-    @Override
+    ${overide}
     public ${a.getFirstFieldDef().getJavaType()}  get${a.getFirstElement().extensionName}(${a.getIndexParameters()}) {
         return ${a.getFirstElement().javaName}${a.getArrayAccessParameters()};
     }
   
-    @Override
+    ${overide}
     public void set${a.getFirstElement().extensionName}(${a.getIndexParameters()}, ${a.getFirstFieldDef().getJavaType()} value) {
         ${a.getFirstElement().javaName}${a.getArrayAccessParameters()} = value;
     }
@@ -96,12 +119,40 @@ public class Line${currentRecord.extensionName}Pojo implements I${currentRecord.
     public int  get${a.get(0).getFirstElement().extensionName}ArrayLength(int indexNumber) {
         return length${a.get(0).getFirstElement().extensionName}[indexNumber];
     }
-#*  *##end	
-
+#*  *##end
+#*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("gencode")})
+	
     public void set(I${currentRecord.extensionName} value) {
         Code${generateOptions.schemaDefinition.extensionName}
             .assign${currentRecord.extensionName}(
                 this, value);
     }
-}
+#*  *##else
+#*      *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IDataPojo.vm")})	
+    public void set(I${currentRecord.extensionName} pojo) {
+#*         *##foreach($f in ${currentRecord.getFields()}) 
+#*             *##if (! ${f.isArrayItem()})
+       ${f.javaName} = pojo.get${f.extensionName}();
+#*             *##end   
+#*         *##end    
+    
+#*         *##foreach($as in ${currentRecord.getArraySameSize()}) 
+#*             *##set($n = "from.get${as.get(0).getFirstElement().extensionName}ArrayLength")
+##${as.get(0).getForLoops("pojo")}    
+${as.get(0).getForLoops("pojo.get${as.get(0).getFirstElement().extensionName}")}    
+#*             *##foreach($a in ${as}) 
+           ${a.getFirstElement().javaName}[${a.getCallIndexParameters()}] = pojo.get${a.getFirstElement().extensionName}(${a.getCallIndexParameters()});
+#*             *##end
+${as.get(0).getEndForLoops()}    
+#*         *##end    
+    }
+#*     *##end     
+#*  *##end	
+#*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/DataSchema.vm")})	
+	
+	public Line${currentRecord.extensionName}Pojo as${currentRecord.extensionName}() {
+	    return this;
+	}
+#*  *##end	
 
+}

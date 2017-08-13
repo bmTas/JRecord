@@ -94,7 +94,7 @@ public class TypeDecimalHex extends TypeNum {
         	endOfField = end;
         }
         
-        s = Conversion.getDecimal(record, position - 1, endOfField);
+        s = Conversion.getDecimalSB(record, position - 1, endOfField).toString();
 
         if (isNumeric) {
             s = addDecimalPoint(s, field.getDecimal());

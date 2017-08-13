@@ -64,7 +64,7 @@ public class RecordException extends RuntimeException {
 	 * @param msg Error Message
 	 */
 	public RecordException(final String msg, Object[] parms) {
-		super(BasicTranslation.getTrans().convert(BasicTranslation.ST_ERROR, msg, parms));
+		super(BasicTranslation.getTrans().convertMsg(BasicTranslation.ST_ERROR, msg, parms));
 	}
 
 
@@ -73,7 +73,7 @@ public class RecordException extends RuntimeException {
 	}
 
 	public RecordException(String msg, Object[] parms, Throwable exception) {
-		super(BasicTranslation.getTrans().convert(BasicTranslation.ST_ERROR, msg, parms), exception);
+		super(BasicTranslation.getTrans().convertMsg(BasicTranslation.ST_ERROR, msg, parms), exception);
 	}
 
 }

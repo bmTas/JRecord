@@ -259,7 +259,6 @@ public class BasicConversion implements AbstractConversion {
 
 	@Override
 	public String getFormatAsString(int idx, int format) {
-		// TODO Auto-generated method stub
 		return Integer.toString(format);
 	}
 

@@ -58,20 +58,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
 #*  *##end
 
            AbstractLineReader reader = iob.newReader(dataFile);
-###macro (printFieldsWrapper)
-###*  *##set( $sep = "        ")
-###*  *##foreach($f in ${r.getFields(11)})
-###*      *##if (! ${f.isArrayItem()})
-##                      ${sep}line${r.extensionName}JR.get${f.extensionName}()
-###*            *##set( $sep = '+ " " + ')
-###*      *##end
-###*  *##end
-###*  *##foreach($a in ${r.getArrayDetailsList()})
-###*      *##if (! ${f.isArrayItem()})
-##                      ${sep}line${r.extensionName}JR.get${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()})
-###*      *##end
-###*  *##end
-###end
+
            while ((line = reader.read()) != null) {
                lineNum += 1;
 #*  *##if (${generateOptions.schemaDefinition.getRecords().size()} == 1)
@@ -110,6 +97,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
             e.printStackTrace();
         }
     }
+ 
 
     public static void main(String[] args) {
         new Read${generateOptions.schemaDefinition.extensionName}();

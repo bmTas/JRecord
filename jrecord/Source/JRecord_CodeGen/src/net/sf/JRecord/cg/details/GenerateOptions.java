@@ -27,18 +27,23 @@ package net.sf.JRecord.cg.details;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
+import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.cg.schema.CodeGenFileName;
 import net.sf.JRecord.cg.schema.LayoutDef;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.def.IO.builders.IIOBuilder;
 import net.sf.JRecord.utilityClasses.ParseArguments;
+
 
 public class GenerateOptions implements IGenerateOptions {
 //	private static final String JAVA_POJO_TEMPLATE = "javaPojo";
@@ -71,6 +76,8 @@ public class GenerateOptions implements IGenerateOptions {
 	
 	private TemplateDtls templateDtls;
 	
+	private StringBuilder message = new StringBuilder();
+	
 //	private final Properties templateProperties;
 	
 	public GenerateOptions(ParseArguments pa) {
@@ -82,7 +89,7 @@ public class GenerateOptions implements IGenerateOptions {
 		String schemaName   = required(pa, ArgumentOption.OPT_SCHEMA);
 		String templateDir  = pa.getArg(ArgumentOption.OPT_TEMPLATE_DIRECTORY, "");
 
-		templateDtls = new TemplateDtls(templateDir, decodeTemplate(pa.getArg(ArgumentOption.OPT_TEMPLATE)));
+		templateDtls = new TemplateDtls(templateDir, decodeTemplate(pa.getArg(ArgumentOption.OPT_TEMPLATE)), false);
 
 //		if (BASIC_TEMPLATE.equals(template)) {
 		if (templateDtls.hasOption(TemplateDtls.T_REQUIRE_PACKAGE_ID)) {
@@ -96,7 +103,7 @@ public class GenerateOptions implements IGenerateOptions {
 		}
 		if (! templateDtls.hasOption(TemplateDtls.T_SPLIT_ALLOWED)) {
 			if (splitVal != null && splitVal.length() > 0) {
-				System.out.println("Split is not supported for " + templateDtls.template + " !!!");
+				appendMessage( "Split is not supported for " + templateDtls.template + " !!!");
 				ok = false;
 			}
 		}
@@ -137,7 +144,7 @@ public class GenerateOptions implements IGenerateOptions {
 			for (String s : recSelList) {
 				recordSelect.add((recSel = new RecordSelect(s)));
 				if (! recSel.ok()) {
-					System.out.println("Invalid Record Selection=" + s);
+					appendMessage("Invalid Record Selection=" + s);
 				}
 			}
 		}
@@ -166,20 +173,29 @@ public class GenerateOptions implements IGenerateOptions {
 			if (xmlSchema) {
 				ioBldr = JRecordInterface1.SCHEMA_XML.newIOBuilder(schemaName);
 			} else {
-				ICobolIOBuilder cblIbBldr= JRecordInterface1.COBOL.newIOBuilder(schemaName)
+				ICobolIOBuilder cblIoBldr= JRecordInterface1.COBOL.newIOBuilder(schemaName)
 						.setDialect(dialect.id)
 						.setSplitCopybook(splitOption.id)
 						.setFileOrganization(io.id)
 						.setDropCopybookNameFromFields(dropCopybookName)
 						.setFont(font);
 				for (RecordSelect rs : recordSelect) {
-					cblIbBldr.setRecordSelection(rs.recordName, newFieldSelection(rs.fieldName, "=", rs.value));
+					cblIoBldr.setRecordSelection(rs.recordName, newFieldSelection(rs.fieldName, "=", rs.value));
 				}
 
-				ioBldr = cblIbBldr;
+				ioBldr = cblIoBldr;
 			}
 			try {
-				t = new LayoutDef(ioBldr.getLayout(), schemaName);
+				LayoutDetail schema = ioBldr.getLayout();
+				
+				templateDtls.setMultiRecord(schema.getRecordCount() > 1);
+				if (! templateDtls.hasOption(TemplateDtls.T_DUPLICATE_FIELD_NAMES)) {
+					check4DuplicateFieldNames(schema);
+				} else {
+					check4DuplicateArrayFieldNames(schema);
+				}
+
+				t = new LayoutDef(schema, schemaName, null);
 			} catch (RecordException e) {
 				processError(e);
 			} catch (IOException e) {
@@ -188,6 +204,80 @@ public class GenerateOptions implements IGenerateOptions {
 		} 				
 		
 		schemaDefinition = t;
+	}
+
+	/**
+	 * @param schema
+	 * @throws RuntimeException
+	 */
+	private void check4DuplicateFieldNames(LayoutDetail schema)
+			throws RuntimeException {
+		Set<String> duplicateFieldNames = schema.getDuplicateFieldNames();
+		if (duplicateFieldNames != null && duplicateFieldNames.size() > 0) {
+			HashSet<String> dups = new HashSet<String>(duplicateFieldNames.size() * 3 / 2);
+			Iterator<String> dupIterator = duplicateFieldNames.iterator();
+			while (dupIterator.hasNext()) {
+				String s = dupIterator.next();
+				int indexOf = s.indexOf('(');
+				if (indexOf > 0) {
+					s = s.substring(0, indexOf - 1);
+				}
+				dups.add(s);
+			}
+			
+			StringBuilder b = new StringBuilder("Duplicate Field Names:");
+			
+			dupIterator = dups.iterator();
+			for (int i = 0; dupIterator.hasNext(); i++) {
+				if (i % 3 == 0) {
+					b.append('\n');
+				}
+				b.append('\t').append(dupIterator.next());
+			}
+			System.err.println( b.toString() );
+			System.err.println();
+			throw new RuntimeException("Duplicate Cobol FieldNames ar not allowed for this Template");				
+		}
+	}
+	
+	private void check4DuplicateArrayFieldNames(LayoutDetail schema)
+			throws RuntimeException {
+		Set<String> duplicateFieldNames = schema.getDuplicateFieldNames();
+		if (duplicateFieldNames != null && duplicateFieldNames.size() > 0) {
+			HashSet<String> dups = new HashSet<String>(duplicateFieldNames.size() * 3 / 2);
+			Iterator<String> dupIterator = duplicateFieldNames.iterator();
+			while (dupIterator.hasNext()) {
+				String s = dupIterator.next();
+				int indexOf = s.indexOf('(');
+				if (indexOf > 0) {
+					dups.add( s.substring(0, indexOf - 1));
+				}
+			}
+			
+			if (dups.size() > 0) {
+				StringBuilder b = new StringBuilder("Duplicate Array Field Names:");
+				
+				dupIterator = dups.iterator();
+				for (int i = 0; dupIterator.hasNext(); i++) {
+					if (i % 3 == 0) {
+						b.append('\n');
+					}
+					b.append('\t').append(dupIterator.next());
+				}
+				System.err.println( b.toString() );
+				System.err.println();
+				throw new RuntimeException("Duplicate Cobol Array FieldNames ar not allowed");
+			}
+		}
+	}
+
+	
+	private void appendMessage(String msg) {
+		System.out.println(msg);
+		if (message.length() > 0) {
+			message.append("\n\n");
+		}
+		message.append(msg);
 	}
 	
 	private String decodeTemplate(String template) {
@@ -477,6 +567,10 @@ public class GenerateOptions implements IGenerateOptions {
 		return ConstantVals.CONSTANT_VALUES;
 	}
 	
+	
+	public String getMessage() {
+		return message.toString();
+	}
     
     public static ExternalFieldSelection newFieldSelection(String fieldName, String op, String value) {
     	ExternalFieldSelection r = new ExternalFieldSelection(fieldName, value, op);

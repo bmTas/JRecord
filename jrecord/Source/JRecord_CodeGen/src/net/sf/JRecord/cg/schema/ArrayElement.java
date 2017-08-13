@@ -44,13 +44,18 @@ public final class ArrayElement extends JavaDetails {
 	public static ArrayElement newArrayItem(String arrayElement, String schemaName) {
 		arrayElement = arrayElement.trim();
 		int idx = arrayElement.indexOf('(');
+		
 		return new ArrayElement(arrayElement.substring(0, idx - 1), idx, arrayElement, schemaName);
 	}
 	private ArrayElement(String arrayName, int idx, String arrayElement, String schemaName) {
-		super(arrayName, schemaName);
+		super(arrayName, schemaName, null);
 		this.arrayName = arrayName;
 		
-		StringTokenizer t = new StringTokenizer(arrayElement.substring(idx+1, arrayElement.length() - 1), ",");
+		int idx2 = arrayElement.indexOf(')');
+		if (idx2 >= 0 && idx2 < arrayElement.length() - 1 ) {
+			throw new RuntimeException("Duplicate Array Field: " + arrayElement);
+		}
+		StringTokenizer t = new StringTokenizer(arrayElement.substring(idx+1, /*idx2>0 ? idx2:*/ arrayElement.length() - 1), ",");
 		List<Integer> li = new ArrayList<Integer>(7);
 		while (t.hasMoreTokens()) {
 			li.add(Integer.parseInt(t.nextToken().trim()));

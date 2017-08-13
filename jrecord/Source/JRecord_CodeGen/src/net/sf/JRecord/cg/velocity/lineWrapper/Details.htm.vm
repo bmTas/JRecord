@@ -2,18 +2,21 @@
 <h2>Interface code for Copybook ${generateOptions.getSchemaDefinition().schemaShortName}</h2>
 <p>This is a brief description of code generated for copybook ${generateOptions.getSchemaDefinition().schemaShortName} 
 for use with the <a href="https://sourceforge.net/projects/jrecord/">JRecord project</a>.
+<p>The code was generated with the <b>lineWrapper</b> template; it generates JavaBean like <i>wrapper</i>
+class for a <b>JRecord Line</b>. The wrapper class will have Getter/Setter methods for the <b>Cobol</b> fields.
+<p>Classes generated include:</p>
 <ul>
- <li><a href="${generateOptions.getPackageDir()}Data/FieldNames${generateOptions.schemaDefinition.extensionName}.java">FieldNames${generateOptions.schemaDefinition.extensionName}.java</a>
+ <li><a href="${generateOptions.getPackageDir()}data/FieldNames${generateOptions.schemaDefinition.extensionName}.java">FieldNames${generateOptions.schemaDefinition.extensionName}.java</a>
 holds all the <b>Cobol</b> field names as constants
 <p></p>
 #foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
- <li><a href="${generateOptions.getPackageDir()}Data/Line${r.extensionName}JR.java">Line${r.extensionName}JR.java</a> Wrapper for a JRecord Line with Getter/setter for all
+ <li><a href="${generateOptions.getPackageDir()}data/Line${r.extensionName}JR.java">Line${r.extensionName}JR.java</a> Wrapper for a JRecord Line with Getter/setter for all
 the Cobol Fields in the ${r.extensionName} Record Definition.
 #end
 <p></p>
- <li><a href="${generateOptions.getPackageDir()}Example/Read${generateOptions.schemaDefinition.extensionName}.java">Read${generateOptions.schemaDefinition.extensionName}.java</a>
+ <li><a href="${generateOptions.getPackageDir()}example/Read${generateOptions.schemaDefinition.extensionName}.java">Read${generateOptions.schemaDefinition.extensionName}.java</a>
 Sample <i>Read</i> program for your Cobol Copybook.  The program may not compile, it is intended as a starting point for you to expand upon.
-  <li><a href="${generateOptions.getPackageDir()}Example/Write${generateOptions.schemaDefinition.extensionName}.java">Write${generateOptions.schemaDefinition.extensionName}.java</a>
+  <li><a href="${generateOptions.getPackageDir()}example/Write${generateOptions.schemaDefinition.extensionName}.java">Write${generateOptions.schemaDefinition.extensionName}.java</a>
 Sample <i>Write</i> program for your Cobol Copybook. The program will not compile, it is intended as a starting point for you to expand upon.
 </ul>
 

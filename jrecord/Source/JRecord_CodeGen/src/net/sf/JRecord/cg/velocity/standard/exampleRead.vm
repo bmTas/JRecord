@@ -54,6 +54,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
 #*  *##foreach($a in ${r.getArrayDetailsList()})
 #*      *##if (! ${f.isArrayItem()})
                       ${sep}line.getFieldValue(r${r.extensionName}.${a.getFirstElement().javaName}.get(${a.getZeroArrayIndex()})).asString()
+#*            *##set( $sep = '+ " " + ')
 #*      *##end
 #*  *##end
 #end
