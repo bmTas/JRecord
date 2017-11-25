@@ -106,7 +106,9 @@ public class TstGroupNames1 extends TestCase {
 		
 		(new RecordEditorXmlWriter()).writeCopyBook(os, ioBldr1.getExternalRecord(), new TextLog());
 		
-		IIOBuilder ioBldr2 = JRecordInterface1.SCHEMA_XML.newIOBuilder(new ByteArrayInputStream(os.toByteArray()), "COMPANY-RECORD");
+		byte[] byteArray = os.toByteArray();
+		System.out.println(new String(byteArray));
+		IIOBuilder ioBldr2 = JRecordInterface1.SCHEMA_XML.newIOBuilder(new ByteArrayInputStream(byteArray), "COMPANY-RECORD");
 		tst(ioBldr2);
 	}
 

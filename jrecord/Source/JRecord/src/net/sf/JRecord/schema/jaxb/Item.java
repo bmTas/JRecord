@@ -52,7 +52,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.External.Def.DependingOnDefinition;
 import net.sf.JRecord.cgen.def.IArrayAnyDimension;
+import net.sf.JRecord.detailsBasic.IItemDetails;
 import net.sf.JRecord.schema.IArrayItemCheck;
+import net.sf.cb2xml.def.ICondition;
 
 
 /**
@@ -216,6 +218,51 @@ public class Item implements IItem {
     @XmlSchemaType(name = "anySimpleType")
     protected String value;
 
+    public Item() {
+    }
+    
+
+    
+    public Item(IItemDetails itm) {
+    	
+    	this.arrayDefinition = itm.getArrayDefinition();
+    	this.condition       = Condition.toConditionList(itm.getConditions());
+    	this.dependingOn     = itm.getDependingOn();
+    	this.displayLength   = itm.getDisplayLength();
+    	this.fieldDefinition = itm.getFieldDefinition();
+    	this.fieldName       = itm.getFieldName();
+    	this.name            = this.fieldName;
+    	this.nameToUse       = this.fieldName;
+    	
+    	List<? extends IItemDetails> childItems = itm.getChildItems();
+    	if (childItems == null || childItems.size() == 0) {
+    		this.itemType = TYPE_FIELD;
+    	} else {
+    		item = new ArrayList<Item>(childItems.size());
+    		for (IItemDetails ci : childItems) {
+    			item.add(new Item(ci));
+    		}
+    	}
+    	//this.itemType = itm.getType();
+    	justified =itm.getJustified().getName();
+    	this.level= itm.getLevelString();
+    	this.edittedNumeric = itm.getNumericClass().editNumeric;
+    	this.numeric = itm.getNumericClass().numeric;
+    	this.occurs = itm.getOccurs();
+    	this.occursMin = itm.getOccursMin();
+    	this.picture = itm.getPicture();
+    	this.position = itm.getPosition();
+    	this.redefines = itm.getRedefinesFieldName();
+    	this.redefined = itm.isFieldRedefined() ? "T" : "";
+    	this.fieldRedefined = itm.isFieldRedefined();
+    	this.scale = itm.getScale();
+    	this.storageLength = itm.getStorageLength();
+    	this.signSeparate = itm.getSignClause().signSeparate;
+    	this.signPosition = itm.getSignClause().signPosition.getName();
+    	this.sync = itm.isSync() ? true : null;
+    	this.usage = itm.getUsage().getName();
+    }
+    
     /**
      * Gets the value of the condition property.
      * 
@@ -238,7 +285,7 @@ public class Item implements IItem {
      * 
      * 
      */
-    public List<Condition> getCondition() {
+    public List<? extends ICondition> getCondition() {
         if (condition == null) {
             condition = new ArrayList<Condition>();
         }

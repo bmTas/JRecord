@@ -37,6 +37,9 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.Log.TextLog;
 import net.sf.JRecord.Numeric.ICopybookDialects;
+
+import java.io.IOException;
+
 import junit.framework.TestCase;
 
 public class TstSplitingCobolCopybooks extends TestCase {
@@ -63,22 +66,22 @@ public class TstSplitingCobolCopybooks extends TestCase {
 	};
 	
 	
-	public void testRepeating()  throws RecordException {
+	public void testRepeating()  throws RecordException, IOException {
 		tstImport("example.cbl", CopybookLoader.SPLIT_HIGHEST_REPEATING);
 		tstImport("example1.cbl", CopybookLoader.SPLIT_HIGHEST_REPEATING);
 		tstImport("example2.cbl", CopybookLoader.SPLIT_HIGHEST_REPEATING);
 		tstImport("example3.cbl", CopybookLoader.SPLIT_HIGHEST_REPEATING);
 	}
 	
-	public void test01()  throws RecordException {
+	public void test01()  throws RecordException, IOException {
 		tstImport("example3.cbl", CopybookLoader.SPLIT_01_LEVEL);
 	}
 	
-	public void testRedef()  throws RecordException {
+	public void testRedef()  throws RecordException, IOException {
 		tstImport("updExample.cbl", CopybookLoader.SPLIT_REDEFINE);
 	}
 	
-	private void tstImport(String copybook, int splitOption) throws RecordException {
+	private void tstImport(String copybook, int splitOption) throws RecordException, IOException {
 	   	String copyName = this.getClass().getResource(copybook).getFile();
 
     	CobolCopybookLoader loaderXML = new CobolCopybookLoader();

@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.CharLine;
-import net.sf.JRecord.Details.IFieldValue;
+import net.sf.JRecord.Details.fieldValue.IFieldValue;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
@@ -74,7 +74,7 @@ public class TestFieldValue extends TestCase {
 		IFieldValue fieldValue = line.getFieldValue(FIELD1);
 		assertTrue((isPresent) == fieldValue.isFieldPresent());
 		assertTrue(false == fieldValue.isLowValues());
-		assertTrue(false ==  fieldValue.isHighValues());
+		assertTrue(false == fieldValue.isHighValues());
 		assertTrue((tstId == SPACES_TST) ==  fieldValue.isSpaces());
 	}
 	

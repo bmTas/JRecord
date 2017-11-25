@@ -136,7 +136,7 @@ public class TstOccursDepending23 extends TestCase {
 		
 		for (int i = salesCount; i< 12; i++) {
 			for (int w = 0; w < 5; w++) {
-				assertFalse(line.getFieldValue("daily-sales (" + i + ", " + w + ")").isFieldInRecord());
+				assertFalse(" i=" + i + ", w=" + w, line.getFieldValue("daily-sales (" + i + ", " + w + ")").isFieldInRecord());
 				assertFalse(line.getFieldValue("daily-value (" + i + ", " + w + ")").isFieldInRecord());
 			}
 		}
@@ -211,7 +211,7 @@ public class TstOccursDepending23 extends TestCase {
 		
 		int calculatedPosition = fld.calculateActualPosition(line);
 		if (pos != calculatedPosition) {
-			//calculatedPosition = fld.calculateActualPosition(line);
+			calculatedPosition = fld.calculateActualPosition(line);
 			assertEquals(fld.getName(), pos, calculatedPosition);
 		}
 		

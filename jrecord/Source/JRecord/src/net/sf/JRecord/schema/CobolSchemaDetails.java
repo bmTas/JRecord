@@ -36,8 +36,7 @@ import java.util.List;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.IO.builders.SchemaIOBuilder;
 import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
-import net.sf.JRecord.schema.jaxb.ICopybook;
-import net.sf.JRecord.schema.jaxb.IItem;
+import net.sf.JRecord.schema.jaxb.ItemRecordDtls;
 
 /**
  * Class Holds <ul>
@@ -69,7 +68,7 @@ public final class CobolSchemaDetails {
 	 *   schema.getRecord(index)      <--->       recordItems.get(index)
 	 * </pre>
 	 */
-	public final List<? extends IItem> recordItems;
+	public final List<ItemRecordDtls> recordItems;
 	
 	
 	/**
@@ -79,7 +78,7 @@ public final class CobolSchemaDetails {
 	 * <li>Array Definition details
 	 * </ul> 
 	 */
-	public final ICopybook cobolCopybook;
+//	public final ICopybook cobolCopybook;
 	
 	/** IOBuilder for the schema */
 	public final ISchemaIOBuilder ioBuilder;
@@ -89,13 +88,13 @@ public final class CobolSchemaDetails {
 	
 	
 	protected CobolSchemaDetails(LayoutDetail schema,
-			List<? extends IItem> cobolItems, ICopybook cobolCopybook, 
+			List<ItemRecordDtls> cobolItems, //ICopybook cobolCopybook, 
 			ISchemaIOBuilder ioBuilder,
 			ISchemaInformation copybookDetails) {
 		super();
 		this.schema = schema;
 		this.recordItems = cobolItems;
-		this.cobolCopybook = cobolCopybook;
+//		this.cobolCopybook = cobolCopybook;
 		this.ioBuilder = ioBuilder;
 		this.copybookInformation = copybookDetails;
 	}

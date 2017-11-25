@@ -36,8 +36,11 @@ import net.sf.JRecord.Common.AbstractFieldValue;
  * It mainly contains high/low value methods 
  * 
  * @author Bruce Martin
+ * 
+ * @deprecated use either AbstractFieldValue or {@link net.sf.JRecord.Details.fieldValue.IFieldValue }
  *
  */
+@Deprecated
 public interface IFieldValue extends AbstractFieldValue {
 
 	public abstract void setToHighValues();

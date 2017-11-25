@@ -30,9 +30,17 @@ package net.sf.JRecord.IO.builders;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 
 import net.sf.JRecord.External.CopybookLoaderFactory;
 import net.sf.JRecord.External.ExternalRecord;
@@ -44,10 +52,14 @@ import net.sf.JRecord.def.IO.builders.ICobolCopybookIOProvider;
 import net.sf.JRecord.def.IO.builders.IIOCopybookProvider;
 import net.sf.JRecord.def.IO.builders.Icb2xmlIOProvider;
 
+
 public class FileSchemaBuilder implements ICobolCopybookIOProvider, IIOCopybookProvider, Icb2xmlIOProvider {
 	private static final CopybookLoaderFactory lf = CopybookLoaderFactory.getInstance();
+	private static final String STANDARD_FONT = "UTF-8";
+
 	
 	private final int schemaType;
+	private boolean indentXml = false;
 
 	public FileSchemaBuilder(int schemaType) {
 		super();
@@ -61,7 +73,6 @@ public class FileSchemaBuilder implements ICobolCopybookIOProvider, IIOCopybookP
 	public CblIOBuilderMultiSchema newIOBuilder(String copybookFilename) {
     	try {
     		return new CblIOBuilderMultiSchema(copybookFilename, (ICopybookLoaderStream) lf.getLoader(schemaType), ICopybookDialects.FMT_MAINFRAME);
-			//return new CblIOBuilderSchemaFilename(copybookFileame, lf.getLoader(schemaType), ICopybookDialects.FMT_MAINFRAME);
 		} catch (ReflectiveOperationException e) {
 			throw new RuntimeException(e);
 		}
@@ -117,11 +128,23 @@ public class FileSchemaBuilder implements ICobolCopybookIOProvider, IIOCopybookP
 		}
 	}
 	
+	/**
+	 * @param indentXml the indentXml to set
+	 */
+	@Override
+	public FileSchemaBuilder setIndentXml(boolean indentXml) {
+		this.indentXml = indentXml;
+		
+		return this;
+	}
+
+
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.def.IO.builders.IIOCopybookProvider#export(java.lang.String, net.sf.JRecord.External.ExternalRecord)
 	 */
 	@Override
-	public void export(String fileName, ExternalRecord schema) throws Exception {
+	public void export(String fileName, ExternalRecord schema) 
+	throws XMLStreamException, UnsupportedEncodingException, FactoryConfigurationError, IOException {
 		export(new BufferedOutputStream(new FileOutputStream(fileName)), schema);
 	}
 
@@ -129,11 +152,44 @@ public class FileSchemaBuilder implements ICobolCopybookIOProvider, IIOCopybookP
 	 * @see net.sf.JRecord.def.IO.builders.IIOCopybookProvider#export(java.io.OutputStream, net.sf.JRecord.External.ExternalRecord)
 	 */
 	@Override
-	public void export(OutputStream outStream, ExternalRecord schema) throws Exception {
+	public void export(OutputStream outStream, ExternalRecord schema)
+	throws XMLStreamException, FactoryConfigurationError, IOException {
 		RecordEditorXmlWriter writer = new RecordEditorXmlWriter();
 		
-		writer.writeCopyBook(outStream, schema, new TextLog());
+		if (indentXml) {
+			export(new OutputStreamWriter(outStream, STANDARD_FONT), schema);
+		} else {
+			writer.writeCopyBook(outStream, schema, new TextLog());
+		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.def.IO.builders.IIOCopybookProvider#export(java.io.Writer, net.sf.JRecord.External.ExternalRecord)
+	 */
+	@Override
+	public void export(Writer writer, ExternalRecord schema)
+			throws XMLStreamException, UnsupportedEncodingException, FactoryConfigurationError {
+		if (indentXml) {
+			XMLStreamWriter xmlStreamWriter =
+					new net.sf.cb2xml.util.IndentXmlWriter(
+							javax.xml.stream.XMLOutputFactory.newInstance()
+								 .createXMLStreamWriter(writer)
+			);
+
+			export(xmlStreamWriter, schema);
+		} else {
+			export(
+					javax.xml.stream.XMLOutputFactory.newInstance()
+					 	.createXMLStreamWriter(writer), 
+					schema);
+		}
+	}
+
+	@Override
+	public void export(XMLStreamWriter writer, ExternalRecord schema) throws XMLStreamException  {
+		new RecordEditorXmlWriter()	
+				.writeCopyBook(writer, schema);
+	}
+
 	
 } 

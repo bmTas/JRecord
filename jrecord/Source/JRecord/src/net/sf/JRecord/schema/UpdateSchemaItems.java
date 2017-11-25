@@ -41,8 +41,8 @@ import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.External.Def.DependingOnDefinition.SizeField;
 import net.sf.JRecord.cgen.impl.ArrayFieldDefinition;
 import net.sf.JRecord.cgen.impl.ArrayFieldDefinition1;
-import net.sf.JRecord.schema.jaxb.Copybook;
 import net.sf.JRecord.schema.jaxb.Item;
+import net.sf.JRecord.schema.jaxb.ItemRecordDtls;
 
 
 /**
@@ -81,8 +81,9 @@ public class UpdateSchemaItems implements ISchemaInformation {
 	
 	private IGetRecordFieldByName fieldLookup = null;
 	//private List<Item> lastItems;
+	private List<ItemRecordDtls> recordItems;
 	private int itemCount = 0;
-	private final List<Item> items;
+//	private final List<Item> items;
 	
 	private boolean redefinedBinaryField = false;
 	
@@ -98,7 +99,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 	 * @param copybookName
 	 * @param varRenameOption
 	 */
-	public UpdateSchemaItems(Copybook copybook, LayoutDetail schema, Map<String, IArrayItemCheck> arrayChecks, boolean dropCopybook, String copybookName, int varRenameOption) {
+	public UpdateSchemaItems(List<ItemRecordDtls> recordItems, LayoutDetail schema, Map<String, IArrayItemCheck> arrayChecks, boolean dropCopybook, String copybookName, int varRenameOption) {
 		//this.copybook = copybook;
 		this.schema = schema;
 		if (copybookName == null || copybookName.length() == 0) {
@@ -110,13 +111,12 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		this.copybookName1 = copybookName + "-";
 		this.copybookName2 = copybookName + "_";
 		this.varRenameOption = varRenameOption;
-		this.items = copybook.getCobolItems();
+		this.recordItems = recordItems;
 		this.arrayChecks = arrayChecks;
 
-		
 		duplicateFieldNames = schema.getDuplicateFieldNames();
 		
-		updateMain(items, 0, new int[99], new int[99], null, new ArrayList<String>(45), false);
+		updateRecords(recordItems, 0, new int[99], new int[99], null, new ArrayList<String>(45), false);
 		
 		if (schema.getRecordCount() < 2) {
 			recordMap = null;
@@ -128,29 +128,39 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		}
 	}
 	
-	private void updateMain(List<Item> itemList, int indexs, int[] arraySizes, int[] elementSize, int[] currSize,
+	private void updateRecords(List<ItemRecordDtls> records, int indexs, int[] arraySizes, int[] elementSize, int[] currSize,
 			ArrayList<String> levels, boolean redefined) {
-		 
-		if (schema.getRecordCount() == 1) {
-			Map<String, SizeField> nameSizeFieldMap = schema.getRecord(0).getDependingOn().getNameSizeFieldMap();
-			for (int i = 0; i < itemList.size(); i++) {
-				updateItem(nameSizeFieldMap, indexs, arraySizes, elementSize, currSize, levels, redefined, itemList.get(i));
-			}
-		} else if (schema.getRecordCount() == itemList.size()){
-			for (int i = 0; i < itemList.size(); i++) {
-				Map<String, SizeField> nameSizeFieldMap = schema.getRecord(i).getDependingOn().getNameSizeFieldMap();
-				updateItem(nameSizeFieldMap, indexs, arraySizes, elementSize, currSize, levels, redefined, itemList.get(i));
-			}
-		} else {
-			Map<String, SizeField> nameSizeFieldMap = schema.getRecord(0).getDependingOn().getNameSizeFieldMap();
-			for (int i = 0; i < itemList.size(); i++) {
-				nameSizeFieldMap.putAll( schema.getRecord(i).getDependingOn().getNameSizeFieldMap());
-			}
-			for (int i = 0; i < itemList.size(); i++) {
-				updateItem(nameSizeFieldMap, indexs, arraySizes, elementSize, currSize, levels, redefined, itemList.get(i));
+		for (ItemRecordDtls rec : records) {
+			Map<String, SizeField> nameSizeFieldMap = rec.record.getDependingOn().getNameSizeFieldMap();
+			for (int i = 0; i < rec.items.size(); i++) {
+				updateItem(nameSizeFieldMap, indexs, arraySizes, elementSize, currSize, levels, redefined, rec.items.get(i));
 			}
 		}
 	}
+	
+//	private void updateMain(List<Item> itemList, int indexs, int[] arraySizes, int[] elementSize, int[] currSize,
+//			ArrayList<String> levels, boolean redefined) {
+//		 
+//		if (schema.getRecordCount() == 1) {
+//			Map<String, SizeField> nameSizeFieldMap = schema.getRecord(0).getDependingOn().getNameSizeFieldMap();
+//			for (int i = 0; i < itemList.size(); i++) {
+//				updateItem(nameSizeFieldMap, indexs, arraySizes, elementSize, currSize, levels, redefined, itemList.get(i));
+//			}
+//		} else if (schema.getRecordCount() == itemList.size()){
+//			for (int i = 0; i < itemList.size(); i++) {
+//				Map<String, SizeField> nameSizeFieldMap = schema.getRecord(i).getDependingOn().getNameSizeFieldMap();
+//				updateItem(nameSizeFieldMap, indexs, arraySizes, elementSize, currSize, levels, redefined, itemList.get(i));
+//			}
+//		} else {
+//			Map<String, SizeField> nameSizeFieldMap = schema.getRecord(0).getDependingOn().getNameSizeFieldMap();
+//			for (int i = 0; i < itemList.size(); i++) {
+//				nameSizeFieldMap.putAll( schema.getRecord(i).getDependingOn().getNameSizeFieldMap());
+//			}
+//			for (int i = 0; i < itemList.size(); i++) {
+//				updateItem(nameSizeFieldMap, indexs, arraySizes, elementSize, currSize, levels, redefined, itemList.get(i));
+//			}
+//		}
+//	}
 	
 	private void update(
 			Map<String, SizeField> sfMap, List<Item> itemList,
@@ -198,7 +208,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		item.fieldName = name;
 		item.nameToUse = updateName(name);
 
-		levels.add(item.fieldName);
+		levels.add(genFieldName(item.fieldName)); 
 		if (hasOccurs) {
 			arraySizes[indexs] = item.getOccurs();
 			elementSize[indexs] = item.getStorageLength();
@@ -229,7 +239,8 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		} else if (newIndexs == 0) {
 			item.itemType = Item.TYPE_FIELD;
 			itemCount += 1;
-			if (dup) {
+			if (item.fieldDefinition != null) {
+			} else if (dup) {
 				item.fieldDefinition = schema.getGroupField(levels.toArray(new String[levels.size()]));
 			} else {
 				item.fieldDefinition = schema.getFieldFromName(item.fieldName);
@@ -251,10 +262,14 @@ public class UpdateSchemaItems implements ISchemaInformation {
 //			}
 			
 			RecordDetail record = (RecordDetail)field.getRecord();
-			item.arrayDefinition = new ArrayFieldDefinition1(record, currSizes,
+			item.arrayDefinition = new ArrayFieldDefinition1(currSizes,
 					record.getArrayFields(field, item.fieldName));
 		}
 		levels.remove(levels.size() - 1);
+	}
+	
+	private String genFieldName(String fieldName) {
+		return fieldName == null || "filler".equalsIgnoreCase(fieldName) ? "" : fieldName;
 	}
 	
 	private boolean isPresent(String s) {
@@ -279,16 +294,19 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		if (schema.hasTreeStructure()) {
 			 Map<String, Integer> ret = new HashMap<String, Integer>();
 			 int recIdx;
-			 for (Item item : items) {
-				 recIdx = schema.getRecordIndex(item.getName());
-				 if (recIdx >= 0) {
-					 int lvl = 0;
-					 while ((recIdx = schema.getRecord(recIdx).getParentRecordIndex()) >= 0) {
-						 lvl+= 1;
-					 }
+			 
+			 for (ItemRecordDtls recDtls : recordItems) {
+				 recIdx = recDtls.recordIndex;
+				 int lvl = 0;
+				 while ((recIdx = schema.getRecord(recIdx).getParentRecordIndex()) >= 0) {
+					 lvl+= 1;
+				 }
+				 if (recDtls.items.size() > 1) {
+					 lvl+= 1;
+				 }
+				 for (Item item : recDtls.items) {
 					 maxRecordLevel = Math.max(maxRecordLevel, lvl);
 					 ret.put(item.nameToUse.toUpperCase(), lvl);
-					 //System.out.println("\t == " + item.nameToUse.toUpperCase() + " " + lvl);
 				 }
 			 }
 			 return ret;
@@ -438,9 +456,9 @@ public class UpdateSchemaItems implements ISchemaInformation {
 	@Override
 	public final IGetRecordFieldByName getFieldLookup() {
 		if (fieldLookup == null) {
-			fieldLookup = updateLookup(
+			fieldLookup = updateLookupRecords(
 					new FieldLookup(schema, itemCount, getDuplicateFieldsStatus() ),  
-					items);
+					recordItems);
 		}
 		return fieldLookup;
 	}
@@ -451,6 +469,13 @@ public class UpdateSchemaItems implements ISchemaInformation {
 	@Override
 	public final boolean isRedefinedBinaryField() {
 		return redefinedBinaryField;
+	}
+
+	private FieldLookup updateLookupRecords(FieldLookup tl, List<ItemRecordDtls> recordItems) {
+		for (ItemRecordDtls itemRecordDtls : recordItems) {
+			updateLookup(tl, itemRecordDtls.items);
+		}
+		return tl;
 	}
 
 	private FieldLookup updateLookup(FieldLookup tl, List<Item> items) {

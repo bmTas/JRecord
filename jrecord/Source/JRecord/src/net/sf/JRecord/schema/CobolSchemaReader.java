@@ -34,10 +34,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Conversion;
@@ -47,15 +44,11 @@ import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ICopybookLoaderCobol;
-import net.sf.JRecord.External.base.Cb2xmlDocument;
 import net.sf.JRecord.IO.builders.CblIOBuilderMultiSchemaBase;
 import net.sf.JRecord.Option.IReformatFieldNames;
 import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
-import net.sf.JRecord.schema.jaxb.Condition;
-import net.sf.JRecord.schema.jaxb.Copybook;
-import net.sf.JRecord.schema.jaxb.Item;
-
-import org.w3c.dom.Document;
+import net.sf.JRecord.detailsBasic.IItemDetails;
+import net.sf.JRecord.schema.jaxb.ItemRecordDtls;
 
 
 /**
@@ -77,7 +70,7 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 
 	private ExternalRecord externalRecord = null;
 	private LayoutDetail schema;
-	private Copybook copybook = null;
+//	private Copybook copybook = null;
 	//private UpdateSchemaItems itemDtls = null;
 	
 	private int tagFormat = IReformatFieldNames.RO_LEAVE_ASIS;
@@ -88,7 +81,7 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 	
 	private CobolSchemaDetails cobolDtls = null;
 	
-	private List<Item> cobolItems = null;
+//	private List<Item> cobolItems = null;
 	private String rootRecord;
 	
 	
@@ -102,45 +95,47 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 	protected void clearLayout() {
 		super.clearLayout();
 		externalRecord = null;
-		copybook = null;
 		iob = null;
 	}
 	
 	public CobolSchemaDetails getCobolSchemaDetails() throws IOException, JAXBException {
-		if (copybook == null) {
+		if (cobolDtls == null) {
 			synchronized (this) {
-				if (copybook == null) {
+				if (cobolDtls == null) {
 					externalRecord = super.getExternalRecord();
 					schema = externalRecord.asLayoutDetail();
 					iob = JRecordInterface1.SCHEMA.newIOBuilder(schema);
 					
-					List<Cb2xmlDocument> cb2xmlDocuments = externalRecord.getCb2xmlDocuments();
-					
-					if (cb2xmlDocuments.size() != 1) {
-						throw new RuntimeException("Expecting 1 cb2xml document but got: " + cb2xmlDocuments.size());
-					} 
-					
-			        JAXBContext jc = JAXBContext.newInstance(Condition.class, Copybook.class, Item.class);
-			        
-			        Unmarshaller unmarshaller = jc.createUnmarshaller();
-			        JAXBElement<Copybook> jaxbCopybook = unmarshaller.unmarshal(((Document) cb2xmlDocuments.get(0).cb2xmlDocument), Copybook.class);
-			        Copybook cpybook = jaxbCopybook.getValue();
-			        this.cobolItems = cpybook.getCobolItems();
-			        UpdateSchemaItems itemDtls = new UpdateSchemaItems(
-			        		cpybook, schema, arrayChecks,
-			        		super.isDropCopybookNameFromFields(), schema.getLayoutName(), tagFormat);
-			        List<Item> recordItems = cobolItems;
-			        if (schema.getRecordCount() == 1 && recordItems.size() > 1) {
-			        	recordItems = new ArrayList<Item>(1);
-			        	Item recItem = new Item();
-			        	recItem.initFields(schema.getLayoutName(), cobolItems);
-			        	recItem.nameToUse = itemDtls.updateName(recItem.fieldName);
-			        	
-			        	recordItems.add(recItem);
+//					List<Cb2xmlDocument> cb2xmlDocuments = externalRecord.getCb2xmlDocuments();
+//					
+//					if (cb2xmlDocuments.size() != 1) {
+//						throw new RuntimeException("Expecting 1 cb2xml document but got: " + cb2xmlDocuments.size());
+//					} 
+//					
+//			        JAXBContext jc = JAXBContext.newInstance(Condition.class, Copybook.class, Item.class);
+//			        
+//			        Unmarshaller unmarshaller = jc.createUnmarshaller();
+//			        JAXBElement<Copybook> jaxbCopybook = unmarshaller.unmarshal(((Document) cb2xmlDocuments.get(0).cb2xmlDocument), Copybook.class);
+//			        Copybook cpybook = jaxbCopybook.getValue();
+//			        this.cobolItems = cpybook.getCobolItems();
+			        List<ItemRecordDtls> recordItems = new ArrayList<ItemRecordDtls>(schema.getRecordCount());
+			        for (int i = 0; i < schema.getRecordCount(); i++) {
+			        	List<? extends IItemDetails> cobolItms = schema.getRecord(i).getCobolItems();
+						recordItems.add(new ItemRecordDtls(i, schema.getRecord(i), cobolItms));
 			        }
-					cobolDtls = new CobolSchemaDetails(schema, recordItems, cpybook, iob, itemDtls);
-					copybook = cpybook;
-				}
+			        UpdateSchemaItems itemDtls = new UpdateSchemaItems(
+			        		recordItems, schema, arrayChecks,
+			        		super.isDropCopybookNameFromFields(), schema.getLayoutName(), tagFormat);
+//			        if (schema.getRecordCount() == 1 && recordItems.size() > 1) {
+//			        	recordItems = new ArrayList<Item>(1);
+//			        	Item recItem = new Item();
+//			        	recItem.initFields(schema.getLayoutName(), cobolItems);
+//			        	recItem.nameToUse = itemDtls.updateName(recItem.fieldName);
+//			        	
+//			        	recordItems.add(recItem);
+//			        }
+					cobolDtls = new CobolSchemaDetails(schema, recordItems, iob, itemDtls);
+					}
 			}
 		}
 		return cobolDtls;
@@ -178,7 +173,7 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 	 */
 	public final T setTagFormat(int tagFormat) {
 		this.tagFormat = tagFormat;
-		copybook = null;
+		cobolDtls = null;
 	
 		return super.self;
 	}

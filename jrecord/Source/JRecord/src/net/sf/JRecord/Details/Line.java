@@ -47,6 +47,7 @@ import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
+import net.sf.JRecord.Details.fieldValue.LineFieldCreator;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeChar;
 import net.sf.JRecord.Types.TypeManager;
@@ -80,6 +81,7 @@ import net.sf.JRecord.Types.TypeNum;
 public class Line extends BasicLine implements AbstractLine, IGetByteData {
 
 	static LineProvider defaultProvider = new DefaultLineProvider();
+	private static final LineFieldCreator FIELD_VALUE_CREATOR = LineFieldCreator.getInstance();
 
 	byte[] data;
 
@@ -289,7 +291,7 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
 	 * @param field
 	 * @param end
 	 */
-	private void ensureCapacity(int end) {
+	public final void ensureCapacity(int end) {
 		if (end > data.length) {
 		    newRecord(Math.max(end, layout.getMinimumRecordLength()));
 		    if (writeLayout >= 0
@@ -444,7 +446,7 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
 //            if (field.calculateActualEnd(this) == 101) {
 //            	 System.out.println("~~ " + field.calculateActualEnd(this));
 //            }
-            ensureCapacity(field.calculateActualEnd(this));
+            ensureCapacity(pos + field.getLen() - 1);
 //            System.out.println("~~ " + field.calculateActualEnd(this));
 			data = TypeManager.getSystemTypeManager().getType(type)
 				.setField(getData(), pos, field, value);
@@ -552,12 +554,13 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
 
 
 	@Override
-	public final FieldValueLine getFieldValue(IFieldDetail field) {
-		return new FieldValueLine(this, field);
+	public final net.sf.JRecord.Details.fieldValue.IFieldValue  getFieldValue(IFieldDetail field) {
+		return FIELD_VALUE_CREATOR.newFieldValue(this, field);
 	}
 
 	@Override
-	public final FieldValueLine getFieldValue(int recordIdx, int fieldIdx) {
-		return new FieldValueLine(this, recordIdx, fieldIdx);
+	public final net.sf.JRecord.Details.fieldValue.IFieldValue  getFieldValue(int recordIdx, int fieldIdx) {
+		FieldDetail field = layout.getField(recordIdx, fieldIdx);
+		return FIELD_VALUE_CREATOR.newFieldValue(this, field);
 	}
 }

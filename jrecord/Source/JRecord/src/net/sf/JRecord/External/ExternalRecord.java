@@ -28,8 +28,10 @@
 
 package net.sf.JRecord.External;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
@@ -39,8 +41,13 @@ import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LayoutGetFieldByName;
 import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.Details.RecordDetail;
+import net.sf.JRecord.Details.Item.ItemCopyJr;
 import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.External.base.BaseExternalRecord;
+import net.sf.JRecord.External.base.FieldCreatorHelper;
+import net.sf.JRecord.Types.TypeManager;
+import net.sf.JRecord.detailsBasic.IItemDetails;
+import net.sf.cb2xml.def.IItemJr;
 
 
 /**
@@ -238,6 +245,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 		}
 		
 		fields.add(fld);
+		super.fieldUpdated(fld);
 		return fields.size() - 1;
 	}
 
@@ -570,11 +578,12 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	    byte[] recordSep = CommonBits.getEolBytes( this.getRecordSep(), recordSepString, fontName);
 	    
 	    this.setParentsFromName();
+	    
+	    TypeManager.CharsetType charsetType = TypeManager.getInstance().getCharsetType(fontName);
 
-		
 		if (this.getNumberOfRecords() == 0) {
 	        records = new RecordDetail[1];
-	        records[0] = this.toRecordDetail();
+	        records[0] = this.toRecordDetail(charsetType, super.optimizeTypes);
 	        records[0].updateRecordSelection(this.getRecordSelection(), records[0]);
 //		    ExternalSelection recordSelection = recordDefinition.getRecordSelection();
 //		    if (recordSelection != null && recordSelection.getSize() > 0) {
@@ -584,7 +593,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	    } else {
 	        records = new RecordDetail[this.getNumberOfRecords()];
 	        for (int i = 0; i < records.length; i++) {
-	            records[i] = this.getRecord(i).toRecordDetail();
+	            records[i] = this.getRecord(i).toRecordDetail(charsetType, super.optimizeTypes);
 	        }    
 
 	        ret = genSchema(records, recordSepString, recordSep);
@@ -640,39 +649,70 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	 *
 	 * @return the same definition as used in the record editor
 	 */
-	private RecordDetail toRecordDetail() {
-	    FieldDetail[] fields = new FieldDetail[this.getNumberOfRecordFields()];
+	private RecordDetail toRecordDetail(TypeManager.CharsetType charsetType, boolean optermize) {
+	    FieldDetail[] fields;
 	    ExternalField fieldRec;
 	    int i;
-
+	    
 	    int[][] posLength = super.getPosLength();
-	    for (i = 0; i < fields.length; i++) {
-	        fieldRec = this.getRecordField(i);
-	        fields[i] = new FieldDetail(fieldRec.getName(),
-	                fieldRec.getDescription(), fieldRec.getType(),
-	                fieldRec.getDecimal(), this.getFontName(), 0, fieldRec.getParameter());
+	    List<? extends IItemJr> items = super.getItems();
+	    List<? extends IItemDetails> itemDtls = null;
+	    TypeManager typeMgr = TypeManager.getInstance();
 
-	        if (posLength[LENGTH_IDX][i] < 0) {
-	        	fields[i].setPosOnly(posLength[POSITION_IDX][i]);
-	        } else {
-	        	fields[i].setPosLen(posLength[POSITION_IDX][i], posLength[LENGTH_IDX][i]);
-	        }
+	    optermize |= super.optimizeTypes;
 
-	        fields[i].setGroupName(fieldRec.getGroup());
-	        fields[i].setDependingOnDtls(fieldRec.getDependOnDtls());
-
-		    String s = fieldRec.getDefault();
-		    if (s != null && ! "".equals(s)) {
-		    	fields[i].setDefaultValue(s);
+	    if (items != null) {
+			FieldCreatorHelper fieldHelper = super.createFieldHelper();
+	    	ItemCopyJr itmCpy = new ItemCopyJr(isKeepFillers(), charsetType, optermize || optimizeTypes);
+	    	itemDtls = itmCpy.copy(fieldHelper, items);
+	    	fields = itmCpy.getFields();
+	    	super.dependingOn = itmCpy.getDependingOn();
+	    	
+			Arrays.sort(fields, new Comparator<FieldDetail>() {
+				@Override public int compare(FieldDetail o1, FieldDetail o2) {
+					return Integer.compare(o1.getPos(), o2.getPos());
+//					if (o1.getPos() > o2.getPos()) {
+//						return 1;
+//					}
+//					if (o1.getPos() < o2.getPos()) {
+//						return -1;
+//					}
+//					return 0; //Integer.compare(o1.getLen(), o2.getLen());
+				}
+			});
+	    } else {
+	    	fields = new FieldDetail[this.getNumberOfRecordFields()];
+		    for (i = 0; i < fields.length; i++) {
+		        fieldRec = this.getRecordField(i);
+		        int type = fieldRec.getType();
+		        if (optermize) {
+		        	type = typeMgr.getShortType(type, posLength[LENGTH_IDX][i], charsetType);
+		        }
+				fields[i] = new FieldDetail(fieldRec.getName(),
+		                fieldRec.getDescription(), type,
+		                fieldRec.getDecimal(), this.getFontName(), 0, fieldRec.getParameter());
+	
+		        if (posLength[LENGTH_IDX][i] < 0) {
+		        	fields[i].setPosOnly(posLength[POSITION_IDX][i]);
+		        } else {
+		        	fields[i].setPosLen(posLength[POSITION_IDX][i], posLength[LENGTH_IDX][i]);
+		        }
+	
+		        fields[i].setGroupName(fieldRec.getGroup());
+		        fields[i].setDependingOnDtls(fieldRec.getDependOnDtls());
+	
+			    String s = fieldRec.getDefault();
+			    if (s != null && ! "".equals(s)) {
+			    	fields[i].setDefaultValue(s);
+			    }
 		    }
 	    }
-
 
 	    RecordDetail ret = new RecordDetail(this.getRecordName(),
 	            this.getRecordPositionOption(),
 //	    		this.getTstField(), this.getTstFieldValue(),
 	            this.getRecordType(), this.getDelimiter(), this.getQuote(),
-	            this.getFontName(), fields, this.getRecordStyle());
+	            this.getFontName(), fields, itemDtls, this.getRecordStyle());
 	    ret.setParentRecordIndex(this.getParentRecord());
 	    ret.setDependingOn(this.getDependingOnDefinition());
 

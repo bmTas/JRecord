@@ -46,13 +46,14 @@ import net.sf.JRecord.def.IO.builders.IIOBuilder;
 
 public class TstXmlSchema1 extends TestCase {
 	
+	@SuppressWarnings("deprecation")
 	private static final FieldDetail[] EXPECTED_DTAR020 = {
 		bldType("KEYCODE-NO", 1, 8, 0, Type.ftChar, "CP037"),
-		bldType("STORE-NO", 9, 2, 0, Type.ftPackedDecimal, "CP037"),
-		bldType("DATE", 11, 4, 0, Type.ftPackedDecimal, "CP037"),
-		bldType("DEPT-NO", 15, 2, 0, Type.ftPackedDecimal, "CP037"),
-		bldType("QTY-SOLD", 17, 5, 0, Type.ftPackedDecimal, "CP037"),
-		bldType("SALE-PRICE", 22, 6, 2, Type.ftPackedDecimal, "CP037"),
+		bldType("STORE-NO", 9, 2, 0, Type.ftPackedDecimalSmall, "CP037"),
+		bldType("DATE", 11, 4, 0, Type.ftPackedDecimalSmall, "CP037"),
+		bldType("DEPT-NO", 15, 2, 0, Type.ftPackedDecimalSmall, "CP037"),
+		bldType("QTY-SOLD", 17, 5, 0, Type.ftPackedDecimalSmall, "CP037"),
+		bldType("SALE-PRICE", 22, 6, 2, Type.ftPackedDecimalSmall, "CP037"),
 	};
 	
 	private static final FieldDetail[][] EXPECTED_AMS_PO = {

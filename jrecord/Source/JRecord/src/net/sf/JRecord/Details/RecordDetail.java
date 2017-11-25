@@ -62,8 +62,9 @@ import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.Types.TypeManager;
-import net.sf.JRecord.cgen.defc.IRecordDetail4gen;
-import net.sf.JRecord.definitiuons.CsvCharDetails;
+import net.sf.JRecord.cgen.def.IRecordDetail4gen;
+import net.sf.JRecord.detailsBasic.CsvCharDetails;
+import net.sf.JRecord.detailsBasic.IItemDetails;
 import net.sf.JRecord.detailsSelection.Convert;
 import net.sf.JRecord.detailsSelection.FieldSelectX;
 import net.sf.JRecord.detailsSelection.RecordSelection;
@@ -101,8 +102,6 @@ import net.sf.JRecord.occursDepending.ODCalculationStandard;
  * @version 0.55
  */
 public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinition, IRecordDetail4gen {
-
-//	private static final   ArrayList<DependingOn> EMPTY_DEPENDING_ON = new ArrayList<DependingOn>(0);
 	
 	public static final int DO_NONE = 1;
 	public static final int DO_SIMPLE_NO_COMPRESSION = 2;
@@ -111,8 +110,6 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	public static final int DO_COMPLEX = 6;
 	public static final int DO_COMPLEX_SIZE_IN_ARRAY = 7;
 
-
-    //private static final int STATUS_EXISTS         =  1;
 
 	private static final byte UNDEFINED = -121;
 	private static final byte NO = 1;
@@ -136,6 +133,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 
 	private int fieldCount;
 	private FieldDetail[] fields;
+	private final List<? extends IItemDetails> cobolItems;
 
 	//private FieldDetail selectionFld = null;
 	//private int    selectionFieldIdx = Constants.NULL_INTEGER;
@@ -199,7 +197,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 						) {
 
 		this(pRecordName, null, pRecordType, pDelim,
-			 pQuote, pFontName, pFields, pRecordStyle);
+			 pQuote, pFontName, pFields, null, pRecordStyle);
 
 		if (!"".equals(pSelectionField)) {
 			recordSelection.setRecSel(FieldSelectX.get(pSelectionField, pSelectionValue, "=", getField(pSelectionField)));
@@ -241,7 +239,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 			final boolean embeddedCr
 			) {
 		this(pRecordName, null, pRecordType, pDelim,
-				pQuote, pFontName, pFields, pRecordStyle);
+				pQuote, pFontName, pFields, null, pRecordStyle);
 	
 		if (selection != null) {
 			this.recordSelection = selection;
@@ -270,13 +268,39 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 						final FieldDetail[] pFields,
 						final int pRecordStyle
 						) {
-		super();
+		this(pRecordName, rpOpt, pRecordType, pDelim, pQuote, pFontName, pFields, null, pRecordStyle);
+	}
+	
+
+	/**
+	 * Create a Record
+	 *
+	 * @param pRecordName  Record Name
+	 * @param pRecordType Record Type
+	 * @param pDelim Record Delimiter
+	 * @param pQuote String Quote (for Comma / Tab Delimited files)
+	 * @param pFontName font name to be used
+	 * @param pFields Fields belonging to the record
+	 * @param pRecordStyle Record Style
+	 */
+	public RecordDetail(final String pRecordName,
+	 					final IRecordPositionOption rpOpt,
+						final int pRecordType,
+						final String pDelim,
+						final String pQuote,
+						final String pFontName,
+						final FieldDetail[] pFields,
+						      List<? extends IItemDetails> items,
+						final int pRecordStyle
+						) {
+
 
 		int j, l;
 		this.recordName = pRecordName;
 		this.recordType = pRecordType;
 
 		this.fields   = pFields;
+		this.cobolItems = items;
 		this.quote    = CsvCharDetails.newQuoteDefinition(pQuote, pFontName);
 		this.fontName = pFontName;
 		this.recordStyle = pRecordStyle;
@@ -340,6 +364,13 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	    numberOfFieldsAdded += 1;
 	}
 
+
+	/**
+	 * @return the cobolItems
+	 */
+	public List<? extends IItemDetails> getCobolItems() {
+		return cobolItems;
+	}
 
 	/**
 	 * Get the Record Name

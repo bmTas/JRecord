@@ -41,6 +41,8 @@ import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.IO.CobolIoProvider;
 import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.Types.TypeManager;
+import net.sf.JRecord.Types.TypeManager.CharsetType;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.cb2xml.def.Cb2xmlConstants;
 import junit.framework.TestCase;
@@ -252,6 +254,8 @@ public class TstCobolIOBuilderSchema extends TestCase {
 		RecordDetail rec;
 		IFieldDetail fld, ef;
 		String t1, t2;
+		TypeManager typeMgr = TypeManager.getInstance();
+		CharsetType charsetType = typeMgr.getCharsetType(schema.getFontName());
 		
 		assertEquals(data.testId, data.fileOrganization, schema.getFileStructure());
 		assertEquals(data.testId, data.font, schema.getFontName());
@@ -268,10 +272,12 @@ public class TstCobolIOBuilderSchema extends TestCase {
 				fld = rec.getField(j);
 				ef =  data.expectedFields[i][j];
 				assertEquals(t2, ef.getName(), fld.getName());
-				assertEquals(t2, ef.getPos(), fld.getPos());
-				assertEquals(t2, ef.getLen(), fld.getLen());
+				assertEquals(t2, ef.getPos(),  fld.getPos());
+				assertEquals(t2, ef.getLen(),  fld.getLen());
 				assertEquals(t2, ef.getDecimal(), fld.getDecimal());
-				assertEquals(t2, ef.getType(), fld.getType());
+				assertEquals(t2,
+						typeMgr.getShortType(ef.getType(), ef.getLen(), charsetType), 
+						fld.getType());
 				assertEquals(t2, ef.getFontName(), fld.getFontName());
 			}
 		}

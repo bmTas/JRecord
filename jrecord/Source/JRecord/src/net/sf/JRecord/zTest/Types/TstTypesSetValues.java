@@ -61,31 +61,43 @@ public class TstTypesSetValues extends TestCase {
 		{"1.234567e2", "123", "123.4", "123.45", "123.456", "123.4567",},
 	};
 	
+	@SuppressWarnings("deprecation")
 	public void testBigEndian1() throws RecordException {
 		tstField1(Type.ftBinaryBigEndian);
 		tstField2(Type.ftBinaryBigEndian);
+		tstField1(Type.ftIntBigEndianSmall);
+		tstField2(Type.ftIntBigEndianSmall);
 	}	
 	
 	public void testLittleEndian1() throws RecordException {
 		tstField1(Type.ftBinaryInt);
 		tstField2(Type.ftBinaryInt);
+		tstField1(Type.ftIntSmall);
+		tstField2(Type.ftBinaryInt);
 	}
 	
 	
+	@SuppressWarnings("deprecation")
 	public void testPackedDecimal1() throws RecordException {
 		tstField1(Type.ftPackedDecimal);
 		tstField2(Type.ftPackedDecimal);
 		tstField3(Type.ftPackedDecimal);
 		tstField1(Type.ftDecimal);
 		tstField2(Type.ftDecimal);
+		tstField1(Type.ftPackedDecimalSmall);
+		tstField2(Type.ftPackedDecimalSmall);
+		tstField3(Type.ftPackedDecimalSmall);
 	}
 	
 	
+	@SuppressWarnings("deprecation")
 	public void testZonedDecimal1() throws RecordException {
 		tstField1(Type.ftZonedNumeric);
 		tstField2(Type.ftZonedNumeric);
 		tstField1(Type.ftFjZonedNumeric);
 		tstField2(Type.ftFjZonedNumeric);
+		tstField1(Type.ftZonedAsciiSmall);
+		tstField2(Type.ftZonedAsciiSmall);
 	}
 
 //	String[] charsets = TstConstants.EBCDIC_CHARSETS;
@@ -130,12 +142,13 @@ public class TstTypesSetValues extends TestCase {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void testGeneral3() throws RecordException {
 		boolean[] toTest = new boolean[200];
 		Arrays.fill(toTest, true);
-		for (int i = 0; i < typesToTest.length; i++) {
-			toTest[i] = false;
-		}
+//		for (int i = 0; i < typesToTest.length; i++) {
+//			toTest[i] = false;
+//		}
 		
 		toTest[Type.ftFloat] = false;
 		toTest[Type.ftDouble] = false;
@@ -143,7 +156,8 @@ public class TstTypesSetValues extends TestCase {
 		toTest[Type.ftNumOrEmpty] = false;
 		toTest[Type.ftPositiveNumAnyDecimal] = false;
 		toTest[Type.ftBit] = false;
-	
+		toTest[Type.ftZonedAsciiSmall] = false;
+
 		for (String charset : TstConstants.EBCDIC_SINGLE_BYTE_CHARSETS) {
 			for (int i = 0; i < 200; i++) {
 				if (toTest[i] && TypeManager.isNumeric(i)) {

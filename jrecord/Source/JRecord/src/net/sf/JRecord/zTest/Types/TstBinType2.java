@@ -48,12 +48,16 @@ public class TstBinType2 extends TestCase {
 
 	private FieldDetail
 	typePd4,  typePd8,  typePd12,
+	typePd4s,  typePd8s,  
 	typeBE1,  typeBE4,  typeBE8,  typeBE12,
+	typeBE1s,  typeBE4s,  typeBE8s,
 	typeBEP1,  typeBEP4,  typeBEP8,  typeBEP12,
+	typeBEP1s,  typeBEP4s,  typeBEP8s,
 	typePBE1, typePBE4, typePBE8, typePBE12,
+	typePBE1s, typePBE4s, 
 	typeLE1,  typeLE4,  typeLE8,  typeLE12,
 	typeLEP1,  typeLEP4,  typeLEP8,  typeLEP12,
-	typePLE1, typePLE4, typePLE8, typePLE12,
+	typePLE1, typePLE4, typePLE8, typePLE12, typePLE1s, typePLE4s,
 	typeHex4, typeHex8, typeHex12;
 
 	protected void setUp() throws Exception {
@@ -62,6 +66,8 @@ public class TstBinType2 extends TestCase {
 		typePd4			= getType(2, 4, Type.ftPackedDecimal, 0);
 		typePd8			= getType(2, 8, Type.ftPackedDecimal, 0);
 		typePd12		= getType(2, 12, Type.ftPackedDecimal, 0);
+		typePd4s		= getType(2, 4, Type.ftPackedDecimalSmall, 0);
+		typePd8s		= getType(2, 8, Type.ftPackedDecimalSmall, 0);
 
 		typeHex4			= getType(2, 4, Type.ftHex, 0);
 		typeHex8			= getType(2, 8, Type.ftHex, 0);
@@ -72,17 +78,27 @@ public class TstBinType2 extends TestCase {
 		typeBE4			= getType(2, 4, Type.ftBinaryBigEndian, 0);
 		typeBE8			= getType(2, 8, Type.ftBinaryBigEndian, 0);
 		typeBE12		= getType(2, 12, Type.ftBinaryBigEndian, 0);
+		typeBE1s			= getType(2, 1, Type.ftIntBigEndianSmall, 0);
+		//typeBE2			= getType(2, 2, Type.ftBinaryBigEndian, 0);
+		typeBE4s			= getType(2, 4, Type.ftIntBigEndianSmall, 0);
+		typeBE8s			= getType(2, 8, Type.ftIntBigEndianSmall, 0);
 
 		typeBEP1		= getType(2, 1, Type.ftBinaryBigEndianPositive, 0);
 		typeBEP4		= getType(2, 4, Type.ftBinaryBigEndianPositive, 0);
 		typeBEP8		= getType(2, 8, Type.ftBinaryBigEndianPositive, 0);
 		typeBEP12		= getType(2, 12, Type.ftBinaryBigEndianPositive, 0);
+		typeBEP1s		= getType(2, 1, Type.ftIntBigEndianPositive, 0);
+		typeBEP4s		= getType(2, 4, Type.ftIntBigEndianPositive, 0);
+		typeBEP8s		= getType(2, 8, Type.ftIntBigEndianPositive, 0);
 
 		typePBE1		= getType(2, 1, Type.ftPositiveBinaryBigEndian, 0);
 		//typePBE2		= getType(2, 2, Type.ftPositiveBinaryBigEndian, 0);
 		typePBE4		= getType(2, 4, Type.ftPositiveBinaryBigEndian, 0);
 		typePBE8		= getType(2, 8, Type.ftPositiveBinaryBigEndian, 0);
 		typePBE12		= getType(2, 12, Type.ftPositiveBinaryBigEndian, 0);
+		typePBE1s		= getType(2, 1, Type.ftUIntBigEndianSmall, 0);
+		//typePBE2		= getType(2, 2, Type.ftPositiveBinaryBigEndian, 0);
+		typePBE4s		= getType(2, 4, Type.ftUIntBigEndianSmall, 0);
 
 
 		typeLE1			= getType(2, 1, Type.ftBinaryInt, 0);
@@ -90,17 +106,28 @@ public class TstBinType2 extends TestCase {
 		typeLE4			= getType(2, 4, Type.ftBinaryInt, 0);
 		typeLE8			= getType(2, 8, Type.ftBinaryInt, 0);
 		typeLE12		= getType(2, 12, Type.ftBinaryInt, 0);
+		typeLE1			= getType(2, 1, Type.ftIntSmall, 0);
+		//typeLE2			= getType(2, 2, Type.ftBinaryInt, 0);
+		typeLE4			= getType(2, 4, Type.ftIntSmall, 0);
+		typeLE8			= getType(2, 8, Type.ftIntSmall, 0);
 
-		typeLEP1			= getType(2, 1, Type.ftBinaryIntPositive, 0);
-		typeLEP4			= getType(2, 4, Type.ftBinaryIntPositive, 0);
-		typeLEP8			= getType(2, 8, Type.ftBinaryIntPositive, 0);
+		typeLEP1		= getType(2, 1, Type.ftBinaryIntPositive, 0);
+		typeLEP4		= getType(2, 4, Type.ftBinaryIntPositive, 0);
+		typeLEP8		= getType(2, 8, Type.ftBinaryIntPositive, 0);
 		typeLEP12		= getType(2, 12, Type.ftBinaryIntPositive, 0);
+		typeLEP1		= getType(2, 1, Type.ftIntPositiveSmall, 0);
+		typeLEP4		= getType(2, 4, Type.ftIntPositiveSmall, 0);
+		typeLEP8		= getType(2, 8, Type.ftIntPositiveSmall, 0);
 
 		typePLE1		= getType(2, 1, Type.ftPostiveBinaryInt, 0);
 		//typePLE2		= getType(2, 2, Type.ftPostiveBinaryInt, 0);
 		typePLE4		= getType(2, 4, Type.ftPostiveBinaryInt, 0);
 		typePLE8		= getType(2, 8, Type.ftPostiveBinaryInt, 0);
 		typePLE12		= getType(2, 12, Type.ftPostiveBinaryInt, 0);
+		typePLE1s		= getType(2, 1, Type.ftUIntSmall, 0);
+		//typePLE2		= getType(2, 2, Type.ftPostiveBinaryInt, 0);
+		typePLE4s		= getType(2, 4, Type.ftUIntSmall, 0);
+//		typePLE8		= getType(2, 8, Type.ftUIntSmall, 0);
 	}
 
 	public void testBE()  throws RecordException {
@@ -123,12 +150,21 @@ public class TstBinType2 extends TestCase {
 				res4a, "BE 12 byte");
 		checkCallBE(typeBE12, "" + BigInteger.valueOf(-Long.MAX_VALUE).multiply(BigInteger.valueOf(256)),
 				res4b, "BE 12 byte");
+		checkCallBE(typeBE1s, "127",  res1a, "BE 1 byte");
+		checkCallBE(typeBE1s, "-127", res1b, "BE 1 byte");
+		checkCallBE(typeBE4s, "" + Integer.MAX_VALUE,  res2a, "BE 4 byte");
+		checkCallBE(typeBE4s, "" + (-Integer.MAX_VALUE),  res2b, "BE 4 byte");
+		checkCallBE(typeBE8s, "" + Long.MAX_VALUE,  res3a, "BE 8 byte");
+		checkCallBE(typeBE8s, "" + (-Long.MAX_VALUE),  res3b, "BE 8 byte");
 
 		checkCallBE(typeBEP1, "127",  res1a, "BE 1 byte");
 		checkCallBE(typeBEP4, "" + Integer.MAX_VALUE,  res2a, "BE 4 byte");
 		checkCallBE(typeBEP8, "" + Long.MAX_VALUE,  res3a, "BE 8 byte");
 		checkCallBE(typeBEP12, "" + BigInteger.valueOf(Long.MAX_VALUE).multiply(BigInteger.valueOf(256)),
 				res4a, "BE 12 byte");
+		checkCallBE(typeBEP1s, "127",  res1a, "BE 1 byte");
+		checkCallBE(typeBEP4s, "" + Integer.MAX_VALUE,  res2a, "BE 4 byte");
+		checkCallBE(typeBEP8s, "" + Long.MAX_VALUE,  res3a, "BE 8 byte");
 
 	}
 
@@ -147,6 +183,8 @@ public class TstBinType2 extends TestCase {
 		checkCallBE(typePBE8, "" + bi,  res3a, "BE 8 byte");
 		checkCallBE(typePBE12, "" + BigInteger.valueOf(Long.MAX_VALUE).multiply(BigInteger.valueOf(512)),
 				res4a, "BE 12 byte");
+		checkCallBE(typePBE1s, "255",  res1a, "PBE 1 byte");
+		checkCallBE(typePBE4s, "" + (l * 2 + 1),  res2a, "PBE 4 byte");
 	}
 
 
@@ -193,6 +231,8 @@ public class TstBinType2 extends TestCase {
 		checkCallLE(typePLE8, "" + bi,  res3a, "LE 8 byte");
 		checkCallLE(typePLE12, "" + BigInteger.valueOf(Long.MAX_VALUE).multiply(BigInteger.valueOf(512)),
 				res4a, "LE 12 byte");
+		checkCallLE(typePLE1s, "255",  res1a, "PLE 1 byte");
+		checkCallLE(typePLE4s, "" + (l * 2 + 1),  res2a, "PLE 4 byte");
 	}
 
 
@@ -215,6 +255,23 @@ public class TstBinType2 extends TestCase {
 
 		checkCallPD(typePd12, "0098765432109876543210987", "0098765432109876543210987c", "PD 12 byte");
 		checkCallPD(typePd12,  "-098765432109876543210987", "0098765432109876543210987d", "PD 12 byte");
+	}
+
+	public void testPDs()  throws RecordException {
+
+		checkCallPD(typePd4s, "9876543", "009876543c", "PD 4 byte");
+		checkCallPD(typePd4s,  "-9876543", "009876543d", "PD 4 byte");
+
+		checkCallPD(typePd8s, "987654321098765", "00987654321098765c", "PD 8 byte");
+		checkCallPD(typePd8s,  "-987654321098765", "00987654321098765d", "PD 8 byte");
+
+
+		checkCallPD(typePd4s, "09876543", "009876543c", "PD 4 byte");
+		checkCallPD(typePd4s,  "-09876543", "009876543d", "PD 4 byte");
+
+		checkCallPD(typePd8s, "00987654321098765", "00987654321098765c", "PD 8 byte");
+		checkCallPD(typePd8s,  "-0987654321098765", "00987654321098765d", "PD 8 byte");
+
 	}
 
 	public void testHex()  throws RecordException {
@@ -279,11 +336,18 @@ public class TstBinType2 extends TestCase {
 		checkSizeError(typeBE8, bin,  "BE 8 byte");
 		checkSizeError(typeBE12, BigInteger.valueOf(li*2).multiply(bip),  "BE 12 byte");
 		checkSizeError(typeBE12, BigInteger.valueOf(li*2).multiply(bin),  "BE 12 byte");
+		checkSizeError(typeBE1s, "128",  "BE 1 byte");
+		checkSizeError(typeBE1s, "-129", "BE 1 byte");
+		checkSizeError(typeBE4s, "" + li,  "BE 4 byte");
+		checkSizeError(typeBE4s, "" + (-li - 2),  "BE 4 byte");
 
 		checkSizeError(typeBEP1, "128",  "BE 1 byte");
 		checkSizeError(typeBEP4, "" + li,  "BE 4 byte");
 		checkSizeError(typeBEP8, bip,  "BE 8 byte");
 		checkSizeError(typeBEP12, BigInteger.valueOf(li*2).multiply(bip),  "BE 12 byte");
+		checkSizeError(typeBEP1s, "128",  "BE 1 byte");
+		checkSizeError(typeBEP4s, "" + li,  "BE 4 byte");
+		checkSizeError(typeBEP8s, bip,  "BE 8 byte");
 	}
 
 

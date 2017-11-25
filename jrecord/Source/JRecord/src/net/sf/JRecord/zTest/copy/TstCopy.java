@@ -75,7 +75,7 @@ public class TstCopy extends TestCase {
 		LayoutDetail outSchema = SchemaLoader.loadSchema(
 				DTAR021_COPBOOK_FILE_NAME, CopybookLoader.SPLIT_NONE, 
 				Conversion.DEFAULT_ASCII_CHARSET, ICopybookDialects.FMT_MAINFRAME)
-				.asLayoutDetail();
+							.asLayoutDetail();
 		doTest(outSchema, true);
 	}
 	
@@ -130,7 +130,44 @@ public class TstCopy extends TestCase {
 	}
 
 	
+	public void testCsvCopy3() throws Exception, RecordException {
+		CommonBits.setUseCsvLine(true);
+		tstCsvCopy3();
+	}
+
 	public void tstCsvCopy1() throws Exception, RecordException {
+	
+		LayoutDetail csvSchema1 = getCsvSchema();
+		LayoutDetail csvSchema2 = getCsvSchemaReverse();
+			
+		LayoutDetail inSchema = SchemaLoader.loadSchema(DTAR020_COPBOOK_FILE_NAME, CopybookLoader.SPLIT_NONE, "CP037", ICopybookDialects.FMT_MAINFRAME)
+				.asLayoutDetail();
+		List<AbstractLine> DTAR020_LINES = readStream(inSchema, DTAR020_DATA);
+				
+		ByteArrayOutputStream out = new ByteArrayOutputStream(DTAR020_DATA.length * 3 / 2);
+		ByteArrayOutputStream out2 = new ByteArrayOutputStream(DTAR020_DATA.length * 3 / 2);
+		
+		Copy.copyFileByMatchingFieldNames(
+				getReader(inSchema, DTAR020_DATA), 
+				getWriter(csvSchema1, out), 
+				csvSchema1);
+		byte[] outData1 = out.toByteArray();
+		
+		Copy.copyFileByMatchingFieldNames(
+				getReader(csvSchema1, outData1), 
+				getWriter(csvSchema2, out2), 
+				csvSchema2);
+		byte[] outData2 = out2.toByteArray();
+		
+		compare("Compare in & out 1: ", readStream(csvSchema1, outData1), readStream(csvSchema2, outData2), false);
+		compare("Compare in & out 2: ", DTAR020_LINES, readStream(csvSchema2, outData2), false);
+		
+		compareCsv("Compare 3:", DTAR020_LINES, outData1, "\\|", true);
+		compareCsv("Compare 3:", DTAR020_LINES, outData2, csvSchema2.getDelimiterDetails().jrDefinition(), false);
+	}
+	
+	
+	public void tstCsvCopy3() throws Exception, RecordException {
 	
 		LayoutDetail csvSchema1 = getCsvSchema();
 		LayoutDetail csvSchema2 = getCsvSchemaReverse();
@@ -287,7 +324,8 @@ public class TstCopy extends TestCase {
 		for (int i = 0; i < m; i++) {
 			for (int j = 0; j < fieldCount; j++) {
 				assertEquals(id + " " + i + ", " + j + ", " + Math.abs(j - sub),
-						l1.get(i).getFieldValue(0, j).asString(), l2.get(i).getFieldValue(0, Math.abs(j - sub)).asString());
+						l1.get(i).getFieldValue(0, j).asString(),
+						l2.get(i).getFieldValue(0, Math.abs(j - sub)).asString());
 			}
 		}
 		assertEquals(id, l1.size(), l2.size());

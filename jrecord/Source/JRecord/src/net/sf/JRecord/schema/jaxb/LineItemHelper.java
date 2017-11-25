@@ -3,7 +3,7 @@ package net.sf.JRecord.schema.jaxb;
 import java.util.Arrays;
 
 import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.Details.IFieldValue;
+import net.sf.JRecord.Details.fieldValue.IFieldValue;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.Def.DependingOnDefinition;
 

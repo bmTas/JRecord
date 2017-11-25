@@ -99,8 +99,7 @@ public class ODCalculationStandard implements IOccursDependingPositionCalculatio
 				int childAdjustment = calculateAdjustment(children, line, dependingOnDtls, lvl + 1, pos);
 				if (pos > dependingOnDef.getEnd()) {
 					int occursMaxLength = dependingOnDef.getOccursMaxLength();
-					int actualOccursLength = occursLength 
-									 - childAdjustment; 
+					int actualOccursLength = occursLength - childAdjustment; 
 					int actualLength = actualOccurs * actualOccursLength;
 	//						- calculateAdjustment(dependingOnDef.getChildren(), line, pos);
 					adj = occursMaxLength - actualLength;//calculateAdjustment(dependingOnDef.getChildren(), line, pos);

@@ -70,6 +70,7 @@ public class TstOccursDepending26 extends TestCase {
 			for (int j = 0; j < 7; j++) {
 				for (int week = 1; week < 4; week++) {
 					for (int day = 1; day < 6; day++) {
+						System.out.print("\t" + i + ", " + j + ", " + week + ", " + day);
 						tstLine(ioBuilder.newLine(), i, j, week, day,normal);
 					}
 				}

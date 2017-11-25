@@ -12,9 +12,9 @@ import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
-import net.sf.JRecord.cgen.def.IPojoConverter;
 import net.sf.JRecord.cgen.def.IReader;
 import net.sf.JRecord.cgen.def.IWriter;
+import net.sf.JRecord.cgen.defJr.IPojoConverter;
 import net.sf.JRecord.def.IO.builders.IIOBuilder;
 import net.sf.JRecord.def.IO.builders.Icb2xmlLoadOptions;
 

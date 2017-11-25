@@ -36,6 +36,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.stream.XMLStreamException;
 
 import org.w3c.dom.Document;
 
@@ -126,14 +127,14 @@ public class TstArrayChecks extends TestCase {
 	public void testStopSpacesZero01() throws IOException {
 		IArrayItemCheck stopAtSpacesZeros = ArrayElementChecks.INSTANCE.newStopAtSpacesZeros();
 		int stop = IArrayItemCheck.R_STOP;
-		tstSacesZeros(stopAtSpacesZeros, stop);
+		tstSpacesZeros(stopAtSpacesZeros, stop);
 	}
 
 	
 	public void testSkipSpacesZero01() throws IOException {
 		IArrayItemCheck stopAtSpacesZeros = ArrayElementChecks.INSTANCE.newSkipSpacesZeros();
 		int stop = IArrayItemCheck.R_SKIP;
-		tstSacesZeros(stopAtSpacesZeros, stop);
+		tstSpacesZeros(stopAtSpacesZeros, stop);
 	}
 
 
@@ -142,7 +143,7 @@ public class TstArrayChecks extends TestCase {
 	 * @param stop
 	 * @throws IOException
 	 */
-	private void tstSacesZeros(IArrayItemCheck stopAtSpacesZeros, int stop)
+	private void tstSpacesZeros(IArrayItemCheck stopAtSpacesZeros, int stop)
 			throws IOException {
 		doTst(	new TstDataString(true, "11", "  "),
 				stopAtSpacesZeros,
@@ -278,6 +279,8 @@ public class TstArrayChecks extends TestCase {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (JAXBException e) {
+			e.printStackTrace();
+		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		}
 		

@@ -28,6 +28,8 @@
 
 package net.sf.JRecord.zTest.External;
 
+import java.io.IOException;
+
 import junit.framework.TestCase;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.CobolCopybookLoader;
@@ -79,7 +81,7 @@ public class TstLoadCobolCopybook  extends TestCase {
 			{0, 18, 1},
 	};
 	
-	public void testLoadCopybook() throws RecordException {
+	public void testLoadCopybook() throws RecordException, IOException {
 		
     	String copyName = this.getClass().getResource(copybookFileName).getFile();
     	CobolCopybookLoader loaderCBL = new CobolCopybookLoader();

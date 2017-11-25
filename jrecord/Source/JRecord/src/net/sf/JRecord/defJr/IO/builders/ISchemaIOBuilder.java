@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import net.sf.JRecord.ByteIO.IByteRecordReader;
+import net.sf.JRecord.ByteIO.IByteRecordWriter;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.IO.AbstractLineReader;
@@ -118,6 +120,31 @@ public interface ISchemaIOBuilder extends INewLineCreator {
 	public abstract AbstractLineReader newReader(InputStream datastream)
 			throws IOException;
 
+	/**
+	 * Create a new LineReader for a user written IByteRecordreader.
+	 * A Byte-Record-Reader can be used to Wrap an external data store e.g.
+	 * Mainframe ZFile, Google-File-Store, MQ-Messages etc
+	 * 
+	 * @param byteReader user written Byte-Record-Reader.
+	 * 
+	 * @return requested LineReader
+	 * 
+	 * <pre>
+	 *<b>Example:</b>
+     *      AbstractLineReader reader = JRecordInterface1.COBOL
+     *              .newIOBuilder("file-name")
+     *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+     *              .<b>newReader(byteRecordReader)</b>;
+     *              
+     *      while ((l = reader.read()) != null) { ... }
+     *      reader.close()
+     * </pre>
+     * 
+	 * @throws IOException 
+	 */
+	public abstract AbstractLineReader newReader(IByteRecordReader byteReader)
+			throws IOException;
+
 	
 	/**
 	 * Create LineWriter for a supplied filename
@@ -175,6 +202,15 @@ public interface ISchemaIOBuilder extends INewLineCreator {
 	 * @throws IOException
 	 */
 	public abstract AbstractLineWriter newWriter(OutputStream datastream)
+			throws IOException;
+
+	/**
+	 * Create LineWriter for a supplied Byte-Record-Writer.
+	 * @param writer supplied Byte-Record-Writer.
+	 * @return JRecord Line-Writer
+	 * @throws IOException
+	 */
+	public abstract AbstractLineWriter newWriter(IByteRecordWriter writer)
 			throws IOException;
 
 }

@@ -39,7 +39,6 @@ import java.io.InputStream;
 
 //import net.sf.JRecord.ByteIO.AbstractByteReader;
 import net.sf.JRecord.ByteIO.IByteReader;
-import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
 
@@ -54,27 +53,21 @@ import net.sf.JRecord.Details.LineProvider;
  * @author Bruce Martin
  *
  */
-public class LineReaderWrapper extends AbstractLineReader {
+public class LineReaderWrapper extends LineByteRecordReaderWrapper<IByteReader> {
 
-    private IByteReader reader;
-    int i = 0;
 
     /**
      *  Create a LineReader from a Byte reader
      */
     public LineReaderWrapper(IByteReader byteReader) {
-        super();
-
-        reader = byteReader;
+        super(byteReader);
     }
 
     /**
      * @param provider
      */
     public LineReaderWrapper(LineProvider provider, IByteReader byteReader) {
-        super(provider);
-
-        reader = byteReader;
+        super(provider, byteReader);
     }
 
     /**
@@ -83,40 +76,11 @@ public class LineReaderWrapper extends AbstractLineReader {
     public void open(InputStream inputStream, LayoutDetail pLayout)
             throws IOException {
 
+        super.open(inputStream, pLayout);
         reader.setLineLength(pLayout.getMaximumRecordLength());
         reader.open(inputStream);
-        super.setLayout(pLayout);
     }
 
-
-    /**
-     * @see net.sf.JRecord.IO.AbstractLineReader#read()
-     */
-    public AbstractLine readImplementation() throws IOException {
-        byte bytes[] = reader.read();
-
-        if (bytes == null) {
-            return null;
-        }
-        return getLine(bytes);
-    }
-
-    protected byte[] rawRead() throws IOException {
-    	return reader.read();
-    }
-    /**
-     * @see net.sf.JRecord.IO.AbstractLineReader#close()
-     */
-    public void close() throws IOException {
-        reader.close();
-    }
-
-	/**
-	 * @return the reader
-	 */
-	public final IByteReader getReader() {
-		return reader;
-	}
 
 	/**
 	 * @param reader the reader to set
@@ -124,5 +88,4 @@ public class LineReaderWrapper extends AbstractLineReader {
 	public final void setReader(IByteReader reader) {
 		this.reader = reader;
 	}
-
 }

@@ -79,8 +79,10 @@ public class TstCobol1 extends TestCase {
 	                 ;
 
 	public void testPositiveConversion() throws RecordException {
-		int[] intelTypes = {22, 33, 23, 23, 25, };
-		int[] mainframeTypes = {22, 33, 39, 39, 25, };
+		@SuppressWarnings("deprecation")
+		int[] intelTypes = {22, Type.ftPackedDecimalPostiveSmall, Type.ftIntPositiveSmall, Type.ftIntPositiveSmall, 25, };
+		@SuppressWarnings("deprecation")
+		int[] mainframeTypes = {22, Type.ftPackedDecimalPostiveSmall, Type.ftIntBigEndianPositive, Type.ftIntBigEndianPositive, 25, };
 
 		System.out.println();
 		System.out.println("Intel: ");
@@ -118,9 +120,10 @@ public class TstCobol1 extends TestCase {
 	}
 
 
+	@SuppressWarnings("deprecation")
 	public void testSignedConversion() throws RecordException {
-		int[] intelTypes = {46, 31, 15, 15, 7, 24, 6, 29, 6, 29, };
-		int[] mainframeTypes = {32, 31, 35, 35, 7, 24, 6, 29, 6, 29, };
+		int[] intelTypes = {46, Type.ftPackedDecimalSmall, Type.ftIntSmall, Type.ftIntSmall, 7, 24, 6, 29, 6, 29, };
+		int[] mainframeTypes = {32, Type.ftPackedDecimalSmall, Type.ftIntBigEndianSmall, Type.ftIntBigEndianSmall, 7, 24, 6, 29, 6, 29, };
 
 		System.out.println();
 		System.out.println("Signed Intel: ");

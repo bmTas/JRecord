@@ -169,11 +169,15 @@ public class Code {
 				System.out.print('*');
 			}
 
-			TestCase.assertEquals(i + purchaseCount, line.getFieldValue(countFld).asInt());
+			System.out.println("  >> " + i + " " + purchaseCount + " " + salesCount);
+			if (i + purchaseCount != line.getFieldValue(countFld).asInt()) {
+				TestCase.assertEquals(i + purchaseCount, line.getFieldValue(countFld).asInt());
+			}
 			if (checkSalesValue) {
 				IFieldDetail valueFld = layout.getFieldFromName("sales-value (" + i + ")");
+				BigDecimal expectedSalesValue = BigDecimal.valueOf(i + purchaseCount).multiply(BD_3p1).setScale(2);
 				TestCase.assertEquals(
-						BigDecimal.valueOf(i + purchaseCount).multiply(BD_3p1).setScale(2), 
+						expectedSalesValue, 
 						line.getFieldValue(valueFld).asBigDecimal());
 			}
 		}

@@ -39,6 +39,7 @@ import net.sf.JRecord.Log.TextLog;
 
 
 import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.Types.Type;
 import junit.framework.TestCase;
 
 /**
@@ -109,10 +110,12 @@ public class TstCobol2 extends TestCase {
 
 
 	private int[][] intelFields = {
-			{ 1, 5, 22}, { 7, 3, 33}, {11, 4, 23}, {16, 4, 23}, {20, 8, 25},
+			{ 1, 5, 22}, { 7, 3, Type.ftPackedDecimalPostiveSmall}, {11, 4, Type.ftIntPositiveSmall}, 
+			{16, 4, Type.ftIntPositiveSmall}, {20, 8, 25},
 			{20, 4, 25}, {24, 2, 25}, {26, 2, 25}, {28, 10, 0}, 			};
 	private int[][] mainframeFields = {
-			{ 1, 5, 22}, { 7, 3, 33}, {11, 4, 39}, {16, 4, 39}, {20, 8, 25},
+			{ 1, 5, 22}, { 7, 3, Type.ftPackedDecimalPostiveSmall}, {11, 4, Type.ftIntBigEndianPositive}, 
+			{16, 4, Type.ftIntBigEndianPositive}, {20, 8, 25},
 			{20, 4, 25}, {24, 2, 25}, {26, 2, 25}, {28, 10, 0}, 			};
 	private String[] blankNames  = {"f01", "f02", "f03", "f04", "f05", "yyyy", "MM", "DD", "", };
 	private String[] fillerNames = {"f01", "f02", "f03", "f04", "f05", "yyyy", "MM", "DD", "filler", };

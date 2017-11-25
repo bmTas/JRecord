@@ -205,7 +205,7 @@ public interface AbstractLine extends AbstractIndexedLine {
      *
      * @return the request field (formated)
      */
-    public abstract IFieldValue getFieldValue(final int recordIdx, final int fieldIdx);
+    public abstract net.sf.JRecord.Details.fieldValue.IFieldValue  getFieldValue(final int recordIdx, final int fieldIdx);
 
     /**
      * Get a fields value
@@ -214,7 +214,7 @@ public interface AbstractLine extends AbstractIndexedLine {
      *
      * @return fields Value
      */
-    public abstract IFieldValue getFieldValue(IFieldDetail field);
+    public abstract net.sf.JRecord.Details.fieldValue.IFieldValue getFieldValue(IFieldDetail field);
 
     /**
      * Get a fields value
@@ -223,7 +223,7 @@ public interface AbstractLine extends AbstractIndexedLine {
      *
      * @return fields Value
      */
-    public abstract IFieldValue getFieldValue(String fieldName);
+    public abstract net.sf.JRecord.Details.fieldValue.IFieldValue  getFieldValue(String fieldName);
 
     
     /**

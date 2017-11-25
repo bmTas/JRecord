@@ -49,11 +49,6 @@ import net.sf.JRecord.Option.ICobolSplitOptions;
  */
 public interface CopybookLoader extends ICobolSplitOptions {
 
-//    public static final int FMT_INTEL      = 0;
-//    public static final int FMT_MAINFRAME  = 1;
-//    public static final int FMT_FUJITSU    = 2;
-//    public static final int FMT_BIG_ENDIAN = 3;
-
 
     /**
      * Read an Copybook from a file into the internal exchange format (ExternalRecord)

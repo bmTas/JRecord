@@ -8,6 +8,8 @@ import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.Types.Type;
+import net.sf.JRecord.Types.TypeManager;
+import net.sf.JRecord.Types.TypeManager.CharsetType;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
 public class CommonCodeFields {
@@ -94,6 +96,8 @@ public class CommonCodeFields {
 
 	public static void checkFields(String id, String font, FieldDetail[] expected, RecordDetail record) {
 		if (expected == null) System.out.println("\t}, {");
+		TypeManager typeMgr = TypeManager.getInstance();
+		CharsetType charsetType = typeMgr.getCharsetType(record.getFontName());
 		for (int i = 0; i < record.getFieldCount(); i++) {
 			FieldDetail field = record.getField(i);
 			if (expected == null) {
@@ -111,7 +115,9 @@ public class CommonCodeFields {
 				TestCase.assertEquals(idx, eField.getName(), field.getName());
 				TestCase.assertEquals(idx, eField.getPos(),  field.getPos());
 				TestCase.assertEquals(idx, eField.getLen(),  field.getLen());
-				TestCase.assertEquals(idx, eField.getType(), field.getType());
+				TestCase.assertEquals(idx, 
+						typeMgr.getShortType(eField.getType(), eField.getLen(), charsetType), 
+						field.getType());
 				TestCase.assertEquals(idx, eField.getDecimal(), field.getDecimal());
 				TestCase.assertEquals(idx, font, field.getFontName());
 			}

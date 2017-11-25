@@ -47,6 +47,8 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import net.sf.cb2xml.def.ICondition;
+
 
 /**
  * <p>Java class for anonymous complex type.
@@ -75,7 +77,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
     "condition"
 })
 @XmlRootElement(name = "condition")
-public class Condition {
+public class Condition implements ICondition{
 
     protected List<Condition> condition;
     @XmlAttribute(name = "name")
@@ -90,6 +92,37 @@ public class Condition {
     @XmlSchemaType(name = "anySimpleType")
     protected String value;
 
+    public Condition() {
+    }
+    
+
+    public Condition(ICondition cond) {
+    	name = cond.getName();
+    	through = cond.getThrough();
+    	value = cond.getValue();
+    	
+    	condition = toConditionList(cond.getChildConditions());
+    }
+
+
+	/**
+	 * @param cond
+	 */
+	protected static List<Condition> toConditionList(List<? extends ICondition> childConditions) {
+		List<Condition> newChildConds = null;
+    	
+    	if (childConditions != null && childConditions.size() > 0) {
+    		newChildConds = new ArrayList<Condition>(childConditions.size());
+    		
+    		for (ICondition c : newChildConds) {
+    			newChildConds.add(new Condition(c));
+    		}
+    	}
+    	return newChildConds;
+	}
+    
+   
+    
     /**
      * Gets the value of the condition property.
      * 
@@ -112,7 +145,7 @@ public class Condition {
      * 
      * 
      */
-    public List<Condition> getCondition() {
+    public List<Condition> getChildConditions() {
         if (condition == null) {
             condition = new ArrayList<Condition>();
         }

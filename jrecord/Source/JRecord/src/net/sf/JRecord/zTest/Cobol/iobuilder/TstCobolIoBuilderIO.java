@@ -47,6 +47,7 @@ import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.IO.CobolIoProvider;
+import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.zTest.Common.TstConstants;
 import junit.framework.TestCase;
@@ -94,13 +95,14 @@ public class TstCobolIoBuilderIO extends TestCase {
 					.getBytes();
 
 	
+	@SuppressWarnings("deprecation")
 	private static final FieldDetail[] EXPECTED_DTAR020 = {
 		bldType("DTAR020-KEYCODE-NO", 1, 8, 0, 0, "CP037"),
-		bldType("DTAR020-STORE-NO", 9, 2, 0, 31, "CP037"),
-		bldType("DTAR020-DATE", 11, 4, 0, 31, "CP037"),
-		bldType("DTAR020-DEPT-NO", 15, 2, 0, 31, "CP037"),
-		bldType("DTAR020-QTY-SOLD", 17, 5, 0, 31, "CP037"),
-		bldType("DTAR020-SALE-PRICE", 22, 6, 2, 31, "CP037"),
+		bldType("DTAR020-STORE-NO", 9, 2, 0, Type.ftPackedDecimalSmall, "CP037"),
+		bldType("DTAR020-DATE", 11, 4, 0, Type.ftPackedDecimalSmall, "CP037"),
+		bldType("DTAR020-DEPT-NO", 15, 2, 0, Type.ftPackedDecimalSmall, "CP037"),
+		bldType("DTAR020-QTY-SOLD", 17, 5, 0, Type.ftPackedDecimalSmall, "CP037"),
+		bldType("DTAR020-SALE-PRICE", 22, 6, 2, Type.ftPackedDecimalSmall, "CP037"),
 	};
 	
 	public void testDTAR020SchemaLoad1a() throws RecordException, IOException {

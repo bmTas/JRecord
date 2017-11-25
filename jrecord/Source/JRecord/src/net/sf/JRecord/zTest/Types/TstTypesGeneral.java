@@ -60,6 +60,7 @@ import net.sf.JRecord.zTest.Common.TestCommonCode;
  */
 public class TstTypesGeneral extends TestCase {
 
+	@SuppressWarnings("deprecation")
 	public static final int[] NUMERIC_TYPES = {
 
 	 	Type.ftNumLeftJustified,
@@ -93,17 +94,28 @@ public class TstTypesGeneral extends TestCase {
 
 	 	Type.ftPackedDecimal,
 	 	Type.ftPackedDecimalPostive,
+	 	Type.ftPackedDecimalSmall,
+	 	Type.ftPackedDecimalPostiveSmall,
 	 	Type.ftZonedNumeric,
 	 	Type.ftBinaryBigEndian,
 	 	Type.ftBinaryBigEndianPositive,
 	 	Type.ftPositiveBinaryBigEndian,
 	 	Type.ftRmComp,
 	 	Type.ftRmCompPositive,
+	 	Type.ftIntBigEndianSmall,
+	 	Type.ftIntBigEndianPositive,
+	 	Type.ftUIntBigEndianSmall,
+	 	Type.ftIntSmall,
+	 	Type.ftIntPositiveSmall,
+	 	Type.ftUIntSmall,
+	 	Type.ftZonedAsciiSmall,
+	 	Type.ftZonedEbcdicSmall,
 
 	 	Type.ftFjZonedNumeric,
 	 	Type.ftGnuCblZonedNumeric,
 	};
 
+	@SuppressWarnings("deprecation")
 	public static final int[] BINARY_TYPES = {
 		Type.ftHex,
 		Type.ftDecimal,
@@ -118,25 +130,38 @@ public class TstTypesGeneral extends TestCase {
 
 	 	Type.ftPackedDecimal,
 	 	Type.ftPackedDecimalPostive,
+	 	Type.ftPackedDecimalSmall,
+	 	Type.ftPackedDecimalPostiveSmall,
 	 	Type.ftBinaryBigEndian,
 	 	Type.ftBinaryBigEndianPositive,
 	 	Type.ftPositiveBinaryBigEndian,
 	 	Type.ftRmComp,
 	 	Type.ftRmCompPositive,
+	 	Type.ftIntBigEndianSmall,
+	 	Type.ftIntBigEndianPositive,
+	 	Type.ftUIntBigEndianSmall,
+	 	Type.ftIntSmall,
+	 	Type.ftIntPositiveSmall,
+	 	Type.ftUIntSmall,
 
 		Type.ftCharRestOfRecord
 	};
 
+	@SuppressWarnings("deprecation")
 	public static final int[] POSITIVE_TYPES = {
 		Type.ftPostiveBinaryInt,
 	 	Type.ftBinaryIntPositive,
 
 		Type.ftAssumedDecimalPositive,
 	 	Type.ftPackedDecimalPostive,
+	 	Type.ftPackedDecimalPostiveSmall,
 	 	Type.ftPositiveNumAnyDecimal,
 	 	Type.ftBinaryBigEndianPositive,
 	 	Type.ftPositiveBinaryBigEndian,
 	 	Type.ftRmCompPositive,
+	 	Type.ftIntBigEndianPositive,
+	 	Type.ftUIntBigEndianSmall,
+	 	Type.ftUIntSmall,
 	};
 
 	private TypeManager typeManager = new TypeManager();
@@ -155,7 +180,10 @@ public class TstTypesGeneral extends TestCase {
 		}
 
 		for (int typeId : NUMERIC_TYPES) {
-			assertTrue("Numeric Type: " + typeId, m.getType(typeId).isNumeric());
+			if (! m.getType(typeId).isNumeric()) {
+				assertTrue("Numeric Type: " + typeId,
+						m.getType(typeId).isNumeric());
+			}
 			numTypes.add(typeId);
 		}
 
@@ -274,6 +302,7 @@ public class TstTypesGeneral extends TestCase {
 	}
 
 	
+	@SuppressWarnings("deprecation")
 	private void tstAssignment(AbstractLine l, String charset, boolean tstBinaryTypes, int size) throws RecordException {
 		String[] values1 = {"0", "5", "10", "32", "432", "6543", "-5", "-10", "-32", "-432"};
 		String[] values2 = {"1.1", "-2.1", "54.3"};
@@ -285,6 +314,8 @@ public class TstTypesGeneral extends TestCase {
 			case Type.ftDouble:
 			case Type.ftHex:
 			case Type.ftBit:
+			case Type.ftZonedEbcdicSmall:
+			case Type.ftZonedAsciiSmall:
 				break;
 			case Type.ftCharRestOfRecord:
 			case Type.ftCharNullPadded:
@@ -433,6 +464,7 @@ public class TstTypesGeneral extends TestCase {
 	 * @param fixed
 	 * @throws RecordException
 	 */
+	@SuppressWarnings("deprecation")
 	private void tstLineAssignment(AbstractLine[] l, boolean fixed) throws RecordException {
 		String[] values1 = {"0", "5", "10", "32", "432", "6543", "-5", "-10", "-32", "-432"};
 		String[] values2 = {"1.1", "-2.1", "54.3"};
@@ -461,13 +493,14 @@ public class TstTypesGeneral extends TestCase {
 								System.out.print("+");
 							}
 							if ("IBM273".equals(fontName)
-							&& (i == Type.ftZonedNumeric)) {
+							&& (i == Type.ftZonedNumeric || i == Type.ftZonedAsciiSmall || i == Type.ftZonedEbcdicSmall)) {
 								
 							} else {
 								String id = fontName
 										+ " Type: " + i
 										+ " values: " + v1 + ", " + v2
-										+ " " + (l[k] instanceof CharLine);
+										+ " " + (l[k] instanceof CharLine)
+										+ " " + k;
 								setLine(l[k], i, v1, v2, fixed);
 								if (! l[0].getFullLine().equals(l[k].getFullLine())) {
 									setLine(l[k], i, v1, v2, fixed);

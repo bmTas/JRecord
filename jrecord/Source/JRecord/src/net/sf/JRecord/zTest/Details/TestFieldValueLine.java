@@ -6,7 +6,7 @@ import java.io.StringReader;
 import junit.framework.TestCase;
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.Details.IFieldValue;
+import net.sf.JRecord.Details.fieldValue.IFieldValue ;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
 public class TestFieldValueLine extends TestCase {
@@ -82,7 +82,9 @@ public class TestFieldValueLine extends TestCase {
 
 	private void chkFieldValue(AbstractLine line, int tstId, boolean isPresent) {
 		IFieldValue fieldValue = line.getFieldValue("field1");
-		assertTrue((isPresent) == fieldValue.isFieldPresent());
+		if ((isPresent) != fieldValue.isFieldPresent()) {
+			assertTrue((isPresent) == fieldValue.isFieldPresent());
+		}
 		assertTrue((tstId == LOW_VALUES_TST) == fieldValue.isLowValues());
 		assertTrue((tstId == HIGH_VALUES_TST) ==  fieldValue.isHighValues());
 		assertTrue((tstId == SPACES_TST) ==  fieldValue.isSpaces());

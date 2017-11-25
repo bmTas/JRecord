@@ -38,7 +38,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.sf.JRecord.ByteIO.AbstractByteWriter;
-import net.sf.JRecord.Details.AbstractLine;
 
 /**
  * This class creates a <b>LineWriter</b> from a Low Level <b>Byte-Writer</b>.
@@ -52,17 +51,13 @@ import net.sf.JRecord.Details.AbstractLine;
  * @author Bruce Martin
  *
  */
-public class LineWriterWrapper extends AbstractLineWriter {
-
-    private AbstractByteWriter writer;
+public class LineWriterWrapper extends LineByteRecordWriterWrapper<AbstractByteWriter> {
 
     /**
      *
      */
     public LineWriterWrapper(AbstractByteWriter byteWriter) {
-        super();
-
-        writer = byteWriter;
+        super(byteWriter);
     }
 
     /**
@@ -72,30 +67,7 @@ public class LineWriterWrapper extends AbstractLineWriter {
         writer.open(outputStream);
     }
 
-    /**
-     * @see net.sf.JRecord.IO.AbstractLineWriter#write(net.sf.JRecord.Details.AbstractLine)
-     */
-    public void write(AbstractLine line) throws IOException {
-        writer.write(line.getData());
-    }
-
-
-    /**
-     * @see net.sf.JRecord.IO.AbstractLineWriter#close()
-     */
-    public void close() throws IOException {
-    	if (writer != null) {
-    		writer.close();
-    	}
-    }
-
-	/**
-	 * @return the writer
-	 */
-	public final AbstractByteWriter getWriter() {
-		return writer;
-	}
-
+	
 	/**
 	 * @param writer the writer to set
 	 */

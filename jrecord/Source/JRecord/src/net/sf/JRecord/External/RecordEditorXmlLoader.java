@@ -32,6 +32,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.Constants;
@@ -48,6 +50,12 @@ import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.IO.XmlLineReader;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Log.TextLog;
+import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.cb2xml.analysis.BaseItem;
+import net.sf.cb2xml.analysis.Item;
+import net.sf.cb2xml.analysis.ItemBuilder;
+import net.sf.cb2xml.def.Cb2xmlConstants;
+import net.sf.cb2xml.def.IItem;
 
 /**
  * Class to Load a RecordLayout (Record or Line Description)
@@ -102,6 +110,7 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 
 	private static class RecordEditorXmlLoaderImp extends BaseCopybookLoader { 
 		
+		private static final String END_ITEMS = "/" + Constants.RE_XML_COBOL_ITEMS;
 		private String lastGroupDetails = null;
 		
 		/**
@@ -277,7 +286,8 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 			if (line != null) {
 				if (Constants.RE_XML_RECORDS.equalsIgnoreCase(line.getFieldValue(XmlConstants.XML_NAME).asString())) {
 					ExternalRecord newRec;
-					if (childRec.getRecordType() != Constants.rtGroupOfBinaryRecords) {
+					if (childRec.getRecordType() != Constants.rtGroupOfBinaryRecords 
+					&& childRec.getRecordType() != Constants.rtBinaryRecord) {
 						childRec.setRecordType(Constants.rtGroupOfRecords);
 					}
 		
@@ -294,16 +304,108 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 					line = reader.read();
 				}
 		
-				line = addFieldTsts(childRec, reader, line, dbIdx);
-				line = addFields(childRec, reader, line, dbIdx);
-				line = addFieldTsts(childRec, reader, line, dbIdx);
+				line = addItems(childRec, reader, line, dbIdx);
+				
+				if (line != null) {
+					if (END_ITEMS.equals(line.getFieldValue(XmlConstants.XML_NAME).asString())) {
+						line = reader.read();
+					} else { 	
+						line = addFieldTsts(childRec, reader, line, dbIdx);
+						line = addFields(childRec, reader, line, dbIdx);
+						line = addFieldTsts(childRec, reader, line, dbIdx);
+					}
+				}
 			}
 			return true;
 		}
 	
 	
+		private AbstractLine addItems(
+				ExternalRecord childRec,
+				XmlLineReader reader,
+				AbstractLine line,
+				int dbIdx)
+		throws IOException {
+			
+			if (line != null
+			&&  Constants.RE_XML_COBOL_ITEMS.equalsIgnoreCase(line.getFieldValue(XmlConstants.XML_NAME).asString())) {
+				String endItem  = "/" + Cb2xmlConstants.ITEM;
+				String endCondition = "/" + Cb2xmlConstants.CONDITION;
+				ItemBuilder bldr = new ItemBuilder();
+				ItemHelper itmReader = new ItemHelper(reader, new Item(null, 0, "00", ""));
+				itmReader.line = line;
+				
+				String copybookPref = itmReader.getAttr(Constants.RE_XML_COPYBOOK_PREF);
+				int dialect = ICopybookDialects.FMT_MAINFRAME;
+				try { dialect = Integer.parseInt(itmReader.getAttr(Constants.RE_XML_COBOL_DIALECT)); } catch (Exception e) { }
+				String[] groupNames = null;
+				String groupNameStr = itmReader.getAttr(Constants.RE_XML_GROUP_NAMES);
+				if (groupNameStr != null && groupNameStr.length() > 0) {
+					groupNames = groupNameStr.split("\\.");
+				}
+				boolean keepFillers = Constants.RE_XML_TRUE.equals(itmReader.getAttr(Constants.RE_XML_KEEP_FILLER));
+				boolean dropCopybookName = Constants.RE_XML_TRUE.equals(itmReader.getAttr(Constants.RE_XML_DROP_COPYBOOK_FROM_FIELD));
+				boolean useJRecordNaming = Constants.RE_XML_TRUE.equals(itmReader.getAttr(Constants.RE_XML_JRECORD_NAMING));
+				
+				while ((line = itmReader.read()) != null) {
+					String recType = line.getFieldValue(XmlConstants.XML_NAME).asString();
+					if (Cb2xmlConstants.ITEM.equalsIgnoreCase(recType)) {
+						processItem(bldr, itmReader);			
+					} else if (Cb2xmlConstants.CONDITION.equalsIgnoreCase(recType)) {
 	
-	
+					} else if (endItem.equalsIgnoreCase(recType)) {
+						itmReader.pop();
+					} else if (endCondition.equalsIgnoreCase(recType)) {
+						
+					} else if (END_ITEMS.equalsIgnoreCase(recType)) {
+						break;
+					}
+				}
+				List<? extends Item> childItems = itmReader.topItem.getChildItems();
+				childRec.setCobolConversionOptions(keepFillers, dropCopybookName, useJRecordNaming);
+				childRec.setItems(copybookPref, groupNames, dialect, childItems);
+				childRec.updateTypeOnCobolItems();
+			}
+			
+			return line;
+		}
+		
+		
+		
+		private void processItem(ItemBuilder itmBldr, ItemHelper rBldr) {
+			
+			itmBldr.setLevelString(rBldr.getAttr(Cb2xmlConstants.LEVEL));
+			itmBldr.setFieldName(rBldr.getAttr(Cb2xmlConstants.NAME));
+			itmBldr.setBlankWhenZero(rBldr.getBooleanAttr(Cb2xmlConstants.BLANK_WHEN_ZERO));
+			itmBldr.setDependingOn(rBldr.getAttr(Cb2xmlConstants.DEPENDING_ON));
+			itmBldr.setDisplayLength(rBldr.getIntAttr(Cb2xmlConstants.DISPLAY_LENGTH));
+			itmBldr.setFieldRedefined(rBldr.getBooleanAttr(Cb2xmlConstants.REDEFINED));
+			itmBldr.setInheritedUsage(rBldr.getBooleanAttr(Cb2xmlConstants.INHERITED_USAGE));
+			itmBldr.setJustified(rBldr.getJustified());
+			itmBldr.setNumericClass(rBldr.getNumericClass());
+			itmBldr.setOccursMin(rBldr.getIntAttr(Cb2xmlConstants.OCCURS_MIN));
+			itmBldr.setOccurs(rBldr.getIntAttr(Cb2xmlConstants.OCCURS));
+			itmBldr.setPicture(rBldr.getAttr(Cb2xmlConstants.PICTURE));
+			itmBldr.setPosition(rBldr.getIntAttr(Cb2xmlConstants.POSITION));
+			itmBldr.setRedefines(rBldr.getAttr(Cb2xmlConstants.REDEFINES));
+			itmBldr.setScale(rBldr.getIntAttr(Cb2xmlConstants.SCALE));
+			itmBldr.setSignClause(rBldr.getSignClause());
+			itmBldr.setSigned(rBldr.getBooleanAttr(Cb2xmlConstants.SIGNED));
+			itmBldr.setStorageLength(rBldr.getIntAttr(Cb2xmlConstants.STORAGE_LENGTH));
+			itmBldr.setSync(rBldr.getBooleanAttr(Cb2xmlConstants.SYNC));
+			itmBldr.setUsage(rBldr.getUsage());
+			itmBldr.setValue(rBldr.getAttr(Cb2xmlConstants.VALUE));
+			
+			int size = rBldr.list.size();
+			Item parent = size == 0 ? null : rBldr.list.get(size - 1);
+			Item newItem = itmBldr.build(parent);
+			
+			if (! "True".equalsIgnoreCase(rBldr.getAttr(XmlConstants.END_ELEMENT))) {
+				rBldr.add(newItem);
+			}
+		}
+
+		
 		private AbstractLine addFields(
 				ExternalRecord childRec,
 				XmlLineReader reader,
@@ -325,8 +427,8 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 						len     = getIntFld(line, Constants.RE_XML_LENGTH, Constants.NULL_INTEGER);
 						fldName = line.getFieldValue(Constants.RE_XML_NAME).asString();
 						try {
-							s =line.getFieldValueIfExists(Constants.RE_XML_DEFAULT).asString();
-							cobolName =line.getFieldValueIfExists(Constants.RE_XML_COBOLNAME).asString();
+							s = line.getFieldValueIfExists(Constants.RE_XML_DEFAULT).asString();
+							cobolName = line.getFieldValueIfExists(Constants.RE_XML_COBOLNAME).asString();
 						} catch (Exception e) {}
 						fld = new ExternalField(
 							getIntFld(line, Constants.RE_XML_POS, Constants.NULL_INTEGER),
@@ -470,4 +572,81 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 		return (new RecordEditorXmlLoaderImp()).loadCopyBook(bs, name, "", null);
 	}
 	
+	
+	/**
+	 * 
+	 * @author bruce
+	 *
+	 */
+	private static class ItemHelper {
+		final XmlLineReader reader; 
+		//final ItemBuilder itmBldr;
+		
+		AbstractLine line;
+		public final BaseItem topItem;
+		public final ArrayList<Item> list = new ArrayList<Item>();
+		
+		public ItemHelper(XmlLineReader reader, Item topItem) {
+			super();
+			this.reader = reader;
+			this.topItem = topItem;
+			add((Item) topItem);
+			
+		}
+		
+		public AbstractLine read() throws IOException {
+			return (line = reader.read());
+		}
+		
+		public String getAttr(String localName) {
+			@SuppressWarnings("deprecation")
+			Object o = line.getField(localName);
+			
+			return o == null ? "" : o.toString();
+		}
+		
+		public int getIntAttr(String localName) {
+			String s = getAttr(localName);
+			if (s != null && s.length() > 0) {
+				return Integer.parseInt(s);
+			}
+			return IItem.NULL_INT_VALUE;
+		}
+		
+		public boolean getBooleanAttr(String localName) {
+			String s = getAttr(localName);
+			return Cb2xmlConstants.TRUE.equals(s);
+		}
+		
+		public Cb2xmlConstants.Justified getJustified() {
+			String s = getAttr(Cb2xmlConstants.JUSTIFIED);
+			return Cb2xmlConstants.toJustified(s);
+		}
+		
+		public Cb2xmlConstants.Usage getUsage() {
+			String s = getAttr(Cb2xmlConstants.USAGE);
+			return Cb2xmlConstants.toUsage(s);
+		}
+		
+		public Cb2xmlConstants.SignClause getSignClause() {
+			String s = getAttr(Cb2xmlConstants.SIGN_CLAUSE);
+			return Cb2xmlConstants.toSignClause(s);
+		}
+		
+		public Cb2xmlConstants.NumericClass getNumericClass() {
+			String s = getAttr(Cb2xmlConstants.NUMERIC);
+			return Cb2xmlConstants.toNumeric(s);
+		}
+
+		public void add(Item itm) {
+			list.add(itm);
+		}
+
+	
+		public void pop() {
+			list.remove(list.size() - 1);
+		}
+
+	}
+
 }

@@ -37,6 +37,8 @@ import java.io.OutputStream;
 import java.util.Map;
 import java.util.TreeMap;
 
+import net.sf.JRecord.ByteIO.IByteRecordReader;
+import net.sf.JRecord.ByteIO.IByteRecordWriter;
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
@@ -50,6 +52,8 @@ import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
+import net.sf.JRecord.IO.LineByteRecordReaderWrapper;
+import net.sf.JRecord.IO.LineByteRecordWriterWrapper;
 import net.sf.JRecord.IO.LineIOProvider;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Log.TextLog;
@@ -253,6 +257,12 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 		return r;
 	}
 	
+	public final AbstractLineReader newReader(IByteRecordReader reader) throws IOException {
+		checkOk(true);
+		LayoutDetail schema = getLayout();
+		
+		return new LineByteRecordReaderWrapper<IByteRecordReader>(lineProvider, reader, schema);
+	}
 	
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.IO.IIOBuilder#newWriter(java.lang.String)
@@ -265,6 +275,16 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.IO.IIOBuilder#newWriter(java.io.OutputStream)
 	 */
+	public final AbstractLineWriter newWriter(IByteRecordWriter writer) throws IOException {
+		checkOk(false);
+		//LayoutDetail schema = getLayout();
+
+		return new LineByteRecordWriterWrapper<IByteRecordWriter>(writer);
+	}
+	
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.IO.IIOBuilder#newWriter(java.io.OutputStream)
+	 */
 	public final AbstractLineWriter newWriter(OutputStream datastream) throws IOException {
 		checkOk(false);
 		LayoutDetail schema = getLayout();
@@ -273,7 +293,6 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 		r.open(datastream);
 		return r;
 	}
-	
 	
 	/**
 	 * Method to allow ChildBuilders to validate the schema prior to

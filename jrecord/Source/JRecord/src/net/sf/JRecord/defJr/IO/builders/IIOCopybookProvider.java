@@ -29,9 +29,17 @@
 package net.sf.JRecord.def.IO.builders;
 
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 
 import net.sf.JRecord.External.ExternalRecord;
 
@@ -77,6 +85,14 @@ public interface IIOCopybookProvider {
 	public abstract IFileIOBuilder newIOBuilder(
 			Reader xmlReader, String copybookName);
 
+
+	/**
+	 * Set wether to indent the Xml or not
+	 * @param indentXml
+	 * @return
+	 */
+	public abstract IIOCopybookProvider setIndentXml(boolean indentXml);
+
 	/**
 	 * Exporting a {@link ExternalRecord} to an Xml-File
 	 * 
@@ -85,7 +101,8 @@ public interface IIOCopybookProvider {
 	 * 
 	 * @throws Exception any error that occurs
 	 */
-	public abstract void export(String fileName, ExternalRecord schema) throws Exception;
+	public abstract void export(String fileName, ExternalRecord schema) 
+	throws XMLStreamException, UnsupportedEncodingException, FactoryConfigurationError, IOException;
 
 	/**
 	 * Exporting a {@link ExternalRecord} to a Stream
@@ -95,6 +112,26 @@ public interface IIOCopybookProvider {
 	 * 
 	 * @throws Exception Any Error that occurs
 	 */
-	public abstract void export(OutputStream outStream, ExternalRecord schema) throws Exception;
+	public abstract void export(OutputStream outStream, ExternalRecord schema) 
+	throws XMLStreamException, UnsupportedEncodingException, FactoryConfigurationError, IOException;
 
+	/**
+	 * Write Xml to a writer
+	 * @param writer
+	 * @param schema schema to export
+	 * @throws Exception
+	 */
+	public abstract void export(Writer writer, ExternalRecord schema)
+	throws XMLStreamException, UnsupportedEncodingException, FactoryConfigurationError;
+
+	/**
+	 * Export 
+	 * @param writer XmlStreamWriter to write the Xml to
+	 * @param schema schema to be written
+	 * 
+	 * @throws XMLStreamException Xml Stream exception
+	 */
+	public abstract void export(XMLStreamWriter writer, ExternalRecord schema)  throws XMLStreamException ;
+
+	
 }

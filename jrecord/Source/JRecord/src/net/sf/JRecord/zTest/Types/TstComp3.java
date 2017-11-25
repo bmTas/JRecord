@@ -34,6 +34,7 @@ import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.Types.TypeNum;
 import net.sf.JRecord.Types.TypePackedDecimal;
+import net.sf.JRecord.Types.smallBin.TypePackedDecimal9;
 import junit.framework.TestCase;
 
 public class TstComp3 extends TestCase {
@@ -47,6 +48,8 @@ public class TstComp3 extends TestCase {
 	public void testGetField() {
 		tstGetField(Type.ftPackedDecimal);
 		tstGetField(Type.ftPackedDecimalPostive);
+		tstGetField(Type.ftPackedDecimalSmall);
+		tstGetField(Type.ftPackedDecimalPostiveSmall);
 	}
 	
 	private void tstGetField(int typeId) {
@@ -54,7 +57,7 @@ public class TstComp3 extends TestCase {
 		FieldDetail f = new FieldDetail("", "", typeId, 0, "", 0, "");
 		f.setPosLen(1, 3);
 		
-		assertTrue(t instanceof TypePackedDecimal);
+		assertTrue(t instanceof TypePackedDecimal || t instanceof TypePackedDecimal9);
 		assertEquals("1234", t.getField(b1, 1, f).toString());
 		if (! t.isPositive()) {
 			assertEquals("-1234", t.getField(b2, 1, f).toString());
@@ -70,6 +73,13 @@ public class TstComp3 extends TestCase {
 		tstSetField(Type.ftPackedDecimalPostive, "1234", b3);
 		tstSetField(Type.ftPackedDecimal, "0", b4);
 		tstSetField(Type.ftPackedDecimalPostive, "0", b5);
+		
+		tstSetField(Type.ftPackedDecimalSmall, "1234", b1);
+		tstSetField(Type.ftPackedDecimalSmall, "-1234", b2);
+		tstSetField(Type.ftPackedDecimalPostiveSmall, "1234", b3);
+		tstSetField(Type.ftPackedDecimalSmall, "0", b4);
+		tstSetField(Type.ftPackedDecimalPostiveSmall, "0", b5);
+
 	}
 	
 	
@@ -87,6 +97,10 @@ public class TstComp3 extends TestCase {
 		tstSetGet(Type.ftPackedDecimal, 1, "c");
 		tstSetGet(Type.ftPackedDecimal, -1, "d");
 		tstSetGet(Type.ftPackedDecimalPostive, 1, "f");
+		
+		tstSetGet(Type.ftPackedDecimalSmall, 1, "c");
+		tstSetGet(Type.ftPackedDecimalSmall, -1, "d");
+		tstSetGet(Type.ftPackedDecimalPostiveSmall, 1, "f");
 	}
 	
 	private void tstSetGet(int typeId, int sign, String suff) throws RecordException {

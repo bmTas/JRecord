@@ -38,7 +38,6 @@ import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ICopybookLoaderStream;
 import net.sf.JRecord.External.ISetDropCopybookName;
-import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Numeric.ICopybookDialects;
@@ -260,12 +259,12 @@ extends CblIOBuilderBase<IOB> implements IGetLoader  {
 		public int calculateStartingPosition() {
 			ICreateExternal c = copybooks.get(index);
 			ExternalRecord xr = c.getLastExternalRecord();
-			ExternalField f = xr.getRecordField(fieldName);
-			if (f == null) {
+			int pos = xr.getfieldPosition(fieldName);
+			if (pos < 0) {
 				throw new RecordException("Field: " + fieldName + " was not found in record " + recordName);
 			}	
 			
-			return f.getPos() - 1;
+			return pos - 1;
 		}
 	}
 }

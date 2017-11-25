@@ -53,7 +53,6 @@ import net.sf.JRecord.occursDepending.ODCalculationComplex;
  * @author Bruce Martin
  *
  */
-
 public class TstOD03 extends TestCase {
 
 	private static final int IOBUILDER_COUNT = 5;
@@ -82,9 +81,7 @@ public class TstOD03 extends TestCase {
 
 		long currTime;
 
-
 		for (int i = 0; i < 8; i+=1) {
-
 			for (int j = 0; j <= 12; j+=1) {
 				for (int week = 0; week < 6; week+=1) {
 					String[] cbl = {
@@ -95,13 +92,15 @@ public class TstOD03 extends TestCase {
 					};
 					for (int ii = 0; ii < cbl.length; ii++) {
 						ioBuilder[ii+1] = JRecordInterface1.COBOL
-								.newIOBuilder( new StringReader(cbl[ii]), "OD01")
-								.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE);
-						
+								.newIOBuilder(new StringReader(cbl[ii]), "OD01")
+								.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE);						
 					}
 
 					for (int ii = 0; ii < ioBuilder.length; ii++) {
-						System.out.println("~~ test 1 " + i + "," + j + ", " + week + ", " +ii);
+//						System.out.println("~~ test 1 " + i + "," + j + ", " + week + ", " +ii);
+//						System.out.println();
+//						System.out.println(cbl[ii]);
+//						System.out.println();
 						line[ii] = ioBuilder[ii].newLine();
 						
 						currTime = System.currentTimeMillis();
@@ -305,7 +304,11 @@ public class TstOD03 extends TestCase {
 	private void tstLineTrailer(ArrayList<IFieldDetail> l, AbstractLine line, LayoutDetail layout, String idm,
 			int lineIdx, int purchaseCount, int salesCount, int week, int pos) {
 		IFieldDetail weekNoFld = layout.getFieldFromName(CCodeODC.WEEK_NO_FIELD_NAME);
-		line.getFieldValue(weekNoFld).set(purchaseCount);
+		try {
+			line.getFieldValue(weekNoFld).set(purchaseCount);
+		} catch (Exception e) {
+			line.getFieldValue(weekNoFld).set(purchaseCount);
+		}
 
 		if (lineIdx == IDX_COMPLEX_OD) {
 			for (int i = salesCount; i< 12; i++) {

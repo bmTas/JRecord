@@ -30,24 +30,32 @@ package net.sf.JRecord.cgen.impl;
 
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.cgen.def.IArray1Dimension;
 import net.sf.JRecord.cgen.def.IArray2Dimension;
 import net.sf.JRecord.cgen.def.IArray3Dimension;
-import net.sf.JRecord.cgen.def.IArrayAnyDimension;
+import net.sf.JRecord.cgen.def.IArrayExtended;
+import net.sf.JRecord.cgen.def.IIndex;
 
-public class ArrayFieldDefinition1 implements IArray1Dimension, IArray2Dimension, IArray3Dimension, IArrayAnyDimension {
+public class ArrayFieldDefinition1 implements IArray1Dimension, IArray2Dimension, IArray3Dimension, IArrayExtended {
 
-	//private final int[] sizeAdj, lengths, indexPos;
 	private final int[]  lengths, numberOfElements;
-	//private final FieldDetail firstField;
-	//private final RecordDetail record;
-	private final FieldDetail[] fields;
+	private FieldDetail[] fields;
 
 	
-	public ArrayFieldDefinition1(RecordDetail rec, int[] arrayLengths, FieldDetail[] fd) {
-		//this.record = rec;
-		//sizeAdj = new int[fd.length - 1];
+	public ArrayFieldDefinition1(int[] arrayLengths) {
+		this(arrayLengths, new FieldDetail[calcArraySize(arrayLengths)]);
+	}
+	
+	private static int calcArraySize(int[] arrayLengths) {
+		int size = 1;
+		for (int aSize : arrayLengths) {
+			size *= aSize;
+		}
+		return size;
+	}
+
+	public ArrayFieldDefinition1(int[] arrayLengths, FieldDetail[] fd) {
+
 		this.lengths = arrayLengths;// new int[fd.length - 1];
 		numberOfElements = new int[lengths.length];
 		this.fields = fd;
@@ -58,37 +66,35 @@ public class ArrayFieldDefinition1 implements IArray1Dimension, IArray2Dimension
 			numberOfElements[i] = num;
 			num = num * (lengths[i]);
 		}
-		
-//		firstField =  (FieldDetail) fd[sizeAdj.length];
-//		lengths[0] = firstArrayLength;
-//		sizeAdj[0] = fd[0].getPos() - firstField.getPos();
-//		
-//		if (firstField.getIndexOfField() < 0) {
-//			throw new RuntimeException("Internal Error index of Field < 0");
-//		}
-//		for (int i = 1; i < sizeAdj.length; i++) {
-//			sizeAdj[i] = fd[i].getPos() - firstField.getPos();
-//			lengths[i] = sizeAdj[i - 1] / sizeAdj[i];
-//			if (fd[i].getIndexOfField() < 0) {
-//				throw new RuntimeException("Internal Error index of Field < 0");
-//			}
-//			indexPos[i] = fd[i].getIndexOfField() - firstField.getIndexOfField(); 
-//		}
-		
-
 	}
-//	
-//	public ArrayFieldDefinition1(RecordDetail rec, String name, int pos, int size, int[] maxIdx, int[] elementSizes) {
-//		this.record = rec;
-//		sizeAdj = new int[size];
-//		lengths = new int[size];
-//		dependingOnDtls = null;
-//		firstField = FieldDetail.newFixedWidthField(name + " (0)", Type.ftChar, pos, elementSizes[size - 1], 0, "");
-//		for (int i = 0; i < size; i++) {
-//			sizeAdj[i] = elementSizes[i];
-//			lengths[i] = maxIdx[i];
-//		}
-//	}
+
+	
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cgen.def.IArrayExtended#setField(net.sf.JRecord.cgen.def.IIndex, net.sf.JRecord.Common.IFieldDetail)
+	 */
+	@Override
+	public void setField(IIndex index, FieldDetail fieldDefinition) {
+		this.fields[calcIndex(index)] = fieldDefinition;
+	}
+	
+
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cgen.def.IArrayExtended#getField(net.sf.JRecord.cgen.def.IIndex)
+	 */
+	@Override
+	public IFieldDetail getField(IIndex index) {
+		return this.fields[calcIndex(index)];
+	}
+	
+	private int calcIndex(IIndex index) {
+		int idx = 0;
+		
+		for (int i = 0; i < numberOfElements.length; i++) {
+			idx += index.getIndex(i) * numberOfElements[i];
+		}
+		return idx;
+	}
 
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.cgen.def.IArray3Dimension#get(int, int, int)
@@ -180,6 +186,37 @@ public class ArrayFieldDefinition1 implements IArray1Dimension, IArray2Dimension
 	public int getIndexCount() {
 		return lengths.length;
 	}
-	
-	
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cgen.def.IArrayExtended#asOneDimensionArray()
+	 */
+	@Override
+	public IArray1Dimension asOneDimensionArray() {
+		if (lengths.length == 1) {
+			return this;
+		}
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cgen.def.IArrayExtended#asTwoDimensionArray()
+	 */
+	@Override
+	public IArray2Dimension asTwoDimensionArray() {
+		if (lengths.length == 2) {
+			return this;
+		}
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cgen.def.IArrayExtended#asThreeDimensionArray()
+	 */
+	@Override
+	public IArray3Dimension asThreeDimensionArray() {
+		if (lengths.length == 3) {
+			return this;
+		}
+		return null;
+	}	
 }

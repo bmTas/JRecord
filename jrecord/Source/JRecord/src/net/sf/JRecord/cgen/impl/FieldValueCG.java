@@ -29,8 +29,8 @@
 package net.sf.JRecord.cgen.impl;
 
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Details.BaseFieldValue;
 import net.sf.JRecord.Details.IGetByteData;
+import net.sf.JRecord.Details.fieldValue.BaseFieldValue;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 

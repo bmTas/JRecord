@@ -67,8 +67,8 @@ import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.Option.Options;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
-import net.sf.JRecord.cgen.defc.ILayoutDetails4gen;
-import net.sf.JRecord.definitiuons.CsvCharDetails;
+import net.sf.JRecord.cgen.def.ILayoutDetails4gen;
+import net.sf.JRecord.detailsBasic.CsvCharDetails;
 
 
 
@@ -282,13 +282,6 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	    		csv = true;
 	    	}
 	    	if (record != null && record.getFieldCount() > 0) {
-//	    		if ((lastSize >= 0 && lastSize != record.getLength())
-//	    		||  (record.getField(record.getFieldCount() - 1).getType()
-//	    				== Type.ftCharRestOfRecord )){
-//	    			fixedLength = false;
-//	    		}
-	    		//lastSize = record.getLength();
-
 		    	treeStructure = treeStructure || (record.getParentRecordIndex() >= 0);
 		        CsvCharDetails recordDelimiter = record.getDelimiterDetails();
 				if ((record.getRecordType() == Constants.rtDelimitedAndQuote

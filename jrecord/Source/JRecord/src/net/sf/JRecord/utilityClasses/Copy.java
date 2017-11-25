@@ -36,7 +36,7 @@ import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.Details.IFieldValue;
+import net.sf.JRecord.Details.fieldValue.IFieldValue ;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
 import net.sf.JRecord.Details.RecordDetail;

@@ -30,6 +30,7 @@ package net.sf.JRecord.Details;
 
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Details.fieldValue.FieldValue;
 import net.sf.JRecord.External.Def.DependingOnDtls;
 
 public abstract class BaseLine implements AbstractLine {
@@ -61,12 +62,12 @@ public abstract class BaseLine implements AbstractLine {
     public abstract Object getField(int type, IFieldDetail field);
 
 //	@Override
-	public IFieldValue getFieldValue(IFieldDetail field) {
+	public net.sf.JRecord.Details.fieldValue.IFieldValue  getFieldValue(IFieldDetail field) {
 		return new FieldValue(this, field);
 	}
 
 	@Override
-	public  IFieldValue getFieldValue(int recordIdx, int fieldIdx) {
+	public  net.sf.JRecord.Details.fieldValue.IFieldValue  getFieldValue(int recordIdx, int fieldIdx) {
 		return new FieldValue(this, recordIdx, fieldIdx);
 	}
 
@@ -74,7 +75,7 @@ public abstract class BaseLine implements AbstractLine {
 	 * @see net.sf.JRecord.Details.IGetFieldValueByName#getFieldValue(java.lang.String)
 	 */
 	@Override
-	public final IFieldValue getFieldValue(String fieldName) {
+	public final net.sf.JRecord.Details.fieldValue.IFieldValue  getFieldValue(String fieldName) {
 		IFieldDetail fieldFromName = layout.getFieldFromName(fieldName);
 		
 		if (fieldFromName == null) {
@@ -90,7 +91,7 @@ public abstract class BaseLine implements AbstractLine {
 	 * @see net.sf.JRecord.Details.AbstractLine#getFieldValueIfExists(java.lang.String)
 	 */
 	@Override
-	public IFieldValue getFieldValueIfExists(String fieldName) {
+	public net.sf.JRecord.Details.fieldValue.IFieldValue  getFieldValueIfExists(String fieldName) {
 		return  getFieldValue(layout.getFieldFromName(fieldName));
 	}
 

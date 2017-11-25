@@ -185,5 +185,36 @@ public class ArrayFieldDefinition implements IArray1Dimension, IArray2Dimension,
 		return lengths.length;
 	}
 	
-	
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cgen.def.IArrayExtended#asOneDimensionArray()
+	 */
+	@Override
+	public IArray1Dimension asOneDimensionArray() {
+		if (lengths.length == 1) {
+			return this;
+		}
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cgen.def.IArrayExtended#asTwoDimensionArray()
+	 */
+	@Override
+	public IArray2Dimension asTwoDimensionArray() {
+		if (lengths.length == 2) {
+			return this;
+		}
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cgen.def.IArrayExtended#asThreeDimensionArray()
+	 */
+	@Override
+	public IArray3Dimension asThreeDimensionArray() {
+		if (lengths.length == 3) {
+			return this;
+		}
+		return null;
+	}	
 }

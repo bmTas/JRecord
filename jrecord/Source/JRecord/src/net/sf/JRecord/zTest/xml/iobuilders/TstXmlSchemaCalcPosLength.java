@@ -171,24 +171,26 @@ public class TstXmlSchemaCalcPosLength extends TestCase {
 	/**
 	 * Checking a record where every position has a field
 	 */
+	@SuppressWarnings("deprecation")
 	private static FieldDetail[] DTAR020_RESULTS_1 = {
 		CommonCodeFields.createField("KEYCODE-NO", 1, 8, 0, Type.ftChar),
-		CommonCodeFields.createField("STORE-NO", 9, 2, 0, Type.ftPackedDecimal),
-		CommonCodeFields.createField("DATE", 11, 4, 0, Type.ftPackedDecimal),
-		CommonCodeFields.createField("DEPT-NO", 15, 2, 0, Type.ftPackedDecimal),
-		CommonCodeFields.createField("QTY-SOLD", 17, 5, 0, Type.ftPackedDecimal),
-		CommonCodeFields.createField("SALE-PRICE", 22, 6, 2, Type.ftPackedDecimal),
+		CommonCodeFields.createField("STORE-NO", 9, 2, 0, Type.ftPackedDecimalSmall),
+		CommonCodeFields.createField("DATE", 11, 4, 0, Type.ftPackedDecimalSmall),
+		CommonCodeFields.createField("DEPT-NO", 15, 2, 0, Type.ftPackedDecimalSmall),
+		CommonCodeFields.createField("QTY-SOLD", 17, 5, 0, Type.ftPackedDecimalSmall),
+		CommonCodeFields.createField("SALE-PRICE", 22, 6, 2, Type.ftPackedDecimalSmall),
 	};
 	
 	/**
 	 * Checking fields where ther is a break in the record 
 	 */
+	@SuppressWarnings("deprecation")
 	private static FieldDetail[] DTAR020_RESULTS_2 =  {
 			CommonCodeFields.createField("KEYCODE-NO", 1, 8, 0, Type.ftChar),
-			CommonCodeFields.createField("STORE-NO", 9, 2, 0, Type.ftPackedDecimal),
-			CommonCodeFields.createField("DATE", 11, 4, 0, Type.ftPackedDecimal),
-			CommonCodeFields.createField("QTY-SOLD", 17, 5, 0, Type.ftPackedDecimal),
-			CommonCodeFields.createField("SALE-PRICE", 22, 6, 2, Type.ftPackedDecimal),
+			CommonCodeFields.createField("STORE-NO", 9, 2, 0, Type.ftPackedDecimalSmall),
+			CommonCodeFields.createField("DATE", 11, 4, 0, Type.ftPackedDecimalSmall),
+			CommonCodeFields.createField("QTY-SOLD", 17, 5, 0, Type.ftPackedDecimalSmall),
+			CommonCodeFields.createField("SALE-PRICE", 22, 6, 2, Type.ftPackedDecimalSmall),
 		};
 	
 	
