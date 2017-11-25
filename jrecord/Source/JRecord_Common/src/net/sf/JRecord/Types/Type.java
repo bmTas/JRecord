@@ -63,7 +63,7 @@ public interface Type {
 
     public static final int USER_RANGE_START    = 1000;
     public static final int DEFAULT_USER_RANGE_SIZE = 75;
-    public static final int LAST_SYSTEM_TYPE    = 150;
+    public static final int LAST_SYSTEM_TYPE    = 250;
 
 	public static final int NULL_INT             = -121;
 
@@ -79,24 +79,24 @@ public interface Type {
 	public static final int ftAssumedDecimal     = 8;
 	public static final int ftSignSeparateLead   = 9;
 	public static final int ftSignSeparateTrail  = 10;
-	public static final int ftSignSepLeadActualDecimal   = 44;
-	public static final int ftSignSepTrailActualDecimal  = 45;
+	public static final int ftSignSepLeadActualDecimal  = 44;
+	public static final int ftSignSepTrailActualDecimal = 45;
 	public static final int ftDecimal            = 11;
 	public static final int ftBinaryInt          = 15;
 	public static final int ftPostiveBinaryInt   = 16;
 	public static final int ftFloat              = 17;
 	public static final int ftDouble             = 18;
 	public static final int ftNumAnyDecimal      = 19;
-	public static final int ftPositiveNumAnyDecimal = 20;
+	public static final int ftPositiveNumAnyDecimal  = 20;
 	public static final int ftBit                = 21;
 	public static final int ftAssumedDecimalPositive = 22;
 	public static final int ftBinaryIntPositive  = 23;
 
 	public static final int ftNumZeroPaddedPN    = 24;
-	public static final int ftNumZeroPaddedPositive = 25;
+	public static final int ftNumZeroPaddedPositive  = 25;
 	public static final int ftNumCommaDecimal  = 26;
 	public static final int ftNumCommaDecimalPN  = 27;
-	public static final int ftNumCommaDecimalPositive  = 28;
+	public static final int ftNumCommaDecimalPositive= 28;
 
 	public static final int ftNumRightJustifiedPN  = 29;
 
@@ -152,6 +152,28 @@ public interface Type {
 	
 	public static final int ftRecordEditorType   = 130;
 	public static final int ftNumOrEmpty         = 131;
+
+	/** @deprecated  Small <= 9 bytes Packed decimal - internal JRecord use **/
+	public static final int ftPackedDecimalSmall    = 140;
+	/** @deprecated  Small <= 9 bytes Positive (unsigned) Packed decimal  - internal JRecord use **/
+	public static final int ftPackedDecimalPostiveSmall = 141;
+	/** @deprecated Small <= 8 bytes Big Endian Integer  - internal JRecord use **/
+	public static final int ftIntBigEndianSmall     = 142;
+	/** @deprecated  Small <= 8 bytes Positive Big Endian Integer  - internal JRecord use **/
+	public static final int ftIntBigEndianPositive  = 143;
+	/** @deprecated  Small <= 7 bytes Big Endian Unsigned int  - internal JRecord use **/
+	public static final int ftUIntBigEndianSmall    = 144;
+	/** @deprecated  Small <= 8 bytes Little Endian Integer  - internal JRecord use **/
+	public static final int ftIntSmall              = 145;
+	/** @deprecated  Small <= 8 bytes Positive Little Endian Integer  - internal JRecord use **/
+	public static final int ftIntPositiveSmall      = 146;
+	/** @deprecated  Small <= 7 bytes Little Endian Unsigned int  - internal JRecord use **/
+	public static final int ftUIntSmall             = 147;
+
+	/** @deprecated  Small <= 16 bytesZoned Decimal  - internal JRecord use **/
+	public static final int ftZonedEbcdicSmall      = 150;
+	/** @deprecated  Small <= 16 bytesZoned Decimal  - internal JRecord use **/
+	public static final int ftZonedAsciiSmall       = 151;
 
 	public static final int NT_TEXT              = 1;
 	public static final int NT_DATE              = 11;

@@ -36,13 +36,21 @@ import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.External.Def.AbstractUpdatableRecord;
 import net.sf.JRecord.External.Def.DependingOn;
 import net.sf.JRecord.External.Def.DependingOnDefinition;
+import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.External.Def.ExternalField;
+import net.sf.JRecord.External.Def.IFieldUpdatedListner;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.ExternalRecordSelection.StreamLine;
+import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.Option.ICobolSplitOptions;
 import net.sf.JRecord.Option.IRecordPositionOption;
+import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
+import net.sf.cb2xml.def.ICopybook;
+import net.sf.cb2xml.def.IItemJr;
+import net.sf.cb2xml.def.IItemJrUpd;
 
 //import net.sf.RecordEditor.utils.Common;
 
@@ -86,7 +94,9 @@ import net.sf.JRecord.Types.TypeManager;
  *       LayoutDetail layout = externalLayout.asLayoutDetail();
  * </pre>
  */
-public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> extends AbstractUpdatableRecord {
+public class BaseExternalRecord<xRecord 
+extends BaseExternalRecord<xRecord>> extends AbstractUpdatableRecord 
+implements IFieldUpdatedListner, IAddDependingOn {
 
 	protected static final int POSITION_IDX = 0;
 	protected static final int LENGTH_IDX = 1;
@@ -94,8 +104,8 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	private int initRecordId; 
 	private String recordName;
 	private String description;
-	private int recordType;
-	private int system;
+	private    int recordType;
+	private    int system;
 	private String systemName = null;
 	private String listChar;
 	private String copyBook;
@@ -105,10 +115,12 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	private String recSepList;
 	private byte[] recordSep;
 	private String fontName;
-	private int recordStyle;
-	private int fileStructure;
-	private int lineNumberOfFieldNames = 1;
-	private int recordLength = -1;
+	private    int recordStyle;
+	private    int fileStructure;
+	private    int lineNumberOfFieldNames = 1;
+	private    int recordLength = -1;
+	private    int dialectCode = ICopybookDialects.FMT_MAINFRAME;
+	private String[] parentGroupNames;
 
 	private ExternalSelection recSelect;
 	private IRecordPositionOption recordPosistionOption = null;
@@ -116,27 +128,37 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	private boolean defaultRecord = false;
 	private boolean embeddedCr    = false;  //private String tstField = "";
 	private boolean initToSpaces  = false;  // for backward compatibility
+	protected boolean optimizeTypes = true;
 //	private boolean fileStructureUpdated = false; 
 //  private RecordDecider recordDecider = null;
   //private String tstFieldValue = "";
-
+	private List<? extends IItemJrUpd> items;
+	private ICopybook copybook;
 
 
 	private int parentRecord = -1;
 
 	private String parentName = null;
+	private String copybookPref;
 
 
 	protected ArrayList<xRecord> subRecords = new ArrayList<xRecord>();
 	protected ArrayList<ExternalField> fields = new ArrayList<ExternalField>(250);
-	private ArrayList<DependingOn> dependingOn = new ArrayList<DependingOn>(3);
+	protected ArrayList<DependingOn> dependingOn = new ArrayList<DependingOn>(3);
 	private DependingOnDefinition dependingOnDef;
 
 	//  private int lastPosition = -1;
 
 	private ArrayList<Cb2xmlDocument> cb2xmlDocuments = new ArrayList<Cb2xmlDocument>();
+	private boolean keepFillers = false, 
+					dropCopybookFromFieldNames, 
+					saveCb2xml = false,
+					useJRecordNaming;
+	
+
 	@SuppressWarnings("unchecked")
 	private final xRecord self = (xRecord) this;
+	
 
   /**
    * Create External Record Definition
@@ -474,7 +496,35 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
       }
   }
 
-  /**
+  	/**
+	 * @param keepFillers the keepFillers to set
+	 */
+	public xRecord setCobolConversionOptions(
+			boolean keepFillers, boolean dropCopybookFromFieldNames, 
+			boolean saveCb2xml,  boolean useJRecordNaming) {
+
+		this.keepFillers = keepFillers;
+		this.dropCopybookFromFieldNames = dropCopybookFromFieldNames;
+		this.saveCb2xml = saveCb2xml;
+		this.useJRecordNaming = useJRecordNaming;
+
+		return self;
+	}
+
+	public xRecord setCobolConversionOptions(
+				boolean keepFillers,
+				boolean dropCopybookFromFieldNames, 
+				boolean useJRecordNaming) {
+
+		this.keepFillers = keepFillers;
+		this.dropCopybookFromFieldNames = dropCopybookFromFieldNames;
+		this.useJRecordNaming = useJRecordNaming;
+
+		return self;
+	}
+
+
+/**
    * This method gets the vaule of Quote
    * @return Quote
    */
@@ -670,7 +720,128 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 
 
 
-//	/**
+	/**
+	 * @return the items
+	 */
+	public List<? extends IItemJr> getItems() {
+		return items;
+	}
+	
+	
+	/**
+	 * @param items the items to set
+	 */
+	public void setItems(String copybookPref, String[] groupArray, int dialectCode, List<? extends IItemJrUpd> items) {
+		this.copybookPref = copybookPref;
+		this.parentGroupNames = groupArray;
+		this.dialectCode  = dialectCode;
+		this.items = items;
+		fields.clear();
+	}
+
+	/**
+	 * @return the copybook
+	 */
+	public ICopybook getCopybook() {
+		return copybook;
+	}
+
+
+	/**
+	 * @param copybook the copybook to set
+	 */
+	public void setCopybook(ICopybook copybook) {
+		this.copybook = copybook;
+	}
+
+
+	public void setItems(String copybookPref, String[] parentGroupNames, int dialectCode, IItemJrUpd item) {
+		ArrayList<IItemJrUpd> itms = new ArrayList<IItemJrUpd>(1);
+
+		this.copybookPref = copybookPref;
+		this.dialectCode  = dialectCode;
+		this.parentGroupNames = parentGroupNames;
+		itms.add(item);
+		this.items = itms;
+		fields.clear();
+	}
+
+
+	/**
+	 * @return the keepFillers
+	 */
+	public boolean isKeepFillers() {
+		return keepFillers;
+	}
+
+
+	/**
+	 * @return the useJRecordNaming
+	 */
+	public boolean isUseJRecordNaming() {
+		return useJRecordNaming;
+	}
+
+	/**
+	 * @return the dropCopybookFromFieldNames
+	 */
+	public boolean isDropCopybookFromFieldNames() {
+		return dropCopybookFromFieldNames;
+	}
+
+	public void updateTypeOnCobolItems() {
+		FieldCreatorHelper fldhelper = createFieldHelper();
+
+		updateType(fldhelper, items);
+	}
+
+
+	private void updateType(FieldCreatorHelper fldhelper, List<? extends IItemJrUpd> items) {
+		if (items != null) { 
+			for (IItemJrUpd itm : items) {
+				updateItemForType(fldhelper, itm);
+				updateType(fldhelper, itm.getChildItems());
+			}
+		}
+	}
+	
+	private void updateItemForType(FieldCreatorHelper fldhelper, IItemJrUpd item) {
+		int typeId = Type.ftChar;
+		List<? extends IItemJrUpd> childItems = item.getChildItems();
+		if (childItems == null || childItems.size() == 0) {
+			typeId = fldhelper.deriveType(
+					item.getNumericClass().numeric, item.getUsage().getName(), item.getPicture(), 
+					item.getSignClause().signSeparate, item.getSignClause().signPosition.getName(), 
+					item.getJustified().isJustified); 
+		}
+		item.setType(typeId);
+	}
+
+	/**
+	 * @return the dialectCode
+	 */
+	public int getDialectCode() {
+		return dialectCode;
+	}
+
+
+	/**
+	 * @return the parentGroupNames
+	 */
+	public String[] getParentGroupNames() {
+		return parentGroupNames;
+	}
+
+
+	/**
+	 * @return the copybookPref
+	 */
+	public String getCopybookPref() {
+		return copybookPref;
+	}
+
+
+	//	/**
 //	 * Create a new record
 //	 * @param pRecordName name of the new record
 //	 * @param fontName fontname to use
@@ -786,6 +957,9 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	    return subRecords.size();
 	}
 
+	public void fieldUpdated(ExternalField field) {
+		items = null;
+	}
 	
 	/**
 	 * Add a field definition
@@ -794,9 +968,16 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	 * @return wether added correctly
 	 */
 	public boolean addRecordField(ExternalField o) {
+		loadFields();
+		fieldUpdated(o);
+		o.setListner(this);
 	    return fields.add(o);
 	}
 	
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.External.base.IAddDependingOn#addDependingOn(net.sf.JRecord.External.Def.DependingOn)
+	 */
+	@Override
 	public void addDependingOn(DependingOn child) {
 		dependingOn.add(child);
 	}
@@ -807,8 +988,15 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	 * @param flds fields to add
 	 */
 	public void addRecordFields(List<? extends ExternalField> flds) {
-		loadFields();
-		fields.addAll(flds);
+		if (flds != null && flds.size() > 0) {
+			loadFields();
+			fieldUpdated(null);
+			fields.addAll(flds);
+			
+			for (ExternalField f : flds) {
+				f.setListner(this);
+			}
+		}
 	}
 	
 	/**
@@ -817,6 +1005,7 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	 */
 	public void removeRecordField(int index) {
 		loadFields();
+		fieldUpdated(null);
 		fields.remove(index);
 	}
 
@@ -832,6 +1021,7 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	
 	public ExternalField getRecordField(String name) {
 		if (name != null) {
+			loadFields();
 			for (ExternalField f : fields) {
 				if (name.equalsIgnoreCase(f.getName())) {
 					return f;
@@ -844,6 +1034,35 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 			}
 		}
 		return null;
+	}
+	
+	public int getfieldPosition(String name) {
+		if (items != null && fields.size() == 0 && name != null && name.indexOf('(') < 0) {
+			int pos = searchFieldPos(items, name);
+			if (pos > 0) {
+				return pos;
+			}
+		}
+		
+		ExternalField f = getRecordField(name);
+		if (f == null) {
+			return -1;
+		}
+		return f.getPos();
+	}
+	
+	private int searchFieldPos(List<? extends IItemJrUpd> items, String name) {
+		int pos;
+		for (IItemJrUpd itm : items) {
+			if (itm.getChildItems().size() > 0) {
+				if ((pos = searchFieldPos(itm.getChildItems(), name)) > 0) {
+					return pos;
+				} 
+			} else if (name.equalsIgnoreCase(itm.getFieldName())) {
+				return itm.getPosition();
+			}
+		}
+		return -1;
 	}
 
 //	/**
@@ -971,9 +1190,126 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	}
 	
 	protected final void loadFields() {
+		if (items != null && fields.size() == 0) {
+			FieldCreatorHelper fldHelper = createFieldHelper();
+			
+			loadItems(
+					fldHelper, 
+					items,
+					"",
+					null, fldHelper.getInitialLevel(), 0);
 		
+			if (fldHelper.lastFiller != null 
+			&& (fldHelper.lastFiller.getPos() + fldHelper.lastFiller.getLen() > fldHelper.lastEndPos)) {
+				fields.add(fldHelper.lastFiller);
+			}
+		}
 	}
 
+
+	/**
+	 * @return
+	 */
+	protected FieldCreatorHelper createFieldHelper() {
+		FieldCreatorHelper fldHelper = new FieldCreatorHelper(
+				ICobolSplitOptions.SPLIT_NONE, dialectCode, useJRecordNaming, copybookPref, fontName);
+		fldHelper.setDropCopybookFromFieldNames(dropCopybookFromFieldNames);
+		fldHelper.setParentGroup(parentGroupNames);
+		return fldHelper;
+	}
+	
+	private void loadItems(
+			FieldCreatorHelper fldHelper, 
+			List<? extends IItemJr> itms, String nameSuffix,
+			DependingOnDtls dependOnParentDtls,
+			int level,
+			int basePos) {
+
+		for (IItemJr itm  : itms) {
+			if (itm.getLevelNumber() == 88) {
+				
+			} else {
+				List<? extends IItemJr> childItems = itm.getChildItems();
+				int size = childItems.size();
+				String dependingVar = itm.getDependingOn();
+				fldHelper.updateGroup(level, itm.getFieldName());
+				
+				if (itm.getOccurs() > 0) {
+                    DependingOn dependOn = null;
+                    
+                    if (dependingVar != null && dependingVar.length() > 0) {
+                    	dependOn = fldHelper
+                    					.dependingOnBuilder()
+                    						.setPosition(itm.getPosition() + basePos)
+                    						.setLength(itm.getStorageLength())
+                    						.setChildOccurs(itm.getOccurs())
+                    					.newDependingOn(this, dependOnParentDtls, dependingVar);
+                    }
+					if (size == 0) {
+						for (int i = 0; i < itm.getOccurs(); i++) {
+							createField(
+									fldHelper, level, itm, 
+									fldHelper.updateFieldNameIndex(nameSuffix, i), // problem area
+									createDependingOnDtls(dependOn, dependOnParentDtls, i),
+									basePos + i * itm.getStorageLength());
+						}						
+					} else {
+						for (int i = 0; i < itm.getOccurs(); i++) {
+							loadItems(
+									fldHelper, childItems, 
+									fldHelper.updateFieldNameIndex(nameSuffix, i),
+									createDependingOnDtls(dependOn, dependOnParentDtls, i),
+									level+1,
+									basePos + i * itm.getStorageLength());
+						}
+					}		
+				} else if (itm.getOccurs() == 0) {
+				} else if (size == 0) {
+					createField(fldHelper, level, itm, nameSuffix, dependOnParentDtls, basePos);
+				} else {
+					loadItems(fldHelper, childItems, nameSuffix, dependOnParentDtls, level+1, basePos);
+				}
+			}
+		}
+	}
+
+	private DependingOnDtls createDependingOnDtls(DependingOn dependOn, DependingOnDtls dependOnParentDtls, int idx) {
+        DependingOnDtls dependOnDtls = dependOnParentDtls;
+        if (dependOn != null) {
+        	dependOnDtls = new DependingOnDtls(dependOn, idx, dependOnParentDtls);
+        }
+        return dependOnDtls;
+	}
+
+	private void createField(
+			FieldCreatorHelper fieldHelper, int level, IItemJr itm, 
+			String nameSuffix, DependingOnDtls dependOnParentDtls,
+			int basePos) {
+		
+		String fieldName = itm.getFieldName();
+		ExternalField fld = new ExternalField(
+			itm.getPosition() + basePos, itm.getStorageLength(), 
+			fieldHelper.createFieldName(fieldName, nameSuffix), 
+			"", 
+			itm.getType(), 
+			fieldHelper.calculateDecimalSize(itm.getType(), itm.getPicture(), itm.getScale()),
+			0, "", "", itm.getFieldName(), 0,
+			dependOnParentDtls);
+		
+	    if (level > 1 && fieldHelper.getGroupNameSize() > level) {
+	       	fld.setGroup(fieldHelper.getGroupName(level - 1));
+	    }
+
+	    int fldEnd = fld.getPos() + fld.getLen();
+		if (keepFillers || (fieldName != null && fieldName.length() > 0 && ! "filler".equalsIgnoreCase(fieldName))) {
+	    	fields.add(fld);
+	    	fieldHelper.lastEndPos = Math.max(fldEnd, fieldHelper.lastEndPos);
+	    } else if (fieldHelper.lastFiller == null || (fieldHelper.lastFiller.getPos() + fieldHelper.lastFiller.getLen() < fldEnd)) {
+	    	fieldHelper.lastFiller = fld;
+	    }
+	}
+
+	
 	/**
 	 * Get the System Name of the system this record belongs to
 	 * @return System Name
@@ -1161,8 +1497,11 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 		int count = 1;
 		int i, endPos;
 		ExternalField fld;
+		
+		loadFields();
 
 		if (fields != null) {
+			loadFields();
 			for (i = 0; i < fields.size(); i++) {
 				if (! isFiller(fields.get(i).getName())) {
 					count += 1;
@@ -1252,6 +1591,7 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	 * @return the dependingOn
 	 */
 	public final DependingOnDefinition getDependingOnDefinition() {
+
 		if (dependingOnDef == null) {
 			dependingOnDef = new DependingOnDefinition(dependingOn);
 		}
@@ -1293,6 +1633,14 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	}
 
 	/**
+	 * @param optimizeTypes the optimizeTypes to set
+	 */
+	public void setOptimizeTypes(boolean optimizeTypes) {
+		this.optimizeTypes = optimizeTypes;
+	}
+
+
+	/**
 	 * @return the defaultRecord
 	 */
 	public boolean isDefaultRecord() {
@@ -1304,17 +1652,40 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	}
 	
 	private boolean checkBinary(BaseExternalRecord<xRecord> rec) {
+		if (rec.fields.size() == 0 && rec.items != null && rec.items.size() > 0) {
+			if (checkBinary(rec.items)) {
+				return true;
+			}
+		} 
+
 		for (ExternalField f : rec.fields ) {
 			if (TypeManager.isBinary(f.getType())) {
 				return true;
 			}
 		}
 		
+		
 		for (xRecord r : rec.subRecords) {
 			if (checkBinary(r)) {
 				return true;
 			}
 		}
+		return false;
+	}
+	
+	private boolean checkBinary(List<? extends IItemJrUpd> itms) {
+		for (IItemJrUpd item : itms) {
+			if (item.getChildItems().size() == 0) {
+				if (TypeManager.isBinary(item.getType())) { 
+					return true; 
+				}
+			} else {
+				if (checkBinary(item.getChildItems())) { 
+					return true; 
+				}
+			}
+		}
+		
 		return false;
 	}
 	
@@ -1411,6 +1782,7 @@ public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> ext
 	 * @return Position / length
 	 */
 	protected int[][] getPosLength() {
+		loadFields();
 		int[][] ret = new int[2][];
 		ret[POSITION_IDX] = new int[fields.size()];
 		ret[LENGTH_IDX] = new int[fields.size()];

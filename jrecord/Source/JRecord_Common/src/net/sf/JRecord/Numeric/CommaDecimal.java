@@ -26,6 +26,7 @@
 package net.sf.JRecord.Numeric;
 
 import net.sf.JRecord.Types.Type;
+import net.sf.cb2xml.def.NumericDefinition;
 
 
 /**
@@ -59,7 +60,7 @@ public class CommaDecimal implements Convert {
 	 * @see net.sf.JRecord.Numeric.Convert#getNumericDefinition()
 	 */
 	@Override
-	public Object getNumericDefinition() {
+	public NumericDefinition getNumericDefinition() {
 		return baseConversion.getNumericDefinition();
 	}
 

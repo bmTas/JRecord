@@ -27,7 +27,7 @@ package net.sf.JRecord.Common;
 
 import net.sf.JRecord.Option.IOptionResult;
 import net.sf.JRecord.Option.IOptionType;
-import net.sf.JRecord.definitiuons.CsvCharDetails;
+import net.sf.JRecord.detailsBasic.CsvCharDetails;
 
 /**
  * Description of one field in a Record (Line)

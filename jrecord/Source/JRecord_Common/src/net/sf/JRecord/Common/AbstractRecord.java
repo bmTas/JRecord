@@ -26,7 +26,7 @@
 package net.sf.JRecord.Common;
 
 import net.sf.JRecord.External.Def.DependingOnDtls;
-import net.sf.JRecord.definitiuons.CsvCharDetails;
+import net.sf.JRecord.detailsBasic.CsvCharDetails;
 
 /**
  * Very Basic RecordLayout interface. It is used by the field Definitions to get

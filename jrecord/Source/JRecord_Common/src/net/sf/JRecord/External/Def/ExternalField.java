@@ -50,6 +50,7 @@ public class ExternalField extends AbstractUpdatableRecord {
   private final DependingOnDtls dependOnDtls;
 
   private String group = "";
+  private IFieldUpdatedListner listner;
 
 
 
@@ -180,289 +181,306 @@ public class ExternalField extends AbstractUpdatableRecord {
 
 
 
-  /**
-   * This method gets the vaule of Pos
-   * @return poistion of the field in the record
-   */
-  public int getPos() {
-      return position;
-  }
+	  /**
+	   * This method gets the vaule of Pos
+	   * @return poistion of the field in the record
+	   */
+	  public int getPos() {
+	      return position;
+	  }
+	
+	  /**
+	   * This method sets the vaule of Pos
+	   *
+	   * @param val value to be assigned to Pos
+	   */
+	  public void setPos(int val) {
+	
+	      if ((val != position) || (updateStatus == NULL_INT_VALUE)) {
+	           position = val;
+	           notifyOfUpdate();
+	      }
+	  }
+	
+	  /**
+	   * This method gets the vaule of Len
+	   * @return field length
+	   */
+	  public int getLen() {
+	      return length;
+	  }
+	
+	  /**
+	   *  This method sets the vaule of Len
+	   *
+	   * @param val value to be assigned to Len
+	   */
+	  public void setLen(int val) {
+	
+	      if ((val != length) || (updateStatus == NULL_INT_VALUE)) {
+	           length = val;
+	           notifyOfUpdate();
+	      }
+	  }
+	
+	  /**
+	   * This method gets the vaule of Name
+	   * @return field name
+	   */
+	  public String getName() {
+	      return name;
+	  }
+	
+	  /**
+	   *  This method sets the value of Name
+	   *
+	   * @param val value to be assigned to Name
+	   */
+	  public void setName(String val) {
+	
+	      if ((val == null || "".equals(val))
+	      && (name == null || "".equals(name))) {
+	          return;
+	      }
+	
+	      if ((val == null) || (! val.equals(name)) || (updateStatus == NULL_INT_VALUE)) {
+	           name = val;
+	           notifyOfUpdate();
+	      }
+	  }
+	
+	  /**
+	   * This method gets the vaule of Description
+	   * @return Field description
+	   */
+	  public String getDescription() {
+	      return description;
+	  }
+	
+	  /**
+	   *  This method sets the vaule of Description
+	   *
+	   * @param val value to be assigned to Description
+	   */
+	  public void setDescription(String val) {
+	
+	      if ((val == null || "".equals(val))
+	      && (description == null || "".equals(description))) {
+	          return;
+	      }
+	
+	      if ((val == null) || (! val.equals(description)) || (updateStatus == NULL_INT_VALUE)) {
+	           description = val;
+	           notifyOfUpdate();
+	      }
+	  }
+	
+	  /**
+	   * This method gets the vaule of Type
+	   * @return field type
+	   */
+	  public int getType() {
+	      return type;
+	  }
+	
+	  /**
+	   *  This method sets the vaule of Type
+	   *
+	   * @param val value to be assigned to Type
+	   */
+	  public void setType(int val) {
+	
+	      if ((val != type) || (updateStatus == NULL_INT_VALUE)) {
+	           type = val;
+	           notifyOfUpdate();
+	      }
+	  }
+	
+	  /**
+	   * This method gets the vaule of Decimal
+	   * @return number of decimal places in the field
+	   */
+	  public int getDecimal() {
+	      return decimal;
+	  }
+	
+	  /**
+	   *  This method sets the vaule of Decimal
+	   *
+	   * @param val value to be assigned to Decimal
+	   */
+	  public void setDecimal(int val) {
+	
+	      if ((val != decimal) || (updateStatus == NULL_INT_VALUE)) {
+	           decimal = val;
+	           notifyOfUpdate();
+	      }
+	  }
+	
+	  /**
+	   * This method gets the vaule of CellFormat
+	   * @return cell format details
+	   */
+	  public int getCellFormat() {
+	      return cellFormat;
+	  }
+	
+	  /**
+	   *  This method sets the vaule of CellFormat
+	   *
+	   * @param val value to be assigned to CellFormat
+	   */
+	  public void setCellFormat(int val) {
+	
+	      if ((val != cellFormat) || (updateStatus == NULL_INT_VALUE)) {
+	           cellFormat = val;
+	           notifyOfUpdate();
+	      }
+	  }
+	
+	  /**
+	   * This method gets the vaule of Parameter
+	   * @return get type / cell format parameter
+	   */
+	  public String getParameter() {
+	      return parameter;
+	  }
+	
+	  /**
+	   *  This method sets the vaule of Parameter
+	   *
+	   * @param val value to be assigned to Parameter
+	   */
+	  public void setParameter(String val) {
+	
+	      if ((val == null || "".equals(val))
+	      && (parameter == null || "".equals(parameter))) {
+	          return;
+	      }
+	
+	      if ((val == null) || (! val.equals(parameter)) || (updateStatus == NULL_INT_VALUE)) {
+	           parameter = val;
+	           notifyOfUpdate();
+	      }
+	  }
+	
+	  /**
+	   * This method gets the vaule of Default
+	   * @return get default value
+	   */
+	  public String getDefault() {
+	      return defaultValue;
+	  }
+	
+	  /**
+	   *  This method sets the vaule of Default
+	   *
+	   * @param val value to be assigned to Default
+	   */
+	  public void setDefault(String val) {
+	
+	      if ((val == null || "".equals(val))
+	      && (defaultValue == null || "".equals(defaultValue))) {
+	          return;
+	      }
+	
+	      if ((val == null) || (! val.equals(defaultValue)) || (updateStatus == NULL_INT_VALUE)) {
+	           defaultValue = val;
+	           notifyOfUpdate();
+	      }
+	  }
+	
+	  /**
+	   * This method gets the vaule of CobolName
+	   * @return Cobol name
+	   */
+	  public String getCobolName() {
+	      return cobolName;
+	  }
+	
+	  /**
+	   *  This method sets the vaule of CobolName
+	   *
+	   * @param val value to be assigned to CobolName
+	   */
+	  public void setCobolName(String val) {
+	
+	      if ((val == null || "".equals(val))
+	      && (cobolName == null || "".equals(cobolName))) {
+	          return;
+	      }
+	
+	      if ((val == null) || (! val.equals(cobolName)) || (updateStatus == NULL_INT_VALUE)) {
+	           cobolName = val;
+	           notifyOfUpdate();
+	      }
+	  }
+	
+	  /**
+	   * This method gets the vaule of SubKey
+	   * @return DB Sub key
+	   */
+	  public int getSubKey() {
+	      return subKey;
+	  }
+	
+	  /**
+	   *  This method sets the vaule of SubKey
+	   *
+	   * @param val value to be assigned to SubKey
+	   */
+	  public void setSubKey(int val) {
+	
+	      if ((val != subKey) || (updateStatus == NULL_INT_VALUE)) {
+	           subKey = val;
+	           updateStatus = UPDATED;
+	      }
+	  }
+	
 
-  /**
-   * This method sets the vaule of Pos
-   *
-   * @param val value to be assigned to Pos
-   */
-  public void setPos(int val) {
-
-      if ((val != position) || (updateStatus == NULL_INT_VALUE)) {
-           position = val;
-           updateStatus = UPDATED;
-      }
-  }
-
-  /**
-   * This method gets the vaule of Len
-   * @return field length
-   */
-  public int getLen() {
-      return length;
-  }
-
-  /**
-   *  This method sets the vaule of Len
-   *
-   * @param val value to be assigned to Len
-   */
-  public void setLen(int val) {
-
-      if ((val != length) || (updateStatus == NULL_INT_VALUE)) {
-           length = val;
-           updateStatus = UPDATED;
-      }
-  }
-
-  /**
-   * This method gets the vaule of Name
-   * @return field name
-   */
-  public String getName() {
-      return name;
-  }
-
-  /**
-   *  This method sets the value of Name
-   *
-   * @param val value to be assigned to Name
-   */
-  public void setName(String val) {
-
-      if ((val == null || "".equals(val))
-      && (name == null || "".equals(name))) {
-          return;
-      }
-
-      if ((val == null) || (! val.equals(name)) || (updateStatus == NULL_INT_VALUE)) {
-           name = val;
-           updateStatus = UPDATED;
-      }
-  }
-
-  /**
-   * This method gets the vaule of Description
-   * @return Field description
-   */
-  public String getDescription() {
-      return description;
-  }
-
-  /**
-   *  This method sets the vaule of Description
-   *
-   * @param val value to be assigned to Description
-   */
-  public void setDescription(String val) {
-
-      if ((val == null || "".equals(val))
-      && (description == null || "".equals(description))) {
-          return;
-      }
-
-      if ((val == null) || (! val.equals(description)) || (updateStatus == NULL_INT_VALUE)) {
-           description = val;
-           updateStatus = UPDATED;
-      }
-  }
-
-  /**
-   * This method gets the vaule of Type
-   * @return field type
-   */
-  public int getType() {
-      return type;
-  }
-
-  /**
-   *  This method sets the vaule of Type
-   *
-   * @param val value to be assigned to Type
-   */
-  public void setType(int val) {
-
-      if ((val != type) || (updateStatus == NULL_INT_VALUE)) {
-           type = val;
-           updateStatus = UPDATED;
-      }
-  }
-
-  /**
-   * This method gets the vaule of Decimal
-   * @return number of decimal places in the field
-   */
-  public int getDecimal() {
-      return decimal;
-  }
-
-  /**
-   *  This method sets the vaule of Decimal
-   *
-   * @param val value to be assigned to Decimal
-   */
-  public void setDecimal(int val) {
-
-      if ((val != decimal) || (updateStatus == NULL_INT_VALUE)) {
-           decimal = val;
-           updateStatus = UPDATED;
-      }
-  }
-
-  /**
-   * This method gets the vaule of CellFormat
-   * @return cell format details
-   */
-  public int getCellFormat() {
-      return cellFormat;
-  }
-
-  /**
-   *  This method sets the vaule of CellFormat
-   *
-   * @param val value to be assigned to CellFormat
-   */
-  public void setCellFormat(int val) {
-
-      if ((val != cellFormat) || (updateStatus == NULL_INT_VALUE)) {
-           cellFormat = val;
-           updateStatus = UPDATED;
-      }
-  }
-
-  /**
-   * This method gets the vaule of Parameter
-   * @return get type / cell format parameter
-   */
-  public String getParameter() {
-      return parameter;
-  }
-
-  /**
-   *  This method sets the vaule of Parameter
-   *
-   * @param val value to be assigned to Parameter
-   */
-  public void setParameter(String val) {
-
-      if ((val == null || "".equals(val))
-      && (parameter == null || "".equals(parameter))) {
-          return;
-      }
-
-      if ((val == null) || (! val.equals(parameter)) || (updateStatus == NULL_INT_VALUE)) {
-           parameter = val;
-           setUpdateStatus(UPDATED);
-      }
-  }
-
-  /**
-   * This method gets the vaule of Default
-   * @return get default value
-   */
-  public String getDefault() {
-      return defaultValue;
-  }
-
-  /**
-   *  This method sets the vaule of Default
-   *
-   * @param val value to be assigned to Default
-   */
-  public void setDefault(String val) {
-
-      if ((val == null || "".equals(val))
-      && (defaultValue == null || "".equals(defaultValue))) {
-          return;
-      }
-
-      if ((val == null) || (! val.equals(defaultValue)) || (updateStatus == NULL_INT_VALUE)) {
-           defaultValue = val;
-           updateStatus = UPDATED;
-      }
-  }
-
-  /**
-   * This method gets the vaule of CobolName
-   * @return Cobol name
-   */
-  public String getCobolName() {
-      return cobolName;
-  }
-
-  /**
-   *  This method sets the vaule of CobolName
-   *
-   * @param val value to be assigned to CobolName
-   */
-  public void setCobolName(String val) {
-
-      if ((val == null || "".equals(val))
-      && (cobolName == null || "".equals(cobolName))) {
-          return;
-      }
-
-      if ((val == null) || (! val.equals(cobolName)) || (updateStatus == NULL_INT_VALUE)) {
-           cobolName = val;
-           updateStatus = UPDATED;
-      }
-  }
-
-  /**
-   * This method gets the vaule of SubKey
-   * @return DB Sub key
-   */
-  public int getSubKey() {
-      return subKey;
-  }
-
-  /**
-   *  This method sets the vaule of SubKey
-   *
-   * @param val value to be assigned to SubKey
-   */
-  public void setSubKey(int val) {
-
-      if ((val != subKey) || (updateStatus == NULL_INT_VALUE)) {
-           subKey = val;
-           updateStatus = UPDATED;
-      }
-  }
+	
+	
+	/**
+	 * @return the group
+	 */
+	public final String getGroup() {
+		return group;
+	}
+	
+	
+	
+	
+	/**
+	 * @return the dependOnDtls
+	 */
+	public final DependingOnDtls getDependOnDtls() {
+		return dependOnDtls;
+	}
+	
+	
+	
+	
+	/**
+	 * @param group the group to set
+	 */
+	public final void setGroup(String group) {
+		this.group = group;
+	}
+	
+	/**
+	 * @param listner the listner to set
+	 */
+	public void setListner(IFieldUpdatedListner listner) {
+		this.listner = listner;
+	}
 
 
 
 
-/**
- * @return the group
- */
-public final String getGroup() {
-	return group;
-}
-
-
-
-
-/**
- * @return the dependOnDtls
- */
-public final DependingOnDtls getDependOnDtls() {
-	return dependOnDtls;
-}
-
-
-
-
-/**
- * @param group the group to set
- */
-public final void setGroup(String group) {
-	this.group = group;
-}
+	private void notifyOfUpdate() {
+		updateStatus = UPDATED;
+		if (listner != null) {
+			listner.fieldUpdated(this);
+		}
+	}
 }

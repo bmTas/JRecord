@@ -42,8 +42,17 @@
       
 package net.sf.JRecord.Types;
 
+import java.util.Arrays;
+
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.Messages;
 import net.sf.JRecord.Common.RecordException;
+import net.sf.JRecord.Types.smallBin.ITypeBinaryExtendedNumeric;
+import net.sf.JRecord.Types.smallBin.TypeIntBigEndian;
+import net.sf.JRecord.Types.smallBin.TypeIntLittleEndian;
+import net.sf.JRecord.Types.smallBin.TypePackedDecimal9;
+import net.sf.JRecord.Types.smallBin.TypeZonedAsciiSmall;
+import net.sf.JRecord.Types.smallBin.TypeZonedEbcdicSmall;
 
 /**
  * This class stores / retrieves type definitions and format definitions
@@ -57,18 +66,32 @@ import net.sf.JRecord.Common.RecordException;
  * @version 0.55
  */
 public class TypeManager {
+	
+	public enum CharsetType {
+			SINGLE_BYTE_EBCDIC,
+			SINGLE_BYTE_ASCII,
+			OTHER_CHARSET
+	};
 
- 	public static final int SYSTEM_ENTRIES = Type.LAST_SYSTEM_TYPE;
+ 	private static final int SHORT_TYPE_SIZE = 30;
+
+	public static final int SYSTEM_ENTRIES = Type.LAST_SYSTEM_TYPE;
 
     public static final int INVALID_INDEX  = SYSTEM_ENTRIES - 1;
+    
+    @SuppressWarnings("deprecation")
+	public static final int FIRST_SHORT_BIN = Type.ftPackedDecimalSmall;
 
     private Type[] types;
+    private ITypeBinaryExtendedNumeric[] shortLengthTypes = new ITypeBinaryExtendedNumeric[SHORT_TYPE_SIZE];
+    private int[] maxShortSize = new int[SHORT_TYPE_SIZE];
+    private int[] normalTypetoShortMapping = new int[100];
 
     private Type charType    = new TypeChar(true);
 
     private int userSize;
 
-    private static TypeManager systemTypeManager = null;
+    private static TypeManager systemTypeManager = new TypeManager();
     
  
 
@@ -86,7 +109,8 @@ public class TypeManager {
      * @param addSystemTypes add the system types
      * @param numberOfUserTypes number of user types to be allowed
      */
-    public TypeManager(final boolean addSystemTypes,
+    @SuppressWarnings("deprecation")
+	public TypeManager(final boolean addSystemTypes,
             		   final int numberOfUserTypes) {
         super();
 
@@ -126,7 +150,7 @@ public class TypeManager {
             types[Type.ftSignSeparateLead]		= new TypeSignSeparate(Type.ftSignSeparateLead);
             types[Type.ftSignSeparateTrail]		= new TypeSignSeparate(Type.ftSignSeparateTrail);
             types[Type.ftSignSepLeadActualDecimal]	= new TypeSignSeparate(Type.ftSignSepLeadActualDecimal);
-            types[Type.ftSignSepTrailActualDecimal]= new TypeSignSeparate(Type.ftSignSepTrailActualDecimal);
+            types[Type.ftSignSepTrailActualDecimal] = new TypeSignSeparate(Type.ftSignSepTrailActualDecimal);
             types[Type.ftZonedNumeric]			= new TypeZoned();
 
             types[Type.ftNumAnyDecimal]			= new TypeNumAnyDecimal(false, false);
@@ -140,7 +164,7 @@ public class TypeManager {
             types[Type.ftPackedDecimalPostive]	= new TypePackedDecimal(true);
             types[Type.ftDecimal]				= new TypeDecimalHex(Type.ftDecimal);
             types[Type.ftHex] 					= new TypeDecimalHex(Type.ftHex);
-
+ 
             types[Type.ftBinaryIntPositive]		= new TypeBinLittleEndian(true, false);
             types[Type.ftPostiveBinaryInt]		= new TypeBinLittleEndian(true);
             types[Type.ftBinaryInt]				= new TypeBinLittleEndian(false);
@@ -158,9 +182,82 @@ public class TypeManager {
 
 //            types[Type.ftCharRestOfFixedRecord] = new TypeCharRestOfFixedRecord();
             types[Type.ftCharRestOfRecord]		= new TypeCharRestOfRecord();
+            
+//            types[Type.ftPackedDecimal9]		= new TypePackedDecimal9();
+//            types[Type.ftPackedDecimalPostive9]	= new TypePackedDecimal9(true);
+
+            shortLengthTypes[Type.ftPackedDecimalSmall  - FIRST_SHORT_BIN] = new TypePackedDecimal9();
+            shortLengthTypes[Type.ftPackedDecimalPostiveSmall - FIRST_SHORT_BIN] = new TypePackedDecimal9(true);
+            shortLengthTypes[Type.ftIntBigEndianSmall   - FIRST_SHORT_BIN] = new TypeIntBigEndian(false, false);
+            shortLengthTypes[Type.ftIntBigEndianPositive- FIRST_SHORT_BIN] = new TypeIntBigEndian(true, false);
+            shortLengthTypes[Type.ftUIntBigEndianSmall  - FIRST_SHORT_BIN] = new TypeIntBigEndian(true, true);
+            shortLengthTypes[Type.ftIntSmall         - FIRST_SHORT_BIN]    = new TypeIntLittleEndian(false, false);
+            shortLengthTypes[Type.ftIntPositiveSmall - FIRST_SHORT_BIN]    = new TypeIntLittleEndian(true, false);
+            shortLengthTypes[Type.ftUIntSmall        - FIRST_SHORT_BIN]    = new TypeIntLittleEndian(true, true);
+
+            shortLengthTypes[Type.ftZonedAsciiSmall  - FIRST_SHORT_BIN]    = new TypeZonedAsciiSmall();
+            shortLengthTypes[Type.ftZonedEbcdicSmall - FIRST_SHORT_BIN]    = new TypeZonedEbcdicSmall();
+          
+            for (int j = 0; j < shortLengthTypes.length; j++) {
+            	if (shortLengthTypes[j] != null) {
+            		types[j + FIRST_SHORT_BIN] = shortLengthTypes[j];
+            	}
+            }
+
+            maxShortSize[Type.ftPackedDecimalSmall - FIRST_SHORT_BIN]  = 9;
+            maxShortSize[Type.ftPackedDecimalPostiveSmall - FIRST_SHORT_BIN] = 9;
+            maxShortSize[Type.ftIntBigEndianSmall  - FIRST_SHORT_BIN]  = 8;
+            maxShortSize[Type.ftIntBigEndianPositive  - FIRST_SHORT_BIN] = 8;
+            maxShortSize[Type.ftUIntBigEndianSmall - FIRST_SHORT_BIN]  = 7;
+            maxShortSize[Type.ftIntSmall   - FIRST_SHORT_BIN]          = 8;
+            maxShortSize[Type.ftIntPositiveSmall   - FIRST_SHORT_BIN]  = 8;
+            maxShortSize[Type.ftUIntSmall  - FIRST_SHORT_BIN]          = 7;
+
+            Arrays.fill(normalTypetoShortMapping, -1);
+            normalTypetoShortMapping[Type.ftPackedDecimal          ] = Type.ftPackedDecimalSmall;       
+            normalTypetoShortMapping[Type.ftPackedDecimalPostive   ] = Type.ftPackedDecimalPostiveSmall;
+            normalTypetoShortMapping[Type.ftBinaryBigEndian        ] = Type.ftIntBigEndianSmall;        
+            normalTypetoShortMapping[Type.ftBinaryBigEndianPositive] = Type.ftIntBigEndianPositive;         
+            normalTypetoShortMapping[Type.ftPositiveBinaryBigEndian] = Type.ftUIntBigEndianSmall;        
+            normalTypetoShortMapping[Type.ftBinaryInt              ] = Type.ftIntSmall;               
+            normalTypetoShortMapping[Type.ftBinaryIntPositive      ] = Type.ftIntPositiveSmall ;        
+            normalTypetoShortMapping[Type.ftPostiveBinaryInt       ] = Type.ftUIntSmall;                
         }
     }
 
+	public final int getShortType(int typeId, int length, String charset) {
+		return getShortType(typeId, length, getCharsetType(charset));
+	}
+
+    @SuppressWarnings({ "incomplete-switch", "deprecation" })
+	public final int getShortType(int typeId, int length, CharsetType charsetType) {
+    	int t = typeId < 0 || typeId > normalTypetoShortMapping.length ? -1 : normalTypetoShortMapping[typeId];
+    	
+    	if (t > 0 && maxShortSize[t - FIRST_SHORT_BIN] >= length) {
+    		return t;
+    	}
+    	
+    	if (typeId == Type.ftZonedNumeric && length < 18) {
+    		switch (charsetType) {
+    		case SINGLE_BYTE_ASCII:  return Type.ftZonedAsciiSmall;
+    		case SINGLE_BYTE_EBCDIC: return Type.ftZonedEbcdicSmall;
+    		}
+    	}
+    	
+    	return typeId;
+    }
+    
+    public CharsetType getCharsetType(String charset) {
+    	
+	    TypeManager.CharsetType charsetType = TypeManager.CharsetType.OTHER_CHARSET;
+	    if (Conversion.isSingleByteEbcidic(charset)) {
+	    	charsetType = TypeManager.CharsetType.SINGLE_BYTE_EBCDIC;
+	    } else if (Conversion.isSingleByte(charset)) {
+	    	charsetType = TypeManager.CharsetType.SINGLE_BYTE_ASCII;
+	    }
+
+	    return charsetType;
+    }
 
     /**
      * register a type & format
@@ -194,6 +291,12 @@ public class TypeManager {
         return types[getIndex(typeId)];
     }
 
+    public ITypeBinaryExtendedNumeric getShortLengthType(int typeId) {
+    	int t = typeId - FIRST_SHORT_BIN;
+    	return t >= 0 && t < shortLengthTypes.length
+		    			? shortLengthTypes[t]
+		    			: null;
+    }
 
     /**
      * Adjusts the index
@@ -234,10 +337,6 @@ public class TypeManager {
      * @return TypeManager
      */
     public static TypeManager getInstance() {
-
-	    if (systemTypeManager == null) {
-	        systemTypeManager = new TypeManager();
-	    }
 		return systemTypeManager;
     }
 
@@ -247,7 +346,7 @@ public class TypeManager {
      * @return standard system Type Manager
      */
 	public static TypeManager getSystemTypeManager() {
-		return getInstance();
+		return systemTypeManager;
 	}
 
 	/**

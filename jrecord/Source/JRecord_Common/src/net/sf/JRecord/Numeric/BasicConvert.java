@@ -28,6 +28,7 @@ package net.sf.JRecord.Numeric;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Types.Type;
 import net.sf.cb2xml.def.Cb2xmlConstants;
+import net.sf.cb2xml.def.NumericDefinition;
 
 /**
  * Standard Cobol Type to JRecord Type conversion class.
@@ -46,7 +47,7 @@ import net.sf.cb2xml.def.Cb2xmlConstants;
     // Using Object instead of BasicNumericDefinition to avoid dependency on cb2xml.
     // It allows the class to be used in RecordEditor Edit Properties without cb2xml or with an old
     // cb2xml. Most user's of the RecordEditor probably do not use Cobol so why make the dependancy.
-    private Object numericDefinition;
+    private NumericDefinition numericDefinition;
 
     private String name;
 
@@ -211,7 +212,7 @@ import net.sf.cb2xml.def.Cb2xmlConstants;
 	 * @see net.sf.JRecord.Numeric.Convert#getNumericDefinition()
 	 */
 	@Override
-	public Object getNumericDefinition() {
+	public NumericDefinition getNumericDefinition() {
 		return numericDefinition;
 	}
 

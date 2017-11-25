@@ -294,7 +294,7 @@ public class GenericNumericDefinition implements NumericDefinition, Convert {
     }
 
 	@Override
-	public Object getNumericDefinition() {
+	public NumericDefinition getNumericDefinition() {
 		return this;
 	}
 

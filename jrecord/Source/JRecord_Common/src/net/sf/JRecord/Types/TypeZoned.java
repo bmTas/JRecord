@@ -65,10 +65,13 @@ import net.sf.JRecord.Common.RecordException;
 public class TypeZoned extends TypeNum {
 
 
-    private static final byte HIGH_NYBLE = (byte) 0xf0;
-	private static final byte ZONED_POSITIVE_NYBLE_OR = (byte) 0xCF;
-	private static final byte ZONED_NEGATIVE_NYBLE_OR = (byte) 0xDF;
-	private static final byte ZONED_NEGATIVE_NYBLE_VALUE = (byte) 0xD0;
+    public static  final byte HIGH_NYBLE = (byte) 0xf0;
+    private static final byte ZONED_POSITIVE_NYBLE_AND = (byte) 0xCF;
+    private static final byte ZONED_NEGATIVE_NYBLE_AND = (byte) 0xDF;
+    public static  final byte ZONED_NEGATIVE_NYBLE_VALUE1 = (byte) 0xD0;
+    public static  final byte ZONED_POSITIVE_NYBLE_VALUE1 = (byte) 0xC0;
+    public static  final byte ZONED_NEGATIVE_NYBLE_VALUE2 = (byte) 0x80;
+    public static  final byte ZONED_POSITIVE_NYBLE_VALUE2 = (byte) 0x90;
 
 
 	/**
@@ -103,7 +106,7 @@ public class TypeZoned extends TypeNum {
 				String sign = "";
 				int end = position + field.getLen() - 1;
 				byte signByte = record[end - 1];
-				if (((byte) (signByte & HIGH_NYBLE)) == ZONED_NEGATIVE_NYBLE_VALUE) {
+				if (((byte) (signByte & HIGH_NYBLE)) == ZONED_NEGATIVE_NYBLE_VALUE1) {
 					sign = "-";
 				}
 				byte[] lastDigitBytes = {(byte) (signByte | HIGH_NYBLE)};
@@ -204,7 +207,7 @@ public class TypeZoned extends TypeNum {
             final int position,
 			final IFieldDetail field,
 			String val) {
-		byte andByte = ZONED_POSITIVE_NYBLE_OR;
+		byte andByte = ZONED_POSITIVE_NYBLE_AND;
 		int len = field.getLen();
 		int endPos = len + position - 2;
 		if (! field.isFixedFormat()) {
@@ -216,7 +219,7 @@ public class TypeZoned extends TypeNum {
 //			andByte = ZONED_POSITIVE_NYBLE;
 			val = val.substring(1);
 		} else if (val.startsWith("-")) {
-			andByte = ZONED_NEGATIVE_NYBLE_OR;
+			andByte = ZONED_NEGATIVE_NYBLE_AND;
 			val = val.substring(1);
 		}
 		copyRightJust(record, val,

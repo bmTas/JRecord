@@ -189,13 +189,23 @@ public interface Constants {
 	public static final String RE_XML_RECORD      = "RECORD";
 	public static final String RE_XML_RECORDS     = "RECORDS";
 	public static final String RE_XML_FIELD       = "FIELD";
+//	public static final String RE_XML_ITEM        = "ITEM";
+//	public static final String RE_XML_CONDITION   = "CONDITION";
 	public static final String RE_XML_FIELDS      = "FIELDS";
 	public static final String RE_XML_TST_FIELD   = "TSTFIELD";
 	public static final String RE_XML_TST_FIELDS  = "TSTFIELDS";
 	public static final String RE_XML_AND_FIELDS  = "AND";
 	public static final String RE_XML_OR_FIELDS   = "OR";
+	public static final String RE_XML_TRUE        = "TRUE";
+	
 
 	public static final String RE_XML_COPYBOOK    = "COPYBOOK";
+	public static final String RE_XML_COBOL_ITEMS = "ITEMS";
+	public static final String RE_XML_JRECORD_NAMING = "JRecNaming";
+	public static final String RE_XML_KEEP_FILLER = "KeepFiller";
+	public static final String RE_XML_DROP_COPYBOOK_FROM_FIELD = "DropCopybook";
+	public static final String RE_XML_COBOL_DIALECT = "DIALECT";
+	public static final String RE_XML_COPYBOOK_PREF = "CopybookPref";
 	public static final String RE_XML_DELIMITER   = "DELIMITER";
 	public static final String RE_XML_DESCRIPTION = "DESCRIPTION";
 	public static final String RE_XML_FONTNAME    = "FONTNAME";

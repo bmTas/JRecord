@@ -589,7 +589,6 @@ public final class Conversion {
 	public static void setBigInt(final byte[] record, int pos, int len, BigInteger val, boolean isPositive) {
 		byte[] bytes = val.toByteArray();
 		int i;
-		byte sb = BYTE_NO_BIT_SET;
 
 		if (bytes.length <= len) {
 		} else if (isPositive && bytes.length == len + 1 && (bytes[0] == 0)){
@@ -605,6 +604,7 @@ public final class Conversion {
 					new Object[] {isPositive, pos, bytes.length , len, bytes[0]});
 		}
 
+		byte sb = BYTE_NO_BIT_SET;
 		if (val.signum() < 0) {
 			sb = BYTE_ALL_BITS_SET;
 		}
@@ -1168,6 +1168,22 @@ public final class Conversion {
 //    }
 	
     /**
+	 * @return the positive0EbcdicZoned
+	 */
+	public static char getPositive0EbcdicZoned() {
+		return positive0EbcdicZoned;
+	}
+
+
+	/**
+	 * @return the negative0EbcdicZoned
+	 */
+	public static char getNegative0EbcdicZoned() {
+		return negative0EbcdicZoned;
+	}
+
+
+	/**
      * Class to hold character-set details
      * 
      * @author Bruce Martin

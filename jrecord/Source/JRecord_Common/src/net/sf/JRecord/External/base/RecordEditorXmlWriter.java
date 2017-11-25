@@ -29,8 +29,10 @@
 package net.sf.JRecord.External.base;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.List;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -43,7 +45,10 @@ import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.ExternalRecordSelection.StreamLine;
 import net.sf.JRecord.Log.AbsSSLogger;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.detailsSelection.RecordSel;
+import net.sf.cb2xml.def.IItem;
+import net.sf.cb2xml.util.WriteXml;
 
 /**
  * Write a RecordLayout (Record or Line Description) to a RecordEditor-XML file.
@@ -70,28 +75,30 @@ public class RecordEditorXmlWriter implements CopybookWriter {
 
 	@Override
 	public void writeCopyBook(OutputStream outStream, BaseExternalRecord<?> copybook,
-			AbsSSLogger log) throws Exception {
-   	XMLOutputFactory f ;
-   	XMLStreamWriter writer;
+			AbsSSLogger log) throws XMLStreamException, IOException  {
 
-//    	try {
-    		 f = XMLOutputFactory.newInstance();
-//    	} catch (Exception e) {
-//    		// For Java 5 (before the addition of XMLOutputFactory to standard java
-//    		 Object o =  XMLOutputFactory.newInstance("javax.xml.stream.XMLOutputFactory",
-//					  this.getClass().getClassLoader());
-//    		 f = (XMLOutputFactory) o;
-//		}
 
-       writer = f.createXMLStreamWriter(new OutputStreamWriter(outStream, STANDARD_FONT));
+		XMLOutputFactory f = XMLOutputFactory.newInstance();
 
-       writer.writeStartDocument(STANDARD_FONT, "1.0");
+		XMLStreamWriter writer = f.createXMLStreamWriter(new OutputStreamWriter(outStream, STANDARD_FONT));
 
-       writeRecord(writer, null, copybook, hasGroupDetails(copybook));
+   		writeCopyBook(writer, copybook);
+   		outStream.close();
+	}
 
-       writer.writeEndDocument();
-       writer.close();
-       outStream.close();
+	/**
+	 * @param copybook
+	 * @param writer
+	 * @throws XMLStreamException
+	 */
+	public void writeCopyBook(XMLStreamWriter writer, BaseExternalRecord<?> copybook) throws XMLStreamException {
+
+		writer.writeStartDocument(STANDARD_FONT, "1.0");
+
+		writeRecord(writer, null, copybook, hasGroupDetails(copybook));
+
+		writer.writeEndDocument();
+		writer.close();
 	}
 
 	private boolean hasGroupDetails(BaseExternalRecord<?> copybook) {
@@ -204,7 +211,55 @@ public class RecordEditorXmlWriter implements CopybookWriter {
     	   writer.writeEndElement();
        }
 
-       if (copybook.getNumberOfRecordFields() > 0) {
+       List<? extends IItem> items = copybook.getItems();
+       if (items != null && items.size() > 0) {
+    	   WriteXml wXml = new WriteXml(true, true, "");
+    	   
+    	   writer.writeStartElement(Constants.RE_XML_COBOL_ITEMS);
+    	   writer.writeAttribute(Constants.RE_XML_COPYBOOK_PREF, copybook.getCopybookPref());
+    	   
+    	   if (copybook.getDialectCode() != ICopybookDialects.FMT_MAINFRAME) {
+    		   writer.writeAttribute(
+    				   Constants.RE_XML_COBOL_DIALECT, 
+    				   Integer.toString(copybook.getDialectCode())
+    		   );
+    	   }
+    	   if (copybook.isKeepFillers()) {
+    		   writer.writeAttribute(
+    				   Constants.RE_XML_KEEP_FILLER, 
+    				   Constants.RE_XML_TRUE
+    		   );
+    	   }
+       	   if (copybook.isDropCopybookFromFieldNames()) {
+    		   writer.writeAttribute(
+    				   Constants.RE_XML_DROP_COPYBOOK_FROM_FIELD, 
+    				   Constants.RE_XML_TRUE
+    		   );
+    	   }
+       	   if (copybook.isUseJRecordNaming()) {
+    		   writer.writeAttribute(
+    				   Constants.RE_XML_JRECORD_NAMING, 
+    				   Constants.RE_XML_TRUE
+    		   );
+    	   }
+   	   
+    	   String[] parentGroupNames = copybook.getParentGroupNames();
+    	   if (parentGroupNames != null && parentGroupNames.length > 0) {
+    		   StringBuilder b = new StringBuilder(parentGroupNames[0]);
+    		   for (int j = 1; j < parentGroupNames.length; j++) {
+    			   if (parentGroupNames[j] != null && parentGroupNames[j].length() > 0) {
+    				   b.append('.').append(parentGroupNames[j]);
+    			   }
+    		   }
+    		   
+    		   writer.writeAttribute(Constants.RE_XML_GROUP_NAMES, b.toString());
+    	   }
+    	   
+    	   
+    	   wXml.writeIItems(writer, items);
+    	   
+    	   writer.writeEndElement();
+       } else if (copybook.getNumberOfRecordFields() > 0) {
     	   String lastGroupName = null;
     	   writer.writeStartElement(Constants.RE_XML_FIELDS);
 

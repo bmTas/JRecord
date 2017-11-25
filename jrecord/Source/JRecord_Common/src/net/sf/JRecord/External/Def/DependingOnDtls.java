@@ -70,6 +70,7 @@ public final class DependingOnDtls implements IDependingOnIndexDtls {
 			DependingOnDtls parent) {
 		this(dependingOn, index, parent, true);
 	}
+	
 	public DependingOnDtls(DependingOn dependingOn, int index,
 			DependingOnDtls parent, boolean permanent) {
 		super();

@@ -44,7 +44,7 @@ import java.io.OutputStream;
  * @author Bruce Martin
  *
  */
-public abstract class AbstractByteWriter {
+public abstract class AbstractByteWriter implements IByteRecordWriter {
 
     public static final String NOT_OPEN_MESSAGE = "File has not been opened";
 
@@ -72,20 +72,16 @@ public abstract class AbstractByteWriter {
     throws IOException;
 
 
-    /**
-     * Read one line from the input file
-     *
-     * @param bytes line to write to the output file
-     *
-     * @throws IOException any IOerror
-     */
-    public abstract void write(byte[] bytes) throws IOException;
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.ByteIO.IByteRecordWriter#write(byte[])
+	 */
+    @Override
+	public abstract void write(byte[] bytes) throws IOException;
 
 
-    /**
-     * Closes the file
-     *
-     * @throws IOException any IOerror
-     */
-    public abstract void close() throws IOException;
+    /* (non-Javadoc)
+	 * @see net.sf.JRecord.ByteIO.IByteRecordWriter#close()
+	 */
+    @Override
+	public abstract void close() throws IOException;
 }

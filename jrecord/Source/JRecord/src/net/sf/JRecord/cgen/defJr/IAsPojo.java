@@ -26,7 +26,7 @@
  *
  * ------------------------------------------------------------------------ */
 
-package net.sf.JRecord.cgen.def;
+package net.sf.JRecord.cgen.defJr;
 
 public interface IAsPojo<Line> {
 

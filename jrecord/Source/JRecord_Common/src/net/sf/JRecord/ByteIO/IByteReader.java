@@ -28,7 +28,7 @@ package net.sf.JRecord.ByteIO;
 import java.io.IOException;
 import java.io.InputStream;
 
-public interface IByteReader {
+public interface IByteReader extends IByteRecordReader {
 
 	/**
 	 * Open file for input
@@ -48,29 +48,17 @@ public interface IByteReader {
 	 */
 	public abstract void open(InputStream inputStream) throws IOException;
 
-	/**
-	 * Read one line from the input file as an array of bytes
-	 *
-	 * @return line read in
-	 *
-	 * @throws IOException io error
-	 */
-	public abstract byte[] read() throws IOException;
-
-	/**
-	 * Closes the file
-	 *
-	 * @throws IOException io error
-	 */
-	public abstract void close() throws IOException;
+	public abstract boolean canWrite();
 
 	/**
 	 * @param lineLength The lineLength to set.
 	 */
-	public abstract void setLineLength(int lineLength);
+	void setLineLength(int lineLength);
 
-	public abstract boolean canWrite();
-
+	/**
+	 * Get the number of bytes read from the file / stream
+	 * @return
+	 */
 	public abstract long getBytesRead();
 
 }

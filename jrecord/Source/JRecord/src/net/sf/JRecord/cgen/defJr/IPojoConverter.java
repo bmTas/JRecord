@@ -1,6 +1,8 @@
-package net.sf.JRecord.cgen.def;
+package net.sf.JRecord.cgen.defJr;
 
 import net.sf.JRecord.Details.AbstractLine;
+import net.sf.JRecord.cgen.def.IDeserializer;
+import net.sf.JRecord.cgen.def.ISerializer;
 
 
 /**

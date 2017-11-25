@@ -40,14 +40,14 @@ package net.sf.JRecord.Numeric;
  * @author Bruce Martin
  *
  */
-public interface Convert extends ICopybookDialects {
+public interface Convert extends ICopybookDialects, net.sf.cb2xml.def.IBasicDialect {
 
     /**
      * Get the Binary Definition details
      *
      * @return Get the Binary Definition details
      */
-    public abstract Object getNumericDefinition();
+    public abstract net.sf.cb2xml.def.NumericDefinition getNumericDefinition();
 //  public abstract net.sf.cb2xml.def.NumericDefinition getNumericDefinition();
 //  using Object instead of net.sf.cb2xml.def.NumericDefinition to avoid dependency on cb2xml when
 //  it is otherwise not needed

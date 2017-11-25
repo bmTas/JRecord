@@ -35,7 +35,7 @@ import net.sf.JRecord.Option.IOptionResult;
 import net.sf.JRecord.Option.IOptionType;
 import net.sf.JRecord.Option.OptionResult;
 import net.sf.JRecord.Option.OptionType;
-import net.sf.JRecord.definitiuons.CsvCharDetails;
+import net.sf.JRecord.detailsBasic.CsvCharDetails;
 
 
 /**

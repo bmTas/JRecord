@@ -49,7 +49,7 @@ import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.Details.IFieldValue;
+import net.sf.JRecord.Details.fieldValue.IFieldValue;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.ICopybookLoaderCobol;
@@ -65,6 +65,8 @@ import net.sf.JRecord.schema.IArrayItemCheck;
 import net.sf.JRecord.schema.IGetRecordFieldByName;
 import net.sf.JRecord.schema.ISchemaInformation;
 import net.sf.JRecord.schema.jaxb.IItem;
+import net.sf.JRecord.schema.jaxb.Item;
+import net.sf.JRecord.schema.jaxb.ItemRecordDtls;
 //import net.sf.JRecord.schema.jaxb.Item;
 import net.sf.JRecord.schema.jaxb.LineItemHelper;
 import net.sf.JRecord.schema.jaxb.impl.DoNothingFormat;
@@ -204,28 +206,32 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
         	f = XMLOutputFactory.newInstance();
         }
        	XMLStreamWriter writer = f.createXMLStreamWriter(new OutputStreamWriter(xmlStream, STANDARD_FONT));
-        List<? extends IItem> items = cobolSchemaDetails.cobolCopybook.getCobolItems(); 
+       // List<? extends IItem> items = cobolSchemaDetails.cobolCopybook.getCobolItems(); 
+       	List<ItemRecordDtls> recordItems = cobolSchemaDetails.recordItems;
         LineItemHelper lineHelper = new LineItemHelper(schema);
         
         writer.writeStartDocument(STANDARD_FONT, "1.0"); 
         writer.writeStartElement(xmlMainElement);
         
- 		if (items.size() == 1) {
- 			IItem item = items.get(0);
-	        while ((l = r.read()) != null) {
-	        	writeItem(writer, lineHelper.setLine(l), item, new IntStack());
-	        }
-        } else if (schema.getRecordCount() <= 1) {
-	        while ((l = r.read()) != null) {
-	        	writer.writeStartElement("Line");
-	        	writeItems(writer, lineHelper.setLine(l), items, new IntStack());
-		        writer.writeEndElement();
-	        }
+ 		if (recordItems.size() == 1) {
+ 			List<Item> items = recordItems.get(0).items;
+ 			String itemName = "Line";
+ 			if (items.size() == 1 && items.get(0).itemType == Item.TYPE_GROUP) {
+		        while ((l = r.read()) != null) {
+		        	writeItems(writer, lineHelper.setLine(l), items, new IntStack());
+		        }
+ 			} else { 			
+		        while ((l = r.read()) != null) {
+		        	writer.writeStartElement("Line");
+		        	writeItems(writer, lineHelper.setLine(l), items, new IntStack());
+			        writer.writeEndElement();
+		        }
+ 			}
         } else if (schema.hasTreeStructure()) {
            	ReadManager rm = new ReadManager(r, schema);
            	rm.read();
         	while (rm.line != null) {
-        		writeItemInTree(writer, rm, items);
+        		writeItemInTree(writer, rm, recordItems);
         	}
         } else {
         	int lineNo = 0;
@@ -235,8 +241,18 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 				if (recordIdx < 0) {
 					throw new RecordException("Unknow Record Type for line number: " + lineNo + " " + l.getFullLine());
 				}
-				writeItem(writer, lineHelper.setLine(l), items.get(recordIdx), new IntStack());
-        	}
+				ItemRecordDtls itemRecordDtls = recordItems.get(recordIdx);
+				switch (itemRecordDtls.items.size()) {
+				case 0: break;
+				case 1:
+					writeItem(writer, lineHelper.setLine(l), itemRecordDtls.items.get(0), new IntStack());
+					break;
+				default:
+					writer.writeStartElement(itemRecordDtls.record.getRecordName());
+					writeItems(writer, lineHelper, itemRecordDtls.items, new IntStack());
+					writer.writeEndElement();
+				}
+	      	}
         }
 
         writer.writeEndElement();
@@ -257,7 +273,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
         skipValidation = ! itemDtls.isRedefinedBinaryField();
 	}
 
-	private void writeItemInTree(XMLStreamWriter writer, ReadManager rm, List<? extends IItem> items) 
+	private void writeItemInTree(XMLStreamWriter writer, ReadManager rm, List<ItemRecordDtls> recordItems) 
 	throws XMLStreamException, IOException {
 
 
@@ -266,8 +282,33 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 		}
 
   		int recIdx = rm.recordIdx;
-		IItem item = items.get(recIdx);
+		List<Item> items = recordItems.get(recIdx).items;
+		//IItem item = items;
 		
+		switch (items.size()) {
+		case 0: break;
+		case 1:
+			writeOneItemInTree(writer, rm, recordItems, recIdx, items.get(0));
+			break;
+		default:
+			writer.writeStartElement(recordItems.get(recIdx).record.getRecordName());
+			for (Item item : items) {
+				writeOneItemInTree(writer, rm, recordItems, recIdx, item);
+			}
+			writer.writeEndElement();
+		} 
+	}
+
+	/**
+	 * @param writer
+	 * @param rm
+	 * @param recordItems
+	 * @param recIdx
+	 * @throws XMLStreamException
+	 * @throws IOException
+	 */
+	private void writeOneItemInTree(XMLStreamWriter writer, ReadManager rm, List<ItemRecordDtls> recordItems,
+			int recIdx, IItem item ) throws XMLStreamException, IOException {
 		writer.writeStartElement(item.getNameToUse());
 		writeAnItem(writer, rm.lineItemHelper, item, new IntStack());
 		
@@ -275,7 +316,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 		while (rm.line != null
 		&& rm.recordIdx >= 0
 		&& rm.schema.getRecord(rm.recordIdx).getParentRecordIndex() == recIdx) {
-			writeItemInTree(writer, rm, items);
+			writeItemInTree(writer, rm, recordItems);
 		}
 		
 		writer.writeEndElement();

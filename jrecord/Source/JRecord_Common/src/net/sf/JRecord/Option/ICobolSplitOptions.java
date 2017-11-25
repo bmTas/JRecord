@@ -67,6 +67,17 @@ public interface ICobolSplitOptions {
      *        05  Detail-Record.
      *  </pre>
      */
-    public static final int SPLIT_HIGHEST_REPEATING = 3;
+    public static final int SPLIT_TOP_LEVEL = 3;
+    /** 
+     *  Multi-Record Copybook with each record in a Group level under 01 
+     *  i.e. 05 in the following 
+     *  <pre>
+     *        01  TOP-LEVEL
+     *            05  Header-Record.
+     *                .....
+     *            05  Detail-Record.
+     *  </pre>
+     */
+    public static final int SPLIT_HIGHEST_REPEATING = 4;
 
 }

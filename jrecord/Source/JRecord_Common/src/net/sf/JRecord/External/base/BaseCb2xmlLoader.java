@@ -57,11 +57,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
@@ -69,21 +74,13 @@ import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.External.Def.DependingOn;
 import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.External.Def.ExternalField;
-import net.sf.JRecord.External.base.Cb2xmlDocument;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Numeric.ConversionManager;
 import net.sf.JRecord.Numeric.Convert;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Option.ICobolSplitOptions;
-import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.cb2xml.def.Cb2xmlConstants;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 
 
@@ -104,9 +101,10 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
 
     private String copybookName;
     private ArrayList<ExternalField> commonDetails;
-    private List<DependingOn> commonDependingOn;
+    //private List<DependingOn> commonDependingOn;
     private String redefinedField;
-    private boolean foundRedefine;
+    private boolean foundRedefine, 
+    				dropCopybookFromFieldNames = CommonBits.isDropCopybookFromFieldNames();
     private boolean saveCb2xml = false;
     private int splitCopybook;
 
@@ -132,15 +130,16 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
     private int level;
     private String splitAtLevel;
     private int positionAdjustment = 0;
-    private ArrayList<String> groupName;
+//    private ArrayList<String> groupName;
     
-    boolean dropCopybookFromFieldNames = CommonBits.isDropCopybookFromFieldNames();
+//    boolean dropCopybookFromFieldNames = CommonBits.isDropCopybookFromFieldNames();
     
     boolean keepFiller = false;
     private final boolean useJRecordNaming ;
     private final IExernalRecordBuilder<XRecord> recBuilder;
     
-    private HashMap<String, String> fieldToNameWithArrayIndexs = new HashMap<String, String>();
+    private FieldCreatorHelper fieldHelper;
+//    private HashMap<String, String> fieldToNameWithArrayIndexs = new HashMap<String, String>();
 //    private HashMap<String, DependingOn> nameToDependDtls = new HashMap<String, DependingOn>();
 
     protected BaseCb2xmlLoader(IExernalRecordBuilder<XRecord> recBuilder, boolean useJRecordNaming) {
@@ -156,9 +155,7 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
      * @return DOM Document
      *
      * @throws IOException error to be handled by calling program
-     * @throws SAXException error to be handled by calling program
-     * @throws ParserConfigurationException error to be handled by calling program
-     */
+      */
     public Document fileToDom(String fileName)
 	throws IOException, SAXException, ParserConfigurationException {
 
@@ -248,17 +245,15 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
      * @return record to be inserted
      *
      * @throws IOException error to be handeled by calling program
-     * @throws SAXException error to be handeled by calling program
-     * @throws ParserConfigurationException error to be handeled by calling program
     */
-    public XRecord loadCopyBook(final String copyBookFile,
-            						  final int splitCopybookOption,
-            						  final int dbIdx,
-            						  final String font,
-            						  final int copybookFormat,
-            						  final int binFormat,
-            						  final int systemId,
-            						  final AbsSSLogger log)
+    public XRecord loadCopyBook(  final String copyBookFile,
+            					  final int splitCopybookOption,
+            					  final int dbIdx,
+            					  final String font,
+            					  final int copybookFormat,
+            					  final int binFormat,
+            					  final int systemId,
+            					  final AbsSSLogger log)
     		throws IOException, SAXException, ParserConfigurationException {
 
         return loadDOMCopyBook(fileToDom(copyBookFile), Conversion.getCopyBookId(copyBookFile),
@@ -281,13 +276,13 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
      *
      * @return record to be inserted
      */
-    public XRecord loadDOMCopyBook(final Document pCopyBookXml,
-            							 final String pCopyBook,
-            							 final int pSplitCopybook,
-            							 final int pDbIdx,
-            							 final String font,
-               						     final int binFormat,
-               						     final int systemId) {
+    public XRecord loadDOMCopyBook(	final Document pCopyBookXml,
+            						final String pCopyBook,
+            						final int pSplitCopybook,
+            						final int pDbIdx,
+            						final String font,
+               						final int binFormat,
+               						final int systemId) {
     	synchronized (this) {
     		int i;
     		String lCopyBookPref;
@@ -299,17 +294,13 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
     		system   = systemId;
     		parentLayout = null;
 
-            if (useJRecordNaming) {
-    			lCopyBookPref = pCopyBook.toUpperCase() + "-";
-    		} else {
-    			lCopyBookPref = pCopyBook + "-";
-    		}
 
+            this.fieldHelper = new FieldCreatorHelper(pSplitCopybook, binFormat, useJRecordNaming, pCopyBook, font);
+            this.fieldHelper.setDropCopybookFromFieldNames(dropCopybookFromFieldNames);
             this.splitCopybook = pSplitCopybook;
 
             this.redefinedField = "";
             this.commonDetails  = new ArrayList<ExternalField>();
-            this.commonDependingOn = null;
             this.foundRedefine  = false;
             this.fieldNum       = 0;
             this.recordNum      = 1;
@@ -319,6 +310,7 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
 
             allocDBs(pDbIdx);
             
+            lCopyBookPref = fieldHelper.getCopyBookPref();
             splitAtLevel = "1";
     
             switch (pSplitCopybook) {
@@ -522,8 +514,8 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
     private void insertXMLcopybook(final String copyBookPref,
     							   final Element element) {
     	level = 0;
-    	groupName = new ArrayList<String>();
-    	groupName.add(".");
+//    	groupName = new ArrayList<String>();
+//    	groupName.add(".");
 
     	insertXMLcopybook(copyBookPref, element, 0, "", null);
     }
@@ -561,25 +553,13 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
                         
                         if (dependingVar.length() > 0) {
                         	ExternalField tmpField = convertElement2Field("xx", false, basePosition, childElement, null);
-                        	String dependingVarNoIdx = dependingVar;
-                        	String key = dependingVar.toLowerCase();
-                        	String lookup = fieldToNameWithArrayIndexs.get(key);
-                        	if (lookup != null) {
-                        		dependingVar = lookup;
-                        		key = lookup.toLowerCase();
-                        	}
-                        	//System.out.println(dependingVar + "\t" + tmpField.getPos() + "\t" + length + "\t" + childOccurs);
-                    		dependOn = new DependingOn(dependingVar, dependingVarNoIdx, tmpField.getPos(), length, childOccurs);
-                        	if (dependOnParentDtls == null ) {
-                        		if (splitCopybook != ICobolSplitOptions.SPLIT_REDEFINE || foundRedefine) {
-                        			currentLayout.addDependingOn(dependOn);
-                         		} else {
-                         			if (commonDependingOn == null) {
-                         				commonDependingOn = new ArrayList<DependingOn>();
-                         			}
-                           			commonDependingOn.add(dependOn);
-                        		}
-                        	}
+                        	dependOn = fieldHelper
+                        					.dependingOnBuilder()
+                        						.setPosition(tmpField.getPos())
+                        						.setLength(length)
+                        						.setChildOccurs(childOccurs)
+                        					.newDependingOn(currentLayout, dependOnParentDtls, dependingVar);
+                        			;
                         }
 
                         int size = 0;
@@ -589,14 +569,7 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
 	                        currentLayout.fields.ensureCapacity(size + childOccurs);
                         }
                         for (int j = 0; j < childOccurs; j++) {
-//	                        	if (j == 1) {
-//	                        		currentLayout.fields.ensureCapacity(size + (currentLayout.fields.size() - size) * childOccurs);
-//	                        	}
-                            if (nameSuffix.equals("")) {
-                                newSuffix = Integer.toString(j);
-                            } else {
-                                newSuffix = nameSuffix + ", " + j;
-                            }
+                        	newSuffix = fieldHelper.updateFieldNameIndex(nameSuffix, j);
 
                             DependingOnDtls dependOnDtls = dependOnParentDtls;
                             if (dependOn != null) {
@@ -606,7 +579,6 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
                             
                             insertXMLcopybook(copyBookPref,  childElement, basePosition + j * length, newSuffix, dependOnDtls);
                         }
-                        
                     } else {
                         insertElement(childElement, copyBookPref, nameSuffix, basePosition, dependOnParentDtls);
                         insertXMLcopybook(copyBookPref, childElement, basePosition, nameSuffix, dependOnParentDtls);
@@ -636,24 +608,13 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
        int opt;
 
        if (element.hasAttribute(Cb2xmlConstants.NAME))  {
-           String lName = getStringAttribute(element, Cb2xmlConstants.NAME);
-           String lOrigName = lName;
+           String lOrigName = getStringAttribute(element, Cb2xmlConstants.NAME);
+           String lName = fieldHelper.createFieldName(lOrigName, nameSuffix);
            String usage = "";
-           String nameKey = lOrigName.toLowerCase();
+           
+           lOrigName = fieldHelper.createOriginalName(lOrigName);
 
            boolean lIsNumeric = getStringAttribute(element, Cb2xmlConstants.NUMERIC).equalsIgnoreCase(Cb2xmlConstants.TRUE);
-
-           if (! "".equals(nameSuffix)) {
-               lName += " (" + nameSuffix + ")";   
-               fieldToNameWithArrayIndexs.put(nameKey, lName);
-           } else {
-        	   fieldToNameWithArrayIndexs.remove(nameKey);
-           }
-
-           if (dropCopybookFromFieldNames && lName.toUpperCase().startsWith(copyBookPref)) {
-               lName = lName.substring(copyBookPref.length());
-               lOrigName = lOrigName.substring(copyBookPref.length());
-           }
 
            if (element.hasAttribute(Cb2xmlConstants.USAGE)) {
         	   usage = element.getAttribute(Cb2xmlConstants.USAGE);
@@ -692,15 +653,16 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
            }
 
            //System.out.println(level + " " + print + " " + lName);
-           if (level > 0 && level <= groupName.size()) {
-        	   String s = groupName.get(level - 1) + lOrigName + ".";
-
-        	   if (groupName.size() > level) {
-        		   groupName.set(level, s);
-        	   } else {
-        		   groupName.add(s);
-        	   }
-           }
+//           if (level > 0 && level <= groupName.size()) {
+//        	   String s = groupName.get(level - 1) + lOrigName + ".";
+//
+//        	   if (groupName.size() > level) {
+//        		   groupName.set(level, s);
+//        	   } else {
+//        		   groupName.add(s);
+//        	   }
+//           }
+           fieldHelper.updateGroup(opt, lOrigName);
 
            switch (opt) {
               case OPT_WRITE_ELEMENT:
@@ -713,6 +675,7 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
                   insertCommonFields(copyBookPref, lName, true);
 
                   foundRedefine = true;
+                  fieldHelper.setFoundRedefine(foundRedefine);
                   if (print) {
                       insertRecordField(convertElement2Field(lName, lIsNumeric, posBase, element, dependDtls));
                   }
@@ -793,12 +756,12 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
 
         fieldNum = commonDetails.size() + 1;
         
+        List<DependingOn> commonDependingOn = fieldHelper.getCommonDependingOn();
         if (commonDependingOn != null) {
 	        for (DependingOn dependOn : commonDependingOn) {
 	        	currentLayout.addDependingOn(dependOn);
 	        }
         }
-
     }
 
 
@@ -901,45 +864,36 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
             								int base,
             								Element element,
             								DependingOnDtls dependDtls) {
-        int iType = Type.ftChar;
+//        int iType = Type.ftChar;
         String usage = getStringAttribute(element, Cb2xmlConstants.USAGE);
-
-        if (isNumeric) {
-            String picture = getStringAttribute(element, Cb2xmlConstants.PICTURE).toUpperCase();
-            String signed = getStringAttribute(element, Cb2xmlConstants.SIGNED);
-            String signSeparate = getStringAttribute(element, Cb2xmlConstants.SIGN_SEPARATE);
-            String signPosition = getStringAttribute(element, Cb2xmlConstants.SIGN_POSITION);
-            iType = numTranslator.getTypeIdentifier(usage, picture, Cb2xmlConstants.TRUE.equals(signed),
-            		Cb2xmlConstants.TRUE.equals(signSeparate), signPosition);
-
-//            if (iType >= 0) {
-//            } else if ("true".equals(signed) ||  picture.startsWith("S")) {
-//                if ("true".equals(signSeparate)) {
-//                    if ("leading".equals(signPosition)) {
-//                        iType = Type.ftSignSeparateLead;
-//                    } else {
-//                        iType = Type.ftSignSeparateTrail;
-//                    }
-//                } else {
-//                    if (binaryFormat == ICopybookDialects.FMT_MAINFRAME) {
-//                      iType = Type.ftZonedNumeric;
-//                    } else {
-//                      iType = Type.ftFjZonedNumeric;
-//                    }
-//                }
-//            } else {
-//                iType = Type.ftAssumedDecimalPositive;
-//            }
-        } else if ("null-padded".equals(usage)) {
-            iType = Type.ftCharNullPadded;
-        } else if ("null-terminated".equals(usage)) {
-            iType = Type.ftCharNullTerminated;
-        } else {	
-        	String just = getStringAttribute(element, Cb2xmlConstants.JUSTIFIED);
-        	if (just != null && just.length() > 0) {
-               iType = Type.ftCharRightJust;
-        	}
-        }
+        String just = getStringAttribute(element, Cb2xmlConstants.JUSTIFIED);
+        String picture = getStringAttribute(element, Cb2xmlConstants.PICTURE).toUpperCase();
+        String signSeparate = getStringAttribute(element, Cb2xmlConstants.SIGN_SEPARATE);
+        String signPosition = getStringAttribute(element, Cb2xmlConstants.SIGN_POSITION);
+        
+        
+        int iType = fieldHelper.deriveType(isNumeric, usage, picture, 
+        		Cb2xmlConstants.TRUE.equals(signSeparate), signPosition, 
+        		just != null && just.length() > 0);
+        
+//        if (isNumeric) {
+//            String picture = getStringAttribute(element, Cb2xmlConstants.PICTURE).toUpperCase();
+//            String signed = getStringAttribute(element, Cb2xmlConstants.SIGNED);
+//            String signSeparate = getStringAttribute(element, Cb2xmlConstants.SIGN_SEPARATE);
+//            String signPosition = getStringAttribute(element, Cb2xmlConstants.SIGN_POSITION);
+//            iType = numTranslator.getTypeIdentifier(usage, picture, Cb2xmlConstants.TRUE.equals(signed),
+//            		Cb2xmlConstants.TRUE.equals(signSeparate), signPosition);
+//
+//        } else if ("null-padded".equals(usage)) {
+//            iType = Type.ftCharNullPadded;
+//        } else if ("null-terminated".equals(usage)) {
+//            iType = Type.ftCharNullTerminated;
+//        } else {	
+//        	String just = getStringAttribute(element, Cb2xmlConstants.JUSTIFIED);
+//        	if (just != null && just.length() > 0) {
+//               iType = Type.ftCharRightJust;
+//        	}
+//        }
 
         ExternalField externalField = new ExternalField(
         	        getIntAttribute(element, Cb2xmlConstants.POSITION) + base - positionAdjustment,
@@ -947,7 +901,11 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
         	        name,
         	        "",
         	        iType,
-        	        calculateDecimalSize(iType, getStringAttribute(element, Cb2xmlConstants.PICTURE)),
+        	        fieldHelper.calculateDecimalSize(
+        	        		iType, 
+        	        		getStringAttribute(element, Cb2xmlConstants.PICTURE),
+        	        		getIntAttribute(element, Cb2xmlConstants.SCALE)
+        	        ),
         	        Constants.FORMAT_DEFAULT,
         	        "",
         	        "",
@@ -956,8 +914,8 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
         	        dependDtls
         	  	 );
 
-        if (level > 1) {
-        	externalField.setGroup(groupName.get(level - 1));
+        if (level > 1 && fieldHelper.getGroupNameSize() > level) {
+        	externalField.setGroup(fieldHelper.getGroupName(level - 1));
         }
 		return externalField;
     }
@@ -1001,61 +959,6 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
     }
 
 
-    /**
-     * Calculate the size of decimal portion
-     * @param pFormat Cobol Picture
-     * @return decimal size
-     */
-    private int calculateDecimalSize(int type, String pFormat) {
-        int lRet = 0;
-        int lPos, lNum, lBracketOpenPos, lBracketClosePos, decimalPos;
-        String lDecimalStr;
-        String lNumStr;
-        String format = "";
-        char decimalPnt = '.';
-        Type t = TypeManager.getInstance().getType(type);
-        if (pFormat != null) {
-            format = pFormat.toUpperCase();
-        }
-        if (t != null) {
-        	decimalPnt = t.getDecimalChar();
-        }
-
-        decimalPos = format.indexOf(decimalPnt);
-        if (decimalPos != format.lastIndexOf(decimalPnt)) {
-        	decimalPos = -1;
-        }
-        lPos = Math.max(format.indexOf("V"), decimalPos);
-        if (lPos >= 0) {
-            lDecimalStr      = format.substring(lPos + 1);
-            lBracketOpenPos  = lDecimalStr.indexOf("(");
-            lBracketClosePos = lDecimalStr.indexOf(")");
-
-            if (lBracketOpenPos >= 0 && lBracketClosePos >= lBracketOpenPos) {
-                try {
-                    lNumStr = lDecimalStr.substring(lBracketOpenPos + 1,
-                            						lBracketClosePos);
-
-                    lNum = Integer.parseInt(lNumStr);
-                    lRet = lNum + lDecimalStr.length() - (lBracketClosePos - lBracketOpenPos) - 2;
-
-                } catch (Exception e) {
-                    /* no action*/
-                }
-            } else {
-                lRet = lDecimalStr.length();
-            }
-            
-            if (lRet > 0 && (pFormat.endsWith("+") || pFormat.endsWith("-"))) {
-            	lRet -= 1;
-            }
-        }
-
-        //System.out.println("===> " + format + "\t" + lRet);
-
-        return lRet;
-    }
-
 
     /**
      * Get the font name
@@ -1092,6 +995,10 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
 	public final void setDropCopybookFromFieldNames(
 			boolean dropCopybookFromFieldNames) {
 		this.dropCopybookFromFieldNames = dropCopybookFromFieldNames;
+		
+		if (this.fieldHelper != null) {
+			this.fieldHelper.setDropCopybookFromFieldNames(dropCopybookFromFieldNames);
+		}
 	}
 
 

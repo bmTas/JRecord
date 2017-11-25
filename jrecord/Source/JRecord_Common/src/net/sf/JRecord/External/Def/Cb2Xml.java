@@ -41,15 +41,21 @@ package net.sf.JRecord.External.Def;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
+
+import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Numeric.ConversionManager;
 import net.sf.JRecord.Numeric.Convert;
-import net.sf.cb2xml.CopyBookAnalyzer;
-import net.sf.cb2xml.def.NumericDefinition;
+import net.sf.cb2xml.Cb2Xml2;
+import net.sf.cb2xml.ICb2XmlBuilder;
+import net.sf.cb2xml.def.Cb2xmlConstants;
+import net.sf.cb2xml.analysis.Copybook;
 import net.sf.cb2xml.sablecc.lexer.LexerException;
 import net.sf.cb2xml.sablecc.parser.ParserException;
+
 
 import org.w3c.dom.Document;
 
@@ -66,6 +72,7 @@ import org.w3c.dom.Document;
 
 public class Cb2Xml {
 
+	private static final String SYNC = "xx123xx";  
 
 	/**
 	 * Convert cobol file to XML~Dom
@@ -77,15 +84,15 @@ public class Cb2Xml {
 	 * @throws IOException 
 	 * @throws LexerException 
 	 * @throws ParserException 
+	 * @throws XMLStreamException 
 	 */
 	public static Document convertToXMLDOM(File file, int binaryFormat, boolean debug, int format, AbsSSLogger log) 
-			throws ParserException, LexerException, IOException {
-
-		Convert conv = ConversionManager.getInstance().getConverter4code(binaryFormat) ;
-
-		
-		CopyBookAnalyzer.setNumericDetails((NumericDefinition) conv.getNumericDefinition());
-		return net.sf.cb2xml.Cb2Xml2.convertToXMLDOM(file, debug, format);
+			throws ParserException, LexerException, IOException, XMLStreamException {
+		return convertToXMLDOM(
+				net.sf.cb2xml.Cb2Xml3
+					.newBuilder(file),
+				binaryFormat, debug, format);
+	
 //		//log = TextLog.getLog(log);
 //		
 ////		try {
@@ -136,22 +143,55 @@ public class Cb2Xml {
 	}
 
 	public static Document convertToXMLDOM(InputStream is, String name,  int binaryFormat, boolean debug, int format) 
-			throws ParserException, LexerException, IOException {
+			throws ParserException, LexerException, IOException, XMLStreamException {
 		
-		Convert conv = ConversionManager.getInstance().getConverter4code(binaryFormat) ;
-	
-		CopyBookAnalyzer.setNumericDetails((NumericDefinition) conv.getNumericDefinition());
-		return net.sf.cb2xml.Cb2Xml2.convertToXMLDOM(is, name, debug, format);
+		return convertToXMLDOM(
+				net.sf.cb2xml.Cb2Xml3
+					.newBuilder(new InputStreamReader(is), name),
+				binaryFormat, debug, format);
 	}
 	
 
 	public static Document convertToXMLDOM(Reader reader, String name,  int binaryFormat, boolean debug, int format) 
-			throws ParserException, LexerException, IOException {
+			throws ParserException, LexerException, IOException, XMLStreamException {
+		
+		return convertToXMLDOM(
+				net.sf.cb2xml.Cb2Xml3
+					.newBuilder(reader, name),
+				binaryFormat, debug, format);
+	}
+
+
+	private static Document convertToXMLDOM(ICb2XmlBuilder bldr, int binaryFormat, boolean debug, int format) 
+			throws ParserException, LexerException, IOException, XMLStreamException {
 		
 		Convert conv = ConversionManager.getInstance().getConverter4code(binaryFormat) ;
+		bldr
+			.setDebug(debug)
+			.setCobolLineFormat(format)
+			.setLoadComments(false)
+			.setXmlFormat(Cb2xmlConstants.Cb2xmlXmlFormat.CLASSIC)
+			.setDialect(conv);
 	
-		CopyBookAnalyzer.setNumericDetails((NumericDefinition) conv.getNumericDefinition());
-		return net.sf.cb2xml.Cb2Xml2.convert(reader, name, debug, format);
+		return Cb2Xml2.bldrToDocument(bldr);	
+	}
+
+
+
+
+	public static Copybook getCopybook(Reader reader, String name,  int binaryFormat, boolean debug, int format) 
+			throws ParserException, LexerException, IOException, XMLStreamException {
+		Convert conv = ConversionManager.getInstance().getConverter4code(binaryFormat) ;
+		synchronized (SYNC) {
+			return net.sf.cb2xml.Cb2Xml3
+					.newBuilderJRec(reader, name)
+							.setDebug(debug)
+							.setCobolLineFormat(format)
+							.setLoadComments(false)
+							.setDialect(conv)
+						.asCobolItemTree();
+			
+		}
 	}
 
 }

@@ -25,7 +25,7 @@
       
 package net.sf.JRecord.Common;
 
-import net.sf.JRecord.definitiuons.CsvCharDetails;
+import net.sf.JRecord.detailsBasic.CsvCharDetails;
 
 /**
  * <p>A minimal <i>File Schema</i> definition. It provides a
