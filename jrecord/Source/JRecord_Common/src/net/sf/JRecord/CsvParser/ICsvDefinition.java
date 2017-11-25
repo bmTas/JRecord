@@ -25,7 +25,7 @@
       
 package net.sf.JRecord.CsvParser;
 
-import net.sf.JRecord.definitiuons.CsvCharDetails;
+import net.sf.JRecord.detailsBasic.CsvCharDetails;
 
 public interface ICsvDefinition {
 

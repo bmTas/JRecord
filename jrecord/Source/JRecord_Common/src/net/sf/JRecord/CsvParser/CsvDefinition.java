@@ -29,7 +29,7 @@
 package net.sf.JRecord.CsvParser;
 
 import net.sf.JRecord.Common.Conversion;
-import net.sf.JRecord.definitiuons.CsvCharDetails;
+import net.sf.JRecord.detailsBasic.CsvCharDetails;
 
 /**
  * @author mum
