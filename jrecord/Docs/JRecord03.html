@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML><HEAD>
+<TITLE>JRecord</TITLE>
+<!-- Begin Header Records  ========================================== -->
+<!-- E:\Work\JRecord\JRecord\Docs1\JRecord.dcf converted by B2H R4.7  -->
+<!-- (390) (WINNT) on 17 Mar 2011 at 12:24:36                         -->
+<META HTTP-EQUIV="updated" CONTENT="Thu, 17 Mar 2011 09:50:55">
+<META HTTP-EQUIV="review" CONTENT="Sat, 17 Mar 2012 09:50:55">
+<META HTTP-EQUIV="expires" CONTENT="Sun, 17 Mar 2013 09:50:55">
+<LINK href="tab.css" type=text/css rel=stylesheet>
+<LINK href="tab.css" type=text/css rel=stylesheet>
+<link rel="stylesheet" type="text/css" href="syntax.css">
+</HEAD><BODY>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+ <TR vAlign=top height=110><TD>
+  <h1><A href="http://sourceforge.net/projects/jrecord"> <IMG src="http://sourceforge.net/sflogo.php?group_id=139274&amp;type=5" width="210" height="62" border="0" alt="SourceForge.net Logo" /></A>&nbsp;&nbsp;&nbsp;JRecord</h1>
+  <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+    <TR vAlign=top>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord02.html">JRecord</A></DIV></TD>
+      <TD align=middle><DIV id=activeTab>File Formats</DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord04.html">Java Examples</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord05.html">Record Layouts</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord06.html">Layout Wizard</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord07.html">Editor</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord08.html">Diff Utility</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord09.html">Reporting</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord10.html">Record Editor</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord11.html">Related</A></DIV></TD>
+<TD align=right width="80%"></TD></tr>
+<tr id=dark><td/><td/><td/><td/><td/><td/><td/><td/><td/><td/><td/><TD>&nbsp;</td></tr>
+</TBODY></table></TD> </TR></table>
+<!-- End Header Records  ============================================ -->
+<A NAME="Top_Of_Page"></A>
+<HR><H2><A NAME="Header_6">File Formats</A></H2>
+<P>As well as supporting the standard files (where some line terminator [Unix: /n])
+denotes the end of the line. This package can support other formats (normally length based lines).
+<P>Length based files have 2 advantages over typical unix/windows text files:
+<OL COMPACT TYPE=1>
+ <LI>When reading, you do not need to check every byte in the file for a &lt;CR&gt;. For a 600 byte line
+you are probably executing 1800 instructions per line to work out the length. With a length based
+file it it will be a couple of instructions,
+ <LI>Ideal for storing binary data - Saves the conversion cost of converting numbers
+between text & Binary (in 3rd generation languages like C and Cobol).
+</OL>
+<P>
+<P><H3><A NAME="Header_7">Formats Currently Supported</A></H3>
+<UL COMPACT>
+ <LI>Standard Unix/Windows/Mac lines.
+ <LI>Fixed Record Length (ie every record is the same fixed length.
+ <LI>Mainframe VB (was also used on other computers as well) - 2 Byte length at the start of the line + two byte hex zero.
+ <LI>Mainframe VB Dump (sames as VB but also including the the Block Discriptor Word).
+ <LI>Fujitsu Cobol VB format. 4 byte length at the start and end of the line.
+</UL>
+<P>&nbsp;<p>
+<TABLE width="100%"><tr>
+<td width="34%" id=dark><a id=dark href="http://sourceforge.net/projects/jrecord/">JRecord at SourceForge</a></td>
+<td width="33%" id=dark><a id=dark href="http://sourceforge.net/projects/jrecord/files/jrecord/">Download Page</a></td>
+<td id=dark><a id=dark href="http://sourceforge.net/projects/jrecord/forums">Forums</a></td>
+</tr></TABLE>
+<P>
+<A NAME="Bot_Of_Page"></A>
+</BODY></HTML>

@@ -1,0 +1,134 @@
+BODY, TD, TH, P, A, DIV, LI, UL
+{
+    COLOR: black;
+    FONT-FAMILY:  Verdana, Tahoma, Arial, Helvetica, sans-serif;
+    FONT-SIZE: 12px
+}
+H1{
+	COLOR: #993300;
+	FONT-FAMILY:  Verdana, Tahoma, Arial, Helvetica, sans-serif;
+	FONT-SIZE: 16px;
+    TEXT-DECORATION: none;
+    font-weight : bold;
+}
+H2{
+	COLOR: #993300;
+	FONT-FAMILY:  Verdana, Tahoma, Arial, Helvetica, sans-serif;
+	FONT-SIZE: 14px;
+    TEXT-DECORATION: none;
+    font-weight : bold;
+}
+H3{
+	COLOR: #993300;
+	FONT-FAMILY:  Verdana, Tahoma, Arial, Helvetica, sans-serif;
+	FONT-SIZE: 12px;
+    TEXT-DECORATION: none;
+    font-weight : bold;
+}
+H4{
+	COLOR: #993300;
+	FONT-FAMILY:  Verdana, Tahoma, Arial, Helvetica, sans-serif;
+	FONT-SIZE: 12px;
+    TEXT-DECORATION: none;
+    font-weight : bold;
+	font-style : italic;
+}
+A {
+	color: navy;
+    FONT-FAMILY:  Verdana, Tahoma, Arial, Helvetica, sans-serif;
+    TEXT-DECORATION: none
+}
+A:hover {
+	color: #993300;
+    TEXT-DECORATION: underline
+}
+A.menu2 {font-weight: bold;}
+A.menu3 {}
+.topMenu {COLOR: white; font-weight: bold;}
+.topMenu:hover {COLOR: #ff9900;}
+A.bottMenu{FONT-SIZE: 10px;}
+.pagePath{
+    COLOR: black;
+    FONT-SIZE: 10px;
+    FONT-WEIGHT: bold;
+}
+.pagePathLink{
+    COLOR: #993300;
+    FONT-SIZE: 14px;
+    FONT-WEIGHT: bold;
+    TEXT-DECORATION: none
+}
+.pagePathLink:hover{
+    COLOR: navy;
+    TEXT-DECORATION: underline
+}
+.fixed{
+    font-family : "Courier New", Courier, monospace;
+	font-size: 12px;
+}
+.boxTop{
+    BACKGROUND-COLOR: #993300;
+	COLOR: #ff9900;
+    FONT-SIZE: 12px;
+    FONT-WEIGHT: bold;
+	text-align:center;
+}
+.text
+{
+	line-height : 16px;
+	text-align:justify;
+}
+
+.menuLeft
+{
+	padding: 0px 0px 0px 5px;
+}
+
+.menu2Header
+{
+    COLOR: #993300;
+    FONT-SIZE: 14px;
+    TEXT-DECORATION: none;
+    font-weight : bold;
+	padding: 8px 0px 10px 5px;
+}
+
+.menu2Desc
+{
+    COLOR: black;
+    FONT-SIZE: 8px;
+    TEXT-DECORATION: none;
+	padding: 0px 0px 10px 10px;
+}
+
+.menuVertHeader
+{
+    FONT-SIZE: 14px;
+    TEXT-DECORATION: none;
+    font-weight : bold;
+	padding: 0px 0px 5px 0px;
+}
+
+.menuVertDesc
+{
+	padding: 0px 0px 5px 10px;
+}
+UL.woBullet LI {
+    font-family : "Courier New", Courier, monospace;
+	list-style : none;
+	text-indent : -32px;
+}
+.newsDate{
+	font-weight : bold;
+}
+
+.code {
+	border : 1 solid Gray;
+	background-color : #F3F3F3;
+	width:100%;
+}
+
+TABLE.code  TR TD{
+	font-family : "Courier New", Courier, monospace;
+
+}

@@ -1,0 +1,95 @@
+:p.The :hp2.Cobol2Xml:ehp2. and :hp2.Xml2Cobol:ehp2. are now in a separate project - :CobolToXml..
+You can download the programs / documentation from :CobolToXml..
+:p.The :RecordEditor. can now generate Cobol2Xml bat/shell scripts, see :reCobolToXml.
+
+
+:p.The programs :hp2.Data2Xml:ehp2. and :hp2.Xml2Data:ehp2. will convert Cobol Data files to/from Xml.
+It makes sense to use this interface if&gml.
+:ul compact.
+ :li.You already process Xml files and are compfortable working with Xml.
+ :li.You want to work in a non-JVM language (e.g. C#, pyhton etc).
+:eul.
+
+
+:h3.Program Options for Data2Xml and Xml2Data
+
+.*b2h html <p></p><pre> 
+.*b2h html           <font color="blue">-cobol	</font>- Cobol  copybook used to "interpret" the data (you must supply either a cobol or cb2xml copybook
+.*b2h html           <font color="blue">-cb2xml	</font>- Cb2xml copybook used to "interpret" the data
+.*b2h html             
+.*b2h html           <font color="blue">-input	</font>- Input file
+.*b2h html           <font color="blue">-output	</font>- Output file
+.*b2h html           <font color="blue">-font  	</font>- Characterset used in the Cobol data file (e.g. IBM037 for US-EBCIDIC)
+.*b2h html
+.*b2h html           <font color="blue">-dropCopybookName	</font>- (true/false) wether to drop the cobol copybook name from the start of the Xml Tags
+.*b2h html
+.*b2h html           <font color="blue">-mainXmlTag     	</font>- The outermost Xml tag to use (default coboldata)    
+.*b2h html           
+.*b2h html           <font color="blue">-tagFormat     	</font>- How Cobol Variable names are reformated to Xml tags:
+.*b2h html                <b>Asis    	</b>- Use the Cobol Variable name
+.*b2h html                <b>Underscore	</b>- Convert - to _,         COBOL-VAR-NAME ==> COBOL_VAR_NAME
+.*b2h html                <b>CamelCase	</b>- Convert to Camel Case,  COBOL-VAR-NAME ==> cobolVarName
+.*b2h html                              	
+.*b2h html           <font color="blue">-fileOrganisation	</font>- "file organization" of the Cobol data file
+.*b2h html		<b>Text    	</b>- Standard Windows/Unix text file (single byte character-set)
+.*b2h html		<b>FixedWidth	</b>- File where lines (records) are the same length no \n                                          
+.*b2h html		<b>Mainframe_VB	</b>- Mainframe VB, file consists of &lt;record-length&gt;&lt;record-data&gt;
+.*b2h html		<b>GNUCobol_VB	</b>- GNU Cobol VB, file consists of &lt;record-length&gt;&lt;record-data&gt;
+.*b2h html
+.*b2h html           <font color="blue">-dialect	</font>- Cobol Dialect
+.*b2h html		<b>Mainframe	</b>- Mainframe cobol
+.*b2h html		<b>Futjitsu	</b>- Fujitsu PC cobol
+.*b2h html		<b>GNUCobol	</b>- GNU Cobol (little endian, ie intel)
+.*b2h html		<b>GNUCobolBE	</b>- GNU Cobol (big endian, ie IBM, Sun(oracle))
+.*b2h html
+.*b2h html          <font color="blue">-split	</font>- Option for Splitting Copybook into seperate records 
+.*b2h html		<b>None   	</b>- No Split
+.*b2h html		<b>01     	</b>- Split on 01
+.*b2h html		<b>Highest	</b>- On Highest Repeating
+.*b2h html
+.*b2h html          <font color="blue">-recordSelection	</font>- Record Selection, can be used multiple time, 
+.*b2h html                                format: <b>-recordSelection RecordName field=value</b>
+.*b2h html
+.*b2h html          <font color="blue">-recordParent   	</font>- Record Parent, can be used multiple time, 
+.*b2h html                               format: <b>-recordParent    RecordName ParentRecord</b>
+.*b2h html </pre>
+
+:h3.Calling Cobol2Xml from the shell
+:p.To convert a cobol file to Xml&gml.   
+
+.*b2h html <pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">21 </font></span><font color="#cc0000">#</font><font color="#cc0000">#</font><font color="#cc0000"> </font><font color="#cc0000"> </font><font color="#cc0000"> </font><font color="#cc0000">Multi</font><font color="#cc0000"> </font><font color="#cc0000">Record</font><font color="#cc0000"> </font><font color="#cc0000">File</font><font color="#cc0000"> </font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">22 </font></span>java -cp ../cb2xml.jar:../JRecord.jar:../Cobol2Xml.jar   net.sf.JRecord.cbl2xml.Data2Xml -cobol amsPoDownload.cbl -fileOrganisation text  \
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">23 </font></span>                                 -split <font color="#ff0000">01</font> \
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">24 </font></span>                                 -recordSelection PO-Record       Record-<font color="#009966"><strong>Type</strong></font><font color="#000000"><strong>=</strong></font>H1 \
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">25 </font></span>                                 -recordSelection Product-Record  Record-<font color="#009966"><strong>Type</strong></font><font color="#000000"><strong>=</strong></font>D1 \
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">26 </font></span>                                 -recordSelection Location-Record Record-<font color="#009966"><strong>Type</strong></font><font color="#000000"><strong>=</strong></font>S1 \
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">27 </font></span>                             -input  <font color="#006699"><strong>in</strong></font>/Ams_PODownload_20041231.txt   \
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">28 </font></span>                             -output out/Ams_PODownload_20041231_bat_Flat.xml 
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">29 </font></span>
+.*b2h html </font></pre>                    
+                    
+                                                                                       
+:h3.Calling Cobol2Xml from Java
+You can run the Cobol <==> Xml process via the following methods of :Cobol2Xml. class&gml.
+
+.*b2h html <pre>                                         
+.*b2h html    Cobol2Xml.<font color="#9966ff">newCobol2Xml</font><font color="#000000"><strong>(</strong></font>CobolCopybook<font color="#000000"><strong>)</strong></font>
+.*b2h html    Cobol2Xml.<font color="#9966ff">newCobol2Xml</font><font color="#000000"><strong>(</strong></font>CobolCopybookInputStream, Copybook name<font color="#000000"><strong>)</strong></font>
+.*b2h html    Cobol2Xml.<font color="#9966ff">newCb2Xml2Xml</font><font color="#000000"><strong>(</strong></font>Cb2xmlCopybook<font color="#000000"><strong>)</strong></font>
+.*b2h html    Cobol2Xml.<font color="#9966ff">newCb2Xml2Xml</font><font color="#000000"><strong>(</strong></font>Cb2xmlCopybookInputStream, CopybookName<font color="#000000"><strong>)</strong></font>
+.*b2h html      
+.*b2h html </pre>
+
+:p.A sample :Cobol2Xml. call in java&gml.
+
+.*b2h html <pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   1 </font></span>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   2 </font></span>    Cobol2Xml.<font color="#9966ff">newCobol2Xml</font><font color="#000000"><strong>(</strong></font>opts.cobolCopybook<font color="#000000"><strong>)</strong></font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   3 </font></span>                  .<font color="#9966ff">setFont</font><font color="#000000"><strong>(</strong></font>opts.font<font color="#000000"><strong>)</strong></font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   4 </font></span>                  .<font color="#9966ff">setFileOrganization</font><font color="#000000"><strong>(</strong></font>opts.fileOrganisation<font color="#000000"><strong>)</strong></font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">   5 </font></span>                  .<font color="#9966ff">setDialect</font><font color="#000000"><strong>(</strong></font>opts.dialect<font color="#000000"><strong>)</strong></font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   6 </font></span>                  .<font color="#9966ff">setDropCopybookNameFromFields</font><font color="#000000"><strong>(</strong></font>opts.dropCopybookName<font color="#000000"><strong>)</strong></font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   7 </font></span>                  .<font color="#9966ff">setXmlMainElement</font><font color="#000000"><strong>(</strong></font>opts.mainXmlTag<font color="#000000"><strong>)</strong></font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   8 </font></span>             .<font color="#9966ff">cobol2xml</font><font color="#000000"><strong>(</strong></font>opts.inputFile, opts.outputFile<font color="#000000"><strong>)</strong></font>;
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   9 </font></span>
+.*b2h html </font></pre>
+

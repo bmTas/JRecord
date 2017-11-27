@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML><HEAD>
+<TITLE>JRecord</TITLE>
+<!-- Begin Header Records  ========================================== -->
+<!-- E:\Work\JRecord\JRecord\Docs1\JRecord.dcf converted by B2H R4.7  -->
+<!-- (390) (WINNT) on 17 Mar 2011 at 12:24:36                         -->
+<META HTTP-EQUIV="updated" CONTENT="Thu, 17 Mar 2011 09:50:55">
+<META HTTP-EQUIV="review" CONTENT="Sat, 17 Mar 2012 09:50:55">
+<META HTTP-EQUIV="expires" CONTENT="Sun, 17 Mar 2013 09:50:55">
+<LINK href="tab.css" type=text/css rel=stylesheet>
+<LINK href="tab.css" type=text/css rel=stylesheet>
+<link rel="stylesheet" type="text/css" href="syntax.css">
+</HEAD><BODY>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+ <TR vAlign=top height=110><TD>
+  <h1><A href="http://sourceforge.net/projects/jrecord"> <IMG src="http://sourceforge.net/sflogo.php?group_id=139274&amp;type=5" width="210" height="62" border="0" alt="SourceForge.net Logo" /></A>&nbsp;&nbsp;&nbsp;JRecord</h1>
+  <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+    <TR vAlign=top>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord02.html">JRecord</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord03.html">File Formats</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord04.html">Java Examples</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord05.html">Record Layouts</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord06.html">Layout Wizard</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord07.html">Editor</A></DIV></TD>
+      <TD align=middle><DIV id=activeTab>Diff Utility</DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord09.html">Reporting</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord10.html">Record Editor</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord11.html">Related</A></DIV></TD>
+<TD align=right width="80%"></TD></tr>
+<tr id=dark><td/><td/><td/><td/><td/><td/><td/><td/><td/><td/><td/><TD>&nbsp;</td></tr>
+</TBODY></table></TD> </TR></table>
+<!-- End Header Records  ============================================ -->
+<A NAME="Top_Of_Page"></A>
+<HR><H2><A NAME="Header_47">Diff Utility</A></H2>
+<P>
+<P>The <B>diff</B> will compare 2 files field by field. Where it differs from most other
+File Compare's is
+<UL>
+  <P><LI>It compares Field to Field (rather that file to file) - this allows files of different formats to be compared.
+i.e. Binary files can be compared to CSV or XML files
+  <P><LI>Only the fields you select to be compared are Compared.
+  <P><LI>Data is displayed as seperate fields.
+</UL>
+<P>
+<P><H3><A NAME="Header_48">When to use JRecord Diff</A></H3>
+<P>Cases where you might use this particular File Compare include&#58;
+<OL TYPE=1>
+  <P><LI>Changing a program and only a couple of fields are changed. You can compare the file
+from the current production program with the file from the new program and exclude
+the changed fields from the Compare. There should be no difference, this will confirm no unintentional changes where made.
+   <P><LI>Changing a program and adding fields - Compare fields in the Production file with the equivalent
+fields in the new File (ignore the new fields). Should be the same.
+  <P><LI>Compare a programs input (Could be a Database Extract) with the Output file.
+</OL>
+<P><H3><A NAME="Header_49">Diff Program</A></H3>
+<P>When you start the diff program, a menu is displayed with 3 options&#58;
+<OL COMPACT TYPE=1>
+ <LI>Run stored Compare. Allows you to rerun a previously setup compare.
+ <LI>Compare Single Layout. This is used to compare to files in the same format (i.e. uses the same Record Layout).
+ <LI>Compare Different Layouts. This is used to compare the data in files of different formats
+</OL>
+<P>
+<img SRC="Diagram/SL_diff0.png">
+<P>
+<P><H4><A NAME="Header_50">Compare (Single Layout)</A></H4>
+<P>
+<P>The first screen lets you enter the 2 files to be compared + the record
+layout to be used.
+<P>
+<img SRC="Diagram/SL_diff1.png">
+<P>
+<P>The next screen lets you select which Records / Fields are to be compared
+<P>
+<img SRC="Diagram/SL_diff2.png">
+<P>
+<P>
+<P>The next screen lets you:
+<UL COMPACT>
+ <LI>Save the compare options to an external file (as XML). This file can be
+rerun in compare option 1.
+ <LI>Run the compare and show the results on the screen.
+ <LI>Enter HTML options (i.e. enter HTML file name etc).
+ <LI>Run the compare and write the results to a HTML file.
+</UL>
+<P>
+<img SRC="Diagram/SL_diff3.png">
+<P>
+<P>If you run the option online; the first screen lists all differences in a
+single table. You can switch between displaying all / changed lines using the button
+on the top right of the screen.
+<P>You can select a single line display by clicking on the button on the left hand
+side of the screen.
+<P>See
+<a href="Cmp_amsPo_1.html">Cmp_amsPo_1.html</a> for a sample HTML compare
+<P>
+<img SRC="Diagram/SL_diff4.png">
+<P>
+<P><B>Note: </B> <I>Green</I> means changed line, <I>Blue</I> is for deleted line and <I>Yellow</I>
+is for inserted line.
+<BR>
+<P>If you select a single line display, you will get (click the left most column
+of the screen above):
+<P>
+<img SRC="Diagram/SL_diff5.gif">
+<P>
+<P><H4><A NAME="Header_51">Compare (Two Layout)</A></H4>
+<P>
+<P>When comparing files in different formats (i.e. 2 different layouts), select
+option 3 from the compare main menu. The files can be quite different formats. One could
+be native mainframe Binary file and the other a PC CSV file. It the data in the fields
+that is compared.
+<P>The first 2 screens look like the following and you enter the 2 files and there record layouts.
+<P>
+<img SRC="Diagram/TL_Diff1.png">
+<P>
+<P>Following is the field selection where you match the fields up:
+<P>
+<img SRC="Diagram/TL_Diff3.png">
+<P>
+<P>
+<P>
+<P>The next screen lets you:
+<UL>
+ <P><LI>Save the compare options to an external file (as XML). This file can be
+rerun in compare option 1.
+ <P><LI>Run the compare and show the results on the screen.
+ <P><LI>Enter HTML options (i.e. enter HTML file name etc).
+ <P><LI>Run the compare and write the results to a HTML file.
+</UL>
+<P>
+<P>
+<img SRC="Diagram/SL_diff3.png">
+<P>
+<P>
+<P>
+<P>&nbsp;<p>
+<TABLE width="100%"><tr>
+<td width="34%" id=dark><a id=dark href="http://sourceforge.net/projects/jrecord/">JRecord at SourceForge</a></td>
+<td width="33%" id=dark><a id=dark href="http://sourceforge.net/projects/jrecord/files/jrecord/">Download Page</a></td>
+<td id=dark><a id=dark href="http://sourceforge.net/projects/jrecord/forums">Forums</a></td>
+</tr></TABLE>
+<A NAME="Bot_Of_Page"></A>
+</BODY></HTML>

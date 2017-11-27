@@ -1,0 +1,38 @@
+.fo off
+
+.*b2h html &nbsp;&nbsp;&nbsp;<font color="blue">Basically to call Cobol2Csv / Csv2Cobol</font>
+     java -jar Cobol2Csv <program arguments>
+ 
+     java -jar Csv2Cobol <program arguments>
+     
+.*b2h html &nbsp;&nbsp;&nbsp;<font color="blue">or</font>
+
+     Cobol2Csv.bat/sh <program arguments>
+ 
+     Csv2Cobol.bat/sh <program arguments>
+
+.*b2h html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;------------------------------------------------------------------------------</font>
+     
+.*b2h html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="blue">Copy a fixed length Mainframe file to a Tab delimited File </font>     
+     java -jar ../lib/Cobol2Csv.jar \
+                  -C DTAR020.cbl  -FS Fixed_Length    -IC CP037 \
+                  -Q DoubleQuote  -D tab \
+                  -I in/DTAR020.bin  -O out/o_DTAR020_a.csv
+
+.*b2h html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="blue">Copy a Line-Sequential (ordinary Text) file to a : delimited File 
+.*b2h html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with _'s instead of -'s in the column names </font>     
+     java -jar ../lib/Cobol2Csv.jar  -C Test2.cbl  -FS Text \  
+                  -D : -Rename Change_Minus_To_Undescore \
+                  -I in/Test2.txt  -O out/o_Test2-rb.csv
+
+.*b2h html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="blue">Convert a <i>Csv</i> file back into a <i>Fixed Width Mainframe Cobol Data</i> file</font>
+     java -jar ../lib/Csv2Cobol.jar ^
+                               -C G:/Users/Bruce01/RecordEditor_HSQL/Copybook/Cobol/DTAR020.cbl ^
+                               -Delimiter , ^
+                               -OFS Fixed_Length ^
+                               -OC cp037 ^
+                               -I out/DTAR020.bin.csv ^
+                               -O out/DTAR020.fromCsv.bin
+                  
+.fo on         
+

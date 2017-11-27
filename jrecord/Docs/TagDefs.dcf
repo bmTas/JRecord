@@ -1,0 +1,64 @@
+.*B2H SYMBOL :tag. example   IT=N VAT=N ATT=N SE=N V='<a href=xmple.htm>RecordEditor Examples</a>'
+.*B2H SYMBOL :tag. RecordEditor   IT=N VAT=N ATT=N SE=N V='<a href="http://record-editor.sourceforge.net" TARGET="_top">RecordEditor</a>'
+.*B2H SYMBOL :tag. JRecord   IT=N VAT=N ATT=N SE=N V='<a href="https://sourceforge.net/projects/jrecord">JRecord</a>'
+.*B2H SYMBOL :tag. cb2xml   IT=N VAT=N ATT=N SE=N V='<a href="https://sourceforge.net/projects/cb2xml">cb2xml</a>'
+.*B2H SYMBOL :tag. CobolToXml   IT=N VAT=N ATT=N SE=N V='<a href="https://sourceforge.net/projects/coboltoxml">CobolToXml</a>'
+.*B2H SYMBOL :tag. CobolToCsv   IT=N VAT=N ATT=N SE=N V='<a href="https://sourceforge.net/projects/coboltocsv">CobolToCsv</a>'
+.*B2H SYMBOL :tag. reCobolToXml   IT=N VAT=N ATT=N SE=N V='<a href="http://coboltoxml.sourceforge.net/wCbl2X05.htm">RecordEditor - Generate CobolToXml</a>'
+.*B2H SYMBOL :tag. reCobolToCsv   IT=N VAT=N ATT=N SE=N V='<a href="http://coboltocsv.sourceforge.net/wCbl2C05.htm">RecordEditor - Generate CobolToCsv</a>'
+.*B2H SYMBOL :tag. RecEdit   IT=N VAT=N ATT=N SE=N V='<b>RecordEditor</b>'
+.*B2H SYMBOL :tag. Velocity   IT=N VAT=N ATT=N SE=N V='<a href="http://velocity.apache.org/" TARGET="Velocity">Velocity</a>'
+.*B2H SYMBOL :tag. PropertiesEditor   IT=N VAT=N ATT=N SE=N V='<font color="blue">Edit RecordEditor Startup Properties</font> program'
+.*B2H SYMBOL :tag. Cobol2Xml   IT=N VAT=N ATT=N SE=N V='<font color="blue">Cobol2Xml</font>'
+.*B2H SYMBOL :tag. Cobol2Csv   IT=N VAT=N ATT=N SE=N V='<font color="blue">Cobol2Csv</font>'
+.*B2H SYMBOL :tag. CobolToJson IT=N VAT=N ATT=N SE=N V='<a href="https://sourceforge.net/projects/jrecord">CobolToJson (subproject of JRecord)</a>'
+.*B2H SYMBOL :tag. RecordEditGen  IT=N VAT=N ATT=N SE=N V='<a href="http://record-editor.sourceforge.net/RecordEditorGenerate.htm">RecordEditor CodeGen</a>'
+
+.*B2H SYMBOL :tag.  Blue  IT=N VAT=N ATT=N SE=Y V='<font color="blue">'
+.*B2H SYMBOL :tag. EBlue  IT=N VAT=N ATT=N SE=Y V='</font>'
+.*B2H SYMBOL :tag.  Red  IT=N VAT=N ATT=N SE=Y V='<font color="red">'
+.*B2H SYMBOL :tag. ERed  IT=N VAT=N ATT=N SE=Y V='</font>'
+
+.*B2H SYMBOL :tag.  BBlue  IT=N VAT=N ATT=N SE=Y V='<font color="blue"><b>'
+.*B2H SYMBOL :tag. EBBlue  IT=N VAT=N ATT=N SE=Y V='</b></font>'
+
+.*B2H SYMBOL :tag.  BGreen  IT=N VAT=N ATT=N SE=Y V='<font color="green"><b>'
+.*B2H SYMBOL :tag. EBGreen  IT=N VAT=N ATT=N SE=Y V='</b></font>'
+
+.*B2H SYMBOL :tag.  BackgroundYellow IT=N VAT=N ATT=N SE=Y V='<span style="background-color&gml.#FFF0CC"><b>'
+.*B2H SYMBOL :tag. EBackgroundYellow IT=N VAT=N ATT=N SE=Y V='</b></span>'
+
+.*B2H SYMBOL :tag.  yellow  IT=N VAT=N ATT=N SE=Y V='<font color="yellow"><b>'
+.*B2H SYMBOL :tag. eyellow  IT=N VAT=N ATT=N SE=Y V='</b></font>'
+
+.*B2H SYMBOL :tag.  BRed   IT=N VAT=N ATT=N SE=Y V='<font color="red"><b>'
+.*B2H SYMBOL :tag. EBRed   IT=N VAT=N ATT=N SE=Y V='</b></font>'
+
+.*B2H SYMBOL :TAG.  Pnl IT=N VAT=N ATT=Y SE=N V='<Table border="3" cellpadding="7" cellspacing="3"><tr><TD BGCOLOR="#000000"><FONT COLOR="#00ff00"><pre>'
+.*B2H SYMBOL :TAG.  ePnl IT=N VAT=N ATT=Y SE=N V='</pre></font></td></tr></pre></table>'
+
+.dm relink on
+.*B2H html <P>&nbsp;<p>
+.*B2H html <TABLE width="100%"><tr>
+.*B2H html <td width="34%" id=dark><a id=dark href="http://sourceforge.net/projects/record-editor/">RecordEditor at SourceForge</a></td>
+.*B2H html <td width="33%" id=dark><a id=dark href="http://sourceforge.net/projects/record-editor/files/">Download Page</a></td>
+.*B2H html <td id=dark><a id=dark href="http://sourceforge.net/projects/record-editor/forums">Forums</a></td>
+.*B2H html </tr></TABLE>
+.dm off
+.*B2H SYMBOL :tag. rlink   IT=N VAT=N ATT=N SE=N V='.relink'
+.dm pict on
+.*b2h HTML <img SRC="Diagram/&*">
+.dm off
+
+.dm example on
+  :ol compact.
+    :li.Adding new Types
+.*b2h html (see <a href="file:Example.htm#HDRTYPE" target="new">Type Example</a>)           
+    :li.Reading Record Orientated files using the Standard RecordEditor Layouts and Cobol Copybooks.
+.*b2h html (see <a href="file:Example.htm#HDRXLIO1" target="new">File IO Example</a>) 
+    :li.Interfacing to 
+.*b2h HTML <a href="http://jakarta.apache.org/velocity/">Velocity</a>.  See also <a href="file:Example.htm#HDRVELOCITY" target="new">Velocity Example</a>
+    :li.Running directly from Cobol Copybooks
+.*b2h html (see <a href="file:Example.htm#HDRCOPYBOOK" target="new">Cobol Copybook Example</a>)           
+  :eol.
+.dm off

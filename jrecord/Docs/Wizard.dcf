@@ -1,0 +1,132 @@
+.dm pict on
+.*b2h HTML <img SRC="Diagram/&*">
+.dm off
+:h3.Layout Wizard
+:p.The :hp1.Record Layout Wizard:ehp1. guides you through creating a 
+:hp2.record layout:ehp2. using a file as the basis. On all the wizard screens, 
+you can use Left and Right Arrow buttons (at the bottom of the screen) to move between the
+screens. There are 2 basic groups of Screens:
+:dl.
+ :dt.Fixed Width
+ :dd.Screens for defining Fixed field width Files. See :hdref refid=wiz2. and :hdref refid=wiz3..
+ :dt.CSV
+ :dd.Screens for defining a CSV file. See :hdref refid=wiz4. and :hdref refid=wiz5.
+:edl.
+
+:h4.File Screen
+:p.On the file screen you enter file details and the name of
+the :hp2.record layout:ehp2. being created. The field :hp2.Record Types:ehp2.
+determines wether you travel down the :hp2.Fixed Width:ehp2. route (:hdref refid=wiz1a., :hdref refid=wiz2. and :hdref refid=wiz3.)
+screens or the :hp2.CSV:ehp2. route ( :hdref refid=wiz4. and :hdref refid=wiz5.).
+
+.pict layout_wizard1.png
+
+:p.Fields on the window are&gml.
+:dl.
+ :dt.File Name
+ :dd.Name of the file you are building a layout for
+ :dt.File Structure
+ :dd.How the file is organised. If you are using Standard Windows / Linux Text files
+:hp2.leave it as Default Reader:ehp2.
+ :dt.Record Type
+ :dd.This is where your specify wether it is a :BBlue.Fixed Width Single Record:EBBlue., :BBlue.Fixed Width Multi Record:EBBlue., or a :BBlue.CSV:EBBlue. file.
+It also determines wether you see the Fixed Width screens :hdref refid=wiz1a., :hdref refid=wiz2. and :hdref refid=wiz3.
+or the CSV Screens :hdref refid=wiz4. and :hdref refid=wiz5..
+ :dt.Font Name
+ :dd.Font Name of the file (e.g. CP037 for US Ebcidic Characters).
+ :dt.Default Type
+ :dd.What Types Fields to initially assign to a field.
+:edl.
+
+:h4 id=wiz1a.File Structure screen
+:p.This screen is only displayed when&gml.
+:ul compact.
+ :li.File Structure is Fixed width or unknown
+ :li.Looks like a binary Variable Length file.
+:eul.
+:p.The purpose of the screen to determine the file structure for binary files.
+
+.pict layout_wizard1a.png
+
+:p.Fields
+:dl.
+ :dt.File Structure
+ :dd.How the file is organised. 
+ :dt.Length
+ :dd.Record Length for a fixed width file. You can also set the length by clicking
+on the record start in the table below.
+:dt.Font Name
+ :dd.Font Name of the file (e.g. CP037 for US Ebcidic Characters).
+:edl.
+
+:h4 id=wiz2.Field Position screen
+:p.The second screen displays the file with the fields in alternating background colors.
+:p.To create a new field, click on the first column of the field.
+:p.To remove a field, click on the first column again
+
+.pict layout_wizard2.png
+
+:h4 id=wiz3.Field Definition screen
+:p.The final screen is for defining the field names and field types.
+:p.Once all the fields have been defined, click on the right arrow button
+to define the new layout.
+
+.pict layout_wizard3.png
+
+:h4.Save Screen
+:p.Final screen lets you specify the output directory, Output file and the Output Format. I would suggest
+using :hp2.RecordEditor XML:ehp2.
+
+.pict layout_wizard6.png
+
+:h4 id=wiz4.CSV Details
+:p.On this screen you specify the basic CSV file structure (i.e. field separator; quotes). 
+
+.pict layout_wizard4.png
+
+:p.Fields on the Screen
+:dl.
+ :dt.Field Separator
+ :dd.Field used to mark the end of one field and the start of the next
+ :dt.Quote Character
+ :dd.Quote character used to surround Text Fields
+ :dt.Parser
+ :dd.Parser used to split lines up into fields. For most files, the :hp2.Basic Parser:ehp2. is the best to use.
+But the three parsers provided are&gml.
+    :dl.
+      :dt.Basic Parser
+      :dd.If Field starts with a Quote, it looks for a <Quote><Separator>. It will fail if a field contains <quote><Separator>
+      :dt.Matching Quotes
+      :dd.For every opening Quote, It looks for a matching closing Quote.
+      :dt.Quotes based on fields
+      :dd.This is an extension of :hp2.Matching Quotes:ehp2.. For this type of Parser
+all text fields will always get quotes around them. This is programs that are very picky
+about having Quotes around Text fields, Dates (in particular some Databases).
+    :edl.
+ :dt.Fields on First Line
+ :dd.Indicates wether the first line of the file holds the field names.
+:edl.
+
+
+:h4 id=wiz5.CSV Field Definition
+
+:p.This screen is used to define the fields (columns) in the file.
+
+.pict layout_wizard5.png
+
+
+:h3.Convert Layout
+:p.Also with :hp2.Layout Wizard:ehp2. is the :hp2.Convert Layout:ehp2. utility. It can convert
+a Layout from one format (say Cobol) to XML. It can also read a sample XML file and write
+a layout for it.
+
+:p.Following is how to convert a Cobol Copybook to XML. Note: :hp2.Input Copybook:ehp2. is filled in and
+:hp2.Copybook Type:ehp2. is set to Cobol.
+
+.pict Convert_1.GIF
+
+:p.To build a layout for a XML file. Note: :hp2.Sample File:ehp2. is filled in with a XML file and
+:hp2.Copybook Type:ehp2. is set to XML.
+
+.pict Convert_2.GIF
+

@@ -1,0 +1,37 @@
+
+.*b2h html <p></p><pre>   
+.*b2h html <font color="blue">  <b>-I </b></font> or <font color="blue"><b>-InputFile </b></font>          : Input file
+.*b2h html <font color="blue">  <b>-O </b></font> or <font color="blue"><b>-OutputFile</b></font>          : Output file
+.*b2h html <font color="blue">  <b>-C </b></font> or <font color="blue"><b>-Copybook</b></font>            : Cobol Copybook file
+.*b2h html <font color="blue">  <b>-D </b></font> or <font color="blue"><b>-Delimiter </b></font>          : Field Seperator (space, tab or value)
+.*b2h html <font color="blue">  <b>-Q </b></font> or <font color="blue"><b>-Quote </b></font>              : Quote, you can use DoubleQuote SingleQuote as well as an a the char
+.*b2h html <font color="blue">  <b>-IC</b></font> or <font color="blue"><b>-InputCharacterSet</b></font>   : Input  font or character set
+.*b2h html <font color="blue">  <b>-OC</b></font> or <font color="blue"><b>-OutputCharacterSet</b></font>  : Output font or character set
+.*b2h html <font color="blue">  <b>-IFS</b></font> or <font color="blue"><b>-InputFileStructure</b></font> : Input File Structure:
+.*b2h html <font color="blue">  <b>-OFS</b></font> or <font color="blue"><b>-OutputFileStructure</b></font>: Output File Structure:
+.*b2h html <b>      Default      </b>: Determine by Copybook
+.*b2h html <b>      Text         </b>: Use Standard Text IO 
+.*b2h html <b>      Fixed_Length </b>: Fixed record Length binary 
+.*b2h html <b>      Mainframe_VB </b>: Mainframe VB File 
+.*b2h html <b>      Mainframe_VB_As_RECFMU</b> : Mainframe VB File including BDW (block descriptor word)
+.*b2h html <b>      FUJITSU_VB   </b>: Fujitsu Cobol VB File 
+.*b2h html <b>      Open_Cobol_VB</b>: Gnu Cobol VB File 
+.*b2h html <font color="blue">  <b>-Dialect</b></font> : Cobol Dialect
+.*b2h html <b>      0</b> or <b>Intel</b>        : Intel little endian 
+.*b2h html <b>      1</b> or <b>Mainframe</b>    : Mainframe big endian (Default) 
+.*b2h html <b>      4</b> or <b>Open_Cobol_Little_Endian_(Intel)</b>  : Gnu:Cobol 
+.*b2h html <b>      2</b> or <b>Fujitsu</b>      : Fujitsu Cobol 
+.*b2h html <font color="blue">  <b>-Rename</b></font>         : How to update cobol variable names
+.*b2h html <b>      0</b> or <b>Leave_Asis</b>                : Use the COBOL name
+.*b2h html <b>      1</b> or <b>Change_Minus_To_Underscore</b>: Change '-(),' to '_'
+.*b2h html <b>      2</b> or <b>Drop_Minus</b>                : Drop minus ('-') from the name
+.*b2h html <font color="blue">  <b>-CsvParser</b></font> : Controls how Csv fields are written / parsed
+.*b2h html <b>      0</b> or <b>Basic_Parser</b>                          : Parse Csv - when a field starts with " look for "&lt;FieldSeparator&gt;or "&lt;eol&amp;gt 
+.*b2h html <b>      1</b> or <b>Standard_Parser</b>                       : Parse CSV matching Quotes
+.*b2h html <b>      2</b> or <b>Standard_Parse_Quote_4_Char_Fields</b>    : Standard Parser, add Quotes to all Char fields
+.*b2h html <b>      3</b> or <b>Basic_Parser_Column_names_in_quotes</b>   : Basic Parser, Field (Column) names in Quotes
+.*b2h html <b>      4</b> or <b>Standard_Parser_Column_names_in_quotes</b>: Standard Parser, Field (Column) names in Quotes
+.*b2h html <b>      5</b> or <b>Standard_Parser_Quote_4_Char_Fields_Column_names_in_quotes</b>        : Standard Parser, Char fields in Quotes,  Field (Column) names in Quotes
+.*b2h html <b>      6</b> or <b>Basic_Parser_Delimiter_all_fields</b>     : Basic Parser, Field Separator for all fields
+.*b2h html <b>      7</b> or <b>Basic_Parser_Delimiter_all_fields+1</b>   : Basic Parser, Field Separator for all fields + extra seperator at the End-of-Line<p></p>
+.*b2h html </pre>

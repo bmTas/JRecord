@@ -1,0 +1,126 @@
+<h1><a id="newusers">Notes for New Users</a></h2>
+<p>The first thing new users need to decide is<ul>
+ <li>Are you going to use the <i>Java</i> interface ???, then see <a href="#javaInterface">Java Interface</a></li>
+ <li>Are you going to use the existing <a href="lib/Overview.html#Csv2Cbl">Cobol2Csv</a> / <a href="lib/CobolData2Xml/Cobol2Xml_ReadMe.htm">Cobol2Xml</a> interfaces. These programs will
+convert Cobol-Data-Files to/from Csv/Xml files.</li>
+ <li>Are you going to write <i>your own generic</i> interface ???. If so look at the <b>CobolSchemaReader</b> class
+and see how it is used in Cobol2Xml. Also If copying files, look at <b>Copy</b> class.</li>
+</ul>
+<h2><a id="javaInterface">Getting started with JRecord Java interface</a></h3>
+<p>The starting point for the most common JRecord operations is the <b><font color="blue">JRecordInterface1</font> class</b>.
+For Cobol operataions you start with <b><font color="blue">JRecordInterface1</font>.<font color="green">COBOL</font></b>. 
+<p>A program to read a <i>Cobol-Data</i> file using a cobol Copybook looks like:</p>
+
+<pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   2 </font></span>    ICobolIOBuilder ioBldr 
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   3 </font></span>                <font color="#000000"><strong>=</strong></font> JRecordInterface1.COBOL
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   4 </font></span>                    .<font color="#9966ff">newIOBuilder</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">CobolCopybook</font><font color="#ff00cc">.</font><font color="#ff00cc">cbl</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">   5 </font></span>                        .<font color="#9966ff">setSplitCopybook</font><font color="#000000"><strong>(</strong></font>CopybookLoader.SPLIT_01_LEVEL<font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   6 </font></span>                        .<font color="#9966ff">setDialect</font><font color="#000000"><strong>(</strong></font>ICopybookDialects.FMT_FUJITSU<font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   7 </font></span>    AbstractLineReader reader <font color="#000000"><strong>=</strong></font> ioBldr.<font color="#9966ff">newReader</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">input</font><font color="#ff00cc"> </font><font color="#ff00cc">File</font><font color="#ff00cc"> </font><font color="#ff00cc">Name</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   8 </font></span>    AbstractLine l;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">   9 </font></span>        
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">  10 </font></span>    <font color="#006699"><strong>while</strong></font> <font color="#000000"><strong>(</strong></font><font color="#000000"><strong>(</strong></font>l <font color="#000000"><strong>=</strong></font> reader.<font color="#9966ff">read</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font><font color="#000000"><strong>)</strong></font> <font color="#000000"><strong>!</strong></font><font color="#000000"><strong>=</strong></font> <font color="#cc00cc">null</font><font color="#000000"><strong>)</strong></font> <font color="#000000"><strong>{</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">  11 </font></span>        ...
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">  12 </font></span>    <font color="#000000"><strong>}</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">  13 </font></span>    reader.<font color="#9966ff">close</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>;
+</font></pre>
+
+<p>See the <a href="Docs/JRecordIntro.htm#HDRIOBLDR">JRecord Manual</a> for a description of IOBuilders.
+There are examples in the <a href="Source\JRecord_IO_Builder_Examples">Source\JRecord_IO_Builder_Examples</a> project.
+<p>If you have the <b>JavaDoc</b> setup correctly in your IDE, there are descriptions / list of options
+available for the various methods:</p>
+
+<img src="Docs/Diagram/JR_IOBuilder01.png">
+
+
+
+
+
+<h3><a id="CodeGen">Code Generation</a></h3>
+<p>To help you get started with JRecord, there are 2 Code Generators available:<ul>
+ <li>In the Cobol-Import section of the <a href="https://sourceforge.net/projects/record-editor/">RecordEditor</a>
+you can specify a Cobol Copybook and a Sample data file. The RecordEditor should be able to figure out
+the correct file options and it can create a IOBuilder + Field-Name class for the Cobol-Copybook/File. This 
+should be useful for new user trying to figure out which options to use. There is more on this in the.
+See <a href="Docs/JRecordIntro.htm#HDRCBLIMPORT">RecordEditor in JRecord Guide</a> for details</li>
+ <li>The <a href="Docs/JRecordIntro.htm#HDRCODEGEN">JRecord CodeGen</a> sub-project will generate a skelton Java~JRecord Read/write programs from a Cobol Copybook.</li>
+</ul>
+
+<h3>JRecord CodeGen Utility</h3>
+<p>The <a href="https://sourceforge.net/projects/jrecord/files/jrecord_CodeGen/">CodeGen</a> utility will generate sample read/write programs for a Cobol Copybook.
+The <b>CodeGen</b> utility can be downloaded from</p>
+<p><a href="https://sourceforge.net/projects/jrecord/files/jrecord_CodeGen/">https://sourceforge.net/projects/jrecord/files/jrecord_CodeGen/</a></p>
+
+<p>The following <b>CodeGen</b> examples all refer to this <b>Cobol Copybook</b>:
+</p><p>
+</p><pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 9 </font></span><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-KCODE-STORE-KEY.
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">10 </font></span><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font>           <font color="#ff0000">05</font> DTAR020-KEYCODE-NO      <font color="#006699"><strong>PIC</strong></font> X(<font color="#ff0000">08</font>).
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">11 </font></span><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font>           <font color="#ff0000">05</font> DTAR020-STORE-NO        <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">03</font>)   <font color="#006699"><strong>COMP-3</strong></font>.
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">12 </font></span><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-DATE               <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">07</font>)   <font color="#006699"><strong>COMP-3</strong></font>.
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">13 </font></span><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-DEPT-NO            <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">03</font>)   <font color="#006699"><strong>COMP-3</strong></font>.
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">14 </font></span><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-QTY-SOLD           <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">9</font>)    <font color="#006699"><strong>COMP-3</strong></font>.
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">15 </font></span><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-SALE-PRICE         <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">9</font>)V99 <font color="#006699"><strong>COMP-3</strong></font>.
+</font></pre>
+<p>
+</p><p>To call <b>CodeGen</b> in a bat file:
+</p><pre><p>
+  java -jar ../../lib/JRecordCodeGen.jar  ^
+<font color="blue">               -Template           standard</font> ^
+               -package            example.ioBuilder.dtar020 ^
+               -Schema             DTAR020.cbl   ^
+                 -FileOrganisation FixedWidth ^
+                 -font cp037 ^
+                 -DropCopybookName   true ^
+               -outputDirectory    DTAR020
+</p></pre>
+<p>
+</p><p>This will generate a <font color="blue">Cobol-Field-name</font> class, skelton <font color="blue">Read</font> class and a skelton <font color="blue">write</font> class.
+The generated <b>FieldName</b> class is
+</p><p>
+</p><pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">32 </font></span><font color="#009966"><strong>public</strong></font> <font color="#0099ff"><strong>class</strong></font> FieldNamesDtar020 <font color="#000000"><strong>{</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">33 </font></span>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">34 </font></span>    <font color="#009966"><strong>public</strong></font> <font color="#009966"><strong>static</strong></font> <font color="#009966"><strong>final</strong></font> RecordDtar020 RECORD_DTAR020 <font color="#000000"><strong>=</strong></font> <font color="#006699"><strong>new</strong></font> <font color="#9966ff">RecordDtar020</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">35 </font></span>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">36 </font></span>    <font color="#009966"><strong>public</strong></font> <font color="#009966"><strong>static</strong></font> <font color="#0099ff"><strong>class</strong></font> RecordDtar020 <font color="#000000"><strong>{</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">37 </font></span>       <font color="#009966"><strong>public</strong></font> <font color="#009966"><strong>final</strong></font> String keycodeNo <font color="#000000"><strong>=</strong></font> <font color="#ff00cc">"</font><font color="#ff00cc">KEYCODE</font><font color="#ff00cc">-</font><font color="#ff00cc">NO</font><font color="#ff00cc">"</font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">38 </font></span>       <font color="#009966"><strong>public</strong></font> <font color="#009966"><strong>final</strong></font> String storeNo <font color="#000000"><strong>=</strong></font> <font color="#ff00cc">"</font><font color="#ff00cc">STORE</font><font color="#ff00cc">-</font><font color="#ff00cc">NO</font><font color="#ff00cc">"</font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">39 </font></span>       <font color="#009966"><strong>public</strong></font> <font color="#009966"><strong>final</strong></font> String date <font color="#000000"><strong>=</strong></font> <font color="#ff00cc">"</font><font color="#ff00cc">DATE</font><font color="#ff00cc">"</font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">40 </font></span>       <font color="#009966"><strong>public</strong></font> <font color="#009966"><strong>final</strong></font> String deptNo <font color="#000000"><strong>=</strong></font> <font color="#ff00cc">"</font><font color="#ff00cc">DEPT</font><font color="#ff00cc">-</font><font color="#ff00cc">NO</font><font color="#ff00cc">"</font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">41 </font></span>       <font color="#009966"><strong>public</strong></font> <font color="#009966"><strong>final</strong></font> String qtySold <font color="#000000"><strong>=</strong></font> <font color="#ff00cc">"</font><font color="#ff00cc">QTY</font><font color="#ff00cc">-</font><font color="#ff00cc">SOLD</font><font color="#ff00cc">"</font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">42 </font></span>       <font color="#009966"><strong>public</strong></font> <font color="#009966"><strong>final</strong></font> String salePrice <font color="#000000"><strong>=</strong></font> <font color="#ff00cc">"</font><font color="#ff00cc">SALE</font><font color="#ff00cc">-</font><font color="#ff00cc">PRICE</font><font color="#ff00cc">"</font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">43 </font></span>    <font color="#000000"><strong>}</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">44 </font></span><font color="#000000"><strong>}</strong></font>
+</font></pre>
+<p>
+</p><p>The generated code to <b>read</b> the file is
+</p><p>
+</p><pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">60 </font></span>        AbstractLine line;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">61 </font></span>        <font color="#0099ff"><strong>int</strong></font> lineNum <font color="#000000"><strong>=</strong></font> <font color="#ff0000">0</font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">62 </font></span>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">63 </font></span>        <font color="#006699"><strong>try</strong></font> <font color="#000000"><strong>{</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">64 </font></span>            ICobolIOBuilder iob <font color="#000000"><strong>=</strong></font> JRecordInterface1.COBOL
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">65 </font></span>                                       .<font color="#9966ff">newIOBuilder</font><font color="#000000"><strong>(</strong></font>copybookName<font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">66 </font></span>                                           .<font color="#9966ff">setFont</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">"</font><font color="#ff00cc">CP037</font><font color="#ff00cc">"</font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">67 </font></span>                                           .<font color="#9966ff">setFileOrganization</font><font color="#000000"><strong>(</strong></font>Constants.IO_FIXED_LENGTH<font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">68 </font></span>                                           .<font color="#9966ff">setSplitCopybook</font><font color="#000000"><strong>(</strong></font>CopybookLoader.SPLIT_NONE<font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">69 </font></span>                                           .<font color="#9966ff">setDropCopybookNameFromFields</font><font color="#000000"><strong>(</strong></font><font color="#cc00cc">true</font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">70 </font></span>                                       ;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">71 </font></span>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">72 </font></span>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">73 </font></span>            FieldNamesDtar020.RecordDtar020 rDtar020 <font color="#000000"><strong>=</strong></font> FieldNamesDtar020.RECORD_DTAR020;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">74 </font></span>            AbstractLineReader reader <font color="#000000"><strong>=</strong></font> iob.<font color="#9966ff">newReader</font><font color="#000000"><strong>(</strong></font>salesFile<font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">75 </font></span>            <font color="#006699"><strong>while</strong></font> <font color="#000000"><strong>(</strong></font><font color="#000000"><strong>(</strong></font>line <font color="#000000"><strong>=</strong></font> reader.<font color="#9966ff">read</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font><font color="#000000"><strong>)</strong></font> <font color="#000000"><strong>!</strong></font><font color="#000000"><strong>=</strong></font> <font color="#cc00cc">null</font><font color="#000000"><strong>)</strong></font> <font color="#000000"><strong>{</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">76 </font></span>                lineNum <font color="#000000"><strong>+</strong></font><font color="#000000"><strong>=</strong></font> <font color="#ff0000">1</font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">77 </font></span>                System.out.<font color="#9966ff">println</font><font color="#000000"><strong>(</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">78 </font></span>                              line.<font color="#9966ff">getFieldValue</font><font color="#000000"><strong>(</strong></font>rDtar020.keycodeNo<font color="#000000"><strong>)</strong></font>.<font color="#9966ff">asString</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">79 </font></span>                      <font color="#000000"><strong>+</strong></font> <font color="#ff00cc">"</font><font color="#ff00cc"> </font><font color="#ff00cc">"</font> <font color="#000000"><strong>+</strong></font> line.<font color="#9966ff">getFieldValue</font><font color="#000000"><strong>(</strong></font>rDtar020.storeNo<font color="#000000"><strong>)</strong></font>.<font color="#9966ff">asString</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">80 </font></span>                      <font color="#000000"><strong>+</strong></font> <font color="#ff00cc">"</font><font color="#ff00cc"> </font><font color="#ff00cc">"</font> <font color="#000000"><strong>+</strong></font> line.<font color="#9966ff">getFieldValue</font><font color="#000000"><strong>(</strong></font>rDtar020.date<font color="#000000"><strong>)</strong></font>.<font color="#9966ff">asString</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">81 </font></span>                      <font color="#000000"><strong>+</strong></font> <font color="#ff00cc">"</font><font color="#ff00cc"> </font><font color="#ff00cc">"</font> <font color="#000000"><strong>+</strong></font> line.<font color="#9966ff">getFieldValue</font><font color="#000000"><strong>(</strong></font>rDtar020.deptNo<font color="#000000"><strong>)</strong></font>.<font color="#9966ff">asString</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">82 </font></span>                      <font color="#000000"><strong>+</strong></font> <font color="#ff00cc">"</font><font color="#ff00cc"> </font><font color="#ff00cc">"</font> <font color="#000000"><strong>+</strong></font> line.<font color="#9966ff">getFieldValue</font><font color="#000000"><strong>(</strong></font>rDtar020.qtySold<font color="#000000"><strong>)</strong></font>.<font color="#9966ff">asString</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">83 </font></span>                      <font color="#000000"><strong>+</strong></font> <font color="#ff00cc">"</font><font color="#ff00cc"> </font><font color="#ff00cc">"</font> <font color="#000000"><strong>+</strong></font> line.<font color="#9966ff">getFieldValue</font><font color="#000000"><strong>(</strong></font>rDtar020.salePrice<font color="#000000"><strong>)</strong></font>.<font color="#9966ff">asString</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">84 </font></span>                   <font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">85 </font></span>            <font color="#000000"><strong>}</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">86 </font></span>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">87 </font></span>            reader.<font color="#9966ff">close</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">88 </font></span>        <font color="#000000"><strong>}</strong></font> <font color="#006699"><strong>catch</strong></font> <font color="#000000"><strong>(</strong></font>Exception e<font color="#000000"><strong>)</strong></font> <font color="#000000"><strong>{</strong>
+</font></font></pre>

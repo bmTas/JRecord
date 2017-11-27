@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML><HEAD>
+<TITLE>JRecord</TITLE>
+<!-- Begin Header Records  ========================================== -->
+<!-- E:\Work\JRecord\JRecord\Docs1\JRecord.dcf converted by B2H R4.7  -->
+<!-- (390) (WINNT) on 17 Mar 2011 at 12:24:36                         -->
+<META HTTP-EQUIV="updated" CONTENT="Thu, 17 Mar 2011 09:50:55">
+<META HTTP-EQUIV="review" CONTENT="Sat, 17 Mar 2012 09:50:55">
+<META HTTP-EQUIV="expires" CONTENT="Sun, 17 Mar 2013 09:50:55">
+<LINK href="tab.css" type=text/css rel=stylesheet>
+<LINK href="tab.css" type=text/css rel=stylesheet>
+<link rel="stylesheet" type="text/css" href="syntax.css">
+</HEAD><BODY>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+ <TR vAlign=top height=110><TD>
+  <h1><A href="http://sourceforge.net/projects/jrecord"> <IMG src="http://sourceforge.net/sflogo.php?group_id=139274&amp;type=5" width="210" height="62" border="0" alt="SourceForge.net Logo" /></A>&nbsp;&nbsp;&nbsp;JRecord</h1>
+  <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+    <TR vAlign=top>
+      <TD align=middle><DIV id=activeTab>JRecord</DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord03.html">File Formats</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord04.html">Java Examples</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord05.html">Record Layouts</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord06.html">Layout Wizard</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord07.html">Editor</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord08.html">Diff Utility</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord09.html">Reporting</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord10.html">Record Editor</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord11.html">Related</A></DIV></TD>
+<TD align=right width="80%"></TD></tr>
+<tr id=dark><td/><td/><td/><td/><td/><td/><td/><td/><td/><td/><td/><TD>&nbsp;</td></tr>
+</TBODY></table></TD> </TR></table>
+<!-- End Header Records  ============================================ -->
+<A NAME="Top_Of_Page"></A>
+<HR><H2><A NAME="Header_1">JRecord</A></H2>
+<P>This project provides code to
+<OL COMPACT TYPE=1>
+ <LI>Read and write files of length based records (both fixed length records and Length field based records).
+ <LI>Read and write CSV files.
+ <LI>Read and Write Flat Fixed width files (Text and Binary) via either a Xml-Record-Layout or a Cobol Copybook..
+ <LI>Read and write XML files (via StAX parser).
+ <LI>Common IO routines across all File Types (XML, CSV, Fixed field Width).
+ <LI>Support for various Flat file formats (Fixed, Delimited, Length based Files (i.e. Mainframe VB).
+</OL>
+<P>
+<P><H3><A NAME="Header_2">Guiding Principles</A></H3>
+<P>
+<OL COMPACT TYPE=1>
+ <LI>Method of reading / writing files should be the same no matter what the file format is.
+ <LI>Programmer should be shielded from the files format.
+ <LI>You should be able to edit files using the files description (Cobol Copybook, Xml or what ever).
+ <LI>Package should be flexible - easy to add new file formats or Record-Layout formats.
+</OL>
+<P>
+<P><H3><A NAME="Header_3">Package Structure</A></H3>
+<P>The JRecord package consists of
+<UL COMPACT>
+  <LI>Low level line IO routines (ByteReader / ByteWriter). These classes read a line
+from a file as an array of Bytes (Formats supported include Fixed Length and various Length based file formats).
+These could be of interest to any one reading / writing Legacy Files.
+  <LI>Classes to read / write File-Descriptions to/from external files
+  <LI>High level IO Routines Supporting field level access.
+</UL>
+<P>
+<P>
+<P><H3><A NAME="Header_4">Issues</A></H3>
+<OL COMPACT TYPE=1>
+ <LI>Code was written as part of the <a href="http://record-editor.sourceforge.net" TARGET="_top">RecordEditor</a> not as a Java library, This has both advantages and disadvantages:
+   <UL COMPACT>
+     <LI>The <a href="http://record-editor.sourceforge.net" TARGET="_top">RecordEditor</a> has had 20,000 downloads over several years. Many parts of the package have been well tested
+     <LI>Some code is there for the RecordEditor making the JRecord package larger that it would be otherwise be.
+     <LI>Classes minimizing space at the expense of speed. This makes sense in a Editor but not for reading / writing in Java..
+     <LI>Package is still being adapted for use as a Java package, More work is needed.
+   </UL>
+ <LI>A way of tailoring the conversion of Cobol Copybooks is needed.
+ <LI>Currently the System has 2 ways of representing a Record-Layout
+ <TABLE CELLPADDING="3">
+   <TR VALIGN="TOP"><TD><P><B>LayoutDetail</B></TD><TD><P>The original format it holds only the bare minimum needed by the package
+   </TD></TR><TR VALIGN="TOP"><TD><P><B>ExternalRecord</B></TD><TD><P>A general purpose interchange format. This was introduced latter on to
+support conversion between file formats / Database (RecordEditor).
+ </TD></TR></TABLE>
+Having two classes representing the same thing is not ideal. I may provide greater support
+for ExternalRecord's through out the package.
+There is a class <B>ToLayoutDetail</B> that can convert one to the other
+</OL>
+<P>
+<P><H3><A NAME="Header_5">To Do</A></H3>
+<OL COMPACT TYPE=1>
+ <LI>Support for more files Structures
+ <LI>Support for Shorter Type-Names.
+ <LI>Greater Flexibility in importing Cobol Copybooks
+ <LI>Support for more Cobol dialects.
+ <LI>More work on the Documentation.
+ <LI>More options for parsing XML files (would be useful to convert child elements to fields).
+ <LI>One possible change is to have the <B>Open</B> methods return the object. This would allow
+<PRE>        AbstractLineReader reader = new XmlLineReader(true).open(filename);
+    or
+        AbstractLineReader reader = LineIOProvider.getInstance()
+				.getLineReader(Constants.IO_FIXED_LENGTH).open(filename);                                                  
+</PRE>any thoughts anybody.
+  <LI>Bettetr class naming standards.
+</OL>
+<P>&nbsp;<p>
+<TABLE width="100%"><tr>
+<td width="34%" id=dark><a id=dark href="http://sourceforge.net/projects/jrecord/">JRecord at SourceForge</a></td>
+<td width="33%" id=dark><a id=dark href="http://sourceforge.net/projects/jrecord/files/jrecord/">Download Page</a></td>
+<td id=dark><a id=dark href="http://sourceforge.net/projects/jrecord/forums">Forums</a></td>
+</tr></TABLE>
+<A NAME="Bot_Of_Page"></A>
+</BODY></HTML>

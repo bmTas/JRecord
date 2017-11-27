@@ -1,0 +1,379 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML><HEAD>
+<TITLE>JRecord</TITLE>
+<!-- Begin Header Records  ========================================== -->
+<!-- E:\Work\JRecord\JRecord\Docs1\JRecord.dcf converted by B2H R4.7  -->
+<!-- (390) (WINNT) on 17 Mar 2011 at 12:24:36                         -->
+<META HTTP-EQUIV="updated" CONTENT="Thu, 17 Mar 2011 09:50:55">
+<META HTTP-EQUIV="review" CONTENT="Sat, 17 Mar 2012 09:50:55">
+<META HTTP-EQUIV="expires" CONTENT="Sun, 17 Mar 2013 09:50:55">
+<LINK href="tab.css" type=text/css rel=stylesheet>
+<LINK href="tab.css" type=text/css rel=stylesheet>
+<link rel="stylesheet" type="text/css" href="syntax.css">
+</HEAD><BODY>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+ <TR vAlign=top height=110><TD>
+  <h1><A href="http://sourceforge.net/projects/jrecord"> <IMG src="http://sourceforge.net/sflogo.php?group_id=139274&amp;type=5" width="210" height="62" border="0" alt="SourceForge.net Logo" /></A>&nbsp;&nbsp;&nbsp;JRecord</h1>
+  <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+    <TR vAlign=top>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord02.html">JRecord</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord03.html">File Formats</A></DIV></TD>
+      <TD align=middle><DIV id=activeTab>Java Examples</DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord05.html">Record Layouts</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord06.html">Layout Wizard</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord07.html">Editor</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord08.html">Diff Utility</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord09.html">Reporting</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord10.html">Record Editor</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord11.html">Related</A></DIV></TD>
+<TD align=right width="80%"></TD></tr>
+<tr id=dark><td/><td/><td/><td/><td/><td/><td/><td/><td/><td/><td/><TD>&nbsp;</td></tr>
+</TBODY></table></TD> </TR></table>
+<!-- End Header Records  ============================================ -->
+<A NAME="Top_Of_Page"></A>
+<HR><H2><A NAME="Header_8">Java Examples</A></H2>
+<P>
+<a name="Toc"/>
+<MENU>
+<LI><A NAME="PToC_9" HREF="#Header_9" >Reading a File (ByteReader)</A>
+<LI><A NAME="PToC_10" HREF="#Header_10" >Reading a Cobol File</A>
+<LI><A NAME="PToC_11" HREF="#Header_11" >Reading and Wrinting a Mainframe Cobol file</A>
+<LI><A NAME="PToC_12" HREF="#Header_12" >Reading and Writing a CSV file</A>
+<LI><A NAME="PToC_13" HREF="#Header_13" >Reading and Writing using Record-Editor XML Layout</A>
+<LI><A NAME="PToC_14" HREF="#Header_14" >Writing a File (XML Layout)</A>
+<LI><A NAME="PToC_15" HREF="#Header_15" >Reading a XML file</A>
+</MENU><P>
+<P><H3><A NAME="Header_9">Reading a File (ByteReader)</A></H3>
+<P>This example shows how a ByteReader is used to read a Fujitsu-Cobol variable length file as a array of Bytes.
+ByteReaders are the lowest level of the IO Tree, they read a line for a file as an array of Bytes. They provide
+an interface to legacy files.
+<P><B>Note: </B>Each line in these files consist of
+<UL COMPACT>
+  <LI>4 byte Record descriptor (2 byte length in little endian binary format, 2 bytes check data).
+  <LI>Line Data
+  <LI>4 byte Record descriptor. Having the Record descriptor at the start and
+end of a record allows you to read forward and backwards in the file.
+</UL>
+<P>
+<P>
+<PRE><SPAN CLASS="gutter">   1:</SPAN>        AbstractByteReader tReader <SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax8">new</SPAN> <SPAN CLASS="syntax6">FujitsuVbByteReader</SPAN>();
+<SPAN CLASS="gutter">   2:</SPAN>        <SPAN CLASS="syntax10">byte</SPAN>[] line;
+<SPAN CLASS="gutter">   3:</SPAN>
+<SPAN CLASS="gutter">   4:</SPAN>        <SPAN CLASS="syntax8">try</SPAN> <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutterH">   5:</SPAN>            tReader.<SPAN CLASS="syntax6">open</SPAN>(fileName);
+<SPAN CLASS="gutter">   6:</SPAN>
+<SPAN CLASS="gutter">   7:</SPAN>            <SPAN CLASS="syntax8">while</SPAN> ((line <SPAN CLASS="syntax18">=</SPAN> tReader.<SPAN CLASS="syntax6">read</SPAN>()) <SPAN CLASS="syntax18">!</SPAN><SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax14">null</SPAN>) <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">   8:</SPAN>                 <SPAN CLASS="syntax2">//</SPAN><SPAN CLASS="syntax2"> </SPAN><SPAN CLASS="syntax2">TODO</SPAN><SPAN CLASS="syntax2"> </SPAN><SPAN CLASS="syntax2">Do</SPAN><SPAN CLASS="syntax2"> </SPAN><SPAN CLASS="syntax2">Something</SPAN><SPAN CLASS="syntax2"> </SPAN><SPAN CLASS="syntax2">.....</SPAN>
+<SPAN CLASS="gutter">   9:</SPAN>            <SPAN CLASS="syntax18">}</SPAN>
+<SPAN CLASS="gutterH">  10:</SPAN>        <SPAN CLASS="syntax18">}</SPAN> <SPAN CLASS="syntax8">finally</SPAN> <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">  11:</SPAN>            tReader.<SPAN CLASS="syntax6">close</SPAN>();
+<SPAN CLASS="gutter">  12:</SPAN>        <SPAN CLASS="syntax18">}</SPAN>
+<SPAN CLASS="gutter">  13:</SPAN>
+</PRE><P><P><P><H3><A NAME="Header_10">Reading a Cobol File</A></H3>
+<P>This Example shows how to read a Windows / Linux file and access the fields via the Cobol names.
+<P>
+<P>Cobol RecordLayout
+<P>
+<PRE><SPAN CLASS="gutterH">   5:</SPAN>        <SPAN CLASS="syntax5">01</SPAN> Ams-Vendor.
+<SPAN CLASS="gutter">   6:</SPAN>           <SPAN CLASS="syntax5">03</SPAN> Brand               <SPAN CLASS="syntax8">Pic</SPAN> x(<SPAN CLASS="syntax5">3</SPAN>).
+<SPAN CLASS="gutter">   7:</SPAN>           <SPAN CLASS="syntax5">03</SPAN> Vendor-Number       <SPAN CLASS="syntax8">Pic</SPAN> <SPAN CLASS="syntax5">9</SPAN>(<SPAN CLASS="syntax5">8</SPAN>).
+<SPAN CLASS="gutter">   8:</SPAN>           <SPAN CLASS="syntax5">03</SPAN> Vendor-Name         <SPAN CLASS="syntax8">Pic</SPAN> X(<SPAN CLASS="syntax5">40</SPAN>).
+<SPAN CLASS="gutter">   9:</SPAN>           <SPAN CLASS="syntax5">03</SPAN> Filler-1            <SPAN CLASS="syntax8">Pic</SPAN> X(<SPAN CLASS="syntax5">15</SPAN>).
+<SPAN CLASS="gutterH">  10:</SPAN>           <SPAN CLASS="syntax5">03</SPAN> Code-850            <SPAN CLASS="syntax8">Pic</SPAN> <SPAN CLASS="syntax5">999</SPAN>.
+<SPAN CLASS="gutter">  11:</SPAN>           <SPAN CLASS="syntax5">03</SPAN> Value-P             <SPAN CLASS="syntax8">Pic</SPAN> X.
+<SPAN CLASS="gutter">  12:</SPAN>           <SPAN CLASS="syntax5">03</SPAN> <SPAN CLASS="syntax8">Filler</SPAN>              <SPAN CLASS="syntax8">Pic</SPAN> X(<SPAN CLASS="syntax5">3</SPAN>).
+<SPAN CLASS="gutter">  13:</SPAN>           <SPAN CLASS="syntax5">03</SPAN> Zero-Value          <SPAN CLASS="syntax8">Pic</SPAN> <SPAN CLASS="syntax5">999</SPAN>.
+</PRE><P><P>Java Code to read the file
+<P>
+<PRE><SPAN CLASS="gutter">   1:</SPAN>        String vendorFile          <SPAN CLASS="syntax18">=</SPAN> TstConstants.SAMPLE_DIRECTORY
+<SPAN CLASS="gutter">   2:</SPAN>                                           <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">Ams_VendorDownload_20041229.txt</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>;
+<SPAN CLASS="gutter">   3:</SPAN>        String copybookName        <SPAN CLASS="syntax18">=</SPAN> TstConstants.COBOL_DIRECTORY
+<SPAN CLASS="gutter">   4:</SPAN>                                           <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">AmsVendor.cbl</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>;
+<SPAN CLASS="gutterH">   5:</SPAN>        CobolIoProvider ioProvider <SPAN CLASS="syntax18">=</SPAN> CobolIoProvider.<SPAN CLASS="syntax6">getInstance</SPAN>();
+<SPAN CLASS="gutter">   6:</SPAN>        AbstractLine line;
+<SPAN CLASS="gutter">   7:</SPAN>        <SPAN CLASS="syntax10">int</SPAN> lineNumber <SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax5">0</SPAN>;
+<SPAN CLASS="gutter">   8:</SPAN>
+<SPAN CLASS="gutter">   9:</SPAN>        <SPAN CLASS="syntax8">try</SPAN> <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutterH">  10:</SPAN>            AbstractLineReader reader  <SPAN CLASS="syntax18">=</SPAN> ioProvider.<SPAN CLASS="syntax6">getLineReader</SPAN>(
+<SPAN CLASS="gutter">  11:</SPAN>                    Constants.IO_TEXT_LINE, Convert.FMT_INTEL,
+<SPAN CLASS="gutter">  12:</SPAN>                    CopybookLoader.SPLIT_NONE, copybookName, vendorFile
+<SPAN CLASS="gutter">  13:</SPAN>            );
+<SPAN CLASS="gutter">  14:</SPAN>
+<SPAN CLASS="gutterH">  15:</SPAN>            System.out.<SPAN CLASS="syntax6">println</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">Vendor</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">\t</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">Name</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>);
+<SPAN CLASS="gutter">  16:</SPAN>            System.out.<SPAN CLASS="syntax6">println</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">===========================================</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>);
+<SPAN CLASS="gutter">  17:</SPAN>
+<SPAN CLASS="gutter">  18:</SPAN>
+<SPAN CLASS="gutter">  19:</SPAN>            <SPAN CLASS="syntax8">while</SPAN> ((line <SPAN CLASS="syntax18">=</SPAN> reader.<SPAN CLASS="syntax6">read</SPAN>()) <SPAN CLASS="syntax18">!</SPAN><SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax14">null</SPAN>) <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutterH">  20:</SPAN>                lineNumber <SPAN CLASS="syntax18">+</SPAN><SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax5">1</SPAN>;
+<SPAN CLASS="gutter">  21:</SPAN>                System.out.<SPAN CLASS="syntax6">println</SPAN>(
+<SPAN CLASS="gutter">  22:</SPAN>                            <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN>    <SPAN CLASS="syntax18">+</SPAN> line.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">Vendor-Number</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>()
+<SPAN CLASS="gutter">  23:</SPAN>                          <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">\t</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> line.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">Vendor-Name</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>());
+<SPAN CLASS="gutter">  24:</SPAN>
+<SPAN CLASS="gutterH">  25:</SPAN>            <SPAN CLASS="syntax18">}</SPAN>
+<SPAN CLASS="gutter">  26:</SPAN>
+<SPAN CLASS="gutter">  27:</SPAN>            reader.<SPAN CLASS="syntax6">close</SPAN>();
+<SPAN CLASS="gutter">  28:</SPAN>
+<SPAN CLASS="gutter">  29:</SPAN>        <SPAN CLASS="syntax18">}</SPAN> <SPAN CLASS="syntax8">catch</SPAN> (Exception e) <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutterH">  30:</SPAN>            System.out.<SPAN CLASS="syntax6">println</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">Error</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">Line</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> lineNumber <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> e.<SPAN CLASS="syntax6">getMessage</SPAN>());
+<SPAN CLASS="gutter">  31:</SPAN>
+</PRE><P><P><P><H3><A NAME="Header_11">Reading and Wrinting a Mainframe Cobol file</A></H3>
+<P>This is how you can read and write a Mainframe Cobol Fixed-Record-length (RECFM=FB) Binary file.
+<P>
+<P>Cobol Copybook
+<P>
+<PRE><SPAN CLASS="gutter">   6:</SPAN><SPAN CLASS="syntax5">000600</SPAN>*
+<SPAN CLASS="gutter">   7:</SPAN><SPAN CLASS="syntax5">000700</SPAN>*   <SPAN CLASS="syntax8">RECORD</SPAN> <SPAN CLASS="syntax8">LENGTH</SPAN> <SPAN CLASS="syntax8">IS</SPAN> <SPAN CLASS="syntax5">27</SPAN>.
+<SPAN CLASS="gutter">   8:</SPAN><SPAN CLASS="syntax5">000800</SPAN>*
+<SPAN CLASS="gutter">   9:</SPAN><SPAN CLASS="syntax5">000900</SPAN>        <SPAN CLASS="syntax5">03</SPAN>  DTAR020-KCODE-STORE-KEY.
+<SPAN CLASS="gutterH">  10:</SPAN><SPAN CLASS="syntax5">001000</SPAN>            <SPAN CLASS="syntax5">05</SPAN> DTAR020-KEYCODE-NO      <SPAN CLASS="syntax8">PIC</SPAN> X(<SPAN CLASS="syntax5">08</SPAN>).
+<SPAN CLASS="gutter">  11:</SPAN><SPAN CLASS="syntax5">001100</SPAN>            <SPAN CLASS="syntax5">05</SPAN> DTAR020-STORE-NO        <SPAN CLASS="syntax8">PIC</SPAN> S9(<SPAN CLASS="syntax5">03</SPAN>)   <SPAN CLASS="syntax8">COMP-3</SPAN>.
+<SPAN CLASS="gutter">  12:</SPAN><SPAN CLASS="syntax5">001200</SPAN>        <SPAN CLASS="syntax5">03</SPAN>  DTAR020-DATE               <SPAN CLASS="syntax8">PIC</SPAN> S9(<SPAN CLASS="syntax5">07</SPAN>)   <SPAN CLASS="syntax8">COMP-3</SPAN>.
+<SPAN CLASS="gutter">  13:</SPAN><SPAN CLASS="syntax5">001300</SPAN>        <SPAN CLASS="syntax5">03</SPAN>  DTAR020-DEPT-NO            <SPAN CLASS="syntax8">PIC</SPAN> S9(<SPAN CLASS="syntax5">03</SPAN>)   <SPAN CLASS="syntax8">COMP-3</SPAN>.
+<SPAN CLASS="gutter">  14:</SPAN><SPAN CLASS="syntax5">001400</SPAN>        <SPAN CLASS="syntax5">03</SPAN>  DTAR020-QTY-SOLD           <SPAN CLASS="syntax8">PIC</SPAN> S9(<SPAN CLASS="syntax5">9</SPAN>)    <SPAN CLASS="syntax8">COMP-3</SPAN>.
+<SPAN CLASS="gutterH">  15:</SPAN><SPAN CLASS="syntax5">001500</SPAN>        <SPAN CLASS="syntax5">03</SPAN>  DTAR020-SALE-PRICE         <SPAN CLASS="syntax8">PIC</SPAN> S9(<SPAN CLASS="syntax5">9</SPAN>)V99 <SPAN CLASS="syntax8">COMP-3</SPAN>.
+<SPAN CLASS="gutter">  16:</SPAN>
+</PRE><P><P><P>Java code to read / write a file
+<P>
+<PRE><SPAN CLASS="gutter">   1:</SPAN>            <SPAN CLASS="syntax8">private</SPAN> <SPAN CLASS="syntax8">static</SPAN> <SPAN CLASS="syntax8">final</SPAN> <SPAN CLASS="syntax10">double</SPAN> GST_CONVERSION <SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax5">1</SPAN>.<SPAN CLASS="syntax5">1</SPAN>;
+<SPAN CLASS="gutter">   2:</SPAN>
+<SPAN CLASS="gutter">   3:</SPAN>            <SPAN CLASS="syntax8">private</SPAN> String installDir     <SPAN CLASS="syntax18">=</SPAN> TstConstants.SAMPLE_DIRECTORY;
+<SPAN CLASS="gutter">   4:</SPAN>            <SPAN CLASS="syntax8">private</SPAN> String salesFile      <SPAN CLASS="syntax18">=</SPAN> installDir <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">DTAR020.bin</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>;
+<SPAN CLASS="gutterH">   5:</SPAN>            <SPAN CLASS="syntax8">private</SPAN> String salesFileOut   <SPAN CLASS="syntax18">=</SPAN> installDir <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">DTAR020out.bin</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>;
+<SPAN CLASS="gutter">   6:</SPAN>            <SPAN CLASS="syntax8">private</SPAN> String copybookName   <SPAN CLASS="syntax18">=</SPAN> TstConstants.COBOL_DIRECTORY <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">DTAR020.cbl</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>;
+<SPAN CLASS="gutter">   7:</SPAN>
+<SPAN CLASS="gutter">   8:</SPAN>            <SPAN CLASS="syntax3">/**</SPAN>
+<SPAN CLASS="gutter">   9:</SPAN><SPAN CLASS="syntax3">        </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">*</SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">Example</SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">of</SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">LineReader</SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">/</SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">LineWrite</SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">classes</SPAN>
+<SPAN CLASS="gutterH">  10:</SPAN><SPAN CLASS="syntax3">        </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">*/</SPAN>
+<SPAN CLASS="gutter">  11:</SPAN>            <SPAN CLASS="syntax8">private</SPAN> <SPAN CLASS="syntax6">XmplLineIO6</SPAN>() <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">  12:</SPAN>                <SPAN CLASS="syntax14">super</SPAN>();
+<SPAN CLASS="gutter">  13:</SPAN>
+<SPAN CLASS="gutter">  14:</SPAN>                <SPAN CLASS="syntax10">int</SPAN> lineNum <SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax5">0</SPAN>;
+<SPAN CLASS="gutterH">  15:</SPAN>                <SPAN CLASS="syntax10">double</SPAN> gstExclusive;
+<SPAN CLASS="gutter">  16:</SPAN>                AbstractLine saleRecord;
+<SPAN CLASS="gutter">  17:</SPAN>
+<SPAN CLASS="gutter">  18:</SPAN>                <SPAN CLASS="syntax8">try</SPAN> <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">  19:</SPAN>                    <SPAN CLASS="syntax10">int</SPAN> fileStructure <SPAN CLASS="syntax18">=</SPAN> Constants.IO_FIXED_LENGTH;
+<SPAN CLASS="gutterH">  20:</SPAN>                    CobolIoProvider ioProvider <SPAN CLASS="syntax18">=</SPAN> CobolIoProvider.<SPAN CLASS="syntax6">getInstance</SPAN>();
+<SPAN CLASS="gutter">  21:</SPAN>                    AbstractLineReader reader  <SPAN CLASS="syntax18">=</SPAN> ioProvider.<SPAN CLASS="syntax6">getLineReader</SPAN>(
+<SPAN CLASS="gutter">  22:</SPAN>                           fileStructure, Convert.FMT_MAINFRAME,
+<SPAN CLASS="gutter">  23:</SPAN>                            CopybookLoader.SPLIT_NONE, copybookName, salesFile
+<SPAN CLASS="gutter">  24:</SPAN>                    );
+<SPAN CLASS="gutterH">  25:</SPAN>
+<SPAN CLASS="gutter">  26:</SPAN>                    AbstractLineWriter writer  <SPAN CLASS="syntax18">=</SPAN> ioProvider.<SPAN CLASS="syntax6">getLineWriter</SPAN>(fileStructure, salesFileOut);
+<SPAN CLASS="gutter">  27:</SPAN>
+<SPAN CLASS="gutter">  28:</SPAN>                    <SPAN CLASS="syntax8">while</SPAN> ((saleRecord <SPAN CLASS="syntax18">=</SPAN> reader.<SPAN CLASS="syntax6">read</SPAN>()) <SPAN CLASS="syntax18">!</SPAN><SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax14">null</SPAN>) <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">  29:</SPAN>                        lineNum <SPAN CLASS="syntax18">+</SPAN><SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax5">1</SPAN>;
+<SPAN CLASS="gutterH">  30:</SPAN>
+<SPAN CLASS="gutter">  31:</SPAN>                        System.out.<SPAN CLASS="syntax6">print</SPAN>(saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">KEYCODE-NO</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>()
+<SPAN CLASS="gutter">  32:</SPAN>                                <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">QTY-SOLD</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>()
+<SPAN CLASS="gutter">  33:</SPAN>                                <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">SALE-PRICE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>());
+<SPAN CLASS="gutter">  34:</SPAN>
+<SPAN CLASS="gutterH">  35:</SPAN>                        gstExclusive <SPAN CLASS="syntax18">=</SPAN> saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">SALE-PRICE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asDouble</SPAN>() <SPAN CLASS="syntax18">/</SPAN> GST_CONVERSION;
+<SPAN CLASS="gutter">  36:</SPAN>                        saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">SALE-PRICE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">set</SPAN>(gstExclusive);
+<SPAN CLASS="gutter">  37:</SPAN>                        writer.<SPAN CLASS="syntax6">write</SPAN>(saleRecord);
+<SPAN CLASS="gutter">  38:</SPAN>
+<SPAN CLASS="gutter">  39:</SPAN>                        System.out.<SPAN CLASS="syntax6">println</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">SALE-PRICE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>());
+<SPAN CLASS="gutterH">  40:</SPAN>                    <SPAN CLASS="syntax18">}</SPAN>
+<SPAN CLASS="gutter">  41:</SPAN>
+<SPAN CLASS="gutter">  42:</SPAN>                    reader.<SPAN CLASS="syntax6">close</SPAN>();
+<SPAN CLASS="gutter">  43:</SPAN>                    writer.<SPAN CLASS="syntax6">close</SPAN>();
+<SPAN CLASS="gutter">  44:</SPAN>                <SPAN CLASS="syntax18">}</SPAN> <SPAN CLASS="syntax8">catch</SPAN> (Exception e) <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutterH">  45:</SPAN>                    System.out.<SPAN CLASS="syntax6">println</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">~~&gt;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> lineNum <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> e.<SPAN CLASS="syntax6">getMessage</SPAN>());
+<SPAN CLASS="gutter">  46:</SPAN>                    System.out.<SPAN CLASS="syntax6">println</SPAN>();
+<SPAN CLASS="gutter">  47:</SPAN>
+<SPAN CLASS="gutter">  48:</SPAN>                    e.<SPAN CLASS="syntax6">printStackTrace</SPAN>();
+<SPAN CLASS="gutter">  49:</SPAN>                <SPAN CLASS="syntax18">}</SPAN>
+<SPAN CLASS="gutterH">  50:</SPAN>
+</PRE><P><P><H3><A NAME="Header_12">Reading and Writing a CSV file</A></H3>
+<P>The following example shows you how to read and write a CSV file with the field names on the first line and a field-seperator of "&#58;"
+<P>
+<PRE><SPAN CLASS="gutter">14:</SPAN>            <SPAN CLASS="syntax8">private</SPAN> <SPAN CLASS="syntax8">static</SPAN> <SPAN CLASS="syntax8">final</SPAN> <SPAN CLASS="syntax10">double</SPAN> GST_CONVERSION <SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax5">1</SPAN>.<SPAN CLASS="syntax5">1</SPAN>;
+<SPAN CLASS="gutterH">15:</SPAN>
+<SPAN CLASS="gutter">16:</SPAN>            <SPAN CLASS="syntax8">private</SPAN> String installDir          <SPAN CLASS="syntax18">=</SPAN> TstConstants.SAMPLE_DIRECTORY;
+<SPAN CLASS="gutter">17:</SPAN>            <SPAN CLASS="syntax8">private</SPAN> String salesFile           <SPAN CLASS="syntax18">=</SPAN> installDir <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">DTAR020.csv</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>;
+<SPAN CLASS="gutter">18:</SPAN>            <SPAN CLASS="syntax8">private</SPAN> String salesFileOut        <SPAN CLASS="syntax18">=</SPAN> installDir <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">DTAR020out.csv</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>;
+<SPAN CLASS="gutter">19:</SPAN>
+<SPAN CLASS="gutterH">20:</SPAN>            <SPAN CLASS="syntax3">/**</SPAN>
+<SPAN CLASS="gutter">21:</SPAN><SPAN CLASS="syntax3">        </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">*</SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">Example</SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">of</SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">LineReader</SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">/</SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">LineWrite</SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">classes</SPAN>
+<SPAN CLASS="gutter">22:</SPAN><SPAN CLASS="syntax3">        </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3"> </SPAN><SPAN CLASS="syntax3">*/</SPAN>
+<SPAN CLASS="gutter">23:</SPAN>            <SPAN CLASS="syntax8">private</SPAN> <SPAN CLASS="syntax6"></SPAN>() <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">24:</SPAN>                <SPAN CLASS="syntax14">super</SPAN>();
+<SPAN CLASS="gutterH">25:</SPAN>
+<SPAN CLASS="gutter">26:</SPAN>                <SPAN CLASS="syntax10">int</SPAN> lineNum <SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax5">0</SPAN>;
+<SPAN CLASS="gutter">27:</SPAN>                <SPAN CLASS="syntax10">double</SPAN> gstExclusive;
+<SPAN CLASS="gutter">28:</SPAN>                AbstractLine saleRecord;
+<SPAN CLASS="gutter">29:</SPAN>
+<SPAN CLASS="gutterH">30:</SPAN>                <SPAN CLASS="syntax8">try</SPAN> <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">31:</SPAN>
+<SPAN CLASS="gutter">32:</SPAN>                    TextLineReader reader  <SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax8">new</SPAN> <SPAN CLASS="syntax6">TextLineReader</SPAN>(<SPAN CLASS="syntax14">null</SPAN>, <SPAN CLASS="syntax14">true</SPAN>);
+<SPAN CLASS="gutter">33:</SPAN>
+<SPAN CLASS="gutter">34:</SPAN>                    TextLineWriter writer  <SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax8">new</SPAN> <SPAN CLASS="syntax6">TextLineWriter</SPAN>(<SPAN CLASS="syntax14">true</SPAN>);
+<SPAN CLASS="gutterH">35:</SPAN>
+<SPAN CLASS="gutter">36:</SPAN>                    reader.<SPAN CLASS="syntax6">setDefaultDelim</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">:</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>);
+<SPAN CLASS="gutter">37:</SPAN>                    reader.<SPAN CLASS="syntax6">open</SPAN>(salesFile);
+<SPAN CLASS="gutter">38:</SPAN>                    writer.<SPAN CLASS="syntax6">open</SPAN>(salesFileOut);
+<SPAN CLASS="gutter">39:</SPAN>
+<SPAN CLASS="gutterH">40:</SPAN>                    <SPAN CLASS="syntax8">while</SPAN> ((saleRecord <SPAN CLASS="syntax18">=</SPAN> reader.<SPAN CLASS="syntax6">read</SPAN>()) <SPAN CLASS="syntax18">!</SPAN><SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax14">null</SPAN>) <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">41:</SPAN>                        lineNum <SPAN CLASS="syntax18">+</SPAN><SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax5">1</SPAN>;
+<SPAN CLASS="gutter">42:</SPAN>
+<SPAN CLASS="gutter">43:</SPAN>                        System.out.<SPAN CLASS="syntax6">print</SPAN>(saleRecord.<SPAN CLASS="syntax6">getField</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">KEYCODE_NO</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>)
+<SPAN CLASS="gutter">44:</SPAN>                                <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> saleRecord.<SPAN CLASS="syntax6">getField</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">QTY_SOLD</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>)
+<SPAN CLASS="gutterH">45:</SPAN>                                <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> saleRecord.<SPAN CLASS="syntax6">getField</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">SALE_PRICE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>));
+<SPAN CLASS="gutter">46:</SPAN>
+<SPAN CLASS="gutter">47:</SPAN>                        gstExclusive <SPAN CLASS="syntax18">=</SPAN> Double.<SPAN CLASS="syntax6">valueOf</SPAN>(saleRecord.<SPAN CLASS="syntax6">getField</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">SALE_PRICE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">toString</SPAN>()) <SPAN CLASS="syntax18">/</SPAN> GST_CONVERSION;
+<SPAN CLASS="gutter">48:</SPAN>                        saleRecord.<SPAN CLASS="syntax6">setField</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">SALE_PRICE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>, Double.<SPAN CLASS="syntax6">valueOf</SPAN>(gstExclusive));
+<SPAN CLASS="gutter">49:</SPAN>                        writer.<SPAN CLASS="syntax6">write</SPAN>(saleRecord);
+<SPAN CLASS="gutterH">50:</SPAN>
+<SPAN CLASS="gutter">51:</SPAN>                        System.out.<SPAN CLASS="syntax6">println</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> saleRecord.<SPAN CLASS="syntax6">getField</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">SALE_PRICE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>));
+<SPAN CLASS="gutter">52:</SPAN>                    <SPAN CLASS="syntax18">}</SPAN>
+<SPAN CLASS="gutter">53:</SPAN>
+<SPAN CLASS="gutter">54:</SPAN>                    reader.<SPAN CLASS="syntax6">close</SPAN>();
+<SPAN CLASS="gutterH">55:</SPAN>                    writer.<SPAN CLASS="syntax6">close</SPAN>();
+<SPAN CLASS="gutter">56:</SPAN>                <SPAN CLASS="syntax18">}</SPAN> <SPAN CLASS="syntax8">catch</SPAN> (Exception e) <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">57:</SPAN>                    System.out.<SPAN CLASS="syntax6">println</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">~~&gt;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> lineNum <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> e.<SPAN CLASS="syntax6">getMessage</SPAN>());
+<SPAN CLASS="gutter">58:</SPAN>                    System.out.<SPAN CLASS="syntax6">println</SPAN>();
+<SPAN CLASS="gutter">59:</SPAN>
+<SPAN CLASS="gutterH">60:</SPAN>                    e.<SPAN CLASS="syntax6">printStackTrace</SPAN>();
+<SPAN CLASS="gutter">61:</SPAN>                <SPAN CLASS="syntax18">}</SPAN>
+<SPAN CLASS="gutter">62:</SPAN>            <SPAN CLASS="syntax18">}</SPAN>
+</PRE><P><P><H3><A NAME="Header_13">Reading and Writing using Record-Editor XML Layout</A></H3>
+<P>Instead of using Cobool Copybooks, you can use the XML to describe the layout. Here is an example of reading / writing a file
+using a Record-Editor XML layout (or copybook).
+<P>
+<P>RecordLayout for a mainframe file file&#58;
+<P>
+<PRE><SPAN CLASS="gutter">   1:</SPAN><SPAN CLASS="syntax10">&lt;?</SPAN><SPAN CLASS="syntax10">xml</SPAN><SPAN CLASS="syntax10"> </SPAN><SPAN CLASS="syntax10">version=&quot;1.0&quot;</SPAN><SPAN CLASS="syntax10"> </SPAN><SPAN CLASS="syntax10">?</SPAN><SPAN CLASS="syntax10">&gt;</SPAN>
+<SPAN CLASS="gutter">   2:</SPAN><SPAN CLASS="syntax17">&lt;</SPAN><SPAN CLASS="syntax17">RECORD</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">RECORDNAME</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">DTAR020</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">COPYBOOK</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">DTAR020</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">DELIMITER</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">&amp;lt;Tab&amp;gt;</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN>
+<SPAN CLASS="gutter">   3:</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">FONTNAME</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">CP037</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">FILESTRUCTURE</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">Default</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">STYLE</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">0</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">RECORDTYPE</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">RecordLayout</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>
+<SPAN CLASS="gutter">   4:</SPAN><SPAN CLASS="syntax17">        </SPAN><SPAN CLASS="syntax17">LIST</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">Y</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">QUOTE</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">RecSep</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">default</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17">&gt;</SPAN>
+<SPAN CLASS="gutterH">   5:</SPAN>        <SPAN CLASS="syntax17">&lt;</SPAN><SPAN CLASS="syntax17">FIELDS</SPAN><SPAN CLASS="syntax17">&gt;</SPAN>
+<SPAN CLASS="gutter">   6:</SPAN>                <SPAN CLASS="syntax17">&lt;</SPAN><SPAN CLASS="syntax17">FIELD</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">NAME</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">KEYCODE-NO</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">POSITION</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">1</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">LENGTH</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">8</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">TYPE</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">Char</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">/</SPAN><SPAN CLASS="syntax17">&gt;</SPAN>
+<SPAN CLASS="gutter">   7:</SPAN>                <SPAN CLASS="syntax17">&lt;</SPAN><SPAN CLASS="syntax17">FIELD</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">NAME</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">STORE-NO</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">POSITION</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">9</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">LENGTH</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">2</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">TYPE</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">Mainframe</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">Packed</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">Decimal</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">(comp-3)</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">/</SPAN><SPAN CLASS="syntax17">&gt;</SPAN>
+<SPAN CLASS="gutter">   8:</SPAN>                <SPAN CLASS="syntax17">&lt;</SPAN><SPAN CLASS="syntax17">FIELD</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">NAME</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">DATE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">POSITION</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">11</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">LENGTH</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">4</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">TYPE</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">Mainframe</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">Packed</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">Decimal</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">(comp-3)</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">/</SPAN><SPAN CLASS="syntax17">&gt;</SPAN>
+<SPAN CLASS="gutter">   9:</SPAN>                <SPAN CLASS="syntax17">&lt;</SPAN><SPAN CLASS="syntax17">FIELD</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">NAME</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">DEPT-NO</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">POSITION</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">15</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">LENGTH</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">2</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">TYPE</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">Mainframe</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">Packed</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">Decimal</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">(comp-3)</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">/</SPAN><SPAN CLASS="syntax17">&gt;</SPAN>
+<SPAN CLASS="gutterH">  10:</SPAN>                <SPAN CLASS="syntax17">&lt;</SPAN><SPAN CLASS="syntax17">FIELD</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">NAME</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">QTY-SOLD</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">POSITION</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">17</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">LENGTH</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">5</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">TYPE</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">Mainframe</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">Packed</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">Decimal</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">(comp-3)</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">/</SPAN><SPAN CLASS="syntax17">&gt;</SPAN>
+<SPAN CLASS="gutter">  11:</SPAN>                <SPAN CLASS="syntax17">&lt;</SPAN><SPAN CLASS="syntax17">FIELD</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">NAME</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">SALE-PRICE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">POSITION</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">22</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">LENGTH</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">6</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">DECIMAL</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">2</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">TYPE</SPAN><SPAN CLASS="syntax17">=</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">Mainframe</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">Packed</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">Decimal</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">(comp-3)</SPAN><SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax17"> </SPAN><SPAN CLASS="syntax17">/</SPAN><SPAN CLASS="syntax17">&gt;</SPAN>
+<SPAN CLASS="gutter">  12:</SPAN>        <SPAN CLASS="syntax17">&lt;</SPAN><SPAN CLASS="syntax17">/</SPAN><SPAN CLASS="syntax17">FIELDS</SPAN><SPAN CLASS="syntax17">&gt;</SPAN>
+<SPAN CLASS="gutter">  13:</SPAN><SPAN CLASS="syntax17">&lt;</SPAN><SPAN CLASS="syntax17">/</SPAN><SPAN CLASS="syntax17">RECORD</SPAN><SPAN CLASS="syntax17">&gt;</SPAN>
+</PRE><P><P><P>Java Code to read the file:
+<P>
+<PRE><SPAN CLASS="gutter">   1:</SPAN>                <SPAN CLASS="syntax10">double</SPAN> GST_CONVERSION <SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax5">1</SPAN>.<SPAN CLASS="syntax5">1</SPAN>;
+<SPAN CLASS="gutter">   2:</SPAN>
+<SPAN CLASS="gutter">   3:</SPAN>                String installDir     <SPAN CLASS="syntax18">=</SPAN> TstConstants.SAMPLE_DIRECTORY;
+<SPAN CLASS="gutter">   4:</SPAN>                String salesFile      <SPAN CLASS="syntax18">=</SPAN> installDir <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">DTAR020.bin</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>;
+<SPAN CLASS="gutterH">   5:</SPAN>                String salesFileOut   <SPAN CLASS="syntax18">=</SPAN> installDir <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">DTAR020out.bin</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>;
+<SPAN CLASS="gutter">   6:</SPAN>                String copybookName   <SPAN CLASS="syntax18">=</SPAN> TstConstants.RECORD_EDITOR_XML_DIRECTORY
+<SPAN CLASS="gutter">   7:</SPAN>                                               <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">DTAR020.Xml</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>;
+<SPAN CLASS="gutter">   8:</SPAN>                <SPAN CLASS="syntax10">int</SPAN> lineNum <SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax5">0</SPAN>;
+<SPAN CLASS="gutter">   9:</SPAN>                <SPAN CLASS="syntax10">double</SPAN> gstExclusive;
+<SPAN CLASS="gutterH">  10:</SPAN>                AbstractLine saleRecord;
+<SPAN CLASS="gutter">  11:</SPAN>
+<SPAN CLASS="gutter">  12:</SPAN>                <SPAN CLASS="syntax8">try</SPAN> <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">  13:</SPAN>                    CopybookLoader loader <SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax8">new</SPAN> <SPAN CLASS="syntax6">RecordEditorXmlLoader</SPAN>();
+<SPAN CLASS="gutter">  14:</SPAN>                    LayoutDetail layout <SPAN CLASS="syntax18">=</SPAN> loader.<SPAN CLASS="syntax6">loadCopyBook</SPAN>(copybookName, <SPAN CLASS="syntax5">0</SPAN>, <SPAN CLASS="syntax5">0</SPAN>, <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>, <SPAN CLASS="syntax5">0</SPAN>, <SPAN CLASS="syntax5">0</SPAN>, <SPAN CLASS="syntax14">null</SPAN>).<SPAN CLASS="syntax6">asLayoutDetail</SPAN>();
+<SPAN CLASS="gutterH">  15:</SPAN>
+<SPAN CLASS="gutter">  16:</SPAN>                    <SPAN CLASS="syntax1">/*</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">with</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">XML</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">copybooks,</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">get</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">the</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">file</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">structure</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">from</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">layout</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">*/</SPAN>
+<SPAN CLASS="gutter">  17:</SPAN>                    <SPAN CLASS="syntax10">int</SPAN> fileStructure <SPAN CLASS="syntax18">=</SPAN> layout.<SPAN CLASS="syntax6">getFileStructure</SPAN>();
+<SPAN CLASS="gutter">  18:</SPAN>
+<SPAN CLASS="gutter">  19:</SPAN>                    AbstractLineReader reader  <SPAN CLASS="syntax18">=</SPAN> LineIOProvider.<SPAN CLASS="syntax6">getInstance</SPAN>().<SPAN CLASS="syntax6">getLineReader</SPAN>(fileStructure);
+<SPAN CLASS="gutterH">  20:</SPAN>                    AbstractLineWriter writer  <SPAN CLASS="syntax18">=</SPAN> LineIOProvider.<SPAN CLASS="syntax6">getInstance</SPAN>().<SPAN CLASS="syntax6">getLineWriter</SPAN>(fileStructure);
+<SPAN CLASS="gutter">  21:</SPAN>
+<SPAN CLASS="gutter">  22:</SPAN>                    reader.<SPAN CLASS="syntax6">open</SPAN>(salesFile, layout);
+<SPAN CLASS="gutter">  23:</SPAN>                    writer.<SPAN CLASS="syntax6">open</SPAN>(salesFileOut);
+<SPAN CLASS="gutter">  24:</SPAN>
+<SPAN CLASS="gutterH">  25:</SPAN>                    <SPAN CLASS="syntax8">while</SPAN> ((saleRecord <SPAN CLASS="syntax18">=</SPAN> reader.<SPAN CLASS="syntax6">read</SPAN>()) <SPAN CLASS="syntax18">!</SPAN><SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax14">null</SPAN>) <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">  26:</SPAN>                        lineNum <SPAN CLASS="syntax18">+</SPAN><SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax5">1</SPAN>;
+<SPAN CLASS="gutter">  27:</SPAN>
+<SPAN CLASS="gutter">  28:</SPAN>                        System.out.<SPAN CLASS="syntax6">print</SPAN>(saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">KEYCODE-NO</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>()
+<SPAN CLASS="gutter">  29:</SPAN>                                <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">QTY-SOLD</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>()
+<SPAN CLASS="gutterH">  30:</SPAN>                                <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">SALE-PRICE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>());
+<SPAN CLASS="gutter">  31:</SPAN>
+<SPAN CLASS="gutter">  32:</SPAN>                        gstExclusive <SPAN CLASS="syntax18">=</SPAN> saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">SALE-PRICE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asDouble</SPAN>() <SPAN CLASS="syntax18">/</SPAN> GST_CONVERSION;
+<SPAN CLASS="gutter">  33:</SPAN>                        saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">SALE-PRICE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">set</SPAN>(gstExclusive);
+<SPAN CLASS="gutter">  34:</SPAN>                        writer.<SPAN CLASS="syntax6">write</SPAN>(saleRecord);
+<SPAN CLASS="gutterH">  35:</SPAN>
+<SPAN CLASS="gutter">  36:</SPAN>                        System.out.<SPAN CLASS="syntax6">println</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">SALE-PRICE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>());
+<SPAN CLASS="gutter">  37:</SPAN>                    <SPAN CLASS="syntax18">}</SPAN>
+<SPAN CLASS="gutter">  38:</SPAN>
+<SPAN CLASS="gutter">  39:</SPAN>                    reader.<SPAN CLASS="syntax6">close</SPAN>();
+<SPAN CLASS="gutterH">  40:</SPAN>                    writer.<SPAN CLASS="syntax6">close</SPAN>();
+<SPAN CLASS="gutter">  41:</SPAN>                <SPAN CLASS="syntax18">}</SPAN> <SPAN CLASS="syntax8">catch</SPAN> (Exception e) <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">  42:</SPAN>
+</PRE><P><P><H3><A NAME="Header_14">Writing a File (XML Layout)</A></H3>
+<P>Here is an example of how to create some data then write it to a File.
+<P><B>Note: </B>Layout Definition is in held in a RecordEditor-Xml format.
+<P>
+<PRE><SPAN CLASS="gutter">   1:</SPAN>                    <SPAN CLASS="syntax10">int</SPAN> fileStructure <SPAN CLASS="syntax18">=</SPAN> Constants.IO_FIXED_LENGTH;
+<SPAN CLASS="gutter">   2:</SPAN>                    CopybookLoader loader <SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax8">new</SPAN> <SPAN CLASS="syntax6">RecordEditorXmlLoader</SPAN>();
+<SPAN CLASS="gutter">   3:</SPAN>                    ExternalRecord extlayout <SPAN CLASS="syntax18">=</SPAN> loader.<SPAN CLASS="syntax6">loadCopyBook</SPAN>(copybookName, <SPAN CLASS="syntax5">0</SPAN>, <SPAN CLASS="syntax5">0</SPAN>, <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>, <SPAN CLASS="syntax5">0</SPAN>, <SPAN CLASS="syntax5">0</SPAN>, <SPAN CLASS="syntax14">null</SPAN>);
+<SPAN CLASS="gutter">   4:</SPAN>                    <SPAN CLASS="syntax1">/*</SPAN><SPAN CLASS="syntax1"> </SPAN>
+<SPAN CLASS="gutterH">   5:</SPAN><SPAN CLASS="syntax1">        </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">*</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">Converting</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">from</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">the</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">interchange</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">(ExternalRecord)</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">format</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">to</SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">LayoutDetail</SPAN>
+<SPAN CLASS="gutter">   6:</SPAN><SPAN CLASS="syntax1">        </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1"> </SPAN><SPAN CLASS="syntax1">*/</SPAN>
+<SPAN CLASS="gutter">   7:</SPAN>                    LayoutDetail layout <SPAN CLASS="syntax18">=</SPAN> ToLayoutDetail.<SPAN CLASS="syntax6">getInstance</SPAN>().<SPAN CLASS="syntax6">getLayout</SPAN>(extlayout);
+<SPAN CLASS="gutter">   8:</SPAN>                    AbstractLine saleRecord <SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax8">new</SPAN> <SPAN CLASS="syntax6">Line</SPAN>(layout);
+<SPAN CLASS="gutter">   9:</SPAN>                    AbstractLineWriter writer  <SPAN CLASS="syntax18">=</SPAN> LineIOProvider.<SPAN CLASS="syntax6">getInstance</SPAN>().<SPAN CLASS="syntax6">getLineWriter</SPAN>(fileStructure);
+<SPAN CLASS="gutterH">  10:</SPAN>
+<SPAN CLASS="gutter">  11:</SPAN>                    writer.<SPAN CLASS="syntax6">open</SPAN>(salesFileOut);
+<SPAN CLASS="gutter">  12:</SPAN>
+<SPAN CLASS="gutter">  13:</SPAN>                    saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">KEYCODE-NO</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">set</SPAN>(<SPAN CLASS="syntax5">1331</SPAN>);
+<SPAN CLASS="gutter">  14:</SPAN>                    saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">STORE-NO</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">set</SPAN>(<SPAN CLASS="syntax5">1</SPAN>);
+<SPAN CLASS="gutterH">  15:</SPAN>                    saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">DATE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">set</SPAN>(<SPAN CLASS="syntax5">80921</SPAN>);
+<SPAN CLASS="gutter">  16:</SPAN>                    saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">DEPT-NO</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">set</SPAN>(<SPAN CLASS="syntax5">100</SPAN>);
+<SPAN CLASS="gutter">  17:</SPAN>                    saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">QTY-SOLD</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">set</SPAN>(<SPAN CLASS="syntax5">7</SPAN>);
+<SPAN CLASS="gutter">  18:</SPAN>                    saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">SALE-PRICE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">set</SPAN>(<SPAN CLASS="syntax5">7</SPAN>.<SPAN CLASS="syntax5">00</SPAN>);
+<SPAN CLASS="gutter">  19:</SPAN>                    writer.<SPAN CLASS="syntax6">write</SPAN>(saleRecord);
+<SPAN CLASS="gutterH">  20:</SPAN>
+<SPAN CLASS="gutter">  21:</SPAN>                    saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">STORE-NO</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">set</SPAN>(<SPAN CLASS="syntax5">11</SPAN>);
+<SPAN CLASS="gutter">  22:</SPAN>                    writer.<SPAN CLASS="syntax6">write</SPAN>(saleRecord);
+<SPAN CLASS="gutter">  23:</SPAN>
+<SPAN CLASS="gutter">  24:</SPAN>                    saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">STORE-NO</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">set</SPAN>(<SPAN CLASS="syntax5">11</SPAN>);
+<SPAN CLASS="gutterH">  25:</SPAN>                    writer.<SPAN CLASS="syntax6">write</SPAN>(saleRecord);
+<SPAN CLASS="gutter">  26:</SPAN>
+<SPAN CLASS="gutter">  27:</SPAN>                    System.out.<SPAN CLASS="syntax6">println</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN> <SPAN CLASS="syntax18">+</SPAN> saleRecord.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">SALE-PRICE</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>());
+<SPAN CLASS="gutter">  28:</SPAN>                    writer.<SPAN CLASS="syntax6">close</SPAN>();
+<SPAN CLASS="gutter">  29:</SPAN>
+</PRE><P><P><P><H3><A NAME="Header_15">Reading a XML file</A></H3>
+<P>
+<P>If you really want to; you can also read XML files in much the same way. You need Java Version 6 or a StAX package installed.
+<P>
+<PRE><SPAN CLASS="gutter">   1:</SPAN>        AbstractLine line;
+<SPAN CLASS="gutter">   2:</SPAN>        XmlLineReader reader <SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax8">new</SPAN> <SPAN CLASS="syntax6">XmlLineReader</SPAN>(<SPAN CLASS="syntax14">true</SPAN>);
+<SPAN CLASS="gutter">   3:</SPAN>        String field, id;
+<SPAN CLASS="gutter">   4:</SPAN>
+<SPAN CLASS="gutterH">   5:</SPAN>
+<SPAN CLASS="gutter">   6:</SPAN>        <SPAN CLASS="syntax8">try</SPAN> <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">   7:</SPAN>            reader.<SPAN CLASS="syntax6">open</SPAN>(mam0045);
+<SPAN CLASS="gutter">   8:</SPAN>
+<SPAN CLASS="gutter">   9:</SPAN>            <SPAN CLASS="syntax8">while</SPAN> ((line <SPAN CLASS="syntax18">=</SPAN> reader.<SPAN CLASS="syntax6">read</SPAN>()) <SPAN CLASS="syntax18">!</SPAN><SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax14">null</SPAN>) <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutterH">  10:</SPAN>
+<SPAN CLASS="gutter">  11:</SPAN>                <SPAN CLASS="syntax2">//</SPAN><SPAN CLASS="syntax2"> </SPAN><SPAN CLASS="syntax2">Checking</SPAN><SPAN CLASS="syntax2"> </SPAN><SPAN CLASS="syntax2">the</SPAN><SPAN CLASS="syntax2"> </SPAN><SPAN CLASS="syntax2">XML</SPAN><SPAN CLASS="syntax2"> </SPAN><SPAN CLASS="syntax2">element</SPAN><SPAN CLASS="syntax2"> </SPAN><SPAN CLASS="syntax2"> </SPAN><SPAN CLASS="syntax2">name;</SPAN><SPAN CLASS="syntax2"> </SPAN><SPAN CLASS="syntax2"> </SPAN>
+<SPAN CLASS="gutter">  12:</SPAN>                field <SPAN CLASS="syntax18">=</SPAN> line.<SPAN CLASS="syntax6">getFieldValue</SPAN>(XmlConstants.XML_NAME).<SPAN CLASS="syntax6">asString</SPAN>();
+<SPAN CLASS="gutter">  13:</SPAN>                <SPAN CLASS="syntax8">if</SPAN> (field <SPAN CLASS="syntax18">!</SPAN><SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax14">null</SPAN> <SPAN CLASS="syntax18">&amp;</SPAN><SPAN CLASS="syntax18">&amp;</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">field</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>.<SPAN CLASS="syntax6">equalsIgnoreCase</SPAN>(field)) <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">  14:</SPAN>                    id <SPAN CLASS="syntax18">=</SPAN> line.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">id</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>();
+<SPAN CLASS="gutterH">  15:</SPAN>                    <SPAN CLASS="syntax8">if</SPAN> (id <SPAN CLASS="syntax18">=</SPAN><SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax14">null</SPAN>) <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">  16:</SPAN>                        id <SPAN CLASS="syntax18">=</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>;
+<SPAN CLASS="gutter">  17:</SPAN>                    <SPAN CLASS="syntax18">}</SPAN>
+<SPAN CLASS="gutter">  18:</SPAN>                    System.out.<SPAN CLASS="syntax6">println</SPAN>(
+<SPAN CLASS="gutter">  19:</SPAN>                              line.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">row</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>() <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">\t</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>
+<SPAN CLASS="gutterH">  20:</SPAN>                            <SPAN CLASS="syntax18">+</SPAN> line.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">col</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>() <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">\t</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>
+<SPAN CLASS="gutter">  21:</SPAN>                            <SPAN CLASS="syntax18">+</SPAN> (line.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">ATTRB</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>()
+<SPAN CLASS="gutter">  22:</SPAN>                               <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">substring</SPAN>(<SPAN CLASS="syntax5">0</SPAN>, <SPAN CLASS="syntax5">12</SPAN>) <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">\t</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>
+<SPAN CLASS="gutter">  23:</SPAN>                            <SPAN CLASS="syntax18">+</SPAN> (id <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13"> </SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">substring</SPAN>(<SPAN CLASS="syntax5">0</SPAN>, <SPAN CLASS="syntax5">12</SPAN>) <SPAN CLASS="syntax18">+</SPAN> <SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">\t</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>
+<SPAN CLASS="gutter">  24:</SPAN>                            <SPAN CLASS="syntax18">+</SPAN> line.<SPAN CLASS="syntax6">getFieldValue</SPAN>(<SPAN CLASS="syntax13">&quot;</SPAN><SPAN CLASS="syntax13">INITIAL</SPAN><SPAN CLASS="syntax13">&quot;</SPAN>).<SPAN CLASS="syntax6">asString</SPAN>()
+<SPAN CLASS="gutterH">  25:</SPAN>                    );
+<SPAN CLASS="gutter">  26:</SPAN>                <SPAN CLASS="syntax18">}</SPAN>
+<SPAN CLASS="gutter">  27:</SPAN>            <SPAN CLASS="syntax18">}</SPAN>
+<SPAN CLASS="gutter">  28:</SPAN>
+<SPAN CLASS="gutter">  29:</SPAN>            reader.<SPAN CLASS="syntax6">close</SPAN>();
+<SPAN CLASS="gutterH">  30:</SPAN>
+<SPAN CLASS="gutter">  31:</SPAN>        <SPAN CLASS="syntax18">}</SPAN> <SPAN CLASS="syntax8">catch</SPAN> (Exception e) <SPAN CLASS="syntax18">{</SPAN>
+<SPAN CLASS="gutter">  32:</SPAN>
+</PRE><P><P>&nbsp;<p>
+<TABLE width="100%"><tr>
+<td width="34%" id=dark><a id=dark href="http://sourceforge.net/projects/jrecord/">JRecord at SourceForge</a></td>
+<td width="33%" id=dark><a id=dark href="http://sourceforge.net/projects/jrecord/files/jrecord/">Download Page</a></td>
+<td id=dark><a id=dark href="http://sourceforge.net/projects/jrecord/forums">Forums</a></td>
+</tr></TABLE>
+<P>
+<A NAME="Bot_Of_Page"></A>
+</BODY></HTML>

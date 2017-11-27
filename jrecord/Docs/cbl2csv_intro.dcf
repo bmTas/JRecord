@@ -1,0 +1,52 @@
+:p.This project is for converting :hp2.Simple:ehp2. :hp1.Cobol Data Files:ehp1. to/from :hp1.Csv Files:ehp1..
+The project supports several Cobol dialects + number of other options. CobolToCsv depends on
+the following projects:
+:ul compact.
+ :li.:cb2xml. - Converts a Cobol Copybook to Xml.
+ :li.:JRecord. - Read/Write Cobol data files using a Cobol Copybook in Java. It also supplies the 
+Csv file handling.
+:eul.
+                                              
+:p.This project will take a Cobol-Copybook and Cobol-Data-File
+
+:p.Cobol-Copybook&gml
+.*b2h html <pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 9 </font></span><font color="#cc6600">000900</font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-KCODE-STORE-KEY.                  
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">10 </font></span><font color="#cc6600">001000</font><font color="#cc6600"> </font>           <font color="#ff0000">05</font> DTAR020-KEYCODE-NO      <font color="#006699"><strong>PIC</strong></font> X(<font color="#ff0000">08</font>).   
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">11 </font></span><font color="#cc6600">001100</font><font color="#cc6600"> </font>           <font color="#ff0000">05</font> DTAR020-STORE-NO        <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">03</font>)   <font color="#006699"><strong>COMP-3</strong></font>.   
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">12 </font></span><font color="#cc6600">001200</font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-DATE               <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">07</font>)   <font color="#006699"><strong>COMP-3</strong></font>.   
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">13 </font></span><font color="#cc6600">001300</font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-DEPT-NO            <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">03</font>)   <font color="#006699"><strong>COMP-3</strong></font>.   
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">14 </font></span><font color="#cc6600">001400</font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-QTY-SOLD           <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">9</font>)    <font color="#006699"><strong>COMP-3</strong></font>.   
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">15 </font></span><font color="#cc6600">001500</font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-SALE-PRICE         <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">9</font>)V99 <font color="#006699"><strong>COMP-3</strong></font>.   
+.*b2h html </font></pre>
+:p.
+:p.Cobol-Data-File&gml.
+:p.
+.pict dtar020.png
+
+:p.And the script to convert the Cobol Data file to a  Csv file (field delimiter=,)&gml.
+.fo off
+
+    java -jar ../lib/Cobol2Csv.jar ^
+                      -C DTAR020.cbl  -IFS Fixed_Length    -IC CP037 ^
+                      -Q DoubleQuote  -Delimiter , ^
+                      -I in/DTAR020.bin  -O out/o_DTAR020_a.csv
+
+.fo on
+:p.
+:p.And the Csv output from the above&gml.
+.*b2h html <pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 1 </font></span>DTAR020_KEYCODE_NO<font color="#0000ff">,</font><font color="#cc0000">DTAR020_STORE_NO</font><font color="#0000ff">,</font>DTAR020_DATE<font color="#0000ff">,</font><font color="#cc0000">DTAR020_DEPT_NO</font><font color="#0000ff">,</font>DTAR020_QTY_SOLD<font color="#0000ff">,</font><font color="#cc0000">DTAR020_SALE_PRICE</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 2 </font></span>69684558<font color="#0000ff">,</font><font color="#cc0000">20</font><font color="#0000ff">,</font>40118<font color="#0000ff">,</font><font color="#cc0000">280</font><font color="#0000ff">,</font>1<font color="#0000ff">,</font><font color="#cc0000">19.00</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 3 </font></span>69684558<font color="#0000ff">,</font><font color="#cc0000">20</font><font color="#0000ff">,</font>40118<font color="#0000ff">,</font><font color="#cc0000">280</font><font color="#0000ff">,</font>-1<font color="#0000ff">,</font><font color="#cc0000">-19.00</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 4 </font></span>69684558<font color="#0000ff">,</font><font color="#cc0000">20</font><font color="#0000ff">,</font>40118<font color="#0000ff">,</font><font color="#cc0000">280</font><font color="#0000ff">,</font>1<font color="#0000ff">,</font><font color="#cc0000">5.01</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066"> 5 </font></span>69694158<font color="#0000ff">,</font><font color="#cc0000">20</font><font color="#0000ff">,</font>40118<font color="#0000ff">,</font><font color="#cc0000">280</font><font color="#0000ff">,</font>1<font color="#0000ff">,</font><font color="#cc0000">19.00</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 6 </font></span>69694158<font color="#0000ff">,</font><font color="#cc0000">20</font><font color="#0000ff">,</font>40118<font color="#0000ff">,</font><font color="#cc0000">280</font><font color="#0000ff">,</font>-1<font color="#0000ff">,</font><font color="#cc0000">-19.00</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 7 </font></span>69694158<font color="#0000ff">,</font><font color="#cc0000">20</font><font color="#0000ff">,</font>40118<font color="#0000ff">,</font><font color="#cc0000">280</font><font color="#0000ff">,</font>1<font color="#0000ff">,</font><font color="#cc0000">5.01</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 8 </font></span>63604808<font color="#0000ff">,</font><font color="#cc0000">20</font><font color="#0000ff">,</font>40118<font color="#0000ff">,</font><font color="#cc0000">170</font><font color="#0000ff">,</font>1<font color="#0000ff">,</font><font color="#cc0000">4.87</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 9 </font></span>62684671<font color="#0000ff">,</font><font color="#cc0000">20</font><font color="#0000ff">,</font>40118<font color="#0000ff">,</font><font color="#cc0000">685</font><font color="#0000ff">,</font>1<font color="#0000ff">,</font><font color="#cc0000">69.99</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">10 </font></span>62684671<font color="#0000ff">,</font><font color="#cc0000">20</font><font color="#0000ff">,</font>40118<font color="#0000ff">,</font><font color="#cc0000">685</font><font color="#0000ff">,</font>-1<font color="#0000ff">,</font><font color="#cc0000">-69.99</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">11 </font></span>64634429<font color="#0000ff">,</font><font color="#cc0000">20</font><font color="#0000ff">,</font>40118<font color="#0000ff">,</font><font color="#cc0000">957</font><font color="#0000ff">,</font>1<font color="#0000ff">,</font><font color="#cc0000">3.99</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">12 </font></span>66624458<font color="#0000ff">,</font><font color="#cc0000">20</font><font color="#0000ff">,</font>40118<font color="#0000ff">,</font><font color="#cc0000">957</font><font color="#0000ff">,</font>1<font color="#0000ff">,</font><font color="#cc0000">0.89</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">13 </font></span>63674861<font color="#0000ff">,</font><font color="#cc0000">20</font><font color="#0000ff">,</font>40118<font color="#0000ff">,</font><font color="#cc0000">957</font><font color="#0000ff">,</font>10<font color="#0000ff">,</font><font color="#cc0000">2.70</font>
+.*b2h html </font></pre>
+
+

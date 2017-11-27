@@ -1,0 +1,296 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.2//EN">
+<HTML><HEAD>
+<TITLE>JRecord</TITLE>
+<!-- Begin Header Records  ========================================== -->
+<!-- E:\Work\JRecord\JRecord\Docs1\JRecord.dcf converted by B2H R4.7  -->
+<!-- (390) (WINNT) on 17 Mar 2011 at 12:24:36                         -->
+<META HTTP-EQUIV="updated" CONTENT="Thu, 17 Mar 2011 09:50:55">
+<META HTTP-EQUIV="review" CONTENT="Sat, 17 Mar 2012 09:50:55">
+<META HTTP-EQUIV="expires" CONTENT="Sun, 17 Mar 2013 09:50:55">
+<LINK href="tab.css" type=text/css rel=stylesheet>
+<LINK href="tab.css" type=text/css rel=stylesheet>
+<link rel="stylesheet" type="text/css" href="syntax.css">
+</HEAD><BODY>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+ <TR vAlign=top height=110><TD>
+  <h1><A href="http://sourceforge.net/projects/jrecord"> <IMG src="http://sourceforge.net/sflogo.php?group_id=139274&amp;type=5" width="210" height="62" border="0" alt="SourceForge.net Logo" /></A>&nbsp;&nbsp;&nbsp;JRecord</h1>
+  <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+    <TR vAlign=top>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord02.html">JRecord</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord03.html">File Formats</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord04.html">Java Examples</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord05.html">Record Layouts</A></DIV></TD>
+      <TD align=middle><DIV id=activeTab>Layout Wizard</DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord07.html">Editor</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord08.html">Diff Utility</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord09.html">Reporting</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord10.html">Record Editor</A></DIV></TD>
+      <TD align=middle><DIV id=tabLink><A class=tab href="JRecord11.html">Related</A></DIV></TD>
+<TD align=right width="80%"></TD></tr>
+<tr id=dark><td/><td/><td/><td/><td/><td/><td/><td/><td/><td/><td/><TD>&nbsp;</td></tr>
+</TBODY></table></TD> </TR></table>
+<!-- End Header Records  ============================================ -->
+<A NAME="Top_Of_Page"></A>
+<HR><H2><A NAME="Header_29">Layout Wizard</A></H2>
+<a name="Toc"/>
+<MENU>
+<LI><A NAME="PToC_30" HREF="#Header_30" >Layout Wizard</A>
+<MENU>
+<LI><A NAME="PToC_31" HREF="#Header_31" >File Screen</A>
+<LI><A NAME="PToC_32" HREF="#HDRWIZ1A" >File Structure screen</A>
+<LI><A NAME="PToC_33" HREF="#HDRWIZ2" >Field Position screen</A>
+<LI><A NAME="PToC_34" HREF="#HDRWIZ3" >Field Definition screen</A>
+<LI><A NAME="PToC_35" HREF="#Header_35" >Save Screen</A>
+<LI><A NAME="PToC_36" HREF="#HDRWIZ4" >CSV Details</A>
+<LI><A NAME="PToC_37" HREF="#HDRWIZ5" >CSV Field Definition</A>
+</MENU>
+<LI><A NAME="PToC_38" HREF="#HDRMULTIWIZ" >Multiple Record Screen</A>
+<MENU>
+<LI><A NAME="PToC_39" HREF="#HDRWIZRECORDTYPE" >Record Type Field</A>
+<LI><A NAME="PToC_40" HREF="#HDRWIZRECORDNAMES" >Record Name screen</A>
+<LI><A NAME="PToC_41" HREF="#HDRWIZ2M" >Field Position screen</A>
+<LI><A NAME="PToC_42" HREF="#HDRWIZ3M" >Field Definition screen</A>
+<LI><A NAME="PToC_43" HREF="#HDRWIZSAVE1" >Save Layout screen</A>
+</MENU>
+<LI><A NAME="PToC_44" HREF="#HDRWIZSTARTUP" >Startup Options</A>
+<LI><A NAME="PToC_45" HREF="#Header_45" >Convert Layout</A>
+</MENU><P>
+<P>
+<P><H3><A NAME="Header_30">Layout Wizard</A></H3>
+<P>The <I>Record Layout Wizard</I> guides you through creating a
+<B>record layout</B> using a file as the basis. On all the wizard screens,
+you can use Left and Right Arrow buttons (at the bottom of the screen) to move between the
+screens. There are 2 basic groups of Screens:
+<TABLE CELLPADDING="3">
+ <TR VALIGN="TOP"><TD><P><B>Fixed Width
+ </B></TD><TD><P>Screens for defining Fixed field width Files. See <A HREF="#HDRWIZ2">"Field Position screen"</A> and <A HREF="#HDRWIZ3">"Field Definition screen"</A>.
+ </TD></TR><TR VALIGN="TOP"><TD><P><B>CSV
+ </B></TD><TD><P>Screens for defining a CSV file. See <A HREF="#HDRWIZ4">"CSV Details"</A> and <A HREF="#HDRWIZ5">"CSV Field Definition"</A>
+</TD></TR></TABLE>
+<P>
+<P><H4><A NAME="Header_31">File Screen</A></H4>
+<P>On the file screen you enter file details and the name of
+the <B>record layout</B> being created. The field <B>Record Types</B>
+determines whether you travel down the <B>Fixed Width</B> route (<A HREF="#HDRWIZ1A">"File Structure screen"</A>, <A HREF="#HDRWIZ2">"Field Position screen"</A> and <A HREF="#HDRWIZ3">"Field Definition screen"</A>)
+screens or the <B>CSV</B> route ( <A HREF="#HDRWIZ4">"CSV Details"</A> and <A HREF="#HDRWIZ5">"CSV Field Definition"</A>).
+<P>
+<img SRC="Diagram/layout_wizard1.png">
+<P>
+<P>Fields on the window are&#58;
+<TABLE CELLPADDING="3">
+ <TR VALIGN="TOP"><TD><P><B>File Name
+ </B></TD><TD><P>Name of the file you are building a layout for
+ </TD></TR><TR VALIGN="TOP"><TD><P><B>File Structure
+ </B></TD><TD><P>How the file is organized. If you are using Standard Windows / Linux Text files
+<B>leave it as Default Reader</B>
+ </TD></TR><TR VALIGN="TOP"><TD><P><B>Record Type
+ </B></TD><TD><P>This is where your specify whether it is a <font color="blue"><b>Fixed Width Single Record</b></font>, <font color="blue"><b>Fixed Width Multi Record</b></font>, or a <font color="blue"><b>CSV</b></font> file.
+It also determines whether you see the Fixed Width screens <A HREF="#HDRWIZ1A">"File Structure screen"</A>, <A HREF="#HDRWIZ2">"Field Position screen"</A> and <A HREF="#HDRWIZ3">"Field Definition screen"</A>
+or the CSV Screens <A HREF="#HDRWIZ4">"CSV Details"</A> and <A HREF="#HDRWIZ5">"CSV Field Definition"</A>.
+ </TD></TR><TR VALIGN="TOP"><TD><P><B>Font Name
+ </B></TD><TD><P>Font Name of the file (e.g. CP037 for US Ebcidic Characters).
+ </TD></TR><TR VALIGN="TOP"><TD><P><B>Default Type
+ </B></TD><TD><P>What Types Fields to initially assign to a field.
+</TD></TR></TABLE>
+<P>
+<P><H4><A NAME="HDRWIZ1A">File Structure screen</A></H4>
+<P>This screen is only displayed when&#58;
+<UL COMPACT>
+ <LI>File Structure is Fixed width or unknown
+ <LI>Looks like a binary Variable Length file.
+</UL>
+<P>The purpose of the screen to determine the file structure for binary files.
+<P>
+<img SRC="Diagram/layout_wizard1a.png">
+<P>
+<P>Fields
+<TABLE CELLPADDING="3">
+ <TR VALIGN="TOP"><TD><P><B>File Structure
+ </B></TD><TD><P>How the file is organized.
+ </TD></TR><TR VALIGN="TOP"><TD><P><B>Length
+ </B></TD><TD><P>Record Length for a fixed width file. You can also set the length by clicking
+on the record start in the table below.
+</TD></TR><TR VALIGN="TOP"><TD><P><B>Font Name
+ </B></TD><TD><P>Font Name of the file (e.g. CP037 for US Ebcidic Characters).
+</TD></TR></TABLE>
+<P>
+<P><H4><A NAME="HDRWIZ2">Field Position screen</A></H4>
+<P>The second screen displays the file with the fields in alternating background colors.
+<P>To create a new field, click on the first column of the field.
+<P>To remove a field, click on the first column again
+<P>
+<img SRC="Diagram/layout_wizard2.png">
+<P>Other Fields Buttons on the screen include&#58;
+<UL>
+ <P><LI><B>Show Hex</B> Display the file in 2 line Hex mode (Both Text and Hex). Useful when working with Binary / Comp-3 fields.
+ <P><LI><B>Search for</B> Used control what fields are searched for&#58;
+  <TABLE CELLPADDING="3">
+    <TR VALIGN="TOP"><TD><P><B>Mainframe Zoned Decimal
+    </B></TD><TD><P>Look for Mainframe Zoned decimal. In Zoned Decimals, The sign is represented as an
+over-strike of the last character.
+    </TD></TR><TR VALIGN="TOP"><TD><P><B>PC/Unix Zoned Decimal
+    </B></TD><TD><P>Look for Zoned decimal in the Ascii Character set.
+    </TD></TR><TR VALIGN="TOP"><TD><P><B>Comp 3
+    </B></TD><TD><P>Look for <I>Comp 3 (Binary Coded Decimals)</I> in the file. This does not
+do any harm in EBCDIC files but in Ascii files, Alphabetic Characters can be mistaken
+for Comp 3 characters.
+    </TD></TR><TR VALIGN="TOP"><TD><P><B>Binary Integer (Big Endian)
+    </B></TD><TD><P>Look for Binary integers (Big Endian) - Cobol Comp Fields
+   </TD></TR></TABLE>
+  <P><LI><B>Clear Fields</B> Removes all fields
+  <P><LI><B>Add Fields</B> Clear existing fields and search for Fields using the <B>Search For</B>
+options above.
+</UL>
+<P>
+<P><H4><A NAME="HDRWIZ3">Field Definition screen</A></H4>
+<P>The final screen is for defining the field names and field types.
+<P>Once all the fields have been defined, click on the right arrow button
+to define the new layout.
+<P>
+<img SRC="Diagram/layout_wizard3.png">
+<P>
+<P><H4><A NAME="Header_35">Save Screen</A></H4>
+<P>Final screen lets you specify the output directory, Output file and the Output Format. I would suggest
+using <B>RecordEditor XML</B>
+<P>
+<img SRC="Diagram/layout_wizard6.png">
+<P>
+<P><H4><A NAME="HDRWIZ4">CSV Details</A></H4>
+<P>On this screen you specify the basic CSV file structure (i.e. field separator; quotes).
+<P>
+<img SRC="Diagram/layout_wizard4.png">
+<P>
+<P>Fields on the Screen
+<TABLE CELLPADDING="3">
+ <TR VALIGN="TOP"><TD><P><B>Field Separator
+ </B></TD><TD><P>Field used to mark the end of one field and the start of the next
+ </TD></TR><TR VALIGN="TOP"><TD><P><B>Quote Character
+ </B></TD><TD><P>Quote character used to surround Text Fields
+ </TD></TR><TR VALIGN="TOP"><TD><P><B>Parser
+ </B></TD><TD><P>Parser used to split lines up into fields. For most files, the <B>Basic Parser</B> is the best to use.
+But the three parsers provided are&#58;
+    <TABLE CELLPADDING="3">
+      <TR VALIGN="TOP"><TD><P><B>Basic Parser
+      </B></TD><TD><P>If Field starts with a Quote, it looks for a &lt;Quote&gt;&lt;Separator&gt;. It will fail if a field contains &lt;quote&gt;&lt;Separator&gt;
+      </TD></TR><TR VALIGN="TOP"><TD><P><B>Matching Quotes
+      </B></TD><TD><P>For every opening Quote, It looks for a matching closing Quote.
+      </TD></TR><TR VALIGN="TOP"><TD><P><B>Quotes based on fields
+      </B></TD><TD><P>This is an extension of <B>Matching Quotes</B>. For this type of Parser
+all text fields will always get quotes around them. This is programs that are very picky
+about having Quotes around Text fields, Dates (in particular some Databases).
+    </TD></TR></TABLE>
+ </TD></TR><TR VALIGN="TOP"><TD><P><B>Fields on First Line
+ </B></TD><TD><P>Indicates whether the first line of the file holds the field names.
+</TD></TR></TABLE>
+<P>
+<P>
+<P><H4><A NAME="HDRWIZ5">CSV Field Definition</A></H4>
+<P>
+<P>This screen is used to define the fields (columns) in the file.
+<P>
+<img SRC="Diagram/layout_wizard5.png">
+<P>
+<P><H3><A NAME="HDRMULTIWIZ">Multiple Record Screen</A></H3>
+<P>Following are the Wizard screens displayed when working a Multi-Record Fixed Field width Data file.
+<P>
+<P><H4><A NAME="HDRWIZRECORDTYPE">Record Type Field</A></H4>
+<P>This screen is used to define where the Record-Type Field (the field that determines
+what type of record it is).  You can do one of
+<UL>
+ <P><LI>Enter the start/end in the Text fields
+ <P><LI>If the Record-Type Field starts in column one, click on the start of the next field in the table
+ <P><LI>Click on the first character of the Record Type field in the Table, then click on the start of the next field.
+</UL>
+<P>
+<img SRC="Diagram/layout_wizard_SetKey.png">
+<P>
+<P><H4><A NAME="HDRWIZRECORDNAMES">Record Name screen</A></H4>
+<P>This screen lets you define the names of the various records.
+<P>
+<img SRC="Diagram/layout_wizard_RecordName.png">
+<P>
+<P><H4><A NAME="HDRWIZ2M">Field Position screen</A></H4>
+<P>This screen displays the file with the fields in alternating background colors.
+<P>To create a new field, click on the first column of the field.
+<P>To remove a field, click on the first column again
+<P>
+<img SRC="Diagram/layout_wizard_RecordFields.png">
+<P>
+<P>Other Fields Buttons on the screen include&#58;
+<UL>
+ <P><LI><B>Record</B> Controls which records are displayed on the screen.
+ <P><LI><B>Show Hex</B> Display the file in 2 line Hex mode (Both Text and Hex). Useful when working with Binary / Comp-3 fields.
+ <P><LI><B>Search for</B> Used control what fields are searched for&#58;
+  <TABLE CELLPADDING="3">
+    <TR VALIGN="TOP"><TD><P><B>Mainframe Zoned Decimal
+    </B></TD><TD><P>Look for Mainframe Zoned decimal. In Zoned Decimals, The sign is represented as an
+over-strike of the last character.
+    </TD></TR><TR VALIGN="TOP"><TD><P><B>PC/Unix Zoned Decimal
+    </B></TD><TD><P>Look for Zoned decimal in the Ascii Character set.
+    </TD></TR><TR VALIGN="TOP"><TD><P><B>Comp 3
+    </B></TD><TD><P>Look for <I>Comp 3 (Binary Coded Decimals)</I> in the file. This does not
+do any harm in EBCDIC files but in Ascii files, Alphabetic Characters can be mistaken
+for Comp 3 characters.
+    </TD></TR><TR VALIGN="TOP"><TD><P><B>Binary Integer (Big Endian)
+    </B></TD><TD><P>Look for Binary integers (Big Endian) - Cobol Comp Fields
+   </TD></TR></TABLE>
+  <P><LI><B>Clear Fields</B> Removes all fields
+  <P><LI><B>Add Fields</B> Clear existing fields and search for Fields using the <B>Search For</B>
+options above.
+</UL>
+<P>
+<P><B>Note: </B>The initial values of the <B>Search For</B> + whether a search is done automatically
+is set in the <B> Edit &gt;&gt;&gt;&gt; Edit Startup Options</B> dialog. See <A HREF="#HDRWIZSTARTUP">"Startup Options"</A> for more details
+<P>
+<P><H4><A NAME="HDRWIZ3M">Field Definition screen</A></H4>
+<P>This screen is for defining the field names and field types.
+<P>Once all the fields have been defined, click on the right arrow button
+to define the new layout. Use the <B>Record</B> combo to switch between the various records.
+<P>
+<img SRC="Diagram/layout_wizard_RecordFieldNames.png">
+<P>
+<P>
+<P><H4><A NAME="HDRWIZSAVE1">Save Layout screen</A></H4>
+<P>On the final screen you define the layout name and layout description
+<P>
+<img SRC="Diagram/Layout_wizard_save.png">
+<P>
+<P>
+<P><H3><A NAME="HDRWIZSTARTUP">Startup Options</A></H3>
+<P>There are several Wizard Field Search options that can be set via the
+<B>Edit Startup options</B> function (<B>Edit &gt;&gt;&gt;&gt; Edit Startup Options</B> Menu).
+<P>
+<img SRC="Diagram/StarupOptions_LayoutWizard.png">
+<P>
+<P>The Parameters that can be set are:
+<UL>
+ <P><LI><B>FsAutoRun</B> Controls whether the field search is run automatically or must be
+ Triggered via the user.
+ <P><LI>Which field types to search for.
+</UL>
+<P>
+<P><H3><A NAME="Header_45">Convert Layout</A></H3>
+<P>Also with <B>Layout Wizard</B> is the <B>Convert Layout</B> utility. It can convert
+a Layout from one format (say Cobol) to XML. It can also read a sample XML file and write
+a layout for it.
+<P>
+<P>Following is how to convert a Cobol Copybook to XML. Note: <B>Input Copybook</B> is filled in and
+<B>Copybook Type</B> is set to Cobol.
+<P>
+<img SRC="Diagram/Convert_1.png">
+<P>
+<P>To build a layout for a XML file. Note: <B>Sample File</B> is filled in with a XML file and
+<B>Copybook Type</B> is set to XML.
+<P>
+<img SRC="Diagram/Convert_2.png">
+<P>
+<P>
+<P>
+<P>&nbsp;<p>
+<TABLE width="100%"><tr>
+<td width="34%" id=dark><a id=dark href="http://sourceforge.net/projects/jrecord/">JRecord at SourceForge</a></td>
+<td width="33%" id=dark><a id=dark href="http://sourceforge.net/projects/jrecord/files/jrecord/">Download Page</a></td>
+<td id=dark><a id=dark href="http://sourceforge.net/projects/jrecord/forums">Forums</a></td>
+</tr></TABLE>
+<A NAME="Bot_Of_Page"></A>
+</BODY></HTML>

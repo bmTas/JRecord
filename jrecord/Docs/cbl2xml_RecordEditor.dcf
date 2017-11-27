@@ -1,0 +1,37 @@
+
+:p.The :RecordEditor. is usefull for CobolToXml users because
+:ul compact.
+ :li.The :RecordEditor. can :hp2.edit:ehp2. :hp1.Cobol Data:ehp1. files using a :hp1.Cobol Copybook:ehp1.
+ :li.In version 0.98 (or later) of the :RecordEditor. there is a :hp2.Code Generation:ehp2. utility that will&gml. 
+ :ul compact.
+    :li.Analyze a Cobol Copybook / Cobol Data Filed
+    :li.Generate Bat/Shell-Script/Java-Script scripts to Convert :hp1.Cobol Data:ehp1. files to/from :hp1.Csv:ehp1. files using :hp2.CobolToCsv:ehp2. jars.
+ :eul.
+:eul. 
+
+
+:h3.Starting RecordEditor's Code Generation
+:p.In the :RecordEditor. select the :hp2.Generate >>> Java JRecord Code for Cobol:ehp2.
+
+.pict CobolGen01.png
+:p.
+:p.On the next screen you enter the :hp2.Cobol Copybook:ehp2. and the sample :hp2.Cobol Data file:ehp2.
+:p.
+.pict CobolGen02.png
+:p.
+:p.Make sure you specify the correct Cobol dialect. The :RecordEditor. will try 
+and figure out the file attributes and display the file on the Right-Hand-side of the screen.
+Update the attributes as need to display the file correctly.
+:p.When you are satisfied the attributes are corect then select the
+:hp2.Generate >>>> Cobol <=> Csv >>> ***:ehp2. drop down menu option.
+
+.pict CsvGen03.png
+
+:p.The destination screen should be displayed next&gml.
+
+.pict CsvGen04.png
+
+:p.Select :hp2.Generate Code:ehp2. and the generated code will be displayed&gml.
+
+.pict CsvGen05.png
+

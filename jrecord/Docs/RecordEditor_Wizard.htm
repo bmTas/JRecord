@@ -1,0 +1,121 @@
+ <h3><a name="HDRWIZARD">Layout Wizard</a></h3>
+ <p>To start the wizard, Select the <b>Layout Wizard</b> button in the RecordEditor:
+<p/><p>
+ <img src="Diagram/RecordEditorWizard.png"/> 
+</p> 
+<p>The <i>Record Layout Wizard</i> guides you through creating a
+<b>record layout</b> using a file as the basis. On all the wizard screens,
+you can use Left and Right Arrow buttons (at the bottom of the screen) to move between the
+screens. There are 2 basic groups of Screens:
+<table cellpadding="3">
+ <tbody><tr valign="TOP"><td><p><b>Fixed Width
+ </b></p></td><td><p>Screens for defining Fixed field width Files. See <a href="#HDRWIZ2">"Field Position screen"</a> and <a href="#HDRWIZ3">"Field Definition screen"</a>.
+ </p></td></tr><tr valign="TOP"><td><p><b>CSV
+ </b></p></td><td><p>Screens for defining a CSV file. See <a href="#HDRWIZ4">"CSV Details"</a> and <a href="#HDRWIZ5">"CSV Field Definition"</a>
+ </p></td></tr><tr valign="TOP"><td><p><b>Multi Record</b></p></td><td><p>Screen for defining files with multiple Records in them.
+ See <a href="#HDRWIZRECORDTYPE">"Record Type Field"</a>, <a href="#HDRWIZRECORDNAMES">"Record Name screen"</a>, <a href="#HDRWIZ2M">"Field Position screen"</a> and <a href="#HDRWIZ3M">"Field Definition screen"</a>.
+</p></td></tr></tbody></table>
+</p><p>
+</p><p></p><h3><a name="Header_38">Initial Wizard Screen</a></h3>
+<p>On the file screen you enter file details and the name of
+the <b>record layout</b> being created. The field <b>Record Types</b>
+determines whether you travel down the
+<table cellpadding="3">
+ <tbody><tr valign="TOP"><td><p><b>Fixed Width</b></p></td><td><p>route (<a href="#HDRWIZ2">"Field Position screen"</a> and <a href="#HDRWIZ3">"Field Definition screen"</a>)
+screens
+ </p></td></tr><tr valign="TOP"><td><p><b>CSV</b></p></td><td><p>route (<a href="#HDRWIZ4">"CSV Details"</a> and <a href="#HDRWIZ5">"CSV Field Definition"</a>).
+ </p></td></tr><tr valign="TOP"><td><p><b>Multi Record</b></p></td><td><p>route (<a href="#HDRWIZRECORDTYPE">"Record Type Field"</a>, <a href="#HDRWIZRECORDTYPE">"Record Type Field"</a>, <a href="#HDRWIZRECORDNAMES">"Record Name screen"</a>, <a href="#HDRWIZ2M">"Field Position screen"</a> and <a href="#HDRWIZ3M">"Field Definition screen"</a>).
+</p></td></tr></tbody></table>
+</p><p>
+<img src="Diagram/layout_wizard1.png">
+</p><p>
+</p><p>Fields on the window are:
+<table cellpadding="3">
+ <tbody><tr valign="TOP"><td><p><b>File Name
+ </b></p></td><td><p>Name of the file you are building a layout for
+ </p></td></tr><tr valign="TOP"><td><p><b>File Structure
+ </b></p></td><td><p>How the file is organized. If you are using Standard Windows / Linux Text files
+<b>leave it as Default Reader</b>
+ </p></td></tr><tr valign="TOP"><td><p><b>Record Type
+ </b></p></td><td><p>This is where you select what type of records are in the file. The options are
+ </p><ul compact="">
+  <li><b>Fixed Length Records</b> For a file with one record with fixed width fields. See <a href="#HDRFIXEDWIZ">"Fixed Width Dialogue"</a> for more details.
+  </li><li><b>Delimited Fields</b> For a file with delimited Fields. See the RecordEditor manual for more details.
+  </li><li><b>Multiple Record (Fixed Width)</b> For files with multiple Fixed With Records in them. See <a href="#HDRMULTIWIZ">"Multiple Record Screen"</a> for more details.
+ </li></ul>
+ </td></tr><tr valign="TOP"><td><p><b>Font Name
+ </b></p></td><td><p>Font Name of the file (e.g. CP037 for US Ebcdic Characters).
+ </p></td></tr><tr valign="TOP"><td><p><b>Default Type
+ </b></p></td><td><p>What Types Fields to initially assign to a field.
+</p></td></tr></tbody></table>
+</p><p>
+</p><p></p><h3><a name="HDRWIZFILESTRUCTURE">File Structure Screen</a></h3>
+<p>If you are using Windows/Unix files, you will not see this screen.
+Its displayed when
+</p><ul>
+ <p></p><li>When a file Structure of <b>Fixed Width</b> or <b>Unknown Format</b> is selected on the initial screen
+ <p></p></li><li>The file looks to be a Mainframe VB or Cobol VB file.
+</li></ul>
+<p>
+<img src="Diagram/layout_wizard_format.png">
+</p><p>
+</p><p>Fields on the window are:
+<table cellpadding="3">
+ <tbody><tr valign="TOP"><td><p><b>File Structure
+ </b></p></td><td><p>The Structure or Format of the file
+ </p></td></tr><tr valign="TOP"><td><p><b>Length
+ </b></p></td><td><p>Record Length for fixed width files. You can also set this field by clicking on a position in the file Table
+ </p></td></tr><tr valign="TOP"><td><p><b>Font Name
+ </b></p></td><td><p>Files Font, typically <b>cp037</b> for Mainframe files (US EBCDIC).
+</p></td></tr></tbody></table>
+</p><p>
+</p><p></p><h3><a name="HDRFIXEDWIZ">Fixed Width Dialogue</a></h3>
+<p>Following are the wizard screens displayed when using a fixed width file.
+</p><p>
+</p><p></p><h4><a name="HDRWIZ2">Field Position screen</a></h4>
+<p>The second screen displays the file with the fields in alternating background colors.
+</p><p>To create a new field, click on the first column of the field.
+</p><p>To remove a field, click on the first column again
+</p><p>
+<img src="Diagram/layout_wizard2.png">
+</p><p>
+</p><p>Other Fields Buttons on the screen include:
+</p><ul>
+ <p></p><li><b>Show Hex</b> Display the file in 2 line Hex mode (Both Text and Hex). Useful when working with Binary / Comp-3 fields.
+ <p></p></li><li><b>Search for</b> Used control what fields are searched for:
+  <table cellpadding="3">
+    <tbody><tr valign="TOP"><td><p><b>Mainframe Zoned Decimal
+    </b></p></td><td><p>Look for Mainframe Zoned decimal. In Zoned Decimals, The sign is represented as an
+over-strike of the last character.
+    </p></td></tr><tr valign="TOP"><td><p><b>PC/Unix Zoned Decimal
+    </b></p></td><td><p>Look for Zoned decimal in the Ascii Character set.
+    </p></td></tr><tr valign="TOP"><td><p><b>Comp 3
+    </b></p></td><td><p>Look for <i>Comp 3 (Binary Coded Decimals)</i> in the file. This does not
+do any harm in EBCDIC files but in Ascii files, Alphabetic Characters can be mistaken
+for Comp 3 characters.
+    </p></td></tr><tr valign="TOP"><td><p><b>Binary Integer (Big Endian)
+    </b></p></td><td><p>Look for Binary integers (Big Endian) - Cobol Comp Fields
+   </p></td></tr></tbody></table>
+  <p></p></li><li><b>Clear Fields</b> Removes all fields
+  <p></p></li><li><b>Add Fields</b> Clear existing fields and search for Fields using the <b>Search For</b>
+options above.
+</li></ul>
+<p>
+</p><p><b>Note: </b>The initial values of the <b>Search For</b> + whether a search is done automatically
+is set in the <b> Edit &gt;&gt;&gt;&gt; Edit Startup Options</b> dialog. See <a href="#HDRWIZSTARTUP">"Startup Options"</a> for more details
+</p><p>
+</p><p></p><h4><a name="HDRWIZ3">Field Definition screen</a></h4>
+<p>This screen is for defining the field names and field types.
+</p><p>Once all the fields have been defined, click on the right arrow button
+to define the new layout.
+</p><p>
+<img src="Diagram/layout_wizard3.png">
+</p><p>
+</p><p>
+</p><p></p><h4><a name="HDRWIZSAVE1">Save screen</a></h4>
+<p>On the final screen you define the layout name and layout description
+</p><p>
+<img src="Diagram/Layout_wizard_save.png">
+</p><p>
+</p><p>
+ 

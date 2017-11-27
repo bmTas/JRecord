@@ -1,0 +1,221 @@
+<p>These are the options you can use when calling <b>Cobol2Json</b> programs
+to convert :hp2.Cobol data:ehp2. files to :hp2.Json:ehp2. Files&gml.
+.fo off                            
+            
+           :blue.-cobol	:eblue.- Cobol  copybook used to "interpret" the data (you must supply either a cobol or cb2xml copybook
+           :blue.-cb2xml	:eblue.- Cb2xml copybook used to "interpret" the data
+             
+           :blue.-input	:eblue.- Input file
+           :blue.-output	:eblue.- Output file
+           :blue.-font  	:eblue.- Characterset used in the Cobol data file (e.g. IBM037 for US-EBCIDIC)
+
+           :blue.-dropCopybookName	:eblue.- (true/false) wether to drop the cobol copybook name from the start of the Json Tags
+           
+           :blue.-tagFormat     	:eblue.- How Cobol Variable names are reformated to Json tags&gml.
+                :hp2.Asis       	:ehp2.- Use the Cobol Variable name
+                :hp2.Underscore 	:ehp2.- Convert - to _,         COBOL-VAR-NAME ==> COBOL_VAR_NAME
+                :hp2.CamelCase  	:ehp2.- Convert to Camel Case,  COBOL-VAR-NAME ==> cobolVarName
+                              	
+           :blue.-fileOrganisation	:eblue.- "file organization" of the Cobol data file
+                :hp2.Text    		:ehp2.- Standard Windows/Unix text file (single byte character-set)
+                :hp2.FixedWidth 	:ehp2.- File where lines (records) are the same length no \n                                          
+                :hp2.Mainframe_VB	:ehp2.- Mainframe VB, file consists of &lt;record-length&gt;&lt;record-data&gt;
+                :hp2.GNUCobol_VB	:ehp2.- GNU Cobol VB, file consists of &lt;record-length&gt;&lt;record-data&gt;
+                                         
+           :blue.-dialect	:eblue.- Cobol Dialect
+                :hp2.Mainframe	:ehp2.- Mainframe cobol
+                :hp2.Futjitsu 	:ehp2.- Fujitsu PC cobol
+                :hp2.GNUCobol 	:ehp2.- GNU Cobol (little endian, ie intel)
+                :hp2.GNUCobolBE	:ehp2.- GNU Cobol (big endian, ie IBM, Sun(oracle))
+
+          :blue.-split	:eblue.- Option for Splitting Copybook into seperate records 
+                :hp2.None      	:ehp2.- No Split
+                :hp2.01        	:ehp2.- Split on 01
+                :hp2.Highest	:ehp2.- On Highest Repeating
+
+          :blue.-recordSelection	:eblue.- Record Selection, can be used multiple time, 
+                                format: :hp2.-recordSelection RecordName field=value:ehp2.
+
+          :blue.-recordParent   	:eblue.- Record Parent, can be used multiple time, 
+                               format: :hp2.-recordParent    RecordName ParentRecord:ehp2.
+
+  
+.fo on
+:h4.Convert a Simple Single Record Cobol file to Json
+:p.The :RecordEditGen. of the :Recordeditor. will generate bat/shell scripts from a Cobol copybook 
+.fo off
+
+  ../lib/Cobol2Json.bat     -cobol G:/Users/BruceTst01/RecordEditor_HSQL/CopyBook/Cobol/DTAR020.cbl ^
+                               -fileOrganisation FixedWidth ^
+                               -font cp037 ^
+                           -input  G:/Users/BruceTst01/RecordEditor_HSQL/SampleFiles/DTAR020.bin   ^
+                           -output out/DTAR020.bin.json
+.fo on
+
+:p.Json output&gml
+
+.*b2h html <pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 1 </font></span>{
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 2 </font></span>  <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> [ {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 3 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-KCODE-STORE-KEY</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 4 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-KEYCODE-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">69684558</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066"> 5 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-STORE-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">20</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 6 </font></span>    },
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 7 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-DATE</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">40118</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 8 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-DEPT-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">280</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 9 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-QTY-SOLD</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">1</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">10 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-SALE-PRICE</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">19.00</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">11 </font></span>  }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">12 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-KCODE-STORE-KEY</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">13 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-KEYCODE-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">69684558</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">14 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-STORE-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">20</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">15 </font></span>    },
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">16 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-DATE</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">40118</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">17 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-DEPT-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">280</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">18 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-QTY-SOLD</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">-1</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">19 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-SALE-PRICE</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">-19.00</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">20 </font></span>  }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">21 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-KCODE-STORE-KEY</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html </font></pre> 
+
+:h4.Convert a Multi Record Cobol file to Json
+:p.This converts a multi record file into Json. Please note the use of
+:dl.
+  :dt.split 
+  :dd.used to define how the Cobol Copybook is split into seperate records.
+  :dt.recordSelection 
+  :dd.Defines how to determine one record from another.
+:edl.  
+.fo off
+
+   ../lib/Cobol2Json.bat    -cobol G:/Users/Bruce01/RecordEditor_HSQL/Copybook/Cobol/amsPoDownload.cbl ^
+                                 -fileOrganisation Text ^
+                                 :bgreen.-split 01 ^:ebgreen.
+                                 :bblue.-recordSelection PO-Record  Record-Type=H1 ^:ebblue.
+                                 :bblue.-recordSelection Product-Record  Record-Type=D1 ^:ebblue.
+                                 :bblue.-recordSelection Location-Record  Record-Type=S1 ^:ebblue.
+                           -input  G:/Users/Bruce01/RecordEditor_HSQL/SampleFiles/Ams_PODownload_20041231.txt   ^
+                           -output out/Ams_PODownload_20041231.txt.json
+
+.fo on
+
+.*b2h html <pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 1 </font></span>{
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 2 </font></span>  <font color="#ff00cc">&quot;</font><font color="#ff00cc">amsPoDownload</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> [ {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 3 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">PO-Record</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 4 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Record-Type</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">H1</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066"> 5 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Sequence-Number</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">45.349</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 6 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Vendor</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">6060</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 7 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">PO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">286225</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 8 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Entry-Date</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">040909</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 9 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">beg01-code</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">00</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">10 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Department</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">200</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">11 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Expected-Reciept-Date</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">050102</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">12 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Cancel-by-date</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">075965</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">13 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Department-Name</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">LADIES</font><font color="#ff00cc"> </font><font color="#ff00cc">KNI</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">14 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Prcoess-Type</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">C</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">15 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Order-Type</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">FT</font><font color="#ff00cc">&quot;</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">16 </font></span>    }
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">17 </font></span>  }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">18 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">Product-Record</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">19 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Record-Type</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">D1</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">20 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Pack-Qty</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">7.0000</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">21 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Pack-Cost</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">0.0002</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">22 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">APN</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">2222500000000</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">23 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Product</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">43314531</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">24 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">pmg-dtl-tech-key</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">2075359</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">25 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Case-Pack-id</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">45614531</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">26 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Product-Name</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">DONKEY</font><font color="#ff00cc"> </font><font color="#ff00cc">24-006607</font><font color="#ff00cc"> </font><font color="#ff00cc">SHWL</font><font color="#ff00cc"> </font><font color="#ff00cc">WRAP</font><font color="#ff00cc"> </font><font color="#ff00cc">CARD</font><font color="#ff00cc">&quot;</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">27 </font></span>    }
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">28 </font></span>  }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">29 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">Location-Record</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">30 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Record-Type</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">S1</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">31 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">location</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> [ {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">32 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">DC-Number</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">5043</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">33 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">Pack-Quantity</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">1</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">34 </font></span>      }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">35 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">DC-Number</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">5045</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">36 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">Pack-Quantity</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">1</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">37 </font></span>      }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">38 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">DC-Number</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">5065</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">39 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">Pack-Quantity</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">1</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">40 </font></span>      }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">41 </font></span>        ...
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">42 </font></span>      } ]
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">43 </font></span>    }
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">44 </font></span>  }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">45 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">Product-Record</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">46 </font></span>      ...
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">47 </font></span>    }
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">48 </font></span>  }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">49 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">Location-Record</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">50 </font></span>       ...
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">51 </font></span>    }
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">52 </font></span>  }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">53 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">Product-Record</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">54 </font></span>      ...
+.*b2h html </font></pre>
+
+:h4.Convert a Multi Record Cobol file to Json (with heirachy)
+:p.Some times with multi-record files there is a Record-Hieracrhy between records,
+in the above file each Po-Record has one or more Product-Records which intern have one or more
+Location-Record. This hierarchy can be expressed with the :hp2.-recordParent:ehp2. option.
+
+.fo off
+
+   ../lib/Cobol2Json.bat    -cobol G:/Users/Bruce01/RecordEditor_HSQL/Copybook/Cobol/amsPoDownload.cbl ^
+                                 -fileOrganisation Text ^
+                                 :bgreen.-split 01 ^:ebgreen.
+                                 :bblue.-recordSelection PO-Record  Record-Type=H1 ^:ebblue.
+                                 :bblue.-recordSelection Product-Record  Record-Type=D1 ^:ebblue.
+                                 :bblue.-recordSelection Location-Record  Record-Type=S1 ^:ebblue.
+                                   :BackgroundYellow.-recordParent Product-Record  PO-Record:EBackgroundYellow. ^
+                                   :BackgroundYellow.-recordParent Location-Record Product-Record:EBackgroundYellow.  ^
+                           -input  G:/Users/Bruce01/RecordEditor_HSQL/SampleFiles/Ams_PODownload_20041231.txt   ^
+                           -output out/Ams_PODownload_20041231.txt.json
+
+.fo on
+:p.In the output Json; The :hp2.PO-Record:ehp2. will have child :hp2.Product-Records:ehp2.
+which intern have child :hp2.Location-Records:ehp2.&gml.
+
+.*b2h html <pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 1 </font></span>{
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 2 </font></span>  <font color="#ff00cc">&quot;</font><font color="#ff00cc">amsPoDownload</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> [ {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 3 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">PO-Record</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 4 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Record-Type</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">H1</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066"> 5 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Sequence-Number</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">45.349</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 6 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Vendor</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">6060</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 7 </font></span>         ... 
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 8 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Order-Type</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">FT</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 9 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">Product-Record</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> [ {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">10 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">Record-Type</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">D1</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">11 </font></span>        .....
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">12 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">Product-Name</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">DONKEY</font><font color="#ff00cc"> </font><font color="#ff00cc">24-006607</font><font color="#ff00cc"> </font><font color="#ff00cc">SHWL</font><font color="#ff00cc"> </font><font color="#ff00cc">WRAP</font><font color="#ff00cc"> </font><font color="#ff00cc">CARD</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">13 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">Location-Record</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> [ {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">14 </font></span>          <font color="#ff00cc">&quot;</font><font color="#ff00cc">Record-Type</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">S1</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">15 </font></span>          <font color="#ff00cc">&quot;</font><font color="#ff00cc">location</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> [ {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">16 </font></span>            <font color="#ff00cc">&quot;</font><font color="#ff00cc">DC-Number</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">5043</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">17 </font></span>            <font color="#ff00cc">&quot;</font><font color="#ff00cc">Pack-Quantity</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">1</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">18 </font></span>          }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">19 </font></span>            ...
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">20 </font></span>        } ]
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">21 </font></span>      }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">22 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">Record-Type</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">D1</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">23 </font></span>        ...
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">24 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">Product-Name</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">MILK</font><font color="#ff00cc"> </font><font color="#ff00cc">24-006607</font><font color="#ff00cc"> </font><font color="#ff00cc">SHWL</font><font color="#ff00cc"> </font><font color="#ff00cc">WRAP</font><font color="#ff00cc"> </font><font color="#ff00cc">CARD</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">25 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">Location-Record</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> [ {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">26 </font></span>          ...
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">27 </font></span>      }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">28 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">Record-Type</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">D1</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">29 </font></span>        ...
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">30 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">Product-Name</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">M.ROSE</font><font color="#ff00cc"> </font><font color="#ff00cc">24-006607</font><font color="#ff00cc"> </font><font color="#ff00cc">SHWL</font><font color="#ff00cc"> </font><font color="#ff00cc">WRAP</font><font color="#ff00cc"> </font><font color="#ff00cc">CARD</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">31 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">Location-Record</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> [ {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">32 </font></span>          ...
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">33 </font></span>        }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">34 </font></span>          ...
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">35 </font></span>        } ]
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">36 </font></span>      }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">37 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">Record-Type</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">D1</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">38 </font></span>        ...
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">39 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">Product-Name</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">AQUA</font><font color="#ff00cc"> </font><font color="#ff00cc">24-006607</font><font color="#ff00cc"> </font><font color="#ff00cc">SHWL</font><font color="#ff00cc"> </font><font color="#ff00cc">WRAP</font><font color="#ff00cc"> </font><font color="#ff00cc">CARD</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">40 </font></span>        <font color="#ff00cc">&quot;</font><font color="#ff00cc">Location-Record</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> [ {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">41 </font></span>          ...
+.*b2h html </font></pre>
+

@@ -1,0 +1,58 @@
+:p.The :CobolToJson. package will convert Cobol Data files to Json.
+:p.The project supports several Cobol dialects + number of other options. CobolToJson depends on
+the following projects:
+:ul compact.
+ :li.:cb2xml. - Converts a Cobol Copybook to Json.
+ :li.:JRecord. - Read/Write Cobol data files using a Cobol Copybook in Java. It also supplies the 
+Csv file handling.
+:eul.
+                                              
+:p.This project will take a Cobol-Copybook and Cobol-Data-File
+
+:p.Cobol-Copybook&gml
+.*b2h html <pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 9 </font></span><font color="#cc6600">000900</font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-KCODE-STORE-KEY.                  
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">10 </font></span><font color="#cc6600">001000</font><font color="#cc6600"> </font>           <font color="#ff0000">05</font> DTAR020-KEYCODE-NO      <font color="#006699"><strong>PIC</strong></font> X(<font color="#ff0000">08</font>).   
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">11 </font></span><font color="#cc6600">001100</font><font color="#cc6600"> </font>           <font color="#ff0000">05</font> DTAR020-STORE-NO        <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">03</font>)   <font color="#006699"><strong>COMP-3</strong></font>.   
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">12 </font></span><font color="#cc6600">001200</font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-DATE               <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">07</font>)   <font color="#006699"><strong>COMP-3</strong></font>.   
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">13 </font></span><font color="#cc6600">001300</font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-DEPT-NO            <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">03</font>)   <font color="#006699"><strong>COMP-3</strong></font>.   
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">14 </font></span><font color="#cc6600">001400</font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-QTY-SOLD           <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">9</font>)    <font color="#006699"><strong>COMP-3</strong></font>.   
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">15 </font></span><font color="#cc6600">001500</font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-SALE-PRICE         <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">9</font>)V99 <font color="#006699"><strong>COMP-3</strong></font>.   
+.*b2h html </font></pre>
+:p.
+:p.Cobol-Data-File&gml.
+:p.
+.pict dtar020.png
+
+:p.And the script to convert the Cobol Data file to an Json file&gml.
+.fo off
+
+   ../lib/Cobol2Json.bat/sh   -cobol cobol/DTAR020.cbl ^
+                              -font cp037         -fileOrganisation FixedWidth ^
+                              -input in/DTAR020.bin   ^
+                              -output out/DTAR020_A.json
+
+.fo on
+:p.And the Json output
+
+.*b2h html <pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 1 </font></span>{
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 2 </font></span>  <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> [ {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 3 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-KCODE-STORE-KEY</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 4 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-KEYCODE-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">69684558</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066"> 5 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-STORE-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">20</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 6 </font></span>    },
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 7 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-DATE</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">40118</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 8 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-DEPT-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">280</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 9 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-QTY-SOLD</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">1</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">10 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-SALE-PRICE</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">19.00</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">11 </font></span>  }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">12 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-KCODE-STORE-KEY</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">13 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-KEYCODE-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">69684558</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">14 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-STORE-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">20</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">15 </font></span>    },
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">16 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-DATE</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">40118</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">17 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-DEPT-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">280</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">18 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-QTY-SOLD</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">-1</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">19 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-SALE-PRICE</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">-19.00</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">20 </font></span>  }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">21 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-KCODE-STORE-KEY</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html </font></pre> 

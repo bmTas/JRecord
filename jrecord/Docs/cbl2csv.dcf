@@ -1,0 +1,34 @@
+:p.If you have :bblue.simple COBOL files:ebblue. (one record type and no duplicate field names), 
+you can use :hp2.Cobol2Csv:ehp2. and :hp2.Csv2Cobol:ehp2. programs. These programs
+will convert a single record cobol file to / from a CSV file. If you pro
+The big advantages are&gml.
+:ul compact.
+ :li.No programming is involved.
+ :li.You keep your code base clear of :hp1.Cobol:ehp1., you just using existing Csv Skills / packages.
+ :li.Can use other languages (other than java) or load into a DB.
+:eul.
+
+It make sense to use :hp2.Cobol2Csv:ehp2. and :hp2.Csv2Cobol:ehp2. if
+:ol compact.
+ :li.Files are :bblue.Simple:ebblue. one record files with :hp2.no duplicate:ehp2. field names.
+ :li.You are :hp2.not going to process the files in Java:ehp2. (i.e. plan to process the files in a language other than java
+ or you are going to directly load the files into a database).
+ :li.Your organisation already uses a package other than JRecord to read CSV files.
+ :li.You want your business application clear of **Cobol** references.
+:eol.
+
+
+:note.It makes less sense to convert the files to CSV if
+:ul compact.
+ :li.You use JRecord to read / write the CSV files.
+You might as well just read / write the raw Cobol files with JRecord.
+ :li.If you do not use an existing CSV package, you might as well just learn JRecord.
+:eul.
+.br
+.br
+
+:hp2.Cobol2Csv examples&gml.:ehp2.
+.im cbl2csv_examples.dcf
+
+:hp2.Cobol2Csv, Csv2Cobol program arguments&gml. :ehp2.        
+.im cbl2csv_programOptions.dcf

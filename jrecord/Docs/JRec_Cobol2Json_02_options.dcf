@@ -1,0 +1,43 @@
+:p.These are the options you can use when calling <b>Cobol2Json</b> programs
+to convert :hp2.Cobol data:ehp2. files to :hp2.Json:ehp2. Files&gml.
+.fo off                            
+            
+           :blue.-cobol	:eblue.- Cobol  copybook used to "interpret" the data (you must supply either a cobol or cb2xml copybook
+           :blue.-cb2xml	:eblue.- Cb2xml copybook used to "interpret" the data
+             
+           :blue.-input	:eblue.- Input file
+           :blue.-output	:eblue.- Output file
+           :blue.-font  	:eblue.- Characterset used in the Cobol data file (e.g. IBM037 for US-EBCIDIC)
+
+           :blue.-dropCopybookName	:eblue.- (true/false) wether to drop the cobol copybook name from the start of the Json Tags
+           
+           :blue.-tagFormat     	:eblue.- How Cobol Variable names are reformated to Json tags&gml.
+                :hp2.Asis       	:ehp2.- Use the Cobol Variable name
+                :hp2.Underscore 	:ehp2.- Convert - to _,         COBOL-VAR-NAME ==> COBOL_VAR_NAME
+                :hp2.CamelCase  	:ehp2.- Convert to Camel Case,  COBOL-VAR-NAME ==> cobolVarName
+                              	
+           :blue.-fileOrganisation	:eblue.- "file organization" of the Cobol data file
+                :hp2.Text    		:ehp2.- Standard Windows/Unix text file (single byte character-set)
+                :hp2.FixedWidth 	:ehp2.- File where lines (records) are the same length no \n                                          
+                :hp2.Mainframe_VB	:ehp2.- Mainframe VB, file consists of &lt;record-length&gt;&lt;record-data&gt;
+                :hp2.GNUCobol_VB	:ehp2.- GNU Cobol VB, file consists of &lt;record-length&gt;&lt;record-data&gt;
+                                         
+           :blue.-dialect	:eblue.- Cobol Dialect
+                :hp2.Mainframe	:ehp2.- Mainframe cobol
+                :hp2.Futjitsu 	:ehp2.- Fujitsu PC cobol
+                :hp2.GNUCobol 	:ehp2.- GNU Cobol (little endian, ie intel)
+                :hp2.GNUCobolBE	:ehp2.- GNU Cobol (big endian, ie IBM, Sun(oracle))
+
+          :blue.-split	:eblue.- Option for Splitting Copybook into seperate records 
+                :hp2.None      	:ehp2.- No Split
+                :hp2.01        	:ehp2.- Split on 01
+                :hp2.Highest	:ehp2.- On Highest Repeating
+
+          :blue.-recordSelection	:eblue.- Record Selection, can be used multiple time, 
+                                format: :hp2.-recordSelection RecordName field=value:ehp2.
+
+          :blue.-recordParent   	:eblue.- Record Parent, can be used multiple time, 
+                               format: :hp2.-recordParent    RecordName ParentRecord:ehp2.
+
+  
+.fo on

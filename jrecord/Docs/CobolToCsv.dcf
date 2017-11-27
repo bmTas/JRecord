@@ -1,0 +1,22 @@
+.im TagDefs.dcf
+:h1.Cobol To Csv
+.im cbl2csv_intro.dcf
+
+
+:h2.Alternative Cobol Conversion options
+:p.There are a number of alternatives to Converting Cobol Files to/from Csv
+
+:ul compact.
+ :li.:CobolToXml. - 
+use the sister project to convert your Cobol files to/from Xml.
+ :li.You could use :JRecord. - 
+to do the conversions. Also the JRecord CodeGen utility could prove useful
+ :li.If there is the interest, I may write CobolToJson and CobolToAvro utilities.
+:eul.
+
+:h2.Cobol to Csv Options
+.im cbl2csv.dcf
+
+:h2.RecordEditor
+.im cbl2csv_RecordEditor.dcf
+

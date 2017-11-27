@@ -1,0 +1,79 @@
+:p.The :RecordEditGen. of the :Recordeditor. will generate bat/shell scripts from a Cobol copybook 
+.fo off
+
+  ../lib/Cobol2Json.bat     -cobol G:/Users/BruceTst01/RecordEditor_HSQL/CopyBook/Cobol/DTAR020.cbl ^
+                               -fileOrganisation FixedWidth ^
+                               -font cp037 ^
+                           -input  G:/Users/BruceTst01/RecordEditor_HSQL/SampleFiles/DTAR020.bin   ^
+                           -output out/DTAR020.bin.json
+.fo on
+
+:p.Json output&gml
+
+.*b2h html <pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 1 </font></span>{
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 2 </font></span>  <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> [ {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 3 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-KCODE-STORE-KEY</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 4 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-KEYCODE-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">69684558</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066"> 5 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-STORE-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">20</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 6 </font></span>    },
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 7 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-DATE</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">40118</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 8 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-DEPT-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">280</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 9 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-QTY-SOLD</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">1</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">10 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-SALE-PRICE</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">19.00</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">11 </font></span>  }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">12 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-KCODE-STORE-KEY</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">13 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-KEYCODE-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc">69684558</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">14 </font></span>      <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-STORE-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">20</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">15 </font></span>    },
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">16 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-DATE</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">40118</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">17 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-DEPT-NO</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">280</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">18 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-QTY-SOLD</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">-1</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">19 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-SALE-PRICE</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> <font color="#ff0000">-19.00</font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">20 </font></span>  }, {
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">21 </font></span>    <font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020-KCODE-STORE-KEY</font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>:</strong></font> {
+.*b2h html </font></pre> 
+
+:p.As well as the Batch interface, :hp2.Cobol2Json:ehp2. can be called from a JVM
+language (Java, Kotlin, Groovy, JRuby etc). This program interface offers mor options
+(e.g. Array checks, complicated RecordSelection etc). Once again these interface programs
+can be generated from the :RecordEditGen. Option.
+:p.You can run the Cobol <==> Json process via the following methods of Cobol2Json class:
+.fo off
+
+    Cobol2Json.:blue.newCobol2Json:eblue.:hp2.(:ehp2.CobolCopybook:hp2.):ehp2.
+    Cobol2Json.:blue.newCobol2Json:eblue.:hp2.(:ehp2.CobolCopybookInputStream, Copybook name:hp2.):ehp2.
+    Cobol2Json.:blue.newCb2Xml2Json:eblue.:hp2.(:ehp2.Cb2xmlCopybook:hp2.):ehp2.
+    Cobol2Json.:blue.newCb2Xml2Json:eblue.:hp2.(:ehp2.Cb2xmlCopybookInputStream, CopybookName:hp2.):ehp2.
+    
+    
+.fo on
+
+:h3.Calling Cobol2Json from Java/JVM
+
+:p.A sample call&gml.
+:p.When using Multiple record (Cobol-Data ==>> Xml) you must set-up record selection (so the program know which record it is reading/writng !!)&gml.      
+
+.*b2h html <pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">11 </font></span>        Cobol2Json.<font color="#9966ff">newCobol2Json</font><font color="#000000"><strong>(</strong></font>Cbl2JsonCode.<font color="#9966ff">getFullName</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">cobol</font><font color="#ff00cc">/</font><font color="#ff00cc">amsPoDownload</font><font color="#ff00cc">.</font><font color="#ff00cc">cbl</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font><font color="#000000"><strong>)</strong></font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">12 </font></span>                  .<font color="#9966ff">setFileOrganization</font><font color="#000000"><strong>(</strong></font>Constants.IO_BIN_TEXT<font color="#000000"><strong>)</strong></font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">13 </font></span>                  .<font color="#9966ff">setSplitCopybook</font><font color="#000000"><strong>(</strong></font>CopybookLoader.SPLIT_01_LEVEL<font color="#000000"><strong>)</strong></font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">14 </font></span>                  .<font color="#9966ff">setTagFormat</font><font color="#000000"><strong>(</strong></font>IReformatFieldNames.RO_UNDERSCORE<font color="#000000"><strong>)</strong></font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">15 </font></span>                  
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">16 </font></span>                     .<font color="#9966ff">setRecordSelection</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">PO</font><font color="#ff00cc">-</font><font color="#ff00cc">Record</font><font color="#ff00cc">&quot;</font>, Cobol2Json.<font color="#9966ff">newFieldSelection</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">Record</font><font color="#ff00cc">-</font><font color="#ff00cc">Type</font><font color="#ff00cc">&quot;</font>,<font color="#ff00cc">&quot;</font><font color="#ff00cc">H1</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font><font color="#000000"><strong>)</strong></font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">17 </font></span>                     .<font color="#9966ff">setRecordSelection</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">Product</font><font color="#ff00cc">-</font><font color="#ff00cc">Record</font><font color="#ff00cc">&quot;</font>, Cobol2Json.<font color="#9966ff">newFieldSelection</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">Record</font><font color="#ff00cc">-</font><font color="#ff00cc">Type</font><font color="#ff00cc">&quot;</font>,<font color="#ff00cc">&quot;</font><font color="#ff00cc">D1</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font><font color="#000000"><strong>)</strong></font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">18 </font></span>                     .<font color="#9966ff">setRecordSelection</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">Location</font><font color="#ff00cc">-</font><font color="#ff00cc">Record</font><font color="#ff00cc">&quot;</font>, Cobol2Json.<font color="#9966ff">newFieldSelection</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">Record</font><font color="#ff00cc">-</font><font color="#ff00cc">Type</font><font color="#ff00cc">&quot;</font>,<font color="#ff00cc">&quot;</font><font color="#ff00cc">S1</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font><font color="#000000"><strong>)</strong></font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">19 </font></span>                     
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">20 </font></span>                  .<font color="#9966ff">cobol2json</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">Ams_PODownload_20041231</font><font color="#ff00cc">.</font><font color="#ff00cc">txt</font><font color="#ff00cc">&quot;</font>,
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">21 </font></span>                              <font color="#ff00cc">&quot;</font><font color="#ff00cc">G</font><font color="#ff00cc">:</font><font color="#ff00cc">/</font><font color="#ff00cc">Temp</font><font color="#ff00cc">/</font><font color="#ff00cc">amsPoDownload_records</font><font color="#ff00cc">.</font><font color="#ff00cc">json</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>;
+.*b2h html </font></pre>
+
+                        
+:p.In the above code, :hp2.newFieldSelection:ehp2. is defined as&gml.
+
+.*b2h html <pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">20 </font></span>    <font color="#009966"><strong>private</strong></font> <font color="#009966"><strong>static</strong></font> ExternalFieldSelection <font color="#9966ff">newFieldSelection</font><font color="#000000"><strong>(</strong></font>String fieldName, String value<font color="#000000"><strong>)</strong></font> <font color="#000000"><strong>{</strong></font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">21 </font></span>        ExternalFieldSelection r <font color="#000000"><strong>=</strong></font> <font color="#006699"><strong>new</strong></font> <font color="#9966ff">ExternalFieldSelection</font><font color="#000000"><strong>(</strong></font>fieldName, value<font color="#000000"><strong>)</strong></font>;
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">22 </font></span>        r.<font color="#9966ff">setCaseSensitive</font><font color="#000000"><strong>(</strong></font><font color="#cc00cc">false</font><font color="#000000"><strong>)</strong></font>;
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">23 </font></span>        <font color="#006699"><strong>return</strong></font> r;
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">24 </font></span>    <font color="#000000"><strong>}</strong></font>
+.*b2h html <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">25 </font></span>
+.*b2h html </font></pre>   
+
