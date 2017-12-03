@@ -109,7 +109,9 @@ public class TstTypesGeneral extends TestCase {
 	 	Type.ftIntPositiveSmall,
 	 	Type.ftUIntSmall,
 	 	Type.ftZonedAsciiSmall,
+	 	Type.ftZonedAsciiSmallPositive,
 	 	Type.ftZonedEbcdicSmall,
+	 	Type.ftZonedEbcdicSmallPositive,
 
 	 	Type.ftFjZonedNumeric,
 	 	Type.ftGnuCblZonedNumeric,
@@ -316,6 +318,8 @@ public class TstTypesGeneral extends TestCase {
 			case Type.ftBit:
 			case Type.ftZonedEbcdicSmall:
 			case Type.ftZonedAsciiSmall:
+			case Type.ftZonedEbcdicSmallPositive:
+			case Type.ftZonedAsciiSmallPositive:
 				break;
 			case Type.ftCharRestOfRecord:
 			case Type.ftCharNullPadded:
@@ -493,7 +497,8 @@ public class TstTypesGeneral extends TestCase {
 								System.out.print("+");
 							}
 							if ("IBM273".equals(fontName)
-							&& (i == Type.ftZonedNumeric || i == Type.ftZonedAsciiSmall || i == Type.ftZonedEbcdicSmall)) {
+							&& (	i == Type.ftZonedNumeric || i == Type.ftZonedAsciiSmall || i == Type.ftZonedEbcdicSmall
+								||	i == Type.ftZonedAsciiSmallPositive || i == Type.ftZonedEbcdicSmallPositive)) {
 								
 							} else {
 								String id = fontName

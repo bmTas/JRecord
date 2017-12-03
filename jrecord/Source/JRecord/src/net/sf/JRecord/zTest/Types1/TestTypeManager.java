@@ -26,6 +26,8 @@ public class TestTypeManager  extends TestCase {
 			new ShortResult(Type.ftChar, 4, TypeManager.CharsetType.OTHER_CHARSET, Type.ftChar),
 			new ShortResult(Type.ftZonedNumeric, 17, TypeManager.CharsetType.SINGLE_BYTE_ASCII,  Type.ftZonedAsciiSmall),
 			new ShortResult(Type.ftZonedNumeric, 17, TypeManager.CharsetType.SINGLE_BYTE_EBCDIC, Type.ftZonedEbcdicSmall),
+			new ShortResult(Type.ftNumZeroPaddedPositive, 17, TypeManager.CharsetType.SINGLE_BYTE_ASCII,  Type.ftZonedAsciiSmallPositive),
+			new ShortResult(Type.ftNumZeroPaddedPositive, 17, TypeManager.CharsetType.SINGLE_BYTE_EBCDIC, Type.ftZonedEbcdicSmallPositive),
 			new ShortResult(Type.ftZonedNumeric, 17, TypeManager.CharsetType.OTHER_CHARSET,      Type.ftZonedNumeric),
 	};
 	

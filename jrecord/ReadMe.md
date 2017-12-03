@@ -160,12 +160,13 @@ descriptions. This will replace the old JRecord-Utilities. This is unlikely to b
      
 ### Changes 0.90
 
-* Change to use cb2xml 1.00. JRecord now conerts Cobol directly into Java classes
-* JRecord now stores both the traditional *Flattend* field list + Cobol Item Tree.
-* Improved performance when accessing Comp, Comp-3 and Mainframe Zoned Decimal.
-* New Split option.
-* Updates to CodeGen.
-* fix to support large copybooks
+* Change to use cb2xml 1.00. Cb2xml now converts Cobol directly into Java classes which are used by JRecord (instead of going via Xml).
+* JRecord now stores both the traditional *Flat* field list + *Cobol Item Tree*. This provides greater access to the original Cobol data.
+* Improved performance when accessing Comp, Comp-3 and Mainframe Zoned Decimal. For smaller numerics, conversion is done using 
+long variables instead of Objects. This improves performance by 70 / 80 %
+* New Cobol Copybook Split option.
+* Updates to CodeGen - JRecord Code Generator.
+* Fix to support large copybooks
 
 ### Changes 0.81.5
 

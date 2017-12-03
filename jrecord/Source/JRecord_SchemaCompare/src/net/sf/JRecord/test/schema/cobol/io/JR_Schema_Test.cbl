@@ -36,5 +36,5 @@
            03  Field-Type                         pic 9(3).
            03  Field-Position                     pic 9(5).
            03  Field-Length                       pic 9(5).
-           03  Decimal                            pic 9(2).
+           03  Decimal                            pic s9(2).
  

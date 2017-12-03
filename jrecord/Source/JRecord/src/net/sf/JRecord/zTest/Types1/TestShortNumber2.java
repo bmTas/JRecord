@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.util.Random;
 
 import junit.framework.TestCase;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
+import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeBinBigEndian;
 import net.sf.JRecord.Types.TypeBinLittleEndian;
 import net.sf.JRecord.Types.TypeNum;
@@ -18,6 +20,10 @@ import net.sf.JRecord.Types.smallBin.TypeZonedAsciiSmall;
 import net.sf.JRecord.Types.smallBin.TypeZonedEbcdicSmall;
 
 public class TestShortNumber2 extends TestCase{
+
+	char[] positiveSign = {'{', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'};
+
+	char[] negativeSign = {'}', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',};
 
 	public void testPd() {
 		chkNewField(new TypePackedDecimal(), new TypePackedDecimal9(), 6, 123);
@@ -52,20 +58,36 @@ public class TestShortNumber2 extends TestCase{
 	}
 
 	public void testZdAscii() {
-		chkNewField(new TypeZoned(),  new TypeZonedAsciiSmall(),       2, 335571, "");
-		chkNewField8(new TypeZoned(), new TypeZonedAsciiSmall(),    1000,   3312, 16, "");
-		chkNewField8(new TypeZoned(), new TypeZonedAsciiSmall(),    1000,   1122, 16, "");
-		chkNewField8(new TypeZoned(), new TypeZonedAsciiSmall(), 1000000,    456, 16, "");
-		chkNewField8(new TypeZoned(), new TypeZonedAsciiSmall(), 1000000,    789, 16, "");
+		chkNewField(new TypeZoned(),  new TypeZonedAsciiSmall(false),       2, 335571, "");
+		chkNewField8(new TypeZoned(), new TypeZonedAsciiSmall(false),    1000,   3312, 16, "");
+		chkNewField8(new TypeZoned(), new TypeZonedAsciiSmall(false),    1000,   1122, 16, "");
+		chkNewField8(new TypeZoned(), new TypeZonedAsciiSmall(false), 1000000,    456, 16, "");
+		chkNewField8(new TypeZoned(), new TypeZonedAsciiSmall(false), 1000000,    789, 16, "");
 	}
 	
 
+	public void testZdAsciiPositive() {
+		chkNewField(new TypeZoned(true),  new TypeZonedAsciiSmall(true),       2, 335571, "");
+		chkNewField8(new TypeZoned(true), new TypeZonedAsciiSmall(true),    1000,   3312, 16, "");
+		chkNewField8(new TypeZoned(true), new TypeZonedAsciiSmall(true),    1000,   1122, 16, "");
+		chkNewField8(new TypeZoned(true), new TypeZonedAsciiSmall(true), 1000000,    456, 16, "");
+		chkNewField8(new TypeZoned(true), new TypeZonedAsciiSmall(true), 1000000,    789, 16, "");
+	}
+
 	public void testZdEbcdic() {
-		chkNewField(new TypeZoned(),  new TypeZonedEbcdicSmall(), 2, 335571, "cp037");
-		chkNewField8(new TypeZoned(), new TypeZonedEbcdicSmall(), 1000, 3312, 16, "cp037");
-		chkNewField8(new TypeZoned(), new TypeZonedEbcdicSmall(), 1000, 1122, 16, "cp037");
-		chkNewField8(new TypeZoned(), new TypeZonedEbcdicSmall(), 1000000, 456, 16, "cp037");
-		chkNewField8(new TypeZoned(), new TypeZonedEbcdicSmall(), 1000000, 789, 16, "cp037");
+		chkNewField(new TypeZoned(),  new TypeZonedEbcdicSmall(false), 2, 335571, "cp037");
+		chkNewField8(new TypeZoned(), new TypeZonedEbcdicSmall(false), 1000, 3312, 16, "cp037");
+		chkNewField8(new TypeZoned(), new TypeZonedEbcdicSmall(false), 1000, 1122, 16, "cp037");
+		chkNewField8(new TypeZoned(), new TypeZonedEbcdicSmall(false), 1000000, 456, 16, "cp037");
+		chkNewField8(new TypeZoned(), new TypeZonedEbcdicSmall(false), 1000000, 789, 16, "cp037");
+	}
+
+	public void testZdEbcdicPositive() {
+		chkNewField(new TypeZoned(true),  new TypeZonedEbcdicSmall(true), 2, 335571, "cp037");
+		chkNewField8(new TypeZoned(true), new TypeZonedEbcdicSmall(true), 1000, 3312, 16, "cp037");
+		chkNewField8(new TypeZoned(true), new TypeZonedEbcdicSmall(true), 1000, 1122, 16, "cp037");
+		chkNewField8(new TypeZoned(true), new TypeZonedEbcdicSmall(true), 1000000, 456, 16, "cp037");
+		chkNewField8(new TypeZoned(true), new TypeZonedEbcdicSmall(true), 1000000, 789, 16, "cp037");
 	}
 	
 	public void testPdLarge() {
@@ -83,6 +105,87 @@ public class TestShortNumber2 extends TestCase{
 	}
 
 
+	public void testShortZdUnsigned() {
+		@SuppressWarnings("deprecation")
+		FieldDetail field = FieldDetail.newFixedWidthField("", Type.ftZonedAsciiSmall, 1, 2, 0, "");
+		TypeZonedAsciiSmall typeAsciiZd = new TypeZonedAsciiSmall(false);
+		TypeZonedAsciiSmall typeAsciiZdP = new TypeZonedAsciiSmall(true);
+		TypeZonedEbcdicSmall typeEbcdicZd = new TypeZonedEbcdicSmall(false);
+		TypeZonedEbcdicSmall typeEbcdicZdP = new TypeZonedEbcdicSmall(true);
+		
+		for (int i = 0; i < 10; i++) {
+			String str = "0" + (char) ('0' + i);
+			assertEquals(i, typeAsciiZd.asUnscaledLong(Conversion.getBytes(str, ""), 1, field));
+			assertEquals(i, typeAsciiZdP.asUnscaledLong(Conversion.getBytes(str, ""), 1, field));
+			assertEquals(i, typeEbcdicZd.asUnscaledLong(Conversion.getBytes(str, "cp037"), 1, field));
+			assertEquals(i, typeEbcdicZdP.asUnscaledLong(Conversion.getBytes(str, "cp037"), 1, field));
+		}
+		
+		for (int i = 0; i < 10; i++) {
+			String str = "1" + (char) ('0' + i);
+			assertEquals(10 + i, typeAsciiZd.asUnscaledLong(Conversion.getBytes(str, ""), 1, field));
+			assertEquals(10 + i, typeEbcdicZd.asUnscaledLong(Conversion.getBytes(str, "cp037"), 1, field));
+			assertEquals(10 + i, typeAsciiZdP.asUnscaledLong(Conversion.getBytes(str, ""), 1, field));
+			assertEquals(10 + i, typeEbcdicZdP.asUnscaledLong(Conversion.getBytes(str, "cp037"), 1, field));
+		}
+	}
+
+
+	public void testShortZdUnsignedSet() {
+		@SuppressWarnings("deprecation")
+		FieldDetail field = FieldDetail.newFixedWidthField("", Type.ftZonedAsciiSmall, 1, 2, 0, "");
+		TypeZonedAsciiSmall typeAsciiZd = new TypeZonedAsciiSmall(false);
+		TypeZonedAsciiSmall typeAsciiZdP = new TypeZonedAsciiSmall(true);
+		TypeZonedEbcdicSmall typeEbcdicZd = new TypeZonedEbcdicSmall(false);
+		TypeZonedEbcdicSmall typeEbcdicZdP = new TypeZonedEbcdicSmall(true);
+		
+		for (int i = 0; i < 100; i++) {
+			String strS = new StringBuilder().append(i / 10).append(positiveSign[i % 10]).toString();
+			String strN = new StringBuilder().append(i / 10).append(negativeSign[i % 10]).toString();
+			String strP = new StringBuilder().append(i / 10).append(i % 10).toString();
+			assertEquals(strP, Conversion.toString(typeAsciiZdP.setUnscaledLong(new byte[2], 1, field, i), ""));
+			assertEquals(strP, Conversion.toString(typeEbcdicZdP.setUnscaledLong(new byte[2], 1, field, i), "cp037"));
+			assertEquals(strS, Conversion.toString(typeAsciiZd.setUnscaledLong(new byte[2], 1, field, i), ""));
+			assertEquals(strS, Conversion.toString(typeEbcdicZd.setUnscaledLong(new byte[2], 1, field, i), "cp037"));
+			if (i > 0) {
+				assertEquals(strN, Conversion.toString(typeAsciiZd.setUnscaledLong(new byte[2], 1, field, -i), ""));
+				assertEquals(strN, Conversion.toString(typeEbcdicZd.setUnscaledLong(new byte[2], 1, field, -i), "cp037"));
+			}
+		}
+		
+	}
+
+	public void testShortZdSigned() {
+		@SuppressWarnings("deprecation")
+		FieldDetail field = FieldDetail.newFixedWidthField("", Type.ftZonedAsciiSmall, 1, 2, 0, "");
+		TypeZonedAsciiSmall typeAsciiZd = new TypeZonedAsciiSmall(false);
+		TypeZonedEbcdicSmall typeEbcdicZd = new TypeZonedEbcdicSmall(false);
+		TypeZonedAsciiSmall typeAsciiZdP = new TypeZonedAsciiSmall(true);
+		String str;
+		
+		for (int i = 0; i < 10; i++) {
+			str = "0" + positiveSign[i];
+			assertEquals(i, typeAsciiZd.asUnscaledLong(Conversion.getBytes(str, ""), 1, field));
+			assertEquals(i, typeAsciiZdP.asUnscaledLong(Conversion.getBytes("0" + i, ""), 1, field));
+			assertEquals(i, typeEbcdicZd.asUnscaledLong(Conversion.getBytes(str, "cp037"), 1, field));
+
+			str = "0" + negativeSign[i];
+			assertEquals(-i, typeAsciiZd.asUnscaledLong(Conversion.getBytes(str, ""), 1, field));
+			assertEquals(-i, typeEbcdicZd.asUnscaledLong(Conversion.getBytes(str, "cp037"), 1, field));
+		}
+		
+		
+		for (int i = 0; i < 10; i++) {
+			str = "1" + positiveSign[i];
+			assertEquals(10 + i, typeAsciiZd.asUnscaledLong(Conversion.getBytes(str, ""), 1, field));
+			assertEquals(10 + i, typeEbcdicZd.asUnscaledLong(Conversion.getBytes(str, "cp037"), 1, field));
+
+			str = "1" + negativeSign[i];
+			assertEquals(-(10 + i), typeAsciiZd.asUnscaledLong(Conversion.getBytes(str, ""), 1, field));
+			assertEquals(-(10 + i), typeEbcdicZd.asUnscaledLong(Conversion.getBytes(str, "cp037"), 1, field));
+		}
+
+	}
 
 	/**
 	 * @param typeN
@@ -240,7 +343,7 @@ public class TestShortNumber2 extends TestCase{
 		FieldDetail field = FieldDetail.newFixedWidthField("", typeNum.getFieldType(), 1, size, decimal, charset);
 		
 		for (int i = 0; i < 300; i++) {
-			long unscaledValue = Math.abs(r.nextLong()) / randomScale;
+			long unscaledValue = Math.abs(r.nextLong() / randomScale);
 			BigDecimal bd = BigDecimal.valueOf(unscaledValue, decimal);
 			BigDecimal bdm = BigDecimal.valueOf(-unscaledValue, decimal);
 
@@ -438,7 +541,7 @@ public class TestShortNumber2 extends TestCase{
 		
 		for (int i = 0; i < 250; i++) {
 			double d = r.nextDouble() * randomScale;
-			long unscaledValue = (long) (d * 100 + 0.5);
+			long unscaledValue = Math.abs((long) (d * 100 + 0.5));
 			BigDecimal bd = BigDecimal.valueOf(unscaledValue, decimal);
 			BigDecimal bdm = BigDecimal.valueOf(-unscaledValue, decimal);
 			String s = bd.toString();

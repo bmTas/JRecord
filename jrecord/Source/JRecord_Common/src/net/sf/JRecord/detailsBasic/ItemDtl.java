@@ -39,7 +39,7 @@ public class ItemDtl extends Item implements IItemDetails {
 	private static ItemType[] itmTypeValues = ItemType.values();
 		
 	public static ItemType toItemType(boolean isField, boolean isArray, boolean isArrayDefinition) {
-		int st = isField ? 0 : 3;
+		int st = isField ? 3 : 0;
 		
 		for (int i = st; i < st + 3; i++) {
 			if (itmTypeValues[i].isArray == isArray 

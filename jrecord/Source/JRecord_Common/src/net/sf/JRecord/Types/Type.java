@@ -173,7 +173,11 @@ public interface Type {
 	/** @deprecated  Small <= 16 bytesZoned Decimal  - internal JRecord use **/
 	public static final int ftZonedEbcdicSmall      = 150;
 	/** @deprecated  Small <= 16 bytesZoned Decimal  - internal JRecord use **/
-	public static final int ftZonedAsciiSmall       = 151;
+	public static final int ftZonedEbcdicSmallPositive = 151;
+	/** @deprecated  Small <= 16 bytesZoned Decimal  - internal JRecord use **/
+	public static final int ftZonedAsciiSmall       = 152;
+	/** @deprecated  Small <= 16 bytesZoned Decimal  - internal JRecord use **/
+	public static final int ftZonedAsciiSmallPositive = 153;
 
 	public static final int NT_TEXT              = 1;
 	public static final int NT_DATE              = 11;

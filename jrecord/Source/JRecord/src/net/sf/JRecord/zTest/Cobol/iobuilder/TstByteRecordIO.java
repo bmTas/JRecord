@@ -15,7 +15,7 @@ import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
 
 /**
- * Test the IByteRecordReader and IByteRecordWriter
+ * Test the IByteRecordReader and IByteRecordWriter interfaces
  * 
  * @author Bruce Martin
  *
@@ -86,6 +86,7 @@ public class TstByteRecordIO extends TestCase {
 		 */
 		@Override
 		public byte[] read() throws IOException {
+			
 			if (lines.length > lineNo) {
 				return lines[lineNo++].getBytes();
 			}

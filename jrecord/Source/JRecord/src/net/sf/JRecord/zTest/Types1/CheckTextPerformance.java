@@ -188,9 +188,9 @@ public class CheckTextPerformance {
 		//p('a'); p('A'); p('{'); p('j'); p('J');
 		System.out.println("\n");
 		
-		c.doCheck("Zoned Ebcdic", "cp037", new TypeZoned(), new TypeZonedEbcdicSmall());
+		c.doCheck("Zoned Ebcdic", "cp037", new TypeZoned(), new TypeZonedEbcdicSmall(false));
 		System.out.println("\n");
-		c.doCheck("Zoned Ascii", "", new TypeZoned(), new TypeZonedAsciiSmall());
+		c.doCheck("Zoned Ascii", "", new TypeZoned(), new TypeZonedAsciiSmall(false));
 		
 	}
 

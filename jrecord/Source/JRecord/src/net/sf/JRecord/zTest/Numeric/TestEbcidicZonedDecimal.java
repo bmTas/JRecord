@@ -48,10 +48,20 @@ public class TestEbcidicZonedDecimal extends TestCase {
 	
 	
 	public void testZonedSetValue() throws RecordException {
-		
+		checkType(Type.ftZonedNumeric);
+	}
+	
+	public void testSmallZonedSetValue() throws RecordException {
+		checkType(Type.ftZonedEbcdicSmall);
+	}
+
+	/**
+	 * @param typeCode
+	 */
+	private void checkType(int typeCode) {
 		byte[] pm1 = {(byte) (0xC0) , (byte) (0xD0), (byte) (0xF0), (byte) (0xF0)};
 		for (String charset : CHARSET_TO_TEST) {
-			FieldDetail fld = new FieldDetail("TstFld", "", Type.ftZonedNumeric, 0, charset, 0, "");
+			FieldDetail fld = new FieldDetail("TstFld", "", typeCode, 0, charset, 0, "");
 			fld.setPosLen(1, 8);
 			
 			System.out.println(charset + "\t" + Conversion.getString(pm1, 0, 2, charset));
@@ -64,16 +74,6 @@ public class TestEbcidicZonedDecimal extends TestCase {
 				tstValue(fld, i);
 			}
 		}
-		
-//		for (String charset : PROBLEM_CHARSET) {
-//			boolean supported = Charset.isSupported(charset);
-//			System.out.println(charset + "\t" + supported
-//					+ "\t" + Conversion.isSingleByte(charset)
-//					+ "\t" + Conversion.getString(pm1, 0, 2, charset));
-//			if (supported) {
-//				System.out.print(Conversion.getString(pm1, 0, 2, charset));
-//			}
-//		}
 	}
 	
 	private void tstValue(FieldDetail fld, int val) throws RecordException {

@@ -33,8 +33,8 @@ public class TypeZonedAsciiSmall extends TypeBaseXBinary {
 	private static final char signm1b = (char)  (NUMERIC_BYTES[12] & 0xff);
 	private static final char signm9b = (char)  (NUMERIC_BYTES[13] & 0xff);
 	
-	public TypeZonedAsciiSmall() {
-		super(false, false, false);
+	public TypeZonedAsciiSmall(boolean positive) {
+		super(positive, false, false);
 	}
 
 	
@@ -72,23 +72,25 @@ public class TypeZonedAsciiSmall extends TypeBaseXBinary {
 			}
 			val = val * 10 + d;
 		}
-		char signNyble = (char) (record[en] & 0xff);
+		char signChar = (char) (record[en] & 0xff);
 		int sign = 1;
 		int last = 0;
 		
-		if (signNyble >= sign1a && signNyble <= sign9a) {
-			last = signNyble - sign1a + 1;
-		} else if (signNyble >= sign1b && signNyble <= sign9b) {
-			last = signNyble - sign1b + 1;
-		} else if (signNyble >= signm1a && signNyble <= signm9a) {
-			last = signNyble - signm1a + 1;
+		if (signChar >= sign1a && signChar <= sign9a) {
+			last = signChar - sign1a + 1;
+		} else if (signChar >= sign1b && signChar <= sign9b) {
+			last = signChar - sign1b + 1;
+		} else if (signChar >= signm1a && signChar <= signm9a) {
+			last = signChar - signm1a + 1;
 			sign = -1;
-		} else if (signNyble >= signm1b && signNyble <= signm9b) {
-			last = signNyble - signm1b + 1;
+		} else if (signChar >= signm1b && signChar <= signm9b) {
+			last = signChar - signm1b + 1;
 			sign = -1;
-		} else if (signNyble == Conversion.getPositive0EbcdicZoned()) {
-		} else if (signNyble == Conversion.getNegative0EbcdicZoned()) {
+		} else if (signChar == Conversion.getPositive0EbcdicZoned()) {
+		} else if (signChar == Conversion.getNegative0EbcdicZoned()) {
 			sign = -1;
+		} else if (signChar >= '0' && signChar <= '9') {
+			last = signChar - '0';
 		} else {
 			throw new RecordException(field.getName() + ": Invalid Zoned Decimal Sign: "
 					+ Conversion.getString(record, position, en+1, ""));
@@ -112,7 +114,9 @@ public class TypeZonedAsciiSmall extends TypeBaseXBinary {
 		
 		long digit = value % 10;
 		
-		if (digit == 0) {
+		if (super.isPositive()) {
+			record[en] = (byte) (digit + ch4Byte0);
+		} else if (digit == 0) {
 			char ch = Conversion.getPositive0EbcdicZoned();
 			if (negative) {
 				ch = Conversion.getNegative0EbcdicZoned();

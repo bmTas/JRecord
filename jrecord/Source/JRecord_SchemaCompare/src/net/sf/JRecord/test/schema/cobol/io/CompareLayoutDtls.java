@@ -3,6 +3,7 @@ package net.sf.JRecord.test.schema.cobol.io;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDetail;
+import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.test.schema.cobol.gen.data.LayoutDtls;
 import net.sf.JRecord.test.schema.cobol.gen.data.LineDialectRecordJR;
 import net.sf.JRecord.test.schema.cobol.gen.data.LineFieldRecordJR;
@@ -75,25 +76,48 @@ public class CompareLayoutDtls {
 		}
 		
 		int minFieldCount = Math.min(fileRecord.fields.size(), record.getFieldCount());
+		int updatedType = 0;
 		
 		for (int i = 0; i < minFieldCount; i++) {
 			FieldDetail fld = record.getField(i);
 			LineFieldRecordJR fileField = fileRecord.fields.get(i);
+					
+			
+			if (! fileField.getFieldName().equals(fld.getName())) {
+				FieldDetail tField = record.getField(fileField.getFieldName());
+				if (tField != null) {
+					fld = tField;
+				}
+			}
+
+			boolean typeError = fileField.getFieldType() != fld.getType();
+			if (typeError) {
+				int shortType = TypeManager.getInstance()
+									.getShortType(fileField.getFieldType(), fld.getLen(), fld.getFontName());
+				if (shortType == fld.getType()) {
+					typeError = false;
+					updatedType += 1;
+				}
+			}
 			
 			if (! fileField.getFieldName().equals(fld.getName())
-			||    fileField.getFieldType() != fld.getType()
+			||    typeError
 			||    fileField.getFieldPosition() != fld.getPos()
 			||    fileField.getFieldLength() != fld.getLen()
 			||    fileField.getDecimal() != fld.getDecimal()
 			) {
 				printRecordHeader(fileSchema, recordIdx, record.getRecordName());
-				System.out.println("     " + i + "\t " + fld.getName()
+				System.out.println("     " + i + "\t " + fileField.getFieldName() + " ~ " + fld.getName() 
 						+ " Type: "    + fileField.getFieldType()      + "~" + fld.getType()
 						+ " Pos: "     + fileField.getFieldPosition()  + "~" + fld.getPos()
 						+ " Length: "  + fileField.getFieldLength()    + "~" + fld.getLen()
 						+ " Decimal: " + fileField.getDecimal()        + "~" + fld.getDecimal()
 				);
 			}
+		}
+		if (updatedType > 0) {
+			printRecordHeader(fileSchema, recordIdx, record.getRecordName());
+			System.out.println("     Warning " + updatedType + " Fields have been changed to 'small' numeric types");
 		}
 	}
 	

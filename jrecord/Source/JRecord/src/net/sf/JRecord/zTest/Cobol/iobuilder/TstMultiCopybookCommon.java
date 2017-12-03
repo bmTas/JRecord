@@ -42,6 +42,7 @@ import net.sf.JRecord.Details.Line;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.Types.Type;
+import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
 
@@ -106,6 +107,7 @@ public class TstMultiCopybookCommon {
 		TestCase.assertEquals(5, l.getRecordCount());
 		TestCase.assertEquals(Constants.IO_CONTINOUS_NO_LINE_MARKER, l.getFileStructure());
 		TestCase.assertEquals(Conversion.DEFAULT_ASCII_CHARSET, l.getFontName());
+		TypeManager t = TypeManager.getInstance();
 		
 		for (int i = 0; i < l.getRecordCount(); i++) {
 			RecordDetail r = l.getRecord(i);
@@ -120,7 +122,7 @@ public class TstMultiCopybookCommon {
 				TestCase.assertEquals(t2, ef.getPos(), fld.getPos());
 				TestCase.assertEquals(t2, ef.getLen(), fld.getLen());
 				TestCase.assertEquals(t2, ef.getDecimal(), fld.getDecimal());
-				TestCase.assertEquals(t2, ef.getType(), fld.getType());
+				TestCase.assertEquals(t2, t.getShortType(ef.getType(), ef.getLen(), ef.getFontName()), fld.getType());
 				TestCase.assertEquals(t2, ef.getFontName(), fld.getFontName());
 
 //				System.out.println("\t\tbldType(\"" + field.getName() 

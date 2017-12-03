@@ -195,8 +195,10 @@ public class TypeManager {
             shortLengthTypes[Type.ftIntPositiveSmall - FIRST_SHORT_BIN]    = new TypeIntLittleEndian(true, false);
             shortLengthTypes[Type.ftUIntSmall        - FIRST_SHORT_BIN]    = new TypeIntLittleEndian(true, true);
 
-            shortLengthTypes[Type.ftZonedAsciiSmall  - FIRST_SHORT_BIN]    = new TypeZonedAsciiSmall();
-            shortLengthTypes[Type.ftZonedEbcdicSmall - FIRST_SHORT_BIN]    = new TypeZonedEbcdicSmall();
+            shortLengthTypes[Type.ftZonedAsciiSmall  - FIRST_SHORT_BIN]    = new TypeZonedAsciiSmall(false);
+            shortLengthTypes[Type.ftZonedEbcdicSmall - FIRST_SHORT_BIN]    = new TypeZonedEbcdicSmall(false);
+            shortLengthTypes[Type.ftZonedEbcdicSmallPositive - FIRST_SHORT_BIN] = new TypeZonedEbcdicSmall(true);
+            shortLengthTypes[Type.ftZonedAsciiSmallPositive  - FIRST_SHORT_BIN] = new TypeZonedAsciiSmall(true);
           
             for (int j = 0; j < shortLengthTypes.length; j++) {
             	if (shortLengthTypes[j] != null) {
@@ -237,11 +239,18 @@ public class TypeManager {
     		return t;
     	}
     	
-    	if (typeId == Type.ftZonedNumeric && length < 18) {
-    		switch (charsetType) {
-    		case SINGLE_BYTE_ASCII:  return Type.ftZonedAsciiSmall;
-    		case SINGLE_BYTE_EBCDIC: return Type.ftZonedEbcdicSmall;
-    		}
+    	if (length < 18) {
+	    	if (typeId == Type.ftZonedNumeric) {
+	    		switch (charsetType) {
+	    		case SINGLE_BYTE_ASCII:  return Type.ftZonedAsciiSmall;
+	    		case SINGLE_BYTE_EBCDIC: return Type.ftZonedEbcdicSmall;
+	    		}
+	    	} else if (typeId == Type.ftNumZeroPaddedPositive) {
+	    		switch (charsetType) {
+	    		case SINGLE_BYTE_ASCII:  return Type.ftZonedAsciiSmallPositive;
+	    		case SINGLE_BYTE_EBCDIC: return Type.ftZonedEbcdicSmallPositive;
+	    		}
+	    	}
     	}
     	
     	return typeId;
@@ -253,7 +262,13 @@ public class TypeManager {
 	    if (Conversion.isSingleByteEbcidic(charset)) {
 	    	charsetType = TypeManager.CharsetType.SINGLE_BYTE_EBCDIC;
 	    } else if (Conversion.isSingleByte(charset)) {
-	    	charsetType = TypeManager.CharsetType.SINGLE_BYTE_ASCII;
+	    	try {
+	    		byte[] b = "09".getBytes(charset);
+	    		if (b.length == 2 && (b[0] == (byte) '0') && (b[1] == (byte) '9')) {
+	    			charsetType = TypeManager.CharsetType.SINGLE_BYTE_ASCII;
+	    		}
+	    	} catch (Exception e) {
+			}
 	    }
 
 	    return charsetType;

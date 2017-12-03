@@ -8,12 +8,16 @@ import net.sf.JRecord.Types.TypeZoned;
 
 public class TypeZonedEbcdicSmall extends TypeBaseXBinary {
 
+	private static final int EBCDIC_DIGIT_HIGH_NYBLE = 0xF0;
+
+	private static final byte[] NUMERIC_BYTES = Conversion.getBytes("09", "cp037");
+
 	private static final int POSITIVE_SIGN_NYBLE = 0xC0;
 	private static final int NEGATIVE_SIGN_NYBLE = 0xD0;
 	private TypeZoned typeZoned = new TypeZoned();
 	
-	public TypeZonedEbcdicSmall() {
-		super(false, false, false);
+	public TypeZonedEbcdicSmall(boolean positive) {
+		super(positive, false, false);
 	}
 
 	
@@ -63,8 +67,10 @@ public class TypeZonedEbcdicSmall extends TypeBaseXBinary {
 		case TypeZoned.ZONED_POSITIVE_NYBLE_VALUE2:
 			break;
 		default:
-			throw new RecordException(field.getName() + ": Invalid Zoned Decimal: " 
-						+ Conversion.getString(record, position, en, "cp037"));
+			if (record[en-1] < NUMERIC_BYTES[0] || record[en-1] > NUMERIC_BYTES[1]) {
+				throw new RecordException(field.getName() + ": Invalid Zoned Decimal: " 
+							+ Conversion.getString(record, position, en, "cp037"));
+			}
 		}
 		return val;
 	}
@@ -79,12 +85,14 @@ public class TypeZonedEbcdicSmall extends TypeBaseXBinary {
 		if (value < 0) {
 			value = - value;
 			signNyble = NEGATIVE_SIGN_NYBLE;
+		} else if (super.isPositive()) {
+			signNyble = EBCDIC_DIGIT_HIGH_NYBLE;
 		}
 		
 		record[en] = (byte) ((value % 10) | signNyble);
 		for (int i = en-1; i >= pos; i--) {
 			value = value / 10;
-			record[i] = (byte) ((value % 10) | 0xF0);	
+			record[i] = (byte) ((value % 10) | EBCDIC_DIGIT_HIGH_NYBLE);	
 		}
 		return record;
 	}

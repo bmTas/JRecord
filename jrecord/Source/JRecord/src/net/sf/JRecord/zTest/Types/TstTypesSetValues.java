@@ -69,6 +69,7 @@ public class TstTypesSetValues extends TestCase {
 		tstField2(Type.ftIntBigEndianSmall);
 	}	
 	
+	@SuppressWarnings("deprecation")
 	public void testLittleEndian1() throws RecordException {
 		tstField1(Type.ftBinaryInt);
 		tstField2(Type.ftBinaryInt);
@@ -98,6 +99,8 @@ public class TstTypesSetValues extends TestCase {
 		tstField2(Type.ftFjZonedNumeric);
 		tstField1(Type.ftZonedAsciiSmall);
 		tstField2(Type.ftZonedAsciiSmall);
+		tstField1(Type.ftZonedAsciiSmallPositive);
+		tstField2(Type.ftZonedAsciiSmallPositive);
 	}
 
 //	String[] charsets = TstConstants.EBCDIC_CHARSETS;
@@ -157,6 +160,7 @@ public class TstTypesSetValues extends TestCase {
 		toTest[Type.ftPositiveNumAnyDecimal] = false;
 		toTest[Type.ftBit] = false;
 		toTest[Type.ftZonedAsciiSmall] = false;
+		toTest[Type.ftZonedAsciiSmallPositive] = false;
 
 		for (String charset : TstConstants.EBCDIC_SINGLE_BYTE_CHARSETS) {
 			for (int i = 0; i < 200; i++) {

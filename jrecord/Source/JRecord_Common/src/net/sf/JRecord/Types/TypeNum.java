@@ -424,10 +424,10 @@ public class TypeNum extends TypeChar {
 	}
 	
 	
-	public final String checkValue(IFieldDetail field, String val)
+	public final String checkValue(IFieldDetail field, String value)
 				throws RecordException {
 
-
+		String val = value;
 		if (couldBeEmpty && (val == null || val.trim().length() == 0)) {
 			return "";
 		}
@@ -477,7 +477,7 @@ public class TypeNum extends TypeChar {
 
 	    }
 	    if (positive && val.indexOf('-') >= 0) {
-	        throw new RecordException("Only positive numbers are allowed");
+	        throw new RecordException("Only positive numbers are allowed: " + value + " ~ " + val);
 	    }
 	    return val;
 	}
