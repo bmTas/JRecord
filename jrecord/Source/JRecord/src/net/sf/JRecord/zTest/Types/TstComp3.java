@@ -49,7 +49,7 @@ public class TstComp3 extends TestCase {
 		tstGetField(Type.ftPackedDecimal);
 		tstGetField(Type.ftPackedDecimalPostive);
 		tstGetField(Type.ftPackedDecimalSmall);
-		tstGetField(Type.ftPackedDecimalPostiveSmall);
+		tstGetField(Type.ftPackedDecimalSmallPostive);
 	}
 	
 	private void tstGetField(int typeId) {
@@ -76,9 +76,9 @@ public class TstComp3 extends TestCase {
 		
 		tstSetField(Type.ftPackedDecimalSmall, "1234", b1);
 		tstSetField(Type.ftPackedDecimalSmall, "-1234", b2);
-		tstSetField(Type.ftPackedDecimalPostiveSmall, "1234", b3);
+		tstSetField(Type.ftPackedDecimalSmallPostive, "1234", b3);
 		tstSetField(Type.ftPackedDecimalSmall, "0", b4);
-		tstSetField(Type.ftPackedDecimalPostiveSmall, "0", b5);
+		tstSetField(Type.ftPackedDecimalSmallPostive, "0", b5);
 
 	}
 	
@@ -100,7 +100,7 @@ public class TstComp3 extends TestCase {
 		
 		tstSetGet(Type.ftPackedDecimalSmall, 1, "c");
 		tstSetGet(Type.ftPackedDecimalSmall, -1, "d");
-		tstSetGet(Type.ftPackedDecimalPostiveSmall, 1, "f");
+		tstSetGet(Type.ftPackedDecimalSmallPostive, 1, "f");
 	}
 	
 	private void tstSetGet(int typeId, int sign, String suff) throws RecordException {

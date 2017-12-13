@@ -179,19 +179,21 @@ public class Cb2Xml {
 
 
 
-	public static Copybook getCopybook(Reader reader, String name,  int binaryFormat, boolean debug, int format) 
+	public static Copybook getCopybook(Reader reader, String name,  int binaryFormat, boolean debug,
+			int format, int stackSize) 
 			throws ParserException, LexerException, IOException, XMLStreamException {
 		Convert conv = ConversionManager.getInstance().getConverter4code(binaryFormat) ;
-		synchronized (SYNC) {
+		//synchronized (SYNC) {
 			return net.sf.cb2xml.Cb2Xml3
 					.newBuilderJRec(reader, name)
 							.setDebug(debug)
 							.setCobolLineFormat(format)
 							.setLoadComments(false)
+							.setStackSize(stackSize)
 							.setDialect(conv)
 						.asCobolItemTree();
 			
-		}
+		//}
 	}
 
 }

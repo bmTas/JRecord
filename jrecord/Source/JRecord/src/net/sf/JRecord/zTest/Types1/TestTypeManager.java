@@ -11,7 +11,7 @@ public class TestTypeManager  extends TestCase {
 			new ShortResult(Type.ftChar,            4, TypeManager.CharsetType.SINGLE_BYTE_ASCII,        Type.ftChar),
 			new ShortResult(Type.ftCharNoTrim,      4, TypeManager.CharsetType.SINGLE_BYTE_EBCDIC,       Type.ftCharNoTrim),
 			new ShortResult(Type.ftPackedDecimal,   9, TypeManager.CharsetType.SINGLE_BYTE_EBCDIC,       Type.ftPackedDecimalSmall),
-			new ShortResult(Type.ftPackedDecimalPostive,   9, TypeManager.CharsetType.SINGLE_BYTE_EBCDIC,Type.ftPackedDecimalPostiveSmall),
+			new ShortResult(Type.ftPackedDecimalPostive,   9, TypeManager.CharsetType.SINGLE_BYTE_EBCDIC,Type.ftPackedDecimalSmallPostive),
 			new ShortResult(Type.ftBinaryBigEndian,        8, TypeManager.CharsetType.OTHER_CHARSET,     Type.ftIntBigEndianSmall),
 			new ShortResult(Type.ftBinaryBigEndianPositive,8, TypeManager.CharsetType.SINGLE_BYTE_ASCII, Type.ftIntBigEndianPositive),
 			new ShortResult(Type.ftPositiveBinaryBigEndian,7, TypeManager.CharsetType.SINGLE_BYTE_EBCDIC,Type.ftUIntBigEndianSmall),

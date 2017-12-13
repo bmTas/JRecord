@@ -145,7 +145,7 @@ public abstract class BaseFieldValue  {
 			if (s.trim().length() == 0) {
 				return 0;
 			}
-			if (s.indexOf(".") > 0) {
+			if (s.indexOf(".") >= 0) {
 				return new BigDecimal(s).longValue();
 			}
 			return Long.parseLong(s);
@@ -280,5 +280,4 @@ public abstract class BaseFieldValue  {
 	public IFieldDetail getFieldDetail() {
 		return field;
 	}
-
 }

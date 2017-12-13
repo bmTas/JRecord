@@ -80,9 +80,9 @@ public class TstCobol1 extends TestCase {
 
 	public void testPositiveConversion() throws RecordException {
 		@SuppressWarnings("deprecation")
-		int[] intelTypes = {22, Type.ftPackedDecimalPostiveSmall, Type.ftIntPositiveSmall, Type.ftIntPositiveSmall, 25, };
+		int[] intelTypes = {22, Type.ftPackedDecimalSmallPostive, Type.ftIntPositiveSmall, Type.ftIntPositiveSmall, 25, };
 		@SuppressWarnings("deprecation")
-		int[] mainframeTypes = {22, Type.ftPackedDecimalPostiveSmall, Type.ftIntBigEndianPositive, Type.ftIntBigEndianPositive, 25, };
+		int[] mainframeTypes = {22, Type.ftPackedDecimalSmallPostive, Type.ftIntBigEndianPositive, Type.ftIntBigEndianPositive, 25, };
 
 		System.out.println();
 		System.out.println("Intel: ");

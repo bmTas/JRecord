@@ -77,7 +77,7 @@ public class CsvParser {
 			//		+ " " + lastCharQuote + " " + lastCharDelim);
 
 			if (ch == delim
-			&& ((! inQuotes) || (inQuotes && lastCharQuote))) {
+			&& ((! inQuotes) || lastCharQuote)) {
 				ret.add(field.toString());
 				field = new StringBuilder();
 				quoteIdx = 0;

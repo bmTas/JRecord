@@ -33,7 +33,7 @@ import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.detailsSelection.RecordSelection;
 
-public abstract class BasicLine extends BaseLine implements AbstractLine {
+public abstract class BasicLine extends BaseLine {
 
 	protected static final byte[] NULL_RECORD = new byte[0];
 	protected LineProvider lineProvider;

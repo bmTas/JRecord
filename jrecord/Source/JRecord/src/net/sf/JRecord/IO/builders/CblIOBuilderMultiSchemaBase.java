@@ -38,6 +38,7 @@ import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ICopybookLoaderStream;
 import net.sf.JRecord.External.ISetDropCopybookName;
+import net.sf.JRecord.External.Def.Cb2xmlJrConsts;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Numeric.ICopybookDialects;
@@ -51,6 +52,9 @@ extends CblIOBuilderBase<IOB> implements IGetLoader  {
 	final ArrayList<ICreateExternal> copybooks = new ArrayList<ICreateExternal>();
 	
 	boolean keepFillers = false;
+	
+	private int stackSize = Cb2xmlJrConsts.CALCULATE_THREAD_SIZE;
+
 
 
 	/**
@@ -73,6 +77,13 @@ extends CblIOBuilderBase<IOB> implements IGetLoader  {
 		this.loader = loader;
 	}
 
+	/**
+	 * @param stackSize the stackSize to set
+	 */
+	public IOB setStackSize(int stackSize) {
+		this.stackSize = stackSize;
+		return super.self;
+	}
 	
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.def.IO.builders.ICobolMultiCopybookIOBuilder#addCopyBook(java.lang.String)
@@ -105,6 +116,7 @@ extends CblIOBuilderBase<IOB> implements IGetLoader  {
 			ISetDropCopybookName xLoader = (ISetDropCopybookName) loader;
 			xLoader.setDropCopybookFromFieldNames(super.dropCopybookNameFromFields);
 			xLoader.setKeepFillers(keepFillers);
+			xLoader.setStackSize(stackSize);
 		}
 		try {
 			 

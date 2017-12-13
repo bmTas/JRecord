@@ -40,7 +40,7 @@ import net.sf.cb2xml.def.NumericDefinition;
     private final int identifier;
 
     private final int binId;
-    private boolean usePositiveInteger;
+    private final boolean usePositiveInteger;
 
     private int defaultVbFileStructure = Constants.IO_DEFAULT;
 
@@ -58,7 +58,8 @@ import net.sf.cb2xml.def.NumericDefinition;
     public BasicConvert(int id, String binName, int binaryId, int[] binarySizes, int[] SynchronizeAt,
     		boolean usePositive, int floatSynchronize, int doubleSynchronize) {
 
-    	name = binName;
+    	this.name = binName;
+    	this.usePositiveInteger = usePositive;
     	try {
     		numericDefinition = new net.sf.cb2xml.def.BasicNumericDefinition(
     				binName, binarySizes, SynchronizeAt, usePositive, floatSynchronize, doubleSynchronize

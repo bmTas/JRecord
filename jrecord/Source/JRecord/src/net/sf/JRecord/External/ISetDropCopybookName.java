@@ -45,4 +45,8 @@ public interface ISetDropCopybookName {
 
 	
 	public abstract void setKeepFillers(boolean keepFiller);
+	
+	
+	public abstract void setStackSize(int stackSize);
+
 }

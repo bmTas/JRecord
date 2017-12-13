@@ -257,6 +257,7 @@ public interface Constants {
 	public static final String TEXT_LE = "<= (Text)";
 	public static final String NUM_NE  = "<> (Numeric)";
 	public static final String TEXT_NE = "<> (Text)";
+	public static final String REG_EXP = "Regular Expression";
 
 	public static final String[] VALID_COMPARISON_OPERATORS = {
 		"=", "eq", "!=", "<>", "ne", ">", "gt", ">=", "ge", "<", "lt", "<=", "le",

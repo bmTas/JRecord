@@ -40,9 +40,9 @@ import net.sf.JRecord.detailsBasic.CsvCharDetails;
  */
 public class BasicFileSchema implements IBasicFileSchema {
 
-	public static int FT_BINARY_FILE = 2;
-	public static int FT_BINARY_CSV_FILE = 3;
-	public static int FT_OTHER = 4;
+	public static final int FT_BINARY_FILE = 2;
+	public static final int FT_BINARY_CSV_FILE = 3;
+	public static final int FT_OTHER = 4;
 	
 	private final int fileStructure, maximumRecordLength, layoutType;
 	private final String charset;

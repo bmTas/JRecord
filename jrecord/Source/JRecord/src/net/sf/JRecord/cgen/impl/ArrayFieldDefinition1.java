@@ -87,6 +87,14 @@ public class ArrayFieldDefinition1 implements IArray1Dimension, IArray2Dimension
 		return this.fields[calcIndex(index)];
 	}
 	
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cgen.def.IArrayAnyDimension#getFirstField()
+	 */
+	@Override
+	public IFieldDetail getFirstField() {
+		return this.fields[0];
+	}
+
 	private int calcIndex(IIndex index) {
 		int idx = 0;
 		
@@ -111,15 +119,6 @@ public class ArrayFieldDefinition1 implements IArray1Dimension, IArray2Dimension
 	public IFieldDetail get(int index1, int index2) {
 		return getField(index1, index2);
 	}
-
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.cgen.def.IArray1Dimension#get(int)
-	 */
-	@Override
-	public IFieldDetail get(int indexs) {
-		return getField(indexs);
-	}
-
 	@Override
 	public IFieldDetail getField(int... indexs) {
 		int idx = 0;
@@ -135,6 +134,17 @@ public class ArrayFieldDefinition1 implements IArray1Dimension, IArray2Dimension
 		return this.fields[idx];
 	}
 	
+	
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cgen.def.IArray1Dimension#get(int)
+	 */
+	@Override
+	public IFieldDetail get(int indexs) {
+		return getField(indexs);
+	}
+
+
 //	private DependingOnDtls getDependingOnDtls(int[] indexs) {
 //		if (dependingOnDtls == null || cmp(dependingOnDtls, indexs)) {
 //			return dependingOnDtls;

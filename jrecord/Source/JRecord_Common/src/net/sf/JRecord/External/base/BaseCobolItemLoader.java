@@ -15,7 +15,11 @@ import javax.xml.stream.XMLStreamException;
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.External.Def.Cb2xmlJrConsts;
+import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.Log.AbsSSLogger;
+import net.sf.JRecord.Numeric.ConversionManager;
+import net.sf.JRecord.Numeric.Convert;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Option.ICobolSplitOptions;
 import net.sf.cb2xml.analysis.BaseItem;
@@ -35,6 +39,10 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
 
     private final boolean useJRecordNaming ;
     private final IExernalRecordBuilder<XRecord> recBuilder;
+    
+    
+    private int stackSize = Cb2xmlJrConsts.CALCULATE_THREAD_SIZE;
+
     
     private boolean keepFiller,
     				dropCopybookFromFieldNames = CommonBits.isDropCopybookFromFieldNames(), 
@@ -59,6 +67,13 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
 		this.saveCb2xml = saveCb2xml;
 	}
 
+
+	/**
+	 * @param stackSize the stackSize to set
+	 */
+	public void setStackSize(int stackSize) {
+		this.stackSize = stackSize;
+	}
 
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.External.CopybookLoader#loadCopyBook(java.lang.String, int, int, java.lang.String, int, int, net.sf.JRecord.Log.AbsSSLogger)
@@ -122,18 +137,35 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
 			int copybookFormat, int binaryFormat, int systemId, AbsSSLogger log)
 			throws IOException {
 		
-		XRecord ret;
 		Copybook copybook;
 
 		try {
 			copybook = net.sf.JRecord.External.Def.Cb2Xml
-							.getCopybook(reader, copyBookName, binaryFormat, false, copybookFormat);
+							.getCopybook(reader, copyBookName, binaryFormat, false, copybookFormat, stackSize);
 		} catch (ParserException | LexerException | XMLStreamException e) {
 			throw new IOException(e);
 		}
 
+		return loadCopybook(copybook, copyBookName, splitCopybook, dbIdx, font, binaryFormat, systemId);
+	}
+
+	/**
+	 * @param copybook
+	 * @param copyBookName
+	 * @param splitCopybook
+	 * @param dbIdx
+	 * @param font
+	 * @param binaryFormat
+	 * @param systemId
+	 * @return
+	 */
+	public XRecord loadCopybook(Copybook copybook, String copyBookName, int splitCopybook, int dbIdx, String font,
+			int binaryFormat, int systemId) {
+		XRecord ret;
        	List<? extends IItemJrUpd> copybookItems = copybook.getChildItems();
-		
+       	
+       	allocDBs(dbIdx);
+       	
         switch (splitCopybook) {
         case ICobolSplitOptions.SPLIT_NONE:   /* split copybook on first redefine*/
         	ret = createSingleRecordSchema(copyBookName, null, font, binaryFormat, copybookItems);
@@ -168,10 +200,59 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
         	ret = createGroupRecordSchema(copyBookName, null, font, binaryFormat, systemId, copybookItems, false);
         }
         
+        
         ret.setCopybook(copybook);
-        updateRecord(copyBookName, systemId, ret, STR_YES);
+        updateRecord(copyBookName, systemId, font, ret, STR_YES);
+        
+        Convert numTranslator = ConversionManager.getInstance().getConverter4code(binaryFormat) ;
+        boolean multipleRecordLengths = false,
+                binary = false;
+
+        if (ret.getNumberOfRecords() == 0) {
+            binary = ret.isBinary();
+        } else {
+            int len = getRecLength(ret.getRecord(0));
+            binary = binary || ret.getRecord(0).isBinary();
+
+            for (int i = 1; i < ret.getNumberOfRecords(); i++) {
+                binary = binary || ret.getRecord(i).isBinary();
+                multipleRecordLengths = multipleRecordLengths
+                                     || (len != getRecLength(ret.getRecord(i)));
+            }
+        }
+        ret.setFileStructure(numTranslator.getFileStructure(multipleRecordLengths, binary));
+
+        freeDBs(dbIdx);       
+
         return ret;
 	}
+	
+
+    private int getRecLength(XRecord rec) {
+    	int ret = 0;
+
+    	try {
+	    	for (int i = 0; i < rec.getNumberOfRecordFields(); i++) {
+	    		ExternalField recordField = rec.getRecordField(i);
+				ret = Math.max(ret, recordField.getPos() + recordField.getLen() - 1);
+	    	}
+    	} catch (Exception e) {
+			System.out.println("Error Finding Record Length Types");
+		}
+
+    	return ret;
+    }
+
+	
+    protected void allocDBs(int pDbIdx) {
+
+    }
+
+
+    protected void freeDBs(int pDbIdx) {
+
+    }
+
 
 	private XRecord createSingleRecordSchema(String copyBookName, String[] groupArray, String font, int binaryFormat,
 			List<? extends IItemJrUpd> copybookItems) {
@@ -276,14 +357,19 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
 		String name = fieldName; 
 		if (name == null || name.length() == 0 || "filler".equalsIgnoreCase(name)) {
 			name = copyBookName + "_" + idx;
+		} else 			if (useJRecordNaming) {
+			name = name.trim();
+    	} else {
+      	   name = copyBookName.trim() + "-" + name.trim();
 		}
+
 		childRec = createRecord(name, font, binaryFormat);
-		updateRecord(name, systemId, childRec, STR_NO);
+		updateRecord(name, systemId, font, childRec, STR_NO);
 		return childRec;
 	}
 
 	@SuppressWarnings("deprecation")
-	private void updateRecord(String copyBookName, int systemId, XRecord ret, String list) {
+	protected void updateRecord(String copyBookName, int systemId, String font, XRecord ret, String list) {
 		ret.setListChar(list);
         ret.setSystem(systemId);
         ret.setCopyBook(copyBookName);
@@ -305,9 +391,10 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
 
 
 	private XRecord createGroupRecord(String copyBookName, String font, int binaryFormat) {
-        int rt = Constants.rtRecordLayout;
-        if (binaryFormat == ICopybookDialects.FMT_MAINFRAME) {
-            rt = Constants.rtBinaryRecord;
+        int rt = Constants.rtGroupOfRecords;
+        if (binaryFormat == ICopybookDialects.FMT_MAINFRAME
+        ||  binaryFormat == ICopybookDialects.FMT_BIG_ENDIAN) {
+            rt = Constants.rtGroupOfBinaryRecords;
         }
 
        return  recBuilder.getNullRecord(

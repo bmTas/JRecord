@@ -226,7 +226,7 @@ public class StandardCsvLineParser extends BaseCsvLineParser  {
 				lastCharDelim = false;
 
 				if (sCh.equals(delimiter)
-				&& ((! inQuotes) || (inQuotes && lastCharQuote))) {
+				&& ((! inQuotes) || lastCharQuote)) {
 					lastCharDelim = true;
 				 	currFieldNumber += 1;
 				 	lastCharQuote = false;
@@ -247,7 +247,7 @@ public class StandardCsvLineParser extends BaseCsvLineParser  {
 				//		+ " " + lastCharQuote + " " + lastCharDelim);
 
 				if (sCh.equals(delimiter)
-				&& ((! inQuotes) || (inQuotes && lastCharQuote))) {
+				&& ((! inQuotes) || (lastCharQuote))) {
 					break;
 				} else if (s.equals(quote)) {
 					if (lastCharDelim) {

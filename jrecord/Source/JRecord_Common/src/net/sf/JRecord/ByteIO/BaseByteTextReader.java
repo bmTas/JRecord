@@ -76,7 +76,7 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 
 	protected boolean check4cr = false;
 	protected boolean check4lf = false;
-	protected boolean check4crlf = false;
+//	protected boolean check4crlf = false;
 
 	protected FindLines findLines = NO_EOL_FINDLINES;
 
@@ -94,7 +94,7 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 		eof = false;
 		check4lf = false;
 		check4cr = false;
-		check4crlf = false;
+//		check4crlf = false;
 
 
 		bytesInBuffer = readBuffer(in, buffer);
@@ -110,7 +110,7 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 				if (eolPos+1 < bytesInBuffer && buffer[eolPos+1] ==  byteLF) {
 					eol = lfcrBytes;
 					altEol = lfBytes;
-					check4crlf = true;
+//					check4crlf = true;
 				} else {
 					eol = crBytes;
 					check4lf = true;

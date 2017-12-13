@@ -18,16 +18,16 @@ import net.sf.JRecord.Common.Conversion;
 public final class CsvCharDetails {
 //	public static final CsvCharDetails DEFAULT_DELIMITER =  newDelimDefinition("\t", "");
 	
-	public static CsvCharDetails COMMA_DELIMITER = new CsvCharDetails(",", "", '\t'); 
-	public static CsvCharDetails TAB_DELIMITER = new CsvCharDetails("\t", "", '\t'); 
-	public static CsvCharDetails DEFAULT_QUOTE = new CsvCharDetails("\"", "", '\t');
-	public static CsvCharDetails DEFAULT_DELIMITER = new CsvCharDetails("\t", "", '\t'); 
-	public static CsvCharDetails SINGLE_QUOTE = new CsvCharDetails("'", "", '"');
-	public static CsvCharDetails DOUBLE_QUOTE = new CsvCharDetails("\"", "", '"');
-	public static CsvCharDetails EMPTY_QUOTE = new CsvCharDetails();
-	
 	private static final byte[] EMPTY_BYTES = new byte[0];
 	private static final char[] EMPTY_CHARS = new char[0];
+	
+	public static final CsvCharDetails COMMA_DELIMITER = new CsvCharDetails(",", "", '\t'); 
+	public static final CsvCharDetails TAB_DELIMITER = new CsvCharDetails("\t", "", '\t'); 
+	public static final CsvCharDetails DEFAULT_QUOTE = new CsvCharDetails("\"", "", '\t');
+	public static final CsvCharDetails DEFAULT_DELIMITER = new CsvCharDetails("\t", "", '\t'); 
+	public static final CsvCharDetails SINGLE_QUOTE = new CsvCharDetails("'", "", '"');
+	public static final CsvCharDetails DOUBLE_QUOTE = new CsvCharDetails("\"", "", '"');
+	public static final CsvCharDetails EMPTY_QUOTE = new CsvCharDetails();
 	
 	
 	public static CsvCharDetails newDelimDefinition(String rawValue, String font) {
@@ -53,7 +53,7 @@ public final class CsvCharDetails {
 	private final boolean bin;
 	
 	private CsvCharDetails(String rawValue, String font, char defaultCh) {
-		this.definition = rawValue == "\t" ? "\\t" : rawValue ;
+		this.definition = "\t".equals(rawValue) ? "\\t" : rawValue ;
 		this.font = font;
 		//this.fontname = font;
 		
@@ -125,5 +125,13 @@ public final class CsvCharDetails {
 		return false;
 	}
 	
-	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return 
+				  (definition == null ? 0                : definition.hashCode())
+				+ (bin                ? bytes.hashCode() : strValue.hashCode());
+	}
 }

@@ -156,7 +156,7 @@ public interface Type {
 	/** @deprecated  Small <= 9 bytes Packed decimal - internal JRecord use **/
 	public static final int ftPackedDecimalSmall    = 140;
 	/** @deprecated  Small <= 9 bytes Positive (unsigned) Packed decimal  - internal JRecord use **/
-	public static final int ftPackedDecimalPostiveSmall = 141;
+	public static final int ftPackedDecimalSmallPostive = 141;
 	/** @deprecated Small <= 8 bytes Big Endian Integer  - internal JRecord use **/
 	public static final int ftIntBigEndianSmall     = 142;
 	/** @deprecated  Small <= 8 bytes Positive Big Endian Integer  - internal JRecord use **/

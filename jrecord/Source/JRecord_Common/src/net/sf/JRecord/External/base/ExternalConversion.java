@@ -45,7 +45,7 @@ import net.sf.JRecord.Types.TypeManager;
  */
 public final class ExternalConversion {
 
-	public static int USE_DEFAULT_DB = -1;
+	public static final int USE_DEFAULT_DB = -1;
 	private static AbstractConversion standardConversion ;
 
 	private static String invalidFileChars = null;

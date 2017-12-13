@@ -25,9 +25,12 @@
       
 package net.sf.JRecord.cgen.def;
 
+import java.util.List;
+
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.detailsBasic.CsvCharDetails;
+import net.sf.JRecord.detailsBasic.IItemDetails;
 import net.sf.JRecord.detailsSelection.RecordSelection;
 
 /**
@@ -50,7 +53,9 @@ public interface IRecordDetail4gen {
 	
 	public abstract IRecordPositionOption getRecordPositionOption();
 	
-	public int getRecordType();
+	public abstract int getRecordType();
 
 	public abstract CsvCharDetails getQuoteDefinition();
+	
+	public abstract List<? extends IItemDetails> getCobolItems();
 }

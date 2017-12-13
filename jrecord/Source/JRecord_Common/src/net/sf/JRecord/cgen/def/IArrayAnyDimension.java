@@ -39,6 +39,8 @@ public interface IArrayAnyDimension {
 	 */
 	public abstract IFieldDetail getField(int... indexs);
 	
+	public abstract IFieldDetail getFirstField();
+	
 	/**
 	 * Get the maximum number of items allowed for the specified index.
 	 * For occurs depending arrays you should check the occurs depending 

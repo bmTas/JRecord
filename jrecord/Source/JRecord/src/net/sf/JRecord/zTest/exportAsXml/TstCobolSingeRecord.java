@@ -344,7 +344,7 @@ public class TstCobolSingeRecord extends TestCase {
 
 	private String[] basicXml = {
 			  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-			+ "<RECORD RECORDNAME=\"Cbl_Line_Test_Record\" COPYBOOK=\"Cbl_Line_Test_Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" QUOTE=\"\" RecSep=\"default\" LINE_NO_FIELD_NAMES=\"1\">\n"
+			+ "<RECORD RECORDNAME=\"Cbl_Line_Test_Record\" COPYBOOK=\"Cbl_Line_Test_Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" QUOTE=\"\" RecSep=\"default\">\n"
 			+ "    <ITEMS CopybookPref=\"Cbl_Line_Test_Record\" JRecNaming=\"TRUE\">\n"
 			+ "        <item level=\"01\" name=\"Cbl-Line-Test-Record\" position=\"1\" storage-length=\"150\" display-length=\"150\">\n"
 			+ "            <item level=\"03\" name=\"Fld-Char\" picture=\"X(10)\" position=\"1\" storage-length=\"10\" display-length=\"10\"/>\n"
@@ -378,7 +378,7 @@ public class TstCobolSingeRecord extends TestCase {
 			+ "    </ITEMS>\n"
 			+ "</RECORD>"
 			, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-					+ "<RECORD RECORDNAME=\"DTAR020\" COPYBOOK=\"DTAR020\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" QUOTE=\"\" RecSep=\"default\" LINE_NO_FIELD_NAMES=\"1\">\n"
+					+ "<RECORD RECORDNAME=\"DTAR020\" COPYBOOK=\"DTAR020\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" QUOTE=\"\" RecSep=\"default\">\n"
 			+ "    <ITEMS CopybookPref=\"DTAR020\" JRecNaming=\"TRUE\">\n"
 			+ "        <item level=\"03\" name=\"DTAR020-KCODE-STORE-KEY\" position=\"1\" storage-length=\"10\" display-length=\"10\">\n"
 			+ "            <item level=\"05\" name=\"DTAR020-KEYCODE-NO\" picture=\"X(08)\" position=\"1\" storage-length=\"8\" display-length=\"8\"/>\n"
@@ -392,7 +392,7 @@ public class TstCobolSingeRecord extends TestCase {
 			+ "</RECORD>"
 			, null
 			,  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-			+ "<RECORD RECORDNAME=\"FCUSDAT\" COPYBOOK=\"FCUSDAT\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" QUOTE=\"\" RecSep=\"default\" LINE_NO_FIELD_NAMES=\"1\">\n"
+			+ "<RECORD RECORDNAME=\"FCUSDAT\" COPYBOOK=\"FCUSDAT\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" QUOTE=\"\" RecSep=\"default\">\n"
 			+ "    <ITEMS CopybookPref=\"FCUSDAT\" JRecNaming=\"TRUE\">\n"
 			+ "        <item level=\"01\" name=\"CUSTOMER-DATA\" position=\"1\" storage-length=\"183\" display-length=\"183\">\n"
 			+ "            <item level=\"05\" name=\"CUSTOMER-ID\" picture=\"9(6)\" position=\"1\" storage-length=\"6\" display-length=\"6\" numeric=\"COBOL_NUMERIC\"/>\n"
@@ -421,7 +421,7 @@ public class TstCobolSingeRecord extends TestCase {
 			+ "</RECORD>"
 			
 			, "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-			+ "<RECORD RECORDNAME=\"RBIVCopy\" COPYBOOK=\"RBIVCopy\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" QUOTE=\"\" RecSep=\"default\" LINE_NO_FIELD_NAMES=\"1\">\n"
+			+ "<RECORD RECORDNAME=\"RBIVCopy\" COPYBOOK=\"RBIVCopy\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" QUOTE=\"\" RecSep=\"default\">\n"
 			+ "    <ITEMS CopybookPref=\"RBIVCopy\" JRecNaming=\"TRUE\">\n"
 			+ "        <item level=\"01\" name=\"RBI-RECORD-T1\" position=\"1\" storage-length=\"124\" display-length=\"124\">\n"
 			+ "            <item level=\"05\" name=\"RBI-TEXT-1\" picture=\"X(50)\" position=\"1\" storage-length=\"50\" display-length=\"50\"/>\n"
@@ -724,7 +724,7 @@ public class TstCobolSingeRecord extends TestCase {
 	};
 	String signXml
 		= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-		+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\" LINE_NO_FIELD_NAMES=\"1\">\n"
+		+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\">\n"
 		+ "    <ITEMS CopybookPref=\"Record\" JRecNaming=\"TRUE\">\n"
 		+ "        <item level=\"01\" name=\"Record\" position=\"1\" storage-length=\"30\" display-length=\"30\">\n"
 		+ "            <item level=\"03\" name=\"pic-x\" picture=\"x(4)\" position=\"1\" storage-length=\"4\" display-length=\"4\"/>\n"
@@ -798,7 +798,7 @@ public class TstCobolSingeRecord extends TestCase {
 	};
 	String usageXml
 				= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-				+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" QUOTE=\"\" RecSep=\"default\" LINE_NO_FIELD_NAMES=\"1\">\n"
+				+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" QUOTE=\"\" RecSep=\"default\">\n"
 				+ "    <ITEMS CopybookPref=\"Record\" JRecNaming=\"TRUE\">\n"
 				+ "        <item level=\"01\" name=\"Record\" position=\"1\" storage-length=\"58\" display-length=\"58\">\n"
 				+ "            <item level=\"05\" name=\"grp-1\" position=\"1\" storage-length=\"16\" display-length=\"16\">\n"
@@ -856,7 +856,7 @@ public class TstCobolSingeRecord extends TestCase {
 	
 	String justifiedXml
 				= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-				+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\" LINE_NO_FIELD_NAMES=\"1\">\n"
+				+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\">\n"
 				+ "    <ITEMS CopybookPref=\"Record\" JRecNaming=\"TRUE\">\n"
 				+ "        <item level=\"01\" name=\"Record\" position=\"1\" storage-length=\"9\" display-length=\"9\">\n"
 				+ "            <item level=\"03\" name=\"pic-x-1\" picture=\"x(3)\" position=\"1\" storage-length=\"3\" display-length=\"3\"/>\n"
@@ -888,7 +888,7 @@ public class TstCobolSingeRecord extends TestCase {
 	};
 	String decimalXml
 		="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-		+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\" LINE_NO_FIELD_NAMES=\"1\">\n"
+		+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\">\n"
 		+ "    <ITEMS CopybookPref=\"Record\" JRecNaming=\"TRUE\">\n"
 		+ "        <item level=\"03\" name=\"Num-1\" picture=\"s9\" position=\"1\" storage-length=\"1\" display-length=\"1\" numeric=\"COBOL_NUMERIC\"/>\n"
 		+ "        <item level=\"03\" name=\"Num-2\" picture=\"s9V9\" position=\"2\" storage-length=\"2\" display-length=\"2\" scale=\"1\" numeric=\"COBOL_NUMERIC\"/>\n"
@@ -921,7 +921,7 @@ public class TstCobolSingeRecord extends TestCase {
 	
 	String numXml
 		= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-		+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\" LINE_NO_FIELD_NAMES=\"1\">\n"
+		+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\">\n"
 		+ "    <ITEMS CopybookPref=\"Record\" JRecNaming=\"TRUE\">\n"
 		+ "        <item level=\"03\" name=\"Num-1\" picture=\"s9\" position=\"1\" storage-length=\"1\" display-length=\"1\" numeric=\"COBOL_NUMERIC\"/>\n"
 		+ "        <item level=\"03\" name=\"Num-2\" picture=\"s9V9\" position=\"2\" storage-length=\"2\" display-length=\"2\" scale=\"1\" numeric=\"COBOL_NUMERIC\"/>\n"
@@ -965,7 +965,7 @@ public class TstCobolSingeRecord extends TestCase {
 //	private String fillerAtEndXml(String name) {
 //		return 
 //				  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-//				+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\" LINE_NO_FIELD_NAMES=\"1\">\n"
+//				+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\">\n"
 //				+ "    <ITEMS CopybookPref=\"Record\">\n"
 //				+ "        <item level=\"03\" name=\"Num-1\" picture=\"s9V99\" position=\"1\" storage-length=\"3\" display-length=\"3\" scale=\"2\" numeric=\"COBOL_NUMERIC\"/>\n"
 //				+ "        <item level=\"03\" name=\"Num-2\" picture=\"s99V99\" position=\"4\" storage-length=\"4\" display-length=\"4\" scale=\"2\" numeric=\"COBOL_NUMERIC\"/>\n"
@@ -1098,7 +1098,7 @@ public class TstCobolSingeRecord extends TestCase {
 			String keepFillerStr = keepFillers ? " KeepFiller=\"TRUE\"" : "";
 			
 			xmlB.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
-			    .append("<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\" LINE_NO_FIELD_NAMES=\"1\">\n")
+			    .append("<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\">\n")
 			    .append("    <ITEMS CopybookPref=\"Record\"" + keepFillerStr + " JRecNaming=\"TRUE\">\n")
 				.append("        <item level=\"03\" name=\"Num-1\" picture=\"s9V99\" position=\"1\" storage-length=\"3\" display-length=\"3\" scale=\"2\" numeric=\"COBOL_NUMERIC\"/>\n");
 	
@@ -1168,7 +1168,7 @@ public class TstCobolSingeRecord extends TestCase {
 			fields = flds;
 			this.xml 
 				= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-				+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\" LINE_NO_FIELD_NAMES=\"1\">\n"
+				+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\">\n"
 				+ "    <ITEMS CopybookPref=\"Record\"" + dropCpy + " JRecNaming=\"TRUE\">\n"
 				+ "        <item level=\"03\" name=\"record-Field-1\" picture=\"x(30)\" position=\"1\" storage-length=\"30\" display-length=\"30\"/>\n"
 				+ "        <item level=\"03\" name=\"RECORD-Field-2\" picture=\"x(10)\" position=\"31\" storage-length=\"10\" display-length=\"10\"/>\n"

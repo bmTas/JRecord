@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.cgen.def.IArrayExtended;
 import net.sf.cb2xml.analysis.BaseItem;
@@ -72,6 +73,10 @@ public class ItemDtl extends Item implements IItemDetails {
 		this.fieldDefinition = fieldDefinition;
 		this.arrayDefinition = arrayDefinition;
 		this.levelIndex = level;
+		
+		if (fieldDefinition instanceof FieldDetail) {
+			((FieldDetail) fieldDefinition).setCobolItem(this);
+		}
 		
 		super.set(baseItem);
 	}

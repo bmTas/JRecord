@@ -146,6 +146,8 @@ public abstract class FieldSelectX extends FieldSelect {
 			ret = new FieldSelect.DoesntContain(name, value, fieldDef);
 		} else if (STARTS_WITH.equalsIgnoreCase(op)) {
 			ret = new FieldSelect.StartsWith(name, value, fieldDef);
+		} else if (Constants.REG_EXP.equalsIgnoreCase(op)) {
+			ret = new FieldSelect.RegularEx(name, value, fieldDef);
 		} else {
 			ret = getBasic(name, value, op, fieldDef, caseSensitive);
 		}

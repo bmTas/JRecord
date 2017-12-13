@@ -134,9 +134,7 @@ public class BinTextReader extends LineReaderWrapper {
 	        recordSep = suppliedLayout.getRecordSep();
 	        font      = suppliedLayout.getFontName();
 
-	        if (rec instanceof RecordDetail) {
-	        	embeddedCr = ((RecordDetail) rec).isEmbeddedNewLine();
-	        }
+	        embeddedCr =  rec.isEmbeddedNewLine();
 	    } catch (Exception e) {
         }
 	    
@@ -196,8 +194,8 @@ public class BinTextReader extends LineReaderWrapper {
 
            	ICsvDefinition csvDef;
 
-        	if (rec instanceof ICsvDefinition) {
-        		csvDef = (ICsvDefinition) rec;
+        	if (rec != null) {
+        		csvDef = rec;
         	} else {
         		csvDef = new CsvDefinition(delimiter, quote, false);
         	}

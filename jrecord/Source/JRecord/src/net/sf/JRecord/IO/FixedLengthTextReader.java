@@ -31,6 +31,7 @@ package net.sf.JRecord.IO;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
 import net.sf.JRecord.charIO.FixedLengthCharReader;
@@ -54,10 +55,9 @@ public class FixedLengthTextReader extends BasicTextLineReader {
      */
     public void open(InputStream inputStream, LayoutDetail layout)
     throws IOException {
-    	String font = "";
-		if (layout != null) {
-			font = layout.getFontName();
-		}
+		if (layout == null) { throw new RecordException("You must supply a layout (schema)"); }
+		
+		String font = layout.getFontName();
     	
     	super.open(new FixedLengthCharReader(layout.getMaximumRecordLength()), inputStream, layout, font);
     }

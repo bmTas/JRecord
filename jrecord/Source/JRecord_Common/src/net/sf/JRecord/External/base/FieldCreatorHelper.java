@@ -219,7 +219,7 @@ public class FieldCreatorHelper {
         picture = picture == null ? "" : picture;
         
         if (isNumeric) {
-        	boolean signed = picture != null && picture.length() > 0 && (picture.charAt(0) == 's' || picture.charAt(0) == 'S');
+        	boolean signed = picture.length() > 0 && (picture.charAt(0) == 's' || picture.charAt(0) == 'S');
         	iType = numTranslator.getTypeIdentifier(
         								usage == null ? "" : usage, 
         								picture, signed,

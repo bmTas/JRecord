@@ -46,7 +46,7 @@ import net.sf.JRecord.Types.Type;
  * @author Bruce Martin
  *
  */
-public class BasicCsvLineParser extends BaseCsvLineParser implements ICsvCharLineParser {
+public class BasicCsvLineParser extends BaseCsvLineParser {
 
     private static BasicCsvLineParser instance = new BasicCsvLineParser(false);
 	public final int delimiterOrganisation;

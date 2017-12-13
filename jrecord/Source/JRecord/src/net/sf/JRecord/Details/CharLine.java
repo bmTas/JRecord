@@ -39,7 +39,7 @@ import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeChar;
 import net.sf.JRecord.Types.TypeManager;
 
-public class CharLine extends BasicLine implements AbstractLine {
+public class CharLine extends BasicLine {
 
 	private static LineProvider defaultProvider = new CharLineProvider();
 

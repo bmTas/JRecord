@@ -36,6 +36,7 @@ import net.sf.JRecord.Option.IOptionType;
 import net.sf.JRecord.Option.OptionResult;
 import net.sf.JRecord.Option.OptionType;
 import net.sf.JRecord.detailsBasic.CsvCharDetails;
+import net.sf.JRecord.detailsBasic.IItemDetails;
 
 
 /**
@@ -65,17 +66,6 @@ public class FieldDetail implements IFieldDetail {
 			return 0;
 		}
 
-//		public String getQuote() {
-//			return null;
-//		}
-
-//		/* (non-Javadoc)
-//		 * @see net.sf.JRecord.Common.AbstractRecord#getQuoteUneditted()
-//		 */
-//		@Override
-//		public String getQuoteUneditted() {
-//			return null;
-//		}
 
 		@Override
 		public CsvCharDetails getQuoteDefinition() {
@@ -100,8 +90,6 @@ public class FieldDetail implements IFieldDetail {
 		public int calculateActualPosition(AbstractIndexedLine line, DependingOnDtls dependingOnDtls, int pos) {
 			return pos;
 		}
-		
-		
 	};
 	private int pos;
 	private int len;
@@ -120,6 +108,7 @@ public class FieldDetail implements IFieldDetail {
 	private String groupName = "";
 	private boolean occursDependingOnValue = false;
 	private DependingOnDtls dependingOnDtls = null;
+	private IItemDetails cobolItem;
 
 
 	/**
@@ -518,4 +507,21 @@ public class FieldDetail implements IFieldDetail {
 	r.setPosOnly(pos);
 	return r;
 }
+
+
+	/**
+	 * @return the cobolItem
+	 */
+	@Override
+	public IItemDetails getCobolItem() {
+		return cobolItem;
+	}
+
+
+	/**
+	 * @param cobolItem the cobolItem to set
+	 */
+	public void setCobolItem(IItemDetails cobolItem) {
+		this.cobolItem = cobolItem;
+	}
  }

@@ -109,7 +109,9 @@ public class FixedLengthByteReader extends AbstractByteReader {
      */
     public void close() throws IOException {
 
-        inStream.close();
+    	if (inStream != null) {
+    		inStream.close();
+    	}
         stream = null;
     }
 

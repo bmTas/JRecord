@@ -81,6 +81,9 @@ public class TypeManager {
     
     @SuppressWarnings("deprecation")
 	public static final int FIRST_SHORT_BIN = Type.ftPackedDecimalSmall;
+    
+    private static final String ASCII_NUM_TST = "09+-.,aAzZ";
+    private static final byte[] ASCII_NUM_BYTES = Conversion.getBytes(ASCII_NUM_TST, Conversion.DEFAULT_ASCII_CHARSET);
 
     private Type[] types;
     private ITypeBinaryExtendedNumeric[] shortLengthTypes = new ITypeBinaryExtendedNumeric[SHORT_TYPE_SIZE];
@@ -187,7 +190,7 @@ public class TypeManager {
 //            types[Type.ftPackedDecimalPostive9]	= new TypePackedDecimal9(true);
 
             shortLengthTypes[Type.ftPackedDecimalSmall  - FIRST_SHORT_BIN] = new TypePackedDecimal9();
-            shortLengthTypes[Type.ftPackedDecimalPostiveSmall - FIRST_SHORT_BIN] = new TypePackedDecimal9(true);
+            shortLengthTypes[Type.ftPackedDecimalSmallPostive - FIRST_SHORT_BIN] = new TypePackedDecimal9(true);
             shortLengthTypes[Type.ftIntBigEndianSmall   - FIRST_SHORT_BIN] = new TypeIntBigEndian(false, false);
             shortLengthTypes[Type.ftIntBigEndianPositive- FIRST_SHORT_BIN] = new TypeIntBigEndian(true, false);
             shortLengthTypes[Type.ftUIntBigEndianSmall  - FIRST_SHORT_BIN] = new TypeIntBigEndian(true, true);
@@ -207,7 +210,7 @@ public class TypeManager {
             }
 
             maxShortSize[Type.ftPackedDecimalSmall - FIRST_SHORT_BIN]  = 9;
-            maxShortSize[Type.ftPackedDecimalPostiveSmall - FIRST_SHORT_BIN] = 9;
+            maxShortSize[Type.ftPackedDecimalSmallPostive - FIRST_SHORT_BIN] = 9;
             maxShortSize[Type.ftIntBigEndianSmall  - FIRST_SHORT_BIN]  = 8;
             maxShortSize[Type.ftIntBigEndianPositive  - FIRST_SHORT_BIN] = 8;
             maxShortSize[Type.ftUIntBigEndianSmall - FIRST_SHORT_BIN]  = 7;
@@ -217,7 +220,7 @@ public class TypeManager {
 
             Arrays.fill(normalTypetoShortMapping, -1);
             normalTypetoShortMapping[Type.ftPackedDecimal          ] = Type.ftPackedDecimalSmall;       
-            normalTypetoShortMapping[Type.ftPackedDecimalPostive   ] = Type.ftPackedDecimalPostiveSmall;
+            normalTypetoShortMapping[Type.ftPackedDecimalPostive   ] = Type.ftPackedDecimalSmallPostive;
             normalTypetoShortMapping[Type.ftBinaryBigEndian        ] = Type.ftIntBigEndianSmall;        
             normalTypetoShortMapping[Type.ftBinaryBigEndianPositive] = Type.ftIntBigEndianPositive;         
             normalTypetoShortMapping[Type.ftPositiveBinaryBigEndian] = Type.ftUIntBigEndianSmall;        
@@ -261,10 +264,13 @@ public class TypeManager {
 	    TypeManager.CharsetType charsetType = TypeManager.CharsetType.OTHER_CHARSET;
 	    if (Conversion.isSingleByteEbcidic(charset)) {
 	    	charsetType = TypeManager.CharsetType.SINGLE_BYTE_EBCDIC;
+	    } else if (Conversion.DEFAULT_ASCII_CHARSET.equalsIgnoreCase(charset)
+	    	   || charset.length() == 8 && "ISO-8859-".equalsIgnoreCase(charset.substring(0, 7))) {
+	    	charsetType = TypeManager.CharsetType.SINGLE_BYTE_ASCII;
 	    } else if (Conversion.isSingleByte(charset)) {
 	    	try {
-	    		byte[] b = "09".getBytes(charset);
-	    		if (b.length == 2 && (b[0] == (byte) '0') && (b[1] == (byte) '9')) {
+	    		byte[] b = ASCII_NUM_TST.getBytes(charset);
+	    		if (Arrays.equals(ASCII_NUM_BYTES, b)) {
 	    			charsetType = TypeManager.CharsetType.SINGLE_BYTE_ASCII;
 	    		}
 	    	} catch (Exception e) {

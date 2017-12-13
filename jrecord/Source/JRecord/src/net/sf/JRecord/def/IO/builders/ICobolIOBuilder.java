@@ -197,6 +197,13 @@ public interface ICobolIOBuilder extends IIOBuilder, Icb2xmlLoadOptions {
 	public abstract ICobolIOBuilder setDropCopybookNameFromFields(boolean dropCopybookNameFromFields);
 	
 	/**
+	 * Set the stacksize to use when
+	 * @param stacksize
+	 * @return
+	 */
+	public abstract ICobolIOBuilder setStackSize(int stacksize);
+	
+	/**
 	 * Controls wether fillers are kept in the layout.
 	 * 
 	 * 

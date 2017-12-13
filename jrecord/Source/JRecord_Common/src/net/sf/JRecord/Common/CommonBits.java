@@ -29,9 +29,9 @@ import java.nio.charset.Charset;
 
 public class CommonBits {
 	
-	public static int LT_XML = 1;
-	public static int LT_TEXT = 2;
-	public static int LT_BYTE = 3;
+	public static final int LT_XML = 1;
+	public static final int LT_TEXT = 2;
+	public static final int LT_BYTE = 3;
 			
 	public  static final String LINE_SEPARATOR = System.getProperty("line.separator");
 	private static final char[] EMPTY_CHAR_ARRAY = {};

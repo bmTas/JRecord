@@ -41,12 +41,12 @@ public class FieldValueSmallBin extends BaseFieldValueLine   {
 
 	@Override
 	public double asDouble() {
-		return type.asUnscaledLong(theLine.getData(), field.calculateActualPosition(theLine), field) / pot[field.getDecimal()];
+		return type.asUnscaledLong(theLine.getData(), field.calculateActualPosition(theLine), field) / (double) pot[field.getDecimal()];
 	}
 
 	@Override
 	public float asFloat() {
-		return type.asUnscaledLong(theLine.getData(), field.calculateActualPosition(theLine), field) / pot[field.getDecimal()];
+		return type.asUnscaledLong(theLine.getData(), field.calculateActualPosition(theLine), field) / (float) pot[field.getDecimal()];
 	}
 
 	@Override

@@ -133,6 +133,14 @@ public class ArrayFieldDefinition implements IArray1Dimension, IArray2Dimension,
 		return f;
 	}
 	
+	/**
+	 * @return the firstField
+	 */
+	@Override
+	public IFieldDetail getFirstField() {
+		return firstField;
+	}
+
 	private DependingOnDtls getDependingOnDtls(int[] indexs) {
 		if (dependingOnDtls == null || cmp(dependingOnDtls, indexs)) {
 			return dependingOnDtls;

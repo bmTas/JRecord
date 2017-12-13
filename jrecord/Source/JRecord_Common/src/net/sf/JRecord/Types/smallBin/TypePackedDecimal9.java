@@ -15,7 +15,7 @@ import net.sf.JRecord.Common.RecordException;
  * @author Bruce Martin
  *
  */
-public class TypePackedDecimal9 extends TypeBaseXBinary implements ITypeBinaryExtendedNumeric {
+public class TypePackedDecimal9 extends TypeBaseXBinary {
 
 	private static final int POSITIVE_SIGNED_NYBLE = 0x0C;
 

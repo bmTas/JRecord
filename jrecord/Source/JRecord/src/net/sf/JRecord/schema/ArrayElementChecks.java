@@ -275,7 +275,7 @@ public class ArrayElementChecks {
 				int length = item.getStorageLength();
 				int pos = item.getPosition(indexs) + length * count - 1;
 				int end  = (occurs - count) * length; 
-				if (line instanceof Line && occurs != null && occurs > count) {		
+				if (line instanceof Line && occurs > count) {		
 					byte spaceByte = line.getLayout().getSpaceByte();
 					byte[] bytes = ((Line) line).getData();
 					Arrays.fill(bytes, pos, Math.min(bytes.length, pos + end), spaceByte);

@@ -84,7 +84,7 @@ public abstract class BaseCsvByteLineParser implements ICsvByteLineParser {
 	        	}
 	        }
         	if (start < line.length) {
-        		extractColName(line, q, fontname, start, line.length);
+        		ret.add(extractColName(line, q, fontname, start, line.length));
         	}
         } else {
 	        for (int i = 0; i < line.length; i++) {

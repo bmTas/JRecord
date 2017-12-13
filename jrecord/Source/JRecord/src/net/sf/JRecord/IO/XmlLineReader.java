@@ -172,14 +172,19 @@ public class XmlLineReader extends AbstractLineReader {
     	StringBuffer sb = new StringBuffer();
     	byte[] bytes = new byte[100];
     	int p = 0;
+    	int start;
+    	int len;
     	
     	
     	iStream.mark(SEARCH_LIMIT);
 
     	do  {
-    		iStream.read(bytes);
-    		sb.append(new String(bytes));
-    		p = sb.indexOf("<");
+    		len = iStream.read(bytes);
+    		if (len < 1) { break; }
+    		
+    		start = sb.length();
+    		sb.append(new String(bytes, 0, len));
+    		p = sb.indexOf("<", start);
     	} while ((sb.length() <= (SEARCH_LIMIT - bytes.length)) 
     		 && (p < 0 || p > sb.length() - 5));
     	
@@ -192,13 +197,18 @@ public class XmlLineReader extends AbstractLineReader {
     	StringBuffer sb = new StringBuffer();
     	char[] chars = new char[100];
     	int p = 0;
+    	int start;
+    	int len;
     	
     	iStream.mark(SEARCH_LIMIT);
 
     	do  {
-    		iStream.read(chars);
+    		len = iStream.read(chars);
+    		if (len < 1) { break; }
+    		
+    		start = sb.length();
     		sb.append(new String(chars));
-    		p = sb.indexOf("<");
+    		p = sb.indexOf("<", start);
     	} while ((sb.length() <= (SEARCH_LIMIT - chars.length)) 
     		 && (p < 0 || p > sb.length() - 5));
     	

@@ -26,7 +26,7 @@ public class StdCblFieldNameConversion implements IFieldNameConversion {
 			String lcCopybookName = copybookName.toLowerCase();
 			if (lcAdjCobolName.length() > lcCopybookName.length() && lcAdjCobolName.startsWith(lcCopybookName)) {
 				adjCobolName = adjCobolName.substring(copybookName.length());
-				if (lcAdjCobolName.startsWith("-") || lcAdjCobolName.startsWith("_")) {
+				if (adjCobolName.startsWith("-") || adjCobolName.startsWith("_")) {
 					adjCobolName = adjCobolName.substring(1);
 				}
 			} 

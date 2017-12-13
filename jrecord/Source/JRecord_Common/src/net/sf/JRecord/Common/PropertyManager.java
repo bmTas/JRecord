@@ -27,6 +27,7 @@ package net.sf.JRecord.Common;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
 
@@ -86,12 +87,20 @@ public class PropertyManager {
 //               + name
 //               + " " + f.exists());
         if (f.exists()) {
-
+			FileInputStream fs = null;
             try {
-                ret.load(new FileInputStream(f));
+            	fs = new FileInputStream(f);
+                ret.load(fs);
             } catch (Exception e) {
-                //e.printStackTrace();
-            }
+
+            } finally {
+				if (fs != null) {
+					try {
+						fs.close();
+					} catch (IOException e) {
+					}
+				}
+			}
         }
 
 	    return ret;

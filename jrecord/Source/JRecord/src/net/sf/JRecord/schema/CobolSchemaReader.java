@@ -93,13 +93,16 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 
  
 	protected void clearLayout() {
-		super.clearLayout();
-		externalRecord = null;
-		iob = null;
+		synchronized (this) {
+			super.clearLayout();
+			externalRecord = null;
+			iob = null;
+		}
 	}
 	
 	public CobolSchemaDetails getCobolSchemaDetails() throws IOException, JAXBException {
-		if (cobolDtls == null) {
+		CobolSchemaDetails cblDtls = cobolDtls;
+		if (cblDtls == null) {
 			synchronized (this) {
 				if (cobolDtls == null) {
 					externalRecord = super.getExternalRecord();
@@ -135,10 +138,11 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 //			        	recordItems.add(recItem);
 //			        }
 					cobolDtls = new CobolSchemaDetails(schema, recordItems, iob, itemDtls);
-					}
+					cblDtls = cobolDtls;
+				}
 			}
 		}
-		return cobolDtls;
+		return cblDtls;
 	}
 
 	public final T setArrayCheck(String arrayName, IArrayItemCheck check) {
@@ -173,7 +177,9 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 	 */
 	public final T setTagFormat(int tagFormat) {
 		this.tagFormat = tagFormat;
-		cobolDtls = null;
+		synchronized (this) {
+			this.cobolDtls = null;
+		}
 	
 		return super.self;
 	}

@@ -141,6 +141,10 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
     private FieldCreatorHelper fieldHelper;
 //    private HashMap<String, String> fieldToNameWithArrayIndexs = new HashMap<String, String>();
 //    private HashMap<String, DependingOn> nameToDependDtls = new HashMap<String, DependingOn>();
+    
+    public void setStackSize(int size) {
+    	
+    }
 
     protected BaseCb2xmlLoader(IExernalRecordBuilder<XRecord> recBuilder, boolean useJRecordNaming) {
     	this.recBuilder = recBuilder;
@@ -393,8 +397,8 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
     	TypeManager m = TypeManager.getInstance();
 
     	try {
-	    	for (int i = 0; i < rec.getNumberOfRecordFields(); i++) {
-	    		ret = ret || m.getType(rec.getRecordField(i).getType()).isBinary();
+	    	for (int i = 0; i < rec.getNumberOfRecordFields() && (! ret); i++) {
+	    		ret = m.getType(rec.getRecordField(i).getType()).isBinary();
 	    	}
     	} catch (Exception e) {
 			System.out.println("Error checking for binary field Types");
@@ -458,7 +462,7 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
     
     private String getTopLevel(Element element) {
         NodeList lNodeList = element.getChildNodes();
-        while (lNodeList.getLength() == 1) {
+        while (lNodeList != null && lNodeList.getLength() == 1) {
         	lNodeList = lNodeList.item(0).getChildNodes();
         }
         if (lNodeList != null && lNodeList.getLength() > 0) {
@@ -739,12 +743,12 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
 
 		if (useJRecordNaming) {
 			name = recordName.trim();
-    	} else {
-     	   name = copyBookPref.trim() + recordName.trim();
-		}
-        if (!copyBookPref.endsWith("-") && !copyBookPref.endsWith("_")) {
+    	} else if (copyBookPref.endsWith("-") || copyBookPref.endsWith("_")) {
+      	   name = copyBookPref.trim() + recordName.trim();
+        } else {
             name = copyBookPref + " " + recordName;
-        }
+		}
+        
         rec = createRecord(copyBookPref + recordNum++,
         				   name,
         				   STR_NO);
@@ -941,6 +945,20 @@ public class BaseCb2xmlLoader<XRecord extends BaseExternalRecord<XRecord>>  {
 
 
     /**
+	 * @return the system
+	 */
+	public int getSystem() {
+		return system;
+	}
+
+	/**
+	 * @param system the system to set
+	 */
+	public void setSystem(int system) {
+		this.system = system;
+	}
+
+	/**
      * Get a string attribute from a element
      *
      * @param element source element

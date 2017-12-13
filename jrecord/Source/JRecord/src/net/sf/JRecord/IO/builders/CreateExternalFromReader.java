@@ -67,12 +67,12 @@ public class CreateExternalFromReader  extends CreateExternalBase  implements IC
 		
 		ICopybookLoaderStream loader = parent. getLoader();
 		
-		if (loader instanceof ICopybookLoaderStream) {
-			return ((ICopybookLoaderStream)loader)
-				.loadCopyBook(new StringReader(copybookStr), copybookName, splitCopybook, 0, 
-						parent.getFont(), parent.getCopybookFileFormat(), 
-						parent.getDialect(), 0, parent.getLog());
-		}
-		throw new RecordException("Internal Error: loader is not a Cobol Copybook loader");
+		//if (loader instanceof ICopybookLoaderStream) {
+		return ((ICopybookLoaderStream)loader)
+			.loadCopyBook(new StringReader(copybookStr), copybookName, splitCopybook, 0, 
+					parent.getFont(), parent.getCopybookFileFormat(), 
+					parent.getDialect(), 0, parent.getLog());
+		//}
+		//throw new RecordException("Internal Error: loader is not a Cobol Copybook loader");
 	}
 }

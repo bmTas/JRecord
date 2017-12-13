@@ -170,7 +170,7 @@ public class ODCalculationComplex implements IOccursDependingPositionCalculation
 							return tmpAdj;
 						}
 					} else if (children != null && children.size() > 0) { 
-						int idx = dependingOnDtls[lvl].index;
+						int idx = dependingOnDtls == null ? 0 : dependingOnDtls[lvl].index;
 						if (stdCalc) {
 							int childAdjustment = calculateAdjustment(lastDtls, children, dependingOnDtls, lvl+1, pos);
 							if (dependingOnDtls != null && childAdjustment > 0) {

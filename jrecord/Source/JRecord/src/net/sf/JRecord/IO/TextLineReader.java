@@ -195,9 +195,9 @@ public class TextLineReader extends BasicTextLineReader {
 	        recordSep = baseLayout.getRecordSep();
 	        font      = baseLayout.getFontName();
 
-	        if (rec instanceof RecordDetail) {
-	        	embeddedCr = ((RecordDetail) rec).isEmbeddedNewLine();
-	        }
+	        //if (rec instanceof RecordDetail) {
+	        embeddedCr = rec.isEmbeddedNewLine();
+	        //}
 	    } catch (Exception e) {
         }
 

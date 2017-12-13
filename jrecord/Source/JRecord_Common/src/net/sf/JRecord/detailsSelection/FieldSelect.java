@@ -26,6 +26,7 @@
 package net.sf.JRecord.detailsSelection;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import net.sf.JRecord.Common.AbstractIndexedLine;
 import net.sf.JRecord.Common.IEmptyTest;
@@ -200,6 +201,23 @@ public abstract class FieldSelect extends ExternalFieldSelection implements Reco
 			}
 			return (o.toString().toLowerCase().startsWith(getFieldValue()));
 		}
+	}
+
+	public static class RegularEx extends FieldSelect {
+		final Pattern pattern;
+		protected RegularEx(String name, String value, IGetValue fieldDef) {
+			super(name, value, "Doesnt_Contain", fieldDef);
+			pattern = Pattern.compile(value);
+		}
+		/* (non-Javadoc)
+		 * @see net.sf.JRecord.detailsSelection.FieldSelect#isSelected(java.lang.Object)
+		 */
+		@Override
+		public boolean isSelected(Object value) {
+			return value != null && pattern.matcher(value.toString()).matches();
+		}
+		
+		
 	}
 
 	public static class Empty extends FieldSelect {

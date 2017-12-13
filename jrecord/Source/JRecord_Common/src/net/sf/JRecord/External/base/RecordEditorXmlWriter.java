@@ -183,7 +183,7 @@ public class RecordEditorXmlWriter implements CopybookWriter {
        } else if (xSel instanceof ExternalGroupSelection) {
     	   toPrint = ((ExternalGroupSelection<?>) xSel).getSize() > 0;
        }
-       writeAttr(writer, Constants.RE_XML_LINE_NO_FIELD_NAME, copybook.getLineNumberOfFieldNames(), 0);
+       writeAttr(writer, Constants.RE_XML_LINE_NO_FIELD_NAME, copybook.getLineNumberOfFieldNames(), 1);
        int recordLength = copybook.getRecordLength();
        int maxLength = getRecLength(copybook);
          

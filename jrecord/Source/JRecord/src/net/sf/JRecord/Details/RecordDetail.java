@@ -368,6 +368,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	/**
 	 * @return the cobolItems
 	 */
+	@Override
 	public List<? extends IItemDetails> getCobolItems() {
 		return cobolItems;
 	}

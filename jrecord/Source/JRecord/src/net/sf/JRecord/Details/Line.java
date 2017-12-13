@@ -78,7 +78,7 @@ import net.sf.JRecord.Types.TypeNum;
  * @author Bruce Martin
  * @version 0.55
  */
-public class Line extends BasicLine implements AbstractLine, IGetByteData {
+public class Line extends BasicLine implements IGetByteData {
 
 	static LineProvider defaultProvider = new DefaultLineProvider();
 	private static final LineFieldCreator FIELD_VALUE_CREATOR = LineFieldCreator.getInstance();
@@ -270,7 +270,8 @@ public class Line extends BasicLine implements AbstractLine, IGetByteData {
 	 */
 	private void adjustLengthIfNecessary(final IFieldDetail field, final int recordIdx) {
 
-		if (field.calculateActualEnd(this) > data.length) {
+		if (field == null) {
+		} else if (field.calculateActualEnd(this) > data.length) {
 			RecordDetail record = layout.getRecord(recordIdx);
 			if (record == null) {
 			} else if (record.hasDependingOn()) {

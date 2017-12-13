@@ -132,9 +132,9 @@ public abstract class BaseLine implements AbstractLine {
 				DependingOnDtls[] tree = dependingOnDtls.getTree();
 				for (int i = 0; i < tree.length; i++){
 					dependingOnDtls = tree[i];
-		        	if (dependingOnDtls.dependingOn == null || dependingOnDtls.dependingOn.getField() == null) {
-		        		System.out.print('*');
-		        	}
+//		        	if (dependingOnDtls.dependingOn == null || dependingOnDtls.dependingOn.getField() == null) {
+//		        		System.out.print('*');
+//		        	}
 		            Object v;
 					//try {
 						v = this.getField(dependingOnDtls.dependingOn.getField());

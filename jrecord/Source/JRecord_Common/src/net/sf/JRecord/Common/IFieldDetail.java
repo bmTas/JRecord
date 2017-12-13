@@ -28,6 +28,7 @@ package net.sf.JRecord.Common;
 import net.sf.JRecord.Option.IOptionResult;
 import net.sf.JRecord.Option.IOptionType;
 import net.sf.JRecord.detailsBasic.CsvCharDetails;
+import net.sf.JRecord.detailsBasic.IItemDetails;
 
 /**
  * Description of one field in a Record (Line)
@@ -87,5 +88,7 @@ public interface IFieldDetail {
 //	public abstract int calculateActualLength(AbstractIndexedLine line);
 	
 	public abstract int calculateActualEnd(AbstractIndexedLine line);
+
+	public abstract IItemDetails getCobolItem();
 
 }

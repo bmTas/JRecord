@@ -55,12 +55,12 @@ import net.sf.JRecord.Types.Type;
  */
 public final class BasicCsvByteLineParserExtended extends BaseCsvByteLineParser  {
 	
-	public static byte[] EMPTY_BYTE_ARRAY = {};
+	public static final byte[] EMPTY_BYTE_ARRAY = {};
 
     private static BasicCsvByteLineParserExtended instance = new BasicCsvByteLineParserExtended(false);
 
  	public final int delimiterOrganisation;
- 	protected final boolean textFieldsInQuotes;
+ 	final boolean textFieldsInQuotes;
 
 
     public BasicCsvByteLineParserExtended(boolean quoteInColumnNames) {
@@ -82,24 +82,24 @@ public final class BasicCsvByteLineParserExtended extends BaseCsvByteLineParser 
 	}
 
 
-	/**
-	 * check if it is end of the fields
-	 */
-	protected boolean  endOfField(int startAt, String s, byte[] quote) {
-		int ql = quote.length;
-		int pos = s.length();
-		int i = 0;
-	
-//		String t = s.substring(pos -  ql, pos);
-//		System.out.print(s.substring(pos -  ql, pos) + " " + s.substring(pos -  ql, pos).equals(quote));
-		while ((pos > ql || (startAt > 0 && pos == ql))
-			&& s.substring(pos -  ql, pos).equals(quote) ) {
-			pos -= ql;
-			i += 1;
-		}
-		//System.out.println("--)) " + s.length() + " > " + (ql * i) + ", i=" + i + " " + (i % 2) + " " + (s.length() > ql));
-		return startAt + s.length() > ql * i && i % 2 == 1;
-	}
+//	/**
+//	 * check if it is end of the fields
+//	 */
+//	protected boolean  endOfField(int startAt, String s, byte[] quote) {
+//		int ql = quote.length;
+//		int pos = s.length();
+//		int i = 0;
+//	
+////		String t = s.substring(pos -  ql, pos);
+////		System.out.print(s.substring(pos -  ql, pos) + " " + s.substring(pos -  ql, pos).equals(quote));
+//		while ((pos > ql || (startAt > 0 && pos == ql))
+//			&& s.substring(pos -  ql, pos).equals(quote) ) {
+//			pos -= ql;
+//			i += 1;
+//		}
+//		//System.out.println("--)) " + s.length() + " > " + (ql * i) + ", i=" + i + " " + (i % 2) + " " + (s.length() > ql));
+//		return startAt + s.length() > ql * i && i % 2 == 1;
+//	}
 
 
     private byte[] formatField(String s, int fieldType, ICsvDefinition lineDef) {

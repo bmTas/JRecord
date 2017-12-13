@@ -311,7 +311,11 @@ public class TypeNum extends TypeChar {
 	    int pos = position - 1;
 	    String font = field.getFontName();
 
-	    if (val != null && val.length() > 0) {
+	    if (val == null) {
+	    	val = "";
+	    }
+	  
+	    if (val.length() > 0) {
 	    	String v = Conversion.numTrim(val, decimalPoint);
 	    	if (( v.length() == 0 || v.charAt(0) == '.' || v.charAt(0) == ',' || v.charAt(0) == decimalPoint)) {
 	    		v = '0' + v;

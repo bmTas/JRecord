@@ -94,8 +94,8 @@ import net.sf.cb2xml.def.IItemJrUpd;
  *       LayoutDetail layout = externalLayout.asLayoutDetail();
  * </pre>
  */
-public class BaseExternalRecord<xRecord 
-extends BaseExternalRecord<xRecord>> extends AbstractUpdatableRecord 
+public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> 
+extends AbstractUpdatableRecord 
 implements IFieldUpdatedListner, IAddDependingOn {
 
 	protected static final int POSITION_IDX = 0;
@@ -1679,10 +1679,8 @@ implements IFieldUpdatedListner, IAddDependingOn {
 				if (TypeManager.isBinary(item.getType())) { 
 					return true; 
 				}
-			} else {
-				if (checkBinary(item.getChildItems())) { 
-					return true; 
-				}
+			} else if (checkBinary(item.getChildItems())) { 
+				return true; 
 			}
 		}
 		

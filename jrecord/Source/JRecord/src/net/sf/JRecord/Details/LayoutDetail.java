@@ -281,7 +281,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 			          || record.getRecordType() == Constants.rtDelimited)) {
 	    		csv = true;
 	    	}
-	    	if (record != null && record.getFieldCount() > 0) {
+	    	if (record.getFieldCount() > 0) {
 		    	treeStructure = treeStructure || (record.getParentRecordIndex() >= 0);
 		        CsvCharDetails recordDelimiter = record.getDelimiterDetails();
 				if ((record.getRecordType() == Constants.rtDelimitedAndQuote

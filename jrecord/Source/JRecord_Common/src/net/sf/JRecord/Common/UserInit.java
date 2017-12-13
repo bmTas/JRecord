@@ -39,7 +39,7 @@ public class UserInit {
 		@SuppressWarnings("rawtypes")
 		Class c;
 
-		if (properties != null) {
+//		if (properties != null) {
 			for (int i = 0; i < 32; i++) {
 				var = init + i;
 				if (properties.containsKey(var)) {
@@ -58,7 +58,7 @@ public class UserInit {
 					}
 				}
 			}
-		}
+//		}
 	}
 
 	public static void init() {

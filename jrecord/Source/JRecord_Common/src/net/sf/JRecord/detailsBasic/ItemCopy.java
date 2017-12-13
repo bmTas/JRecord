@@ -49,11 +49,7 @@ public abstract class ItemCopy implements IAddDependingOn {
 						//int basePos);
 
 					}
-					ItemDtl itemDtl = new ItemDtl(parent, itm, isArrayItm, 
-							fld, createArray(itm, newIdxDtls), level);
-					if (fld != null) {
-						itemDtl.setType(fld.getType());
-					}
+					ItemDtl itemDtl = createItem(parent, level, itm, isArrayItm, newIdxDtls, fld);
 					copy(fldHelper,	itemDtl, isArrayItm, itm.getChildItems(),
 							newIdxDtls, level+1);
 					itemDtls.add(itemDtl);
@@ -62,6 +58,25 @@ public abstract class ItemCopy implements IAddDependingOn {
 		}
 
 		return itemDtls;
+	}
+
+	/**
+	 * @param parent
+	 * @param level
+	 * @param itm
+	 * @param isArrayItm
+	 * @param newIdxDtls
+	 * @param fld
+	 * @return
+	 */
+	protected ItemDtl createItem(Item parent, int level, IItemJr itm, boolean isArrayItm, ArrayIndexDtls newIdxDtls,
+			IFieldDetail fld) {
+		ItemDtl itemDtl = new ItemDtl(parent, itm, isArrayItm, 
+				fld, createArray(itm, newIdxDtls), level);
+		if (fld != null) {
+			itemDtl.setType(fld.getType());
+		}
+		return itemDtl;
 	}
 	
 	private void loadItems(

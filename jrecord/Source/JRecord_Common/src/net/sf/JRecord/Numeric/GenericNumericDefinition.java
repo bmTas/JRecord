@@ -51,17 +51,17 @@ import net.sf.cb2xml.def.NumericDefinition;
  */
 public class GenericNumericDefinition implements NumericDefinition, Convert {
 
-	public static int PIC9   = 0;
-	public static int BINARY = 2;
-	public static int COMP_0 = 2;
-	public static int COMP_1 = 3;
-	public static int COMP_2 = 4;
-	public static int COMP_3 = 5;
-	public static int COMP_4 = 6;
-	public static int COMP_5 = 7;
-	public static int COMP_6 = 8;
-	public static int COMP_7 = 9;
-	public static int COMP_8 = 10;
+	public final static int PIC9   = 0;
+	public final static int BINARY = 2;
+	public final static int COMP_0 = 2;
+	public final static int COMP_1 = 3;
+	public final static int COMP_2 = 4;
+	public final static int COMP_3 = 5;
+	public final static int COMP_4 = 6;
+	public final static int COMP_5 = 7;
+	public final static int COMP_6 = 8;
+	public final static int COMP_7 = 9;
+	public final static int COMP_8 = 10;
 
 	// initialise for mainframe
 	private int[] compSizesUsed ;

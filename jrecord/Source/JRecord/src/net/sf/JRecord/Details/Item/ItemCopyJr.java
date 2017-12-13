@@ -98,7 +98,9 @@ public class ItemCopyJr extends ItemCopy {
 		fd.setDependingOnDtls(dependOnParentDtls);
 		
 		if (arrayIndexDtls.inArray && itm instanceof ItemDtl) {
-			((ItemDtl) itm).getArrayDefinition().setField(arrayIndexDtls, fd);
+			ItemDtl cobolItem = ((ItemDtl) itm);
+			cobolItem.getArrayDefinition().setField(arrayIndexDtls, fd);
+			fd.setCobolItem(cobolItem);
 		}
 		return fd;
 	}
@@ -114,7 +116,9 @@ public class ItemCopyJr extends ItemCopy {
 	 */
 	@Override
 	public IArrayExtended createArray(IItemJr item, ArrayIndexDtls idxDtls) {
-		return new ArrayFieldDefinition1(idxDtls.toIndexSizeArray());
+		return idxDtls.getNumberOfIndexs() > 0 
+				? new ArrayFieldDefinition1(idxDtls.toIndexSizeArray())
+				: null;
 	}
 	
 	public FieldDetail[] getFields() {

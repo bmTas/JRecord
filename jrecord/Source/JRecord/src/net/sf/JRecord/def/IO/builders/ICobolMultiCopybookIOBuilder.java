@@ -147,6 +147,7 @@ public interface ICobolMultiCopybookIOBuilder extends  ICobolIOBuilder {
 	
 	@Override public abstract ICobolMultiCopybookIOBuilder setKeepFillers(boolean keepFillers);
 
+	
 
 	/**
 	 * Set the starting position for current copybook
@@ -154,6 +155,16 @@ public interface ICobolMultiCopybookIOBuilder extends  ICobolIOBuilder {
 	 * @return IOBuilder for further definition (fluid style)
 	 */
 	public abstract ICobolMultiCopybookIOBuilder setStartingPosition(int position) ;
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.def.IO.builders.ICobolIOBuilder#setRecordLength(int)
+	 */
+	@Override ICobolMultiCopybookIOBuilder setRecordLength(int recordLength);
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.def.IO.builders.ICobolIOBuilder#setStackSize(int)
+	 */
+	@Override ICobolMultiCopybookIOBuilder setStackSize(int stacksize);
 
 	/**
 	 * Set the starting position relative to a field

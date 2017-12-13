@@ -110,11 +110,11 @@ public class TstCobol2 extends TestCase {
 
 
 	private int[][] intelFields = {
-			{ 1, 5, 22}, { 7, 3, Type.ftPackedDecimalPostiveSmall}, {11, 4, Type.ftIntPositiveSmall}, 
+			{ 1, 5, 22}, { 7, 3, Type.ftPackedDecimalSmallPostive}, {11, 4, Type.ftIntPositiveSmall}, 
 			{16, 4, Type.ftIntPositiveSmall}, {20, 8, 25},
 			{20, 4, 25}, {24, 2, 25}, {26, 2, 25}, {28, 10, 0}, 			};
 	private int[][] mainframeFields = {
-			{ 1, 5, 22}, { 7, 3, Type.ftPackedDecimalPostiveSmall}, {11, 4, Type.ftIntBigEndianPositive}, 
+			{ 1, 5, 22}, { 7, 3, Type.ftPackedDecimalSmallPostive}, {11, 4, Type.ftIntBigEndianPositive}, 
 			{16, 4, Type.ftIntBigEndianPositive}, {20, 8, 25},
 			{20, 4, 25}, {24, 2, 25}, {26, 2, 25}, {28, 10, 0}, 			};
 	private String[] blankNames  = {"f01", "f02", "f03", "f04", "f05", "yyyy", "MM", "DD", "", };
