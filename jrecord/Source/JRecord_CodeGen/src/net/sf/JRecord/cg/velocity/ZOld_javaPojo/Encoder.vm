@@ -1,0 +1,43 @@
+package  ${generateOptions.packageId}.io;
+#incl("schema/CommentSchema.pvm")
+
+import net.sf.JRecord.cgen.def.IEncoder;
+
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+import ${generateOptions.packageId}.data.Line${r.extensionName}JR;
+import ${generateOptions.packageId}.def.I${r.extensionName};
+import ${generateOptions.packageId}.schema.Schema${r.extensionName};
+#*  *##end
+
+public class Encoder${generateOptions.schemaDefinition.extensionName} 
+#*  *##set( $pref = 'implements ')
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+${pref} IEncoder<I${r.extensionName}>
+#*  *##set( $pref = '         , ')
+#*  *##end
+{
+
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+    private Line${r.extensionName}JR line${r.extensionName};
+#*  *##end
+
+    public Encoder${generateOptions.schemaDefinition.extensionName}(Schema${generateOptions.schemaDefinition.extensionName} schemaDef) {
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+        line${r.extensionName} = new Line${r.extensionName}JR(schemaDef.record${r.extensionName});
+#*  *##end
+    }
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+    
+    @Override
+    public byte[] encode(I${r.extensionName} rec) {
+        Line${r.extensionName}JR tl = line${r.extensionName};
+        if (rec instanceof Line${r.extensionName}JR) {
+            tl = (Line${r.extensionName}JR) rec;
+        } else {
+            tl.set(rec);
+        }
+        return tl.getData();
+    }
+#*  *##end
+}
+

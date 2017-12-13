@@ -25,13 +25,13 @@
       
 package net.sf.JRecord.cg.schema;
 
-import net.sf.JRecord.cg.nameConversion.IFieldNameConversion;
-import net.sf.JRecord.cg.nameConversion.FieldNameConversionManager;
+import net.sf.JRecord.fieldNameConversion.FieldNameConversionManager;
+import net.sf.JRecord.fieldNameConversion.IFieldNameConversion;
 
 //import net.sf.JRecord.cg.common.CCode;
 
 public class JavaDetails {
-	private final String cobolName, extensionName, javaName, className, constantName, sqlName,
+	private final String cobolName,  extensionName, javaName, className, constantName, sqlName,
 			standardisedName;
 
 	protected JavaDetails(String cobolName, String copybookName, String classname) {
@@ -57,7 +57,7 @@ public class JavaDetails {
 		
 		String name = conversion.cobolName2JavaName(adjCobolName);
 		this.cobolName = cobolName;
-	
+
 		if (classname == null) {
 			this.extensionName = conversion.toSuffix(name);			
 			this.className = conversion.toClassName(name);

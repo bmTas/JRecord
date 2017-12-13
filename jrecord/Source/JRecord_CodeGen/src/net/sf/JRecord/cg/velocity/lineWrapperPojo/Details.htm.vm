@@ -10,7 +10,7 @@
 <tr><td>Font</td><td><b>${generateOptions.font}</b></td></tr>
 </table>
 <h2>Structure of the Generated Code</h2>
-<p>This code was generated using the <b>stdPojo</b> Template. This template generates, an Interface(with Getter/setter methods for the Cobol fields)
+<p>This code was generated using the <b>lineWrapperPojo</b> Template. This template generates, an Interface(with Getter/setter methods for the Cobol fields)
 for each Cobol Record. This interface has 2 implementing classes:<ul>
  <li>One (<b>JR</b>) is implemented as a wrapper around a <b>JRecord</b> line class. This class has 2 methods
  <b>toPojo</b> and <b>set</b> to convert to/from the equivalent pojo class.</li>

@@ -1,0 +1,119 @@
+package ${generateOptions.packageId}.example;
+##  
+##   Read Example JRecord using Schema-Fields
+##
+##   Author: Bruce Martin
+##
+#incl("schema/CommentExample.pvm")
+#macro (printFields)
+#*  *##set( $sep = "        ")    
+#*  *##foreach($f in ${r.getFields(11)})
+#*      *##if (! ${f.isArrayItem()})
+                      ${sep}line.get${f.extensionName}()
+#*            *##set( $sep = '+ " " + ')    
+#*      *##end
+#*  *##end
+#*  *##foreach($a in ${r.getArrayDetailsList()}) 
+#*      *##if (! ${f.isArrayItem()})	
+                      ${sep}line.get${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()})
+#*      *##end
+#*  *##end
+#end	
+
+import net.sf.JRecord.cgen.def.IReader;
+
+#*  *##set( $r = ${generateOptions.schemaDefinition.getRecords().get(0)})                     
+import ${generateOptions.packageId}.data.Line${r.extensionName}JR;                                         
+import ${generateOptions.packageId}.data.Line${r.extensionName}Pojo;                                         
+import ${generateOptions.packageId}.io.IOBuilder${generateOptions.schemaDefinition.extensionName};
+
+	
+
+/**
+ * Read Cobol file using a Cobol Copybook (${generateOptions.schemaDefinition.extensionName}).
+ *
+ * This Generated program is intended as an example of using JRecord
+ * with generated classes.
+ * You should regard it as a starting point and modify 
+ * it according to your needs
+ */
+public final class Read${generateOptions.schemaDefinition.extensionName} {
+
+    private String testDir        = "G:/temp/";
+    private String salesFile      = testDir + "DTAR020.bin";
+#*    private String salesFileOut   = testDir + "DTAR020out.bin";*#
+    private String copybookName   = "${generateOptions.getSchemaDefinition().schemaName.getJavaFileName()}"; 
+ 
+    /**
+     * Example of LineReader  classes
+     */
+    public Read${generateOptions.schemaDefinition.extensionName}() {
+    }
+    
+    public void byteArrayReader() {
+
+    	Line${r.extensionName}JR line;
+        int lineNum = 0;
+
+        System.out.println();
+        System.out.println(" ------ Reading via Byte Array ------");
+        System.out.println();
+
+        try {
+            IOBuilder${generateOptions.schemaDefinition.extensionName} ioBldr = new IOBuilder${generateOptions.schemaDefinition.extensionName}(copybookName);
+            IReader<Line${r.extensionName}JR> reader = ioBldr.newReader(salesFile);  
+
+            while ((line = reader.read()) != null) {
+                lineNum += 1;
+                System.out.println(
+#*          *##printFields()  
+                   );
+            }
+
+            reader.close();
+        } catch (Exception e) {
+            System.out.println("~~> " + lineNum + " " + e);
+            System.out.println();
+
+            e.printStackTrace();
+        }
+    }
+    
+    public void pojoArrayReader() {
+
+    	Line${r.extensionName}Pojo line;
+        int lineNum = 0;
+        
+        System.out.println();
+        System.out.println(" ------ Reading via POJO ------");
+        System.out.println();
+
+        try {
+            IOBuilder${generateOptions.schemaDefinition.extensionName} ioBldr = new IOBuilder${generateOptions.schemaDefinition.extensionName}(copybookName);
+            IReader<Line${r.extensionName}Pojo> reader = ioBldr.newPojoReader(salesFile);  
+
+            while ((line = reader.read()) != null) {
+                lineNum += 1;
+                System.out.println(
+#*          *##printFields()  
+                   );
+            }
+
+            reader.close();
+        } catch (Exception e) {
+            System.out.println("~~> " + lineNum + " " + e);
+            System.out.println();
+
+            e.printStackTrace();
+        }
+    }
+
+    
+    public static void main(String[] args) {
+        Read${generateOptions.schemaDefinition.extensionName} t = new Read${generateOptions.schemaDefinition.extensionName}();
+
+    	t.byteArrayReader();
+   	t.pojoArrayReader();
+    }
+}
+

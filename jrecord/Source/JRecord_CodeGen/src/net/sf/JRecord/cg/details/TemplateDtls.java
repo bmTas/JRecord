@@ -43,11 +43,14 @@ public class TemplateDtls {
 	private static final String IF = ".if.";
 	private static final String SKEL_PREF = "skel.";
 
+	public static final int DEFAULT_JREC_VERSION = 815;
 	public static final String DEFAULT_TEMPLATE_BASE = "/net/sf/JRecord/cg/velocity/";
 	public static final String GENERATE_PROPERTIES = "Generate.properties";
 	public static final String T_REQUIRE_PACKAGE_ID = "requirePackageId";
 	public static final String T_SPLIT_ALLOWED = "splitAllowed";
 	public static final String T_DUPLICATE_FIELD_NAMES = "duplicateFieldNames";
+	
+	public static final String JRECORD_VERION_FLAG = "checkJRecordVersion";
 
 	
 	public final String template, templateDir, templateBase;
@@ -57,17 +60,20 @@ public class TemplateDtls {
 	private boolean ok = true;
 	private boolean inTemplateBase = false, multiRecord = false;
 	
+	public final int jrecordVersion;
+	
 	private String currentDate, currentDateTime;
 	
 	private SkelGenDefinition skeltons;
 
-	public TemplateDtls(String templateDir, String template, boolean multiRecord) {
-		this(templateDir, template, DEFAULT_TEMPLATE_BASE, multiRecord);
+	public TemplateDtls(String templateDir, String template, boolean multiRecord, int jrecordVersion) {
+		this(templateDir, template, DEFAULT_TEMPLATE_BASE, multiRecord, jrecordVersion);
 	}
 
-	public TemplateDtls(String templateDir, String template, String templateBase, boolean multiRecord) {
+	public TemplateDtls(String templateDir, String template, String templateBase, boolean multiRecord, int jrecordVersion) {
 		
 		this.multiRecord = multiRecord;
+		this.jrecordVersion = jrecordVersion;
 		
 		String t = templateDir;
 		boolean useTemplateDir = false;
@@ -103,11 +109,12 @@ public class TemplateDtls {
 		Properties p = new Properties();
 		try {
 			InputStream stream;
-			String filePropertiesName = dir + template + '/' + GENERATE_PROPERTIES;
-			if ((new File(filePropertiesName)).exists()) {
+			String filePropertiesName;
+			if (useTemplateDir && (new File(filePropertiesName = dir + template + '/' + GENERATE_PROPERTIES)).exists()) {
 				stream = new FileInputStream(filePropertiesName );
 			} else {
-				stream = this.getClass().getResourceAsStream(templateBase + template + '/' + GENERATE_PROPERTIES);
+				stream = TemplateDtls.class.getResourceAsStream(templateBase + template + '/' + GENERATE_PROPERTIES);
+				//stream = this.getClass().getResourceAsStream(templateBase + template + '/' + GENERATE_PROPERTIES);
 				inTemplateBase = true;
 			}
 			if (stream == null) {
@@ -127,6 +134,27 @@ public class TemplateDtls {
 		return p;
 	}
 	
+	
+	
+	public static Properties getTemplateProperties(String dir, boolean useTemplateDir,String template)
+	throws IOException  {
+		InputStream stream; 
+		
+		String filePropertiesName;
+		if (useTemplateDir && (new File(filePropertiesName = dir + template + '/' + GENERATE_PROPERTIES)).exists()) {
+			stream = new FileInputStream(filePropertiesName );
+		} else {
+			stream = TemplateDtls.class.getResourceAsStream(DEFAULT_TEMPLATE_BASE + template + '/' + GENERATE_PROPERTIES);
+		}
+		Properties p = new Properties();
+
+		if (stream != null) {
+			p.load(stream);	
+		}
+
+		return p;
+	}
+
 	/**
 	 * Get the Template description Html 
 	 * (displayed in the RecordEditor when generating a template).
@@ -433,5 +461,12 @@ public class TemplateDtls {
 			currentDateTime = new SimpleDateFormat("d MMM yyyy H:m:s").format(date);
 			currentDate = new SimpleDateFormat("d MMM yyyy").format(date);
 		}
+	}
+
+	/**
+	 * @return the jrecordVersion
+	 */
+	public int getJrecordVersion() {
+		return jrecordVersion;
 	}
 }

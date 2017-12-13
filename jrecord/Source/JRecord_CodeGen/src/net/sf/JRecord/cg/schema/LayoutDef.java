@@ -31,8 +31,8 @@ import java.util.List;
 
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Conversion;
-import net.sf.JRecord.cg.common.CCode;
-import net.sf.JRecord.cgen.defc.ILayoutDetails4gen;
+import net.sf.JRecord.cgen.def.ILayoutDetails4gen;
+import net.sf.JRecord.cgen.support.Code2JRecordConstants;
 
 /**
  * Class to represent a Layout (file schema) for use in Code Generation
@@ -89,7 +89,7 @@ public class LayoutDef extends JavaDetails {
 	 * @return JRecord Record-Type-Code
 	 */
 	public String getJRecordLayoutType() {
-		return CCode.getRecordTypeName(schema.getLayoutType());
+		return Code2JRecordConstants.getRecordTypeName(schema.getLayoutType());
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class LayoutDef extends JavaDetails {
 	 * @return
 	 */
 	public String getJRecordIoType() {
-		return CCode.getJRecordIoTypeName(schema.getFileStructure());
+		return Code2JRecordConstants.getJRecordIoTypeName(schema.getFileStructure());
 	}
 
 	/**
@@ -127,7 +127,7 @@ public class LayoutDef extends JavaDetails {
 	 * Get the Csv field delimiter
 	 * 
 	 * @return Csv field delimiter
-	 * @see net.sf.JRecord.cgen.defc.ILayoutDetails4gen#getDelimiter()
+	 * @see net.sf.JRecord.cgen.def.ILayoutDetails4gen#getDelimiter()
 	 */
 	public String getDelimiter() {
 		String d = schema.getDelimiterDetails().jrDefinition();

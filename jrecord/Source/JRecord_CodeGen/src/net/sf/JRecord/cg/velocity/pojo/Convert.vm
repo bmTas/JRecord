@@ -23,82 +23,51 @@ import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
 import net.sf.JRecord.Common.IFieldDetail;
 
 import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.Details.FieldValue;
 import net.sf.JRecord.Details.LayoutDetail;
+#if (${generateOptions.getJRecordVersion()} > 815)
+import net.sf.JRecord.Details.Line;
+import net.sf.JRecord.Details.fieldValue.IFieldValueUpdLine;
+import net.sf.JRecord.Details.fieldValue.LineFieldCreator;
+#else
+import net.sf.JRecord.Details.FieldValue;
+#end
 
-public class Convert${currentRecord.extensionName} extends BasePojoConverter<Line${currentRecord.extensionName}Pojo> {
-
-#*    *##foreach($f in ${currentRecord.getFields()})     
-#*      *##if (! ${f.isArrayItem()})
-    public final IFieldDetail fld${f.extensionName};
-#*      *##end
-#*    *##end 
-
+##
+#macro (defArrays)
 #*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
     public final IArray${a.getDimensionString()}Dimension array${a.getFirstElement().extensionName};
 #*  *##end
-                  
-    public Convert${currentRecord.extensionName}(ISchemaIOBuilder lineCreator) throws IOException {
-        super(lineCreator);
-        
-        LayoutDetail schema = lineCreator.getLayout();
-        FieldNames${generateOptions.schemaDefinition.extensionName}.Record${currentRecord.extensionName} fn
-                   = FieldNames${generateOptions.schemaDefinition.extensionName}.RECORD_${currentRecord.constantName};
-#*    *##if (${currentRecord.getArrayDetailsList().size()} > 0)
+#end
+#macro (initArrays)
+#*  *##if (${currentRecord.getArrayDetailsList().size()} > 0)
         RecordDetail record = schema.getRecord("${currentRecord.getRecord().getRecordName()}");
-#*    *##end 
-                  
-#*    *##foreach($f in ${currentRecord.getFields()})     
-#*      *##if (! ${f.isArrayItem()})
-        fld${f.extensionName} = schema.getFieldFromName(fn.${f.javaName});
-#*      *##end
-#*    *##end 
-	
+#*  *##end 
+
 #*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
         array${a.getFirstElement().extensionName} = new ArrayFieldDefinition1(
 #*      *##set ( $sep = '')
                    record,
                    new int[] {#*
-           *##foreach($count in ${a.getSizes()})#*
-               *##set ($c = ${count} + 1)#*
-           	   *#${sep}${c}#*
-               *##set ($sep = ', ')#*
-           *##end#*      *#},
-#*         *##set ( $sz =  ${a.getFieldDefs().size()} - 1)          	   
+        *##foreach($count in ${a.getSizes()})#*
+           *##set ($c = ${count} + 1)#*
+       	   *#${sep}${c}#*
+           *##set ($sep = ', ')#*
+        *##end#*      *#},
+#*      *##set ( $sz =  ${a.getFieldDefs().size()} - 1)          	   
                    record.getArrayFields(
 ##                       record.getField(fn.${a.getFieldDefs().get($sz).javaName}(${a.getZeroArrayIndex()}) ),
                        record.getField(fn.${a.getFirstElement().javaName}.get(${a.getZeroArrayIndex()}) ),
                        "${a.getFirstElement().cobolName}")      
         );
 #*  *##end
-    }
-
-    /*
-     * This method setField was introduced for use in Generated Code.
-     * It is marked as depreciated to discourage its use outside generated code.
-     * Suppressing `deprecation` because this is where the method is supposed to
-     * be used. 
-     */
-    @SuppressWarnings("deprecation")
+#end
+#macro (toPojoDef)
     @Override
     public Line${currentRecord.extensionName}Pojo toPojo(AbstractLine line) { 
         
         Line${currentRecord.extensionName}Pojo pojo = new Line${currentRecord.extensionName}Pojo();
-#if (${currentRecord.getFields().size()} > 0)
-        FieldValue u = new FieldValue(line, null);
-        
-#* *##foreach($f in ${currentRecord.getFields()}) 
-#*     *##if (! ${f.isArrayItem()})
-#*         *##if (${f.getJavaType()} == "short")
-        pojo.set${f.extensionName}( (short) u.setField(fld${f.extensionName}).asInt());   
-#*         *##else   
-        pojo.set${f.extensionName}(u.setField(fld${f.extensionName}).${f.getAsType()}());   
-#*         *##end
-#*     *##end
-#* *##end
-    
-
-    
+#end
+#macro (toPojoArrays)
 #* *##foreach($as in ${currentRecord.getArraySameSize()}) 
 #*     #set($n = "from.get${as.get(0).getFirstElement().extensionName}ArrayLength")*#
 ${as.get(0).getForLoops("pojo.get${as.get(0).getFirstElement().extensionName}")}    
@@ -115,6 +84,236 @@ ${as.get(0).getForLoops("pojo.get${as.get(0).getFirstElement().extensionName}")}
 #*     *##end
 ${as.get(0).getEndForLoops()}    
 #* *##end
+#end
+##
+public class Convert${currentRecord.extensionName} extends BasePojoConverter<Line${currentRecord.extensionName}Pojo> {
+ 
+#if (${generateOptions.getJRecordVersion()} > 815)
+#*    *##foreach($f in ${currentRecord.getFields()})     
+#*      *##if (! ${f.isArrayItem()})
+    public final IFieldValueUpdLine fu${f.extensionName};
+#*      *##end
+#*    *##end 
+
+#defArrays()
+##*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+##    public final IArray${a.getDimensionString()}Dimension array${a.getFirstElement().extensionName};
+###*  *##end
+                  
+    public Convert${currentRecord.extensionName}(ISchemaIOBuilder lineCreator) throws IOException {
+        super(lineCreator);
+        
+        LayoutDetail schema = lineCreator.getLayout();
+        FieldNames${generateOptions.schemaDefinition.extensionName}.Record${currentRecord.extensionName} fn
+                   = FieldNames${generateOptions.schemaDefinition.extensionName}.RECORD_${currentRecord.constantName};
+        Line line = null;
+        LineFieldCreator lfc = LineFieldCreator.getInstance();
+                  
+                   
+#*    *##foreach($f in ${currentRecord.getFields()})     
+#*      *##if (! ${f.isArrayItem()})
+        IFieldDetail fld${f.extensionName} = schema.getFieldFromName(fn.${f.javaName});
+#*      *##end
+#*    *##end 
+
+#*    *##foreach($f in ${currentRecord.getFields()})     
+#*      *##if (! ${f.isArrayItem()})
+        fu${f.extensionName} = lfc.newFieldValue(line, fld${f.extensionName});
+#*      *##end
+#*    *##end 
+
+#initArrays()
+    }
+
+#toPojoDef()
+#* *##if (${currentRecord.getFields().size()} > 0)
+        
+#*     *##foreach($f in ${currentRecord.getFields()})                                                                                                                                                                                           
+#*         *##if (${f.isShortNumber()} || ${f.isArrayItem()})
+#*         *##else
+#*             *##if (${f.getJavaType()} == "short")
+        pojo.set${f.extensionName}( (short) fu${f.extensionName}.setLine(line).asInt());   
+#*             *##else   
+        pojo.set${f.extensionName}(fu${f.extensionName}.setLine(line).${f.getAsType()}());   
+#*             *##end
+#*         *##end
+#*     *##end
+	// ${currentRecord.isShortNumber()}
+#*     *##if (${currentRecord.isShortNumber()})
+
+       if (line instanceof Line) {
+           Line l = (Line) line;
+        
+#*         *##foreach($f in ${currentRecord.getFields()})                                                                                                                                                                                           
+#*             *##if (${f.isShortNumber()} && ! ${f.isArrayItem()})
+#*                 *##if (${f.getJavaType()} == "short")
+           pojo.set${f.extensionName}( (short) fu${f.extensionName}.setLine(l).asInt());   
+#*                 *##else   
+           pojo.set${f.extensionName}(fu${f.extensionName}.setLine(l).${f.getAsType()}());   
+#*                 *##end
+#*             *##end
+#*         *##end
+       } else {
+           FieldNames${generateOptions.schemaDefinition.extensionName}.Record${currentRecord.extensionName} fn
+                   = FieldNames${generateOptions.schemaDefinition.extensionName}.RECORD_${currentRecord.constantName};
+
+#*         *##foreach($f in ${currentRecord.getFields()})                                                                                                                                                                                           
+#*             *##if (${f.isShortNumber()} && ! ${f.isArrayItem()})
+#*                 *##if (${f.getJavaType()} == "short")
+           pojo.set${f.extensionName}( (short) line.getFieldValue(fn.${f.javaName}).asInt());   
+#*                 *##else   
+           pojo.set${f.extensionName}(line.getFieldValue(fn.${f.javaName}).${f.getAsType()}());   
+#*                 *##end
+#*             *##end
+#*         *##end
+       }
+#*     *##end
+                        
+#toPojoArrays()  
+
+#* *##end
+        return pojo;
+    }
+
+    @Override
+    public void updateLine(AbstractLine line, Line${currentRecord.extensionName}Pojo pojo) {
+        
+#* *##if (${currentRecord.getFields().size()} > 0)        
+#*     *##foreach($f in ${currentRecord.getFields()})                                                                                                                                                                                           
+#*         *##if (${f.isShortNumber()} || ${f.isArrayItem()})
+#*         *##else
+       fu${f.extensionName}.setLine(line).set(pojo.get${f.extensionName}());
+#*         *##end
+#*     *##end
+#*     *##if (${currentRecord.isShortNumber()})
+       if (line instanceof Line) {
+           Line l = (Line) line;
+
+#*         *##foreach($f in ${currentRecord.getFields()})                                                                                                                                                                                           
+#*             *##if (${f.isShortNumber()} && ! ${f.isArrayItem()})
+           fu${f.extensionName}.setLine(l).set(pojo.get${f.extensionName}());
+#*             *##end
+#*         *##end
+       } else {
+           FieldNames${generateOptions.schemaDefinition.extensionName}.Record${currentRecord.extensionName} fn
+                   = FieldNames${generateOptions.schemaDefinition.extensionName}.RECORD_${currentRecord.constantName};
+
+#*         *##foreach($f in ${currentRecord.getFields()})                                                                                                                                                                                           
+#*             *##if (${f.isShortNumber()} && ! ${f.isArrayItem()})
+	       line.getFieldValue(fn.${f.javaName}).set(pojo.get${f.extensionName}());
+#*             *##end
+#*         *##end
+       }
+#*    *##end
+    
+#*    *##foreach($as in ${currentRecord.getArraySameSize()}) 
+#*        *##set($n = "from.get${as.get(0).getFirstElement().extensionName}ArrayLength")
+${as.get(0).getForLoops("pojo.get${as.get(0).getFirstElement().extensionName}")}    
+##${as.get(0).getForLoops("pojo")}    
+#*        *##foreach($a in ${as}) 
+           u.setField(array${a.getFirstElement().extensionName}.get(${a.getCallIndexParameters()}))
+              .set(pojo.get${a.getFirstElement().extensionName}(${a.getCallIndexParameters()}));
+#*        *##end
+${as.get(0).getEndForLoops()}    
+#*    *##end    
+#* *##end
+    }
+    
+#* *##else
+#*    *##foreach($f in ${currentRecord.getFields()})     
+#*      *##if (! ${f.isArrayItem()})
+    public final IFieldDetail fld${f.extensionName};
+#*      *##end
+#*    *##end 
+
+#defArrays()
+###*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+##    public final IArray${a.getDimensionString()}Dimension array${a.getFirstElement().extensionName};
+###*  *##end
+                  
+    public Convert${currentRecord.extensionName}(ISchemaIOBuilder lineCreator) throws IOException {
+        super(lineCreator);
+        
+        LayoutDetail schema = lineCreator.getLayout();
+        FieldNames${generateOptions.schemaDefinition.extensionName}.Record${currentRecord.extensionName} fn
+                   = FieldNames${generateOptions.schemaDefinition.extensionName}.RECORD_${currentRecord.constantName};
+                  
+#*    *##foreach($f in ${currentRecord.getFields()})     
+#*      *##if (! ${f.isArrayItem()})
+        fld${f.extensionName} = schema.getFieldFromName(fn.${f.javaName});
+#*      *##end
+#*    *##end 
+
+#initArrays()
+###*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+##        array${a.getFirstElement().extensionName} = new ArrayFieldDefinition1(
+###*      *##set ( $sep = '')
+##                   record,
+##                   new int[] {#*
+##           *##foreach($count in ${a.getSizes()})#*
+##               *##set ($c = ${count} + 1)#*
+##           	   *#${sep}${c}#*
+##               *##set ($sep = ', ')#*
+##           *##end#*      *#},
+###*         *##set ( $sz =  ${a.getFieldDefs().size()} - 1)          	   
+##                   record.getArrayFields(
+####                       record.getField(fn.${a.getFieldDefs().get($sz).javaName}(${a.getZeroArrayIndex()}) ),
+##                       record.getField(fn.${a.getFirstElement().javaName}.get(${a.getZeroArrayIndex()}) ),
+##                       "${a.getFirstElement().cobolName}")      
+##        );
+###*  *##end
+    }
+
+    /*
+     * This method setField was introduced for use in Generated Code.
+     * It is marked as depreciated to discourage its use outside generated code.
+     * Suppressing `deprecation` because this is where the method is supposed to
+     * be used. 
+     */        
+    @SuppressWarnings("deprecation")
+#toPojoDef()
+##    /*
+##     * This method setField was introduced for use in Generated Code.
+##     * It is marked as depreciated to discourage its use outside generated code.
+##     * Suppressing `deprecation` because this is where the method is supposed to
+##     * be used. 
+##     */        
+##    @SuppressWarnings("deprecation")
+##    @Override
+##    public Line${currentRecord.extensionName}Pojo toPojo(AbstractLine line) { 
+##        
+##        Line${currentRecord.extensionName}Pojo pojo = new Line${currentRecord.extensionName}Pojo();
+#if (${currentRecord.getFields().size()} > 0)
+        FieldValue u = new FieldValue(line, null);
+        
+#* *##foreach($f in ${currentRecord.getFields()})                                                                                                                                                                                           
+#*     *##if (! ${f.isArrayItem()})
+#*         *##if (${f.getJavaType()} == "short")
+        pojo.set${f.extensionName}( (short) u.setField(fld${f.extensionName}).asInt());   
+#*         *##else   
+        pojo.set${f.extensionName}(u.setField(fld${f.extensionName}).${f.getAsType()}());   
+#*         *##end
+#*     *##end
+#* *##end
+    
+
+#toPojoArrays()    
+###* *##foreach($as in ${currentRecord.getArraySameSize()}) 
+###*     #set($n = "from.get${as.get(0).getFirstElement().extensionName}ArrayLength")*#
+##${as.get(0).getForLoops("pojo.get${as.get(0).getFirstElement().extensionName}")}    
+###*     *##foreach($a in ${as}) 
+###*          *##if ( ${a.getFirstFieldDef().getJavaType()} == "short")
+##            pojo.set${a.getFirstElement().extensionName}(${a.getCallIndexParameters()},
+##                       (short) u.setField(array${a.getFirstElement().extensionName}.get(${a.getCallIndexParameters()})).asInt());
+####            u.setField(fn.${a.getFirstElement().javaName}.get(${a.getCallIndexParameters()}))).asInt();
+###*          *##else
+##            pojo.set${a.getFirstElement().extensionName}(${a.getCallIndexParameters()}, 
+##                       u.setField(array${a.getFirstElement().extensionName}.get(${a.getCallIndexParameters()})).${a.getFirstFieldDef().getAsType()}());
+####            u.setField(fn.${a.getFirstElement().javaName}.get(${a.getCallIndexParameters()}))).${a.getFirstFieldDef().getAsType()}();
+###*          *##end
+###*     *##end
+##${as.get(0).getEndForLoops()}    
+###* *##end
 
 #end
         return pojo;
@@ -152,6 +351,5 @@ ${as.get(0).getEndForLoops()}
 #* *##end    
 #end
     }
+#end
 }
-
-

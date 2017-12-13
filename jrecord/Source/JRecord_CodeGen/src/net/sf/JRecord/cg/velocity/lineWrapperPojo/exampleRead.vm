@@ -67,6 +67,10 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
                System.out.println(
 #*          *##printFieldsWrapper()
                    );
+#*          *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IDataPojo.vm")})
+	           // to get a proper java pojo line, use the asPojo() method:
+	           // pojoLine = line${r.extensionName}JR.asPojo();
+#*          *##end
 #*      *##end
 #*  *##else
 #*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})

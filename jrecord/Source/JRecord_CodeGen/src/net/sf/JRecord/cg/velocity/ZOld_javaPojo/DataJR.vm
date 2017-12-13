@@ -6,8 +6,7 @@ import ${imp};
 #*  *##end
                                                                              
 import net.sf.JRecord.Details.IGetByteData;
-import net.sf.JRecord.cgen.defJr.IAsPojoSetData;
-import net.sf.JRecord.cgen.def.ILineToBytes;
+import net.sf.JRecord.cgen.def.IAsPojo;
 import net.sf.JRecord.cgen.impl.FieldValueCG;
 	
 import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
@@ -15,7 +14,7 @@ import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;
 import ${generateOptions.packageId}.schema.Record${currentRecord.extensionName};  
 
 public class Line${currentRecord.extensionName}JR 
-implements I${currentRecord.extensionName}Pojo, IGetByteData, ILineToBytes<I${currentRecord.extensionName}>, IAsPojoSetData<Line${currentRecord.extensionName}Pojo> {
+implements I${currentRecord.extensionName}Pojo, IGetByteData, IAsPojoSetData<Line${currentRecord.extensionName}Pojo> {
 
     public static final byte[] EMPTY_BYTE_ARRAY = {};
     

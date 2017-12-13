@@ -89,7 +89,11 @@ public class GenerateOptions implements IGenerateOptions {
 		String schemaName   = required(pa, ArgumentOption.OPT_SCHEMA);
 		String templateDir  = pa.getArg(ArgumentOption.OPT_TEMPLATE_DIRECTORY, "");
 
-		templateDtls = new TemplateDtls(templateDir, decodeTemplate(pa.getArg(ArgumentOption.OPT_TEMPLATE)), false);
+		templateDtls = new TemplateDtls(
+									templateDir,
+									decodeTemplate(pa.getArg(ArgumentOption.OPT_TEMPLATE)), 
+									false,
+									TemplateDtls.DEFAULT_JREC_VERSION);
 
 //		if (BASIC_TEMPLATE.equals(template)) {
 		if (templateDtls.hasOption(TemplateDtls.T_REQUIRE_PACKAGE_ID)) {
@@ -577,7 +581,16 @@ public class GenerateOptions implements IGenerateOptions {
     	r.setCaseSensitive(false);
     	return r;
     }
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.cg.details.IGenerateOptions#getJRecordVersion()
+	 */
+	@Override
+	public int getJRecordVersion() {
+		return TemplateDtls.DEFAULT_JREC_VERSION;
+	}
    
+    
 //    public static ExternalGroupSelection<ExternalSelection> newAnd(ExternalSelection... selections) {
 //    	return ExternalGroupSelection.newAnd(selections);
 //    }

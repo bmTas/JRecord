@@ -95,5 +95,10 @@ public interface IGenerateOptions {
 	 */
 	public abstract ConstantVals getConstantValues();
 
+	/**
+	 * JRecord version to generate for
+	 * @return
+	 */
+	public abstract int getJRecordVersion();
 
 }

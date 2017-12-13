@@ -26,9 +26,9 @@
 package net.sf.JRecord.cg.details;
 
 import net.sf.JRecord.Common.Constants;
-import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.Def.BasicConversion;
 import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.Option.ICobolSplitOptions;
 
 
 /**
@@ -59,7 +59,7 @@ public class ArgumentOption {
 	public static final String JAVA_POJO_TEMPLATE = "javaPojo";
 	public static final ArgumentOption TEMPLATE_JAVA_POJO = stdTemplateArg(JAVA_POJO_TEMPLATE,   "Generate java classes for each Cobol Record");
 	public static final ArgumentOption TEMPLATE_BASIC = stdTemplateArg("basic",  "Generate example code using JRecord IO Builders");
-	public static final ArgumentOption TEMPLATE_STD_POJO = stdTemplateArg("stdPojo",   "Generate java wrapper & pojo classes for each Cobol Record");
+	public static final ArgumentOption TEMPLATE_WRAPPER_POJO = stdTemplateArg("lineWrapperPojo",   "Generate java wrapper & pojo classes for each Cobol Record");
 	public static final ArgumentOption TEMPLATE_SCHEMA_CLASS = stdTemplateArg("schemaClass", "Generate example code using JRecord IO Builders + Schema details");
 	public static final ArgumentOption TEMPLATE_LINE_WRAPPER = stdTemplateArg("lineWrapper", "Generate Wrapper classes for JRecord-Lines");
 	public static final ArgumentOption TEMPLATE_STANDARD = stdTemplateArg("standard",  "Generate example code using JRecord IO Builders + Field Name Class");
@@ -70,7 +70,7 @@ public class ArgumentOption {
 		TEMPLATE_STANDARD,
 		TEMPLATE_LINE_WRAPPER,
 		TEMPLATE_SCHEMA_CLASS,
-		TEMPLATE_STD_POJO,
+		TEMPLATE_WRAPPER_POJO,
 		TEMPLATE_POJO,
 		TEMPLATE_POJO_INTERFACE,
 		TEMPLATE_JAVA_POJO,
@@ -79,10 +79,10 @@ public class ArgumentOption {
 
 
 	public static final ArgumentOption[] SPLIT_OPTS = {
-		new ArgumentOption("None",      "CopybookLoader.SPLIT_NONE", "No Copybook split", CopybookLoader.SPLIT_NONE ),
-		new ArgumentOption("01",        "CopybookLoader.SPLIT_01_LEVEL", "Split on 01", CopybookLoader.SPLIT_01_LEVEL),
-		new ArgumentOption("redefine",  "CopybookLoader.SPLIT_REDEFINE", "Split on redefine", CopybookLoader.SPLIT_REDEFINE),
-		new ArgumentOption("highest",   "CopybookLoader.SPLIT_HIGHEST_REPEATING", "Hightest Level", CopybookLoader.SPLIT_HIGHEST_REPEATING),
+		new ArgumentOption("None",      "CopybookLoader.SPLIT_NONE", "No Copybook split", ICobolSplitOptions.SPLIT_NONE ),
+		new ArgumentOption("01",        "CopybookLoader.SPLIT_01_LEVEL", "Split on 01", ICobolSplitOptions.SPLIT_01_LEVEL),
+		new ArgumentOption("redefine",  "CopybookLoader.SPLIT_REDEFINE", "Split on redefine", ICobolSplitOptions.SPLIT_REDEFINE),
+		new ArgumentOption("highest",   "CopybookLoader.SPLIT_HIGHEST_REPEATING", "Hightest Level", ICobolSplitOptions.SPLIT_HIGHEST_REPEATING),
 	};
 
 	public static final ArgumentOption[] FILE_ORGANISATION_OPTS = {

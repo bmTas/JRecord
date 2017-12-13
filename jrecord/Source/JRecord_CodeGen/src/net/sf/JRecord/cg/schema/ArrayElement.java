@@ -32,13 +32,10 @@ import java.util.StringTokenizer;
 public final class ArrayElement extends JavaDetails {
 	final String arrayName;
 	final int[] indexs;
-	final boolean special, first;
+	final boolean special, first, firstIndex;
 	/**
 	 * @return the special
 	 */
-	public final boolean isSpecial() {
-		return special;
-	}
 	final int specialLevel;
 	
 	public static ArrayElement newArrayItem(String arrayElement, String schemaName) {
@@ -66,6 +63,7 @@ public final class ArrayElement extends JavaDetails {
 		}
 		int oneCount = 0;
 		int sLevel = indexs.length;
+		boolean firstIdx = true;
 		
 		for (int i = 0; sLevel >= 0 && i < indexs.length; i++) {
 			switch (indexs[i]) {
@@ -77,14 +75,21 @@ public final class ArrayElement extends JavaDetails {
 				}
 				sLevel = i;
 				oneCount += 1;
+				firstIdx = false;
 				break;
 			default:
+				firstIdx = false;
 				sLevel = -1;
 			}
 		}
-		special = sLevel >= 0;
-		specialLevel = sLevel;
-		first = special && oneCount == 0;
+		this.special = sLevel >= 0;
+		this.specialLevel = sLevel;
+		this.first = special && oneCount == 0;
+		this.firstIndex = firstIdx;
 	}
 	
+	public final boolean isSpecial() {
+		return special;
+	}
+
 }

@@ -1,0 +1,107 @@
+package ${generateOptions.packageId}.data;
+#incl("schema/CommentSchema.pvm")
+#macro(arrayIdx $max)
+#if( $max > 0)#foreach ($i in [1 .. ${max}])[idx${i}]#end #end
+#end
+
+#*  *##if (${currentRecord.getArrayDetailsList().size()} > 0)
+import java.util.Arrays;
+#*  *##end
+#*  *##foreach($imp in ${currentRecord.getImportList()})
+import ${imp};
+#*  *##end
+
+import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
+import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;
+
+public class Line${currentRecord.extensionName}Pojo implements I${currentRecord.extensionName}Pojo {
+
+#*  *##foreach($f in ${currentRecord.getFields()}) 
+#*      *##if (! ${f.isArrayItem()})	
+    private ${f.getJavaType()} ${f.javaName};
+#*      *##end
+#*  *##end
+
+#*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+    private ${a.getFirstFieldDef().getJavaType()}#*
+        *##foreach ($ii in [1 .. ${a.getSizes().size()}])[]#end#*
+             *# ${a.getFirstElement().javaName};        
+#*  *##end
+
+#*  *##foreach($a in ${currentRecord.getArraySameSize()}) 
+    private int[] length${a.get(0).getFirstElement().extensionName} = {${a.get(0).getSizesAsString()}};
+#*  *##end	
+
+#*  *##if (${currentRecord.getArrayDetailsList().size()} > 0)
+    public Line${currentRecord.extensionName}Pojo() {
+#*      *##foreach($aa in ${currentRecord.getArraySameSize()})
+#*          *##set( $st = "")
+#*          *##set( $last = ${aa.get(0).getSizes().size()} - 1)
+#*          *##if( $last > 0)
+#*              *##foreach ($ii in [1 .. ${last}])
+#*                  *##set( $iim1 = $ii - 1)
+        ${st}for (int idx${ii} = 0;idx${ii} < length${aa.get(0).getFirstElement().extensionName}[${iim1} - 1]; idx${ii}++) {
+#*                  *##foreach($a in $aa)
+#*                  *##set( $size = "length${aa.get(0).getFirstElement().extensionName}[${iim1}]")
+        ${st}    ${a.getFirstElement().javaName} #arrayIdx(${iim1}) = new ${a.getFirstFieldDef().getJavaType()}#foreach ($i in [$ii ..${a.getSizes().size()}])[${size}]#set($size = "")#end ;       	
+#*                  *##end#*
+                *##set( $st = "${st}    ")
+#*              *##end
+#*          *##end
+#*          *##foreach($a in ${aa})
+        ${st}${a.getFirstElement().javaName} #arrayIdx(${last}) = new ${a.getFirstFieldDef().getJavaType()}[length${aa.get(0).getFirstElement().extensionName}[${last}]];       	
+#*          *##end
+#*          *##foreach($a in ${aa})
+        ${st}Arrays.fill(${a.getFirstElement().javaName} #arrayIdx(${last}), ${a.getFirstFieldDef().getFieldInitialise()});      	
+#*          *##end
+#*          *##if( $last > 0)
+        #foreach($ii in [1 .. ${last}])}#end
+#*          *##end
+
+
+#*      *##end
+    }
+#*  *##end
+
+#*  *##foreach($f in ${currentRecord.getFields()}) 
+#*      *##if (! ${f.isArrayItem()})
+    @Override
+    public ${f.getJavaType()} get${f.extensionName}() {
+        return ${f.javaName};
+    }
+    
+    @Override
+    public void set${f.extensionName}(${f.getJavaType()} value) {
+        this.${f.javaName} = value;
+    }
+
+#*      *##end
+#*  *##end
+
+#*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+    @Override
+    public ${a.getFirstFieldDef().getJavaType()}  get${a.getFirstElement().extensionName}(${a.getIndexParameters()}) {
+        return ${a.getFirstElement().javaName}${a.getArrayAccessParameters()};
+    }
+  
+    @Override
+    public void set${a.getFirstElement().extensionName}(${a.getIndexParameters()}, ${a.getFirstFieldDef().getJavaType()} value) {
+        ${a.getFirstElement().javaName}${a.getArrayAccessParameters()} = value;
+    }
+
+#*  *##end
+
+	
+#*  *##foreach($a in ${currentRecord.getArraySameSize()}) 
+    public int  get${a.get(0).getFirstElement().extensionName}ArrayLength(int indexNumber) {
+        return length${a.get(0).getFirstElement().extensionName}[indexNumber];
+    }
+#*  *##end	
+
+    public void set(I${currentRecord.extensionName} value) {
+        Code${generateOptions.schemaDefinition.extensionName}
+            .assign${currentRecord.extensionName}(
+                this, value);
+    }
+}
+

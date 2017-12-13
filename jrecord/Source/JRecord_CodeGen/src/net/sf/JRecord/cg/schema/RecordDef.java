@@ -34,12 +34,15 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.sf.JRecord.Common.FieldDetail;
+import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Option.Options;
-import net.sf.JRecord.cg.common.CCode;
-import net.sf.JRecord.cgen.defc.IRecordDetail4gen;
+import net.sf.JRecord.cgen.def.IArrayAnyDimension;
+import net.sf.JRecord.cgen.def.IRecordDetail4gen;
+import net.sf.JRecord.cgen.support.Code2JRecordConstants;
+import net.sf.JRecord.detailsBasic.IItemDetails;
 
 
 /**
@@ -51,6 +54,7 @@ public class RecordDef extends JavaDetails {
 	private final IRecordDetail4gen record;
 	
 	private final ArrayList<FieldDef> fields = new ArrayList<FieldDef>();
+	private final List<CobolItemDef> cobolItemDefs, cobolItemDefList;
 	
 	private final String RecordSelectionStr, recordPositionOptionStr;
 	private final List<ArrayDetails> arrayDetailsList = new ArrayList<ArrayDetails>();
@@ -62,6 +66,7 @@ public class RecordDef extends JavaDetails {
 			"=", "!=", ">", "<", ">=", "<="
 	));
 
+	private final boolean shortNumber;
 	
 	/**
 	 * Class to describe one record type in a file for use in code generation
@@ -78,9 +83,12 @@ public class RecordDef extends JavaDetails {
 		String fldName, lcFldName;
 		ArrayElement ai;
 		HashMap<String, ArrayDetails> arrayMap = new HashMap<String, ArrayDetails>();
+		HashMap<IFieldDetail, ArrayDetails> fieldArrayMap = new HashMap<IFieldDetail, ArrayDetails>();
 		FieldDef fieldDef;
 		ArrayDetails ad = null;
 		TreeSet<String> importSet = new TreeSet<String>();
+		
+		boolean shortNumbers = false;
 
 		
 		fields.ensureCapacity(fieldCount);
@@ -110,6 +118,7 @@ public class RecordDef extends JavaDetails {
 					} else {
 						ad = new ArrayDetails(ai, fieldDef);
 						arrayMap.put(ai.arrayName, ad);
+						fieldArrayMap.put(field, ad);
 						arrayDetailsList.add(ad);
 					}
 				} else {
@@ -117,6 +126,7 @@ public class RecordDef extends JavaDetails {
 				}
 				
 				fields.add(fieldDef);
+				shortNumbers |= fieldDef.shortNumber;
 				
 				String jType = fieldDef.getJavaType();
 				if ("BigDecimal".equals(jType)) {
@@ -127,20 +137,14 @@ public class RecordDef extends JavaDetails {
 			}
 		}
 		
+		this.shortNumber = shortNumbers;
+		
 		importList = new ArrayList<String>(importSet);
 		
 		StringBuilder b = new StringBuilder(30);
 		expandSel(b, record.getRecordSelection().getRecSel(), 0);
-		RecordSelectionStr = b.toString();
-		String s = "null";
-		if (record.getRecordPositionOption() == Options.RP_FIRST_RECORD_IN_FILE) {
-			s = "Options.RP_FIRST_RECORD_IN_FILE"; 
-		} else if (record.getRecordPositionOption() == Options.RP_MIDDLE_RECORDS) {
-			s = "Options.RP_MIDDLE_RECORDS"; 
-		} else if (record.getRecordPositionOption() == Options.RP_LAST_RECORD_IN_FILE) {
-			s = "Options.RP_LAST_RECORD_IN_FILE"; 
-		}
-		this.recordPositionOptionStr = s;
+		this.RecordSelectionStr = b.toString();
+		this.recordPositionOptionStr = decodePositionInFile(record);
 		
 		if (arrayDetailsList.size() > 0) {
 		    List<ArrayDetails> currList = new ArrayList<ArrayDetails>();
@@ -155,8 +159,117 @@ public class RecordDef extends JavaDetails {
 			arraySameSize.add(currList);
 		}
 		
-		recordSelection = parseRecSel(record.getRecordSelection().getRecSel());
-		defaultRecord = record.getRecordSelection().isDefaultRecord();
+		this.recordSelection = parseRecSel(record.getRecordSelection().getRecSel());
+		this.defaultRecord = record.getRecordSelection().isDefaultRecord();
+		
+		List<? extends IItemDetails> cobolItems = record.getCobolItems();
+		
+		List<CobolItemDef> cblItemDefs = null, cblItemDefList = null;
+		if (cobolItems != null) {
+			cblItemDefs = processCobolItems(cobolItems, bldFieldMap(), fieldArrayMap, 0, schemaName, className);
+			
+			cblItemDefList = expandCobolItems(cblItemDefs);
+		}
+		this.cobolItemDefs = cblItemDefs;
+		this.cobolItemDefList = cblItemDefList;
+	}
+
+	/**
+	 * @param record
+	 * @return
+	 */
+	protected String decodePositionInFile(IRecordDetail4gen record) {
+		String s = "null";
+		if (record.getRecordPositionOption() == Options.RP_FIRST_RECORD_IN_FILE) {
+			s = "Options.RP_FIRST_RECORD_IN_FILE"; 
+		} else if (record.getRecordPositionOption() == Options.RP_MIDDLE_RECORDS) {
+			s = "Options.RP_MIDDLE_RECORDS"; 
+		} else if (record.getRecordPositionOption() == Options.RP_LAST_RECORD_IN_FILE) {
+			s = "Options.RP_LAST_RECORD_IN_FILE"; 
+		}
+		return s;
+	}
+
+	/**
+	 * @return
+	 */
+	protected HashMap<IFieldDetail, FieldDef> bldFieldMap() {
+		HashMap<IFieldDetail, FieldDef> fieldMap = new HashMap<IFieldDetail, FieldDef>(Math.max(50, fields.size() * 3 / 2));
+		for (FieldDef fd : fields) {
+			if ((! fd.isArrayItem()) || fd.getArrayDetails().firstIndex) {
+				fieldMap.put(fd.getFieldDetail(), fd);
+			}
+		}
+		return fieldMap;
+	}
+
+	/**
+	 * @param cblItemDefs
+	 * @param cblItemDefList
+	 */
+	private ArrayList<CobolItemDef> expandCobolItems(List<CobolItemDef> cblItemDefs) {
+		HashMap<IItemDetails, CobolItemDef> itemToDefMap = new HashMap<IItemDetails, CobolItemDef>(Math.max(50, cblItemDefs.size() * 4));
+		ArrayList<CobolItemDef> cblItemDefList = new ArrayList<CobolItemDef>(Math.max(25, cblItemDefs.size() * 2));
+
+		expand(cblItemDefList, itemToDefMap, cblItemDefs);
+
+		for (FieldDef fd : fields) {
+			IItemDetails cobolItem = fd.getFieldDetail().getCobolItem();
+			if (cobolItem != null) {
+				fd.setCobolItemDef(itemToDefMap.get(cobolItem));
+			}
+		}
+		return cblItemDefList;
+	}
+	
+	private List<CobolItemDef> processCobolItems(
+			List<? extends IItemDetails> cobolItems, 
+			HashMap<IFieldDetail, FieldDef> fieldMap,
+			HashMap<IFieldDetail, ArrayDetails> fieldArrayMap,
+			int level, String schemaName, String className) {
+		List<CobolItemDef> cblItms = null;
+		
+		if (cobolItems != null && cobolItems.size() > 0) {
+			cblItms = new ArrayList<CobolItemDef>(cobolItems.size());
+			
+			for (IItemDetails itm : cobolItems) {
+				FieldDef fieldDef = null;
+				ArrayDetails ad = null;
+				
+				if (itm.isLeaf()) {
+					IFieldDetail f = itm.getFieldDefinition();
+					IArrayAnyDimension arrayDefinition = itm.getArrayDefinition();
+					
+					if (arrayDefinition != null) {
+						f = arrayDefinition.getFirstField();
+						ad = fieldArrayMap.get(f);
+					}
+					fieldDef = fieldMap.get(f);
+					//fieldArrayMap.g
+				}
+				CobolItemDef cblItemDef = new CobolItemDef(
+						itm, schemaName, 
+						className == null ? null : itm.getFieldName(), 
+						level, 
+						processCobolItems(itm.getChildItems(), fieldMap, fieldArrayMap, level+1, schemaName, className), 
+						fieldDef, ad);
+				cblItms.add(cblItemDef);
+			}
+		}
+		
+		return cblItms;
+	}
+	
+	private void expand(
+			List<CobolItemDef> cblItmsList, HashMap<IItemDetails, CobolItemDef> itemToDefMap, 
+			List<CobolItemDef> cblItms) {
+		if (cblItms != null) {
+			for (CobolItemDef ci : cblItms) {
+				cblItmsList.add(ci);
+				itemToDefMap.put(ci.getCobolItem(), ci);
+				expand(cblItmsList, itemToDefMap, ci.getChildItems());
+			}
+		}
 	}
 
 	public void expandSel(StringBuilder b, ExternalSelection sel, int level) {
@@ -222,7 +335,7 @@ public class RecordDef extends JavaDetails {
 
 	
 	public String getJRecordRecordType() {
-		return CCode.getRecordTypeName(record.getRecordType());
+		return Code2JRecordConstants.getRecordTypeName(record.getRecordType());
 	}
 
 	/**
@@ -325,6 +438,27 @@ public class RecordDef extends JavaDetails {
 		case 1: return list.get(0);
 		}
 		return new GroupSelection(gs.getType(), boolOp, list);
+	}
+
+	/**
+	 * @return the shortNumbers
+	 */
+	public boolean isShortNumber() {
+		return shortNumber;
+	}
+
+	/**
+	 * @return the cobolItemDefs
+	 */
+	public List<CobolItemDef> getCobolItemDefs() {
+		return cobolItemDefs;
+	}
+
+	/**
+	 * @return the cobolItemDefList
+	 */
+	public List<CobolItemDef> getCobolItemDefList() {
+		return cobolItemDefList;
 	}
 
 }

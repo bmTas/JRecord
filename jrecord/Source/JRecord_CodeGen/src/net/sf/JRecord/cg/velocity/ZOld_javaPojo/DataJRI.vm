@@ -1,0 +1,59 @@
+package ${generateOptions.packageId}.data;
+#incl("schema/CommentSchema.pvm")
+
+#*  *##foreach($imp in ${currentRecord.getImportList()})
+import ${imp};
+#*  *##end
+
+import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;
+
+public class Line${currentRecord.extensionName}JR implements I${currentRecord.extensionName}Pojo {
+
+#*  *##foreach($f in ${currentRecord.getFields()}) 
+#*      *##if (! ${f.isArrayItem()})	
+    private ${f.getJavaType()} ${f.javaName};
+#*      *##end
+#*  *##end
+
+#*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+    private ${a.getFirstFieldDef().getJavaType()}#*
+        *##foreach ($ii in [1 .. ${a.getSizes().size()}])[]#end#*
+             *# ${a.getFirstElement().javaName};        
+#*  *##end
+
+#*  *##if (${currentRecord.getArrayDetailsList().size()} > 0)
+    public Line${currentRecord.extensionName}Pojo() {
+    }
+#*  *##end
+
+#*  *##foreach($f in ${currentRecord.getFields()}) 
+#*      *##if (! ${f.isArrayItem()})
+    @Override
+    public ${f.getJavaType()} get${f.extensionName}() {
+        return ${f.javaName};
+    }
+    
+    @Override
+    public void set${f.extensionName}(${f.getJavaType()} value) {
+        this.${f.javaName} = value;
+    }
+
+#*      *##end
+#*  *##end
+
+#*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+    @Override
+    public ${a.getFirstFieldDef().getJavaType()}  get${a.getFirstElement().extensionName}(${a.getIndexParameters()}) {
+        return ${a.getFirstElement().javaName}${a.getArrayAccessParameters()};
+    }
+    
+    
+    @Override
+    public void set${a.getFirstElement().extensionName}(${a.getIndexParameters()}, ${a.getFirstFieldDef().getJavaType()} value) {
+        ${a.getFirstElement().javaName}${a.getArrayAccessParameters()} = value;
+    }
+
+#*  *##end
+
+}
+

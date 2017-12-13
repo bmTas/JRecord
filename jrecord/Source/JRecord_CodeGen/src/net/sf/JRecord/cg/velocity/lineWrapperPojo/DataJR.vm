@@ -16,7 +16,7 @@ import net.sf.JRecord.Details.IGetByteData;
 import net.sf.JRecord.Details.Line;
 import net.sf.JRecord.Details.CsvLine;
 #*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("genpojo")})
-import net.sf.JRecord.cgen.def.IAsPojo;
+import net.sf.JRecord.cgen.defJr.IAsPojo;
 	
 import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
 import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;  
