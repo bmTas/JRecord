@@ -9,7 +9,7 @@ import net.sf.JRecord.Types.TypeZoned;
 public class TypeZonedAsciiSmall extends TypeBaseXBinary {
 
 
-	private TypeZoned typeZoned = new TypeZoned();
+	private TypeZoned typeZoned;
 	
 	private static final byte[] NUMERIC_BYTES = "+-.,09aijrAIJR".getBytes();
 //	private static final char ch4ByteMinus = (char) (NUMERIC_BYTES[1] & 0xff);
@@ -35,6 +35,7 @@ public class TypeZonedAsciiSmall extends TypeBaseXBinary {
 	
 	public TypeZonedAsciiSmall(boolean positive) {
 		super(positive, false, false);
+		typeZoned = new TypeZoned(positive);
 	}
 
 	
@@ -43,7 +44,9 @@ public class TypeZonedAsciiSmall extends TypeBaseXBinary {
 	 */
 	@Override
 	public byte[] setField(byte[] record, int position, IFieldDetail field, Object value) {
-		if (value == null || value == CommonBits.NULL_VALUE || value instanceof Number) {
+		if (value == null || value == CommonBits.NULL_VALUE ) {
+			return setUnscaledLong(record, position, field, 0);
+		} else if (value instanceof Number) {
 			return super.setField(record, position, field, value);
 		}
 		return typeZoned.setField(record, position, field, value);

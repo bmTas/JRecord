@@ -42,7 +42,7 @@ public class TestConversion extends TestCase {
 
 		char[] negativeSign = {'}', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',};
 
-		
+		Conversion.setDefaultEbcidicCharacterset("cp037");
 //		System.out.println(Conversion.toZoned("10") + " " + Conversion.toZoned("-10"));
 		assertEquals("1{", Conversion.toZoned("10"));
 		assertEquals("1}", Conversion.toZoned("-10"));

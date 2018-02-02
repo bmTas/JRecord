@@ -33,6 +33,7 @@ import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeZoned;
+import net.sf.JRecord.Types.TypeZonedLeading;
 import net.sf.JRecord.zTest.Common.TstConstants;
 import junit.framework.TestCase;
 
@@ -51,6 +52,7 @@ public class TestEbcidicZonedDecimal extends TestCase {
 		checkType(Type.ftZonedNumeric);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void testSmallZonedSetValue() throws RecordException {
 		checkType(Type.ftZonedEbcdicSmall);
 	}
@@ -113,4 +115,136 @@ public class TestEbcidicZonedDecimal extends TestCase {
 				Conversion.toString(record, fld.getFontName()), 
 				tz.formatValueForRecord(fld, Integer.toString(val)));
 	}
+	
+	
+	public void testZonedLeadingAscii() {
+		String[] STD_EBCDIC = {
+				"IBM037",		"IBM1047",		"IBM273",		"IBM280",
+				"IBM285",		"IBM297",		"IBM500",		"IBM930",
+				"IBM935",		"IBM937",
+				
+				"cp037",	"cp273",	"cp277",	"cp278",
+				"cp280",	"cp284",	"cp285",	"cp290",
+				"cp297"
+		};
+		FieldDetail fld = new FieldDetail("TstFld", "", Type.ftZonedNumeric, 0, Conversion.DEFAULT_ASCII_CHARSET, 0, "");
+		fld.setPosLen(1, 3);
+		
+		for (String charset : STD_EBCDIC) {
+			System.out.println(">> " + charset + " ");
+			
+			Conversion.setDefaultEbcidicCharacterset(charset);
+		
+			chkSignLeading1(fld);
+		}
+	}
+
+	
+	public void testZonedLeadingEbcdic() {
+		
+		for (String charset : CHARSET_TO_TEST) {
+			System.out.println(">> " + charset + " ");
+			FieldDetail ebcdicFld = new FieldDetail("TstFld", "", Type.ftZonedNumeric, 0, charset, 0, "");
+			ebcdicFld.setPosLen(1, 3);
+			
+			Conversion.setDefaultEbcidicCharacterset(charset);
+		
+			chkSignLeading1(ebcdicFld);
+		}
+	}
+
+	String spaces8 = "        ";
+	
+	/**
+	 * @param fld
+	 */
+	protected void chkSignLeading1(FieldDetail fld) {
+		TypeZonedLeading zd = new TypeZonedLeading();
+		TypeZonedLeading zdp = new TypeZonedLeading(true);
+		String charset = fld.getFontName();
+		byte[] space8Bytes = Conversion.getBytes(spaces8, charset);
+		String tstCharset = Conversion.getDefaultSingleByteCharacterset();
+		boolean doGet =  ! ("IBM930".equals(tstCharset) || "IBM935".equals(tstCharset) || "IBM937".equals(tstCharset)
+				|| "CP930".equals(tstCharset) || "CP935".equals(tstCharset) || "CP937".equals(tstCharset));
+		
+		for (int i = 0; i < 1000; i++) {
+			int highestNum = i / 100;
+			StringBuilder expectedU = new StringBuilder(3)
+					.append(highestNum)
+					.append((i / 10) % 10)
+					.append(i % 10);
+			StringBuilder expectedP = (new StringBuilder(expectedU));
+			StringBuilder expectedN = (new StringBuilder(expectedU));
+			expectedP.setCharAt(0, toPositiveSignChar(highestNum));
+			expectedN.setCharAt(0, toNegativeSignChar(highestNum));
+			
+			String expUnsigned = expectedU.toString();
+			String message = charset + "< " + expUnsigned;
+			String numWithPlus = "+" + i;
+
+//			if ("101".equals(expUnsigned)) {
+//				System.out.println('*');
+//			}
+			assertEquals(message, expUnsigned, zdp.formatValueForRecord(fld, Integer.toString(i)));
+			assertEquals(message, expectedP.toString(), zd.formatValueForRecord(fld, Integer.toString(i)));
+			assertEquals(message, i == 0 ? expectedP.toString() :expectedN.toString(), zd.formatValueForRecord(fld, Integer.toString(-i)));
+			assertEquals(message, expUnsigned, zdp.formatValueForRecord(fld, numWithPlus));
+			assertEquals(message, expectedP.toString(), zd.formatValueForRecord(fld, numWithPlus));
+			
+			for (int j = 0; j < 5; j++) {
+				String xU = createString(j, expectedU),
+					   xP = createString(j, expectedP),
+					   xN = createString(j, expectedN);
+				byte[] bytesU = zdp.setField(space8Bytes.clone(), j+1, fld, i);
+				byte[] bytesP = zd.setField(space8Bytes.clone(), j+1, fld, i);
+				String msg = message + " " + j;
+				assertEquals(msg, xU, Conversion.toString(bytesU, charset));
+				if (! xP.equals(Conversion.toString(bytesP, charset))) {
+					assertEquals(msg, xP, 
+							Conversion.toString(
+									zd.setField(space8Bytes.clone(), j+1, fld, i), 
+									charset));
+				}
+				assertEquals(msg, xU, 
+						Conversion.toString(
+								zdp.setField(space8Bytes.clone(), j+1, fld, numWithPlus), 
+								charset));
+				assertEquals(msg, xP, 
+						Conversion.toString(
+								zd.setField(space8Bytes.clone(), j+1, fld, numWithPlus), 
+								charset));
+				if (i > 0) {
+					byte[] bytesN = zd.setField(space8Bytes.clone(), j+1, fld, -i);
+					assertEquals(msg, xN, Conversion.toString(bytesN, charset));
+					if (doGet) assertEquals(msg, "-" + i, zd.getField(bytesN, j+1, fld).toString());
+				}
+				if (doGet) {
+					assertEquals(msg, "" + i, zd .getField(bytesP.clone(), j+1, fld).toString());
+					assertEquals(msg, "" + i, zdp.getField(bytesP.clone(), j+1, fld).toString());
+					assertEquals(msg, "" + i, zd .getField(bytesU.clone(), j+1, fld).toString());
+					assertEquals(msg, "" + i, zdp.getField(bytesU.clone(), j+1, fld).toString());
+				}
+			}
+		}
+	}
+	
+	
+	private String createString(int pos, CharSequence val) {
+		StringBuilder b = new StringBuilder(spaces8);
+		
+		for (int i = 0; i < val.length(); i++) {
+			b.setCharAt(pos + i, val.charAt(i));
+		}
+		return b.toString();
+	}
+	
+	private static char toPositiveSignChar(int v) {
+		return v == 0 ? Conversion.getPositive0EbcdicZoned()	: (char) ('0' + v + Conversion.EBCDIC_ZONED_POSITIVE_DIFF);
+	}
+	
+	
+	private static char toNegativeSignChar(int v) {
+		return v == 0 ? Conversion.getNegative0EbcdicZoned()	: (char) ('0' + v + Conversion.EBCDIC_ZONED_NEGATIVE_DIFF);
+	}
+
 }

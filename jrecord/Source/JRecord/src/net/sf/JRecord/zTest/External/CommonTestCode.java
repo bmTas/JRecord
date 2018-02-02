@@ -15,6 +15,7 @@ public class CommonTestCode {
 		types[Type.ftChar]            = "Type.ftChar";
 		types[Type.ftPackedDecimal]   = "Type.ftPackedDecimal";
 		types[Type.ftZonedNumeric]    = "Type.ftZonedNumeric";
+//		types[Type.ftZonedLeading]    = "Type.ftZonedLeading";
 		types[Type.ftBinaryBigEndian] = "Type.ftBinaryBigEndian";
 	}
 	public static void compare(String id, ExternalField[] expected, ExternalField[] actual) {

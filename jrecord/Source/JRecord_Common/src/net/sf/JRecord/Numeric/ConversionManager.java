@@ -72,13 +72,15 @@ public class ConversionManager implements AbstractManager {
         Convert mainframeConverter = (new BasicConvert(
 				ICopybookDialects.FMT_MAINFRAME, "Mainframe", ICopybookDialects.FMT_MAINFRAME, MAINFRAME_BIN_SIZES,
 				MAINFRAME_SYNC, false, 4, 4)).setDefaultVbFileStructure(Constants.IO_VB);
-        Convert fujitsuConverter = (
+//        Convert mainframeZLConverter = (new BasicConvert(
+// 				ICopybookDialects.FMT_MAINFRAME_SIGN_LEADING_ZONED, "Mainframe Sign Leading Zoned", ICopybookDialects.FMT_MAINFRAME, MAINFRAME_BIN_SIZES,
+// 				MAINFRAME_SYNC, false, 4, 4)).setDefaultVbFileStructure(Constants.IO_VB);
+       Convert fujitsuConverter = (
         			new GnuCobol(ICopybookDialects.FMT_FUJITSU, "Fujitsu", MAINFRAME_BIN_SIZES, MAINFRAME_SYNC, 4, 8)
         		).setDefaultVbFileStructure(Constants.IO_VB_FUJITSU);
 
         registerConverter(new BasicConvert(ICopybookDialects.FMT_INTEL, "Intel", ICopybookDialects.FMT_INTEL, MAINFRAME_BIN_SIZES, false));
-		registerConverter(
-        		mainframeConverter);
+		registerConverter(mainframeConverter);
 		registerConverter(fujitsuConverter);
         registerConverter(new BasicConvert(ICopybookDialects.FMT_BIG_ENDIAN, "Big-Endian (Old)", ICopybookDialects.FMT_BIG_ENDIAN, MAINFRAME_BIN_SIZES, false));
 
@@ -91,6 +93,8 @@ public class ConversionManager implements AbstractManager {
         registerConverter(new OpenCobolBE(ICopybookDialects.FMT_FS2000_BE, "GNU Cobol bs2000 Big Endian",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
         registerConverter(new OpenCobolBE(ICopybookDialects.FMT_GNU_COBOL_MVS_BE, "GNU Cobol MVS Big Endian",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
         registerConverter(new OpenCobolBE(ICopybookDialects.FMT_OC_MICRO_FOCUS_BE, "GNU Cobol Micro Focus Big E",  BIN_SIZES_1_TO_8, NO_SYNC, 1 , 1));
+        
+  //      registerConverter(mainframeZLConverter);
         registerConverter(new CommaDecimal(ICopybookDialects.FMT_MAINFRAME_COMMA_DECIMAL, mainframeConverter));
         registerConverter(new CommaDecimal(ICopybookDialects.FMT_FUJITSU_COMMA_DECIMAL, fujitsuConverter));
         //registerConverter(new MicroFocusCobol());

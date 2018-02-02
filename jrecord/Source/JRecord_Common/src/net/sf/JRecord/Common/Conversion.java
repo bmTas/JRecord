@@ -64,8 +64,8 @@ public final class Conversion {
 	private static final byte BYTE_NO_BIT_SET   =  0;
 	private static final byte BYTE_ALL_BITS_SET = -1;
 
-	private static int positiveDiff = 'A' - '1';
-	private static int negativeDiff = 'J' - '1';
+	public static final int EBCDIC_ZONED_POSITIVE_DIFF = 'A' - '1';
+	public static final int EBCDIC_ZONED_NEGATIVE_DIFF = 'J' - '1';
 	
 	private static char positive0EbcdicZoned = '{';
 	private static char negative0EbcdicZoned = '}';
@@ -219,7 +219,7 @@ public final class Conversion {
 		case 'G':
 		case 'H':
 		case 'I':
-			lastChar = (char) (ucLastChar - positiveDiff);
+			lastChar = (char) (ucLastChar - EBCDIC_ZONED_POSITIVE_DIFF);
 			break;
 		case 'J':
 		case 'K':
@@ -231,7 +231,7 @@ public final class Conversion {
 		case 'Q':
 		case 'R':
 			sign = "-";
-			lastChar = (char) (ucLastChar - negativeDiff);
+			lastChar = (char) (ucLastChar - EBCDIC_ZONED_NEGATIVE_DIFF);
 			break;
 		default:
 			if (lastChar == positive0EbcdicZoned) {
@@ -537,7 +537,7 @@ public final class Conversion {
 			if (lastChar == '0') {
 				lastChar = negative0EbcdicZoned;
 			} else {
-				lastChar = (char) (lastChar + negativeDiff);
+				lastChar = (char) (lastChar + EBCDIC_ZONED_NEGATIVE_DIFF);
 			}
 			ret = ret.substring(1, ret.length() - 1) + lastChar;
 
@@ -549,7 +549,7 @@ public final class Conversion {
 		    if (lastChar == '0') {
 		        lastChar = positive0EbcdicZoned;
 		    } else {
-		        lastChar = (char) (lastChar + positiveDiff);
+		        lastChar = (char) (lastChar + EBCDIC_ZONED_POSITIVE_DIFF);
 		    }
 			ret = ret.substring(0, ret.length() - 1) + lastChar;
 		}

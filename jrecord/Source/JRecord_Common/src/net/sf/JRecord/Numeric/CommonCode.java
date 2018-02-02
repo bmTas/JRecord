@@ -49,7 +49,9 @@ public class CommonCode {
 			} else {
 				iType = Type.ftGnuCblZonedNumeric;
 				switch (dialect) {
+				case ICopybookDialects.FMT_MAINFRAME_COMMA_DECIMAL: 				
 				case ICopybookDialects.FMT_MAINFRAME: 				iType = Type.ftZonedNumeric;		break;
+//				case ICopybookDialects.FMT_MAINFRAME_SIGN_LEADING_ZONED: iType = Type.ftZonedLeading;		break;
 				case ICopybookDialects.FMT_FUJITSU:
 				case ICopybookDialects.FMT_FUJITSU_COMMA_DECIMAL:	iType = Type.ftFjZonedNumeric;		break;		
 				}

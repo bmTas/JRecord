@@ -102,6 +102,7 @@ public interface Type {
 
 	public static final int ftPackedDecimal      = 31;
 	public static final int ftZonedNumeric       = 32;
+//	public static final int ftZonedLeading       = 30;
 	public static final int ftPackedDecimalPostive = 33;
 //	public static final int ftZonedNumericPositive = 34;
 	public static final int ftBinaryBigEndian    = 35;

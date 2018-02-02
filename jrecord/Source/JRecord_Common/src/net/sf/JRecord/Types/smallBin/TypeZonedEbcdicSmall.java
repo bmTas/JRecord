@@ -14,10 +14,11 @@ public class TypeZonedEbcdicSmall extends TypeBaseXBinary {
 
 	private static final int POSITIVE_SIGN_NYBLE = 0xC0;
 	private static final int NEGATIVE_SIGN_NYBLE = 0xD0;
-	private TypeZoned typeZoned = new TypeZoned();
+	private TypeZoned typeZoned;
 	
 	public TypeZonedEbcdicSmall(boolean positive) {
 		super(positive, false, false);
+		typeZoned = new TypeZoned(positive);
 	}
 
 	
@@ -58,13 +59,13 @@ public class TypeZonedEbcdicSmall extends TypeBaseXBinary {
 		int xx = record[en-1] & 0xf0;
 		byte signNyble = (byte) xx;
 		switch (signNyble) {
-		case TypeZoned.ZONED_NEGATIVE_NYBLE_VALUE1:
-		case TypeZoned.ZONED_NEGATIVE_NYBLE_VALUE2:
+		case ZONED_NEGATIVE_NYBLE_VALUE1:
+		case ZONED_NEGATIVE_NYBLE_VALUE2:
 			val = -val;
 			break;
-		case TypeZoned.HIGH_NYBLE:
-		case TypeZoned.ZONED_POSITIVE_NYBLE_VALUE1:
-		case TypeZoned.ZONED_POSITIVE_NYBLE_VALUE2:
+		case HIGH_NYBLE:
+		case ZONED_POSITIVE_NYBLE_VALUE1:
+		case ZONED_POSITIVE_NYBLE_VALUE2:
 			break;
 		default:
 			if (record[en-1] < NUMERIC_BYTES[0] || record[en-1] > NUMERIC_BYTES[1]) {

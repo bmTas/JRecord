@@ -119,6 +119,11 @@ public class TestShortNumber2 extends TestCase{
 			assertEquals(i, typeAsciiZdP.asUnscaledLong(Conversion.getBytes(str, ""), 1, field));
 			assertEquals(i, typeEbcdicZd.asUnscaledLong(Conversion.getBytes(str, "cp037"), 1, field));
 			assertEquals(i, typeEbcdicZdP.asUnscaledLong(Conversion.getBytes(str, "cp037"), 1, field));
+
+			assertEquals("" + i, typeAsciiZd.getField(Conversion.getBytes(str, ""), 1, field).toString());
+			assertEquals("" + i, typeAsciiZdP.getField(Conversion.getBytes(str, ""), 1, field).toString());
+			assertEquals("" + i, typeEbcdicZd.getField(Conversion.getBytes(str, "cp037"), 1, field).toString());
+			assertEquals("" + i, typeEbcdicZdP.getField(Conversion.getBytes(str, "cp037"), 1, field).toString());
 		}
 		
 		for (int i = 0; i < 10; i++) {
@@ -127,6 +132,11 @@ public class TestShortNumber2 extends TestCase{
 			assertEquals(10 + i, typeEbcdicZd.asUnscaledLong(Conversion.getBytes(str, "cp037"), 1, field));
 			assertEquals(10 + i, typeAsciiZdP.asUnscaledLong(Conversion.getBytes(str, ""), 1, field));
 			assertEquals(10 + i, typeEbcdicZdP.asUnscaledLong(Conversion.getBytes(str, "cp037"), 1, field));
+			
+			assertEquals("1" + i, typeAsciiZd.getField(Conversion.getBytes(str, ""), 1, field).toString());
+			assertEquals("1" + i, typeEbcdicZd.getField(Conversion.getBytes(str, "cp037"), 1, field).toString());
+			assertEquals("1" + i, typeAsciiZdP.getField(Conversion.getBytes(str, ""), 1, field).toString());
+			assertEquals("1" + i, typeEbcdicZdP.getField(Conversion.getBytes(str, "cp037"), 1, field).toString());
 		}
 	}
 
@@ -134,22 +144,42 @@ public class TestShortNumber2 extends TestCase{
 	public void testShortZdUnsignedSet() {
 		@SuppressWarnings("deprecation")
 		FieldDetail field = FieldDetail.newFixedWidthField("", Type.ftZonedAsciiSmall, 1, 2, 0, "");
-		TypeZonedAsciiSmall typeAsciiZd = new TypeZonedAsciiSmall(false);
-		TypeZonedAsciiSmall typeAsciiZdP = new TypeZonedAsciiSmall(true);
-		TypeZonedEbcdicSmall typeEbcdicZd = new TypeZonedEbcdicSmall(false);
+		FieldDetail fielde = FieldDetail.newFixedWidthField("", Type.ftZonedAsciiSmall, 1, 2, 0, "cp037");
+		TypeZonedAsciiSmall  typeAsciiZd   = new TypeZonedAsciiSmall(false);
+		TypeZonedAsciiSmall  typeAsciiZdP  = new TypeZonedAsciiSmall(true);
+		TypeZonedEbcdicSmall typeEbcdicZd  = new TypeZonedEbcdicSmall(false);
 		TypeZonedEbcdicSmall typeEbcdicZdP = new TypeZonedEbcdicSmall(true);
 		
 		for (int i = 0; i < 100; i++) {
 			String strS = new StringBuilder().append(i / 10).append(positiveSign[i % 10]).toString();
 			String strN = new StringBuilder().append(i / 10).append(negativeSign[i % 10]).toString();
 			String strP = new StringBuilder().append(i / 10).append(i % 10).toString();
+			
+			String value = "" + i;
+
 			assertEquals(strP, Conversion.toString(typeAsciiZdP.setUnscaledLong(new byte[2], 1, field, i), ""));
-			assertEquals(strP, Conversion.toString(typeEbcdicZdP.setUnscaledLong(new byte[2], 1, field, i), "cp037"));
+			assertEquals(strP, Conversion.toString(typeEbcdicZdP.setUnscaledLong(new byte[2], 1, fielde, i), "cp037"));
 			assertEquals(strS, Conversion.toString(typeAsciiZd.setUnscaledLong(new byte[2], 1, field, i), ""));
-			assertEquals(strS, Conversion.toString(typeEbcdicZd.setUnscaledLong(new byte[2], 1, field, i), "cp037"));
+			assertEquals(strS, Conversion.toString(typeEbcdicZd.setUnscaledLong(new byte[2], 1, fielde, i), "cp037"));
 			if (i > 0) {
 				assertEquals(strN, Conversion.toString(typeAsciiZd.setUnscaledLong(new byte[2], 1, field, -i), ""));
-				assertEquals(strN, Conversion.toString(typeEbcdicZd.setUnscaledLong(new byte[2], 1, field, -i), "cp037"));
+				assertEquals(strN, Conversion.toString(typeEbcdicZd.setUnscaledLong(new byte[2], 1, fielde, -i), "cp037"));
+			}
+			
+			assertEquals(strP, Conversion.toString(typeAsciiZdP.setField(new byte[2], 1, field, i), ""));
+			assertEquals(strP, Conversion.toString(typeEbcdicZdP.setField(new byte[2], 1, fielde, i), "cp037"));
+			assertEquals(strS, Conversion.toString(typeAsciiZd.setField(new byte[2], 1, field, i), ""));
+			assertEquals(strS, Conversion.toString(typeEbcdicZd.setField(new byte[2], 1, fielde, i), "cp037"));
+			
+			assertEquals(strP, Conversion.toString(typeAsciiZdP.setField(new byte[2], 1, field, value), ""));
+			assertEquals(value, strP, Conversion.toString(typeEbcdicZdP.setField(new byte[2], 1, fielde, value), "cp037"));
+			assertEquals(strS, Conversion.toString(typeAsciiZd.setField(new byte[2], 1, field, value), ""));
+			assertEquals(strS, Conversion.toString(typeEbcdicZd.setField(new byte[2], 1, fielde, value), "cp037"));
+			if (i > 0) {
+				assertEquals(strN, Conversion.toString( typeAsciiZd.setField(new byte[2], 1, field, -i), ""));
+				assertEquals(strN, Conversion.toString(typeEbcdicZd.setField(new byte[2], 1, fielde, -i), "cp037"));
+				assertEquals(strN, Conversion.toString( typeAsciiZd.setField(new byte[2], 1, field, '-' + value), ""));
+				assertEquals(strN, Conversion.toString(typeEbcdicZd.setField(new byte[2], 1, fielde, '-' + value), "cp037"));
 			}
 		}
 		

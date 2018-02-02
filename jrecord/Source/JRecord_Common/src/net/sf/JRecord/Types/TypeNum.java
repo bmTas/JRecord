@@ -69,6 +69,14 @@ import net.sf.JRecord.Common.RecordException;
  */
 public class TypeNum extends TypeChar {
 
+    public static  final byte HIGH_NYBLE = (byte) 0xf0;
+    public static final byte ZONED_POSITIVE_NYBLE_AND = (byte) 0xCF;
+    public static final byte ZONED_NEGATIVE_NYBLE_AND = (byte) 0xDF;
+    public static  final byte ZONED_NEGATIVE_NYBLE_VALUE1 = (byte) 0xD0;
+    public static  final byte ZONED_POSITIVE_NYBLE_VALUE1 = (byte) 0xC0;
+    public static  final byte ZONED_NEGATIVE_NYBLE_VALUE2 = (byte) 0x80;
+    public static  final byte ZONED_POSITIVE_NYBLE_VALUE2 = (byte) 0x90;
+
 //    private static final String STRING_NULL_VALUE = (String) CommonBits.NULL_VALUE;
 //	private static final int BASE_10 = 10;
 	private final boolean couldBeHexZero;

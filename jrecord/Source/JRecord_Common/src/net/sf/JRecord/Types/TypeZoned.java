@@ -64,16 +64,6 @@ import net.sf.JRecord.Common.RecordException;
  */
 public class TypeZoned extends TypeNum {
 
-
-    public static  final byte HIGH_NYBLE = (byte) 0xf0;
-    private static final byte ZONED_POSITIVE_NYBLE_AND = (byte) 0xCF;
-    private static final byte ZONED_NEGATIVE_NYBLE_AND = (byte) 0xDF;
-    public static  final byte ZONED_NEGATIVE_NYBLE_VALUE1 = (byte) 0xD0;
-    public static  final byte ZONED_POSITIVE_NYBLE_VALUE1 = (byte) 0xC0;
-    public static  final byte ZONED_NEGATIVE_NYBLE_VALUE2 = (byte) 0x80;
-    public static  final byte ZONED_POSITIVE_NYBLE_VALUE2 = (byte) 0x90;
-
-
 	/**
      * Define mainframe Zoned Decimal Type
      *
@@ -98,7 +88,7 @@ public class TypeZoned extends TypeNum {
         String val = super.getFieldText(record, position, field);
         String zoned = val; 
         char ch;
-        if (val.length() == 0 || ((ch = val.charAt(val.length() - 1)) >= '0' && ch <= 9)) {
+        if (val.length() == 0 || ((ch = val.charAt(val.length() - 1)) >= '0' && ch <= '9')) {
         	
         } else {
 			String charset = field.getFontName();
@@ -169,7 +159,10 @@ public class TypeZoned extends TypeNum {
 //			return record;
 	    }
 	    
-	    copyRightJust(record, Conversion.toZoned(val),
+	    if (! super.isPositive()) {
+	    	val = Conversion.toZoned(val);
+	    }
+	    copyRightJust(record, val,
 	            position - 1, field.getLen(),
 	            "0", charset);
 	    return record;
@@ -192,7 +185,9 @@ public class TypeZoned extends TypeNum {
 	    	return Conversion.numTrim(s);
 	    }
 	    
-	    val = Conversion.toZoned(val);
+	    if (! super.isPositive()) {
+	    	val = Conversion.toZoned(val);
+	    }
 	    if (field.isFixedFormat() && val.length() < field.getLen()) {
 	    	return Conversion.padFront(val, field.getLen() - val.length(), '0');			
 //	    			new StringBuilder()
@@ -215,12 +210,17 @@ public class TypeZoned extends TypeNum {
 			len = record.length - position + 1;
 		}
 
-		if (val.startsWith("+")) {
-//			andByte = ZONED_POSITIVE_NYBLE;
-			val = val.substring(1);
-		} else if (val.startsWith("-")) {
-			andByte = ZONED_NEGATIVE_NYBLE_AND;
-			val = val.substring(1);
+		if (val.startsWith("-")) {
+				andByte = ZONED_NEGATIVE_NYBLE_AND;
+				val = val.substring(1);
+		} else {
+			if (val.startsWith("+")) {
+				val = val.substring(1);
+			} 
+			
+			if (isPositive()) {
+				andByte = (byte) 0xF0;
+			}
 		}
 		copyRightJust(record, val,
 	            position - 1, len,

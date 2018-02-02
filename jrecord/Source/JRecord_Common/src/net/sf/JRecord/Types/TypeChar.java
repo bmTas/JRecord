@@ -316,16 +316,17 @@ public class TypeChar implements Type {
 	        				   int pos, int len,
 	        				   String pad,
 	        				   String font) {
-
 	    int l = val.length();
 
+		byte[] bytes = getBytes(val, font);
 		if (l == len) {
-			System.arraycopy(getBytes(val, font), 0, record, pos, len);
+			//System.out.println(record.length + " " + val + " " + pos + " " + len);
+			System.arraycopy(bytes, 0, record, pos, len);
 		} else if (l > len) {
 		    throw new RecordException("Character Field is to big: " + val + " Field Length: " + len);
 		} else {
 			padWith(record, pos, len - val.length(), pad, font);
-			System.arraycopy(getBytes(val, font), 0, record,
+			System.arraycopy(bytes, 0, record,
 							 pos + len - val.length(), val.length());
 		}
 	}

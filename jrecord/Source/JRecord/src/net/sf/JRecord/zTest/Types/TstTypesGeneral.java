@@ -97,6 +97,7 @@ public class TstTypesGeneral extends TestCase {
 	 	Type.ftPackedDecimalSmall,
 	 	Type.ftPackedDecimalSmallPostive,
 	 	Type.ftZonedNumeric,
+//	 	Type.ftZonedLeading,
 	 	Type.ftBinaryBigEndian,
 	 	Type.ftBinaryBigEndianPositive,
 	 	Type.ftPositiveBinaryBigEndian,
@@ -497,8 +498,10 @@ public class TstTypesGeneral extends TestCase {
 								System.out.print("+");
 							}
 							if ("IBM273".equals(fontName)
-							&& (	i == Type.ftZonedNumeric || i == Type.ftZonedAsciiSmall || i == Type.ftZonedEbcdicSmall
+							&& (	i == Type.ftZonedNumeric //|| i == Type.ftZonedLeading
+								||  i == Type.ftZonedAsciiSmall || i == Type.ftZonedEbcdicSmall
 								||	i == Type.ftZonedAsciiSmallPositive || i == Type.ftZonedEbcdicSmallPositive)) {
+//							} else if (Conversion.isSingleByteEbcidic(fontName) && i == Type.ftZonedLeading){
 								
 							} else {
 								String id = fontName
@@ -509,8 +512,8 @@ public class TstTypesGeneral extends TestCase {
 								setLine(l[k], i, v1, v2, fixed);
 								if (! l[0].getFullLine().equals(l[k].getFullLine())) {
 									setLine(l[k], i, v1, v2, fixed);
-								}
-								assertEquals(id, l[0].getFullLine(), l[k].getFullLine());
+									assertEquals(id, l[0].getFullLine(), l[k].getFullLine());
+								}							
 							}
 						}
 					}
