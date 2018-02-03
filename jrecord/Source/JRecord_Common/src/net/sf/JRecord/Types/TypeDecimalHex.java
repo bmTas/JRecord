@@ -60,7 +60,7 @@ import net.sf.JRecord.Common.IFieldDetail;
  */
 public class TypeDecimalHex extends TypeNum {
 
-    private boolean isNumeric;
+    private final boolean isNumeric;
 
     /**
      * Define a Decimal or Hex Type

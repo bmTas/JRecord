@@ -248,11 +248,11 @@ public class TypeManager {
 	    		case SINGLE_BYTE_ASCII:  return Type.ftZonedAsciiSmall;
 	    		case SINGLE_BYTE_EBCDIC: return Type.ftZonedEbcdicSmall;
 	    		}
-	    	} else if (typeId == Type.ftNumZeroPaddedPositive) {
-	    		switch (charsetType) {
-	    		case SINGLE_BYTE_ASCII:  return Type.ftZonedAsciiSmallPositive;
-	    		case SINGLE_BYTE_EBCDIC: return Type.ftZonedEbcdicSmallPositive;
-	    		}
+//	    	} else if (typeId == Type.ftNumZeroPaddedPositive) {
+//	    		switch (charsetType) {
+//	    		case SINGLE_BYTE_ASCII:  return Type.ftZonedAsciiSmallPositive;
+//	    		case SINGLE_BYTE_EBCDIC: return Type.ftZonedEbcdicSmallPositive;
+//	    		}
 	    	}
     	}
     	

@@ -82,13 +82,13 @@ public class TypeNum extends TypeChar {
 	private final boolean couldBeHexZero;
     private final boolean adjustTheDecimal;
     protected final boolean couldBeEmpty;
-    private boolean couldBeLong = true;
+    private final boolean couldBeLong;
     private final boolean positive;
-    private boolean usePositiveSign = false;
-    private String padChar = " ";
+    private final boolean usePositiveSign;
+    private final String padChar;
     private final char decimalPoint;
 
-    private int typeIdentifier;
+    private final int typeIdentifier;
 
 
 
@@ -143,6 +143,8 @@ public class TypeNum extends TypeChar {
 
         typeIdentifier = typeId;
 
+        boolean usePositiveSign = false;
+        String padChar = " ";
         switch (typeId) {
         case Type.ftNumRightJustifiedPN:
         case Type.ftNumRightJustCommaDpPN:
@@ -164,6 +166,9 @@ public class TypeNum extends TypeChar {
         case Type.ftNumZeroPaddedPositive:
             padChar = "0";
         }
+        
+        this.padChar = padChar;
+        this.usePositiveSign = usePositiveSign;
         adjustTheDecimal = adjDecimal;
         couldBeEmpty = false;
 
@@ -204,6 +209,9 @@ public class TypeNum extends TypeChar {
         this.couldBeHexZero = couldBeHexHero;
         this.couldBeEmpty = numCouldBeEmpty;
         this.decimalPoint = '.';
+        this.usePositiveSign = false;
+        this.typeIdentifier = 0;
+        this.padChar = " ";
     }
 
 
