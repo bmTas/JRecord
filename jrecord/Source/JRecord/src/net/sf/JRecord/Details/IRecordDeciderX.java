@@ -28,7 +28,38 @@
 
 package net.sf.JRecord.Details;
 
+/**
+ * 
+ * Cobol Copybooks do not provide a means to determine which
+ * Record applies to a particular Data-Line. Most of the
+ * time this does not matter but there are exceptions 
+ * (e.g. <b>Constants.IO_CONTINOUS_NO_LINE_MARKER</b>).
+ * 
+ * <p>One way to tell
+ * JRecord / RecordEditor which Record to use for a Data-line
+ * is to define a {@link RecordDecider}.
+ * 
+ * <p>This .
+ * 
+ * <pre>
+ *   iobuilder.setRecordDecider(myRecordDecider);
+ * </pre>
+ * 
+ *
+ * @author Bruce Martin
+ *
+ */
+
 public interface IRecordDeciderX extends RecordDecider {
 
+	/**
+	 * Define the <i>Layout</i> to the {@link RecordDecider}.
+	 * This method is called by the LayoutDetail class.
+	 * <p>This allows for better performing RecordDeciders.
+	 * 
+	 *  <p><b>For internal JRecord use !!!</b>
+	 * 	 * 
+	 * @param layout that uses the RecordDecider
+	 */
 	public abstract void setLayout(LayoutDetail layout);
 }

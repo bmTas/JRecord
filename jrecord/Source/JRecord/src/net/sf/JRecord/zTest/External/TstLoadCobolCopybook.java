@@ -67,7 +67,7 @@ public class TstLoadCobolCopybook  extends TestCase {
 			{0, 2, 1},
 			{0, 3, 2},
 			{0, 5, 2},
-			{39, 5, 2},
+			{36, 5, 2},
 			{0, 7, 2},
 			{25, 7, 1},
 			{25, 8, 1},

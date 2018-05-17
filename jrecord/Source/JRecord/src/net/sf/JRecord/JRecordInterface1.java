@@ -29,17 +29,20 @@
 package net.sf.JRecord;
 
 import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.External.CopybookLoaderFactory;
 import net.sf.JRecord.IO.builders.CsvIOBuilder;
 import net.sf.JRecord.IO.builders.FileSchemaBuilder;
 import net.sf.JRecord.IO.builders.FixedWidthIOBuilder;
 import net.sf.JRecord.IO.builders.SchemaIOBuilder;
+import net.sf.JRecord.IO.builders.recordDeciders.RecordDeciderBuilder;
 import net.sf.JRecord.def.IO.builders.ICobolCopybookIOProvider;
 import net.sf.JRecord.def.IO.builders.ICsvIOBuilder;
 import net.sf.JRecord.def.IO.builders.IFixedWidthIOBuilder;
 import net.sf.JRecord.def.IO.builders.IIOCopybookProvider;
 import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
 import net.sf.JRecord.def.IO.builders.Icb2xmlIOProvider;
+import net.sf.JRecord.def.IO.builders.recordDeciders.IRecordDeciderBuilder;
 
 
 /**
@@ -71,7 +74,7 @@ public class JRecordInterface1 {
      * Create Reader's / Writers based on Cobol-Copybooks
      * <pre>
      * <b>Example:</b>
-     * {@code
+     * <pre>{@code
      *      AbstractLineReader r = JRecordInterface1.COBOL
      *              .newIOBuilder("file-name.cbl")
      *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
@@ -184,6 +187,57 @@ public class JRecordInterface1 {
      * }</pre> 
      */
     public static final FixedWidthIOBuilderProvider FIXED_WIDTH = new FixedWidthIOBuilderProvider();
+    
+    
+    /**
+     * Cobol Copybooks do not provide a means to determine which
+	 * Record applies to a particular Data-Line. Most of the
+	 * time this does not matter but there are exceptions 
+	 * (e.g. <b>Constants.IO_CONTINOUS_NO_LINE_MARKER</b>).
+	 * 
+	 * <p>One way to tell
+	 * JRecord / RecordEditor which Record to use for a Data-line
+	 * is to define a {@link RecordDecider}.
+	 * 
+	 * <pre>
+	 *   iobuilder.setRecordDecider(myRecordDecider);
+	 * </pre>
+	 * 
+	 * <p>While you can write your own {@link RecordDecider}.
+	 * The RECORD_DECIDER_BUILDER makes it easy to create efficient {@link RecordDecider}
+	 * using a builder style interface.
+	 * 
+	 * <p>For a copybook like:
+	 * 
+	 * <pre>
+	 *       01  Header.
+	 *           03 Record-Type            Pic x.
+	 *              88 Header-Rec  value 'H'.
+	 *              88 Trailer-Rec value 'T'.
+	 *           ....
+	 *       01  Detail.
+	 *           03 Field-1                Pic x.
+	 *           ....
+	 *       01  Trailer.
+	 *           03 Record-TypeT           Pic x.
+	 *           ....
+	 * </pre>
+	 *
+	 * The Java code
+	 * 
+	 *  <pre>
+	 *     RecordDecider decider = JRecordInterface1.RECORD_DECIDER_BUILDER
+	 *                                    .singleFieldDeciderBuilder("Record-Type", "Detail")
+	 *                                        .addRecord("H", "Header")
+	 *                                        .addRecord("T", "Trailer")
+	 *                                    .build();
+	 *    AbstractLineReader r = JRecordInterface1.COBOL
+     *              .newIOBuilder("file-name.cbl")
+     *                  .setRecordDecider(decider)
+     *                  ...                     
+	 *  </pre>
+     */
+    public static final IRecordDeciderBuilder RECORD_DECIDER_BUILDER = new RecordDeciderBuilder();
     
     /**
      * This class creates Csv-IO-Builders {@link CsvIOBuilder}

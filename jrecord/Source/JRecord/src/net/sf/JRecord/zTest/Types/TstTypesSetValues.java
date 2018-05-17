@@ -149,9 +149,6 @@ public class TstTypesSetValues extends TestCase {
 	public void testGeneral3() throws RecordException {
 		boolean[] toTest = new boolean[200];
 		Arrays.fill(toTest, true);
-//		for (int i = 0; i < typesToTest.length; i++) {
-//			toTest[i] = false;
-//		}
 		
 		toTest[Type.ftFloat] = false;
 		toTest[Type.ftDouble] = false;

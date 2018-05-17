@@ -50,7 +50,7 @@ public class CreateExternalFromReader  extends CreateExternalBase  implements IC
 	} 
 
 	@Override
-	public ExternalRecord createExternalRecordImp() throws Exception {
+	protected ExternalRecord createExternalRecordImp() throws Exception {
 		
 		if (copybookStr == null) {
 			char[] buf = new char[0x8000];

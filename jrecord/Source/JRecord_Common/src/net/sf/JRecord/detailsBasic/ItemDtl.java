@@ -132,7 +132,6 @@ public class ItemDtl extends Item implements IItemDetails {
 	 */
 	@Override
 	public boolean isLeaf() {
-		// TODO Auto-generated method stub
 		return childItems == null || childItems.size() == 0;
 	}
 

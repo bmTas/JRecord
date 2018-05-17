@@ -189,6 +189,7 @@ public class TstCsv2 extends TestCase {
 		
 		LayoutDetail schema = ExternalRecord.newCsvRecord("", Constants.IO_CSV_NAME_1ST_LINE, "",
 				CommonCsvTests.toHex(','), CommonCsvTests.toHex('\"')).asLayoutDetail();
+		//tstReadArray("CsvRead1: ", schema, 1, CSV_LINES, CSV_LINES, CSV_LINE_FIELD);
 		tstReadArray("CsvRead1: ", schema, 1, CSV_LINES, CSV_LINES_ALT, CSV_LINE_FIELD);
 	}
 
@@ -301,6 +302,7 @@ public class TstCsv2 extends TestCase {
 		
 		LayoutDetail schema = ExternalRecord.newCsvRecord("", Constants.IO_CSV_NAME_1ST_LINE, "", 
 				CommonCsvTests.toHex(','), CommonCsvTests.toHex('\"')).asLayoutDetail();
+		//tstReadArray(id, schema, 1, CSV_LINES2, CSV_LINES2, CSV_LINE_FIELD2);
 		tstReadArray(id, schema, 1, CSV_LINES2, CSV_LINES2_ALT, CSV_LINE_FIELD2);
 	}
 
@@ -334,7 +336,7 @@ public class TstCsv2 extends TestCase {
 			if (lines1[i] == null) {
 				assertEquals(id + i, lines[i], line.getFullLine());
 			} else {
-				assertEquals(id + i, lines1[i], line.getFullLine());
+				assertEquals(id + "~" + i, lines1[i], line.getFullLine());
 			}
 			
 			for (int j = 0; j < expected[i].length; j++) {

@@ -33,6 +33,7 @@ import java.io.IOException;
 
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
@@ -258,7 +259,14 @@ public class TstCobolIOBuilderSchema extends TestCase {
 		CharsetType charsetType = typeMgr.getCharsetType(schema.getFontName());
 		
 		assertEquals(data.testId, data.fileOrganization, schema.getFileStructure());
-		assertEquals(data.testId, data.font, schema.getFontName());
+		if (data.font == null 
+		|| ((!data.font.equals(schema.getFontName())  ))) {
+			if ("".equals(data.font) && Conversion.DEFAULT_ASCII_CHARSET.equals(schema.getFontName())) {
+				
+			} else { 
+				assertEquals(data.testId, data.font, schema.getFontName());
+			}
+		}
 		assertEquals(data.testId, data.expectedFields.length, schema.getRecordCount());
 		
 		for (int i = 0; i < schema.getRecordCount(); i++) {
@@ -275,9 +283,11 @@ public class TstCobolIOBuilderSchema extends TestCase {
 				assertEquals(t2, ef.getPos(),  fld.getPos());
 				assertEquals(t2, ef.getLen(),  fld.getLen());
 				assertEquals(t2, ef.getDecimal(), fld.getDecimal());
-				assertEquals(t2,
-						typeMgr.getShortType(ef.getType(), ef.getLen(), charsetType), 
-						fld.getType());
+				int shortType = typeMgr.getShortType(ef.getType(), ef.getLen(), charsetType);
+				if (shortType !=  fld.getType()) {
+					assertEquals(t2, shortType, fld.getType());
+				}
+				
 				assertEquals(t2, ef.getFontName(), fld.getFontName());
 			}
 		}

@@ -35,6 +35,7 @@ import java.util.List;
 
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -575,6 +576,9 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	    String recordSepString = this.getRecSepList();
 
 	    String fontName = this.getFontName();
+	    if ((fontName == null || fontName.length() == 0) && Conversion.isMultiByte("") && isBinary()) {
+	    	fontName = Conversion.DEFAULT_ASCII_CHARSET;
+	    }
 	    byte[] recordSep = CommonBits.getEolBytes( this.getRecordSep(), recordSepString, fontName);
 	    
 	    this.setParentsFromName();
@@ -589,14 +593,14 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 //		    if (recordSelection != null && recordSelection.getSize() > 0) {
 //		    	layouts[0].getRecordSelection().setRecSel((new Convert()).convert(recordSelection, layouts[0]));
 //		    }
-	        ret = genSchema(records, recordSepString, recordSep);
+	        ret = genSchema(records, fontName, recordSepString, recordSep);
 	    } else {
 	        records = new RecordDetail[this.getNumberOfRecords()];
 	        for (int i = 0; i < records.length; i++) {
 	            records[i] = this.getRecord(i).toRecordDetail(charsetType, super.optimizeTypes);
 	        }    
 
-	        ret = genSchema(records, recordSepString, recordSep);
+	        ret = genSchema(records, fontName, recordSepString, recordSep);
 		    for (int i = 0; i < records.length; i++) {
 		    	records[i].updateRecordSelection(
 		    			this.getRecord(i).getRecordSelection(), 
@@ -615,6 +619,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	    return ret;
 	}
 
+
 	
 
 	/**
@@ -625,14 +630,14 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	 * @return requested schema (Layoutdetail - internal schema format)
 	 */
 	private LayoutDetail genSchema(
-			RecordDetail[] recordDefs, String recordSepString, byte[] recordSep) {
+			RecordDetail[] recordDefs, String fontname, String recordSepString, byte[] recordSep) {
 		return new LayoutDetail(this.getRecordName(),
 	            recordDefs,
 	            this.getDescription(),
 	            this.getRecordType(),
 	            recordSep,
 	            recordSepString,
-	            this.getFontName(),
+	            fontname,
 	            this.getRecordDecider(),
 	            this.getFileStructure(),
 	            null,

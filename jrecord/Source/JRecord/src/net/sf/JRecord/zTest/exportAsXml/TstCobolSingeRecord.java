@@ -21,6 +21,7 @@ import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.Types.TypeManager.CharsetType;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
@@ -70,7 +71,7 @@ public class TstCobolSingeRecord extends TestCase {
 		createField("Fld-Assummed-Decimal", ".Cbl-Line-Test-Record.",66, 10, 4, 32),
 		createField("Fld-Num-2-decimal", ".Cbl-Line-Test-Record.",76, 10, 2, 6),
 		createField("Fld-Decimal-2-digits", ".Cbl-Line-Test-Record.",86, 5, 2, 31),
-		createField("Fld-Positive-Int-2-digit", ".Cbl-Line-Test-Record.",91, 4, 2, 39),
+		createField("Fld-Positive-Int-2-digit", ".Cbl-Line-Test-Record.",91, 4, 2, Type.ftPositiveBinaryBigEndian),
 		createField("Filler-4", ".Cbl-Line-Test-Record.",95, 6, 0, 0),
 		createField("Fld-Mainframe-Int", ".Cbl-Line-Test-Record.",101, 4, 0, 35),
 		createField("Fld-MainframeInt2decimal", ".Cbl-Line-Test-Record.",105, 4, 2, 35),
@@ -112,7 +113,7 @@ public class TstCobolSingeRecord extends TestCase {
 		createField("CUSTOMER-NAME", ".CUSTOMER-DATA.PERSONAL-DATA.",7, 20, 0, 0),
 		createField("CUSTOMER-ADDRESS", ".CUSTOMER-DATA.PERSONAL-DATA.",27, 20, 0, 0),
 		createField("CUSTOMER-PHONE", ".CUSTOMER-DATA.PERSONAL-DATA.",47, 8, 0, 0),
-		createField("TRANSACTION-NBR", ".CUSTOMER-DATA.TRANSACTIONS.",55, 4, 0, 39),
+		createField("TRANSACTION-NBR", ".CUSTOMER-DATA.TRANSACTIONS.",55, 4, 0, Type.ftPositiveBinaryBigEndian),
 		createField("TRANSACTION-DATE (0)", ".CUSTOMER-DATA.TRANSACTIONS.TRANSACTION.",59, 8, 0, 0),
 		createField("TRANSACTION-DAY (0)", ".CUSTOMER-DATA.TRANSACTIONS.TRANSACTION..",59, 2, 0, 0),
 		createField("TRANSACTION-MONTH (0)", ".CUSTOMER-DATA.TRANSACTIONS.TRANSACTION..",62, 2, 0, 0),
@@ -283,11 +284,11 @@ public class TstCobolSingeRecord extends TestCase {
 		createField("sep2", ".CompFields.Signed-Comp.", 372, 1, 0, 0),
 		createField("Num2", ".CompFields.Signed-Comp.", 373, 2, 2, 35),
 		createField("sep0", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 375, 1, 0, 0),
-		createField("Num0", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 376, 2, 0, 39),
+		createField("Num0", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 376, 2, 0, Type.ftPositiveBinaryBigEndian),
 		createField("sep1", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 378, 1, 0, 0),
-		createField("Num1", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 379, 2, 2, 39),
+		createField("Num1", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 379, 2, 2, Type.ftPositiveBinaryBigEndian),
 		createField("sep2", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 381, 1, 0, 0),
-		createField("Num2", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 382, 2, 2, 39),
+		createField("Num2", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 382, 2, 2, Type.ftPositiveBinaryBigEndian),
 		createField("sep0", ".CompFields.Signed-Comp-3.aa.", 384, 1, 0, 0),
 		createField("Num0", ".CompFields.Signed-Comp-3.aa.", 385, 2, 0, 31),
 		createField("sep1", ".CompFields.Signed-Comp-3.aa.", 387, 1, 0, 0),
@@ -304,12 +305,12 @@ public class TstCobolSingeRecord extends TestCase {
 		createField("Num0", ".CompFields.G-Comp-4.aa.", 406, 2, 0, 35),
 		createField("sep1", ".CompFields.G-Comp-4.aa.", 408, 1, 0, 0),
 		createField("Num1", ".CompFields.G-Comp-4.aa.", 409, 2, 2, 35),
-		createField("Num2", ".CompFields.G-Comp-4.aa.", 411, 2, 2, 39),
+		createField("Num2", ".CompFields.G-Comp-4.aa.", 411, 2, 2, Type.ftPositiveBinaryBigEndian),
 		createField("sep0", ".CompFields.G-Comp-5.aa.", 413, 1, 0, 0),
 		createField("Num0", ".CompFields.G-Comp-5.aa.", 414, 2, 0, 35),
 		createField("sep1", ".CompFields.G-Comp-5.aa.", 416, 1, 0, 0),
 		createField("Num1", ".CompFields.G-Comp-5.aa.", 417, 2, 2, 35),
-		createField("Num2", ".CompFields.G-Comp-5.aa.", 419, 2, 2, 39),
+		createField("Num2", ".CompFields.G-Comp-5.aa.", 419, 2, 2, Type.ftPositiveBinaryBigEndian),
 		createField("PIC-TEST-1", ".CompFields.some-more-items.TOP-LEVEL-ITEM.", 421, 1, 0, 0),
 		createField("PIC-TEST-2", ".CompFields.some-more-items.TOP-LEVEL-ITEM.", 422, 2, 0, 0),
 		createField("PIC-TEST-3", ".CompFields.some-more-items.TOP-LEVEL-ITEM.", 424, 3, 0, 0),
@@ -965,7 +966,7 @@ public class TstCobolSingeRecord extends TestCase {
 //	private String fillerAtEndXml(String name) {
 //		return 
 //				  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-//				+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FONTNAME=\"cp1252\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\">\n"
+//				+ "<RECORD RECORDNAME=\"Record\" COPYBOOK=\"Record\" DELIMITER=\"&lt;Tab&gt;\" FILESTRUCTURE=\"Fixed_Length\" STYLE=\"0\" RECORDTYPE=\"BinaryRecord\" LIST=\"Y\" INITSPACES=\"Y\" QUOTE=\"\" RecSep=\"default\">\n"
 //				+ "    <ITEMS CopybookPref=\"Record\">\n"
 //				+ "        <item level=\"03\" name=\"Num-1\" picture=\"s9V99\" position=\"1\" storage-length=\"3\" display-length=\"3\" scale=\"2\" numeric=\"COBOL_NUMERIC\"/>\n"
 //				+ "        <item level=\"03\" name=\"Num-2\" picture=\"s99V99\" position=\"4\" storage-length=\"4\" display-length=\"4\" scale=\"2\" numeric=\"COBOL_NUMERIC\"/>\n"

@@ -19,6 +19,7 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.Types.TypeManager.CharsetType;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
@@ -151,11 +152,11 @@ public class TstMultiRecordCopybooks extends TestCase {
 			createField("sep2", ".CompFields.Signed-Comp.", 372, 1, 0, 0),
 			createField("Num2", ".CompFields.Signed-Comp.", 373, 2, 2, 35),
 			createField("sep0", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 375, 1, 0, 0),
-			createField("Num0", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 376, 2, 0, 39),
+			createField("Num0", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 376, 2, 0, Type.ftPositiveBinaryBigEndian),
 			createField("sep1", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 378, 1, 0, 0),
-			createField("Num1", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 379, 2, 2, 39),
+			createField("Num1", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 379, 2, 2, Type.ftPositiveBinaryBigEndian),
 			createField("sep2", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 381, 1, 0, 0),
-			createField("Num2", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 382, 2, 2, 39),
+			createField("Num2", ".CompFields.UnSigned-Comp.aa.bb.cc.dd.", 382, 2, 2, Type.ftPositiveBinaryBigEndian),
 			createField("sep0", ".CompFields.Signed-Comp-3.aa.", 384, 1, 0, 0),
 			createField("Num0", ".CompFields.Signed-Comp-3.aa.", 385, 2, 0, 31),
 			createField("sep1", ".CompFields.Signed-Comp-3.aa.", 387, 1, 0, 0),
@@ -172,12 +173,12 @@ public class TstMultiRecordCopybooks extends TestCase {
 			createField("Num0", ".CompFields.G-Comp-4.aa.", 406, 2, 0, 35),
 			createField("sep1", ".CompFields.G-Comp-4.aa.", 408, 1, 0, 0),
 			createField("Num1", ".CompFields.G-Comp-4.aa.", 409, 2, 2, 35),
-			createField("Num2", ".CompFields.G-Comp-4.aa.", 411, 2, 2, 39),
+			createField("Num2", ".CompFields.G-Comp-4.aa.", 411, 2, 2, Type.ftPositiveBinaryBigEndian),
 			createField("sep0", ".CompFields.G-Comp-5.aa.", 413, 1, 0, 0),
 			createField("Num0", ".CompFields.G-Comp-5.aa.", 414, 2, 0, 35),
 			createField("sep1", ".CompFields.G-Comp-5.aa.", 416, 1, 0, 0),
 			createField("Num1", ".CompFields.G-Comp-5.aa.", 417, 2, 2, 35),
-			createField("Num2", ".CompFields.G-Comp-5.aa.", 419, 2, 2, 39),
+			createField("Num2", ".CompFields.G-Comp-5.aa.", 419, 2, 2, Type.ftPositiveBinaryBigEndian),
 			createField("PIC-TEST-1", ".CompFields.some-more-items.TOP-LEVEL-ITEM.", 421, 1, 0, 0),
 			createField("PIC-TEST-2", ".CompFields.some-more-items.TOP-LEVEL-ITEM.", 422, 2, 0, 0),
 			createField("PIC-TEST-3", ".CompFields.some-more-items.TOP-LEVEL-ITEM.", 424, 3, 0, 0),

@@ -82,7 +82,7 @@ public class TstCobol1 extends TestCase {
 		@SuppressWarnings("deprecation")
 		int[] intelTypes = {22, Type.ftPackedDecimalSmallPostive, Type.ftIntPositiveSmall, Type.ftIntPositiveSmall, 25, };
 		@SuppressWarnings("deprecation")
-		int[] mainframeTypes = {22, Type.ftPackedDecimalSmallPostive, Type.ftIntBigEndianPositive, Type.ftIntBigEndianPositive, 25, };
+		int[] mainframeTypes = {22, Type.ftPackedDecimalSmallPostive, Type.ftUIntBigEndianSmall, Type.ftUIntBigEndianSmall, 25, };
 
 		System.out.println();
 		System.out.println("Intel: ");
@@ -123,7 +123,7 @@ public class TstCobol1 extends TestCase {
 	@SuppressWarnings("deprecation")
 	public void testSignedConversion() throws RecordException {
 		int[] intelTypes = {46, Type.ftPackedDecimalSmall, Type.ftIntSmall, Type.ftIntSmall, 7, 24, 6, 29, 6, 29, };
-		int[] mainframeTypes = {32, Type.ftPackedDecimalSmall, Type.ftIntBigEndianSmall, Type.ftIntBigEndianSmall, 7, 24, 6, 29, 6, 29, };
+		int[] mainframeTypes = {Type.ftZonedAsciiSmall, Type.ftPackedDecimalSmall, Type.ftIntBigEndianSmall, Type.ftIntBigEndianSmall, 7, 24, 6, 29, 6, 29, };
 
 		System.out.println();
 		System.out.println("Signed Intel: ");

@@ -49,7 +49,7 @@ public class CreateExternalFromStream  extends CreateExternalBase  implements IC
 	} 
 
 	@Override
-	public ExternalRecord createExternalRecordImp() throws Exception {
+	protected ExternalRecord createExternalRecordImp() throws Exception {
 		
 		if (copybookBytes == null) {
 			ByteArrayOutputStream os = new ByteArrayOutputStream(0x8000);

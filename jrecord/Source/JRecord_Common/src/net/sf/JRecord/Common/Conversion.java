@@ -72,7 +72,7 @@ public final class Conversion {
 
 	//private static final DecimalFormatSymbols decSymbols = new DecimalFormatSymbols();
 	private static final char decimalChar = '.';  //decSymbols.getDecimalSeparator();
-	private static final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+//	private static final NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
 	static {
 		String asciiCharSet = "";
@@ -1051,7 +1051,7 @@ public final class Conversion {
 
 
 	public static NumberFormat getNumberformat() {
-		return numberFormat;
+		return NumberFormat.getNumberInstance(Locale.US);
 	}
 
 	public static boolean isHtml(String s) {

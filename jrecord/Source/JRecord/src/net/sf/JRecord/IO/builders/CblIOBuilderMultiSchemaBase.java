@@ -53,6 +53,8 @@ extends CblIOBuilderBase<IOB> implements IGetLoader  {
 	
 	boolean keepFillers = false;
 	
+	private boolean optimizeTypes = true;
+	
 	private int stackSize = Cb2xmlJrConsts.CALCULATE_THREAD_SIZE;
 
 
@@ -103,6 +105,11 @@ extends CblIOBuilderBase<IOB> implements IGetLoader  {
 		return super.self;
 	}
 
+	public IOB setOptimizeTypes(boolean optimize) {
+		this.optimizeTypes = optimize;
+		return super.self;
+	}
+
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.IO.builders.CblIOBuilderBase#getExternalRecordImpl()
 	 */
@@ -119,7 +126,10 @@ extends CblIOBuilderBase<IOB> implements IGetLoader  {
 			xLoader.setStackSize(stackSize);
 		}
 		try {
-			 
+			for (ICreateExternal copybookdef : copybooks) {
+				copybookdef.setOptimizeTypes(optimizeTypes);
+			}
+			
 			if (copybooks.size() == 1) {
 				return copybooks.get(0).createExternalRecord();
 			} else {

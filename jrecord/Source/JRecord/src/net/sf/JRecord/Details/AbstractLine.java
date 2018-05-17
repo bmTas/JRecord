@@ -34,9 +34,8 @@
 
 package net.sf.JRecord.Details;
 
-import net.sf.JRecord.Common.AbstractFieldValue;
-import net.sf.JRecord.Common.AbstractIndexedLine;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Common.ILineFieldNames;
 
 /**
  * Interface to represent one Line in a file. Used through out JRecord / RecordEditor
@@ -63,7 +62,7 @@ import net.sf.JRecord.Common.IFieldDetail;
  * @author Bruce Martin
  *
  */
-public interface AbstractLine extends AbstractIndexedLine {
+public interface AbstractLine extends ILineFieldNames {
     /**
      *   This method completely replaces a lines value. It is used to determine
      * a records prefered record layout
@@ -187,17 +186,6 @@ public interface AbstractLine extends AbstractIndexedLine {
 
 
     /**
-     * Get a fields value
-     *
-     * @param fieldName field to retrieve
-     *
-     * @return fields Value
-     *
-     * @deprecated use {@link AbstractLine#getFieldValue(String)}
-     */
-    public abstract Object getField(String fieldName);
-
-    /**
      * Gets a fields value
      *
      * @param recordIdx Index of the RecordDescription to be used.
@@ -207,6 +195,7 @@ public interface AbstractLine extends AbstractIndexedLine {
      */
     public abstract net.sf.JRecord.Details.fieldValue.IFieldValue  getFieldValue(final int recordIdx, final int fieldIdx);
 
+    public abstract net.sf.JRecord.Details.fieldValue.IFieldValue getFieldValue(String fieldName);
     /**
      * Get a fields value
      *
@@ -215,25 +204,6 @@ public interface AbstractLine extends AbstractIndexedLine {
      * @return fields Value
      */
     public abstract net.sf.JRecord.Details.fieldValue.IFieldValue getFieldValue(IFieldDetail field);
-
-    /**
-     * Get a fields value
-     *
-     * @param fieldName field to retrieve
-     *
-     * @return fields Value
-     */
-    public abstract net.sf.JRecord.Details.fieldValue.IFieldValue  getFieldValue(String fieldName);
-
-    
-    /**
-     * Get a fields value
-     *
-     * @param fieldName field to retrieve
-     *
-     * @return fields Value
-     */
-   public abstract AbstractFieldValue getFieldValueIfExists(String fieldName);
 
     /**
      * Set a field via its name

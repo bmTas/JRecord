@@ -71,7 +71,7 @@ public class ConversionManager implements AbstractManager {
 
         Convert mainframeConverter = (new BasicConvert(
 				ICopybookDialects.FMT_MAINFRAME, "Mainframe", ICopybookDialects.FMT_MAINFRAME, MAINFRAME_BIN_SIZES,
-				MAINFRAME_SYNC, false, 4, 4)).setDefaultVbFileStructure(Constants.IO_VB);
+				MAINFRAME_SYNC, true, 4, 4)).setDefaultVbFileStructure(Constants.IO_VB);
 //        Convert mainframeZLConverter = (new BasicConvert(
 // 				ICopybookDialects.FMT_MAINFRAME_SIGN_LEADING_ZONED, "Mainframe Sign Leading Zoned", ICopybookDialects.FMT_MAINFRAME, MAINFRAME_BIN_SIZES,
 // 				MAINFRAME_SYNC, false, 4, 4)).setDefaultVbFileStructure(Constants.IO_VB);

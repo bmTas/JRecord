@@ -59,6 +59,7 @@ import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.CsvParser.ICsvCharLineParser;
 import net.sf.JRecord.CsvParser.ICsvDefinition;
+import net.sf.JRecord.IO.builders.recordDeciders.SingleFieldDecider;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.CsvParser.ICsvByteLineParser;
 import net.sf.JRecord.CsvParser.CsvParserManagerChar;
@@ -184,7 +185,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
  		   final byte[] pRecordSep,
  		   final String pEolIndicator,
  		   final String pFontName,
- 		   final RecordDecider pRecordDecider,
+ 		   		 RecordDecider pRecordDecider,
  		   final int pFileStructure,
  		   final IRecordPositionOption rpOpt,
  		         boolean  initToSpaces,
@@ -202,7 +203,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 		this.layoutType    = pLayoutType;
 		this.recordSep     = pRecordSep;
 		this.fontName      = pFontName;
-		this.decider       = pRecordDecider;
+		//this.decider       = pRecordDecider;
 		this.fileStructure = CommonBits.translateFileStructureToNotAskFont(pFileStructure);
 		this.recordCount   = pRecords.length;
 //		this.setDecider(pRecordDecider);
@@ -318,10 +319,16 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	    csvLayout = csv;
 	    
 //	    this.setDecider(pRecordDecider);
-		if (decider != null && decider instanceof IRecordDeciderX) {
-		((IRecordDeciderX) decider).setLayout(this);
-	}
-
+		if (pRecordDecider != null && pRecordDecider instanceof IRecordDeciderX) {
+			if (pRecordDecider instanceof SingleFieldDecider) {
+				try {
+					pRecordDecider = (RecordDecider) ((SingleFieldDecider) pRecordDecider).clone();
+				} catch (CloneNotSupportedException e) {
+				}
+			}
+			((IRecordDeciderX) pRecordDecider).setLayout(this);
+		}
+		this.decider       = pRecordDecider;
 	}
 
 
@@ -854,17 +861,13 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
      * @return field definition for the supplied name
      */
     public IFieldDetail getFieldFromName(String fieldName) {
-    	IFieldDetail ret = null;
+    	//IFieldDetail ret = null;
     	String key = fieldName.toUpperCase();
 
     	buildFieldNameMap();
 
-    	if (fieldNameMap.containsKey(key)) {
-    		ret = fieldNameMap.get(key);
-    	}
-
-    	return ret;
-    }
+    	return fieldNameMap.get(key);
+     }
     
     public Set<String> getDuplicateFieldNames() {
     	buildFieldNameMap();
@@ -882,15 +885,14 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
     		for (i = 0; i < recordCount; i++) {
     		    size += records[i].getFieldCount();
     		}
-    		size = (size * 5) / 4 + 4;
+    		size = Math.max(16, (size * 4) / 3 + 4);
 
     		fieldNameMap = new HashMap<String, IFieldDetail>(size);
-    		recordFieldNameMap = new HashMap<String, IFieldDetail>(size);
+    		recordFieldNameMap  = new HashMap<String, IFieldDetail>(size);
     		duplicateFieldNames = new HashSet<String>(10);
 
     		for (i = 0; i < recordCount; i++) {
-    			//FieldDetail[] flds = records[i].getFields();
-    			for (j = 0; j < records[i].getFieldCount(); j++) {
+     			for (j = 0; j < records[i].getFieldCount(); j++) {
     			    fld = records[i].getField(j);
     			    nameTmp = fld.getName();
     			    name = nameTmp;

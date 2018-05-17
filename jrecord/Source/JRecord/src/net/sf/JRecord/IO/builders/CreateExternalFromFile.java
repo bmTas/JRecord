@@ -44,8 +44,9 @@ public class CreateExternalFromFile extends CreateExternalBase implements ICreat
 
 
 	@Override
-	public ExternalRecord createExternalRecordImp() throws Exception {
+	protected ExternalRecord createExternalRecordImp() throws Exception {
 		return parent.getLoader().loadCopyBook(copybookFilename, splitCopybook, 0, parent.getFont(), 
 				parent.getCopybookFileFormat(), parent.getDialect(), 0, parent.getLog());
+		
 	}
 }

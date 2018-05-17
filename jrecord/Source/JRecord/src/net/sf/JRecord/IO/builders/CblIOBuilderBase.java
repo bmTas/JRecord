@@ -342,18 +342,24 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 	 */
 	public IOB setRecordSelection(String recordName, ExternalSelection selectionCriteria) {
 		getRecordUpdate(recordName).selection = selectionCriteria;
+		clearLayout();
+
 		return self;
 	}
 
 
 	public IOB setRecordPositionCode(String recordName, IRecordPositionOption positionOption) {
 		getRecordUpdate(recordName).positionCode = positionOption;
+		clearLayout();
+
 		return self;
 	}
 
 
 	public IOB setRecordParent(String recordName, String parentName) {
 		getRecordUpdate(recordName).parentName = parentName;
+		clearLayout();
+
 		return self;
 	}
 
@@ -363,12 +369,16 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 	 */
 	public final IOB setRecordDecider(RecordDecider recordDecider) {
 		this.recordDecider = recordDecider;
+		clearLayout();
+
 		return self;
 	}
 
 	
 	public IOB setRecordLength(int recordLength) {
 		this.recordLength = recordLength;
+		clearLayout();
+
 		return self;
 	}
 
@@ -378,6 +388,8 @@ public abstract class CblIOBuilderBase<IOB> /*implements ISchemaIOBuilder*/  {
 	 */
 	public final IOB setInitToSpaces(boolean initToSpaces) {
 		this.initToSpaces = Boolean.valueOf(initToSpaces);
+		clearLayout();
+
 		return self;
 	}
 

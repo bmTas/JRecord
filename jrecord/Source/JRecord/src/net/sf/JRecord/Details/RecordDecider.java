@@ -38,9 +38,20 @@ package net.sf.JRecord.Details;
 
 
 /**
- * RecordDecider's are used decide which specific RecordDetail
- * should be used to format a line (or data record). It allow
- * you to write Java Code to decide which particular Record Should Be used.
+ * 
+ * Cobol Copybooks do not provide a means to determine which
+ * Record applies to a particular Data-Line. Most of the
+ * time this does not matter but there are exceptions 
+ * (e.g. <b>Constants.IO_CONTINOUS_NO_LINE_MARKER</b>).
+ * 
+ * <p>One way to tell
+ * JRecord / RecordEditor which Record to use for a Data-line
+ * is to define a <b>RecordDecider</b>.
+ * 
+ * <pre>
+ *   iobuilder.setRecordDecider(myRecordDecider);
+ * </pre>
+ * 
  *
  * @author Bruce Martin
  *
@@ -48,9 +59,9 @@ package net.sf.JRecord.Details;
 public interface RecordDecider {
 
     /**
-     * Get the preferred Layout
+     * Get the Record to use for a specific line
      *
-     * @param line to decide what the preferred layout is
+     * @param line to decide what the recoprd to 
      *
      * @return the preferred layout
      */

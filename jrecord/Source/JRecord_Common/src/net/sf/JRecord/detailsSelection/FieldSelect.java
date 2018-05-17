@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import net.sf.JRecord.Common.AbstractIndexedLine;
+import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IEmptyTest;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
@@ -223,7 +224,7 @@ public abstract class FieldSelect extends ExternalFieldSelection implements Reco
 	public static class Empty extends FieldSelect {
 
 		protected Empty(String name, String value, IGetValue fieldDef) {
-			super(name, value, "Doesnt_Contain", fieldDef);
+			super(name, value, Constants.EMPTY, fieldDef);
 		}
 
 

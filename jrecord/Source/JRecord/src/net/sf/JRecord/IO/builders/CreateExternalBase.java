@@ -39,7 +39,9 @@ public abstract class CreateExternalBase {
 	final IGetLoader parent;
 	private final String recordName;
 	private ExternalRecord lastExternalRecord;
-
+	
+	private boolean optimizeTypes = true;
+	
 	int splitCopybook = CopybookLoader.SPLIT_NONE;
 	private ExternalSelection recordSelection = null;
 	private IStartingPosition startPosition = new IStartingPosition() {		
@@ -94,6 +96,7 @@ public abstract class CreateExternalBase {
 		}
 
 		lastExternalRecord = createExternalRecordImp();
+		lastExternalRecord.setOptimizeTypes(optimizeTypes);
 		
 		if (recordSelection != null) {
 			lastExternalRecord.setRecordSelection(recordSelection);			
@@ -131,5 +134,13 @@ public abstract class CreateExternalBase {
 		}
 	}
 	
-	public abstract ExternalRecord createExternalRecordImp() throws Exception;
+	protected abstract ExternalRecord createExternalRecordImp() throws Exception;
+
+
+	/**
+	 * @param optimizeTypes the optimizeTypes to set
+	 */
+	public void setOptimizeTypes(boolean optimizeTypes) {
+		this.optimizeTypes = optimizeTypes;
+	}
 }

@@ -157,8 +157,6 @@ public class FieldValue extends BaseFieldValue implements IFieldValueUpdLine {
 				fld).toString();
 	}
 
-	
-
 	/**
 	 * @see IFieldValue#set(java.lang.Object)
 	 */

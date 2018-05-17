@@ -140,7 +140,8 @@ public class TestBasicConvertPictAnalysis  extends TestCase{
 	public void testNumericCompPictures() {
 		chkCompPict("", "S9999V99",Type.ftBinaryBigEndian);
 		chkCompPict("", "s9999v99",Type.ftBinaryBigEndian);
-		chkCompPict("", "9999V99",Type.ftBinaryBigEndianPositive);
+//		chkCompPict("", "9999V99",Type.ftBinaryBigEndianPositive);
+		chkCompPict("", "9999V99",Type.ftPositiveBinaryBigEndian);
 
 		chkCompPict("-3", "S9999V99",Type.ftPackedDecimal);
 		chkCompPict("-3", "s9999v99",Type.ftPackedDecimal);
@@ -148,7 +149,8 @@ public class TestBasicConvertPictAnalysis  extends TestCase{
 
 		chkCompPict("-5", "S9999V99",Type.ftBinaryBigEndian);
 		chkCompPict("-5", "s9999v99",Type.ftBinaryBigEndian);
-		chkCompPict("-5", "9999V99",Type.ftBinaryBigEndianPositive);
+//		chkCompPict("-5", "9999V99",Type.ftBinaryBigEndianPositive);
+		chkCompPict("-5", "9999V99",Type.ftPositiveBinaryBigEndian);
 	}
 
 	private void chkPict(String picture, int type) {

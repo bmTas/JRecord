@@ -19,6 +19,10 @@ public class TstCobol3 extends TestCase {
 	private static final String SIGNED_COPYBOOK
 		= "           01  TST.\n"
 		+ "               03 f01         pic s999.\n";
+	
+	private static final String SIGNED_COMP_COPYBOOK
+	= "           01  TST.\n"
+	+ "               03 f01         pic s9999 comp.\n";
 
 	public void testCblUnSigned() throws IOException {
 		tstSetUnsigned("");
@@ -157,4 +161,13 @@ public class TstCobol3 extends TestCase {
 		return "000".substring(ret.length()) + ret;
 	}
 	
+	
+//	private void tstComp() {
+//		ICobolIOBuilder iob = JRecordInterface1.COBOL
+//				.newIOBuilder(new StringReader(UNSIGNED_COPYBOOK), "TST")
+//				.setFont("cp037")
+//				;
+//		Type
+//		
+//	}
 }

@@ -261,16 +261,46 @@ public interface Icb2xmlLoadOptions {
 	public abstract Icb2xmlLoadOptions setRecordSelection(String recordName, ExternalSelection selectionCriteria);
 	
 	/**
-	 * Set the Record Length for a fixed width file
-	 * @param recordLength Record Length 
+	 * Set the Record Length for a fixed width file. You only need to 
+	 * do this when the RecordLength is different to the longest Record
+	 * in the Cobol copybook
+	 * 
+	 * @param recordLength Record Length of the file
+	 * 
 	 * @return this item for more updates
 	 */
 	public abstract Icb2xmlLoadOptions setRecordLength(int recordLength);
 
 	/**
-	 * Assign a class that can work out what type of record it is
-	 * @param recordDecider a Record-Decider
-	 * @return this
+	 * Cobol Copybooks do not define how to determine which record is which
+	 * in a way that a package like JRecord can determine. In some cases
+	 * JRecord needs to know which record is which. You can use a RecordDecider 
+	 * to tell JRecord which record to use.
+	 * 
+	 * <pre>
+	 *      05  Record-Type                 pic x.
+	 *          88 Header-Record-Type    'H'.
+	 *          88 Detail-record-Type    'D'.
+	 *           ...  
+	 *      05  Header-Record.
+	 *      
+	 *      05  Detail-Record redefines Header-Record.
+	 * </pre>
+	 * 
+	 * And in JRecord
+	 * 
+	 * <pre>
+	 *     RecordDecider rd = JRecordInterface1.RECORD_DECIDER_BUILDER
+	 *                              .singleFieldDeciderBuilder("Record-Type", true)
+	 *                                  .addRecord("H", "Header-Record")
+	 *                                  .addRecord("D", "Detail-Record")
+	 *                              .build();
+	 *     ioBuilder
+	 *             .setRecordDecider(rd) ...
+	 * </pre>
+	 * @param recordDecider a Record-Decider to be used
+	 * 
+	 * @return this IOBuilder for future updates
 	 */
 	public abstract Icb2xmlLoadOptions setRecordDecider(RecordDecider recordDecider);
 	

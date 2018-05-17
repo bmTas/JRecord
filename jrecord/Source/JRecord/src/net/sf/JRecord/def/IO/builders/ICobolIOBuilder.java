@@ -214,5 +214,15 @@ public interface ICobolIOBuilder extends IIOBuilder, Icb2xmlLoadOptions {
 	 * you try and avoid it (i.e. name the filler fields).
 	 */
 	public abstract ICobolIOBuilder setKeepFillers(boolean keepFillers);
+	
+	/**
+	 * @param optimize wether to use the optimized numeric types or not
+	 * 
+	 * @return this IOBuilder
+	 * 
+	 * @deprecated Try and avoid this option
+	 */
+	public abstract ICobolIOBuilder setOptimizeTypes(boolean optimize);
+	
 
 }

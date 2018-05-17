@@ -127,7 +127,7 @@ public class TstLineBin extends TestCase {
  //       assertEquals(" 3 GetField - Decimal Field ", "123", line.getField(0, 2 + xmlTotal));
         assertEquals(" 7 GetField - Num Right Just", "123", line.getField(0, 6 + xmlTotal));
         assertEquals(" 8 GetField - Num Zero Padded Field ", "456", line.getField(0, 7));
-        assertEquals("10 GetField - Assumed Decimal ", "123.4500", line.getField(0, 9));
+        assertEquals("10 GetField - Assumed Decimal ", "123.4500", line.getField(0, 9).toString());
         assertEquals("11 GetField - Num 2 Decimal ", "23.67", line.getField(0, 10));
 //        assertEquals("12 GetField - Decimal ", "45.67", line.getField(0, 11));
         //assertEquals("13 GetField - Positive Int ", "123.45", line.getField(0, 12));
@@ -142,8 +142,8 @@ public class TstLineBin extends TestCase {
         assertEquals("23 GetField - Mainframe Packed ", "1234", line.getField(0, 22).toString());
         assertEquals("24 GetField - Mainframe Packed with decimal", "123.0", line.getField(0, 23).toString());
 
-        assertEquals("25 GetField - Mainframe Zoned ", "-12", line.getField(0, 24));
-        assertEquals("26 GetField - Mainframe Zoned with decimal", "-0.12", line.getField(0, 25));
+        assertEquals("25 GetField - Mainframe Zoned ", "-12", line.getField(0, 24).toString());
+        assertEquals("26 GetField - Mainframe Zoned with decimal", "-0.12", line.getField(0, 25).toString());
 
         //assertEquals("27 GetField - Bit 1byte ", "10000000", line.getField(0, 26));
         //assertEquals("28 GetField - Bit 2byte ", "1000000110000011", line.getField(0, 27));

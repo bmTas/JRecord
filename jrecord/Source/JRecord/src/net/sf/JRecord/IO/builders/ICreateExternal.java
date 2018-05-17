@@ -56,4 +56,6 @@ public interface ICreateExternal {
 	public abstract ExternalRecord getLastExternalRecord();
 	
 	public abstract void clearLastRecord();
+	
+	public void setOptimizeTypes(boolean optimizeTypes);
 }

@@ -88,8 +88,10 @@ public class TstCobolIOBuilder02 extends TestCase {
 			createField("Numeric-comp-fld-8", 13, 4, Type.ftBinaryBigEndian),
 			createField("Numeric-comp-5-fld-2", 17, 2, Type.ftBinaryBigEndian),
 			createField("Numeric-comp-5-fld-4", 19, 2, Type.ftBinaryBigEndian),
-			createField("pcomp-fld-2", 21, 2, Type.ftBinaryBigEndianPositive),
-			createField("pcomp-fld-4", 23, 2, Type.ftBinaryBigEndianPositive),
+//			createField("pcomp-fld-2", 21, 2, Type.ftBinaryBigEndianPositive),
+//			createField("pcomp-fld-4", 23, 2, Type.ftBinaryBigEndianPositive),
+			createField("pcomp-fld-2", 21, 2, Type.ftPositiveBinaryBigEndian),
+			createField("pcomp-fld-4", 23, 2, Type.ftPositiveBinaryBigEndian),
 			createField("pic9-fld-5", 25, 5, Type.ftZonedNumeric),
 		}, {
 			createField("Numeric-comp-fld-2", 1, 2, Type.ftBinaryBigEndian),
@@ -101,6 +103,7 @@ public class TstCobolIOBuilder02 extends TestCase {
 			createField("Numeric-comp-5-fld-4", 19, 2, Type.ftBinaryInt),
 			createField("pcomp-fld-2", 21, 2, Type.ftPositiveBinaryBigEndian),
 			createField("pcomp-fld-4", 23, 2, Type.ftPositiveBinaryBigEndian),
+
 			createField("pic9-fld-5", 25, 5, Type.ftFjZonedNumeric),
 		}, {
 			createField("Numeric-comp-fld-2", 1, 1, Type.ftBinaryBigEndian),
