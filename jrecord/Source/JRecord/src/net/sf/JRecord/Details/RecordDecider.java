@@ -61,7 +61,7 @@ public interface RecordDecider {
     /**
      * Get the Record to use for a specific line
      *
-     * @param line to decide what the recoprd to 
+     * @param line to decide what the record to use 
      *
      * @return the preferred layout
      */

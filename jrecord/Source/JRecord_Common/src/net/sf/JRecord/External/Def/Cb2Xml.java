@@ -49,7 +49,6 @@ import javax.xml.stream.XMLStreamException;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Numeric.ConversionManager;
 import net.sf.JRecord.Numeric.Convert;
-import net.sf.cb2xml.Cb2Xml2;
 import net.sf.cb2xml.ICb2XmlBuilder;
 import net.sf.cb2xml.def.Cb2xmlConstants;
 import net.sf.cb2xml.analysis.Copybook;
@@ -71,8 +70,12 @@ import org.w3c.dom.Document;
  */
 
 public class Cb2Xml {
+	
+	public static final int USE_DEFAULT_THREADSIZE = Cb2xmlConstants.USE_DEFAULT_THREADSIZE;
+	public static final int CALCULATE_THREAD_SIZE  = Cb2xmlConstants.CALCULATE_THREAD_SIZE;
 
-	private static final String SYNC = "xx123xx";  
+
+//	private static final String SYNC = "xx123xx";  
 
 	/**
 	 * Convert cobol file to XML~Dom
@@ -86,12 +89,12 @@ public class Cb2Xml {
 	 * @throws ParserException 
 	 * @throws XMLStreamException 
 	 */
-	public static Document convertToXMLDOM(File file, int binaryFormat, boolean debug, int format, AbsSSLogger log) 
+	public static Document convertToXMLDOM(File file, int cobolDialect, boolean debug, int format, AbsSSLogger log) 
 			throws ParserException, LexerException, IOException, XMLStreamException {
 		return convertToXMLDOM(
 				net.sf.cb2xml.Cb2Xml3
 					.newBuilder(file),
-				binaryFormat, debug, format);
+				cobolDialect, debug, format);
 	
 //		//log = TextLog.getLog(log);
 //		
@@ -142,30 +145,78 @@ public class Cb2Xml {
 //		return document;
 	}
 
-	public static Document convertToXMLDOM(InputStream is, String name,  int binaryFormat, boolean debug, int format) 
+	/**
+	 * 
+	 * @param is Cobol Copybook stream
+	 * @param name Copybook Name
+	 * @param cobolDialect COBOL dialect<ul>
+	 *   <li><b>ICopybookDialects.FMT_MAINFRAME</b> - Mainframe Cobol
+	 *   <li><b>ICopybookDialects.FMT_FUJITSU</b> - Written for the old Fujitsu Cobol 3 compiler
+	 *   <li><b>ICopybookDialects.FMT_GNU_COBOL</b> - GNU Cobol (formerly Open Cobol) on a Little Endian machine (e.g Intel).
+	 *   <li><b>ICopybookDialects.FMT_OC_MICRO_FOCUS_BE</b> -  GNU Cobol running in Microfocus compatibility mode on a Big Endian machine
+	 * </ul>
+	 * @param debug
+	 * @param formatFormat of the Cobol Copybook:<ul>
+	 *    <li>Cb2xmlConstants.FREE_FORMAT Free format copybook
+	 *    <li>Cb2xmlConstants.USE_STANDARD_COLUMNS - Standard Cobol Columns
+	 *    <li>Cb2xmlConstants.USE_COLS_6_TO_80 - use columns 6 -> 80
+	 *    <li>Cb2xmlConstants.USE_LONG_LINE - Long line starting at column 6
+	 *  </ul>
+	 * @return
+	 * @throws ParserException
+	 * @throws LexerException
+	 * @throws IOException
+	 * @throws XMLStreamException
+	 */
+	public static Document convertToXMLDOM(
+			InputStream is, String name,  int cobolDialect, 
+			boolean debug, int copybookFormat) 
 			throws ParserException, LexerException, IOException, XMLStreamException {
 		
 		return convertToXMLDOM(
 				net.sf.cb2xml.Cb2Xml3
 					.newBuilder(new InputStreamReader(is), name),
-				binaryFormat, debug, format);
+				cobolDialect, debug, copybookFormat);
 	}
 	
-
-	public static Document convertToXMLDOM(Reader reader, String name,  int binaryFormat, boolean debug, int format) 
+	/**
+	 * 
+	 * @param reader  Cobol Copybook
+	 * @param name
+	 * @param cobolDialect COBOL dialect<ul>
+	 *   <li><b>ICopybookDialects.FMT_MAINFRAME</b> - Mainframe Cobol
+	 *   <li><b>ICopybookDialects.FMT_FUJITSU</b> - Written for the old Fujitsu Cobol 3 compiler
+	 *   <li><b>ICopybookDialects.FMT_GNU_COBOL</b> - GNU Cobol (formerly Open Cobol) on a Little Endian machine (e.g Intel).
+	 *   <li><b>ICopybookDialects.FMT_OC_MICRO_FOCUS_BE</b> -  GNU Cobol running in Microfocus compatibility mode on a Big Endian machine
+	 * </ul>
+	 * @param debug
+	 * @param formatFormat of the Cobol Copybook:<ul>
+	 *    <li>Cb2xmlConstants.FREE_FORMAT Free format copybook
+	 *    <li>Cb2xmlConstants.USE_STANDARD_COLUMNS - Standard Cobol Columns
+	 *    <li>Cb2xmlConstants.USE_COLS_6_TO_80 - use columns 6 -> 80
+	 *    <li>Cb2xmlConstants.USE_LONG_LINE - Long line starting at column 6
+	 *  </ul>
+	 * @return
+	 * @throws ParserException
+	 * @throws LexerException
+	 * @throws IOException
+	 * @throws XMLStreamException
+	 */
+	public static Document convertToXMLDOM(Reader reader, String name,  int cobolDialect, boolean debug, int format) 
 			throws ParserException, LexerException, IOException, XMLStreamException {
 		
 		return convertToXMLDOM(
 				net.sf.cb2xml.Cb2Xml3
 					.newBuilder(reader, name),
-				binaryFormat, debug, format);
+				cobolDialect, debug, format);
 	}
 
 
-	private static Document convertToXMLDOM(ICb2XmlBuilder bldr, int binaryFormat, boolean debug, int format) 
+	@SuppressWarnings("deprecation")
+	private static Document convertToXMLDOM(ICb2XmlBuilder bldr, int cobolDialect, boolean debug, int format) 
 			throws ParserException, LexerException, IOException, XMLStreamException {
 		
-		Convert conv = ConversionManager.getInstance().getConverter4code(binaryFormat) ;
+		Convert conv = ConversionManager.getInstance().getConverter4code(cobolDialect) ;
 		bldr
 			.setDebug(debug)
 			.setCobolLineFormat(format)
@@ -173,16 +224,34 @@ public class Cb2Xml {
 			.setXmlFormat(Cb2xmlConstants.Cb2xmlXmlFormat.CLASSIC)
 			.setDialect(conv);
 	
-		return Cb2Xml2.bldrToDocument(bldr);	
+		return net.sf.cb2xml.Cb2Xml2.bldrToDocument(bldr);	
 	}
 
 
 
-
-	public static Copybook getCopybook(Reader reader, String name,  int binaryFormat, boolean debug,
-			int format, int stackSize) 
-			throws ParserException, LexerException, IOException, XMLStreamException {
-		Convert conv = ConversionManager.getInstance().getConverter4code(binaryFormat) ;
+	/**
+	 * 
+	 * @param reader Cobol Copybook Reader
+	 * @param name Cobol Copybook Name
+	 * @param cobolDialect COBOL dialect<ul>
+	 *   <li><b>ICopybookDialects.FMT_MAINFRAME</b> - Mainframe Cobol
+	 *   <li><b>ICopybookDialects.FMT_FUJITSU</b> - Written for the old Fujitsu Cobol 3 compiler
+	 *   <li><b>ICopybookDialects.FMT_GNU_COBOL</b> - GNU Cobol (formerly Open Cobol) on a Little Endian machine (e.g Intel).
+	 *   <li><b>ICopybookDialects.FMT_OC_MICRO_FOCUS_BE</b> -  GNU Cobol running in Microfocus compatibility mode on a Big Endian machine
+	 * </ul>
+	 * @param debug
+	 * @param formatFormat of the Cobol Copybook:<ul>
+	 *    <li>Cb2xmlConstants.FREE_FORMAT Free format copybook
+	 *    <li>Cb2xmlConstants.USE_STANDARD_COLUMNS - Standard Cobol Columns
+	 *    <li>Cb2xmlConstants.USE_COLS_6_TO_80 - use columns 6 -> 80
+	 *    <li>Cb2xmlConstants.USE_LONG_LINE - Long line starting at column 6
+	 *  </ul>
+	 * @param stackSize
+	 * @return
+	 */
+	public static Copybook getCopybook(Reader reader, String name,  int cobolDialect, boolean debug,
+			int format, int stackSize) {
+		Convert conv = ConversionManager.getInstance().getConverter4code(cobolDialect) ;
 		//synchronized (SYNC) {
 			return net.sf.cb2xml.Cb2Xml3
 					.newBuilderJRec(reader, name)

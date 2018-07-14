@@ -251,7 +251,6 @@ public abstract class BasicLine extends BaseLine {
 	 * Check for Occurs depending size field update
 	 * 
 	 * @param field field being updated
-	 * @param value new field value
 	 */
 	protected final void checkForOdUpdate(IFieldDetail field) {
 		if (field != null) {

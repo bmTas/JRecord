@@ -70,6 +70,7 @@ import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.cgen.def.ILayoutDetails4gen;
 import net.sf.JRecord.detailsBasic.CsvCharDetails;
+import net.sf.JRecord.detailsBasic.IItemDetails;
 
 
 
@@ -150,6 +151,8 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	private final int maxPossibleLength, minPossibleLength;
 	
 
+	private Map<String, List<IItemDetails>> groupMap, groupFieldMap;
+	
 	/**
 	 * This class holds a one or more records
 	 *
@@ -1054,6 +1057,36 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 		return new HashMap<String, IFieldDetail>(recordFieldNameMap);
 	}
 
+	/**
+	 * Get Cobol Group Definition by the field name
+	 * @param cobolGroupName Cobol Group Name
+	 * @return List of Matching Cobol group definitions or Null
+	 */
+	public List<IItemDetails> getCobolGroupItems(String cobolGroupName) {
+		updateCobolMaps();
+		return cobolGroupName == null ? null : groupMap.get(cobolGroupName.toUpperCase());
+	}
+
+	/**
+	 * Get Cobol Field/Group Definition by the field name
+	 * @param cobolName Cobol Field/Group Name
+	 * @return List of Matching Cobol Field/Group definitions or Null
+	 */
+	public List<IItemDetails> getCobolItems(String cobolName) {
+		updateCobolMaps();
+		return cobolName == null ? null : groupFieldMap.get(cobolName.toUpperCase());
+	}
+
+	private void updateCobolMaps() {
+		if (groupMap == null) {
+			groupMap = new HashMap<String, List<IItemDetails>>();
+			groupFieldMap = new HashMap<String, List<IItemDetails>>();
+			
+			for (int i = 0; i < recordCount; i++) {
+				records[i].updateNameCobolItemMap(groupMap, groupFieldMap);
+			}
+		}
+	}
 
 	/**
 	 * @return the spaceByte

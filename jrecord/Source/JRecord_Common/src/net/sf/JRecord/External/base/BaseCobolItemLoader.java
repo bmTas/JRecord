@@ -10,8 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.xml.stream.XMLStreamException;
-
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
@@ -28,8 +26,6 @@ import net.sf.cb2xml.analysis.Item;
 import net.sf.cb2xml.def.IItem;
 import net.sf.cb2xml.def.IItemBase;
 import net.sf.cb2xml.def.IItemJrUpd;
-import net.sf.cb2xml.sablecc.lexer.LexerException;
-import net.sf.cb2xml.sablecc.parser.ParserException;
 
 public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
 
@@ -113,16 +109,16 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
      *
      * @return record to be inserted
      *
-     * @throws IOException error to be handeled by calling program
+     * @throws IOException error to be handled by calling program
      */
     public XRecord loadCopyBook(final String copyBookFile,
-            						  final int splitCopybookOption,
-            						  final int dbIdx,
-            						  final String font,
-            						  final int copybookFormat,
-            						  final int binFormat,
-            						  final int systemId,
-            						  final AbsSSLogger log)
+            					final int splitCopybookOption,
+            					final int dbIdx,
+            					final String font,
+            					final int copybookFormat,
+            					final int binFormat,
+            					final int systemId,
+            					final AbsSSLogger log)
     		throws IOException {
 
     	return loadCopyBook(new FileReader(copyBookFile), Conversion.getCopyBookId(copyBookFile),
@@ -139,12 +135,16 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
 		
 		Copybook copybook;
 
-		try {
+//		try {
 			copybook = net.sf.JRecord.External.Def.Cb2Xml
 							.getCopybook(reader, copyBookName, binaryFormat, false, copybookFormat, stackSize);
-		} catch (ParserException | LexerException | XMLStreamException e) {
-			throw new IOException(e);
-		}
+//		} catch (ParserException e) {
+//			throw new IOException(e);
+//		} catch ( XMLStreamException e) {
+//			throw new IOException(e);
+//		} catch (LexerException e) {
+//			throw new IOException(e);
+//		}
 
 		return loadCopybook(copybook, copyBookName, splitCopybook, dbIdx, font, binaryFormat, systemId);
 	}

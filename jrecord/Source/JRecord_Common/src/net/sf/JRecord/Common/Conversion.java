@@ -1111,6 +1111,10 @@ public final class Conversion {
 	}
 
 
+	public static boolean isEbcidic(String charset) {
+		return getHold(charset).isEbcdic;
+	}
+
 	public static boolean isSingleByteEbcidic(String charset) {
 		return getHold(charset).isSingleByteEbcidic;
 	}

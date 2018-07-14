@@ -41,6 +41,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.JRecord.Common.AbstractIndexedLine;
 import net.sf.JRecord.Common.AbstractRecordX;
@@ -371,6 +372,46 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	@Override
 	public List<? extends IItemDetails> getCobolItems() {
 		return cobolItems;
+	}
+	
+	void updateNameCobolItemMap(Map<String, List<IItemDetails>> groupMap, Map<String, List<IItemDetails>> groupAndFieldMap) {
+		if (cobolItems != null) {
+			updateNameCobolItemMap(cobolItems, groupMap, groupAndFieldMap);
+		}
+	}
+
+	private void updateNameCobolItemMap(
+			List<? extends IItemDetails> cblItems, 
+			Map<String, List<IItemDetails>> groupMap, Map<String, List<IItemDetails>> groupAndFieldMap) {
+		if (cblItems != null) {
+			for (IItemDetails itm : cblItems) {
+				List<IItemDetails> singletonList = updateItemListMap(groupAndFieldMap, itm, null);
+				if (! itm.isLeaf()) {
+					singletonList = updateItemListMap(groupMap, itm, singletonList);
+					updateNameCobolItemMap(itm.getChildItems(), groupMap, groupAndFieldMap);
+				}
+			}
+		}
+	}
+
+	private List<IItemDetails> updateItemListMap(Map<String, List<IItemDetails>> itmMap, IItemDetails itm, List<IItemDetails> siList) {
+		if (itmMap != null && itm.getFieldName() != null) {
+			String key = itm.getFieldName().toUpperCase();
+			List<IItemDetails> similarlyNamedItems = itmMap.get(key);
+			if (similarlyNamedItems == null) {
+				List<IItemDetails> singletonList = siList != null ? siList : Collections.singletonList(itm);
+				itmMap.put(key, singletonList);
+				return singletonList;
+			} else if (similarlyNamedItems.size() == 1) {
+				List<IItemDetails> list = new ArrayList<IItemDetails>(5);
+				list.add(similarlyNamedItems.get(0));
+				list.add(itm);
+				itmMap.put(key, list);
+			} else {
+				similarlyNamedItems.add(itm);	
+			}
+		}
+		return null;
 	}
 
 	/**

@@ -81,7 +81,8 @@ public class ItemCopyJr extends ItemCopy {
 	 * @param fieldName
 	 * @return
 	 */
-	private FieldDetail createField(FieldCreatorHelper fieldHelper, int type, DependingOnDtls dependOnParentDtls, int level, IItemJr itm,
+	private FieldDetail createField(FieldCreatorHelper fieldHelper, int type, DependingOnDtls dependOnParentDtls, int level,
+			IItemJr itm,
 			ArrayIndexDtls arrayIndexDtls, String fieldName, int basePos) {
 
 		FieldDetail fd = FieldDetail.newFixedWidthField(
@@ -99,8 +100,8 @@ public class ItemCopyJr extends ItemCopy {
 		
 		if (arrayIndexDtls.inArray && itm instanceof ItemDtl) {
 			ItemDtl cobolItem = ((ItemDtl) itm);
-			cobolItem.getArrayDefinition().setField(arrayIndexDtls, fd);
 			fd.setCobolItem(cobolItem);
+			cobolItem.getArrayDefinition().setField(arrayIndexDtls, fd);
 		}
 		return fd;
 	}

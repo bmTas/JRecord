@@ -76,7 +76,6 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 
 	protected boolean check4cr = false;
 	protected boolean check4lf = false;
-//	protected boolean check4crlf = false;
 
 	protected FindLines findLines = NO_EOL_FINDLINES;
 
@@ -116,11 +115,6 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 					check4lf = true;
 				}
 			} else {
-//				if (eolPos+1 < bytesInBuffer && buffer[eolPos+1] ==  byteCR) {
-//					eol = lfcrBytes;
-//					altEol = lfBytes;
-//					check4crlf = true;
-//				} else {
 					eol = lfBytes;
 					altEol = lfcrBytes;
 					check4cr = true;
@@ -164,10 +158,6 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 		byte[] ret = null;
 		int lno = getLineNo();
 
-//		if (eof && lno >= lineArray.length) {
-//			return null;
-//		}
-
 		int srcPos = lineArray[lno];
 
 		if (srcPos < buffer.length && ((check4cr &&  buffer[srcPos] == byteCR) || (check4lf && buffer[srcPos] == byteLF))) {
@@ -187,6 +177,7 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 				eolLength += 1;
 			}
 			if (lno+1 < lineArray.length) {
+				//System.out.print("\t~ " + lineNum+ " " + lineArray[lno+1] + " - " +  srcPos  + " - " + eolLength + "   " );
 				ret = new byte[lineArray[lno+1] -  srcPos - eolLength];
 			} else {
 				ret = new byte[buffer.length - srcPos];
