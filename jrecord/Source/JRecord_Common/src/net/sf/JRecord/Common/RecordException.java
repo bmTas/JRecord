@@ -45,12 +45,18 @@ public class RecordException extends RuntimeException {
 	public RecordException(final boolean x, final String msg) {
 		super(msg);
 	}
+	/**
+	 * @param msg Error Message
+	 */
+	public RecordException(final boolean x, final String msg, Throwable exception) {
+		super(msg, exception);
+	}
 
 	/**
 	 * @param msg Error Message
 	 */
 	public RecordException(final String msg) {
-		super(BasicTranslation.getTrans().convert(BasicTranslation.ST_ERROR, msg));
+		super(BasicJrTranslation.getTrans().convert(BasicJrTranslation.ST_ERROR, msg));
 	}
 
 	/**
@@ -64,16 +70,16 @@ public class RecordException extends RuntimeException {
 	 * @param msg Error Message
 	 */
 	public RecordException(final String msg, Object[] parms) {
-		super(BasicTranslation.getTrans().convertMsg(BasicTranslation.ST_ERROR, msg, parms));
+		super(BasicJrTranslation.getTrans().convertMsg(BasicJrTranslation.ST_ERROR, msg, parms));
 	}
 
 
 	public RecordException(String msg, Throwable exception) {
-		super(BasicTranslation.getTrans().convert(BasicTranslation.ST_ERROR, msg), exception);
+		super(BasicJrTranslation.getTrans().convert(BasicJrTranslation.ST_ERROR, msg), exception);
 	}
 
 	public RecordException(String msg, Object[] parms, Throwable exception) {
-		super(BasicTranslation.getTrans().convertMsg(BasicTranslation.ST_ERROR, msg, parms), exception);
+		super(BasicJrTranslation.getTrans().convertMsg(BasicJrTranslation.ST_ERROR, msg, parms), exception);
 	}
 
 }

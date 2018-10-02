@@ -46,6 +46,10 @@ public final class CsvCharDetails {
 		if (rawValue == null || rawValue.length() == 0) { return EMPTY_QUOTE; }
 		return new CsvCharDetails(rawValue, font, '\t');
 	}
+	
+	public static CsvCharDetails newDef(byte b, String font) {
+		return new CsvCharDetails(b, font);
+	}
 
 	private final String definition,  strValue, font;
 	private final byte[] bytes;
@@ -62,6 +66,22 @@ public final class CsvCharDetails {
 		strValue = new String(chars);
 		bin = Conversion.isHexDefinition(rawValue);
 	}
+	
+	private CsvCharDetails(byte b, String font) {
+		this.font = font;
+		//this.fontname = font;
+		
+		bytes = new byte[]{b};	
+		strValue = Conversion.toString(bytes, font);
+		chars = strValue == null || strValue.length() == 0 ? new char[0] : strValue.toCharArray();
+		this.definition = "\t".equals(strValue) ? "\\t" : strValue ;
+		boolean tbin = true;
+		if (chars.length == 1 && chars[0] >= 32 && chars[0] <128) {
+			tbin = false;
+		}
+		bin = tbin;
+	}
+
 
 	private CsvCharDetails() {
 		this.definition = "" ;

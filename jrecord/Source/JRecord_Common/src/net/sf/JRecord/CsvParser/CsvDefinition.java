@@ -54,6 +54,7 @@ public class CsvDefinition implements ICsvDefinition {
 		this(delimiter, quote, ICsvDefinition.NORMAL_SPLIT, -1, Conversion.DEFAULT_ASCII_CHARSET, false);
 	}
 
+	@SuppressWarnings("deprecation")
 	public CsvDefinition(CsvCharDetails delimiter, CsvCharDetails quote) {
 		this(delimiter, quote, ICsvDefinition.NORMAL_SPLIT, -1, delimiter.getFont(), false);
 	}

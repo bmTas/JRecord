@@ -56,6 +56,6 @@ public class VbDumpByteReader extends VbByteReader {
      * ByteReader for Mainframe VB File that also include Block descriptor Word
      */
     public VbDumpByteReader() {
-        super(true);
+        super(MODE_ORIG_BLOCK_LENGTH, true);
     }
 }

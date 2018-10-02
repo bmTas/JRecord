@@ -33,7 +33,7 @@ public class RecordRunTimeException extends RuntimeException {
 	 * @param msg Error Message
 	 */
 	public RecordRunTimeException(final String msg) {
-		super(BasicTranslation.getTrans().convert(BasicTranslation.ST_ERROR, msg));
+		super(BasicJrTranslation.getTrans().convert(BasicJrTranslation.ST_ERROR, msg));
 	}
 
 	/**
@@ -47,16 +47,10 @@ public class RecordRunTimeException extends RuntimeException {
 	 * @param msg Error Message
 	 */
 	public RecordRunTimeException(final String msg, Object[] parms) {
-		super(BasicTranslation.getTrans().convertMsg(BasicTranslation.ST_ERROR, msg, parms));
+		super(BasicJrTranslation.getTrans().convertMsg(BasicJrTranslation.ST_ERROR, msg, parms));
 	}
 
-
-	public RecordRunTimeException(String msg, Throwable exception) {
-		super(BasicTranslation.getTrans().convert(BasicTranslation.ST_ERROR, msg), exception);
+	protected RecordRunTimeException(boolean v, String msg) {
+		super(msg);
 	}
-
-	public RecordRunTimeException(String msg, String parm, Throwable exception) {
-		super(BasicTranslation.getTrans().convert(BasicTranslation.ST_ERROR, msg, parm), exception);
-	}
-
 }

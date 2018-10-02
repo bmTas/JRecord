@@ -28,6 +28,7 @@ package net.sf.JRecord.cgen.support;
 import java.util.Arrays;
 
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.CsvParser.ICsvParserIds;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Option.ICobolSplitOptions;
 import net.sf.JRecord.Types.Type;
@@ -42,6 +43,7 @@ public class Code2JRecordConstants {
     private static final String[] DIALECT = new String[150];
     private static final String[] SPLIT = new String[20];
     private static final String[] COPYBOOK_FORMAT = new String[20];
+    private static final String[] PARSER_ID = new String[ICsvParserIds.BASIC_PARSER_QUOTE_BY_TYPE + 8];
   
     static {
     	Arrays.fill(JAVA_TYPE_NAME, null);
@@ -244,6 +246,7 @@ public class Code2JRecordConstants {
 			
 			JAVA_TYPE_NAME [Type.ftPackedDecimal            ] = "ftPackedDecimal";
 			JAVA_TYPE_NAME [Type.ftZonedNumeric             ] = "ftZonedNumeric";
+//			JAVA_TYPE_NAME [Type.ftZonedLeading             ] = "ftZonedLeading";
 			JAVA_TYPE_NAME [Type.ftPackedDecimalPostive     ] = "ftPackedDecimalPostive";
 			JAVA_TYPE_NAME [Type.ftBinaryBigEndian          ] = "ftBinaryBigEndian";                                                      
 			JAVA_TYPE_NAME [Type.ftBinaryBigEndianPositive  ] = "ftBinaryBigEndianPositive";
@@ -393,6 +396,7 @@ public class Code2JRecordConstants {
 		    IO_TYPE [Constants.IO_VB                   ] = "IO_VB";
 		    IO_TYPE [Constants.IO_VBS                  ] = "IO_VBS";
 		    IO_TYPE [Constants.IO_VB_DUMP              ] = "IO_VB_DUMP";
+		    IO_TYPE [Constants.IO_VB_DUMP2             ] = "IO_VB_DUMP2";
 		    IO_TYPE [Constants.IO_VB_FUJITSU           ] = "IO_VB_FUJITSU";
 		    IO_TYPE [Constants.IO_VB_GNU_COBOL         ] = "IO_VB_GNU_COBOL";
 		    IO_TYPE [Constants.IO_BIN_TEXT             ] = "IO_BIN_TEXT";
@@ -428,16 +432,48 @@ public class Code2JRecordConstants {
 		}
 	}
 	
+	public static String getParserName(int parserId) {
+		
+		initParserIds();
+		
+		return parserId < 0 || parserId >= PARSER_ID.length || PARSER_ID[parserId] == null
+					? Integer.toString(parserId)
+					: "ICsvParserIds." + PARSER_ID[parserId];
+	}
 	
-	public static String typeToJavaType(int typeId, int length, int decimal) {
+	private static void initParserIds() {
+		if (PARSER_ID[ICsvParserIds.BASIC_PARSER_QUOTE_BY_TYPE] == null) {
+			PARSER_ID[ICsvParserIds.EXTENDED_BASIC_CSV_PARSER				] ="EXTENDED_BASIC_CSV_PARSER";
+			PARSER_ID[ICsvParserIds.STANDARD_CSV_PARSER						] ="STANDARD_CSV_PARSER";
+			PARSER_ID[ICsvParserIds.DB_CSV_PARSER							] ="DB_CSV_PARSER";
+			PARSER_ID[ICsvParserIds.BASIC_QUOTED_COL_NAME_CSV_PARSER		] ="BASIC_QUOTED_COL_NAME_CSV_PARSER";
+			PARSER_ID[ICsvParserIds.STANDARD_QUOTED_COL_NAME_CSV_PARSER		] ="STANDARD_QUOTED_COL_NAME_CSV_PARSER";
+			PARSER_ID[ICsvParserIds.DB_QUOTED_COL_NAME_CSV_PARSER			] ="DB_QUOTED_COL_NAME_CSV_PARSER";
+			PARSER_ID[ICsvParserIds.BASIC_ENSURE_CORRECT_NO_FIELDS			] ="BASIC_ENSURE_CORRECT_NO_FIELDS";
+			PARSER_ID[ICsvParserIds.BASIC_ENSURE_CORRECT_NO_FIELDS_P1		] ="BASIC_ENSURE_CORRECT_NO_FIELDS_P1";
+			PARSER_ID[ICsvParserIds.BASIC_EMBEDDED_CR						] ="BASIC_EMBEDDED_CR";
+			PARSER_ID[ICsvParserIds.STANDARD_EMBEDDED_CR					] ="STANDARD_EMBEDDED_CR";
+			PARSER_ID[ICsvParserIds.BASIC_EMBEDDED_CR_NAMES_IN_QUOTES		] ="BASIC_EMBEDDED_CR_NAMES_IN_QUOTES";
+			PARSER_ID[ICsvParserIds.STANDARD_EMBEDDED_CR_NAMES_INQUOTE		] ="STANDARD_EMBEDDED_CR_NAMES_INQUOTE";
+			PARSER_ID[ICsvParserIds.STANDARD_EMBEDDED_CR_NAMES_TXT_INQUOTE 	] ="STANDARD_EMBEDDED_CR_NAMES_TXT_INQUOTE";
+			PARSER_ID[ICsvParserIds.BASIC_CSV_PARSER_NEW_NUM				] ="BASIC_CSV_PARSER_NEW_NUM";
+			PARSER_ID[ICsvParserIds.BASIC_PARSER_QUOTE_BY_TYPE				] ="BASIC_PARSER_QUOTE_BY_TYPE";
+
+		}
+	}
+	
+	
+	public static String typeToJavaType(boolean csv, int typeId, int length, int decimal) {
 		if (! TypeManager.isNumeric(typeId)) {
 			return "String";
 		} else if (typeId == Type.ftFloat) {
 			return "float";
 		} else if (typeId == Type.ftDouble) {
 			return "double";
-		} else if (decimal > 0) {
+		} else if (decimal > 0 || typeId == Type.ftNumAnyDecimal) {
 			return "BigDecimal";
+		} else if (csv) {
+			return "long";
 		}
 		
 		if (typeId == Type.ftPackedDecimal) {

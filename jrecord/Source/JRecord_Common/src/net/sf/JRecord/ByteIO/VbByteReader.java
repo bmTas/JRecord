@@ -55,6 +55,11 @@ import java.io.InputStream;
 public class VbByteReader extends AbstractByteReader {
 
 	private static final int LAST_7_BITS_SET = 127;
+	
+	public static final int MODE_NO_BLOCK_LENGTH = 0;
+	public static final int MODE_ORIG_BLOCK_LENGTH = 1;
+	public static final int MODE_BLOCK_LENGTH_2 = 2;
+
 
     private InputStream inStream;
 	private BufferedInputStream stream = null;
@@ -72,7 +77,7 @@ public class VbByteReader extends AbstractByteReader {
 //	private byte[] rdwLength = new byte[2];
 
 
-	private boolean containsBlockLength = false;
+	private int blockMode = MODE_NO_BLOCK_LENGTH;
 	private byte[] bdw = new byte[4];
 //	private byte[] bdwLength = new byte[2];
 
@@ -88,7 +93,7 @@ public class VbByteReader extends AbstractByteReader {
 	 * 4 byte Record-Descriptor-Word at the start of the record.
 	 */
 	public VbByteReader() {
-	    this(false, true);
+	    this(MODE_NO_BLOCK_LENGTH, true);
 	}
 
 
@@ -105,9 +110,13 @@ public class VbByteReader extends AbstractByteReader {
 	}
 
 	public VbByteReader(final boolean includesBlockLength, boolean lengthIncludesRDW) {
+		this(includesBlockLength ? MODE_ORIG_BLOCK_LENGTH : MODE_NO_BLOCK_LENGTH, lengthIncludesRDW);
+	}
+
+	public VbByteReader(final int includesBlockLength, boolean lengthIncludesRDW) {
 	    super();
 
-	    containsBlockLength = includesBlockLength;
+	    blockMode = includesBlockLength;
 	    if (lengthIncludesRDW) {
 	    	rdwAdjust = 4;
 	    }
@@ -148,8 +157,25 @@ public class VbByteReader extends AbstractByteReader {
 //            rdwLength[1] = rdw[1];
 //
 //        	int lineLength = (new BigInteger(rdwLength)).intValue() - rdwAdjust;
-        	int lineLength = ((rdw[0] & 0xFF) << 8) + (rdw[1] & 0xFF) - rdwAdjust;
+         	int lineLength = ((rdw[0] & 0xFF) << 8) + (rdw[1] & 0xFF) - rdwAdjust;
             if (rdw[2] != 0  || rdw[3] != 0) {
+//            	System.out.println();
+//            	System.out.println("-----------------------------------------------------------------");
+//               	System.out.println();
+//               	System.out.println(rdw[0] + " " + rdw[1] + " " + rdw[2] + " " + rdw[3]
+//               			+ " \t " + blockMode + " && " + bytesReadFromBlock + " >= " + blockLength);
+              	byte[] b = new byte[256];
+            	readBuffer(stream, b);
+            	String string = new String(b, "cp037");
+    			System.out.print(string);
+    			 System.out.println();
+    			 System.out.println();
+    			for (int i = 0; i < b.length; i++) {
+    				if (i % 8 == 0) System.out.println();
+    				System.out.print("\t>" + b[i] + "\t" + string.charAt(i));
+    			}
+    			 System.out.println();
+    			 System.out.println();
 //              if ((rdw[2] != 0 &&  rdw[2] != 1 && rdw[2] != 2) || rdw[3] != 0) {
                 throw new IOException(
                           "Invalid Record Descriptor word at line "
@@ -165,7 +191,7 @@ public class VbByteReader extends AbstractByteReader {
             if (readBuffer(stream, inBytes) >= 0) {
                 ret = inBytes;
 
-                if (containsBlockLength) {
+                if (blockMode > 0) {
                 	bytesReadFromBlock += lineLength + 4;
                 }
 			}
@@ -180,21 +206,28 @@ public class VbByteReader extends AbstractByteReader {
      */
     private void checkForBlockLength() {
 
-        if (containsBlockLength && bytesReadFromBlock >= blockLength) {
+        if (blockMode > 0 && bytesReadFromBlock >= blockLength) {
         	try {
     			bytesReadFromBlock = 4;
         		if ((readBuffer(stream, bdw) > 0)) {
-        			if (bdw[0] >= 0) {
+        			if (bdw[0] >= 0 || blockMode == MODE_BLOCK_LENGTH_2) {
 //        	            bdwLength[0] = bdw[0];
 //        	            bdwLength[1] = bdw[1];
 //
 //        	        	blockLength = (new BigInteger(bdwLength)).intValue();
         	        	blockLength = ((bdw[0] & 0xFF) << 8) + (bdw[1] & 0xFF);
+//        	        	System.out.println("BlkLength 1  >> " + blockLength);
         			} else {
+//       				int bl =  ((bdw[0] & 0xFF) << 8) + (bdw[1] & 0xFF);
+//        	        	System.out.println("~~~" + bdw[0] + ", " + bdw[1] + ", "+ bdw[02] + ", "+ bdw[03] + " ~~ "
+//        	        			+ bl);
         				bdw[0] &= LAST_7_BITS_SET;
-        				blockLength = ((bdw[0] & 0xFF) << 24) + ((bdw[1] & 0xFF) << 16) 
+        				blockLength = ((bdw[0] & 0xFF) << 24) + ((bdw[1] & 0xFF) << 16)
 								+ ((bdw[2] & 0xFF) << 8) + ((bdw[3] & 0xFF));
- //       	        	blockLength = (new BigInteger(bdw)).intValue();
+//       	        	blockLength = (new BigInteger(bdw)).intValue();
+//        	        	System.out.println("BlkLength 2  >> " + blockLength
+//        	        			+ " ~ " + (((bdw[0] & 0xFF) << 8) + (bdw[1] & 0xFF) ));
+//        	        	System.out.println("~~~" + bdw[0] + ", " + bdw[1] + ", "+ bdw[02] + ", "+ bdw[03] + ", ");
         			}
         		}
         	} catch (Exception e) {

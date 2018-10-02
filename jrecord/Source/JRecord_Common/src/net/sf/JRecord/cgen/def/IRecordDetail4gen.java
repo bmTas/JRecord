@@ -55,6 +55,8 @@ public interface IRecordDetail4gen {
 	
 	public abstract int getRecordType();
 
+	public abstract int getRecordStyle();
+
 	public abstract CsvCharDetails getQuoteDefinition();
 	
 	public abstract List<? extends IItemDetails> getCobolItems();

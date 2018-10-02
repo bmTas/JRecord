@@ -28,8 +28,6 @@
 
 package net.sf.JRecord.def.IO.builders;
 
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;

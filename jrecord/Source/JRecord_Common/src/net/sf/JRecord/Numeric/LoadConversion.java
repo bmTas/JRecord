@@ -54,6 +54,7 @@ public class LoadConversion {
 		typeConversion.put("f",    Type.ftFloat);
 		typeConversion.put("d",    Type.ftDouble);
 		typeConversion.put("mvszd",Type.ftZonedNumeric);
+//		typeConversion.put("mvszdl",Type.ftZonedLeading);
 		typeConversion.put("zd9",  Type.ftGnuCblZonedNumeric);
 		typeConversion.put("zd",   Type.ftFjZonedNumeric);
 		typeConversion.put("rm",   Type.ftRmComp);

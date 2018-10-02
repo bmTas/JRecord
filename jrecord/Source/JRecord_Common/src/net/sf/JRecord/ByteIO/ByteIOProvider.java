@@ -106,10 +106,11 @@ public class ByteIOProvider {
        		case Constants.IO_FIXED_BYTE_ENTER_FONT:		
        		case Constants.IO_FIXED_LENGTH:		return new FixedLengthByteReader(length);
 			case Constants.IO_VBS: 				return new VbsByteReader(false, true);
-			case Constants.IO_VB: 				return new VbByteReader(false, true);
+			case Constants.IO_VB: 				return new VbByteReader(VbByteReader.MODE_NO_BLOCK_LENGTH, true);
 			case Constants.IO_VB_DUMP:			return new VbDumpByteReader();
+			case Constants.IO_VB_DUMP2:			return new VbByteReader(VbByteReader.MODE_BLOCK_LENGTH_2, true);
 			case Constants.IO_VB_FUJITSU:		return new FujitsuVbByteReader();
-			case Constants.IO_VB_GNU_COBOL:		return new VbByteReader(false, false);
+			case Constants.IO_VB_GNU_COBOL:		return new VbByteReader(VbByteReader.MODE_NO_BLOCK_LENGTH, false);
 			case Constants.IO_TEXT_BYTE_ENTER_FONT:			
 			case Constants.IO_BIN_TEXT:			return new ByteTextReader();
 			case Constants.IO_MICROFOCUS:		return new MicroFocusByteReader();
@@ -157,6 +158,7 @@ public class ByteIOProvider {
 //    		case Constants.IO_FIXED_LENGTH:		return new BinaryByteWriter();
     		case Constants.IO_VBS:				throw new RecordException("Writing VBS files is not supported; use IO_VB");
     		case Constants.IO_VB: 				return new VbByteWriter();
+    		case Constants.IO_VB_DUMP2:
     		case Constants.IO_VB_DUMP:			return new VbDumpByteWriter();
     		case Constants.IO_VB_FUJITSU:		return new FujitsuVbByteWriter();
     		case Constants.IO_VB_GNU_COBOL:		return new VbByteWriter(false);

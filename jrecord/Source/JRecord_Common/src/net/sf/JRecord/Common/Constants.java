@@ -107,6 +107,7 @@ public interface Constants {
      * read VBS files, there is now Write option. 
      */
     public static final int IO_VBS  = 12;
+    public static final int IO_VB_DUMP2=14;
 
     public static final int IO_UNKOWN_FORMAT = 21 /* RecordEditor Format */;
     public static final int IO_WIZARD        = 22 /* RecordEditor Format */;

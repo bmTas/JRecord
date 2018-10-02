@@ -59,6 +59,7 @@ public class TstByteIoProvider extends TestCase {
             Constants.IO_FIXED_LENGTH,
             Constants.IO_VB,
             Constants.IO_VB_DUMP,
+            Constants.IO_VB_DUMP2,
             Constants.IO_VB_FUJITSU,
     };
  	@SuppressWarnings("rawtypes")
@@ -66,6 +67,7 @@ public class TstByteIoProvider extends TestCase {
             FixedLengthByteReader.class,
             VbByteReader.class,
             VbDumpByteReader.class,
+            VbByteReader.class,
             FujitsuVbByteReader.class
     };
 
@@ -73,6 +75,7 @@ public class TstByteIoProvider extends TestCase {
 	private Class[] classWriters = {
             FixedLengthByteWriter.class,
             VbByteWriter.class,
+            VbDumpByteWriter.class,
             VbDumpByteWriter.class,
             FujitsuVbByteWriter.class
     };

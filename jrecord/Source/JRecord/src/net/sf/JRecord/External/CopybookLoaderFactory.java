@@ -38,6 +38,11 @@
 package net.sf.JRecord.External;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+
+import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.Def.AbstractConversion;
 import net.sf.JRecord.Log.AbsSSLogger;
@@ -142,7 +147,7 @@ public class CopybookLoaderFactory {
 		if (CobolCopybookLoader.isAvailable()) {
 			register("Cobol Copybook", CobolCopybookLoader.class, "");
 		} else {
-	    	register("Empty - Cobol placeholder", XmlCopybookLoader.class, "");
+	    	register("Empty - Cobol placeholder", NoCb2xml.class, "");
 	    }
 		recordEditorXml = numberLoaded;
 		register("RecordEditor XML Copybook",RecordEditorXmlLoader.class, "");
@@ -312,5 +317,45 @@ public class CopybookLoaderFactory {
 	 */
 	public final int getNumberofLoaders() {
 		return numberLoaded;
+	}
+	
+	
+	/**
+	 * This is a dummy class to be used if cb2xml is nt present
+	 * It simply gives an error message if used.
+	 * 
+	 * @author Bruce Martin
+	 *
+	 */
+	public static class NoCb2xml implements ICopybookLoaderStream {
+
+		private static final String CB2XML_MISSING 
+				= "cb2xml.jar is missing !!!\n"
+				+ "cb2xml processes Cobol Copybooks --> no Cobol processing is possible !!\n";
+
+		@Override
+		public ExternalRecord loadCopyBook(String copyBookFile, int splitCopybookOption, int dbIdx, String font,
+				int binFormat, int systemId, AbsSSLogger log) throws Exception {
+			throw new RecordException(CB2XML_MISSING);
+		}
+
+		@Override
+		public ExternalRecord loadCopyBook(String copyBookFile, int splitCopybookOption, int dbIdx, String font,
+				int copybookFormat, int binFormat, int systemId, AbsSSLogger log) throws Exception {
+			throw new RecordException(CB2XML_MISSING);
+		}
+
+		@Override
+		public ExternalRecord loadCopyBook(InputStream inputStream, String copyBookName, int splitCopybook, int dbIdx,
+				String font, int copybookFormat, int binaryFormat, int systemId, AbsSSLogger log) throws IOException {
+			throw new RecordException(CB2XML_MISSING);
+		}
+
+		@Override
+		public ExternalRecord loadCopyBook(Reader reader, String copyBookName, int splitCopybook, int dbIdx,
+				String font, int copybookFormat, int binaryFormat, int systemId, AbsSSLogger log) throws IOException {
+			throw new RecordException(CB2XML_MISSING);
+		}
+		
 	}
 }

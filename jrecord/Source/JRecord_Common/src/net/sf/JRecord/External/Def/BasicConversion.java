@@ -65,6 +65,7 @@ public class BasicConversion implements AbstractConversion {
         keys[i] = Constants.IO_BINARY_IBM_4680;        externalNames[i] = "Binary";                  names[i++] = rdLineBin;
         keys[i] = Constants.IO_VB;                     externalNames[i] = "Mainframe_VB";            names[i++] = rdVb;
         keys[i] = Constants.IO_VB_DUMP;                externalNames[i] = "Mainframe_VB_As_RECFMU";  names[i++] = rdVbDump;
+        keys[i] = Constants.IO_VB_DUMP2;               externalNames[i] = "VB_DUMP2"; 				 names[i++] = "VB_DUMP2";
         keys[i] = Constants.IO_VB_FUJITSU;             externalNames[i] = "FUJITSU_VB";              names[i++] = "Fujitsu Variable Binary";
         keys[i] = Constants.IO_VB_GNU_COBOL;           externalNames[i] = "Gnu_Cobol_VB";            names[i++] = "GNU Cobol VB";
         keys[i] = Constants.IO_MICROFOCUS;             externalNames[i] = "Microfocus_Format";       names[i++] = "Experimental Microfocus Header File";
@@ -85,7 +86,7 @@ public class BasicConversion implements AbstractConversion {
         keys[i] = Constants.IO_XML_BUILD_LAYOUT;       externalNames[i] = "XML_Build_Layout";       names[i++] = "XML - Build Layout";
         keys[i] = Constants.IO_CONTINOUS_NO_LINE_MARKER;       externalNames[i] = "Continuous";  		    names[i++] = "Continuous no eol marker";
         keys[i] = Constants.IO_VBS;                    externalNames[i] = "Mainframe_VBS";            names[i++] = "Variable Block Spanned (VBS)";
-        keys[i] = Constants.IO_VB_GNU_COBOL;           externalNames[i] = "Open_Cobol_VB";           names[i++] = "Open Cobol VB";;
+//        keys[i] = Constants.IO_VB_GNU_COBOL;           externalNames[i] = "Open_Cobol_VB";           names[i++] = "Open Cobol VB";;
         keys[i] = Constants.NULL_INTEGER;              externalNames[i] = null;                     names[i] = null;
 
         keys[i] = Constants.IO_FIXED_BYTE_ENTER_FONT;  externalNames[i] = "FIXED_BYTE_ENTER_FONT";   names[i++] = "Fixed Byte, enter font";
@@ -170,6 +171,7 @@ public class BasicConversion implements AbstractConversion {
 		setName(Type.ftPackedDecimalPostive  , "Mainframe Packed Decimal (+ve)");
 		setName(Type.ftZonedNumeric  , "Mainframe Zoned Numeric");
 		typeNumbers.put("Binary Integer Big Edian (Mainframe, AIX etc)".toLowerCase(), Integer.valueOf(Type.ftBinaryBigEndian ));
+//		setName(Type.ftZonedLeading  , "Mainframe Zoned Leading");
 		setName(Type.ftBinaryBigEndian  , "Binary Integer Big Endian (Mainframe?)", "Binary Integer Big Endian (Mainframe, AIX etc)");
 		setName(Type.ftBinaryBigEndianPositive  , "Binary Integer Big Endian (only +ve)", "Binary Integer Big Endian (only +ve )");
 		setName(Type.ftPositiveBinaryBigEndian  , "Positive Integer Big Endian", "Positive Integer (Big Endian)");
