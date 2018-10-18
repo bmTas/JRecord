@@ -38,6 +38,8 @@ public class MicroFocusByteReader extends AbstractByteReader {
 	private boolean eof = true;
 
 	private byte[] relativeAttr = new byte[2];
+	
+	private int lineNumber = 1;
 	byte[] len1;
 
 	@Override
@@ -86,11 +88,13 @@ public class MicroFocusByteReader extends AbstractByteReader {
 			
 			readnext = ! (attr == 4 || attr == 5 || attr == 7 || attr == 8);
 			if (len > 1000000) {
-				throw new IOException("Record Length to Big: " + len);
+				throw new IOException("Record Length to Big: " + len + " record number: " + lineNumber);
 			}
 			rec = new byte[len];
-			if (readBuffer(instream, rec) < len) {
-				throw new IOException("Record Length < Expected (" + len + ")");
+			
+			int bytesRead;
+			if ((bytesRead = readBuffer(instream, rec)) < len) {
+				throw new IOException("Length of Record (" + bytesRead + ") < Expected (" + len + ") record number: " + lineNumber);
 			}
 			switch (headerRecord.getFileFormat()) {
 			case  MicroFocusFileHeader.FORMAT_INDEXED:
@@ -113,6 +117,7 @@ public class MicroFocusByteReader extends AbstractByteReader {
 		
 		} while (readnext);
 		
+		lineNumber += 1;
 		return rec;
 	}
 

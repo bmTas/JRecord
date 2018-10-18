@@ -1,6 +1,5 @@
 package net.sf.JRecord.cgen.defJr;
 
-import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.cgen.def.IDeserializer;
 import net.sf.JRecord.cgen.def.ISerializer;
 
@@ -13,24 +12,10 @@ import net.sf.JRecord.cgen.def.ISerializer;
  * </ul>
  * 
  * 
- * @author bruce
+ * @author Bruce Martin
  *
  * @param <Pojo>
  */
-public interface IPojoConverter<Pojo> extends ISerializer<Pojo>, IDeserializer<Pojo> {
+public interface IPojoConverter<Pojo> extends ISerializer<Pojo>, IDeserializer<Pojo>, IToPojo<Pojo>, IUpdateLine<Pojo> {
 
-	
-	/**
-	 * Convert a JRecord line to a Pojo.
-	 * @param line JRecord line
-	 * @return Pojo
-	 */
-	public Pojo toPojo(AbstractLine line);
-	
-	/**
-	 * This method copies the Pojo values to a JRecord line
-	 * @param line JRecord line to be updated
-	 * @param pojo 
-	 */
-	public void updateLine(AbstractLine line, Pojo pojo);
 }
