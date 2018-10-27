@@ -287,7 +287,7 @@ public final class BasicCsvByteLineParserExtended extends BaseCsvByteLineParser 
 		String fontName = lineDefinition.getFontName();
 		
 		for (int i = 0; i < values.length; i++) {
-			ret[i] = values[i].length == 0 ? "" : Conversion.toString(values[i], fontName);
+			ret[i] = values[i] == null || values[i].length == 0 ? "" : Conversion.toString(values[i], fontName);
 		}
 		
 		return ret;

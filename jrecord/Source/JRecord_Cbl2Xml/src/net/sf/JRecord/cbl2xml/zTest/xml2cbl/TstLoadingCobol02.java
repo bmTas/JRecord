@@ -39,6 +39,7 @@ import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.cbl2xml.Cobol2Xml;
 import net.sf.JRecord.cbl2xml.impl.Cobol2GroupXml;
+import net.sf.JRecord.cgen.support.Code2JRecordConstants;
 import junit.framework.TestCase;
 
 public class TstLoadingCobol02 extends TestCase {
@@ -271,62 +272,7 @@ public class TstLoadingCobol02 extends TestCase {
 	}
 	
 	public static String getJRecordTypeName(int type) {
-		initTypeNames();
-		
-		if (type < 0 || type > JAVA_TYPE_NAME.length || JAVA_TYPE_NAME[type] == null) {
-			return Integer.toString(type);
-		}
-		
-		return "Type." + JAVA_TYPE_NAME[type];
-	}
-
-	private static void initTypeNames() {
-		if (JAVA_TYPE_NAME[0] == null || JAVA_TYPE_NAME [Type.ftHtmlField ] == null) {		
-			JAVA_TYPE_NAME [Type.ftChar                     ] = "ftChar";
-			JAVA_TYPE_NAME [Type.ftCharRightJust            ] = "ftCharRightJust";
-			JAVA_TYPE_NAME [Type.ftCharNullTerminated       ] = "ftCharNullTerminated";
-			JAVA_TYPE_NAME [Type.ftCharNullPadded           ] = "ftCharNullPadded";
-			
-			JAVA_TYPE_NAME [Type.ftHex                      ] = "ftHex";
-			JAVA_TYPE_NAME [Type.ftNumLeftJustified         ] = "ftNumLeftJustified";
-			JAVA_TYPE_NAME [Type.ftNumRightJustified        ] = "ftNumRightJustified";
-			JAVA_TYPE_NAME [Type.ftNumZeroPadded            ] = "ftNumZeroPadded";
-			JAVA_TYPE_NAME [Type.ftAssumedDecimal           ] = "ftAssumedDecimal";
-			JAVA_TYPE_NAME [Type.ftSignSeparateLead         ] = "ftSignSeparateLead";
-			JAVA_TYPE_NAME [Type.ftSignSeparateTrail        ] = "ftSignSeparateTrail";
-			JAVA_TYPE_NAME [Type.ftDecimal                  ] = "ftDecimal";
-			JAVA_TYPE_NAME [Type.ftBinaryInt                ] = "ftBinaryInt";
-			JAVA_TYPE_NAME [Type.ftPostiveBinaryInt         ] = "ftPostiveBinaryInt";
-			JAVA_TYPE_NAME [Type.ftFloat                    ] = "ftFloat";
-			JAVA_TYPE_NAME [Type.ftDouble                   ] = "ftDouble";
-			JAVA_TYPE_NAME [Type.ftNumAnyDecimal            ] = "ftNumAnyDecimal";
-			JAVA_TYPE_NAME [Type.ftPositiveNumAnyDecimal    ] = "ftPositiveNumAnyDecimal";
-			JAVA_TYPE_NAME [Type.ftBit                      ] = "ftBit";
-			JAVA_TYPE_NAME [Type.ftAssumedDecimalPositive   ] = "ftAssumedDecimalPositive";
-			JAVA_TYPE_NAME [Type.ftBinaryIntPositive        ] = "ftBinaryIntPositive";
-
-			JAVA_TYPE_NAME [Type.ftNumZeroPaddedPN          ] = "ftNumZeroPaddedPN";
-			JAVA_TYPE_NAME [Type.ftNumZeroPaddedPositive    ] = "ftNumZeroPaddedPositive";
-			JAVA_TYPE_NAME [Type.ftNumCommaDecimal          ] = "ftNumCommaDecimal";
-			JAVA_TYPE_NAME [Type.ftNumCommaDecimalPN        ] = "ftNumCommaDecimalPN";
-			JAVA_TYPE_NAME [Type.ftNumCommaDecimalPositive  ] = "ftNumCommaDecimalPositive";
-
-			JAVA_TYPE_NAME [Type.ftNumRightJustifiedPN      ] = "ftNumRightJustifiedPN";
-			
-			JAVA_TYPE_NAME [Type.ftPackedDecimal            ] = "ftPackedDecimal";
-			JAVA_TYPE_NAME [Type.ftZonedNumeric             ] = "ftZonedNumeric";
-			JAVA_TYPE_NAME [Type.ftPackedDecimalPostive     ] = "ftPackedDecimalPostive";
-			JAVA_TYPE_NAME [Type.ftBinaryBigEndian          ] = "ftBinaryBigEndian";                                                      
-			JAVA_TYPE_NAME [Type.ftBinaryBigEndianPositive  ] = "ftBinaryBigEndianPositive";
-			JAVA_TYPE_NAME [Type.ftPositiveBinaryBigEndian  ] = "ftPositiveBinaryBigEndian";
-			JAVA_TYPE_NAME [Type.ftRmComp                   ] = "ftRmComp";
-			JAVA_TYPE_NAME [Type.ftRmCompPositive           ] = "ftRmCompPositive";
-
-			JAVA_TYPE_NAME [Type.ftFjZonedNumeric           ] = "ftFjZonedNumeric";
-			JAVA_TYPE_NAME [Type.ftNumRightJustCommaDp      ] = "ftNumRightJustCommaDp";
-			JAVA_TYPE_NAME [Type.ftNumRightJustCommaDpPN    ] = "ftNumRightJustCommaDpPN";
-
-		}
+		return Code2JRecordConstants.getJRecordTypeName(type);
 	}
 
 	
