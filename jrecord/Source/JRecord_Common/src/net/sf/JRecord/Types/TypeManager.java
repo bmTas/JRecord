@@ -392,6 +392,10 @@ public class TypeManager {
 		return type.isNumeric() && (type instanceof TypeNum) && ((TypeNum) type).isBinary();
 	}
 
+	public static boolean isPackedDecimal(int typeId) {
+		return (typeId == Type.ftPackedDecimal || typeId == Type.ftPackedDecimalSmall
+				||  typeId == Type.ftPackedDecimalPostive || typeId == Type.ftPackedDecimalSmallPostive);
+	}
 	/**
 	 * return whether the type has a floating decimal.
 	 * @param typeId type to check

@@ -166,16 +166,16 @@ public class VbByteReader extends AbstractByteReader {
 //               			+ " \t " + blockMode + " && " + bytesReadFromBlock + " >= " + blockLength);
               	byte[] b = new byte[256];
             	readBuffer(stream, b);
-            	String string = new String(b, "cp037");
-    			System.out.print(string);
-    			 System.out.println();
-    			 System.out.println();
-    			for (int i = 0; i < b.length; i++) {
-    				if (i % 8 == 0) System.out.println();
-    				System.out.print("\t>" + b[i] + "\t" + string.charAt(i));
-    			}
-    			 System.out.println();
-    			 System.out.println();
+//            	String string = new String(b, "cp037");
+//    			System.out.print(string);
+//    			 System.out.println();
+//    			 System.out.println();
+//    			for (int i = 0; i < b.length; i++) {
+//    				if (i % 8 == 0) System.out.println();
+//    				System.out.print("\t>" + b[i] + "\t" + string.charAt(i));
+//    			}
+//    			 System.out.println();
+//    			 System.out.println();
 //              if ((rdw[2] != 0 &&  rdw[2] != 1 && rdw[2] != 2) || rdw[3] != 0) {
                 throw new IOException(
                           "Invalid Record Descriptor word at line "

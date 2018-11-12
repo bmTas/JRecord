@@ -5,6 +5,7 @@ import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.Line;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.Types.smallBin.ITypeBinaryExtendedNumeric;
+import net.sf.JRecord.cgen.def.IArrayAnyDimension;
 
 public class LineFieldCreator {
 	private static final TypeManager TYPE_MANAGER = TypeManager.getInstance();
@@ -30,6 +31,15 @@ public class LineFieldCreator {
 			return newFieldValue((Line) line, field);
 		}
 		return new FieldValue(line, field);
+	}
+
+	public IArrayFieldValue newArrayFieldValue(AbstractLine line, IArrayAnyDimension array) {
+		IFieldDetail firstField = array.getFirstField();
+		ITypeBinaryExtendedNumeric binType = TYPE_MANAGER.getShortLengthType(firstField.getType());
+		if (binType != null && line instanceof Line) {
+			return new ArrayFieldValueSmallBin((Line) line, firstField, binType, array);
+		}
+		return new ArrayFieldValue(line, array);
 	}
 
 }

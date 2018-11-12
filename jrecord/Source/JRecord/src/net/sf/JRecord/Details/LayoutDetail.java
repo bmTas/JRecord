@@ -904,8 +904,17 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
     			    while (fieldNameMap.containsKey(name.toUpperCase())) {
     			    	name = nameTmp + k++;
     			    }
-    			    if (k == 2) {
-    			    	duplicateFieldNames.add(fld.getName().toUpperCase());
+			    	String ucFieldName;
+    			    if (k > 1 && ! duplicateFieldNames.contains((ucFieldName = fld.getName().toUpperCase()))) {
+    			    	IFieldDetail iFieldDetail = fieldNameMap.get(ucFieldName);
+    			    	if (fld.getPos() != iFieldDetail.getPos()
+    			  		|| fld.getLen() != iFieldDetail.getLen()
+    			  		|| fld.getDecimal() != iFieldDetail.getDecimal()
+    			  		|| fld.getType() != iFieldDetail.getType()
+    			    	|| fld.getFormat() != iFieldDetail.getFormat()
+    			    	|| (fld.getParamater() != null && ! fld.getParamater().equals(iFieldDetail.getParamater()))) {
+    			    		duplicateFieldNames.add(ucFieldName);
+    			    	}
     			    }
     			    fld.setLookupName(name);
 					fieldNameMap.put(name.toUpperCase(), fld);

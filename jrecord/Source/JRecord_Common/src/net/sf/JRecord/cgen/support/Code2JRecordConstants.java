@@ -246,13 +246,21 @@ public class Code2JRecordConstants {
 			
 			JAVA_TYPE_NAME [Type.ftPackedDecimal            ] = "ftPackedDecimal";
 			JAVA_TYPE_NAME [Type.ftZonedNumeric             ] = "ftZonedNumeric";
-//			JAVA_TYPE_NAME [Type.ftZonedLeading             ] = "ftZonedLeading";
 			JAVA_TYPE_NAME [Type.ftPackedDecimalPostive     ] = "ftPackedDecimalPostive";
 			JAVA_TYPE_NAME [Type.ftBinaryBigEndian          ] = "ftBinaryBigEndian";                                                      
 			JAVA_TYPE_NAME [Type.ftBinaryBigEndianPositive  ] = "ftBinaryBigEndianPositive";
 			JAVA_TYPE_NAME [Type.ftPositiveBinaryBigEndian  ] = "ftPositiveBinaryBigEndian";
 			JAVA_TYPE_NAME [Type.ftRmComp                   ] = "ftRmComp";
 			JAVA_TYPE_NAME [Type.ftRmCompPositive           ] = "ftRmCompPositive";
+			
+			JAVA_TYPE_NAME [Type.ftPackedDecimalSmall       ] = "ftPackedDecimal";          
+			JAVA_TYPE_NAME [Type.ftPackedDecimalSmallPostive] = "ftPackedDecimalPostive   ";            
+			JAVA_TYPE_NAME [Type.ftIntBigEndianSmall        ] = "ftBinaryBigEndian        ";            
+			JAVA_TYPE_NAME [Type.ftIntBigEndianPositive     ] = "ftBinaryBigEndianPositive";            
+			JAVA_TYPE_NAME [Type.ftUIntBigEndianSmall       ] = "ftPositiveBinaryBigEndian";            
+			JAVA_TYPE_NAME [Type.ftIntSmall                 ] = "ftBinaryInt              ";            
+			JAVA_TYPE_NAME [Type.ftIntPositiveSmall         ] = "ftBinaryIntPositive      ";            
+			JAVA_TYPE_NAME [Type.ftUIntSmall                ] = "ftPostiveBinaryInt       ";   
 
 			JAVA_TYPE_NAME [Type.ftFjZonedNumeric           ] = "ftFjZonedNumeric";
 			JAVA_TYPE_NAME [Type.ftNumRightJustCommaDp      ] = "ftNumRightJustCommaDp";
@@ -476,7 +484,8 @@ public class Code2JRecordConstants {
 			return "long";
 		}
 		
-		if (typeId == Type.ftPackedDecimal) {
+		if (typeId == Type.ftPackedDecimal || typeId == Type.ftPackedDecimalSmall
+		||  typeId == Type.ftPackedDecimalPostive || typeId == Type.ftPackedDecimalSmallPostive) {
 			if (length < 3) {
 				return "short";
 			} else if (length < 6) {
