@@ -1,0 +1,147 @@
+<body>
+<h1>JRecord</h1>
+<p>The Main reason for using JRecord is to read Cobol Data files, but it can be used to <ol>
+  <li>Binary/Text fixed field width files
+  <li>CSV (Delimited) files
+</ol>
+<p>&nbsp;</p>
+<p>JRecord also provides great flexibility in
+<ul>
+  <li>JRecord supports several non standard file structure (Fixed-Length Lines / Length-Based lines).
+      It can also be extended to support other File Structures.
+  <li>JRecord currently supports Cobol and its own Xml Record Layouts. It could be extended to support
+      be extended to support other Record-Layouts.
+</ul>
+<p>&nbsp;</p>
+The Normal starting point to JRecord is via the <a href="net/sf/JRecord/JRecordInterface1.html"><b>JRecordInterface1</b></a> Class.
+To use <a href="net/sf/JRecord/JRecordInterface1.html">JRecordInterface1</a>:
+
+<pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 2 </font></span>            ICobolIOBuilder ioBldr <font color="#000000"><strong>=</strong></font> <b>JRecordInterface1.COBOL</b>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 3 </font></span>                        .<font color="#9966ff">newIOBuilder</font><font color="#000000"><strong>(</strong></font>copybookName<font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 4 </font></span>                                .<font color="#9966ff">setDialect</font><font color="#000000"><strong>(</strong></font> ICopybookDialects.FMT_MAINFRAME<font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066"> 5 </font></span>                                .<font color="#9966ff">setFont</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">cp037</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 6 </font></span>                                .<font color="#9966ff">setFileOrganization</font><font color="#000000"><strong>(</strong></font>Constants.IO_FIXED_LENGTH<font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 7 </font></span>                                .<font color="#9966ff">setDropCopybookNameFromFields</font><font color="#000000"><strong>(</strong></font><font color="#cc00cc">true</font><font color="#000000"><strong>)</strong></font>;
+</font></pre>
+
+
+<p>Important packages in JRecord:
+<ol>
+  <li><b>Details</b> - Holds File & line definition classes. Important Interfaces / classes
+    <ul>
+     <li><b>AbstractLine</b> - Interface that specifies what a line (read from a file) does. 
+     Use the <b>getFieldValue</b> method to get a reference to a field.
+     There are multiple implementations of AbstractLine - <b>Line</b>, <b>CharLine</b>, <b>CsvLine</b> and <b>XmlLine</b>.</li>
+     <li><b>LayoutDetail</b> - Class that describes a file (and its lines) Structure - i.e. the various records
+            and where the fields start / end.
+<pre>
+     LayoutDetail  - Describes a file
+       |
+       +----- RecordDetail (1 or More) - Describes one record in the file
+                |
+                +------  FieldDetail (1 or More)  - Describes one field in the file 
+</pre>     
+      <li><b>AbstractFieldValue</b> - Interface to get/set a fields value - it is a reference to one field in a line.
+    </ul>
+  <li><b>def.IO.builders</b> - Tis holds the IO Builder definitions, these are what you will be interacting with via
+  claa <b>JRecordInterface1</b></li>
+  <li><b>IO</b> - Record Oriented IO routines. Important classes
+    <ul>
+      <li><b>AbstractLineReader</b> Abstract Class for reading AbstractLine's from a file. 
+          All Reader's extend this class.
+      <li><b>AbstractLineReader</b> Abstract Class for writing AbstractLine's to a file. 
+          All Writer's extend this class.
+      <li><b>CobolIOProvider</b> - Will create / provide a class's to read / write a Cobol file.
+      <li><b>LineIOProvider</b> provide classes to read write files of a specified structure.
+    </ul>
+  <li><b>External</b> - Classes to read, write and convert File Definitions (Copybooks or Record Layouts).
+    <ul>
+      <li><b>ExternalRecord</b> Record Layout interchange format. It can be read/written from external
+      files and converted to the internal format LayoutDetail.
+      <li><b>ToRecordLayout</b> Convert a ExternalRecord class to an LayoutDetail class.
+      <li><b>ToExternalRecord</b> Convert a LayoutDetail class to an ExternalRecord class.
+      <li><b>RecordEditorXmlLoader</b> Loads a RecordEditor-Xml Layout as ExternalRecord
+      <li><b>RecordEditorXmlWrite</b> Writes ExternalRecord to a file in the RecordEditor-Xml format
+      <li><b>CopybookLoaderFactory</b> The  method getLayoutRecordEditXml which will load a RecordEditor-Xml file as
+             a RecordLayout.    
+    </ul>
+  <li><b>Type</b> - Classes to convert a field from the External Representation
+      to the Internal format.
+  <li><b>ByteIO</b>  - Low level IO routines, most user should not need to look at this package
+</ol>
+
+<p> </p>
+<p>Following is an example of reading & writing a file using IOBuilder classes
+
+<pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 2 </font></span>            ICobolIOBuilder ioBldr <font color="#000000"><strong>=</strong></font> <b>JRecordInterface1.COBOL</b>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 3 </font></span>                        .<font color="#9966ff">newIOBuilder</font><font color="#000000"><strong>(</strong></font>copybookName<font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 4 </font></span>                                .<font color="#9966ff">setDialect</font><font color="#000000"><strong>(</strong></font> ICopybookDialects.FMT_MAINFRAME<font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066"> 5 </font></span>                                .<font color="#9966ff">setFont</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">cp037</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 6 </font></span>                                .<font color="#9966ff">setFileOrganization</font><font color="#000000"><strong>(</strong></font>Constants.IO_FIXED_LENGTH<font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 7 </font></span>                                .<font color="#9966ff">setDropCopybookNameFromFields</font><font color="#000000"><strong>(</strong></font><font color="#cc00cc">true</font><font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 8 </font></span>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 9 </font></span>            AbstractLineReader reader  <font color="#000000"><strong>=</strong></font> ioBldr.<font color="#9966ff">newReader</font><font color="#000000"><strong>(</strong></font>salesFile<font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">10 </font></span>            AbstractLineWriter writer  <font color="#000000"><strong>=</strong></font> ioBldr.<font color="#9966ff">newWriter</font><font color="#000000"><strong>(</strong></font>salesFileOut<font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">11 </font></span>                        
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">12 </font></span>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">13 </font></span>            <font color="#006699"><strong>while</strong></font> <font color="#000000"><strong>(</strong></font><font color="#000000"><strong>(</strong></font>saleRecord <font color="#000000"><strong>=</strong></font> reader.<font color="#9966ff">read</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font><font color="#000000"><strong>)</strong></font> <font color="#000000"><strong>!</strong></font><font color="#000000"><strong>=</strong></font> <font color="#cc00cc">null</font><font color="#000000"><strong>)</strong></font> <font color="#000000"><strong>{</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">14 </font></span>                System.out.<font color="#9966ff">print</font><font color="#000000"><strong>(</strong></font>saleRecord.<font color="#9966ff">getFieldValue</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">KEYCODE</font><font color="#ff00cc">-</font><font color="#ff00cc">NO</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>.<font color="#9966ff">asString</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">15 </font></span>                        <font color="#000000"><strong>+</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc"> </font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>+</strong></font> saleRecord.<font color="#9966ff">getFieldValue</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">QTY</font><font color="#ff00cc">-</font><font color="#ff00cc">SOLD</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>.<font color="#9966ff">asString</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">16 </font></span>                        <font color="#000000"><strong>+</strong></font> <font color="#ff00cc">&quot;</font><font color="#ff00cc"> </font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>+</strong></font> saleRecord.<font color="#9966ff">getFieldValue</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">SALE</font><font color="#ff00cc">-</font><font color="#ff00cc">PRICE</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>.<font color="#9966ff">asString</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font><font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">17 </font></span>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">18 </font></span>                gstExclusive <font color="#000000"><strong>=</strong></font> saleRecord.<font color="#9966ff">getFieldValue</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">SALE</font><font color="#ff00cc">-</font><font color="#ff00cc">PRICE</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>.<font color="#9966ff">asDouble</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font> <font color="#000000"><strong>/</strong></font> GST_CONVERSION;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">19 </font></span>                saleRecord.<font color="#9966ff">getFieldValue</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">SALE</font><font color="#ff00cc">-</font><font color="#ff00cc">PRICE</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>.<font color="#9966ff">set</font><font color="#000000"><strong>(</strong></font>gstExclusive<font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">20 </font></span>                writer.<font color="#9966ff">write</font><font color="#000000"><strong>(</strong></font>saleRecord<font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">21 </font></span>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">22 </font></span>                System.out.<font color="#9966ff">println</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc"> </font><font color="#ff00cc">&quot;</font> <font color="#000000"><strong>+</strong></font> saleRecord.<font color="#9966ff">getFieldValue</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">SALE</font><font color="#ff00cc">-</font><font color="#ff00cc">PRICE</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>.<font color="#9966ff">asString</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font><font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">23 </font></span>            <font color="#000000"><strong>}</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">24 </font></span>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">25 </font></span>            reader.<font color="#9966ff">close</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>;
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">26 </font></span>            writer.<font color="#9966ff">close</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>;
+</font></pre>
+
+<!--pre>
+            ICobolIOBuilder ioBldr = JRecordInterface1.COBOL
+        		.newIOBuilder(copybookName)
+        			.setDialect( ICopybookDialects.FMT_MAINFRAME)
+        			.setFont("cp037")
+        			.setFileOrganization(Constants.IO_FIXED_LENGTH)
+        			.setDropCopybookNameFromFields(true);
+
+
+
+            AbstractLineReader reader  = ioBldr.newReader(salesFile);
+            AbstractLineWriter writer  = ioBldr.newWriter(salesFileOut);
+            		
+
+            while ((saleRecord = reader.read()) != null) {
+                lineNum += 1;
+
+                System.out.print(saleRecord.getFieldValue("KEYCODE-NO").asString()
+                        + " " + saleRecord.getFieldValue("QTY-SOLD").asString()
+                        + " " + saleRecord.getFieldValue("SALE-PRICE").asString());
+
+                gstExclusive = saleRecord.getFieldValue("SALE-PRICE").asDouble() / GST_CONVERSION;
+                saleRecord.getFieldValue("SALE-PRICE").set(gstExclusive);
+                writer.write(saleRecord);
+
+                System.out.println(" " + saleRecord.getFieldValue("SALE-PRICE").asString());
+            }
+
+            reader.close();
+            writer.close();
+
+</pre-->
+
+<!--p><b>RecordEditor Interface</b>
+<p>The following classes are used by the <b>RecordEditor</b> as interfaces to JRecord. You can extend the
+RecordEditor by changing the appropriate interface class.
+<ul>
+  <li><b>CopybookWriterManager</b> - tells the RecordEditor what File base RecordLayouts can be loaded.
+  <li><b>CopybookLoaderFactory</b> - tells the RecordEditor what File base RecordLayouts can be written.
+  <li><b>LineIOProvider</b> - tells the RecordEditor what file structures are supported. 
+  <li><b>TypeManager</b> - tells the RecordEditor what Types are supported. Note: the RecordEditor extends this class
+  <li><b>ConversionManager</b> - tells the RecordEditor what Cobol numeric versions are available - ie how
+  to translate Cobol numbers to RecordEditot / JRecord types.
+</ul!-->
+</body>

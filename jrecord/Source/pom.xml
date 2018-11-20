@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.sf</groupId>
     <artifactId>jrecord</artifactId>
-    <version>0.81</version>
+    <version>0.90</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -45,16 +45,15 @@
         <dependency>
             <groupId>net.sf</groupId>
             <artifactId>cb2xml_src</artifactId>
-            <version>0.95.4</version>
+            <version>1.00</version>
         </dependency>
     </dependencies>
 
     <modules>
         <module>JRecord_Common</module>
         <module>JRecord</module>
-        <module>JRecord_CodeGen</module>
+        <!--module>JRecord_CodeGen</module!-->
         <module>JRecord_IO_Builder_Examples</module>
-        <module>JRecord_Cbl2Xml</module>
     </modules>
 
 </project>

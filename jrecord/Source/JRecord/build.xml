@@ -35,7 +35,7 @@
 
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${buildExample.dir}" />
-		<javac srcdir="${src.dir}" destdir="${build.dir}" optimize="false" target="1.5" source="1.5" debug="true">
+		<javac srcdir="${src.dir}" destdir="${build.dir}" optimize="false" source="1.7" target="1.7"  debug="true">
 			<exclude name="net/sf/JRecord/zExamples/**"/>
 			<exclude name="net/sf/JRecord/zTest/**"/>
 			<classpath>
@@ -46,7 +46,7 @@
 			</classpath>
 		</javac>
 
-		<javac srcdir="${src.dir}" destdir="${buildExample.dir}" optimize="false" target="1.5" source="1.5" debug="true">
+		<javac srcdir="${src.dir}" destdir="${buildExample.dir}" optimize="false" source="1.7" target="1.7" debug="true">
 			<!--include name="net/sf/JRecord/zExamples/LineDTAR0020*"/!-->
 			<include name="net/sf/JRecord/zExamples/cobol/readWrite/XmplLineIOD*"/>
 			<include name="net/sf/JRecord/zExamples/cobol/toCsv/*"/>

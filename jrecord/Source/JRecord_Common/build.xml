@@ -18,16 +18,14 @@
 	<property name="JRecord.jar" location="${outputLib.dir}/JRecord.jar" />
 	<property name="inputLib.dir" location="../../lib" />
 
-	<target name="cb2xml" description="compile JRecord code" >
+	<!--target name="cb2xml" description="compile JRecord code" >
 		<ant dir="../cb2xml" antfile="build.xml" output="buildout.txt" inheritall="false" />
-	</target>
+	</target!-->
 
 
-	<target name="build" description="compile code" depends="cb2xml">
-	<!--echo file="${inputLib.dir}/SmallEditorFiles.txt"/-->
-
+	<target name="build" description="compile code">
 		<mkdir dir="${build.dir}" />
-		<javac srcdir="${src.dir}" destdir="${build.dir}" optimize="false" target="1.5" debug="true">
+		<javac srcdir="${src.dir}" destdir="${build.dir}" optimize="false" target="1.7" debug="true">
 			<classpath>
 				<filelist dir="../cb2xml/lib">
 					<file name="cb2xml.jar"/>
