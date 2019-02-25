@@ -6,10 +6,10 @@ import java.util.List;
 
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.External.Item.IItemJRec;
 import net.sf.JRecord.cgen.def.IArrayExtended;
 import net.sf.cb2xml.analysis.BaseItem;
 import net.sf.cb2xml.analysis.Item;
-import net.sf.cb2xml.def.IItem;
 
 /**
  * Cobol Item Definition
@@ -61,23 +61,41 @@ public class ItemDtl extends Item implements IItemDetails {
 
 	private List<ItemDtl> childItems = EMPTY_LIST;
 	public final int levelIndex;
+	private int formatId;
+	private String parameter, javaType; //JRecord Type Identifier
+
+//	public ItemDtl(BaseItem parentItem, IItemDetails baseItem) {
+//		this(	parentItem, baseItem, 
+//				baseItem.getItemType().isArray, baseItem.getFieldDefinition(),
+//				baseItem.getArrayDefinition(), baseItem.getLevelNumber(), false);
+//	}
+	
 	public ItemDtl(
-			BaseItem parentItem, IItem baseItem, boolean isArray,
+			BaseItem parentItem, IItemJRec baseItem, boolean isArray,
 			IFieldDetail fieldDefinition, IArrayExtended arrayDefinition, int level) {
+		this(parentItem, baseItem, isArray, fieldDefinition, arrayDefinition, level, true);
+	}
+	
+	private ItemDtl(
+			BaseItem parentItem, IItemJRec baseItem, boolean isArray,
+			IFieldDetail fieldDefinition, IArrayExtended arrayDefinition, int level,
+			boolean updateFieldDtl) {
 		super(parentItem, baseItem.getLevelNumber(), baseItem.getLevelString(), baseItem.getFieldName());
 		
 		this.itemType = toItemType(
 				baseItem.getChildItems() == null || baseItem.getChildItems().size() == 0,
 				isArray,
 				baseItem.getOccurs() >= 0);
-		this.fieldDefinition = fieldDefinition;
 		this.arrayDefinition = arrayDefinition;
 		this.levelIndex = level;
 		
-		if (fieldDefinition instanceof FieldDetail) {
+		this.fieldDefinition = fieldDefinition;
+		if (updateFieldDtl && fieldDefinition instanceof FieldDetail) {
 			((FieldDetail) fieldDefinition).setCobolItem(this);
 		}
 		
+		formatId = baseItem.getFormatId();
+		parameter = baseItem.getParameter();
 		super.set(baseItem);
 	}
 
@@ -108,6 +126,8 @@ public class ItemDtl extends Item implements IItemDetails {
 	public IFieldDetail getFieldDefinition() {
 		return fieldDefinition;
 	}
+
+
 
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.detailsBasic.IItemDetails#getArrayDefinition()
@@ -141,6 +161,44 @@ public class ItemDtl extends Item implements IItemDetails {
 	@Override
 	public int getLevelIndex() {
 		return levelIndex;
+	}
+	
+
+	/**
+	 * @return the formatId
+	 */
+	@Override
+	public final int getFormatId() {
+		return formatId;
+	}
+
+
+	/**
+	 * @return the parameter
+	 */
+	@Override
+	public final String getParameter() {
+		return parameter;
+	}
+	
+	public void setFormat(int formatId, String parameter) {
+		this.formatId = formatId;
+		this.parameter = parameter;
+	}
+
+	/**
+	 * @return the javaType
+	 */
+	@Override
+	public final String getJavaType() {
+		return javaType;
+	}
+
+	/**
+	 * @param javaType the javaType to set
+	 */
+	public final void setJavaType(String javaType) {
+		this.javaType = javaType;
 	}
 
 }

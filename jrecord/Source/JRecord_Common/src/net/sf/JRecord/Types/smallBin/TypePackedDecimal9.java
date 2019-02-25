@@ -92,35 +92,35 @@ public class TypePackedDecimal9 extends TypeBaseXBinary {
 		switch (field.getLen()) {
 		case 9: 
 			v = toNum[record[pos++] & 0xFF];
-			if (v < 0) {invalidMessage(field, pos + 2 - position);}
+			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret = v;
 		case 8: 
 			v = toNum[record[pos++] & 0xFF];
-			if (v < 0) {invalidMessage(field, pos + 2 - position);}
+			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret =  ret * 100 + v;
 		case 7: 
 			v = toNum[record[pos++] & 0xFF];
-			if (v < 0) {invalidMessage(field, pos + 2 - position);}
+			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret = ret * 100 + v;
 		case 6: 
 			v = toNum[record[pos++] & 0xFF];
-			if (v < 0) {invalidMessage(field, pos + 2 - position);}
+			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret = ret * 100 + v;
 		case 5: 
 			v = toNum[record[pos++] & 0xFF];
-			if (v < 0) {invalidMessage(field, pos + 2 - position);}
+			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret = ret * 100 + v;
 		case 4: 
 			v = toNum[record[pos++] & 0xFF];
-			if (v < 0) {invalidMessage(field, pos + 2 - position);}
+			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret = ret * 100 + v;
 		case 3: 
 			v = toNum[record[pos++] & 0xFF];
-			if (v < 0) {invalidMessage(field, pos + 2 - position);}
+			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret = ret * 100 + v;
 		case 2: 
 			v = toNum[record[pos++] & 0xFF];
-			if (v < 0) {invalidMessage(field, pos + 2 - position);}
+			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret = ret * 100 + v;
 		}
 		
@@ -136,8 +136,9 @@ public class TypePackedDecimal9 extends TypeBaseXBinary {
 		return ret;
 	}
 		
-	private void invalidMessage(IFieldDetail field, int pos) {
-		throw new RecordException("Invalid Packed decimal at: " + pos + " in field: " + field.getName());
+	private void invalidMessage(IFieldDetail field, int pos, byte b) {
+		throw new RecordException("Invalid Packed decimal at: " + pos + " in field: " + field.getName()
+				+ " Byte: " + Integer.toHexString(b & 0xFF));
 	}
 
 	/* (non-Javadoc)

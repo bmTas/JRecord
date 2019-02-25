@@ -39,6 +39,9 @@ import net.sf.JRecord.External.Def.DependingOnDefinition;
 import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.External.Def.IFieldUpdatedListner;
+import net.sf.JRecord.External.Item.IItemJRec;
+import net.sf.JRecord.External.Item.IItemJRecUpd;
+import net.sf.JRecord.External.Item.ItemJRec;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
@@ -49,7 +52,6 @@ import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.cb2xml.def.ICopybook;
-import net.sf.cb2xml.def.IItemJr;
 import net.sf.cb2xml.def.IItemJrUpd;
 
 //import net.sf.RecordEditor.utils.Common;
@@ -132,7 +134,7 @@ implements IFieldUpdatedListner, IAddDependingOn {
 //	private boolean fileStructureUpdated = false; 
 //  private RecordDecider recordDecider = null;
   //private String tstFieldValue = "";
-	private List<? extends IItemJrUpd> items;
+	protected List<? extends IItemJRecUpd> items;
 	private ICopybook copybook;
 
 
@@ -152,7 +154,7 @@ implements IFieldUpdatedListner, IAddDependingOn {
 	private ArrayList<Cb2xmlDocument> cb2xmlDocuments = new ArrayList<Cb2xmlDocument>();
 	private boolean keepFillers = false, 
 					dropCopybookFromFieldNames, 
-					saveCb2xml = false,
+					//saveCb2xml = false,
 					useJRecordNaming;
 	
 
@@ -505,7 +507,7 @@ implements IFieldUpdatedListner, IAddDependingOn {
 
 		this.keepFillers = keepFillers;
 		this.dropCopybookFromFieldNames = dropCopybookFromFieldNames;
-		this.saveCb2xml = saveCb2xml;
+		//this.saveCb2xml = saveCb2xml;
 		this.useJRecordNaming = useJRecordNaming;
 
 		return self;
@@ -723,11 +725,17 @@ implements IFieldUpdatedListner, IAddDependingOn {
 	/**
 	 * @return the items
 	 */
-	public List<? extends IItemJr> getItems() {
+	public List<? extends IItemJRec> getItems() {
 		return items;
 	}
 	
-	
+//	/**
+//	 * @return the items
+//	 */
+//	protected final List<? extends IItemJrUpd> getItemsU() {
+//		return items;
+//	}
+
 	/**
 	 * @param items the items to set
 	 */
@@ -735,7 +743,17 @@ implements IFieldUpdatedListner, IAddDependingOn {
 		this.copybookPref = copybookPref;
 		this.parentGroupNames = groupArray;
 		this.dialectCode  = dialectCode;
-		this.items = items;
+		
+		if (items == null || items.size() == 0) {
+			this.items = null;
+		} else {
+			ArrayList<IItemJRecUpd> itms = new ArrayList<IItemJRecUpd>();
+			for (int i = 0; i < items.size(); i++) {
+				itms.add(new ItemJRec(null, items.get(i)));
+			}
+			this.items = itms;
+		}
+
 		fields.clear();
 	}
 
@@ -756,12 +774,12 @@ implements IFieldUpdatedListner, IAddDependingOn {
 
 
 	public void setItems(String copybookPref, String[] parentGroupNames, int dialectCode, IItemJrUpd item) {
-		ArrayList<IItemJrUpd> itms = new ArrayList<IItemJrUpd>(1);
+		ArrayList<IItemJRecUpd> itms = new ArrayList<IItemJRecUpd>(1);
+		itms.add(new ItemJRec(null, item));
 
 		this.copybookPref = copybookPref;
 		this.dialectCode  = dialectCode;
 		this.parentGroupNames = parentGroupNames;
-		itms.add(item);
 		this.items = itms;
 		fields.clear();
 	}
@@ -1220,17 +1238,17 @@ implements IFieldUpdatedListner, IAddDependingOn {
 	
 	private void loadItems(
 			FieldCreatorHelper fldHelper, 
-			List<? extends IItemJr> itms, String nameSuffix,
+			List<? extends IItemJRecUpd> itms, String nameSuffix,
 			DependingOnDtls dependOnParentDtls,
 			int level,
 			int basePos) {
 
-		for (IItemJr itm  : itms) {
+		for (IItemJRecUpd itm  : itms) {
 			if (itm.getLevelNumber() == 88) {
 				
 			} else {
-				List<? extends IItemJr> childItems = itm.getChildItems();
-				int size = childItems.size();
+				List<? extends IItemJRecUpd> childItems = itm.getChildItems();
+				int numChildItems = childItems.size();
 				String dependingVar = itm.getDependingOn();
 				fldHelper.updateGroup(level, itm.getFieldName());
 				
@@ -1245,7 +1263,7 @@ implements IFieldUpdatedListner, IAddDependingOn {
                     						.setChildOccurs(itm.getOccurs())
                     					.newDependingOn(this, dependOnParentDtls, dependingVar);
                     }
-					if (size == 0) {
+					if (numChildItems == 0) {
 						for (int i = 0; i < itm.getOccurs(); i++) {
 							createField(
 									fldHelper, level, itm, 
@@ -1264,7 +1282,7 @@ implements IFieldUpdatedListner, IAddDependingOn {
 						}
 					}		
 				} else if (itm.getOccurs() == 0) {
-				} else if (size == 0) {
+				} else if (numChildItems == 0) {
 					createField(fldHelper, level, itm, nameSuffix, dependOnParentDtls, basePos);
 				} else {
 					loadItems(fldHelper, childItems, nameSuffix, dependOnParentDtls, level+1, basePos);
@@ -1282,7 +1300,7 @@ implements IFieldUpdatedListner, IAddDependingOn {
 	}
 
 	private void createField(
-			FieldCreatorHelper fieldHelper, int level, IItemJr itm, 
+			FieldCreatorHelper fieldHelper, int level, IItemJRecUpd itm, 
 			String nameSuffix, DependingOnDtls dependOnParentDtls,
 			int basePos) {
 		
@@ -1293,7 +1311,7 @@ implements IFieldUpdatedListner, IAddDependingOn {
 			"", 
 			itm.getType(), 
 			fieldHelper.calculateDecimalSize(itm.getType(), itm.getPicture(), itm.getScale()),
-			0, "", "", itm.getFieldName(), 0,
+			itm.getFormatId(), itm.getParameter(), "", itm.getFieldName(), 0,
 			dependOnParentDtls);
 		
 	    if (level > 1 && fieldHelper.getGroupNameSize() > level) {

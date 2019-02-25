@@ -28,6 +28,7 @@ package net.sf.JRecord.cg.schema;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Types.TypeManager;
+import net.sf.JRecord.cg.schema.classDefinitions.IClassDef;
 import net.sf.JRecord.cgen.support.Code2JRecordConstants;
 
 /**
@@ -39,19 +40,30 @@ public class FieldDef extends JavaDetails {
 	private final IFieldDetail fieldDetail;
 	private final ArrayElement arrayDetails;
 	private CobolItemDef cobolItemDef;
-	public final String javaType;
+	public final String javaType, javaRawType, jrecAs;
 	private String value = null;
 	public final boolean shortNumber;
+	public final IClassDef classDef;
 	
 
 
-	public FieldDef(String cobolName, FieldDetail fieldDef, ArrayElement ai, String schemaName) {
+	public FieldDef(String cobolName, FieldDetail fieldDef, ArrayElement ai, String schemaName,
+			boolean isCsv) {
 		super(cobolName, schemaName, null);
 		int type = fieldDef.getType();
+		JavaTypeDetails td = new JavaTypeDetails(isCsv, fieldDef);
 
 		this.fieldDetail = fieldDef;
 		this.arrayDetails = ai;
-		this.javaType = Code2JRecordConstants.typeToJavaType(fieldDetail.getType(), fieldDetail.getLen(), fieldDetail.getDecimal());
+		this.classDef = td.classDef;
+		this.javaRawType = td.javaRawType;
+		this.javaType = td.javaType;
+		this.jrecAs = "as" + (classDef == null || classDef.getJrecAs() == null 
+				? "short".equals(javaType) 
+						? "Int" 
+						: javaType.substring(0, 1).toUpperCase() + javaType.substring(1)
+				: classDef.getJrecAs());
+
 		shortNumber = TypeManager.getInstance().getShortType(type, fieldDef.getLen(), fieldDef.getFontName()) != type;
 	}
 
@@ -85,12 +97,35 @@ public class FieldDef extends JavaDetails {
 	 * @return the javaType
 	 */
 	public final String getJavaType() {
-		return javaType;
+		return  javaType ;
+	}
+	/**
+	 * @return the javaType
+	 */
+	public final String getRawJavaType() {
+		return javaRawType;
 	}
 
 	public final String getAsType() {
-		return "as" + javaType.substring(0, 1).toUpperCase() + javaType.substring(1);
+		return jrecAs;
 	}
+	
+	public final String formatGet(String value) {
+		
+		if (classDef != null) {
+			return classDef.generateFromPojo(value);
+		}
+		return value;
+	}
+
+	
+	public final String formatSet(String value) {
+		if (classDef != null) {
+			return classDef.generateToPojo(value);
+		}
+		return "short".equalsIgnoreCase(javaType) ? "(short) " + value : value;
+	}
+
 
 	/**
 	 * @return the value
@@ -120,6 +155,7 @@ public class FieldDef extends JavaDetails {
 
 	public final String getFieldInitialise() {
 		String ret = "0";
+		
 		if ("String".equals(javaType)) {
 			ret = "\"\"";
 		} else if (javaType.startsWith("Big")) {

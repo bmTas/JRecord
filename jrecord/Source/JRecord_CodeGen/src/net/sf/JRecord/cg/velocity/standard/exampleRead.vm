@@ -6,6 +6,7 @@ package ${packageId};
 ##
 #incl("schema/CommentExample.pvm")
 
+#* *##set ( $currentRecord = ${generateOptions.schemaDefinition.getRecords().get(0)})
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineReader;
@@ -38,6 +39,7 @@ public final class Read${generateOptions.schemaDefinition.extensionName} {
 
         try {
 #incl("schema/DclIOBuilder.pvm")
+
 
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})
             FieldNames${generateOptions.schemaDefinition.extensionName}.Record${r.extensionName} r${r.extensionName} = FieldNames${generateOptions.schemaDefinition.extensionName}.RECORD_${r.constantName};

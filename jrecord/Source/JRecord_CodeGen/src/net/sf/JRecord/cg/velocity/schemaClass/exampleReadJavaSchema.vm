@@ -82,7 +82,7 @@ public final class ReadJavaSchema${generateOptions.schemaDefinition.extensionNam
     }
     
     public static void main(String[] args) {
-        new Read${generateOptions.schemaDefinition.extensionName}();
+        new ReadJavaSchema${generateOptions.schemaDefinition.extensionName}();
     }
 }
 

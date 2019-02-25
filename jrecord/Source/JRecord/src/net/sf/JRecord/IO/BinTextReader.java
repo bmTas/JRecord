@@ -197,7 +197,7 @@ public class BinTextReader extends LineReaderWrapper {
         	if (rec != null) {
         		csvDef = rec;
         	} else {
-        		csvDef = new CsvDefinition(delimiter, quote, false);
+        		csvDef = new CsvDefinition(fontName, delimiter, quote, false);
         	}
         	List<String> fieldList;
            	fieldList = CsvParserManagerByte.getInstance().get(parser, binCsv)

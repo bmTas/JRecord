@@ -94,7 +94,8 @@ public class FieldIterator implements Iterable<AbstractFieldValue>, Iterator<Abs
 	}
 	
 	private void toNextField() {
-		while (fieldNo < recordDef.getFieldCount() && ! line.isFieldInLine(recordDef.getField(fieldNo))) {
+		while (fieldNo < recordDef.getFieldCount()
+		   && ! line.isFieldInLine(recordDef.getField(fieldNo))) {
 			fieldNo += 1;
 		}
 	}

@@ -30,7 +30,7 @@ package net.sf.JRecord.zTest.cobol2csv;
 
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Conversion;
-import net.sf.JRecord.cbl2csv.ParseArgsCobol2Csv;
+import net.sf.JRecord.cbl2csv.args.ParseArgsCobol2Csv;
 import net.sf.JRecord.zTest.Common.TestCommonCode;
 import net.sf.JRecord.zTest.Common.TstConstants;
 

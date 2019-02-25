@@ -1,9 +1,11 @@
 package ${generateOptions.packageId}.data;
 #incl("schema/CommentSchema.pvm")
+#incl("schema/CommonMacros.vm")
 
 #*  *##foreach($imp in ${currentRecord.getImportList()})
 import ${imp};
 #*  *##end
+#conversionImport($currentRecord)
                                                                              
 import net.sf.JRecord.Details.IGetByteData;
 import net.sf.JRecord.cgen.def.IAsPojo;
@@ -31,7 +33,7 @@ implements I${currentRecord.extensionName}Pojo, IGetByteData, IAsPojoSetData<Lin
 ##    private ${a.getFirstFieldDef().getJavaType()}#*
 ##        *##foreach ($ii in [1 .. ${a.getSizes().size()}])[]#end#*
 ##             *# ${a.getFirstElement().javaName};        
-###*  *##end
+###*  *##end 
 
     public Line${currentRecord.extensionName}JR(Record${currentRecord.extensionName} rec) {
     
@@ -48,16 +50,17 @@ implements I${currentRecord.extensionName}Pojo, IGetByteData, IAsPojoSetData<Lin
 #*      *##if (! ${f.isArrayItem()})
     @Override
     public ${f.getJavaType()} get${f.extensionName}() {
-#*          *##if (${f.getJavaType()} == "short")
-        return (short) ${f.javaName}.asInt();                                 
-#*          *##else   
-        return ${f.javaName}.${f.getAsType()}();
-#*          *##end
+        return #convertToJava($f, "${f.javaName}");
+###*          *##if (${f.getJavaType()} == "short")
+##        return (short) ${f.javaName}.asInt();                                 
+###*          *##else   
+##        return ${f.javaName}.${f.getAsType()}();
+###*          *##end
     }
     
     @Override
     public void set${f.extensionName}(${f.getJavaType()} value) {
-        this.${f.javaName}.set(value);
+        this.${f.javaName}.set(#convertFromJava($f, "value");
     }
 
 #*      *##end
@@ -66,18 +69,19 @@ implements I${currentRecord.extensionName}Pojo, IGetByteData, IAsPojoSetData<Lin
 #*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
     @Override
     public ${a.getFirstFieldDef().getJavaType()}  get${a.getFirstElement().extensionName}(${a.getIndexParameters()}) {
-#*          *##if ( ${a.getFirstFieldDef().getJavaType()} == "short")
-        return (short) (new FieldValueCG(this, record.array${a.getFirstElement().extensionName}.get(${a.getCallIndexParameters()}))).asInt();
-#*          *##else
-        return (new FieldValueCG(this, record.array${a.getFirstElement().extensionName}.get(${a.getCallIndexParameters()}))).${a.getFirstFieldDef().getAsType()}();
-#*          *##end
+        return #convertToJava(${a.getFirstFieldDef()}, "(new FieldValueCG(this, record.array${a.getFirstElement().extensionName}.get(${a.getCallIndexParameters()})))");
+###*          *##if ( ${a.getFirstFieldDef().getJavaType()} == "short")
+##        return (short) (new FieldValueCG(this, record.array${a.getFirstElement().extensionName}.get(${a.getCallIndexParameters()}))).asInt();
+###*          *##else
+##        return (new FieldValueCG(this, record.array${a.getFirstElement().extensionName}.get(${a.getCallIndexParameters()}))).${a.getFirstFieldDef().getAsType()}();
+###*          *##end
 ##        return ${a.getFirstElement().javaName}${a.getCallIndexParameters()};
     }
     
     
     @Override
     public void set${a.getFirstElement().extensionName}(${a.getIndexParameters()}, ${a.getFirstFieldDef().getJavaType()} value) {
-        (new FieldValueCG(this, record.array${a.getFirstElement().extensionName}.get(${a.getCallIndexParameters()}))).set(value);
+        (new FieldValueCG(this, record.array${a.getFirstElement().extensionName}.get(${a.getCallIndexParameters()}))).set(#convertFromJava(${a.getFirstFieldDef()}, "value");
 ##        ${a.getFirstElement().javaName}${a.getCallIndexParameters()} = value;
     }
 
@@ -111,5 +115,6 @@ implements I${currentRecord.extensionName}Pojo, IGetByteData, IAsPojoSetData<Lin
             .assign${currentRecord.extensionName}(
                 this, value);
     }
+#conversionCode($currentRecord)    
 }
 

@@ -78,7 +78,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser {
      * @return the number of fields
      */
     public final int getFieldCount(String line, ICsvDefinition lineDef) {
-        String[] fields = split(line, lineDef, 0);
+        String[] fields = splitInternal(line, lineDef, 0);
 
         if (fields == null) {
             return 0;
@@ -93,7 +93,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser {
      * @see ICsvCharLineParser#getField(int, String, ICsvDefinition)
      */
     public final String getField(int fieldNumber, String line, ICsvDefinition lineDef) {
-        String[] fields = split(line, lineDef, fieldNumber);
+        String[] fields = splitInternal(line, lineDef, fieldNumber);
 
         if (fields == null  || fields.length <= fieldNumber || fields[fieldNumber] == null) {
             return null;
@@ -122,7 +122,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser {
 
     @Override
 	public final List<String> getFieldList(String line, ICsvDefinition csvDefinition) {
-    	String[] fields = split(line, csvDefinition, 0);
+    	String[] fields = splitInternal(line, csvDefinition, 0);
     	if (fields == null) {
             return new ArrayList<String>(1);
         }
@@ -160,7 +160,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser {
     public final String setField(int fieldNumber, int fieldType, String line, ICsvDefinition lineDef,
             String newValue) {
 
-        String[] fields = split(line, lineDef, fieldNumber);
+        String[] fields = splitInternal(line, lineDef, fieldNumber);
 
         if (fields == null || fields.length == 0) {
             fields = initArray(fieldNumber + 1);
@@ -201,6 +201,15 @@ public class BasicCsvLineParser extends BaseCsvLineParser {
     }
 
 
+    public final String[] split(String line, ICsvDefinition lineDefinition, int min) {
+    	String[] fields = splitInternal(line, lineDefinition, min);
+		String quote = lineDefinition.getQuoteDefinition().asString();
+		for (int i = 0; i < fields.length; i++) {
+			update4quote(fields, i, quote);
+		}
+		return fields;
+    }
+    
 	/**
 	 * Split a supplied line into its Fields. This only applies to
 	 * Comma / Tab separated files
@@ -211,7 +220,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser {
 	 *
 	 * @return Array of fields
 	 */
-	public final String[] split(String line, ICsvDefinition lineDefinition, int min) {
+	private final String[] splitInternal(String line, ICsvDefinition lineDefinition, int min) {
 
 		String delimiter = super.getDelimFromCsvDef(lineDefinition);
 		if ((delimiter == null || line == null)
@@ -261,6 +270,7 @@ public class BasicCsvLineParser extends BaseCsvLineParser {
 		            buf.append(s);
 		            if (endOfField(buf.length(), s, quote)) {
 		                //buf.delete(buf.length() - 1, buf.length());
+		          
 		                temp[i++] = buf.toString();
 		                building = false;
 		                //buf.delete(0, buf.length());

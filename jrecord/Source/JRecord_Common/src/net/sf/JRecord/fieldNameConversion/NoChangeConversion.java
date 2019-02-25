@@ -172,6 +172,8 @@ public class NoChangeConversion implements IFieldNameConversion {
 				break;
 			case '(':
 			case ',':
+			case '/':
+			case '\\':
 			case ' ':
 			case '.':
 				if (b.length() == 0 || (b.charAt(b.length() - 1) != '_')) {

@@ -26,7 +26,7 @@
  *
  * ------------------------------------------------------------------------ */
 
-package net.sf.JRecord.cbl2csv;
+package net.sf.JRecord.cbl2csv.args;
 
 public interface IUpdateFieldName {
 

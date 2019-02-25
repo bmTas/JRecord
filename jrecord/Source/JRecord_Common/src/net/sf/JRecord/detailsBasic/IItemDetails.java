@@ -3,16 +3,16 @@ package net.sf.JRecord.detailsBasic;
 import java.util.List;
 
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.cgen.def.IArrayAnyDimension;
+import net.sf.JRecord.External.Item.IItemJRec;
+import net.sf.JRecord.cgen.def.IArrayExtended;
 import net.sf.JRecord.detailsBasic.ItemDtl.ItemType;
-import net.sf.cb2xml.def.IItemJr;
 
 /**
  * Extended Cobol-Item Definition
- * @author bruce
+ * @author Bruce Martin
  *
  */
-public interface IItemDetails extends IItemJr {
+public interface IItemDetails extends IItemJRec {
 
 	List<? extends IItemDetails> getChildItems();
 
@@ -24,7 +24,7 @@ public interface IItemDetails extends IItemJr {
 	/**
 	 * @return the arrayDefinition
 	 */
-	IArrayAnyDimension getArrayDefinition();
+	IArrayExtended getArrayDefinition();
 
 	/**
 	 * @return the itemType
@@ -34,4 +34,6 @@ public interface IItemDetails extends IItemJr {
 	boolean isLeaf();
 	
 	int getLevelIndex();
+
+	String getJavaType();
 }

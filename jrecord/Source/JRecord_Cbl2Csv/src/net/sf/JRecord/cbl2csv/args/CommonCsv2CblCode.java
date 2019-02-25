@@ -1,4 +1,4 @@
-package net.sf.JRecord.cbl2csv;
+package net.sf.JRecord.cbl2csv.args;
 
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -13,7 +13,7 @@ public class CommonCsv2CblCode {
      *  
      * @param rec Schema to be updated
      */
-    static void updateCsvNames(LayoutDetail schema, ParseArgsCobol2Csv csvArgs, IDefineCsvFields defineFields) {
+    public static void updateCsvNames(LayoutDetail schema, ParseArgsCobol2Csv csvArgs, IDefineCsvFields defineFields) {
  	
 		FieldDetail field;
 		int fieldCount = schema.getRecord(0).getFieldCount();

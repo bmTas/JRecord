@@ -85,15 +85,28 @@ public class GenerateOptions implements IGenerateOptions {
 		String splitVal = pa.getArg(ArgumentOption.OPT_SPLIT);
 		String dialectVal = pa.getArg(ArgumentOption.OPT_DIALECT);
 		String dropVal = pa.getArg(ArgumentOption.OPT_DROP_COPYBOOK_NAME, "");
+		String versionStr =  pa.getArg(ArgumentOption.OPT_JREC_VERSION, "");
+		int version = 0;
+		if (versionStr.length() > 0) {
+			try {
+				double d = Double.parseDouble(versionStr) * 1000 + 0.5;
+						
+				version = (int) d;
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+		}
 				
 		String schemaName   = required(pa, ArgumentOption.OPT_SCHEMA);
 		String templateDir  = pa.getArg(ArgumentOption.OPT_TEMPLATE_DIRECTORY, "");
 
 		templateDtls = new TemplateDtls(
 									templateDir,
-									decodeTemplate(pa.getArg(ArgumentOption.OPT_TEMPLATE)), 
+									decodeTemplate(templateDir, pa.getArg(ArgumentOption.OPT_TEMPLATE)), 
+									TemplateDtls.DEFAULT_TEMPLATE_BASE,
 									false,
-									TemplateDtls.DEFAULT_JREC_VERSION);
+									version > 0 ? version : TemplateDtls.DEFAULT_JREC_VERSION,
+									pa.getArg(ArgumentOption.OPT_GEN_DATE));
 
 //		if (BASIC_TEMPLATE.equals(template)) {
 		if (templateDtls.hasOption(TemplateDtls.T_REQUIRE_PACKAGE_ID)) {
@@ -284,9 +297,10 @@ public class GenerateOptions implements IGenerateOptions {
 		message.append(msg);
 	}
 	
-	private String decodeTemplate(String template) {
-		if (template == null || template.length() == 0) {
-			template = ArgumentOption.JAVA_POJO_TEMPLATE;
+	private String decodeTemplate(String templateDir, String template) {
+		if (templateDir != null && templateDir.length() > 0) {
+		} else if (template == null || template.length() == 0) {
+			template = ArgumentOption.LINE_WRAPPER_TEMPLATE;
 		}
 		return template;
 	}
@@ -587,7 +601,7 @@ public class GenerateOptions implements IGenerateOptions {
 	 */
 	@Override
 	public int getJRecordVersion() {
-		return TemplateDtls.DEFAULT_JREC_VERSION;
+		return templateDtls.getJrecordVersion();
 	}
    
     

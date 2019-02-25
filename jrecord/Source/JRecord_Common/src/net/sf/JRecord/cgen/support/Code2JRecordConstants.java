@@ -26,6 +26,7 @@
 package net.sf.JRecord.cgen.support;
 
 import java.util.Arrays;
+import java.util.List;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.CsvParser.ICsvParserIds;
@@ -36,6 +37,8 @@ import net.sf.JRecord.Types.TypeManager;
 import net.sf.cb2xml.def.Cb2xmlConstants;
 
 public class Code2JRecordConstants {
+	
+	public static List<String> JAVA_TYPES = Arrays.asList("String", "short", "int", "long", "BigDecimal", "BigInteger");
 
     private static final String[] JAVA_TYPE_NAME = new String[Type.LAST_SYSTEM_TYPE];
     private static final String[] RECORD_TYPES = new String[20];
@@ -471,6 +474,7 @@ public class Code2JRecordConstants {
 	}
 	
 	
+	@SuppressWarnings("deprecation")
 	public static String typeToJavaType(boolean csv, int typeId, int length, int decimal) {
 		if (! TypeManager.isNumeric(typeId)) {
 			return "String";

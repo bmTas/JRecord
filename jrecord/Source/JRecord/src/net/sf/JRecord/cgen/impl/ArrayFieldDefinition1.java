@@ -30,6 +30,7 @@ package net.sf.JRecord.cgen.impl;
 
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.cgen.def.IArray1Dimension;
 import net.sf.JRecord.cgen.def.IArray2Dimension;
 import net.sf.JRecord.cgen.def.IArray3Dimension;
@@ -121,6 +122,9 @@ public class ArrayFieldDefinition1 implements IArray1Dimension, IArray2Dimension
 	}
 	@Override
 	public IFieldDetail getField(int... indexs) {
+		if (indexs.length != numberOfElements.length) { 
+			throw new RecordException("You must supply " + numberOfElements.length + " indexs");
+		}
 		int idx = 0;
 		
 		for (int i = 0; i < indexs.length; i++) {

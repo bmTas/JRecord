@@ -44,6 +44,8 @@ import java.io.OutputStream;
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.cbl2csv.args.CommonCsv2CblCode;
+import net.sf.JRecord.cbl2csv.args.ParseArgsCobol2Csv;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.def.IO.builders.ICsvIOBuilder;
 import net.sf.JRecord.def.IO.builders.IDefineCsvFields;
@@ -85,7 +87,8 @@ public class Cobol2Csv {
 //
 //		        cobolLayout = schema.asLayoutDetail();     // Create the Cobol layout
 		        ICobolIOBuilder iobCbl = JRecordInterface1.COBOL
-		        					.newIOBuilder(csvArgs.copybookName);
+		        					.newIOBuilder(csvArgs.copybookName)
+		        					.setOptimizeTypes(false);
 
 		        runCobol2Csv(csvArgs, iobCbl, 
 		        		new FileInputStream(csvArgs.infile),

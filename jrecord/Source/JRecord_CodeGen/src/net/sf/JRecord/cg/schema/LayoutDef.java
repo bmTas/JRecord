@@ -63,8 +63,10 @@ public class LayoutDef extends JavaDetails {
 			records.add(new RecordDef( 
 					schema.getRecord(i), 
 					schemaName ,
-					className == null ? null : schema.getRecord(i).getRecordName()));
+					className == null ? null : schema.getRecord(i).getRecordName(),
+					schema.isCsvLayout()));
 		}
+
 	}
 
 	/**

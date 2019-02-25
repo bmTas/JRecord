@@ -37,6 +37,7 @@ package net.sf.JRecord.Common;
 
 import java.math.BigInteger;
 import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Locale;
@@ -1127,6 +1128,10 @@ public final class Conversion {
     	return getHold(fontName).isMultiByte;
     }
 
+    public static float averageBytesPerChar(String fontName) {
+    	return getHold(fontName).averageBytesPerChar;
+    }
+
  
     private static HoldEbcidicFlag getHold(String charset) {
     	HoldEbcidicFlag hold = holdEbcidicFlag;
@@ -1197,16 +1202,33 @@ public final class Conversion {
 	public static final class HoldEbcidicFlag {
 		public final String charset;
 		public final boolean isSingleByteEbcidic, isMultiByte, isEbcdic;
+		public final float averageBytesPerChar;
 		
 		public HoldEbcidicFlag(String charset) {
 			super();
 			
+			float f = 2, ave = 2;
+
 			if (charset == null || charset.length() == 0) {
-				this.charset =  Charset.defaultCharset().name();
+				Charset defaultCharset = Charset.defaultCharset();
+				this.charset =  defaultCharset.name();
+				CharsetEncoder encoder = defaultCharset.newEncoder();
+
+				f = encoder.maxBytesPerChar();
+				ave = encoder.averageBytesPerChar(); 
 			} else {
 				this.charset = charset;
+				if (Charset.isSupported(charset)) {
+					Charset charsetDef = Charset.forName(charset);
+					CharsetEncoder encoder = charsetDef.newEncoder();
+					f = encoder.maxBytesPerChar();
+					ave = encoder.averageBytesPerChar(); 
+				}
 			}
-			this.isMultiByte = isMultiByteI(charset);
+
+			this.isMultiByte = (f > 1.0f);
+			this.averageBytesPerChar = ave;
+			
 			
 			
 			byte[] b = getBytes("0", charset);
@@ -1215,19 +1237,9 @@ public final class Conversion {
 			
 			
 			this.isSingleByteEbcidic = isEbcdic && ! isMultiByte;
+			
 		}
-		
-	    private static boolean isMultiByteI(String fontName) {
-			float f = 2;
 
-			if (fontName == null || fontName.length() == 0) {
-				f = Charset.defaultCharset().newEncoder().maxBytesPerChar();
-			} else if (Charset.isSupported(fontName)) {
-				f = Charset.forName(fontName).newEncoder().maxBytesPerChar();
-			}
-
-			return (f > 1.0f);
-	    }
 	}
 	
 

@@ -40,7 +40,7 @@ import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.cbl2csv.Cobol2Csv;
 import net.sf.JRecord.cbl2csv.Csv2Cobol;
-import net.sf.JRecord.cbl2csv.ParseArgsCobol2Csv;
+import net.sf.JRecord.cbl2csv.args.ParseArgsCobol2Csv;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 //import net.sf.JRecord.zExamples.cobol.toCsv.ParseArgsCobol2Csv;
 import net.sf.JRecord.zTest.Common.TstConstants;

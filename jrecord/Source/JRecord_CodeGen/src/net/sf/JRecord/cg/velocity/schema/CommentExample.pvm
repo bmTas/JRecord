@@ -38,6 +38,9 @@ import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.External.CopybookLoader;
 #*  *##end
 import net.sf.JRecord.def.IO.builders.${ioBldr};
+#*  *##if (${generateOptions.dialect.utlCode} != "FMT_MAINFRAME")
+import net.sf.JRecord.Numeric.ICopybookDialects;
+#*  *##end
 #end
 #macro (genSelect $recSel $sp)
 #* *##if (${recSel.getType()} == ${const.TYPE_ATOM})

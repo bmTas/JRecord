@@ -31,8 +31,6 @@
 
 
 	<target name="compile" description="compile code" depends="JRecord_Common">
-	<!--echo file="${inputLib.dir}/SmallEditorFiles.txt"/-->
-
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${buildExample.dir}" />
 		<javac srcdir="${src.dir}" destdir="${build.dir}" optimize="false" source="1.7" target="1.7"  debug="true">
@@ -77,7 +75,7 @@
 			<fileset dir="${build.dir}"/>
 			<fileset dir="${JRecordCommon.dir}"/>
 		</jar!-->
-		<jar destfile="${Cobol2Csv.jar}" filesonly="true">
+		<!--jar destfile="${Cobol2Csv.jar}" filesonly="true">
 			<manifest>
 				<attribute name="Class-Path" value="cb2xml.jar JRecord.jar" />
 			    <attribute name="Main-Class" value="net.sf.JRecord.zExamples.cobol.toCsv.Cobol2Csv"/>
@@ -85,14 +83,13 @@
 			<fileset dir="${buildExample.dir}">
 				<exclude name="net/sf/JRecord/zExamples/cobol/readWrite/*"/>
 				<exclude name="net/sf/JRecord/zExamples/copy/*"/>
-				<!--exclude name="net/sf/JRecord/zExamples/sharedUtilities/*"/!-->
 				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Cobol2CsvA*"/>
 				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Csv2Cobol*"/>
 				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Csv2Cobol*"/>
 				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Z*"/>
 			</fileset>
-		</jar>
-		<jar destfile="${Csv2Cobol.jar}" filesonly="true">
+		</jar!-->
+		<!--jar destfile="${Csv2Cobol.jar}" filesonly="true">
 			<manifest>
 				<attribute name="Class-Path" value="cb2xml.jar JRecord.jar" />
 			    <attribute name="Main-Class" value="net.sf.JRecord.zExamples.cobol.toCsv.Csv2Cobol"/>
@@ -100,12 +97,11 @@
 			<fileset dir="${buildExample.dir}">
 				<exclude name="net/sf/JRecord/zExamples/cobol/readWrite/*"/>
 				<exclude name="net/sf/JRecord/zExamples/copy/*"/>
-				<!--exclude name="net/sf/JRecord/zExamples/sharedUtilities/*"/!-->
 				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Cobol2Csv*"/>
 				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Fixed2Csv*"/>
 				<exclude name="net/sf/JRecord/zExamples/cobol/toCsv/Z*"/>
 			</fileset>
-		</jar>
+		</jar!-->
 		<jar destfile="${Cobol2Cobol.jar}" filesonly="true">
 			<manifest>
 				<attribute name="Class-Path" value="cb2xml.jar JRecord.jar" />

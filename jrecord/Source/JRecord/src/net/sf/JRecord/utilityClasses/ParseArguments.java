@@ -47,7 +47,7 @@ import java.util.List;
  */
 public class ParseArguments {
 	
-	private static final String[] EMPTY_ARRAY = {}; 
+	public static final String[] EMPTY_ARRAY = {}; 
 
 //    private HashMap<String, String> argsMap = new HashMap<String, String>();
     private HashMap<String, List<String>> argsMapOfList = new HashMap<String, List<String>>();
@@ -127,7 +127,68 @@ public class ParseArguments {
      * @return Argument value
      */
     public String getArg(String arg) {
-        return getArg(arg, null);
+        return getArg(arg, null);//    /**
+//      * Get a requested integer argument
+//      *
+//      * @param arg argument being requested
+//      *
+//      * @return Argment value
+//      * @throws Exception any error that occurs
+//      */
+//     public int getIntArg(String arg) throws Exception {
+//         try {
+//             return Integer.parseInt(getArg(arg));
+//         } catch (Exception e) {
+//             System.out.println();
+//             System.out.println("Error processing integer argument " + arg
+//                     + "  - " + e.getMessage());
+//             System.out.println();
+//             throw e;
+//         }
+//      }
+ //
+ //
+//     /**
+//      * Get a requested integer argument
+//      *
+//      * @param arg argument being requested
+//      * @param defaultVal default value for the parameter
+//      * @return Argment value
+//       */
+//     public int getIntArg(String arg, int defaultVal) {
+//         try {
+//             return Integer.parseInt(getArg(arg));
+//         } catch (Exception e) {
+//             return defaultVal;
+//         }
+//      }
+ //
+ //
+//     /**
+//      * Get a requested integer argument
+//      *
+//      * @param arg1 argument being requested
+//      * @param arg2 argument being requested
+//      * @param defaultVal default value for the parameter
+//      * @return Argment value
+//      */
+//     public int get2IntArgs(String arg1, String arg2, int defaultVal) {
+//         String strVal = getArg(arg1);
+//         if (strVal != null && strVal.length() > 0) {
+//             try {
+//             	return Integer.parseInt(strVal);
+//             } catch (Exception e) { }
+//         }
+//         
+//         strVal = getArg(arg2);
+//         if (strVal != null && strVal.length() > 0) {
+//             try {
+//             	return Integer.parseInt(strVal);
+//             } catch (Exception e) { }
+//         }
+ //    
+//         return defaultVal;
+//      }
     }
 
 
@@ -167,68 +228,4 @@ public class ParseArguments {
     public List<String> getArgList(String arg) {
     	return argsMapOfList.get(arg.toUpperCase());
     }
-
-//    /**
-//     * Get a requested integer argument
-//     *
-//     * @param arg argument being requested
-//     *
-//     * @return Argment value
-//     * @throws Exception any error that occurs
-//     */
-//    public int getIntArg(String arg) throws Exception {
-//        try {
-//            return Integer.parseInt(getArg(arg));
-//        } catch (Exception e) {
-//            System.out.println();
-//            System.out.println("Error processing integer argument " + arg
-//                    + "  - " + e.getMessage());
-//            System.out.println();
-//            throw e;
-//        }
-//     }
-//
-//
-//    /**
-//     * Get a requested integer argument
-//     *
-//     * @param arg argument being requested
-//     * @param defaultVal default value for the parameter
-//     * @return Argment value
-//      */
-//    public int getIntArg(String arg, int defaultVal) {
-//        try {
-//            return Integer.parseInt(getArg(arg));
-//        } catch (Exception e) {
-//            return defaultVal;
-//        }
-//     }
-//
-//
-//    /**
-//     * Get a requested integer argument
-//     *
-//     * @param arg1 argument being requested
-//     * @param arg2 argument being requested
-//     * @param defaultVal default value for the parameter
-//     * @return Argment value
-//     */
-//    public int get2IntArgs(String arg1, String arg2, int defaultVal) {
-//        String strVal = getArg(arg1);
-//        if (strVal != null && strVal.length() > 0) {
-//            try {
-//            	return Integer.parseInt(strVal);
-//            } catch (Exception e) { }
-//        }
-//        
-//        strVal = getArg(arg2);
-//        if (strVal != null && strVal.length() > 0) {
-//            try {
-//            	return Integer.parseInt(strVal);
-//            } catch (Exception e) { }
-//        }
-//    
-//        return defaultVal;
-//     }
-
 }

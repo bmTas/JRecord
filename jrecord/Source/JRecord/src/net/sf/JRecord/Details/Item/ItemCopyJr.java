@@ -3,7 +3,9 @@ package net.sf.JRecord.Details.Item;
 import java.util.ArrayList;
 
 import net.sf.JRecord.Common.FieldDetail;
+import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.External.Def.DependingOnDtls;
+import net.sf.JRecord.External.Item.IItemJRec;
 import net.sf.JRecord.External.base.FieldCreatorHelper;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
@@ -14,6 +16,7 @@ import net.sf.JRecord.detailsBasic.ItemCopy;
 import net.sf.JRecord.detailsBasic.ItemDtl;
 import net.sf.cb2xml.def.IItem;
 import net.sf.cb2xml.def.IItemJr;
+
 
 public class ItemCopyJr extends ItemCopy {
 	
@@ -36,9 +39,27 @@ public class ItemCopyJr extends ItemCopy {
 	}
 
 
+
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.detailsBasic.ItemCopy#addFieldToList(net.sf.JRecord.Common.IFieldDetail)
+	 */
 	@Override
-	public FieldDetail createField(FieldCreatorHelper fieldHelper, int level, IItemJr itm,
-			ArrayIndexDtls arrayIndexDtls, DependingOnDtls dependOnParentDtls, int basePos) {
+	protected void addFieldToList(IFieldDetail fieldDetail) {
+		String name = fieldDetail.getName();
+		if ((!excludeFillers) 
+		|| (name != null && name.length() > 0 && !"filler".equalsIgnoreCase(name))) {
+			fields.add((FieldDetail)fieldDetail);
+		}
+	}
+
+
+
+
+	@Override
+	protected FieldDetail createField(FieldCreatorHelper fieldHelper, int level, IItemJRec itm,
+			ArrayIndexDtls arrayIndexDtls, DependingOnDtls dependOnParentDtls, int basePos,
+			boolean addToList) {
 
 
 		FieldDetail fd; 
@@ -62,7 +83,9 @@ public class ItemCopyJr extends ItemCopy {
 		} else {
 			fd = createField(fieldHelper, type, dependOnParentDtls, level, itm, arrayIndexDtls, fldName, basePos);
 
-			fields.add(fd);
+			if (addToList) {
+				fields.add(fd);
+			}
 
 			if (lastField == null || lastField.getEnd() < fd.getEnd()) {
 				lastField = fd;
@@ -116,7 +139,7 @@ public class ItemCopyJr extends ItemCopy {
 	 * @see net.sf.JRecord.detailsBasic.ItemCopy#createArray(net.sf.cb2xml.def.IItem, net.sf.JRecord.detailsBasic.ArrayIndexDtls)
 	 */
 	@Override
-	public IArrayExtended createArray(IItemJr item, ArrayIndexDtls idxDtls) {
+	protected IArrayExtended createArray(IItemJr item, ArrayIndexDtls idxDtls) {
 		return idxDtls.getNumberOfIndexs() > 0 
 				? new ArrayFieldDefinition1(idxDtls.toIndexSizeArray())
 				: null;

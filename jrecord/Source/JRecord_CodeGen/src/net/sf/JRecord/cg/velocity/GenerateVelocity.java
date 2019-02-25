@@ -240,10 +240,14 @@ public class GenerateVelocity {
 		System.out.println("Template: " + templateFile);
 		
 		ArrayList<SkelLineNum> skelLines = new ArrayList<SkelLineNum>();
+		String template = null;
 		try {
-			Velocity.evaluate( context, writer, "log tag name", loadTemplate(skelLines, opts, templateFile));
+			 template = loadTemplate(skelLines, opts, templateFile);
+			Velocity.evaluate( context, writer, "log tag name", template);
 		} catch(ParseErrorException pe) {
 			String errorText = pe.toString();
+			
+			System.err.println(template);
 			int idx1 = errorText.indexOf("line");
 			if (idx1 > 0) {
 				int idx2 = errorText.indexOf(",", idx1 + 5);

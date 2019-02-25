@@ -160,6 +160,18 @@ public class ArrayDetails {
 	}
 	
 	
+	public String getZeroIndexParameters() {
+		StringBuilder b = new StringBuilder();
+		
+		String sep = "";
+		for (int i = 1; i <= sizes.length; i++) {
+			b.append(sep).append("0");
+			sep = ", ";
+		}
+
+		return b.toString();
+	}
+	
 	public String getCallIndexParameters() {
 		StringBuilder b = new StringBuilder();
 		

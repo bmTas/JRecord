@@ -1,9 +1,11 @@
 #*      *##if (${generateOptions.dialect.utlCode} != "FMT_MAINFRAME")
-                                   .setDialect("${generateOptions.dialect.code}")
+                                   .setDialect(${generateOptions.dialect.code})
 #*      *##end                                           
-###*      *##if (${generateOptions.font} != "")
-                                   .setFont("${generateOptions.font}")
-###*      *##end                                           
+#*      *##if (${generateOptions.font} == "")
+                                   //.setFont("") // Think about specifying an encoding !!!
+#*      *##else
+                                   .setFont("${generateOptions.font}") 
+#*      *##end                                           
                                    .setFileOrganization(${generateOptions.getFileStructureCode().code})
                                    .setSplitCopybook(${generateOptions.splitOption.code})
 #*      *##if (${generateOptions.dropCopybookName} == "true")

@@ -216,11 +216,12 @@ public interface ICobolIOBuilder extends IIOBuilder, Icb2xmlLoadOptions {
 	public abstract ICobolIOBuilder setKeepFillers(boolean keepFillers);
 	
 	/**
+	 * <b>Try and avoid this option</b>
+	 *
 	 * @param optimize wether to use the optimized numeric types or not
 	 * 
 	 * @return this IOBuilder
 	 * 
-	 * @deprecated Try and avoid this option
 	 */
 	public abstract ICobolIOBuilder setOptimizeTypes(boolean optimize);
 	

@@ -180,6 +180,8 @@ public class StdCblFieldNameConversion implements IFieldNameConversion {
 				b.append('_');
 				toUCase = false;
 				break;
+			case '/':
+			case '\\':
 			case '.':
 			case ' ':
 			case '-':

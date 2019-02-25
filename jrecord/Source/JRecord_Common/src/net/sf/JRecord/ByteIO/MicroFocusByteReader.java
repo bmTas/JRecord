@@ -30,6 +30,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
 
+import net.sf.JRecord.Common.Conversion;
+
 public class MicroFocusByteReader extends AbstractByteReader {
 
 	
@@ -96,12 +98,19 @@ public class MicroFocusByteReader extends AbstractByteReader {
 			if ((bytesRead = readBuffer(instream, rec)) < len) {
 				throw new IOException("Length of Record (" + bytesRead + ") < Expected (" + len + ") record number: " + lineNumber);
 			}
+			byte[] buf;
+//			System.out.println();
+//			System.out.println("Atrr " + attr + " " + readnext);
+//			System.out.println("Hex: " + Conversion.getDecimal(rec, 0, rec.length));
+//			System.out.println("Str: " + new String(rec));
 			switch (headerRecord.getFileFormat()) {
 			case  MicroFocusFileHeader.FORMAT_INDEXED:
 			case  MicroFocusFileHeader.FORMAT_SEQUENTIAL:
-				remainder = len % 4;
+				remainder = (len + len1.length) % 4;
 				if (remainder != 0) {
-					readBuffer(instream, new byte[4 - remainder]);
+					buf = new byte[4 - remainder];
+					readBuffer(instream, buf);
+//					System.out.println("Remainder: " + Conversion.getDecimal(buf, 0, buf.length) + " " + new String(buf));
 				}
 				break;
 //			case  MicroFocusFileHeader.FORMAT_INDEXED:

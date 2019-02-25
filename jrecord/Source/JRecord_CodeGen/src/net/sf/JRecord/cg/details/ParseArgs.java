@@ -35,7 +35,9 @@ public class ParseArgs extends ParseArguments   {
 		ArgumentOption.OPT_DIALECT,
 		ArgumentOption.OPT_FILE_ORGANISATION,
 		ArgumentOption.OPT_LOAD_SCHEMA, "-h", "-?", "-help", ArgumentOption.OPT_SPLIT,
-		ArgumentOption.OPT_FONT_NAME, ArgumentOption.OPT_DROP_COPYBOOK_NAME, ArgumentOption.OPT_OUTPUT_DIR
+		ArgumentOption.OPT_FONT_NAME, ArgumentOption.OPT_DROP_COPYBOOK_NAME, ArgumentOption.OPT_OUTPUT_DIR,
+		ArgumentOption.OPT_GEN_DATE,
+		ArgumentOption.OPT_JREC_VERSION,
 	};
 	private static final String[] MULTI_ARGS = {
 		ArgumentOption.OPT_RECSEL, ArgumentOption.OPT_GENERATE

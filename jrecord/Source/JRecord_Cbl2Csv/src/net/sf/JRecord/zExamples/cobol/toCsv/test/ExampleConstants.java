@@ -32,7 +32,7 @@ import java.io.File;
 
 public class ExampleConstants {
 
-	public static final String TEMP_DIR = checkExists("G:\\Temp\\", System.getProperty("java.io.tmpdir"));
+	public static final String TEMP_DIR = checkExists("G:\\Temp\\", System.getProperty("java.io.tmpdir") + "/");
 	
 	
 	private static String checkExists(String dir1, String dir2) {

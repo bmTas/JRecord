@@ -44,11 +44,11 @@ import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.Details.Item.ItemCopyJr;
 import net.sf.JRecord.External.Def.ExternalField;
+import net.sf.JRecord.External.Item.IItemJRec;
 import net.sf.JRecord.External.base.BaseExternalRecord;
 import net.sf.JRecord.External.base.FieldCreatorHelper;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.detailsBasic.IItemDetails;
-import net.sf.cb2xml.def.IItemJr;
 
 
 /**
@@ -660,7 +660,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	    int i;
 	    
 	    int[][] posLength = super.getPosLength();
-	    List<? extends IItemJr> items = super.getItems();
+	    List<? extends IItemJRec> items = super.getItems();
 	    List<? extends IItemDetails> itemDtls = null;
 	    TypeManager typeMgr = TypeManager.getInstance();
 

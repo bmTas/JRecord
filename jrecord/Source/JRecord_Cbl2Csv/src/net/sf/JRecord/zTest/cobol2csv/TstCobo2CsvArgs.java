@@ -31,8 +31,15 @@ package net.sf.JRecord.zTest.cobol2csv;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.External.base.ExternalConversion;
 import net.sf.JRecord.Numeric.ConversionManager;
-import net.sf.JRecord.Numeric.ICopybookDialects; 
-import net.sf.JRecord.cbl2csv.ParseArgsCobol2Csv;
+import net.sf.JRecord.Numeric.ICopybookDialects;import net.sf.JRecord.Option.ICobolSplitOptions;
+import net.sf.JRecord.cbl2csv.args.ParseArgsCobol2Csv;
+import net.sf.JRecord.cbl2csv.args.RecordSelect;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import junit.framework.TestCase;
 
 
@@ -74,11 +81,137 @@ public class TstCobo2CsvArgs extends TestCase {
 				ParseArgsCobol2Csv.ARG_RENAME, "1",
 		};
 		
-		doCheckAllArgs(new ParseArgsCobol2Csv(parms1));
-		doCheckAllArgs(new ParseArgsCobol2Csv(parms2));
+		doCheckStdArgs(new ParseArgsCobol2Csv(parms1));
+		doCheckStdArgs(new ParseArgsCobol2Csv(parms2));
 	}
 	
-	private void doCheckAllArgs(ParseArgsCobol2Csv a) {
+	public void testMultiRecArgs() {
+		String[] splitStr = {"none", "01", "redefine", "Highest"};
+		int[] splitVal = {ICobolSplitOptions.SPLIT_NONE, ICobolSplitOptions.SPLIT_01_LEVEL,
+				ICobolSplitOptions.SPLIT_REDEFINE, ICobolSplitOptions.SPLIT_HIGHEST_REPEATING
+		};
+	
+		String[] yesNoStr = { "yes", "YES", "y", "Y", "true", "True", "TRUE", "t", "x", "no", "n", "false"};
+		
+		for (int i = 0; i < yesNoStr.length; i++) {
+			int splitIdx = i % splitStr.length;
+			String[] parms1 = {
+					ParseArgsCobol2Csv.ARG_IN_FILE,  IN_FILE, 
+					ParseArgsCobol2Csv.ARG_COPYBOOK,  COPYBOOK,
+					ParseArgsCobol2Csv.ARG_INPUT_FONT, IN_FONT,
+					ParseArgsCobol2Csv.ARG_BINARY, "1",
+					ParseArgsCobol2Csv.ARG_STRUCTURE, "1",
+					ParseArgsCobol2Csv.ARG_OUT_FILE, OUT_FILE,
+					ParseArgsCobol2Csv.ARG_OUTPUT_FONT, OUT_FONT,
+					ParseArgsCobol2Csv.ARG_RENAME, "1",
+					
+					ParseArgsCobol2Csv.OPT_ADD_RECORD_NAME, yesNoStr[i],
+					ParseArgsCobol2Csv.OPT_SPLIT, splitStr[splitIdx]
+			};
+			
+			ParseArgsCobol2Csv multiRecArgs = ParseArgsCobol2Csv.multiRecArgs(parms1);
+			doCheckStdArgs(multiRecArgs);
+			assertEquals(splitVal[splitIdx], multiRecArgs.split);
+			assertEquals(i + ": ", i < yesNoStr.length - 4, multiRecArgs.addRecordNameToCsv);
+		}
+		
+		for (int i = 0; i < 8; i++) {
+			List<String> parms= new ArrayList<String>(Arrays.asList(
+					ParseArgsCobol2Csv.ARG_IN_FILE,  IN_FILE, 
+					ParseArgsCobol2Csv.ARG_COPYBOOK,  COPYBOOK,
+					ParseArgsCobol2Csv.ARG_INPUT_FONT, IN_FONT,
+					ParseArgsCobol2Csv.ARG_BINARY, "1",
+					ParseArgsCobol2Csv.ARG_STRUCTURE, "1",
+					ParseArgsCobol2Csv.ARG_OUT_FILE, OUT_FILE,
+					ParseArgsCobol2Csv.ARG_OUTPUT_FONT, OUT_FONT,
+					ParseArgsCobol2Csv.ARG_RENAME, "1",
+					
+					ParseArgsCobol2Csv.OPT_ADD_RECORD_NAME, "yes",
+					ParseArgsCobol2Csv.OPT_SPLIT, "none"
+			));
+
+		
+			for (int j = 1; j <= i; j++) {
+				parms.add(ParseArgsCobol2Csv.OPT_RECSEL);
+				parms.add("rec" + j + " rec-type" + j + "=" + (j-1));
+			}
+			
+			ParseArgsCobol2Csv multiRecArgs = ParseArgsCobol2Csv.multiRecArgs(parms.toArray(new String[parms.size()]));
+			
+			doCheckStdArgs(multiRecArgs);
+			assertEquals(ICobolSplitOptions.SPLIT_NONE, multiRecArgs.split);
+			assertEquals(true, multiRecArgs.addRecordNameToCsv);
+			
+			assertEquals(i, multiRecArgs.recordSelect.size());
+			
+			for (int j = 1; j <= i; j++) {
+				RecordSelect recSel = multiRecArgs.recordSelect.get(j-1);
+				String message = i + ", " + j;
+				assertEquals(message, "rec"+j, recSel.recordName);
+				assertEquals(message, "rec-type"+j, recSel.fieldName);
+				assertEquals(message, ""+(j-1), recSel.value);
+			}
+
+		}
+	}
+	
+	public void testMultiRecArgs02() {
+
+		List<String> stdParms = Arrays.asList(
+				ParseArgsCobol2Csv.ARG_IN_FILE,  IN_FILE, 
+				ParseArgsCobol2Csv.ARG_COPYBOOK,  COPYBOOK,
+				ParseArgsCobol2Csv.ARG_INPUT_FONT, IN_FONT,
+				ParseArgsCobol2Csv.ARG_BINARY, "1",
+				ParseArgsCobol2Csv.ARG_STRUCTURE, "1",
+				ParseArgsCobol2Csv.ARG_OUT_FILE, OUT_FILE,
+				ParseArgsCobol2Csv.ARG_OUTPUT_FONT, OUT_FONT,
+				ParseArgsCobol2Csv.ARG_RENAME, "1"
+		);
+		String[] yesNoStr = { "yes", "YES", "y", "Y", "true", "True", "TRUE", "t", "x", "no", "n", "false"};
+		ArrayList<String> parms;
+		ParseArgsCobol2Csv multiRecArgs;
+		for (int i = 0; i < yesNoStr.length; i++) {
+			parms = new ArrayList<String>(stdParms);
+			Collections.addAll(parms, ParseArgsCobol2Csv.OPT_REPORT_INVALID, yesNoStr[i]);
+			
+			doErrorChks(i + ": ", parms, i < yesNoStr.length - 4, null, null, null);
+		}
+
+		parms = new ArrayList<String>(stdParms);
+		Collections.addAll(parms, ParseArgsCobol2Csv.OPT_LOW_VALUES, "NULL");	
+		doErrorChks( "Low: ", parms, false, "NULL", null, null);
+		
+		parms = new ArrayList<String>(stdParms);
+		Collections.addAll(parms, ParseArgsCobol2Csv.OPT_HIGH_VALUES, "NULL");	
+		doErrorChks( "High: ", parms, false, null, "NULL", null);
+
+		parms = new ArrayList<String>(stdParms);
+		Collections.addAll(parms, ParseArgsCobol2Csv.OPT_NUM_SPACES, "SPACES");		
+		doErrorChks( "Spaces: ", parms, false,  null, null, "SPACES");
+
+		parms = new ArrayList<String>(stdParms);
+		Collections.addAll(parms, 
+				ParseArgsCobol2Csv.OPT_LOW_VALUES, "LOW",
+				ParseArgsCobol2Csv.OPT_HIGH_VALUES, "HIGH",
+				ParseArgsCobol2Csv.OPT_NUM_SPACES, "SPACES"
+		);		
+		doErrorChks( "All: ", parms, false, "LOW", "HIGH", "SPACES");
+
+	}
+	
+	private void doErrorChks(String id, List<String> parms, boolean invalid,
+			String lowValuesTxt, String highValuesTxt, String numSpaces) {
+		ParseArgsCobol2Csv multiRecArgs = ParseArgsCobol2Csv.multiRecArgs(parms.toArray(new String[parms.size()]));
+		doCheckStdArgs(multiRecArgs);
+
+		assertEquals(id, invalid, multiRecArgs.reportInvalid);
+		assertEquals(id, lowValuesTxt, multiRecArgs.lowValuesTxt);
+		assertEquals(id, highValuesTxt, multiRecArgs.highValuesTxt);
+		assertEquals(id, numSpaces, multiRecArgs.numericSpaceTxt);
+	}
+
+	
+	private void doCheckStdArgs(ParseArgsCobol2Csv a) {
 		assertEquals(IN_FILE, a.infile);
 		assertEquals(COPYBOOK, a.copybookName);
 		assertEquals(IN_FONT, a.inFont);

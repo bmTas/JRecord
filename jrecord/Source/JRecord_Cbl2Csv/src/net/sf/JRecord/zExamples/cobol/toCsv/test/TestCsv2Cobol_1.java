@@ -32,6 +32,7 @@
 package net.sf.JRecord.zExamples.cobol.toCsv.test;
 
 import net.sf.JRecord.cbl2csv.Csv2Cobol;
+import net.sf.JRecord.zData.Data;
 
 /**
  * @author Bruce Martin
@@ -44,11 +45,11 @@ public class TestCsv2Cobol_1 {
 	 */
 	public static void main(String[] a) {
 
-		String inputFileName1 = TestCsv2Cobol_1.class.getResource("DTAR020.csv").getFile();
+		String inputFileName1 = Data.DTAR020_BIN_RESOURCE.getFile();
 		String[] args1 = {
 				"-I", inputFileName1, 
 				"-O", ExampleConstants.TEMP_DIR + "o_DTAR020.bin", 
-				"-C", TestCsv2Cobol_1.class.getResource("DTAR020.cbl").getFile(), 
+				"-C", Data.DTAR020_COPYBOOK_FILE_NAME, 
 				"-Q", "\"",                /* Quote           */
 				"-FS", "Fixed_Length",     /* File Structure  */
 				"-OC", "CP273",            /* Input Character set   */

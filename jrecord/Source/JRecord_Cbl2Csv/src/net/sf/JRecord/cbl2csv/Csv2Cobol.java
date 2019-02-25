@@ -47,6 +47,8 @@ import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.cbl2csv.args.CommonCsv2CblCode;
+import net.sf.JRecord.cbl2csv.args.ParseArgsCobol2Csv;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.def.IO.builders.ICsvIOBuilder;
 import net.sf.JRecord.utilityClasses.Copy;

@@ -32,13 +32,16 @@
  *
  * ------------------------------------------------------------------------ */
 
-package net.sf.JRecord.cbl2csv;
+package net.sf.JRecord.cbl2csv.args;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sf.JRecord.Common.Constants;
-import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.CsvParser.CsvParserManagerChar;
 import net.sf.JRecord.External.base.ExternalConversion;
 import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.Option.ICobolSplitOptions;
 import net.sf.JRecord.utilityClasses.ParseArguments;
 
 
@@ -52,6 +55,8 @@ import net.sf.JRecord.utilityClasses.ParseArguments;
 
  */
 public class ParseArgsCobol2Csv implements IUpdateFieldName {
+
+	public static final String[] EMPTY_ARRAY = {}; 
 
     public static final String ARG_COPYBOOK     = "-C";
     public static final String ARG_BINARY       = "-B";
@@ -81,6 +86,7 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
     public static final int RO_LEAVE_ASIS = 0;
     public static final int RO_CHANGE_MINUS_TO_UNDERSCORE = 1; 
     public static final int RO_DROP_MINUS = 2;
+    public static final int RO_CAMEL_CASE = 3;
 
     private static final String[] VALID_PARAMS = {
             ARG_COPYBOOK, ARG_BINARY, ARG_STRUCTURE, ARG_SEPARATOR,
@@ -91,6 +97,47 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
             ARG_INPUT_STRUCTURE, ARG_INPUT_STRUCTURE1,
             ARG_OUTPUT_STRUCTURE, ARG_OUTPUT_STRUCTURE1,
     };
+    
+    
+    public static final String OPT_SPLIT   = "-split";
+	public static final String OPT_RECSEL  = "-recordSelection";
+	public static final String OPT_ADD_RECORD_NAME = "-addRecordName";
+    public static final String OPT_HIGH_VALUES     = "-highValuesText";
+    public static final String OPT_LOW_VALUES      = "-lowValuesText";
+    public static final String OPT_NUM_SPACES      = "-numericSpacesText";
+    public static final String OPT_REPORT_INVALID  = "-reportInvalid";
+
+	public static final Option SPLIT_01 = new Option(ICobolSplitOptions.SPLIT_01_LEVEL, "01",    "Split on 01 level");
+	public static final Option SPLIT_NONE = new Option(ICobolSplitOptions.SPLIT_NONE, "None",    "No Split");
+	public static final Option SPLIT_REDEFINE = new Option(ICobolSplitOptions.SPLIT_REDEFINE, "redefine",      "Split on redefine");
+
+
+	private static final Option[] SPLIT_OPTS = {
+		SPLIT_NONE,
+		SPLIT_01,
+		SPLIT_REDEFINE,
+		new Option(ICobolSplitOptions.SPLIT_HIGHEST_REPEATING, "Highest", "On Highest Repeating level"),
+	};
+	
+	private static final String[] MULTI_ARGS = {
+		OPT_RECSEL, 		
+	};
+
+    private static final String[] VALID_MULTI_RECORD_PARAMS = {
+            ARG_COPYBOOK, ARG_BINARY, ARG_STRUCTURE, ARG_SEPARATOR,
+            ARG_IN_FILE, ARG_OUT_FILE, ARG_INPUT_FONT, ARG_OUTPUT_FONT, ARG_QUOTE, 
+            ARG_RENAME, 
+            ARG_COPYBOOK1, ARG_BINARY1, ARG_STRUCTURE1, ARG_SEPARATOR1,
+            ARG_IN_FILE1, ARG_OUT_FILE1, ARG_INPUT_FONT1, ARG_OUTPUT_FONT1, ARG_QUOTE1,
+            ARG_INPUT_STRUCTURE, ARG_INPUT_STRUCTURE1,
+            ARG_OUTPUT_STRUCTURE, ARG_OUTPUT_STRUCTURE1,
+            
+            OPT_SPLIT, 
+            OPT_ADD_RECORD_NAME,
+            OPT_HIGH_VALUES, OPT_LOW_VALUES, OPT_NUM_SPACES, 
+            OPT_REPORT_INVALID
+    };
+
 
     public final boolean infilePresent, toCsv;
     public final int binFormat, inputFileStructure, csvParser, outputFileStructure;
@@ -104,10 +151,21 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
 
     
     public final int renameOption;
+	public final IUpdateFieldName updateFieldName;
     
+    public final int split;
+	public final List<RecordSelect> recordSelect = new ArrayList<RecordSelect>(10);
+
+	public final boolean addRecordNameToCsv, reportInvalid;
+	
+	public final String lowValuesTxt, highValuesTxt, numericSpaceTxt;
+   
+	public static ParseArgsCobol2Csv multiRecArgs(String[] arguments) {
+		return new ParseArgsCobol2Csv(VALID_MULTI_RECORD_PARAMS, MULTI_ARGS, true, arguments);
+	}
     
     public ParseArgsCobol2Csv(String[] arguments) {
-    	this(true, arguments);
+    	this(VALID_PARAMS, EMPTY_ARRAY, true, arguments);
  //   	this(Constants.IO_DEFAULT, Constants.IO_UNICODE_NAME_1ST_LINE, arguments);
    }
 
@@ -117,8 +175,17 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
      * @param arguments program arguments
      */
     public ParseArgsCobol2Csv(boolean toCsv, String[] arguments) { 
+    	this(VALID_PARAMS, EMPTY_ARRAY, toCsv, arguments);
+    }
+
+    
+    /**
+     * convert a cobol file to a CSV file
+     * @param arguments program arguments
+     */
+    public ParseArgsCobol2Csv(String[] validParams, String[] multiArgs, boolean toCsv, String[] arguments) { 
     	this.toCsv = toCsv;
-        ParseArguments args = new ParseArguments(VALID_PARAMS, arguments);
+        ParseArguments args = new ParseArguments(validParams, multiArgs, arguments);
  	
 	    String tSep     = args.get2Args(ARG_SEPARATOR1, ARG_SEPARATOR, "\t");
 	    String tOutfile = args.get2Args(ARG_OUT_FILE1, ARG_OUT_FILE, "");
@@ -156,7 +223,7 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
 	    quote = tQuote;
 	    infilePresent = present(infile);
 	    if (! infilePresent) {
-	        usage(" You must supply an input file (-i parameter ");
+	        usage(" You must supply an input file (-i parameter ", multiArgs.length > 0);
 	    } else {
 	        if ("space".equalsIgnoreCase(tSep)) {
 	        	tSep = " ";
@@ -177,59 +244,120 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
 
 	    
 	    renameOption = getOptionCode(renameOptStr, renameOptions, RO_CHANGE_MINUS_TO_UNDERSCORE);
+	    switch (renameOption) {
+	    case RO_CHANGE_MINUS_TO_UNDERSCORE:
+	    	updateFieldName = FieldNameUpdaters.TO_UNDERSCORE;
+	    	break;
+	    case RO_DROP_MINUS:
+	    	updateFieldName = FieldNameUpdaters.DROP_MINUS;
+	    	break;
+	    case RO_CAMEL_CASE:
+	    	updateFieldName = FieldNameUpdaters.TO_CAMEL_CASE;
+	    	break;
+  
+	    case RO_LEAVE_ASIS:
+	    default:
+	    	updateFieldName = FieldNameUpdaters.NO_UPDATE;	
+	    }
 
+	    
+		Option splitVal = SPLIT_NONE;
+		List<String> recSelList = args.getArgList(OPT_RECSEL);
+		if (recSelList != null && recSelList.size() > 0) {
+			RecordSelect recSel;
+			
+			//splitVal = SPLIT_01;
+			for (String s : recSelList) {
+				recordSelect.add((recSel = new RecordSelect(s)));
+				if (! recSel.ok()) {
+					System.out.println("Invalid Record Selection=" + s);
+				}
+			}
+		}
+		split = decodeAsOpt(args, OPT_SPLIT, true, splitVal, SPLIT_OPTS).code;
+
+		lowValuesTxt  = args.getArg(OPT_LOW_VALUES, null); 
+		highValuesTxt = args.getArg(OPT_HIGH_VALUES, null); 
+		String arg = args.getArg(OPT_NUM_SPACES, null);
+		numericSpaceTxt =  "space_character".equalsIgnoreCase(arg) ? " " : arg; 
+		
+		addRecordNameToCsv 	 = isTrue(args.getArg(OPT_ADD_RECORD_NAME, "").toLowerCase());
+		reportInvalid        = isTrue(args.getArg(OPT_REPORT_INVALID, "").toLowerCase());
     }
+
+	private boolean isTrue(String addRecNameStr) {
+		return "y".equals(addRecNameStr) || "yes".equals(addRecNameStr)
+		|| "t".equals(addRecNameStr) || "true".equals(addRecNameStr);
+	}
     
     private int getOptionCode(String s, Option[] options, int defaultCode) {
     	int ret = defaultCode;
     	if (s.length() > 0) {
-	    	boolean searching = true;
 	    	for (int i = 0; i < options.length; i++) {
 	    		if (options[i].display.equalsIgnoreCase(s)) {
-	    			searching = false;
-	    			ret = options[i].code;
-	    			break;
+	    			return options[i].code;
 	    		}
 	    	}
 	    	
-	    	if (searching) {
-	    		try {
-	    			ret = Integer.parseInt(s);
-	    		} catch (Exception e) {
-				}
-	    	}
+    		try {
+    			ret = Integer.parseInt(s);
+    		} catch (Exception e) { }
 	    }
     	
     	return ret;
     }
 
-    
+
+	private Option decodeAsOpt(ParseArguments pa, String key, boolean printMsg, Option defaultOption, Option[] opts) {
+		return decodeAsOpt(pa.getArg(key), key, printMsg, defaultOption, opts);
+	}
+
+	private Option decodeAsOpt(String v, String key, boolean printMsg, Option defaultOption, Option[] opts) {
+		
+		if (v != null) {
+			for (Option o : opts) {
+				if (o.display.equalsIgnoreCase(v)) {
+					
+					return o;
+				}
+			}
+			if (printMsg) {
+				System.out.println("Invalid value " + v + " for argument " + key);
+				//ok = false;
+			}
+		}
+		
+		return defaultOption;
+	}
+
+
     /* (non-Javadoc)
 	 * @see net.sf.JRecord.zExamples.cobol.toCsv.UpdateFieldName#fixName(java.lang.String)
 	 */
     @Override
 	public final  String updateName(String name) {
-        StringBuilder newName = new StringBuilder(name);
-
-        switch (renameOption) {
-		case RO_CHANGE_MINUS_TO_UNDERSCORE:
-	        if (newName.charAt(newName.length() -1) == ')') {
-	        	newName.setLength(newName.length() - 1);
-	        }
-	        Conversion.replace(newName, "-", "_");
-	        Conversion.replace(newName, " ", "_");
-	        Conversion.replace(newName, "(", "_");
-	        Conversion.replace(newName, ",", "_");
-	        Conversion.replace(newName, ")", "_");
-	        Conversion.replace(newName, "___", "_");
-	        Conversion.replace(newName, "__", "_");
-	        break;
-		case RO_DROP_MINUS:
-			Conversion.replace(newName, "-", "");
-			Conversion.replace(newName, " ", "");
-        }
-      
-       return newName.toString();
+    	return updateFieldName.updateName(name);
+//        StringBuilder newName = new StringBuilder(name);
+//
+//        switch (renameOption) {
+//		case RO_CHANGE_MINUS_TO_UNDERSCORE:
+//	        if (newName.charAt(newName.length() -1) == ')') {
+//	        	newName.setLength(newName.length() - 1);
+//	        }
+//	        Conversion.replace(newName, "-", "_");
+//	        Conversion.replace(newName, " ", "_");
+//	        Conversion.replace(newName, "(", "_");
+//	        Conversion.replace(newName, ",", "_");
+//	        Conversion.replace(newName, ")", "_");
+//	        Conversion.replace(newName, "___", "_");
+//	        Conversion.replace(newName, "__", "_");
+//	        break;
+//		case RO_DROP_MINUS:
+//			Conversion.replace(newName, "-", "");
+//			Conversion.replace(newName, " ", "");
+//        }
+//      
+//       return newName.toString();
     }
     /**
      * test if a field has a value
@@ -246,7 +374,7 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
      *
      * @param msg error message
      */
-    private static void usage(String msg) {
+    private static void usage(String msg, boolean isMultiRecord) {
 
     	ExternalConversion.getDialectName(ICopybookDialects.FMT_INTEL);
     	
@@ -295,9 +423,20 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
         System.out.println("        " + ICopybookDialects.FMT_FUJITSU + " or " + ExternalConversion.getDialectName(ICopybookDialects.FMT_FUJITSU)    + "\t: Fujitsu Cobol ");
         System.out.println("    " + ARG_RENAME + "  : How to update cobol variable names");       
         printOtionArray(renameOptions);
-
-        System.out.println("    " + ARG_CSV_PARSER + "  : Controls how Csv fields are parsed");       
-        printOtionArray(csvParserOption);
+      
+        if (isMultiRecord) {
+        	System.out.println("    " + OPT_ADD_RECORD_NAME + " : wether to add recordname to each row (yes/no)");
+        	System.out.println("    " + OPT_RECSEL + " : define record selection e.g. Record-Name Record-type=H ");
+        	System.out.println("    " + OPT_SPLIT + " : COBOL Copybook Record split option: ");
+            printOtionArray(SPLIT_OPTS);
+        	System.out.println("    " + OPT_LOW_VALUES  + " : Text to display when a field is Low-Values");
+        	System.out.println("    " + OPT_HIGH_VALUES + " : Text to display when a field is High-Values");
+        	System.out.println("    " + OPT_NUM_SPACES  + " : Text to display when a numeric field is spaces");
+        	System.out.println("    " + OPT_REPORT_INVALID  + " : report high/low values etc");
+       } else {
+           System.out.println("    " + ARG_CSV_PARSER + "  : Controls how Csv fields are parsed");       
+           printOtionArray(csvParserOption);
+       }
     }
     
     private static void printOtionArray(Option[] optArray) {
@@ -314,6 +453,7 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
     		new Option(RO_CHANGE_MINUS_TO_UNDERSCORE, "Change_Minus_To_Underscore", "Change '-(),' to '_'"), 
     		new Option(RO_DROP_MINUS, "No-", "Drop minus ('-') from the name"),
     		new Option(RO_DROP_MINUS, "Drop_Minus", "Drop minus ('-') from the name"),
+    		new Option(RO_CAMEL_CASE, "camelCase", "Camel Case"),
        };
         
         return options;
@@ -347,4 +487,5 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
     	
     	
     }
+   
 }

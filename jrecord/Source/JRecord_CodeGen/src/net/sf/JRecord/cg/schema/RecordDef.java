@@ -39,6 +39,7 @@ import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Option.Options;
+import net.sf.JRecord.cg.schema.classDefinitions.IClassDef;
 import net.sf.JRecord.cgen.def.IArrayAnyDimension;
 import net.sf.JRecord.cgen.def.IRecordDetail4gen;
 import net.sf.JRecord.cgen.support.Code2JRecordConstants;
@@ -59,12 +60,13 @@ public class RecordDef extends JavaDetails {
 	private final String RecordSelectionStr, recordPositionOptionStr;
 	private final List<ArrayDetails> arrayDetailsList = new ArrayList<ArrayDetails>();
 	private final List<List<ArrayDetails>> arraySameSize = new ArrayList<List<ArrayDetails>>();
-	private final List<String> importList;
+	private final List<String> importList, classImports, conversionImports, javaCode;
 	private final ExternalSelection recordSelection;
 	private final boolean defaultRecord;
 	private final Set<String> validOps = new HashSet<String>(Arrays.asList(
 			"=", "!=", ">", "<", ">=", "<="
 	));
+	
 
 	private final boolean shortNumber;
 	
@@ -73,7 +75,7 @@ public class RecordDef extends JavaDetails {
 	 * 
 	 * @param record standard Record Description
 	 */
-	public RecordDef(IRecordDetail4gen record, String schemaName, String className) {
+	public RecordDef(IRecordDetail4gen record, String schemaName, String className, boolean isCsv) {
 		super(record.getRecordName(), schemaName, className); 
 		this.record = record;
 		
@@ -89,6 +91,7 @@ public class RecordDef extends JavaDetails {
 		TreeSet<String> importSet = new TreeSet<String>();
 		
 		boolean shortNumbers = false;
+		HashSet<IClassDef> classesDefined = new HashSet<IClassDef>();
 
 		
 		fields.ensureCapacity(fieldCount);
@@ -110,7 +113,7 @@ public class RecordDef extends JavaDetails {
 				ai = null;
 				if (fldName.indexOf('(') > 0) {
 					ai = ArrayElement.newArrayItem(fldName, schemaName);
-					fieldDef = new FieldDef(fldName, field, ai, schemaName);
+					fieldDef = new FieldDef(fldName, field, ai, schemaName, isCsv);
 					
 					if (arrayMap.containsKey(ai.arrayName)) {
 						ad = arrayMap.get(ai.arrayName);
@@ -122,10 +125,13 @@ public class RecordDef extends JavaDetails {
 						arrayDetailsList.add(ad);
 					}
 				} else {
-					fieldDef = new FieldDef(fldName, field, ai, schemaName);
+					fieldDef = new FieldDef(fldName, field, ai, schemaName, isCsv);
 				}
 				
 				fields.add(fieldDef);
+				if (fieldDef.classDef != null) {
+					classesDefined.add(fieldDef.classDef);
+				}
 				shortNumbers |= fieldDef.shortNumber;
 				
 				String jType = fieldDef.getJavaType();
@@ -172,7 +178,38 @@ public class RecordDef extends JavaDetails {
 		}
 		this.cobolItemDefs = cblItemDefs;
 		this.cobolItemDefList = cblItemDefList;
+		
+		TreeSet<String> classImportSet = new TreeSet<String>(),
+				conversionImportSet = new TreeSet<String>(),
+				codeSet = new TreeSet<String>();
+		if (classesDefined.size() > 0) {
+			for (IClassDef cd :classesDefined) {
+				updateSet(classImportSet, cd.getDataImport());
+				updateSet(codeSet, cd.getCode());
+				String[] conversionImports = cd.getConversionImport();
+				if (conversionImports != null) {
+					for (String s : conversionImports) {
+						updateSet(conversionImportSet, s);
+					}
+				}
+			}
+		}
+		classImports = new ArrayList<String>(classImportSet);
+		conversionImports = new ArrayList<String>(conversionImportSet);
+		javaCode = new ArrayList<String>(codeSet);
 	}
+	
+	
+	private void updateSet(TreeSet<String> set, String s) {
+		if (hasData(s)) {
+			set.add(s);
+		}
+	}
+	
+	private boolean hasData(String s) {
+		return s != null && s.length() > 0;
+	}
+
 
 	/**
 	 * @param record
@@ -337,6 +374,10 @@ public class RecordDef extends JavaDetails {
 	public String getJRecordRecordType() {
 		return Code2JRecordConstants.getRecordTypeName(record.getRecordType());
 	}
+	
+	public String getParserName() {
+		return Code2JRecordConstants.getParserName(record.getRecordStyle());
+	}
 
 	/**
 	 * @return the recordSelectionStr
@@ -459,6 +500,30 @@ public class RecordDef extends JavaDetails {
 	 */
 	public List<CobolItemDef> getCobolItemDefList() {
 		return cobolItemDefList;
+	}
+
+
+	/**
+	 * @return the classImports
+	 */
+	public final List<String> getClassImports() {
+		return classImports;
+	}
+
+
+	/**
+	 * @return the conversionImports
+	 */
+	public final List<String> getConversionImports() {
+		return conversionImports;
+	}
+
+
+	/**
+	 * @return the javaCode
+	 */
+	public final List<String> getJavaCode() {
+		return javaCode;
 	}
 
 }

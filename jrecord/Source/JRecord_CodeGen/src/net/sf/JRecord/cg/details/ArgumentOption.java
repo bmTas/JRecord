@@ -48,6 +48,8 @@ public class ArgumentOption {
 	public static final String OPT_FILE_ORGANISATION = "-FileOrganisation";
 	public static final String OPT_LOAD_SCHEMA = "-loadSchema";
 	public static final String OPT_PACKAGE  = "-package";
+	public static final String OPT_GEN_DATE = "-GenerateDate";
+	public static final String OPT_JREC_VERSION = "-JRecordVersion";
 	
 	public static final String OPT_DROP_COPYBOOK_NAME = "-DropCopybookName";
 	public static final String OPT_FONT_NAME = "-font";
@@ -57,11 +59,12 @@ public class ArgumentOption {
 
 	
 	public static final String JAVA_POJO_TEMPLATE = "javaPojo";
+	public static final String LINE_WRAPPER_TEMPLATE = "lineWrapper";
 	public static final ArgumentOption TEMPLATE_JAVA_POJO = stdTemplateArg(JAVA_POJO_TEMPLATE,   "Generate java classes for each Cobol Record");
 	public static final ArgumentOption TEMPLATE_BASIC = stdTemplateArg("basic",  "Generate example code using JRecord IO Builders");
 	public static final ArgumentOption TEMPLATE_WRAPPER_POJO = stdTemplateArg("lineWrapperPojo",   "Generate java wrapper & pojo classes for each Cobol Record");
 	public static final ArgumentOption TEMPLATE_SCHEMA_CLASS = stdTemplateArg("schemaClass", "Generate example code using JRecord IO Builders + Schema details");
-	public static final ArgumentOption TEMPLATE_LINE_WRAPPER = stdTemplateArg("lineWrapper", "Generate Wrapper classes for JRecord-Lines");
+	public static final ArgumentOption TEMPLATE_LINE_WRAPPER = stdTemplateArg(LINE_WRAPPER_TEMPLATE, "Generate Wrapper classes for JRecord-Lines");
 	public static final ArgumentOption TEMPLATE_STANDARD = stdTemplateArg("standard",  "Generate example code using JRecord IO Builders + Field Name Class");
 	public static final ArgumentOption TEMPLATE_POJO = stdTemplateArg("pojo",  "Generate pojo classes for each Cobol Record + IoBuilder");
 	public static final ArgumentOption TEMPLATE_POJO_INTERFACE = stdTemplateArg("pojoWithInterface",  "Generate pojo classes (with interfaces) for each Cobol Record + IoBuilder");

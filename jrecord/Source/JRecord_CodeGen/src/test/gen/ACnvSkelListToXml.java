@@ -28,6 +28,14 @@ public class ACnvSkelListToXml {
 			
 		marshaller.marshal(t.getSkeltons(), new File("/home/bruce/" + template + ".xml"));
 	}
+	public static void reToXml(Marshaller marshaller , String template) throws JAXBException {
+		TemplateDtls t = new TemplateDtls(
+				"/home/bruce/eclipse-workspace2/RecordEditor/src/net/sf/RecordEditor/cg/velocity/" + template + "/",
+				null, 
+				true, TemplateDtls.DEFAULT_JREC_VERSION);
+			
+		marshaller.marshal(t.getSkeltons(), new File("/home/bruce/work/temp/" + template + ".xml"));
+	}
 
 	public static void main(String[] args) throws JAXBException {
 		
@@ -37,10 +45,14 @@ public class ACnvSkelListToXml {
 		Marshaller marshaller = jc.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-		toXml(marshaller, "pojo");
-		toXml(marshaller, "standard");
-		toXml(marshaller, "lineWrapper");
-		toXml(marshaller, "stdPojo");
+//		toXml(marshaller, "pojo");
+//		toXml(marshaller, "standard");
+//		toXml(marshaller, "lineWrapper");
+//		toXml(marshaller, "stdPojo");
+		
+		reToXml(marshaller, "javaJRecPojo");
+		reToXml(marshaller, "javaJRecWrapper");
+		reToXml(marshaller, "javaJRec");
 	}
 
 }

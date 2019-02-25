@@ -66,12 +66,16 @@ public class MicroFocusByteWriter extends AbstractByteWriter {
 		if (bytes.length > header.getMaxLength()) {
 			throw new IOException("Record Length is greater than that specified");
 		}
+		int recLengthbytes= header.getMaxLength() < MicroFocusFileHeader.MIN_4_BYTE_LENGTH
+				? 2 
+				: 4 ;
 		try {
-			if (header.getMaxLength() < MicroFocusFileHeader.MIN_4_BYTE_LENGTH) {
-				Conversion.setLong(len, 0, 2, bytes.length, true);
-			} else {
-				Conversion.setLong(len, 0, 4, bytes.length, true);
-			}
+			Conversion.setLong(len, 0, recLengthbytes, bytes.length, true);
+//			if (header.getMaxLength() < MicroFocusFileHeader.MIN_4_BYTE_LENGTH) {
+//				Conversion.setLong(len, 0, 2, bytes.length, true);
+//			} else {
+//				Conversion.setLong(len, 0, 4, bytes.length, true);
+//			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new IOException("Error Setting Microfocus Record Length");
@@ -86,7 +90,7 @@ public class MicroFocusByteWriter extends AbstractByteWriter {
 		outStream.write(len);
 		outStream.write(bytes);
 		
-		remainder = bytes.length % 4;
+		remainder = (bytes.length + recLengthbytes) % 4;
 		
 		if (remainder != 0) {
 			outStream.write(new byte[4 - remainder]);

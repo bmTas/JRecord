@@ -3,6 +3,7 @@ package net.sf.JRecord.cg.details;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -49,10 +50,11 @@ public class TemplateDtls {
 	public static final String T_REQUIRE_PACKAGE_ID = "requirePackageId";
 	public static final String T_SPLIT_ALLOWED = "splitAllowed";
 	public static final String T_DUPLICATE_FIELD_NAMES = "duplicateFieldNames";
+	public static final String T_UPDATE_TYPES = "UpdateTypes";
 	
 	public static final String JRECORD_VERION_FLAG = "checkJRecordVersion";
 
-	
+	public final boolean useTemplateDir;
 	public final String template, templateDir, templateBase;
 	private String language;
 	public final Map<String, Object> generateOptions = new HashMap<String, Object>(10);
@@ -67,29 +69,31 @@ public class TemplateDtls {
 	private SkelGenDefinition skeltons;
 
 	public TemplateDtls(String templateDir, String template, boolean multiRecord, int jrecordVersion) {
-		this(templateDir, template, DEFAULT_TEMPLATE_BASE, multiRecord, jrecordVersion);
+		this(templateDir, template, DEFAULT_TEMPLATE_BASE, multiRecord, jrecordVersion, null);
 	}
 
-	public TemplateDtls(String templateDir, String template, String templateBase, boolean multiRecord, int jrecordVersion) {
+	public TemplateDtls(String templateDir, String template, String templateBase, 
+			boolean multiRecord, int jrecordVersion, String genDate) {
 		
 		this.multiRecord = multiRecord;
 		this.jrecordVersion = jrecordVersion;
 		
-		String t = templateDir;
 		boolean useTemplateDir = false;
 		if ((! isEmpty(templateDir))) {
-			char endChar = templateDir.charAt(templateDir.length() - 1);
-			if (endChar != '/' && endChar != '\\') {
-				t = t + '/';
-			}
+			String t = addDirChar(templateDir);
 			templateDir = t;
-			if (isEmpty(template) && (new File(t + GENERATE_PROPERTIES)).exists()) {
-				File f = new File(t);
-				template = f.getName();
-				templateDir = f.getParent();
-				useTemplateDir = true;
-			} 
+			if (isEmpty(template)) {
+				if ((new File(t + GENERATE_PROPERTIES)).exists()) {
+					File f = new File(t);
+					template = f.getName();
+					templateDir = f.getParent();
+					useTemplateDir = true;
+				}
+			} else  {
+				useTemplateDir = (new File(t + template + '/' + GENERATE_PROPERTIES)).exists();
+			}
 		}
+		this.useTemplateDir = useTemplateDir;
 		if (templateBase == null) {
 			templateBase = DEFAULT_TEMPLATE_BASE;
 		}
@@ -98,6 +102,21 @@ public class TemplateDtls {
 		this.template = template;
 		templateProperties = getProperties(templateDir, useTemplateDir, template);
 		loadOptions("Opts.");
+		
+		if (! isEmpty(genDate)) {
+			currentDate = genDate;
+			currentDateTime = genDate + " 0:0:0";
+		}
+	}
+
+	private String addDirChar(String t) {
+		if (t != null && t.length() > 1) {
+			char endChar = t.charAt(t.length() - 1);
+			if (endChar != '/' && endChar != '\\') {
+				t = t + '/';
+			}
+		}
+		return t;
 	}
 	
 	private boolean isEmpty(String s) {
@@ -109,17 +128,21 @@ public class TemplateDtls {
 		Properties p = new Properties();
 		try {
 			InputStream stream;
-			String filePropertiesName;
-			if (useTemplateDir && (new File(filePropertiesName = dir + template + '/' + GENERATE_PROPERTIES)).exists()) {
+			String filePropertiesName, name;
+			if (useTemplateDir && (new File(filePropertiesName = addDirChar(dir) + template + '/' + GENERATE_PROPERTIES)).exists()) {
 				stream = new FileInputStream(filePropertiesName );
+				name = "File: " + filePropertiesName;
 			} else {
-				stream = TemplateDtls.class.getResourceAsStream(templateBase + template + '/' + GENERATE_PROPERTIES);
+				String resoueceName = templateBase + template + '/' + GENERATE_PROPERTIES;
+				name = "Resource: " + resoueceName;
+				stream = TemplateDtls.class.getResourceAsStream(resoueceName);
 				//stream = this.getClass().getResourceAsStream(templateBase + template + '/' + GENERATE_PROPERTIES);
 				inTemplateBase = true;
 			}
 			if (stream == null) {
 				System.out.println();
-				System.out.println("Could not Load Template: " + template);
+				System.out.println("         useTemplateDir: " + useTemplateDir + " " + dir);
+				System.out.println("Could not Load Template: " + template + " " + name);
 				System.out.println();
 				throw new RuntimeException("Could not load properties file for Template:" + template);
 			}
@@ -364,7 +387,11 @@ public class TemplateDtls {
 	private void loadOptionsWithSkeltons(List<Skelton> skeltons) {
 		if (skeltons != null) {
 			for (Skelton skel : skeltons) {
-				generateOptions.put("skel=" + skel.getTemplateFileName(), true);
+				String s = skel.getTemplateFileName();
+				if (s.startsWith("$std.")) {
+					s = s.substring(5);
+				}
+				generateOptions.put("skel=" + s, Boolean.TRUE);
 			}
 		}
 	}
@@ -374,13 +401,31 @@ public class TemplateDtls {
         		.newInstance(SkelGenDefinition.class, Skeltons.class, Skelton.class, Options.class, Option.class);
         
         Unmarshaller unmarshaller = jc.createUnmarshaller();
-        String resourceName = templateBase + template + "/" + xmlFile;
-        System.out.println("Xml resource name: " + resourceName);
-		//InputStream xmlStream = this.getClass().getResourceAsStream(resourceName);
-        URL resource = this.getClass().getResource(resourceName);
-        System.out.println("Xml resource: " + resource + " ");
-        SkelGenDefinition skelDefs = (SkelGenDefinition) unmarshaller.unmarshal(resource); 
-        
+        SkelGenDefinition skelDefs;
+        if (useTemplateDir) {
+        	FileInputStream is = null;
+        	try {
+				is = new FileInputStream(templateDir + '/' + template + "/" + xmlFile);
+				skelDefs = (SkelGenDefinition) unmarshaller.unmarshal(is);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				throw new RuntimeException(e);
+			} finally {
+				if (is != null) {
+					try {
+						is.close();
+					} catch (IOException e) {
+					}
+				}
+			}
+        } else {
+	        String resourceName = templateBase + template + "/" + xmlFile;
+	        //System.out.println("Xml resource name: " + resourceName);
+			//InputStream xmlStream = this.getClass().getResourceAsStream(resourceName);
+	        URL resource = this.getClass().getResource(resourceName);
+	        //System.out.println("Xml resource: " + resource + " ");
+	        skelDefs = (SkelGenDefinition) unmarshaller.unmarshal(resource); 
+        }
         updateSkelDetails(skelDefs.getLayoutSkeltons());
         updateSkelDetails(skelDefs.getRecordSkeltons());
         

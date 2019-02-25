@@ -7,6 +7,7 @@ import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.External.Def.DependingOn;
 import net.sf.JRecord.External.Def.DependingOnDtls;
+import net.sf.JRecord.External.Item.IItemJRec;
 import net.sf.JRecord.External.base.FieldCreatorHelper;
 import net.sf.JRecord.External.base.IAddDependingOn;
 import net.sf.JRecord.cgen.def.IArrayExtended;
@@ -18,7 +19,7 @@ public abstract class ItemCopy implements IAddDependingOn {
 	private ArrayList<DependingOn> dependingOn = new ArrayList<DependingOn>(6);
 
 	
-	public List<ItemDtl> copy(FieldCreatorHelper fldHelper, List<? extends IItemJr> items) {
+	public List<ItemDtl> copy(FieldCreatorHelper fldHelper, List<? extends IItemJRec> items) {
 		List<ItemDtl> list = null;
 		if (items != null) {
 			list = copy(fldHelper, null, false, items, ArrayIndexDtls.EMPTY, fldHelper.getInitialLevel());
@@ -29,12 +30,12 @@ public abstract class ItemCopy implements IAddDependingOn {
 	
 	private List<ItemDtl> copy(
 			FieldCreatorHelper fldHelper, Item parent, boolean isArray,
-			List<? extends IItemJr> items, ArrayIndexDtls idxDtls,
+			List<? extends IItemJRec> items, ArrayIndexDtls idxDtls,
 			int level) {
 		ArrayList<ItemDtl> itemDtls = null;
 		if (items != null) {
 			itemDtls = new ArrayList<ItemDtl>();
-			for (IItemJr itm : items) {
+			for (IItemJRec itm : items) {
 				if (itm.getLevelNumber() != 88) {
 					boolean isArrayItm = isArray || itm.getOccurs() >= 0; 
 					ArrayIndexDtls newIdxDtls = itm.getOccurs() >= 0 
@@ -43,7 +44,7 @@ public abstract class ItemCopy implements IAddDependingOn {
 					IFieldDetail fld = null;
 					fldHelper.updateGroup(level, itm.getFieldName());
 					if (! newIdxDtls.inArray) {
-						fld = createField(fldHelper, level, itm, idxDtls, null, 0);
+						fld = createField(fldHelper, level, itm, idxDtls, null, 0, false);
 						//FieldCreatorHelper fieldHelper, int level, ItemDtl itm, 
 						//ArrayIndexDtls arrayIndexDtls, DependingOnDtls dependOnParentDtls,
 						//int basePos);
@@ -69,7 +70,7 @@ public abstract class ItemCopy implements IAddDependingOn {
 	 * @param fld
 	 * @return
 	 */
-	protected ItemDtl createItem(Item parent, int level, IItemJr itm, boolean isArrayItm, ArrayIndexDtls newIdxDtls,
+	protected ItemDtl createItem(Item parent, int level, IItemJRec itm, boolean isArrayItm, ArrayIndexDtls newIdxDtls,
 			IFieldDetail fld) {
 		ItemDtl itemDtl = new ItemDtl(parent, itm, isArrayItm, 
 				fld, createArray(itm, newIdxDtls), level);
@@ -87,11 +88,9 @@ public abstract class ItemCopy implements IAddDependingOn {
 			int basePos) {
 
 		for (ItemDtl itm  : itms) {
-			if (itm.getLevelNumber() == 88) {
-				
-			} else {
+			if (itm.getLevelNumber() != 88) {
 				List<ItemDtl> childItems = itm.getChildItems();
-				int size = childItems.size();
+				int numChildren = childItems.size();
 				String dependingVar = itm.getDependingOn();
 //				if (itm.getFieldName() != null && itm.getFieldName().equals("TRANSACTION-DATE")) {
 //					System.out.print('.');
@@ -102,6 +101,9 @@ public abstract class ItemCopy implements IAddDependingOn {
 //					System.out.println(level + "\t" + fldHelper.getGroupName(level - 1) + "\t: " + itm.getFieldName());
 //				}				
 				
+				if (numChildren == 0 && itm.getFieldDefinition() != null) {
+					addFieldToList(itm.getFieldDefinition());
+				}
 				if (itm.getOccurs() > 0) {
                     DependingOn dependOn = null;
                     
@@ -115,7 +117,7 @@ public abstract class ItemCopy implements IAddDependingOn {
                     }
                     
                     ArrayIndexDtls newIdxDtls = new ArrayIndexDtls(idxDtls, itm.getOccurs());
-					if (size == 0) {
+					if (numChildren == 0) {
 						for (int i = 0; i < itm.getOccurs(); i++) {
 							newIdxDtls.setIndex(i);
 //							if (itm.getFieldName() != null && "array-fld".equals(itm.getFieldName())) {
@@ -127,7 +129,9 @@ public abstract class ItemCopy implements IAddDependingOn {
 											fldHelper, level, itm, 
 											newIdxDtls, // problem area
 											createDependingOnDtls(dependOn, dependOnParentDtls, i),
-											basePos + i * itm.getStorageLength()));
+											basePos + i * itm.getStorageLength(),
+											true)
+									);
 						}						
 					} else {
 						for (int i = 0; i < itm.getOccurs(); i++) {
@@ -141,11 +145,11 @@ public abstract class ItemCopy implements IAddDependingOn {
 						}
 					}		
 				} else if (itm.getOccurs() == 0) {
-				} else if (size == 0) {
+				} else if (numChildren == 0) {
 					if (idxDtls.inArray) {
 						itm.arrayDefinition.setField(
 								idxDtls, 
-								createField(fldHelper, level, itm, idxDtls, dependOnParentDtls, basePos));
+								createField(fldHelper, level, itm, idxDtls, dependOnParentDtls, basePos, true));
 					}
 				} else {
 					loadItems(fldHelper, childItems, idxDtls, dependOnParentDtls, level+1, basePos);
@@ -178,11 +182,12 @@ public abstract class ItemCopy implements IAddDependingOn {
         return dependOnDtls;
 	}
 
-
-	public abstract FieldDetail createField(
-			FieldCreatorHelper fieldHelper, int level, IItemJr itm, 
-			ArrayIndexDtls arrayIndexDtls, DependingOnDtls dependOnParentDtls,
-			int basePos);
+	protected abstract void addFieldToList(IFieldDetail fieldDetail);
 	
-	public abstract IArrayExtended createArray(IItemJr item, ArrayIndexDtls idxDtls);
+	protected abstract FieldDetail createField(
+			FieldCreatorHelper fieldHelper, int level, IItemJRec itm, 
+			ArrayIndexDtls arrayIndexDtls, DependingOnDtls dependOnParentDtls,
+			int basePos, boolean addToList);
+	
+	protected abstract IArrayExtended createArray(IItemJr item, ArrayIndexDtls idxDtls);
 }

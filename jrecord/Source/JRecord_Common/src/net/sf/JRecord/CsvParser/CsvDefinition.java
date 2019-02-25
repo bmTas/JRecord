@@ -63,8 +63,8 @@ public class CsvDefinition implements ICsvDefinition {
 //		this(delimiter, quote, ICsvDefinition.NORMAL_SPLIT, -1,"", embeddedCR);
 //	}
 
-	public CsvDefinition(CsvCharDetails delimiter, CsvCharDetails quote, boolean embeddedCR) {
-		this(delimiter, quote, ICsvDefinition.NORMAL_SPLIT, -1,"", embeddedCR);
+	public CsvDefinition(String font, CsvCharDetails delimiter, CsvCharDetails quote, boolean embeddedCR) {
+		this(delimiter, quote, ICsvDefinition.NORMAL_SPLIT, -1, font, embeddedCR);
 	}
 
 	public CsvDefinition(String delimiter, String quote,

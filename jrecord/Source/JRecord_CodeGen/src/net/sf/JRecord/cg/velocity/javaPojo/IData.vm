@@ -4,6 +4,9 @@ package ${generateOptions.packageId}.def;
 #*  *##foreach($imp in ${currentRecord.getImportList()})
 import ${imp};
 #*  *##end
+#foreach($jc in ${currentRecord.getClassImports()})
+import ${jc};
+#end
 
 public interface I${currentRecord.extensionName} {
 
@@ -17,6 +20,7 @@ public interface I${currentRecord.extensionName} {
     public ${a.getFirstFieldDef().getJavaType()}  get${a.getFirstElement().extensionName}(${a.getIndexParameters()});
 #*  *##end
 	
+
 #*  *##foreach($a in ${currentRecord.getArraySameSize()}) 
     public int  get${a.get(0).getFirstElement().extensionName}ArrayLength(int indexNumber);
 #*  *##end	

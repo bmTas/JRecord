@@ -3,16 +3,24 @@ package ${generateOptions.packageId}.data;
 #macro(arrayIdx $max)
 #if( $max > 0)#foreach ($i in [1 .. ${max}])[idx${i}]#end #end
 #end
+	
+/**
+ * This class is the Java representation of one record in the file
+ */
 
 #*  *##if (${currentRecord.getArrayDetailsList().size()} > 0)
 import java.util.Arrays;
 #*  *##end
+#foreach($jc in ${currentRecord.getClassImports()})
+import ${jc};
+#end	
 #*  *##foreach($imp in ${currentRecord.getImportList()})
 import ${imp};
 #*  *##end
 
 #*  *##set ( $interfaceTxt = "")
 #*  *##set ( $overide = "")
+#*  *##set ( $overideSet = "")
 #*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IDataPojo.vm")})
 import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
 import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;
@@ -20,13 +28,25 @@ import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;
 
 #*      *##set ( $interfaceTxt = "implements I${currentRecord.extensionName}Pojo")
 #*      *##set ( $overide = "@Override")
+#*      *##set ( $overideSet = "@Override")
+#*  *##elseif (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IData.vm")})
+import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
+#*      *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IDataUpdate.vm")})
+import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Upd;
+#*          *##set ( $interfaceTxt = "implements I${currentRecord.extensionName}, I${currentRecord.extensionName}Upd")
+#*          *##set ( $overideSet = "@Override")
+#*      *##else	
+#*         *##set ( $interfaceTxt = "implements I${currentRecord.extensionName}")
+#*      *##end	
+#*      *##set ( $overide = "@Override")
 #*  *##end
 #*  *##set ( $extends = "" )
 #*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/DataSchema.vm")})
 #*      *##set ( $extends = "extends Line${generateOptions.schemaDefinition.extensionName}Schema " )
 #*  *##end	
 
-public class Line${currentRecord.extensionName}Pojo ${extends} ${interfaceTxt} {
+public class Line${currentRecord.extensionName}Pojo ${extends}
+${interfaceTxt} {
 
 #*  *##foreach($f in ${currentRecord.getFields()}) 
 #*      *##if (! ${f.isArrayItem()})	
@@ -93,7 +113,7 @@ public class Line${currentRecord.extensionName}Pojo ${extends} ${interfaceTxt} {
         return ${f.javaName};
     }
     
-    ${overide}
+    ${overideSet}
     public void set${f.extensionName}(${f.getJavaType()} value) {
         this.${f.javaName} = value;
     }
@@ -107,7 +127,7 @@ public class Line${currentRecord.extensionName}Pojo ${extends} ${interfaceTxt} {
         return ${a.getFirstElement().javaName}${a.getArrayAccessParameters()};
     }
   
-    ${overide}
+    ${overideSet}
     public void set${a.getFirstElement().extensionName}(${a.getIndexParameters()}, ${a.getFirstFieldDef().getJavaType()} value) {
         ${a.getFirstElement().javaName}${a.getArrayAccessParameters()} = value;
     }
@@ -120,7 +140,7 @@ public class Line${currentRecord.extensionName}Pojo ${extends} ${interfaceTxt} {
         return length${a.get(0).getFirstElement().extensionName}[indexNumber];
     }
 #*  *##end
-#*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("gencode")})
+#*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/Code.vm")})
 	
     public void set(I${currentRecord.extensionName} value) {
         Code${generateOptions.schemaDefinition.extensionName}

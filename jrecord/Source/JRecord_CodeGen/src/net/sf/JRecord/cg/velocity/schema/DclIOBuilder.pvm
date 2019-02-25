@@ -1,15 +1,15 @@
 #*  *##if (${generateOptions.getSchemaDefinition().isXmlSchema()})
             IIOBuilder iob = JRecordInterface1.SCHEMA_XML
-                                       .newIOBuilder(copybookName);
+                           .newIOBuilder(copybookName);
 #*  *##else
             ICobolIOBuilder iob = JRecordInterface1.COBOL
-                                       .newIOBuilder(copybookName)
+                                .newIOBuilder(copybookName)
 #incl("schema/IoBuilderAttriutes.pvm")                                       
 ###*      *##if (${generateOptions.dialect.utlCode} != "FMT_MAINFRAME")
-##                                           .setDialect("${generateOptions.dialect.code}")
+##                                           .setDialect(${generateOptions.dialect.code})
 ###*      *##end                                           
-###*      *##if (${generateOptions.font} != "")
-##                                           .setFont("${generateOptions.font}")
+###*      *##if (${generateOptions.font.length()} > 0)
+##                                           .setFont("${generateOptions.font}") //${generateOptions.font.length()}
 ###*      *##end                                           
 ##                                           .setFileOrganization(${generateOptions.getFileStructureCode().code})
 ##                                           .setSplitCopybook(${generateOptions.splitOption.code})
