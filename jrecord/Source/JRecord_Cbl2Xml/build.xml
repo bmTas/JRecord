@@ -18,6 +18,7 @@
 	<property name="javadoc.dir" location="${docs.dir}/api" />
 	<!--property name="JRecord.jar" location="${outputLib.dir}/JRecord.jar" /-->
 	<property name="Cobol2Xml.jar" location="${outputLib.dir}/Cobol2Xml.jar" />
+	<property name="Xml2Cobol.jar" location="${outputLib.dir}/Xml2Cobol.jar" />
 	<property name="inputLib.dir" location="../../lib" />
 	<property name="JRecord.dir" location="../JRecord/build" />
 
@@ -34,10 +35,10 @@
 		<javac srcdir="${src.dir}" destdir="${build.dir}" optimize="false" target="1.5" source="1.5" debug="true">
 			<exclude name="net/sf/JRecord/cbl2xml/zTest/**"/>
 			<classpath>
-				<filelist dir="../../workspace/cb2xml/lib">
+				<filelist dir="../cb2xml/lib">
 					<file name="cb2xml.jar"/>
 				</filelist>
-				<filelist dir="../../workspace/JRecord/lib">
+				<filelist dir="../JRecord/lib">
 					<file name="JRecord.jar"/>
 				</filelist>
 			</classpath>
@@ -47,7 +48,20 @@
 	<target name="build" depends="compile" description="build jar">
 		<mkdir dir="${outputLib.dir}" />
 		<jar destfile="${Cobol2Xml.jar}" filesonly="true">
+			<manifest>
+				<attribute name="Class-Path" value="cb2xml.jar JRecord.jar" />
+			    <attribute name="Main-Class" value="net.sf.JRecord.cbl2xml.Data2Xml"/>
+			</manifest>
 			<fileset dir="${build.dir}"/>
+		</jar>
+		<jar destfile="${Xml2Cobol.jar}" filesonly="true">
+			<manifest>
+				<attribute name="Class-Path" value="cb2xml.jar JRecord.jar Cobol2Xml.jar" />
+			    <attribute name="Main-Class" value="net.sf.JRecord.cbl2xml.Xml2Data"/>
+			</manifest>
+			<fileset dir="${build.dir}">
+				<include name="net/sf/JRecord/cbl2xml/Xml2Data*"/>
+			</fileset>
 		</jar>
 	</target>
 

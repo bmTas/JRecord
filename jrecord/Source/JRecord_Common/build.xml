@@ -15,23 +15,35 @@
 	<property name="outputLib.dir" location="lib" />
 	<property name="docs.dir" location="docs" />
 	<property name="javadoc.dir" location="${docs.dir}/api" />
-	<property name="JRecord.jar" location="${outputLib.dir}/JRecord.jar" />
+	<property name="JRecord_Common.jar" location="${outputLib.dir}/JRecord_Common.jar" />
 	<property name="inputLib.dir" location="../../lib" />
+	<property name="cb2xmlLib.dir" location="../cb2xml/lib" />
 
-	<!--target name="cb2xml" description="compile JRecord code" >
+	<target name="cb2xml" description="compile JRecord code" >
 		<ant dir="../cb2xml" antfile="build.xml" output="buildout.txt" inheritall="false" />
-	</target!-->
+	</target>
 
 
-	<target name="build" description="compile code">
+	<target name="compile" description="compile code" depends="cb2xml">
+	<!--echo file="${inputLib.dir}/SmallEditorFiles.txt"/-->
+
 		<mkdir dir="${build.dir}" />
-		<javac srcdir="${src.dir}" destdir="${build.dir}" optimize="false" target="1.7" debug="true">
+		<javac srcdir="${src.dir}" destdir="${build.dir}" optimize="false" target="1.6" debug="true">
 			<classpath>
 				<filelist dir="../cb2xml/lib">
 					<file name="cb2xml.jar"/>
 				</filelist>
 			</classpath>
 		</javac>
+	</target>
+
+	
+	<target name="build" depends="compile" description="build jar">
+		<mkdir dir="${outputLib.dir}" />
+		<jar destfile="${JRecord_Common.jar}" filesonly="true">
+			<fileset dir="${build.dir}"/>
+			<zipfileset src="${cb2xmlLib.dir}/cb2xml_definitions.jar" />
+		</jar>
 	</target>
 
 
