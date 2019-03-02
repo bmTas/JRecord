@@ -1,0 +1,162 @@
+package ${packageId};
+## ----------------------------------------------------------------------
+##  Purpose: Create a wrapper around a line 
+##       that provides Gettter/setter for fields
+##  Author: Bruce Martin
+## ----------------------------------------------------------------------
+
+#incl("schema/CommentSchema.pvm")
+#incl("schema/CommonMacros.vm")
+
+/**
+ *  This is a <i>LineWrapper</i> class - it wraps JRecord Line
+ *  makes it look like a Java Bean and implements the relavent
+ *  interfaces
+ */
+ 
+
+#*  *##foreach($imp in ${currentRecord.getImportList()})
+import ${imp};
+#*  *##end
+#conversionImport($currentRecord)
+
+import net.sf.JRecord.Details.AbstractLine;
+import net.sf.JRecord.Details.IGetByteData;
+import net.sf.JRecord.Details.Line;
+import net.sf.JRecord.Details.CsvLine;
+
+#*  *##set ( $overide = "")
+#*  *##set ( $overideSet = "")
+#*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IDataPojo.vm")})
+####if (${generateOptions.getTemplateDtls().getGenerateOption("genpojo")})
+import net.sf.JRecord.cgen.defJr.IAsPojo;
+	
+import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
+import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;  
+
+#*      *##set ( $overide = "@Override")
+#*      *##set ( $overideSet = "@Override")
+
+## // genpojo : ${generateOptions.getTemplateDtls().getGenerateOption("genpojo")}
+public class Line${currentRecord.extensionName}JR 
+implements I${currentRecord.extensionName}Pojo, IGetByteData, IAsPojo<Line${currentRecord.extensionName}Pojo> {
+#*  *##elseif (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IData.vm")})
+#*      *##set ( $overide = "@Override")
+import net.sf.JRecord.cgen.defJr.IAsPojo;
+	
+import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
+#*      *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IDataUpdate.vm")})
+#*          *##set ( $overideSet = "@Override")
+import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Upd;
+
+public class Line${currentRecord.extensionName}JR 
+implements I${currentRecord.extensionName}, I${currentRecord.extensionName}Upd, IGetByteData {
+#*      *##else
+	
+public class Line${currentRecord.extensionName}JR 
+implements I${currentRecord.extensionName}, IGetByteData {
+#*      *##end
+#*  *##else
+
+public class Line${currentRecord.extensionName}JR implements IGetByteData {
+#*  *##end
+   
+    private AbstractLine line; 
+
+    private static FieldNames${generateOptions.schemaDefinition.extensionName}.Record${currentRecord.extensionName} fn
+                   = FieldNames${generateOptions.schemaDefinition.extensionName}.RECORD_${currentRecord.constantName};
+
+#*  *##foreach($a in ${currentRecord.getArraySameSize()}) 
+    private int[] size${a.get(0).getFirstElement().extensionName} = {${a.get(0).getSizesAsString()}};
+#*  *##end		
+        
+
+#*  *##foreach($f in ${currentRecord.getFields()}) 
+#*      *##if (! ${f.isArrayItem()})
+    ${overide}
+    public ${f.getJavaType()} get${f.extensionName}() {
+        return #convertToJava($f, "line.getFieldValue(fn.${f.javaName})");
+###*          *##if (${f.getJavaType()} == "short")
+##        return (short) line.getFieldValue(fn.${f.javaName}).asInt();                                 
+###*          *##else   
+##        return line.getFieldValue(fn.${f.javaName}).${f.getAsType()}();
+###*          *##end
+    }
+    
+    ${overideSet}
+    public void set${f.extensionName}(${f.getJavaType()} value) {
+        this.line.getFieldValue(fn.${f.javaName}).set(#convertFromJava($f, "value"));
+    }
+
+#*      *##end
+#*  *##end
+
+#*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+    ${overide}
+    public ${a.getFirstFieldDef().getJavaType()}  get${a.getFirstElement().extensionName}(${a.getIndexParameters()}) {
+        return #convertToJava(${a.getFirstFieldDef()}, "(line.getFieldValue(fn.${a.getFirstElement().javaName}.get(${a.getCallIndexParameters()})))");
+###*          *##if ( ${a.getFirstFieldDef().getJavaType()} == "short")
+##        return (short) (line.getFieldValue(fn.${a.getFirstElement().javaName}.get(${a.getCallIndexParameters()}))).asInt();
+###*          *##else
+##        return (line.getFieldValue(fn.${a.getFirstElement().javaName}.get(${a.getCallIndexParameters()}))).${a.getFirstFieldDef().getAsType()}();
+###*          *##end
+    }
+    
+    
+    ${overideSet}
+    public void set${a.getFirstElement().extensionName}(${a.getIndexParameters()}, ${a.getFirstFieldDef().getJavaType()} value) {
+        (line.getFieldValue(fn.${a.getFirstElement().javaName}.get(${a.getCallIndexParameters()}))).set(#convertFromJava(${a.getFirstFieldDef()}, "value"));
+    }
+
+#*  *##end
+	
+#*  *##foreach($a in ${currentRecord.getArraySameSize()}) 
+    public int  get${a.get(0).getFirstElement().extensionName}ArrayLength(int indexNumber) {
+        return size${a.get(0).getFirstElement().extensionName}[indexNumber];
+    }
+#*  *##end		
+
+
+    @Override
+    public byte[] getData() {
+        return line.getData();  
+    }
+
+    @Override
+    public void setData(byte[] data) {
+
+        if (line instanceof Line || line instanceof CsvLine) {
+            line.setData(data);
+        } else {
+            throw new RuntimeException("Invalid line for setdata");
+        }
+    }
+    
+    public Line${currentRecord.extensionName}JR setLine(AbstractLine l) {
+    	line = l;
+    	return this;
+    }
+    
+    public AbstractLine getLine() {
+        return line;
+    }
+#*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IDataUpdate.vm")})
+###if (${generateOptions.getTemplateDtls().getGenerateOption("genpojo")})	
+    
+    public Line${currentRecord.extensionName}Pojo asPojo() {
+        Line${currentRecord.extensionName}Pojo l = new Line${currentRecord.extensionName}Pojo();
+        l.set(this);
+        return l;
+    }
+#*  *##end
+#*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IData.vm")})
+    
+    public void set(I${currentRecord.extensionName} value) {
+        Code${generateOptions.schemaDefinition.extensionName}
+            .assign${currentRecord.extensionName}(
+                this, value);
+    }
+#*  *##end
+#conversionCode($currentRecord)
+}
+

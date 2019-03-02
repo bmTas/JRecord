@@ -1,0 +1,27 @@
+#*      *##if (${generateOptions.dialect.utlCode} != "FMT_MAINFRAME")
+                                   .setDialect(${generateOptions.dialect.code})
+#*      *##end                                           
+#*      *##if (${generateOptions.font} == "")
+                                   //.setFont("") // Think about specifying an encoding !!!
+#*      *##else
+                                   .setFont("${generateOptions.font}") 
+#*      *##end                                           
+                                   .setFileOrganization(${generateOptions.getFileStructureCode().code})
+                                   .setSplitCopybook(${generateOptions.splitOption.code})
+#*      *##if (${generateOptions.dropCopybookName} == "true")
+                                   .setDropCopybookNameFromFields(${generateOptions.dropCopybookName})
+#*      *##end                                           
+#*      *##if (${generateOptions.schemaDefinition.getRecords().size()} > 1)
+         //TODO   --    Setup/Check record Selection !!!
+#*          *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})
+#*              *##set ( $recSelStr = ${r.getRecordSelectionStr()})
+#*              *##if (${recSelStr} && ${recSelStr.trim()} != "")
+              .setRecordSelection(
+                  "${r.cobolName}", 
+              ${recSelStr}
+              )
+#*              *##else              
+         //TODO     .setRecordSelection( "${r.cobolName}", ExternalFieldSelection.newFieldSelection("field-name", "value to test"))  
+#*              *##end
+#*          *##end
+#*      *##end

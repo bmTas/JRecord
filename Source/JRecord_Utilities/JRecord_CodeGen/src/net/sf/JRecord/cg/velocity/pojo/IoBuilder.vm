@@ -1,0 +1,133 @@
+package ${packageId};
+## ----------------------------------------------------------------------
+##  Purpose: Create a class to convert Pojo-Lines 
+##       to/from JRecord-Lines / Array-of-Bytes
+##           This class is used to do Pojo IO on
+##       a Cobol Data file.
+##  Author: Bruce Martin
+## ----------------------------------------------------------------------
+
+#incl("schema/CommentSchema.pvm")
+
+import java.io.InputStream;
+import java.io.IOException;
+
+import net.sf.JRecord.JRecordInterface1;
+import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.External.CopybookLoader;
+/** This requires JRecord Version 0.81.5 or later */
+import net.sf.JRecord.cgen.impl.IoBuilder;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
+
+#*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/DataSchema.vm")})
+import ${generateOptions.packageId}.def.Defs${generateOptions.schemaDefinition.extensionName};
+#*  *##end    
+
+
+#foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+import ${generateOptions.packageId}.data.Convert${r.extensionName};
+#end
+#if (${generateOptions.schemaDefinition.getRecords().size()} == 1)
+#* *##set ( $currentRecord = ${generateOptions.schemaDefinition.getRecords().get(0)})
+import ${generateOptions.packageId}.data.Line${currentRecord.extensionName}Pojo;
+#* *##set ( $line = "Line${currentRecord.extensionName}Pojo")
+#* *##set ( $convert = "Convert${currentRecord.extensionName}")
+#else
+import net.sf.JRecord.cgen.impl.BasePojoConverter;
+import net.sf.JRecord.Details.AbstractLine;
+import net.sf.JRecord.Details.LayoutDetail;
+import ${generateOptions.packageId}.data.Line${generateOptions.schemaDefinition.extensionName}Schema;
+#* *##set ( $line = "Line${generateOptions.schemaDefinition.extensionName}Schema")
+#* *##set ( $convert = "ConvertSchema${generateOptions.schemaDefinition.extensionName}")
+#end
+
+public class IoBuilder${generateOptions.schemaDefinition.extensionName}  {
+
+   public static IoBuilder<${line}> newIoBuilder(String copybookName) {
+
+        return createIoBuilder(updateIoBuilder(
+                                       JRecordInterface1.COBOL
+                                            .newIOBuilder(copybookName)));
+    }
+    
+   public static IoBuilder<${line}> newIoBuilder(InputStream copybookStream, String copybookName) {
+
+        return createIoBuilder(updateIoBuilder(
+                                       JRecordInterface1.COBOL
+                                            .newIOBuilder(copybookStream, copybookName)));
+   }
+    
+   private static IoBuilder<${line}> createIoBuilder(ICobolIOBuilder iob) {
+    
+       try {
+            /** IoBuilder requires JRecord Version 0.81.5 or later */
+           return new IoBuilder<${line}>(new ${convert}(iob), iob);
+       } catch (IOException e) {
+           throw new RuntimeException(e);
+       }
+    }
+
+
+   private static ICobolIOBuilder updateIoBuilder(ICobolIOBuilder iob) {
+    
+        return iob
+#incl("schema/IoBuilderAttriutes.pvm") 
+#if (${generateOptions.schemaDefinition.getRecords().size()} > 1)
+          //TODO Update the record Selection if required
+#end        ;
+   }
+#if (${generateOptions.schemaDefinition.getRecords().size()} > 1)
+   private static class ConvertSchema${generateOptions.schemaDefinition.extensionName} 
+   extends BasePojoConverter<Line${generateOptions.schemaDefinition.extensionName}Schema> {
+
+        private final ICobolIOBuilder iob;
+        private LayoutDetail schema;
+     
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+        private final Convert${r.extensionName} convert${r.extensionName};
+#*  *##end
+
+        public ConvertSchema${generateOptions.schemaDefinition.extensionName}(ICobolIOBuilder iob) throws IOException  {
+            super(iob);
+        
+            this.iob = iob;
+            this.schema = iob.getLayout();
+           
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+            this.convert${r.extensionName} = new Convert${r.extensionName}(iob);
+#*  *##end
+        }
+        
+        @Override
+        public Line${generateOptions.schemaDefinition.extensionName}Schema toPojo(AbstractLine line) { 
+         	int recordIdx = line.getPreferredLayoutIdxAlt();
+        	
+        	if (recordIdx >= 0) {
+				switch (Defs${generateOptions.schemaDefinition.extensionName}.recordFromString(
+	        				schema.getRecord(recordIdx)
+	        				         .getRecordName())) {
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+	        	case ${r.constantName} :
+	        		return convert${r.extensionName}.toPojo(line);
+#*  *##end
+	        	}
+        	}
+        	
+        	throw new RuntimeException("Unkown Record Type for line: " + line.getFullLine() );       
+        }
+   
+        
+        @Override
+        public void updateLine(AbstractLine line, Line${generateOptions.schemaDefinition.extensionName}Schema pojo) {
+            switch (pojo.generatedRecordType()) {
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+            case ${r.constantName} :
+                convert${r.extensionName}.updateLine(line, pojo.as${r.extensionName}());
+                break;
+#*  *##end
+           }
+        }
+    }
+#end
+    
+}

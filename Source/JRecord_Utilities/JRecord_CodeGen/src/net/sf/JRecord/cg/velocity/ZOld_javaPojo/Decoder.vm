@@ -1,0 +1,29 @@
+package ${generateOptions.packageId}.io;
+#incl("schema/CommentSchema.pvm")
+
+import net.sf.JRecord.cgen.def.IDecoder;
+import ${generateOptions.packageId}.data.Line${currentRecord.extensionName}JR;
+import ${generateOptions.packageId}.schema.Schema${currentRecord.extensionName};
+
+/**
+ * This class coverts an array of bytes to a Line${currentRecord.extensionName}JR
+ */  
+public class Decoder${currentRecord.extensionName}JR implements IDecoder<Line${currentRecord.extensionName}JR> {
+
+    private final Schema${currentRecord.extensionName} schema${currentRecord.extensionName};
+
+   /**
+    * This class coverts an array of bytes to a Line${currentRecord.extensionName}JR
+    */  
+    public Decoder${currentRecord.extensionName}JR (Schema${currentRecord.extensionName} schema${currentRecord.extensionName}) {
+        this.schema${currentRecord.extensionName}= schema${currentRecord.extensionName};        
+    }
+    
+    @Override
+    public Line${currentRecord.extensionName}JR decode(byte[] data) {
+        Line${currentRecord.extensionName}JR l = new Line${currentRecord.extensionName}JR(schema${currentRecord.extensionName}.record${currentRecord.extensionName});
+        l.setData(data);
+        return l;
+    }
+}
+

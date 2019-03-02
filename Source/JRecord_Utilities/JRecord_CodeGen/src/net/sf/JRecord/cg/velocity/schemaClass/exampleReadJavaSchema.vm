@@ -1,0 +1,88 @@
+package ${packageId};
+#incl("schema/CommentExample.pvm")
+
+import net.sf.JRecord.JRecordInterface1;
+import net.sf.JRecord.Details.AbstractLine;
+import net.sf.JRecord.IO.AbstractLineReader;
+import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;                                         
+
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})                     
+import ${generateOptions.packageId}.schema.Record${r.extensionName};
+#*  *##end
+import ${generateOptions.packageId}.schema.Schema${generateOptions.schemaDefinition.extensionName};
+	
+
+/**
+ * Read Cobol file using a Cobol Copybook (${generateOptions.schemaDefinition.extensionName}).
+ *
+ * This Generated program is intended as an example of using JRecord
+ * rather than a useful program (that compiles - it wont).
+ * You should regard it as a starting point and modify 
+ * it according to needs
+ */
+public final class ReadJavaSchema${generateOptions.schemaDefinition.extensionName} {
+
+    private String testDir        = "G:/temp/";
+    private String salesFile      = testDir + "DTAR020.bin";
+#*    private String salesFileOut   = testDir + "DTAR020out.bin";*#
+  
+    /**
+     * Example of LineReader  classes
+     */
+    public ReadJavaSchema${generateOptions.schemaDefinition.extensionName}() {
+        super();
+
+        AbstractLine line;
+        int lineNum = 0;
+
+        try {
+            Schema${generateOptions.schemaDefinition.extensionName} schema${generateOptions.schemaDefinition.extensionName} = new Schema${generateOptions.schemaDefinition.extensionName}(); 
+            ISchemaIOBuilder iob = JRecordInterface1.SCHEMA.newIOBuilder(schema${generateOptions.schemaDefinition.extensionName}.schema);
+#*  *##foreach($r in ${generateOptions.schemaDefinition.getRecords()}) 
+            Record${r.extensionName} r${r.extensionName} = schema${generateOptions.schemaDefinition.extensionName}.record${r.extensionName};
+#*  *##end
+	
+            AbstractLineReader reader = iob.newReader(salesFile);
+#macro (scPrtFields)
+#*          *##foreach($f in ${r.getFields(11)}) 
+#*              *##if (! ${f.isArrayItem()})
+                      ${sep}line.getFieldValue(r${r.extensionName}.fld${f.extensionName}).asString()
+#*                  *##set( $sep = '+ " " + ')    
+#*              *##end
+#*          *##end
+#end	
+            while ((line = reader.read()) != null) {
+                lineNum += 1;
+#*  *##if (${generateOptions.schemaDefinition.getRecords().size()} == 1)
+#*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+#*          *##set( $sep = "        ")    
+                System.out.println(
+#*          *##scPrtFields()  
+                );
+#*      *##end                        
+#*  *##else	
+#*      *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+#*          *##set( $sep = "        ")    
+                if (/* ${r.record.recordName} */) {
+                   System.out.println(
+#*          *##scPrtFields()  
+                   );
+                }
+#*      *##end                        
+#*  *##end                        
+            }
+
+            reader.close();
+        } catch (Exception e) {
+            System.out.println("~~> " + lineNum + " " + e);
+            System.out.println();
+
+            e.printStackTrace();
+        }
+    }
+    
+    public static void main(String[] args) {
+        new ReadJavaSchema${generateOptions.schemaDefinition.extensionName}();
+    }
+}
+

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" author="true" 
+        	classpath="../cb2xml/lib/cb2xml.jar;C:\eclipse\plugins\org.junit_4.11.0.v201303080030/junit.jar" destdir="F:\Work\JRecord\Javadoc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" 
+        	overview="../JRecord/Summary.html" 
+        	packagenames="net.sf.JRecord,net.sf.JRecord.ByteIO,net.sf.JRecord.Log,net.sf.JRecord.CsvParser,net.sf.JRecord.Numeric,net.sf.JRecord.def.IO.builders,net.sf.JRecord.Types,net.sf.JRecord.IO,net.sf.JRecord.External,net.sf.JRecord.Common,net.sf.JRecord.Details,net.sf.JRecord.utilityClasses,net.sf.JRecord.zExamples.*,net.sf.JRecord.schema**" 
+        	source="1.6" splitindex="true" use="true" version="true" useexternalfile="true">
+        	<sourcepath path="../JRecord_Common/src"></sourcepath>
+        	<sourcepath path="src"></sourcepath>
+        </javadoc>
+    </target>
+</project>

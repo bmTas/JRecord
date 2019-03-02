@@ -1,0 +1,96 @@
+<!--
+/*************************************************************
+ * This file is part of RecordEditor.
+ * See the file "LICENSE" for copyright information and the
+ * terms and conditions for copying, distribution and
+ * modification of RecordEditor.
+ *************************************************************
+ */
+-->
+
+<project name="Cbl2Csv" default="build">
+
+	<property name="src.dir" location="src" />
+	<property name="build.dir" location="build" />
+	<property name="outputLib.dir" location="lib" />
+	<property name="docs.dir" location="docs" />
+	<property name="javadoc.dir" location="${docs.dir}/api" />
+	<property name="Cobol2Csv.jar" location="${outputLib.dir}/Cobol2Csv.jar" />
+	<property name="MultiRecordCobol2Csv.jar" location="${outputLib.dir}/MultiRecordCobol2Csv.jar" />
+	<property name="Csv2Cobol.jar" location="${outputLib.dir}/Csv2Cobol.jar" />
+	<property name="Cobol2Cobol.jar" location="${outputLib.dir}/Cobol2Cobol.jar" />
+	<property name="inputLib.dir" location="../../lib" />
+
+	<!--target name="JRecord" description="compile JRecord code" >
+		<ant dir="../JRecord" antfile="build.xml" output="buildout.txt" inheritall="false" />
+	</target!-->
+
+
+	<target name="compile" description="compile code">
+	<!--echo file="${inputLib.dir}/SmallEditorFiles.txt"/-->
+
+		<mkdir dir="${build.dir}" />
+	
+		<javac srcdir="${src.dir}" destdir="${build.dir}" optimize="false" source="1.5" target="1.5"  debug="true">
+			<exclude name="net/sf/JRecord/zExamples/**"/>
+			<exclude name="net/sf/JRecord/zTest/**"/>
+			<exclude name="net/sf/JRecord/zData/**"/>
+			<classpath>
+				<filelist dir="../cb2xml/lib">
+					<file name="cb2xml.jar"/>
+				</filelist>
+				<filelist dir="../JRecord/lib">
+					<file name="JRecord.jar"/>
+				</filelist>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="build" depends="compile" description="build jar">
+		<mkdir dir="${outputLib.dir}" />
+		<jar destfile="${Cobol2Csv.jar}" filesonly="true">
+			<manifest>
+				<attribute name="Class-Path" value="cb2xml.jar JRecord.jar" />
+			    <attribute name="Main-Class" value="net.sf.JRecord.cbl2csv.Cobol2Csv"/>
+			</manifest>
+			<fileset dir="${build.dir}"/>
+		</jar>
+		<jar destfile="${Csv2Cobol.jar}" filesonly="true">
+			<manifest>
+				<attribute name="Class-Path" value="cb2xml.jar JRecord.jar" />
+			    <attribute name="Main-Class" value="net.sf.JRecord.cbl2csv.Csv2Cobol"/>
+			</manifest>
+			<fileset dir="${build.dir}">
+				<exclude name="net/sf/JRecord/cbl2csv/Cobol2Csv*"/>
+				<exclude name="net/sf/JRecord/cbl2csv/imp/**"/>
+			</fileset>
+		</jar>
+		<jar destfile="${MultiRecordCobol2Csv.jar}" filesonly="true">
+			<manifest>
+				<attribute name="Class-Path" value="cb2xml.jar JRecord.jar" />
+			    <attribute name="Main-Class" value="net.sf.JRecord.cbl2csv.Cobol2CsvMultiRecord"/>
+			</manifest>
+			<fileset dir="${build.dir}">
+				<exclude name="net/sf/JRecord/cbl2csv/Cobol2Csv.java"/>
+				<exclude name="net/sf/JRecord/cbl2csv/Csv2Cobol.java"/>
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="javadoc" description="javadoc">
+		<mkdir dir="${javadoc.dir}" />
+		<javadoc destdir="${javadoc.dir}">
+			<fileset dir="${src.dir}" />
+		</javadoc>
+	</target>
+
+	<target name="clean" description="clean">
+		<delete file="${Cobol2Csv}" />
+		<delete dir="${build.dir}" />
+		<delete dir="${outputLib.dir}" />
+		<delete dir="${javadoc.dir}" />
+	</target>
+
+
+
+</project>

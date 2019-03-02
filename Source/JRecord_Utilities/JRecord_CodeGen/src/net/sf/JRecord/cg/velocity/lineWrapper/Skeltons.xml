@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SkelGenDefinition>
+    <LayoutSkeltons>
+        <skelton description="Sample Read program" output="&amp;directory./example/Read&amp;suffix..java" template="lineWrapperPojo/exampleRead.vm"/>
+        <skelton description="Sample Write program" output="&amp;directory./example/Write&amp;suffix..java" template="lineWrapperPojo/exampleWrite.vm"/>
+        <skelton description="Class with the Cobol Fields names defined as final fields" output="&amp;directory./data/FieldNames&amp;suffix..java" template="standard/FieldNames.vm"/>
+        <skelton description="Brief description of the generated code" output="Description_&amp;suffix..html" template="&amp;template./Details.htm.vm"/>
+    </LayoutSkeltons>
+    <RecordSkeltons>
+        <skelton description="A &quot;line wrapper&quot; class that provides get.../set... methods for the Cobol fields" output="&amp;directory./data/Line&amp;recordSuffix.JR.java" template="lineWrapperPojo/DataJR.vm"/>
+    </RecordSkeltons>
+</SkelGenDefinition>

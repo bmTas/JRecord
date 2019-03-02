@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.sf</groupId>
+        <artifactId>jrecord</artifactId>
+        <version>0.81</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>jrecord-codegen</artifactId>
+
+    <build>
+        <sourceDirectory>src</sourceDirectory>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.sf</groupId>
+            <artifactId>jrecord-base</artifactId>
+            <version>${jrecord.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+        </dependency>
+    </dependencies>
+
+
+</project>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RECORD RECORDNAME="" COPYBOOK="" DELIMITER=";" FILESTRUCTURE="CSV_NAME_1ST_LINE" STYLE="0" RECORDTYPE="Delimited" LIST="N" QUOTE="&quot;" RecSep="default" LINE_NO_FIELD_NAMES="1">
+	<FIELDS>
+		<FIELD NAME="Sku" POSITION="1" TYPE="Char"/>
+		<FIELD NAME="Store" POSITION="2" TYPE="NumAnyDecimal"/>
+		<FIELD NAME="Date" POSITION="3" TYPE="NumAnyDecimal"/>
+		<FIELD NAME="Dept" POSITION="4" TYPE="NumAnyDecimal"/>
+		<FIELD NAME="Qty" POSITION="5" TYPE="NumAnyDecimal"/>
+		<FIELD NAME="Price" POSITION="6" TYPE="NumAnyDecimal"/>
+		<FIELD NAME="GST" POSITION="7" TYPE="NumAnyDecimal"/>
+	</FIELDS>
+</RECORD>

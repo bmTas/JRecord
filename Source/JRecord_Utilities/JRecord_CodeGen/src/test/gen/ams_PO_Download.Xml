@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RECORD RECORDNAME="ams PO Download" COPYBOOK="" DELIMITER="&lt;Tab&gt;" FILESTRUCTURE="Default" STYLE="0" RECORDTYPE="GroupOfRecords" LIST="Y" QUOTE="" RecSep="default" SYSTEMNAME="Ams" LINE_NO_FIELD_NAMES="1">
+	<RECORDS>
+		<RECORD RECORDNAME="ams PO Download: Detail" COPYBOOK="" DELIMITER="&lt;Tab&gt;" DESCRIPTION="PO Download: Detail" FILESTRUCTURE="Default" STYLE="0" RECORDTYPE="RecordLayout" LIST="N" QUOTE="" RecSep="default" SYSTEMNAME="Ams" TESTFIELD="Record Type" TESTVALUE="D1" LINE_NO_FIELD_NAMES="1">
+			<FIELDS>
+				<FIELD NAME="Record Type" POSITION="1" LENGTH="2" TYPE="Char"/>
+				<FIELD NAME="Pack Qty" POSITION="3" LENGTH="9" DECIMAL="4" TYPE="Num Assumed Decimal (Zero padded)"/>
+				<FIELD NAME="Pack Cost" POSITION="12" LENGTH="13" DECIMAL="4" TYPE="Num Assumed Decimal (Zero padded)"/>
+				<FIELD NAME="APN" POSITION="25" LENGTH="13" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="Filler" POSITION="38" LENGTH="1" TYPE="Char"/>
+				<FIELD NAME="Product" POSITION="39" LENGTH="8" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="pmg dtl tech key" POSITION="72" LENGTH="15" TYPE="Char"/>
+				<FIELD NAME="Case Pack id" POSITION="87" LENGTH="15" TYPE="Char"/>
+				<FIELD NAME="Product Name" POSITION="101" LENGTH="50" TYPE="Char"/>
+			</FIELDS>
+		</RECORD>
+		<RECORD RECORDNAME="ams PO Download: Header" COPYBOOK="" DELIMITER="&lt;Tab&gt;" DESCRIPTION="PO Download: Header" FILESTRUCTURE="Default" STYLE="0" RECORDTYPE="RecordLayout" LIST="N" QUOTE="" RecSep="default" SYSTEMNAME="Ams" TESTFIELD="Record Type" TESTVALUE="H1" LINE_NO_FIELD_NAMES="1">
+			<FIELDS>
+				<FIELD NAME="Record Type" POSITION="1" LENGTH="2" TYPE="Char"/>
+				<FIELD NAME="Sequence Number" POSITION="3" LENGTH="5" DECIMAL="3" TYPE="Num Assumed Decimal (Zero padded)"/>
+				<FIELD NAME="Vendor" POSITION="8" LENGTH="10" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="PO" POSITION="18" LENGTH="12" TYPE="Num Assumed Decimal (Zero padded)"/>
+				<FIELD NAME="Entry Date" DESCRIPTION="Format YYMMDD" POSITION="30" LENGTH="6" TYPE="Char"/>
+				<FIELD NAME="Filler" POSITION="36" LENGTH="8" TYPE="Char"/>
+				<FIELD NAME="beg01 code" POSITION="44" LENGTH="2" TYPE="Char"/>
+				<FIELD NAME="beg02 code" POSITION="46" LENGTH="2" TYPE="Char"/>
+				<FIELD NAME="Department" POSITION="48" LENGTH="4" TYPE="Char"/>
+				<FIELD NAME="Expected Reciept Date" DESCRIPTION="Format YYMMDD" POSITION="52" LENGTH="6" TYPE="Char"/>
+				<FIELD NAME="Cancel by date" DESCRIPTION="Format YYMMDD" POSITION="58" LENGTH="6" TYPE="Char"/>
+				<FIELD NAME="EDI Type" POSITION="68" LENGTH="1" TYPE="Char"/>
+				<FIELD NAME="Add Date" DESCRIPTION="Format YYMMDD" POSITION="69" LENGTH="6" TYPE="Char"/>
+				<FIELD NAME="Filler" POSITION="75" LENGTH="1" TYPE="Char"/>
+				<FIELD NAME="Department Name" POSITION="76" LENGTH="10" TYPE="Char"/>
+				<FIELD NAME="Prcoess Type" DESCRIPTION="C/N Conveyable/Non-Conveyable" POSITION="86" LENGTH="1" TYPE="Char"/>
+				<FIELD NAME="Order Type" POSITION="87" LENGTH="2" TYPE="Char"/>
+			</FIELDS>
+		</RECORD>
+		<RECORD RECORDNAME="ams PO Download: Allocation" COPYBOOK="" DELIMITER="&lt;Tab&gt;" DESCRIPTION="Allocation Line" FILESTRUCTURE="Default" STYLE="0" RECORDTYPE="RecordLayout" LIST="N" QUOTE="" RecSep="default" SYSTEMNAME="Ams" TESTFIELD="Record Type" TESTVALUE="S1" LINE_NO_FIELD_NAMES="1">
+			<FIELDS>
+				<FIELD NAME="Record Type" POSITION="1" LENGTH="2" TYPE="Char"/>
+				<FIELD NAME="DC Number 1" POSITION="3" LENGTH="4" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="Pack Quantity 1" POSITION="7" LENGTH="8" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="DC Number 2" POSITION="15" LENGTH="4" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="Pack Quantity 2" POSITION="19" LENGTH="8" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="DC Number 4" POSITION="39" LENGTH="4" TYPE="Char"/>
+				<FIELD NAME="Pack Quantity 4" POSITION="43" LENGTH="8" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="DC Number 5" POSITION="51" LENGTH="4" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="Pack Quantity 5" POSITION="55" LENGTH="8" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="DC Number 6" POSITION="63" LENGTH="4" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="Pack Quantity 6" POSITION="67" LENGTH="8" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="DC Number 7" POSITION="75" LENGTH="4" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="Pack Quantity 7" POSITION="79" LENGTH="8" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="DC Number 8" POSITION="87" LENGTH="4" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="Pack Quantity 8" POSITION="91" LENGTH="8" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="DC Number 9" POSITION="99" LENGTH="4" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="Pack Quantity 9" POSITION="103" LENGTH="8" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="DC Number 10" POSITION="111" LENGTH="4" TYPE="Num (Right Justified zero padded)"/>
+				<FIELD NAME="Pack Quantity 10" POSITION="115" LENGTH="8" TYPE="Num (Right Justified zero padded)"/>
+			</FIELDS>
+		</RECORD>
+	</RECORDS>
+</RECORD>

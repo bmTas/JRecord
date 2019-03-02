@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<RECORD RECORDNAME="DTAR020" COPYBOOK="DTAR020" DELIMITER="&lt;Tab&gt;" 
+        FONTNAME="CP037" FILESTRUCTURE="Default" STYLE="0" RECORDTYPE="RecordLayout"
+	LIST="Y" QUOTE="" RecSep="default">
+	<FIELDS>
+		<FIELD NAME="KEYCODE-NO" POSITION="1"  LENGTH="8" TYPE="Char" />
+		<FIELD NAME="STORE-NO"   POSITION="9"  LENGTH="2" TYPE="Mainframe Packed Decimal (comp-3)" />
+		<FIELD NAME="DATE"       POSITION="11" LENGTH="4" TYPE="Mainframe Packed Decimal (comp-3)" />
+		<FIELD NAME="DEPT-NO"    POSITION="15" LENGTH="2" TYPE="Mainframe Packed Decimal (comp-3)" />
+		<FIELD NAME="QTY-SOLD"   POSITION="17" LENGTH="5" TYPE="Mainframe Packed Decimal (comp-3)" />
+		<FIELD NAME="SALE-PRICE" POSITION="22" LENGTH="6" DECIMAL="2" TYPE="Mainframe Packed Decimal (comp-3)" />
+	</FIELDS>
+</RECORD>

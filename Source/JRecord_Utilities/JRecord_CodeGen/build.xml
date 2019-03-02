@@ -1,0 +1,88 @@
+<!--
+/*************************************************************
+ * This file is part of RecordEditor.
+ * See the file "LICENSE" for copyright information and the
+ * terms and conditions for copying, distribution and
+ * modification of RecordEditor.
+ *************************************************************
+ */
+-->
+
+<project name="JRecord_CodeGen" default="build">
+
+	<property name="src.dir" location="src" />
+	<property name="build.dir" location="build" />
+	<property name="outputLib.dir" location="lib" />
+	<property name="docs.dir" location="docs" />
+	<property name="javadoc.dir" location="${docs.dir}/api" />
+	<!--property name="JRecord.jar" location="${outputLib.dir}/JRecord.jar" /-->
+	<property name="JRecordCodeGen.jar" location="${outputLib.dir}/JRecordCodeGen.jar" />
+	<property name="inputLib.dir" location="../../lib" />
+	<property name="JRecord.dir" location="../JRecord/build" />
+	<property name="javadoc.dir" location="docs/api" />
+
+	<!--target name="JRecord" description="compile JRecord code" >
+		<ant dir="../JRecord" antfile="build.xml" output="buildout.txt" inheritall="false" />
+	</target-->
+
+
+	<target name="compile" description="compile code">
+	<!--echo file="${inputLib.dir}/SmallEditorFiles.txt"/-->
+
+		<mkdir dir="${build.dir}" />
+		<javac srcdir="${src.dir}" destdir="${build.dir}" optimize="false" target="1.5" source="1.5" debug="true">
+			<include name="net/sf/JRecord/cg/**"/>
+			<classpath>
+				<filelist dir="../cb2xml/lib">
+					<file name="cb2xml.jar"/>
+				</filelist>
+				<filelist dir="../JRecord/lib">
+					<file name="JRecord.jar"/>
+				</filelist>
+				<filelist dir="/home/bruce/work/lib">
+					<file name="velocity-1.7.jar"/>
+					<file name="velocity-1.7-dep.jar"/>
+				</filelist>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="build" depends="compile" description="build jar">
+		<mkdir dir="${outputLib.dir}" />
+		<jar destfile="${JRecordCodeGen.jar}" filesonly="true">
+			<manifest>
+				<attribute name="Class-Path" value="cb2xml.jar JRecord.jar velocity-1.7.jar velocity-1.7-dep.jar" />
+			    <attribute name="Main-Class" value="net.sf.JRecord.cg.Generate"/>
+			</manifest>
+			<fileset dir="${build.dir}"/>
+			<fileset dir="src" >
+  				<include name="net/sf/JRecord/cg/velocity/*/*.xml"/>
+  				<include name="net/sf/JRecord/cg/velocity/*/*.*vm"/>
+			    <include name="net/sf/JRecord/cg/velocity/*/*.properties"/>
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="javadoc" description="javadoc">
+		<mkdir dir="${javadoc.dir}" />
+		<javadoc destdir="${javadoc.dir}" overview="../JRecord_CodeGen/Summary.html" >
+			<fileset dir="${src.dir}" >
+				<include name="net/sf/JRecord/cg/details/**"/>
+				<include name="net/sf/JRecord/cg/schema/**"/>
+				<exclude name="**/*.vm"/>
+				<exclude name="**/*.pvm"/>
+				<exclude name="**/*.properties"/>
+			</fileset>
+		</javadoc>
+	</target>
+
+	<target name="clean" description="clean">
+		<delete file="${JRecordCodeGen.jar}" />
+		<delete dir="${build.dir}" />
+		<delete dir="${outputLib.dir}" />
+		<delete dir="${javadoc.dir}" />
+	</target>
+
+
+
+</project>

@@ -1,0 +1,4251 @@
+{
+  "CUSTOMER_DATA" : [ {
+    "CUSTOMER_ID" : 1,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL SMITH",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 2,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED BROWN",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 36.82,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 175.93,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 114.92,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 229.65,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 3,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY JOHNSON",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 46.97,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 180.88,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 4,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED WILLIAMS",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 52.98,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 35.29,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 82.42,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 124.20,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 5,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JOHNSON",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 6,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED WILLIAMS",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 35.87,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 47.73,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 7,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JOHNSON",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 8,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN JOHNSON",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 40.18,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 9,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN JONES",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 200.13,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 127.15,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 10,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED WILLIAMS",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 192.82,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 127.03,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 11,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL SMITH",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 6.42,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 12,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JONES",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 230.66,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 13,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JOHNSON",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 222.72,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 215.78,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 86.64,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 100.75,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 14,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JONES",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 15,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL WILLIAMS",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 77.16,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 52.59,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 128.51,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 132.15,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 218.51,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 16,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JOHNSON",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 206.73,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 6.76,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 17,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  WILLIAMS",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 18,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  SMITH",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 186.87,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 30.70,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 69.14,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 201.20,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 19,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL BROWN",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 96.40,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 20,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JONES",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 116.85,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 21,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL WILLIAMS",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 91.79,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 171.87,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 206.64,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 228.23,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 22,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  SMITH",
+      "CUSTOMER_ADDRESS" : "SEATTLE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 209.88,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 23,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JONES",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 163.63,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 24,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JONES",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 226.76,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 9.51,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 200.28,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 25,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN JONES",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 132.95,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 35.30,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 69.21,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 26,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JONES",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 160.43,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 113.12,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 42.03,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 189.20,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 27,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL SMITH",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 229.64,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 132.48,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 38.91,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 86.48,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 70.08,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 28,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED BROWN",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 182.64,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 68.97,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 29,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED BROWN",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 102.94,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 52.95,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 30,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL SMITH",
+      "CUSTOMER_ADDRESS" : "SEATTLE",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 97.26,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 131.58,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 184.93,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 44.81,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 219.84,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 31,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  JOHNSON",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 60.21,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 32,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JOHNSON",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 135.51,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 212.64,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 177.77,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 33,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JOHNSON",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 102.61,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 34,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY JOHNSON",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 9.10,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 37.07,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 92.04,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 186.64,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 35,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  JOHNSON",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 180.22,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 198.48,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 109.69,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 145.71,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 36,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JONES",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 95.55,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 37,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED WILLIAMS",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 94.36,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 186.74,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 38,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JONES",
+      "CUSTOMER_ADDRESS" : "SEATTLE",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 194.81,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 131.46,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 39,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JONES",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 142.40,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 120.27,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 146.44,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 40,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY JOHNSON",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 41,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED WILLIAMS",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 38.62,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 59.62,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 213.73,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 42,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN WILLIAMS",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 43,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JOHNSON",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 126.35,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 73.38,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 44,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL WILLIAMS",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 69.98,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 45,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY JOHNSON",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 6.55,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 222.98,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 9.63,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 178.62,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 175.28,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 46,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY JONES",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 3.27,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 47,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  JOHNSON",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 45.60,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 73.37,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 86.72,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 187.28,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 48,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY SMITH",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 17.66,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 156.74,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 91.94,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 166.17,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 25.36,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 49,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JONES",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 22.51,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 133.58,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 126.80,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 50,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL WILLIAMS",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 25.62,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 131.60,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 51,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  JOHNSON",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 216.51,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 102.70,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 85.99,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 195.29,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 218.92,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 52,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  WILLIAMS",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 53,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL BROWN",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 30.85,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 50.02,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 121.16,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 54,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN BROWN",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 215.72,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 55,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY JONES",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 88.59,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 86.20,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 214.90,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 56,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JOHNSON",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 26.34,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 206.80,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 133.42,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 57,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED BROWN",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 70.93,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 58,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN JOHNSON",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 60.59,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 176.74,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 6.42,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 187.30,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 59,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY WILLIAMS",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 113.92,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 60,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JONES",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 164.82,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 234.99,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 185.97,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 61,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN JONES",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 117.02,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 48.51,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 33.31,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 62,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JOHNSON",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 64.09,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 216.63,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 63,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY JONES",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 172.28,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 3.88,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 64,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED WILLIAMS",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 50.28,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 190.39,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 135.58,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 118.14,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 82.11,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 65,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL SMITH",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 66,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY WILLIAMS",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 39.26,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 67,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JONES",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 156.82,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 188.29,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 203.00,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 52.57,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 68,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JONES",
+      "CUSTOMER_ADDRESS" : "SEATTLE",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 70.41,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 69,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JOHNSON",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 70,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JOHNSON",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 0.96,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 20.38,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 23.20,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 173.16,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 71,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY JOHNSON",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 7.40,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 95.64,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 175.46,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 93.20,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 155.50,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 72,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN JOHNSON",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 132.70,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 52.74,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 1.27,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 198.25,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 73,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  WILLIAMS",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 99.81,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 219.60,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 58.16,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 201.65,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 74,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  JOHNSON",
+      "CUSTOMER_ADDRESS" : "SEATTLE",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 48.24,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 71.31,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 58.72,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 172.07,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 68.10,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 75,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED WILLIAMS",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 196.49,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 76,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY WILLIAMS",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 224.25,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 4.25,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 120.95,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 83.93,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 142.25,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 77,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JOHNSON",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 180.42,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 28.50,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 160.35,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 78,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  JOHNSON",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 60.69,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 213.68,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 235.52,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 105.39,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 190.80,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 79,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY SMITH",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 105.16,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 80,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN JONES",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 56.37,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 142.36,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 13.67,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 81,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN JONES",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 105.14,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 80.21,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 161.98,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 145.20,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 158.25,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 82,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL BROWN",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 120.90,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 6.47,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 58.20,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 17.46,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 83,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN WILLIAMS",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 27.69,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 84,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  BROWN",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 116.94,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 216.82,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 189.39,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 85,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY SMITH",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 146.71,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 81.09,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 15.06,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 216.91,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 86,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY WILLIAMS",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 134.24,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 87,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  WILLIAMS",
+      "CUSTOMER_ADDRESS" : "SEATTLE",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 174.89,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 223.80,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 88,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL WILLIAMS",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 183.86,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 183.53,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 5.38,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 143.72,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 112.43,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 89,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY BROWN",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 125.75,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 54.84,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 176.53,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 43.80,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 178.56,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 90,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JONES",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 214.23,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 91,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN BROWN",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 25.47,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 112.42,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 92,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JONES",
+      "CUSTOMER_ADDRESS" : "SEATTLE",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 69.69,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 61.78,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 71.43,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 145.67,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 195.19,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 93,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  JONES",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 142.94,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 139.17,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 39.33,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 213.57,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 41.49,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 94,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JOHNSON",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 33.85,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 36.75,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 55.21,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 152.43,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 210.33,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 95,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JONES",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 40.06,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 136.13,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 139.27,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 155.03,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 132.51,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 96,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  JOHNSON",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 169.64,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 95.62,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 224.77,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 85.54,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 97,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JONES",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 230.07,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 4.55,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 166.33,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 98,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  SMITH",
+      "CUSTOMER_ADDRESS" : "SEATTLE",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 204.37,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 99,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  SMITH",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 191.00,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 49.97,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 100,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL WILLIAMS",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 5.52,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 209.51,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 81.58,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 101,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED BROWN",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 125.30,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 207.43,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 225.19,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 102,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JOHNSON",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 233.78,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 213.36,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 223.15,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 103,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  WILLIAMS",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 104,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JOHNSON",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 94.22,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 195.89,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 78.49,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 105,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  WILLIAMS",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 106,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY JONES",
+      "CUSTOMER_ADDRESS" : "SEATTLE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 222.97,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 107,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN WILLIAMS",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 108,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JONES",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 162.66,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 72.85,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 21.28,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 36.02,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 109,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN SMITH",
+      "CUSTOMER_ADDRESS" : "SEATTLE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 88.93,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 116.06,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 104.30,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 110,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JOHNSON",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 204.25,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 145.86,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 111,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY BROWN",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 108.55,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 132.19,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 115.52,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 29.10,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 112,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN JOHNSON",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 37.97,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 113,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JOHNSON",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 16.08,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 79.07,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 129.31,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 118.04,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 55.46,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 114,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JONES",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 111.48,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 115,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  JONES",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 120.85,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 116,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY JOHNSON",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 151.91,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 5.68,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 172.73,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 117,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL WILLIAMS",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 118,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED BROWN",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 13.13,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 130.99,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 119,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED BROWN",
+      "CUSTOMER_ADDRESS" : "SEATTLE",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 157.89,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 212.81,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 229.47,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 43.31,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 120,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  WILLIAMS",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 121,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL WILLIAMS",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 204.52,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 127.01,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 13.69,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 167.08,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 50.41,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 122,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN JONES",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 44.24,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 123,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  JONES",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 124,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JONES",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 199.45,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 209.11,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 79.00,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 93.31,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 125,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "JOHN WILLIAMS",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 154.20,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 18.04,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 4.01,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 232.87,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 71.52,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 126,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  WILLIAMS",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 231.44,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 127,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL WILLIAMS",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 215.66,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 89.10,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 103.87,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 128,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL SMITH",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 84.19,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 129,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED BROWN",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 97.12,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 164.47,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 130,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED WILLIAMS",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 87.28,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 113.47,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 26.89,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 131,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED WILLIAMS",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 10.46,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 35.90,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 97.27,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 34.58,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 132,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JOHNSON",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 106.60,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 160.05,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 133,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED SMITH",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 69.22,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 178.92,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 58.24,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 134,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED WILLIAMS",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 135,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JONES",
+      "CUSTOMER_ADDRESS" : "SEATTLE",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 136,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY WILLIAMS",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 62.91,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 142.60,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 80.58,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 9.61,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 137,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED JONES",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 3,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 118.88,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 4.14,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 213.16,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 138,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  JONES",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 85.66,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 142.74,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 139,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL SMITH",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 174.50,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 61.10,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 166.55,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 160.31,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 140,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY JONES",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 89.65,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 82.01,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 233.58,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 16.06,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 141,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  JONES",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 178.95,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 142,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JOHNSON",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 2,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 6.98,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 155.19,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 143,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JONES",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 5,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 158.83,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 48.96,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 128.89,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 233.27,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 232.19,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 144,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "FRED WILLIAMS",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  }, {
+    "CUSTOMER_ID" : 145,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL WILLIAMS",
+      "CUSTOMER_ADDRESS" : "CAMBRIDGE",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 52.63,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 183.67,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 126.38,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 224.72,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 146,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY BROWN",
+      "CUSTOMER_ADDRESS" : "BOSTON",
+      "CUSTOMER_PHONE" : "38791206"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 12.75,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 147,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL WILLIAMS",
+      "CUSTOMER_ADDRESS" : "SAN FRANCISCO",
+      "CUSTOMER_PHONE" : "48952235"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 1,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 223.37,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 148,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BILL JOHNSON",
+      "CUSTOMER_ADDRESS" : "SEATTLE",
+      "CUSTOMER_PHONE" : "67159589"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "13/02/05",
+        "TRANSACTION_DAY" : "13",
+        "TRANSACTION_MONTH" : "02",
+        "TRANSACTION_YEAR" : "05",
+        "TRANSACTION_AMOUNT" : 52.48,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "10/04/11",
+        "TRANSACTION_DAY" : "10",
+        "TRANSACTION_MONTH" : "04",
+        "TRANSACTION_YEAR" : "11",
+        "TRANSACTION_AMOUNT" : 148.87,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "09/03/02",
+        "TRANSACTION_DAY" : "09",
+        "TRANSACTION_MONTH" : "03",
+        "TRANSACTION_YEAR" : "02",
+        "TRANSACTION_AMOUNT" : 144.29,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 74.91,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 149,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "BOB  BROWN",
+      "CUSTOMER_ADDRESS" : "SEATTLE",
+      "CUSTOMER_PHONE" : "25663488"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 4,
+      "TRANSACTION" : [ {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 212.76,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 218.36,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "30/10/10",
+        "TRANSACTION_DAY" : "30",
+        "TRANSACTION_MONTH" : "10",
+        "TRANSACTION_YEAR" : "10",
+        "TRANSACTION_AMOUNT" : 70.48,
+        "TRANSACTION_COMMENT" : "*********"
+      }, {
+        "TRANSACTION_DATE" : "01/12/09",
+        "TRANSACTION_DAY" : "01",
+        "TRANSACTION_MONTH" : "12",
+        "TRANSACTION_YEAR" : "09",
+        "TRANSACTION_AMOUNT" : 191.74,
+        "TRANSACTION_COMMENT" : "*********"
+      } ]
+    }
+  }, {
+    "CUSTOMER_ID" : 150,
+    "PERSONAL_DATA" : {
+      "CUSTOMER_NAME" : "RORY JONES",
+      "CUSTOMER_ADDRESS" : "NEW YORK",
+      "CUSTOMER_PHONE" : "54845428"
+    },
+    "TRANSACTIONS" : {
+      "TRANSACTION_NBR" : 0
+    }
+  } ]
+}

@@ -1,0 +1,125 @@
+package ${packageId};
+##
+##   Read Example JRecord using Generated class
+##
+##   Author: Bruce Martin
+##
+#incl("schema/CommentExample.pvm")
+#incl("$std.schema/CommonMacros.vm")
+
+import java.io.IOException;
+
+import net.sf.JRecord.cgen.def.IReader;
+import net.sf.JRecord.cgen.impl.IoBuilder;
+
+#if (${generateOptions.schemaDefinition.getRecords().size()} == 1)
+#else
+import ${generateOptions.packageId}.data.Line${generateOptions.schemaDefinition.extensionName}Schema;
+#end
+
+import ${generateOptions.packageId}.io.IoBuilder${generateOptions.schemaDefinition.extensionName};
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})
+import ${generateOptions.packageId}.data.Line${r.extensionName}Pojo;
+#*  *##end
+
+
+/**
+ * Read Cobol file using a Cobol Copybook (${generateOptions.schemaDefinition.extensionName}).
+ *
+ * This Generated program is intended as an example of using JRecord
+ * rather than a useful program (that compiles - it wont).
+ * You should regard it as a starting point and modify
+ * it according to needs
+ */
+public final class Read${generateOptions.schemaDefinition.extensionName} {
+
+    private String dataFile     = "${generateOptions.getDataFileName().getJavaFileName()}";
+    private String copybookName = "${generateOptions.getSchemaDefinition().schemaName.getJavaFileName()}";
+
+    /**
+     * Example of Using a PojoReader  classes
+     */
+    public Read${generateOptions.schemaDefinition.extensionName}() {
+        super();
+
+#if (${generateOptions.schemaDefinition.getRecords().size()} == 1)
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})
+        IReader<Line${r.extensionName}Pojo> reader = null;
+        int lineNum = 0;
+        try {
+            IoBuilder<Line${r.extensionName}Pojo> iob = IoBuilder${r.extensionName}.newIoBuilder(copybookName);
+            Line${r.extensionName}Pojo line;
+
+            reader = iob.newReader(dataFile);
+            
+            while ((line = reader.read()) != null) {
+                lineNum += 1;
+                
+               System.out.println(
+#*          *##printFieldsJavaPojo()
+                   );
+            }
+#*  *##end
+#else
+        IReader<Line${generateOptions.schemaDefinition.extensionName}Schema> reader = null;
+        int lineNum = 0;
+        try {
+            IoBuilder<Line${generateOptions.schemaDefinition.extensionName}Schema> iob = IoBuilder${generateOptions.schemaDefinition.extensionName}.newIoBuilder(copybookName);
+            Line${generateOptions.schemaDefinition.extensionName}Schema line;
+
+            //TODO Check the Record Selection code (in IoBuilder${generateOptions.schemaDefinition.extensionName}) is correct
+            //TODO (or set a RecordDecider/RecordSelection !!!).  e.g.
+            //TODO
+            //TODO        iob.setRecordDecider(...);
+            //TODO   or   iob.setRecordSelection(...)
+            //TODO
+            //TODO You need to tell JRecord how to decide what
+            //TODO Records have been read !!!
+            
+            reader = iob.newReader(dataFile);
+            
+            while ((line = reader.read()) != null) {
+               lineNum += 1;
+               
+               switch (line.generatedRecordType()) {
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+               case ${r.constantName} :
+                   Line${r.extensionName}Pojo pojo${r.extensionName} = line.as${r.extensionName}();
+                   System.out.println(
+#*      *##set( $sep = "        ")    
+#*      *##foreach($f in ${r.getFields(11)})
+#*          *##if (! ${f.isArrayItem()})
+                      ${sep}pojo${r.extensionName}.get${f.extensionName}()
+#*                *##set( $sep = '+ " " + ')    
+#*          *##end
+#*      *##end
+#*      *##foreach($a in ${r.getArrayDetailsList()}) 
+##*          *##if (! ${f.isArrayItem()})    
+                      ${sep}pojo${r.extensionName}.get${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()})
+#*                *##set( $sep = '+ " " + ')    
+##*          *##end
+#*      *##end
+                       );
+                   break;
+#*  *##end
+               }
+            }
+#end
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        new Read${generateOptions.schemaDefinition.extensionName}();
+    }
+}
+

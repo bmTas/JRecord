@@ -1,0 +1,52 @@
+package ${generateOptions.packageId}.schema;
+#incl("schema/CommentSchema.pvm")
+
+import net.sf.JRecord.Common.CommonBits;
+import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.Details.RecordDetail;
+
+public class Schema${generateOptions.schemaDefinition.extensionName} {
+
+#*  *##set ($schemaDef = ${generateOptions.schemaDefinition})
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+    public final Record${r.extensionName} record${r.extensionName};
+#*  *##end    
+    
+    public final LayoutDetail schema;
+    
+    public Schema${generateOptions.schemaDefinition.extensionName}() {
+    
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+ 	record${r.extensionName} = new Record${r.extensionName}();
+#*  *##end
+        
+        RecordDetail[] recs = {
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+                record${r.extensionName}.record,
+#*  *##end
+        };
+
+##       String recordSepString = recordSepString ??? 
+##       byte[] recordSep = CommonBits.getEolBytes( null, recordSepString, "${generateOptions.font}");
+        String recordSepString = ""; 
+        byte[] recordSep = CommonBits.getEolBytes( null, recordSepString, "${generateOptions.font}");
+        schema = new LayoutDetail(
+                      "${schemaDef.schema.getLayoutName()}", recs, "", 
+                      ${schemaDef.getJRecordLayoutType()}, recordSep, recordSepString, 
+                      "${generateOptions.font}", null, ${schemaDef.getJRecordIoType()});
+        
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+        record${r.extensionName}.updateRecordSelection(schema);
+#*  *##end
+    }
+    
+    public Schema${generateOptions.schemaDefinition.extensionName}(LayoutDetail schema) {
+#*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
+        this.record${r.extensionName} = new Record${r.extensionName}(schema, schema.getRecord("${r.record.recordName}"));
+#*  *##end
+
+        this.schema = schema;
+    }
+}
+

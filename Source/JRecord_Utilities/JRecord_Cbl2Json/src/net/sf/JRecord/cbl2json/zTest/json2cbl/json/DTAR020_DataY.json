@@ -1,0 +1,3414 @@
+{
+  "DTAR020" : [ {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69684558",
+      "STORE_NO" : 20
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 280,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69684558",
+      "STORE_NO" : 20
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 280,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -19.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69684558",
+      "STORE_NO" : 20
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 280,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 5.01
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694158",
+      "STORE_NO" : 20
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 280,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694158",
+      "STORE_NO" : 20
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 280,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -19.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694158",
+      "STORE_NO" : 20
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 280,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 5.01
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63604808",
+      "STORE_NO" : 20
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 170,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 4.87
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62684671",
+      "STORE_NO" : 20
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 685,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 69.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62684671",
+      "STORE_NO" : 20
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 685,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -69.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64634429",
+      "STORE_NO" : 20
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66624458",
+      "STORE_NO" : 20
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.89
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63674861",
+      "STORE_NO" : 20
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 10,
+    "SALE_PRICE" : 2.70
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "65674532",
+      "STORE_NO" : 20
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.59
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64614401",
+      "STORE_NO" : 59
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64614401",
+      "STORE_NO" : 59
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "61664713",
+      "STORE_NO" : 59
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 335,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 17.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "61664713",
+      "STORE_NO" : 59
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 335,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -17.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68634752",
+      "STORE_NO" : 59
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 410,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 8.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60614487",
+      "STORE_NO" : 59
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 878,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 5.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63644339",
+      "STORE_NO" : 59
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 878,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.65
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60694698",
+      "STORE_NO" : 59
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 620,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60664659",
+      "STORE_NO" : 59
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 620,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62684217",
+      "STORE_NO" : 59
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67674686",
+      "STORE_NO" : 59
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "61684613",
+      "STORE_NO" : 59
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 335,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64624770",
+      "STORE_NO" : 59
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 2.59
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694814",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 360,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 2.50
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694814",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 360,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 2.50
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69644164",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 21.59
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62684907",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 375,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 13.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694193",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 375,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 13.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694193",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 375,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -13.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694193",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 375,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 11.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63654450",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 320,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 13.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62664576",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 320,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.72
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63634260",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 320,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 5.59
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64684534",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 440,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 14.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64674965",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 235,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64674965",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 235,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -19.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64674965",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 235,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60624523",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 261,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66624253",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.49
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66624253",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.49
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64654284",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60684907",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 805,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 5.50
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63624299",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 870,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 10.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63624367",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 870,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 11.19
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694575",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 475,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 14.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69614011",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 905,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 6.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62634996",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 650,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67634503",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 970,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 24.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "65604476",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 830,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694170",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 851,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 16.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63684098",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 410,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.98
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63684098",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 410,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.98
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63684098",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 410,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.98
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64674609",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 485,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 29.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62614014",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 366,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 14.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "61694741",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 432,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.06
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62614534",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 432,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.09
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64604876",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 801,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 29.62
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66624829",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694843",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 13.59
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62684580",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 265,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62664909",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.29
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62674751",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62674492",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.49
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62674492",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.49
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694706",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 13.59
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69644602",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 265,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63634768",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 270,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62684207",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 265,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69644961",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 230,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.60
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69604743",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 250,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 29.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63634081",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.89
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69614229",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 902,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 15.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62654454",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 845,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 5.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64634712",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 845,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.90
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62674092",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 851,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 15.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67664966",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.89
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67664966",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.89
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64674633",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 220,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 15.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64624081",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 280,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 26.24
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69674069",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 910,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 10.49
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62684028",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 520,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 29.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64604876",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 801,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 29.62
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68644966",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 902,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.50
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68644966",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 902,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -12.50
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68644966",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 902,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.01
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62664347",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 370,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 8.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62664231",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 370,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 8.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694605",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 261,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 25.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69634922",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 261,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63694928",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 904,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 11.49
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60624185",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 500,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 8.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60624314",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 500,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 8.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694959",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 270,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 11.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69624033",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 80,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 18.19
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694485",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 17.56
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60614646",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 6.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63654066",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 275,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 24.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62684548",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 415,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 39.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62684548",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 415,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 39.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694685",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 360,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 6.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63614741",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 395,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 27.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60664302",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 270,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60664241",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 270,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66674979",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 360,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 4.50
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62634862",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 355,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 11.89
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62604139",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 335,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 7.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62624382",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 370,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 18.98
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62624382",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 370,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -18.98
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694937",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 360,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 2.50
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62624382",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 370,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 18.98
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62624382",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 370,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 18.98
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62624382",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 370,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -18.98
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62624382",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 370,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -18.98
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62624382",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 370,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 18.98
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62624382",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 370,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 18.98
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "61684889",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 685,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 4.49
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68614651",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 370,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62664674",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 471,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 24.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "61684889",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 685,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 4.49
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60694417",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.65
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "65694328",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.59
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63684449",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 320,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 16.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62614815",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 405,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 20.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62664151",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 455,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 25.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64684719",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 410,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69654084",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 6.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69644897",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 5.08
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68654655",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 5.08
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68674560",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 170,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 5.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694387",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 432,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 7.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62664568",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 432,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 5.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69634261",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 261,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69634660",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 261,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69684947",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 280,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 22.49
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60654072",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 905,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 4.33
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60654072",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 905,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 4.33
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69624221",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 355,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 16.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62654800",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 355,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64644495",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 801,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 29.65
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67664645",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.39
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60614265",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 395,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 15.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68604583",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 905,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 15.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60614265",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 395,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 15.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60614265",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 395,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -15.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60614265",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 395,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -15.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68604583",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 905,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -15.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68604583",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 905,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 15.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68604583",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 905,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -15.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68604583",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 905,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.80
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60614265",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 395,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 15.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60614265",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 395,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -15.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60614265",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 395,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.80
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69664661",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 904,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 14.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68664211",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 11.19
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60614707",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 6.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64604513",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 235,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 16.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60624864",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 261,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 15.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69644909",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 261,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60604100",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 80,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 13.30
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69634263",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 261,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 25.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69634263",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 261,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -25.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69634263",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 261,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "61674701",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 670,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63654007",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 670,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 56.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67624103",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 801,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 16.50
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68614329",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 905,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 39.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67644384",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 23.96
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64644495",
+      "STORE_NO" : 166
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 801,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 29.65
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60684484",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 220,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60684484",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 220,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67674299",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 905,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 4.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69664620",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 355,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 11.89
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69664620",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 355,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -11.89
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69664620",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 355,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.09
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60674210",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 275,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -15.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60664048",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -4.80
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60614866",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -4.80
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60664048",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -4.80
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60664048",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -4.80
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60614866",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -4.80
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69654081",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 70,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63664643",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 16.79
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69654135",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 70,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60644672",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 160,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.09
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62654852",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 345,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -19.59
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62674960",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 490,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -16.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62674960",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 490,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 16.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "65674126",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 2.69
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60634192",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 500,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 24.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64634500",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -9.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66624803",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 170,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 2.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66624803",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 170,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -2.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66624803",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 170,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.04
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66624889",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 170,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 2.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66624889",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 170,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -2.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66624889",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 170,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.04
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60624241",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 500,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 34.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62644079",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 650,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62664183",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 320,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -20.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64654047",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 320,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -25.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694327",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 375,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -10.39
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69604894",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 275,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -19.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67644821",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -14.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67644118",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 16.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66664981",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 901,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.09
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66684899",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 901,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64634942",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 270,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 15.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63654826",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 275,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69604993",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 220,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -14.39
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63624118",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 250,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -15.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62684517",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 475,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -29.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67634503",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 970,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 24.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694782",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -16.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694683",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -16.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694782",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -16.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694782",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -16.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62684096",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 310,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 14.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69644199",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.19
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60634366",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 904,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 7.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67654448",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 70,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 23.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67654448",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 70,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -23.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67654448",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 70,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.01
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69654459",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 5.08
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60664779",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 5.08
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63674002",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 310,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -29.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68604041",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 870,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -19.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67634503",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 970,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 24.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68644941",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -10.39
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68644941",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -10.39
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68644941",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -10.39
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68644941",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -10.39
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68644934",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 10.39
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62674884",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 350,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -8.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68654381",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 235,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 14.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64644433",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 801,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 24.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64604829",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 805,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -29.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62634996",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 650,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60624270",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 670,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63664932",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.59
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69684804",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 851,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68664363",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 415,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -29.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694503",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 2.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62644205",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 590,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 24.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62604912",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 590,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 24.89
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64634802",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 904,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 4.29
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60664257",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 901,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 2.12
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62684043",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 878,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -19.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62684043",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 878,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64644860",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 805,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -3.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62644590",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 590,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -22.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64664587",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 432,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -16.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64604930",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 801,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -35.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60604880",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 250,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68674372",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 845,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 2.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63684755",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 845,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 2.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64684439",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67624120",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 940,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.98
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67624120",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 940,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -0.98
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67624120",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 940,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.49
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67624120",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 940,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.98
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67624120",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 940,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -0.98
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67624120",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 940,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.49
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66614192",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 940,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.23
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66614192",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 940,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -1.23
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66614192",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 940,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.69
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66614192",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 940,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.23
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66614192",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 940,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -1.23
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66614192",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 940,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.69
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67624473",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 940,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.50
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67624473",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 940,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -0.50
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67624473",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 940,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.19
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67614923",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 875,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -19.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63604715",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 432,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -6.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63604715",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 432,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -6.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63604715",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 432,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -6.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62684102",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 310,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 14.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63654091",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 805,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 4.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68694729",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 855,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -16.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60684563",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 220,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.59
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68664957",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 80,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 13.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67604116",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 801,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 21.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64664047",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 801,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 22.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67634497",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 970,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 24.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64664270",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.19
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60634150",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 160,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -14.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68684135",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 878,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -249.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68684135",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 878,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 269.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68684135",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 878,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -269.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68684135",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 878,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 249.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69624909",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 235,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -26.21
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62634962",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 530,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -6.89
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67614726",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 160,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -9.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68654094",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 170,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -4.50
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60674335",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 485,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60674335",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 485,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -19.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60674335",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 485,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60644305",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 0.89
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64604604",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 366,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 6.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63694367",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 290,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62644079",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 650,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67674119",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 1.89
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69614627",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 265,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69614740",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 265,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60614135",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 230,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -14.25
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69674452",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 970,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62694272",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 2.49
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69614274",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 902,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60634379",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 290,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 25.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60674904",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 261,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66614582",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 670,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -15.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64654096",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 805,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 4.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62634605",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 405,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 29.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694354",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 2.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69634699",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 80,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 20.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69634712",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 80,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 20.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69664171",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 250,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -27.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694479",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 280,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 14.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63634656",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 929,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -5.50
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69664149",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 903,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -5.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69664163",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 903,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -1.39
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67674341",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 901,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -19.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69644053",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 230,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 18.74
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63674184",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 957,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 164.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62604338",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 870,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 69.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62644344",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 432,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 10.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66644706",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 432,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 10.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62644528",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 432,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 10.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62644764",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 432,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 10.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62664135",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 405,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 11.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62664244",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 405,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 11.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62664197",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 405,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 11.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62654875",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 471,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 39.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64614653",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 265,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 34.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64614653",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 265,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 34.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "61694023",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 650,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 14.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "61694023",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 650,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 14.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60694909",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 998,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 2.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68614241",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 70,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69654638",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 6.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67634923",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 60,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 17.59
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "64614285",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 70,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 22.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69644389",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 17.59
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68614787",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 70,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 27.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69644337",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 70,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 29.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68634061",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 70,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 27.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69644184",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 15.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63624756",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 801,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 21.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "67604116",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 801,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 21.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68654451",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 27.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62614172",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 193,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.19
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "61614174",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 620,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 49.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "61614174",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 620,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 29.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62644445",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 801,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 69.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62634323",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 905,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 149.00
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66674079",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 901,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66674130",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 901,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "61604095",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 902,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.50
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "66664028",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 902,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 14.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "68654621",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 902,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 12.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63694264",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 830,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63604361",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 901,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62634259",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 901,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 6.69
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "62634259",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 901,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 6.69
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60684429",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 904,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 4.89
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60684037",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 904,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 9.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694875",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 904,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694875",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 904,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694875",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 904,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 19.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694875",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 904,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -19.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694875",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 904,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -19.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69694875",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 904,
+    "QTY_SOLD" : -1,
+    "SALE_PRICE" : -19.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63604108",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 901,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 3.95
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "63694928",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 904,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 11.49
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "60634765",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 904,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 4.99
+  }, {
+    "KCODE_STORE_KEY" : {
+      "KEYCODE_NO" : "69664668",
+      "STORE_NO" : 184
+    },
+    "DATE" : 40118,
+    "DEPT_NO" : 903,
+    "QTY_SOLD" : 1,
+    "SALE_PRICE" : 8.95
+  } ]
+}

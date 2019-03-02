@@ -1,0 +1,1473 @@
+{
+  "DTAR1000_REC" : [ {
+    "STORE_NO" : 1,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Geelong",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 2,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Coffs Harbour",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 3,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Mackay",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 4,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Ballarat",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 5,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Albury",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 6,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Wodonga",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 7,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Shepparton",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 8,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Bendigo",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 9,
+    "REGION_NO" : 50,
+    "STORE_NAME" : "S Centrepoint",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 10,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Earlville",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 11,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Cessnock",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 12,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Ringwood",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 15,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Bankstown",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 16,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Glendale",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 19,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Penrith",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 20,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Indooroopilly",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 21,
+    "REGION_NO" : 50,
+    "STORE_NAME" : "S Tea Tree Plaza",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 23,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Warnambool",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 24,
+    "REGION_NO" : 50,
+    "STORE_NAME" : "S Newton",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 25,
+    "REGION_NO" : 50,
+    "STORE_NAME" : "S Fulham Gardens",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 26,
+    "REGION_NO" : 50,
+    "STORE_NAME" : "S Edwardstown",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 27,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Runaway Bay",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 28,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Launceston",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 30,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Epping",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 32,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Camberwell",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 33,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "Y Blacktown (Closed)",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 35,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Rockdale",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 36,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Fremantle",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 21,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Miranda",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 38,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Maroochydore",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 39,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Colac",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 40,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Tweed Heads",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 42,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Reservoir",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 43,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Morley",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 44,
+    "REGION_NO" : 50,
+    "STORE_NAME" : "S Mt Gambier",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 45,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Carousel",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 46,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Dubbo",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 47,
+    "REGION_NO" : 50,
+    "STORE_NAME" : "S Sefton Park",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 48,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Bundaberg",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 49,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Rockhampton",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 52,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Eastwood",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 54,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Highpoint City",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 55,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Leichhardt",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 57,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Victoria Park",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 58,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Knox City",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 59,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Buranda",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 60,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N St Marys",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 61,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Waverley Gardens",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 62,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Castletown",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 64,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Hoppers Crossing",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 65,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Innaloo",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 67,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Morwell Mid Valley",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 68,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Mt Gravatt",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 69,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Midland",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 70,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Bass Hill",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 72,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Geraldton",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 73,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Southport",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 74,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Campbelltown",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 75,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Sale",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 76,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Bull Creek",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 77,
+    "REGION_NO" : 50,
+    "STORE_NAME" : "S Elizabeth",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 78,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Warringah Mall",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 79,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Stirling",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 80,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Sunshine",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 81,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Ashfield",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 82,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Box Hill",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 83,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Springwood",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 84,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Brookside",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 85,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Roselands",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 86,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Southland",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 87,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Chadstone",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 88,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Templestowe",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 89,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Erina",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 90,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Carlingford Court",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 91,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Chatswood",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 92,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Malvern",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 93,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Liverpool",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 94,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Whitford City",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 95,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Eastgarden",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 96,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Canberra Civic",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 97,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Fountain Gate",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 98,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Frankston",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 99,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Glen Waverley",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 100,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Waurn Ponds",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 125,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Mt Druitt",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 126,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Robina",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 127,
+    "REGION_NO" : 50,
+    "STORE_NAME" : "S Marion",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 128,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Rockingham",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 129,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Macquarie",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 131,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Melbourne City",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 132,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Glenorchy",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 133,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Browns Plains",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 134,
+    "REGION_NO" : 50,
+    "STORE_NAME" : "S Reynella",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 135,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Capalaba",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 136,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Charlestown",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 137,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Dandenong",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 138,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Cairns Central",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 139,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Toowoomba",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 140,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Pacific Fair",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 141,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q The Willows",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 142,
+    "REGION_NO" : 50,
+    "STORE_NAME" : "S Hollywood Plaza",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 143,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Hervey Bay",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 144,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Parramatta",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 145,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Port Macquarie",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 146,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Palmerston",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 149,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Broadmeadows",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 150,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Cowra",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 151,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Perth",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 152,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Mornington",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 153,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Pakenham",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 154,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Shellharbour",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 155,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Redbank",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 156,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Morayfield",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 157,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Chirnside Park",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 158,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Brimbank Central",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 159,
+    "REGION_NO" : 50,
+    "STORE_NAME" : "S Whyalla",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 160,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Watergardens",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 161,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Hobart",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 162,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Tuggeranong",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 163,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Queanbeyan",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 164,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Tuggerah",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 165,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Hurstville",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 166,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Chermside",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 167,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Northlakes",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 168,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Airport West",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 169,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Hornsby",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 170,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Bondi",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 171,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Burwood",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 173,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Bunbury",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 174,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Carindale",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 175,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Tamworth",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 177,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Castle Hill",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 178,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Blacktown",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 179,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Greensborough",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 180,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Joondalup",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 183,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "V Swan Hill",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 184,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Brisbane CBD",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 186,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "B Narre Warren (Closed)",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 188,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Macarthur Square",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 189,
+    "REGION_NO" : 20,
+    "STORE_NAME" : "B Northland Baby Target",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 191,
+    "REGION_NO" : 50,
+    "STORE_NAME" : "B Golden Grove",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 192,
+    "REGION_NO" : 10,
+    "STORE_NAME" : "N Wetherill Park",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 193,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Kalgoorlie",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 194,
+    "REGION_NO" : 50,
+    "STORE_NAME" : "S Mildura",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 195,
+    "REGION_NO" : 40,
+    "STORE_NAME" : "Q Bribie Island",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 196,
+    "REGION_NO" : 60,
+    "STORE_NAME" : "W Meadow Springs",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  }, {
+    "STORE_NO" : 197,
+    "REGION_NO" : 50,
+    "STORE_NAME" : "S Unley",
+    "NEW_STORE" : "N",
+    "ACTIVE_STORE" : "Y",
+    "CLOSED_STORE" : "N",
+    "DC_TYPE" : "N",
+    "SRC_TYPE" : "N",
+    "HO_TYPE" : "N"
+  } ]
+}
