@@ -177,12 +177,19 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 				eolLength += 1;
 			}
 			if (lno+1 < lineArray.length) {
-				//System.out.print("\t~ " + lineNum+ " " + lineArray[lno+1] + " - " +  srcPos  + " - " + eolLength + "   " );
-				ret = new byte[lineArray[lno+1] -  srcPos - eolLength];
+				//System.out.print("\t~ " + lno+ " " + lineArray[lno+1] + " - " +  srcPos  + " - " + eolLength + "   " );
+				int lineLen = lineArray[lno+1] -  srcPos - eolLength;
+				if (lineLen < 0) {
+					ret  = EMPTY;
+					bytesRead += Math.max(0, lineLen + eolLength);
+				} else {
+					ret = lineLen == 0 ? EMPTY : new byte[lineLen];
+					bytesRead += eolLength;
+				}
 			} else {
 				ret = new byte[buffer.length - srcPos];
+				bytesRead += eolLength;
 			}
-			bytesRead += eolLength;
 		}
 		System.arraycopy(buffer, srcPos, ret, 0, ret.length);
 		bytesRead += ret.length;
