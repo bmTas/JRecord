@@ -39,6 +39,7 @@ import net.sf.JRecord.detailsBasic.CsvCharDetails;
 import net.sf.JRecord.detailsBasic.IItemDetails;
 
 
+
 /**
  * This class stores the description of one field in a record (or Line).
  * It is used by the <b>RecordDetail</b> class
@@ -523,5 +524,14 @@ public class FieldDetail implements IFieldDetail {
 	 */
 	public void setCobolItem(IItemDetails cobolItem) {
 		this.cobolItem = cobolItem;
+	}
+	
+	/**
+	 * This method is for CodeGen/RecordEditor Utility.
+	 * Do not use it in JRecord
+	 * @return Java if it has been set by 
+	 */
+	public String getJavaTypeIfSet() {
+		return cobolItem == null ? null : cobolItem.getJavaType();
 	}
  }

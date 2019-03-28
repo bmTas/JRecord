@@ -10,7 +10,9 @@ public class JavaTypeDetails {
 	public final IClassDef classDef;
 	
 	public JavaTypeDetails(boolean isCsv, FieldDetail fieldDef) {
-		this(isCsv, fieldDef.getType(), fieldDef.getCobolItem() == null ? null : fieldDef.getCobolItem().getJavaType(),fieldDef.getLen(), 
+		this(isCsv, fieldDef.getType(), 
+				fieldDef.getJavaTypeIfSet(),
+				fieldDef.getLen(), 
 				fieldDef.getDecimal(), fieldDef.getFormat(), fieldDef.getParamater());
 	}
 	
