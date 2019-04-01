@@ -5,7 +5,7 @@ Csv parsing changes and fix for duplicate field processing.
 These are to reduce the amount of duplicate code int JRecord/RecordEditor.
 
 ## Notes for New Users
-The [ReadMe_NewUsers.htm](ReadMe_NewUsers.htm">ReadMe_NewUsers.htm) has an expanded version of this section.
+The [ReadMe_NewUsers.htm](ReadMe_NewUsers.htm) has an expanded version of this section.
 The first thing new users need to decide is
 
 * Are you going to use the *Java* interface ???, then see **Java Interface** section
