@@ -8,6 +8,7 @@ import net.sf.JRecord.cgen.support.Code2JRecordConstants;
 public class JavaTypeDetails {
 	public final String javaType, javaRawType;
 	public final IClassDef classDef;
+	public final boolean isInteger;
 	
 	public JavaTypeDetails(boolean isCsv, FieldDetail fieldDef) {
 		this(isCsv, fieldDef.getType(), 
@@ -24,5 +25,6 @@ public class JavaTypeDetails {
 				? Code2JRecordConstants.typeToJavaType(isCsv, type, len, decimal)
 				: typeName;
 		this.javaType = classDef== null || classDef.getClassName() == null ? javaRawType : classDef.getClassName();
+		this.isInteger = "short".equals(javaRawType) || "int".equals(javaRawType) || "long".equals(javaRawType);
 	}
 }

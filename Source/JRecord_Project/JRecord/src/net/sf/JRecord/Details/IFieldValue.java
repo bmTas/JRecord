@@ -88,4 +88,9 @@ public interface IFieldValue extends AbstractFieldValue {
 	 * in an Occurs-Depending
 	 */
 	public abstract boolean isFieldInRecord();
+
+	/**
+	 * Set the fieldValue to spaces
+	 */
+	public void setToSpaces();
 }

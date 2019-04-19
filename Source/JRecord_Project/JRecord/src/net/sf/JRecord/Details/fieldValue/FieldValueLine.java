@@ -92,22 +92,17 @@ public class FieldValueLine extends FieldValue {
 		theLine.setFieldHex(field, val); 
 	}
 
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.Details.FieldValue#setToLowValues()
-	 */
+
+	
 	@Override
-	public void setToLowValues() {
-		theLine.setFieldToByte(field, (byte) 0);
+	public void setToSpaces() {
+		setFieldToByte(theLine.getLayout().getSpaceByte());
 	}
 
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.Details.FieldValue#setToHighValues()
-	 */
-	@Override
-	public void setToHighValues() {
-		theLine.setFieldToByte(field, (byte) 0xFF);
-	}
 
+	protected void setFieldToByte(byte val) {
+		theLine.setFieldToByte(field, val);
+	}
 
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.Details.fieldValue.IFieldValueUpdLine#setLine(net.sf.JRecord.Details.Line)

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.sf</groupId>
     <artifactId>jrecord</artifactId>
-    <version>0.90</version>
+    <version>0.90.2</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -45,7 +45,7 @@
         <dependency>
             <groupId>net.sf</groupId>
             <artifactId>cb2xml_src</artifactId>
-            <version>1.00</version>
+            <version>1.01.1</version>
         </dependency>
     </dependencies>
 

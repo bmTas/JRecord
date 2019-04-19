@@ -146,7 +146,8 @@ public class TemplateDtls {
 				System.out.println();
 				throw new RuntimeException("Could not load properties file for Template:" + template);
 			}
-			p.load(stream);				
+			p.load(stream);	
+			stream.close();
 		} catch (IOException e) {
 			ok = false;
 			System.out.println();

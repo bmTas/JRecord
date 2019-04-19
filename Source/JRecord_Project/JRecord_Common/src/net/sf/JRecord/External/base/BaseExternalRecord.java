@@ -1669,6 +1669,23 @@ implements IFieldUpdatedListner, IAddDependingOn {
 		return checkBinary(this);
 	}
 	
+	public boolean isCsv() {
+		if (subRecords.size() == 0) {
+			return isCsv(this);
+		} else {
+			for (int i = 0; i < subRecords.size(); i++) {
+				if (isCsv(subRecords.get(i))) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private boolean isCsv(BaseExternalRecord<xRecord> r) {
+		return r.recordType == Constants.rtDelimited || r.recordType == Constants.rtDelimitedAndQuote;
+	}
+	
 	private boolean checkBinary(BaseExternalRecord<xRecord> rec) {
 		if (rec.fields.size() == 0 && rec.items != null && rec.items.size() > 0) {
 			if (checkBinary(rec.items)) {

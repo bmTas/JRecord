@@ -28,6 +28,7 @@
 
 package net.sf.JRecord.Details.fieldValue;
 
+import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.BaseLine;
@@ -237,17 +238,56 @@ public class FieldValue extends BaseFieldValue implements IFieldValueUpdLine {
 	
 	@Override
 	public void setHex(String s) {
+		if (theLine instanceof Line) {
+			((Line)theLine).setFieldHex(field, s);
+			return;
+		}
 		throwError();
 	}
 	
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.Details.FieldValue#setToLowValues()
+	 */
 	@Override
 	public void setToLowValues() {
-		throwError();
+		setFieldToByte((byte) 0);
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.JRecord.Details.FieldValue#setToHighValues()
+	 */
+	@Override
+	public void setToHighValues() {
+		setFieldToByte((byte) 0xFF);
 	}
 	
 	
+	@SuppressWarnings("deprecation")
 	@Override
-	public void setToHighValues() {
+	public void setToSpaces() {
+//		if (theLine instanceof Line) {
+//			((Line)theLine).setFieldToByte(field, theLine.getLayout().getSpaceByte());
+//			return;
+//		}
+		
+		FieldDetail charField;
+		if (field.isFixedFormat()) {
+			charField = FieldDetail.newFixedWidthField(field.getName(), Type.ftChar, 
+					field.getPos(), field.getLen(), 0, field.getFontName());
+		} else {
+			charField = FieldDetail.newCsvField(field.getName(), Type.ftChar, 
+					field.getPos(), 0, field.getFontName());
+		}
+		theLine.setField(charField, " ");
+	}
+
+ 
+
+	protected void setFieldToByte(byte val) {
+		if (theLine instanceof Line) {
+			((Line)theLine).setFieldToByte(field, val);
+			return;
+		}
 		throwError();
 	}
 	

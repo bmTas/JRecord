@@ -101,6 +101,17 @@ public abstract class BaseFieldValueLine implements IFieldValueUpdLine {
 	public final void setToLowValues() {
 		theLine.setFieldToByte(field, (byte) 0);
 	}
+	
+	@Override
+	public void setToSpaces() {
+		setFieldToByte(theLine.getLayout().getSpaceByte());
+	}
+
+
+	protected void setFieldToByte(byte val) {
+		theLine.setFieldToByte(field, val);
+	}
+
 
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.Details.FieldValue#setToHighValues()

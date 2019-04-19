@@ -53,7 +53,8 @@ public class TstCblDataToXml02 {
 	private static final String[] EMPTY_STRING_ARRAY = {};
 
 
-	private String[][] files ={
+	private String[][] files = {
+
 			{"DTAR020.cbl",  "DTAR020.bin",  "DTAR020_DataN.xml", "N", "F", "DTAR020-KEYCODE-NO"},
 			{"DTAR107.cbl",  "DTAR107.bin",  "DTAR107_DataN.xml", "N", "F"},
 			{"DTAR192.cbl",  "DTAR192.bin",  "DTAR192_DataN.xml", "N", "F"},
