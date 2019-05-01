@@ -22,17 +22,17 @@ import ${imp};
 #*  *##set ( $overide = "")
 #*  *##set ( $overideSet = "")
 #*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IDataPojo.vm")})
-import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
-import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;
+import ${generateOptions.packageId}.definitions.I${currentRecord.extensionName};
+import ${generateOptions.packageId}.definitions.I${currentRecord.extensionName}Pojo;
 
 
 #*      *##set ( $interfaceTxt = "implements I${currentRecord.extensionName}Pojo")
 #*      *##set ( $overide = "@Override")
 #*      *##set ( $overideSet = "@Override")
 #*  *##elseif (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IData.vm")})
-import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
+import ${generateOptions.packageId}.definitions.I${currentRecord.extensionName};
 #*      *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IDataUpdate.vm")})
-import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Upd;
+import ${generateOptions.packageId}.definitions.I${currentRecord.extensionName}Upd;
 #*          *##set ( $interfaceTxt = "implements I${currentRecord.extensionName}, I${currentRecord.extensionName}Upd")
 #*          *##set ( $overideSet = "@Override")
 #*      *##else	
@@ -67,7 +67,7 @@ ${interfaceTxt} {
     public Line${currentRecord.extensionName}Pojo() {
 #*      *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/DataSchema.vm")})
 #*          *##set ( $extends = "extends Line${generateOptions.schemaDefinition.extensionName}Schema " )
-        super( ${generateOptions.packageId}.def.Defs${generateOptions.schemaDefinition.extensionName}
+        super( ${generateOptions.packageId}.definitions.Defs${generateOptions.schemaDefinition.extensionName}
                       .Records.${currentRecord.constantName} );
                       
 #*      *##end	

@@ -1,12 +1,12 @@
 package ${packageId};
 #incl("schema/CommentSchema.pvm")
 
-import ${generateOptions.packageId}.def.Defs${generateOptions.schemaDefinition.extensionName};
+import ${generateOptions.packageId}.definitions.Defs${generateOptions.schemaDefinition.extensionName};
 
 #*  *##set ( $implements = "" )
 #*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IDataSchema.vm")})
 #*      *##set ( $implements = "    implements I${generateOptions.schemaDefinition.extensionName}Schema " )
-import ${generateOptions.packageId}.def.I${generateOptions.schemaDefinition.extensionName}Schema;
+import ${generateOptions.packageId}.definitions.I${generateOptions.schemaDefinition.extensionName}Schema;
 
 #*  *##end
 public abstract class Line${generateOptions.schemaDefinition.extensionName}Schema ${implements} {

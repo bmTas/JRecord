@@ -7,7 +7,7 @@
         <skelton description="Pojo IoBuilder class" output="&amp;directory./io/IoBuilder&amp;suffix..java" template="&amp;template./IoBuilder.vm"/>
         <skelton 
         	template="javaPojo/Defs.vm"
-        	output="&amp;directory./def/Defs&amp;suffix..java"
+        	output="&amp;directory./definitions/Defs&amp;suffix..java"
         	description="Class holding Enum of Records and related code"/>
         <skelton 
         	template="javaPojo/DataSchema.vm"

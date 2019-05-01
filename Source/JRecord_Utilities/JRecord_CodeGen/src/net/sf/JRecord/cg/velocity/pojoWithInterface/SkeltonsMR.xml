@@ -7,11 +7,11 @@
         <skelton description="Pojo IoBuilder class" output="&amp;directory./io/IoBuilder&amp;suffix..java" template="pojo/IoBuilder.vm"/>
         <skelton 
         	template="javaPojo/Defs.vm"
-        	output="&amp;directory./def/Defs&amp;suffix..java"
+        	output="&amp;directory./definitions/Defs&amp;suffix..java"
         	description="Class holding Enum of Records and related code"/>
         <skelton 
         	template="javaPojo/IDataSchema.vm"
-        	output="&amp;directory./def/I&amp;suffix.Schema.java"
+        	output="&amp;directory./definitions/I&amp;suffix.Schema.java"
         	description="Holds Schema Level Parent Interface"/>
         <skelton 
         	template="javaPojo/DataSchema.vm"
@@ -19,9 +19,9 @@
         	description="Holds Schema Level Parent of all the record-pojo's"/>
   </LayoutSkeltons>
     <RecordSkeltons>
-        <skelton description="Interface that describes all the Cobol fields (as get...)" output="&amp;directory./def/I&amp;recordSuffix..java" template="javaPojo/IData.vm"/>
-        <skelton description="Interface that describes has set... Methods for the Cobol fields" output="&amp;directory./def/I&amp;recordSuffix.Upd.java" template="javaPojo/IDataUpdate.vm"/>
-        <skelton description="Interface that describes has get.../set... Methods for the Cobol fields" output="&amp;directory./def/I&amp;recordSuffix.Pojo.java" template="javaPojo/IDataPojo.vm"/>
+        <skelton description="Interface that describes all the Cobol fields (as get...)" output="&amp;directory./definitions/I&amp;recordSuffix..java" template="javaPojo/IData.vm"/>
+        <skelton description="Interface that describes has set... Methods for the Cobol fields" output="&amp;directory./definitions/I&amp;recordSuffix.Upd.java" template="javaPojo/IDataUpdate.vm"/>
+        <skelton description="Interface that describes has get.../set... Methods for the Cobol fields" output="&amp;directory./definitions/I&amp;recordSuffix.Pojo.java" template="javaPojo/IDataPojo.vm"/>
         <skelton description="Java POJO class that represents the &quot;Cobol&quot; record" output="&amp;directory./data/Line&amp;recordSuffix.Pojo.java" template="javaPojo/DataPojo.vm"/>
         <skelton 
         	template="pojo/Convert.vm"

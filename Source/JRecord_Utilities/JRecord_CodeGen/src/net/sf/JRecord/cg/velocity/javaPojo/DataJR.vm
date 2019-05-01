@@ -12,8 +12,8 @@ import net.sf.JRecord.cgen.defJr.IAsPojoSetData;
 import net.sf.JRecord.cgen.def.ILineToBytes;
 import net.sf.JRecord.cgen.impl.FieldValueCG;
 	
-import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
-import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;  
+import ${generateOptions.packageId}.definitions.I${currentRecord.extensionName};
+import ${generateOptions.packageId}.definitions.I${currentRecord.extensionName}Pojo;  
 import ${generateOptions.packageId}.schema.Record${currentRecord.extensionName};  
 
 public class Line${currentRecord.extensionName}JR 

@@ -1,4 +1,4 @@
-package ${generateOptions.packageId}.def;
+package ${generateOptions.packageId}.definitions;
 #incl("schema/CommentSchema.pvm")
 
 public interface I${currentRecord.extensionName}Pojo extends I${currentRecord.extensionName}Upd, I${currentRecord.extensionName} {

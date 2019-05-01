@@ -6,7 +6,7 @@ import net.sf.JRecord.cgen.def.ISerializer;
 import ${generateOptions.packageId}.schema.Schema${generateOptions.schemaDefinition.extensionName};
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
 import ${generateOptions.packageId}.data.Line${r.extensionName}JR;
-import ${generateOptions.packageId}.def.I${r.extensionName};
+import ${generateOptions.packageId}.definitions.I${r.extensionName};
 #*  *##end
 
 public class Serializer${generateOptions.schemaDefinition.extensionName} 

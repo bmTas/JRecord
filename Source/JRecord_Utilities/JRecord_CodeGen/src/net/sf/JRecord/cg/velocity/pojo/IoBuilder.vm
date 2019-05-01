@@ -20,7 +20,7 @@ import net.sf.JRecord.cgen.impl.IoBuilder;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
 #*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/DataSchema.vm")})
-import ${generateOptions.packageId}.def.Defs${generateOptions.schemaDefinition.extensionName};
+import ${generateOptions.packageId}.definitions.Defs${generateOptions.schemaDefinition.extensionName};
 #*  *##end    
 
 

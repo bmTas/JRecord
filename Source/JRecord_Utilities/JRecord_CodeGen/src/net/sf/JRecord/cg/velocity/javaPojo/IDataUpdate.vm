@@ -1,10 +1,13 @@
-package ${generateOptions.packageId}.def;
+package ${generateOptions.packageId}.definitions;
 #incl("schema/CommentSchema.pvm")
 
 #*  *##foreach($imp in ${currentRecord.getImportList()})
 import ${imp};
 #*  *##end
-
+#foreach($jc in ${currentRecord.getClassImports()})
+import ${jc};
+#end
+	
 public interface I${currentRecord.extensionName}Upd {
 
 #*  *##foreach($f in ${currentRecord.getFields()}) 

@@ -1,4 +1,4 @@
-package ${generateOptions.packageId}.def;
+package ${generateOptions.packageId}.definitions;
 #incl("schema/CommentSchema.pvm")
 
 #*  *##foreach($imp in ${currentRecord.getImportList()})

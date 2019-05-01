@@ -11,7 +11,7 @@ import net.sf.JRecord.Common.IGetData;
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
 import ${generateOptions.packageId}.data.Line${r.extensionName}JR;
 ##import ${generateOptions.packageId}.data.Line${r.extensionName}Pojo;
-import ${generateOptions.packageId}.def.I${r.extensionName};
+import ${generateOptions.packageId}.definitions.I${r.extensionName};
 #*  *##end 
 
 

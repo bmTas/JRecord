@@ -13,6 +13,7 @@ import net.sf.JRecord.cg.schema.LayoutDef;
  */
 public interface IGenerateOptions {
 
+	public static String DEFAULT_DEFINITION_PACKAGE_ID = "def";
 	/**
 	 * Get the 'Extended' Layout (or file schema definition)
 	 * @return the schemaDefinition
@@ -96,9 +97,16 @@ public interface IGenerateOptions {
 	public abstract ConstantVals getConstantValues();
 
 	/**
+	 * get the Schema Definition Package Id.
+	 * In version 0.90 of JRecord 
+	 */
+	public abstract String getDefinitionPackageId();
+	
+	/**
 	 * JRecord version to generate for
 	 * @return
 	 */
 	public abstract int getJRecordVersion();
+
 
 }

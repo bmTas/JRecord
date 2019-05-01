@@ -31,8 +31,8 @@ import net.sf.JRecord.Details.CsvLine;
 ####if (${generateOptions.getTemplateDtls().getGenerateOption("genpojo")})
 import net.sf.JRecord.cgen.defJr.IAsPojo;
 	
-import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
-import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;  
+import ${generateOptions.packageId}.definitions.I${currentRecord.extensionName};
+import ${generateOptions.packageId}.definitions.I${currentRecord.extensionName}Pojo;  
 
 #*      *##set ( $overide = "@Override")
 #*      *##set ( $overideSet = "@Override")
@@ -44,10 +44,10 @@ implements I${currentRecord.extensionName}Pojo, IGetByteData, IAsPojo<Line${curr
 #*      *##set ( $overide = "@Override")
 import net.sf.JRecord.cgen.defJr.IAsPojo;
 	
-import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
+import ${generateOptions.packageId}.definitions.I${currentRecord.extensionName};
 #*      *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/IDataUpdate.vm")})
 #*          *##set ( $overideSet = "@Override")
-import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Upd;
+import ${generateOptions.packageId}.definitions.I${currentRecord.extensionName}Upd;
 
 public class Line${currentRecord.extensionName}JR 
 implements I${currentRecord.extensionName}, I${currentRecord.extensionName}Upd, IGetByteData {

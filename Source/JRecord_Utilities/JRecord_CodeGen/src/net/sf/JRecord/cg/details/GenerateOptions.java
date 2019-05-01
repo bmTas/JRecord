@@ -604,7 +604,12 @@ public class GenerateOptions implements IGenerateOptions {
 		return templateDtls.getJrecordVersion();
 	}
    
-    
+
+
+	@Override
+	public String getDefinitionPackageId() {
+		return DEFAULT_DEFINITION_PACKAGE_ID;
+	}   
 //    public static ExternalGroupSelection<ExternalSelection> newAnd(ExternalSelection... selections) {
 //    	return ExternalGroupSelection.newAnd(selections);
 //    }

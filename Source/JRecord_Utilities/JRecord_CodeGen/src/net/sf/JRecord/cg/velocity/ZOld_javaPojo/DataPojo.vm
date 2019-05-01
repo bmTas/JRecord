@@ -11,8 +11,8 @@ import java.util.Arrays;
 import ${imp};
 #*  *##end
 
-import ${generateOptions.packageId}.def.I${currentRecord.extensionName};
-import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;
+import ${generateOptions.packageId}.definitions.I${currentRecord.extensionName};
+import ${generateOptions.packageId}.definitions.I${currentRecord.extensionName}Pojo;
 
 public class Line${currentRecord.extensionName}Pojo implements I${currentRecord.extensionName}Pojo {
 

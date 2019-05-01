@@ -1,8 +1,8 @@
 package ${generateOptions.packageId}.data;
 
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()}) 
-import ${generateOptions.packageId}.def.I${r.extensionName};  
-import ${generateOptions.packageId}.def.I${r.extensionName}Upd;  
+import ${generateOptions.packageId}.definitions.I${r.extensionName};  
+import ${generateOptions.packageId}.definitions.I${r.extensionName}Upd;  
 #*      *##end
 
 public class Code${generateOptions.schemaDefinition.extensionName} {

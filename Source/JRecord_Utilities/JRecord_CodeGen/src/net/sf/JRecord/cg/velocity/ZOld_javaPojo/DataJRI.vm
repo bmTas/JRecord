@@ -5,7 +5,7 @@ package ${generateOptions.packageId}.data;
 import ${imp};
 #*  *##end
 
-import ${generateOptions.packageId}.def.I${currentRecord.extensionName}Pojo;
+import ${generateOptions.packageId}.definitions.I${currentRecord.extensionName}Pojo;
 
 public class Line${currentRecord.extensionName}JR implements I${currentRecord.extensionName}Pojo {
 
