@@ -30,6 +30,8 @@
       
 package net.sf.JRecord.Common;
 
+import net.sf.JRecord.CsvParser.CsvParserManagerChar;
+import net.sf.JRecord.CsvParser.ICsvCharLineParser;
 import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.Option.IOptionResult;
 import net.sf.JRecord.Option.IOptionType;
@@ -91,6 +93,14 @@ public class FieldDetail implements IFieldDetail {
 		public int calculateActualPosition(AbstractIndexedLine line, DependingOnDtls dependingOnDtls, int pos) {
 			return pos;
 		}
+
+
+		@Override
+		public ICsvCharLineParser getCharParser() {
+			return  CsvParserManagerChar.getInstance().get(getRecordStyle());
+		}
+		
+		
 	};
 	private int pos;
 	private int len;

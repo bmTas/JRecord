@@ -30,6 +30,7 @@ package net.sf.JRecord.schema;
 
 import java.util.Map;
 
+import net.sf.JRecord.schema.fieldRename.IGetRecordFieldByName;
 import net.sf.JRecord.schema.jaxb.IItem;
 
 /**
@@ -45,12 +46,12 @@ public interface ISchemaInformation {
 	public static final int D_NO_DUPLICATES_IN_RECORD = 2;
 	public static final int D_DUPLICATES = 3;
 
-	/**
-	 * These values allow you to "Rename the Cobol Names"
-	 */
-	public static final int RO_LEAVE_ASIS = 0;
-	public static final int RO_MINUS_TO_UNDERSCORE = 1;
-	public static final int RO_CAMEL_CASE = 2;
+//	/**
+//	 * These values allow you to "Rename the Cobol Names"
+//	 */
+//	public static final int RO_LEAVE_ASIS = 0;
+//	public static final int RO_MINUS_TO_UNDERSCORE = 1;
+//	public static final int RO_CAMEL_CASE = 2;
 
 	/**
 	 * Get the Map of "Array's" by Level-Name (Group / Field names)
@@ -77,12 +78,12 @@ public interface ISchemaInformation {
 	 */
 	public abstract Map<String, Integer> getRecordHierarchyMap();
 
-	/**
-	 * Get the Record-Index for a name
-	 * @param name Record-Name
-	 * @return Record-Index
-	 */
-	public abstract int getRecordIndex(String name);
+//	/**
+//	 * Get the Record-Index for a name
+//	 * @param name Record-Name
+//	 * @return Record-Index
+//	 */
+//	public abstract int getRecordIndex(String name);
 
 	/**
 	 *  If you have Record-Hierarchy like:

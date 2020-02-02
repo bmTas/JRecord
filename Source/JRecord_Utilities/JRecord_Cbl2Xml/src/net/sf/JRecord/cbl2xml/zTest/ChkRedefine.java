@@ -31,7 +31,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.Details.AbstractLine;
@@ -46,7 +45,7 @@ public class ChkRedefine {
 			+ "                05 Val1      PIC S9(7) COMP-3.\n"
 			+ "                05 Val2      PIC X(10).\n";
 	
-	public static void main(String[] args) throws IOException, JAXBException, XMLStreamException {
+	public static void main(String[] args) throws IOException, XMLStreamException {
 		ICobol2Xml c2x = Cobol2Xml.newCobol2Xml(new StringReader(COPYBOOK), "the-rec")
 							.setFont("");
 		

@@ -280,5 +280,10 @@ public abstract class BaseCsvLineParser implements ICsvCharLineParser, ICsvByteL
 				csvDefinition.getFontName());
 	}
 	
-	
+
+	@Override
+	public boolean isUpdatable() {
+		return true;
+	}
+
 }

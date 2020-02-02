@@ -31,7 +31,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.xml.bind.JAXBException;
+
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 
@@ -61,7 +61,7 @@ public class TstCblDataToXml21 {
 	
 	//private String firstLine = "TAR5839DCDC - Taras Ave                                                             30-68 Taras Ave                         Altona North                       3025      VICA";
 	@Test
-	public void testData2Xml() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
+	public void testData2Xml() throws IOException, SAXException, ParserConfigurationException, RecordException, XMLStreamException {
 		String copybookName, dataName, xmlStr;
 		for (String[] d : files) { 
 			xmlStr = Cb2XmlCode.loadFile(Cb2XmlCode.getFullName("xml/" + d[2]), "\r\n", false);
@@ -80,7 +80,7 @@ public class TstCblDataToXml21 {
 	} 
 
 	@Test
-	public void testXml2Data() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
+	public void testXml2Data() throws IOException, SAXException, ParserConfigurationException, RecordException, XMLStreamException {
 		String xml2data, xmlStr;
 		String expected = loadLocationFile();
 		
@@ -103,7 +103,7 @@ public class TstCblDataToXml21 {
 
 	
 	private static byte[] data2xml(String dataFileName, String copybookFileName, int tagFormat) 
-	throws FileNotFoundException, RecordException, IOException, JAXBException, XMLStreamException, SAXException, ParserConfigurationException {
+	throws FileNotFoundException, RecordException, IOException, XMLStreamException, SAXException, ParserConfigurationException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 		Cobol2GroupXml.newCb2Xml2Xml(copybookFileName)
@@ -118,7 +118,7 @@ public class TstCblDataToXml21 {
 	
 	
 	private static String xml2data(InputStream xmlStream, String copybookFileName, int tagFormat) 
-	throws FileNotFoundException, RecordException, IOException, JAXBException, XMLStreamException {
+	throws FileNotFoundException, RecordException, IOException, XMLStreamException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 		Cobol2GroupXml.newCb2Xml2Xml(copybookFileName)

@@ -28,7 +28,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
+
 import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.JRecordInterface1;
@@ -51,7 +51,7 @@ public class TstReadingWriting extends TestCase {
 	
 	private static final int MAX_SALES_COUNT = 12;
 
-	public void test01()  throws IOException, RecordException,  XMLStreamException, JAXBException {
+	public void test01()  throws IOException, RecordException,  XMLStreamException {
 		tst("OccursDepending1.cbl", Constants.IO_STANDARD_TEXT_FILE, "1");
 	}
 	
@@ -63,7 +63,7 @@ public class TstReadingWriting extends TestCase {
 //		tst("OccursDepending1.cbl", Constants.IO_STANDARD_UNICODE_TEXT_FILE);
 //	}
 	
-	public void test04()  throws IOException, RecordException, XMLStreamException, JAXBException {
+	public void test04()  throws IOException, RecordException, XMLStreamException {
 		tst("OccursDepending2.cbl", Constants.IO_STANDARD_TEXT_FILE, "2");
 	}
 //	
@@ -71,7 +71,7 @@ public class TstReadingWriting extends TestCase {
 //		tst("OccursDepending2.cbl", Constants.IO_VB_FUJITSU);
 //	}
 	
-	private void tst(String copybook, int fileOrg, String id) throws IOException, RecordException, XMLStreamException, JAXBException {
+	private void tst(String copybook, int fileOrg, String id) throws IOException, RecordException, XMLStreamException {
 		String copybookFileName = TstXmlConstants.COBOL_DIRECTORY + copybook;
 		
 		ICobolIOBuilder ioBuilder = JRecordInterface1.COBOL

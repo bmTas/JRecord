@@ -31,8 +31,6 @@ package net.sf.JRecord.schema;
 
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
-
 import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Option.IRecordPositionOption;
@@ -180,9 +178,7 @@ public interface ICobolSchemaReader  extends  Icb2xmlLoadOptions  {
 	 * @return Extended Schema details
 	 * 
 	 */
-	public abstract CobolSchemaDetails getCobolSchemaDetails() throws IOException,
-			JAXBException;
-
+	public abstract CobolSchemaDetails getCobolSchemaDetails() throws IOException;
 
 
 }

@@ -185,6 +185,12 @@ public class BaseRecordEditorXmlLoader<XRecord extends BaseExternalRecord<XRecor
 						"Y".equalsIgnoreCase(
 								line.getFieldValueIfExists(Constants.RE_XML_INIT_SPACES).asString()));
 				
+				String formatParam = line.getFieldValueIfExists(Constants.RE_XML_STYLE_PARAM).asString();
+				
+				if (formatParam.length() > 0) {
+					childRec.setLineFormatParam(formatParam);
+				}
+				
 				s = line.getFieldValueIfExists(Constants.RE_XML_RECORDSEP).asString();
 				if (s != null && ! "".equals(s)) {
 					childRec.setRecSepList(s);

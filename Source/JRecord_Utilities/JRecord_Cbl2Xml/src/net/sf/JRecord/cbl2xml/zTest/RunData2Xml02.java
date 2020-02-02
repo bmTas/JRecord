@@ -26,7 +26,6 @@ package net.sf.JRecord.cbl2xml.zTest;
 
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.Common.RecordException;
@@ -35,7 +34,7 @@ import net.sf.JRecord.cbl2xml.zTest.xml2cbl.Cb2XmlCode;
 
 public class RunData2Xml02 {
 
-	public static void main(String[] args) throws RecordException, IOException, JAXBException, XMLStreamException {
+	public static void main(String[] args) throws RecordException, IOException, XMLStreamException {
 		String cbl1 =  Cb2XmlCode.getFullName("cobol/amsPoDownload.cbl");
 		String forgText = "text";
 		String poRec = "PO-Record";

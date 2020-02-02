@@ -32,7 +32,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.xml.bind.JAXBException;
+
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLStreamException;
@@ -72,14 +72,14 @@ public class TstCblDataToXml02 {
 
 	//private String firstLine = "TAR5839DCDC - Taras Ave                                                             30-68 Taras Ave                         Altona North                       3025      VICA";
 	@Test
-	public void testData2Xml() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
+	public void testData2Xml() throws IOException, SAXException, ParserConfigurationException, RecordException, XMLStreamException {
 		for (String[] d : files) {
 			check(d);
 		}
 	}
 	
 	@Test
-	public void testData2Xml_DTAR107() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
+	public void testData2Xml_DTAR107() throws IOException, SAXException, ParserConfigurationException, RecordException, XMLStreamException {
 		check(files[4]);
 	}
 
@@ -95,7 +95,7 @@ public class TstCblDataToXml02 {
 	 * @throws FactoryConfigurationError
 	 */
 	private void check(String[] d) throws FileNotFoundException,
-			RecordException, IOException, JAXBException, XMLStreamException,
+			RecordException, IOException, XMLStreamException,
 			SAXException, ParserConfigurationException,
 			FactoryConfigurationError {
 		String copybookName;
@@ -130,7 +130,7 @@ public class TstCblDataToXml02 {
 	} 
 	
 	private static byte[] data2xml(String dataFileName, String copybookFileName, boolean dropCopybookName, boolean vb, boolean useAddPlus) 
-	throws FileNotFoundException, RecordException, IOException, JAXBException, XMLStreamException, SAXException, ParserConfigurationException {
+	throws FileNotFoundException, RecordException, IOException, XMLStreamException, SAXException, ParserConfigurationException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 		int fileOrg = Constants.IO_FIXED_LENGTH;
@@ -157,7 +157,7 @@ public class TstCblDataToXml02 {
 	
 	
 	@Test
-	public void testXml2Data() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
+	public void testXml2Data() throws IOException, SAXException, ParserConfigurationException, RecordException, XMLStreamException {
 		int count = files.length/2;
 		byte[] xml2data;
 		byte[][] expected = new byte[count][];
@@ -188,7 +188,7 @@ public class TstCblDataToXml02 {
 	}
 
 	private static byte[] xml2data(String dataFileName, String copybookFileName, boolean dropCopybookName, boolean vb) 
-	throws FileNotFoundException, RecordException, IOException, JAXBException, XMLStreamException {
+	throws FileNotFoundException, RecordException, IOException, XMLStreamException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 		int fileOrg = Constants.IO_FIXED_LENGTH;

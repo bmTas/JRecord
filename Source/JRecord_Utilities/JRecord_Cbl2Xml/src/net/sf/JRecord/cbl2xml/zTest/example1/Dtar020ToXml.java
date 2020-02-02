@@ -38,7 +38,7 @@ package net.sf.JRecord.cbl2xml.zTest.example1;
 
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
+
 import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.cbl2xml.Cobol2Xml;
@@ -47,7 +47,7 @@ import net.sf.JRecord.Option.JRecordConstantVars;
 public class Dtar020ToXml {
 
    public static void main(String[] args)
-   throws IOException, JAXBException, XMLStreamException {
+   throws IOException, XMLStreamException {
   
        JRecordConstantVars constants = Cobol2Xml.JR_CONSTANTS;
 	

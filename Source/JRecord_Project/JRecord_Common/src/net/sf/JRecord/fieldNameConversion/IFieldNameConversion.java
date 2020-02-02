@@ -1,6 +1,6 @@
 package net.sf.JRecord.fieldNameConversion;
 
-public interface IFieldNameConversion {
+public interface IFieldNameConversion extends IRenameField {
 	
 	String getConversionName();
 
@@ -10,7 +10,7 @@ public interface IFieldNameConversion {
 
 	String toSuffix(String str);
 
-	String toFieldName(String b);
+//	String toFieldName(String b);
 
 	String toClassName(String b);
 

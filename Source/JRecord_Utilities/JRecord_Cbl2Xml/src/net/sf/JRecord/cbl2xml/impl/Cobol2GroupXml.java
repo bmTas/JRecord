@@ -32,10 +32,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -62,8 +62,8 @@ import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
 import net.sf.JRecord.schema.CobolSchemaDetails;
 import net.sf.JRecord.schema.CobolSchemaReader;
 import net.sf.JRecord.schema.IArrayItemCheck;
-import net.sf.JRecord.schema.IGetRecordFieldByName;
 import net.sf.JRecord.schema.ISchemaInformation;
+import net.sf.JRecord.schema.fieldRename.IGetRecordFieldByName;
 import net.sf.JRecord.schema.jaxb.IItem;
 import net.sf.JRecord.schema.jaxb.Item;
 import net.sf.JRecord.schema.jaxb.ItemRecordDtls;
@@ -99,7 +99,8 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 	private IFormatField formatField = DoNothingFormat.INSTANCE;
 
 
-	
+	private IGetRecordFieldByName fieldNameLookup = null;
+
 	
 	private Cobol2GroupXml(String copybookFilename, ICopybookLoaderCobol loader) {
 		super(Conversion.getCopyBookId(copybookFilename), loader);
@@ -181,6 +182,13 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 	}
 
 
+	@Override
+	public final ICobol2Xml setFieldNameLookup(IGetRecordFieldByName fieldNameLookup) {
+		this.fieldNameLookup = fieldNameLookup;
+		
+		return this;
+	}
+
 	/**
 	 * @param formatField the formatField to set
 	 */
@@ -191,12 +199,12 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 	}
 
 	@Override
-	public void cobol2xml(String cobolFileName, String xmlFileName) throws RecordException, IOException, JAXBException, XMLStreamException {
+	public void cobol2xml(String cobolFileName, String xmlFileName) throws RecordException, IOException, XMLStreamException {
 		cobol2xml(new FileInputStream(cobolFileName), new BufferedOutputStream(new FileOutputStream(xmlFileName), 0x4000));
 	}
 	
 	@Override
-	public void cobol2xml(InputStream cobolStream, OutputStream xmlStream) throws IOException, JAXBException, XMLStreamException {
+	public void cobol2xml(InputStream cobolStream, OutputStream xmlStream) throws IOException,  XMLStreamException {
 		doInit();
 		
         AbstractLineReader r = cobolSchemaDetails.ioBuilder.newReader(cobolStream);
@@ -215,7 +223,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
         
  		if (recordItems.size() == 1) {
  			List<Item> items = recordItems.get(0).items;
- 			String itemName = "Line";
+ 			//String itemName = "Line";
  			if (items.size() == 1 && items.get(0).itemType == Item.TYPE_GROUP) {
 		        while ((l = r.read()) != null) {
 		        	writeItems(writer, lineHelper.setLine(l), items, new IntStack());
@@ -264,7 +272,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
         r.close();
 	}
 	
-	private void doInit() throws IOException, JAXBException {
+	private void doInit() throws IOException {
 		cobolSchemaDetails = super.getCobolSchemaDetails();
 		
 		schema = cobolSchemaDetails.schema;
@@ -482,13 +490,13 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 	
 	@Override
 	public void xml2Cobol(String xmlFileName, String cobolFileName) 
-	throws RecordException, IOException, JAXBException, XMLStreamException {
+	throws RecordException, IOException, XMLStreamException {
 		xml2Cobol(new FileInputStream(xmlFileName), new BufferedOutputStream(new FileOutputStream(cobolFileName), 0x4000));
 	}
 
 	@Override
 	public void xml2Cobol(InputStream xmlStream, OutputStream cobolStream) 
-	throws RecordException, IOException, JAXBException, XMLStreamException{
+	throws RecordException, IOException, XMLStreamException{
 		//XMLInputFactory f = XMLInputFactory.newInstance();
 		doInit();
 		if (itemDtls.getDuplicateFieldsStatus() == ISchemaInformation.D_DUPLICATES) {
@@ -508,14 +516,17 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 		Map<String, ? extends IItem> arrayItems = itemDtls.getArrayItems();
 		IntStack arrayDtls = new IntStack();
 		IntStack levelNames = new IntStack();
-		IGetRecordFieldByName fieldLookup = itemDtls.getFieldLookup();
 		Map<String, Integer> recordHierarchyMap = itemDtls.getRecordHierarchyMap();
 		int maxHierarchLvl = itemDtls.getMaxRecordHierarchyLevel();
 		String recordName = "";
 		Integer lookupLvl;
 		boolean lastWasArray = false;
+		ArrayList<String> tagNames = new ArrayList<String>();
 		
-
+		if (fieldNameLookup == null) {
+			fieldNameLookup = itemDtls.getFieldLookup();
+		}
+		fieldNameLookup.setSchema(schema);
 		
 		while (parser.hasNext()) {
 			lastType = type;
@@ -538,7 +549,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 
             		l = cobolSchemaDetails.ioBuilder.newLine();
             		if (schema.getRecordCount() > 1) {
-            			int recIdx = itemDtls.getRecordIndex(name); // schema.getRecordIndex(name);
+            			int recIdx = fieldNameLookup.getRecordIndex(name); // schema.getRecordIndex(name);
             			if (recIdx >= 0) {
             				l.setWriteLayout(recIdx);
             			}
@@ -561,6 +572,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
             	
             	lastName = name;
             	levelNames.add(0, name, null);
+            	tagNames.add(name);
             	b.setLength(0);
             	
             	
@@ -573,14 +585,14 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 				
 				if (lastName.equals(name2)) {
 	        		IFieldDetail f;
-	        		String n = lastName;
+	        		//String n = lastName;
 	        		
-	        		f = fieldLookup.getField(recordName, n, indexes);
+	        		f = fieldNameLookup.getField(recordName, tagNames, indexes);
 	        		
 	        		if (f == null) {
 	        			if (b.length() > 0) {
-	        				f = fieldLookup.getField(recordName, n, indexes);
-	        				throw new RuntimeException("Field: " + n + " does not exist, can not assign '" + b.toString() + "'");
+	        				//f = fieldLookup.getField(recordName, tagNames, indexes);
+	        				throw new RuntimeException("Field: " + lastName + " does not exist, can not assign '" + b.toString() + "'");
 	        			}
 	        		} else {
 		        		AbstractFieldValue fieldValue = l.getFieldValue(f);
@@ -594,7 +606,8 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 							fieldValue.set(txt);
 			        	}
 	        		}
-		        	b.setLength(0); 	
+		        	b.setLength(0);
+		        	tagNames.remove(tagNames.size() - 1);
 				}
 				
 				if (lastWasArray) {

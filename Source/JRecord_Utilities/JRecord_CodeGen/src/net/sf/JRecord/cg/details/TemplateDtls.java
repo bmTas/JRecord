@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,15 +15,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 
-import net.sf.JRecord.cg.details.jaxb.Option;
-import net.sf.JRecord.cg.details.jaxb.Options;
-import net.sf.JRecord.cg.details.jaxb.SkelGenDefinition;
-import net.sf.JRecord.cg.details.jaxb.Skelton;
-import net.sf.JRecord.cg.details.jaxb.Skeltons;
+//import javax.xml.bind.JAXBContext;
+//import javax.xml.bind.JAXBException;
+//import javax.xml.bind.Unmarshaller;
+
+import net.sf.JRecord.cg.details.xml.Option;
+import net.sf.JRecord.cg.details.xml.ReadSkelGenDefinition;
+import net.sf.JRecord.cg.details.xml.SkelGenDefinition;
+import net.sf.JRecord.cg.details.xml.Skelton;
+
 
 
 
@@ -286,7 +290,7 @@ public class TemplateDtls {
 					if ((xml = getString(templateProperties, SKELTON_XML_PROPERTY )) != null) {
 						try {
 							tempSkels = loadSkelsFromXml(xml);
-						} catch (JAXBException e) {
+						} catch (XMLStreamException e) {
 							return lang;
 						}
 					} else {
@@ -369,7 +373,7 @@ public class TemplateDtls {
 		this.multiRecord = multiRecord;
 	}
 
-	public SkelGenDefinition getSkeltons() throws JAXBException {
+	public SkelGenDefinition getSkeltons() throws XMLStreamException, FactoryConfigurationError  {
 		if (skeltons == null) {
 			String xml;
 			if (multiRecord && (xml = getString(templateProperties, SKELTON_XML_MULTI_RECORD )) != null) {
@@ -397,40 +401,46 @@ public class TemplateDtls {
 		}
 	}
 	
-	private SkelGenDefinition loadSkelsFromXml(String xmlFile) throws JAXBException {
-        JAXBContext jc = JAXBContext
-        		.newInstance(SkelGenDefinition.class, Skeltons.class, Skelton.class, Options.class, Option.class);
-        
-        Unmarshaller unmarshaller = jc.createUnmarshaller();
+	private SkelGenDefinition loadSkelsFromXml(String xmlFile) throws XMLStreamException, FactoryConfigurationError {
+//        JAXBContext jc = JAXBContext
+//        		.newInstance(SkelGenDefinition.class, Skeltons.class, Skelton.class, Options.class, Option.class);
+//        
+//        Unmarshaller unmarshaller = jc.createUnmarshaller();
         SkelGenDefinition skelDefs;
-        if (useTemplateDir) {
-        	FileInputStream is = null;
-        	try {
+        ReadSkelGenDefinition readSkel;
+    	InputStream is = null;
+    	try {
+	        if (useTemplateDir) {
 				is = new FileInputStream(templateDir + '/' + template + "/" + xmlFile);
-				skelDefs = (SkelGenDefinition) unmarshaller.unmarshal(is);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-				throw new RuntimeException(e);
-			} finally {
-				if (is != null) {
-					try {
-						is.close();
-					} catch (IOException e) {
-					}
+	        } else {
+		        String resourceName = templateBase + template + "/" + xmlFile;
+		        //System.out.println("Xml resource name: " + resourceName);
+				//InputStream xmlStream = this.getClass().getResourceAsStream(resourceName);
+		       is = this.getClass().getResource(resourceName).openStream();
+	        }
+        
+			XMLStreamReader xmlStream = XMLInputFactory.newInstance().createXMLStreamReader(is);
+			readSkel =new ReadSkelGenDefinition(xmlStream);
+			skelDefs = readSkel.readXml();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
 				}
 			}
-        } else {
-	        String resourceName = templateBase + template + "/" + xmlFile;
-	        //System.out.println("Xml resource name: " + resourceName);
-			//InputStream xmlStream = this.getClass().getResourceAsStream(resourceName);
-	        URL resource = this.getClass().getResource(resourceName);
-	        //System.out.println("Xml resource: " + resource + " ");
-	        skelDefs = (SkelGenDefinition) unmarshaller.unmarshal(resource); 
-        }
+		}
+
         updateSkelDetails(skelDefs.getLayoutSkeltons());
         updateSkelDetails(skelDefs.getRecordSkeltons());
         
-        List<Option> options = skelDefs.getOptions();
+        List<Option> options = skelDefs.getOptions().getOption();
         for (Option option : options) {
         	Object o = Boolean.TRUE;
         	String value = option.getValue();

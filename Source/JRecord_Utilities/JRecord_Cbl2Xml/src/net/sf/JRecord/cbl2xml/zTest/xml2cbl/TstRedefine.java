@@ -31,7 +31,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringReader;
 
-import javax.xml.bind.JAXBException;
+
 import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.Common.Conversion;
@@ -67,7 +67,7 @@ public class TstRedefine {
 					= "<?xml version=\"1.0\" encoding=\"UTF-8\"?><CobolData><the-rec><Base-Data></Base-Data>"
 					+ "<Data><Val1>#</Val1><Val2></Val2><Val3></Val3><Val4>#</Val4></Data></the-rec></CobolData>";
 	@Test
-	public void test01() throws IOException, JAXBException, XMLStreamException {
+	public void test01() throws IOException, XMLStreamException {
 		
 		ICobol2Xml c2x = Cobol2Xml.newCobol2Xml(new StringReader(COPYBOOK), "the-rec")
 								.setFont("");
@@ -87,7 +87,7 @@ public class TstRedefine {
 	 * @throws JAXBException
 	 * @throws XMLStreamException
 	 */
-	public void chk1(ICobol2Xml c2x, int i) throws IOException, JAXBException,
+	public void chk1(ICobol2Xml c2x, int i) throws IOException,
 			XMLStreamException {
 		AbstractLine line = c2x.asIOBuilder().newLine();
 		line.getFieldValue("Val1").set(i);
@@ -120,7 +120,7 @@ public class TstRedefine {
 	}
 	
 	@Test
-	public void test02() throws IOException, JAXBException, XMLStreamException {
+	public void test02() throws IOException, XMLStreamException {
 		
 		ICobol2Xml c2x = Cobol2Xml.newCobol2Xml(new StringReader(COPYBOOK), "the-rec")
 								.setFont("");
@@ -141,7 +141,7 @@ public class TstRedefine {
 	 * @throws JAXBException
 	 * @throws XMLStreamException
 	 */
-	public void chk2(ICobol2Xml c2x, int i) throws IOException, JAXBException,
+	public void chk2(ICobol2Xml c2x, int i) throws IOException,
 			XMLStreamException {
 		AbstractLine line = c2x.asIOBuilder().newLine();
 		line.getFieldValue("Val1").set(i);
@@ -184,7 +184,7 @@ public class TstRedefine {
 	}
 
 	@Test
-	public void test03() throws IOException, JAXBException, XMLStreamException {
+	public void test03() throws IOException, XMLStreamException {
 		
 		ICobol2Xml c2x = Cobol2Xml.newCobol2Xml(new StringReader(COPYBOOK), "the-rec")
 								.setFont("");
@@ -206,7 +206,7 @@ public class TstRedefine {
 	 * @throws JAXBException
 	 * @throws XMLStreamException
 	 */
-	public void chk3(ICobol2Xml c2x, int i) throws IOException, JAXBException,
+	public void chk3(ICobol2Xml c2x, int i) throws IOException,
 			XMLStreamException {
 		AbstractLine line = c2x.asIOBuilder().newLine();
 		line.getFieldValue("Val1").set(i);

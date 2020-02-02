@@ -28,6 +28,8 @@ package net.sf.JRecord.cg;
 import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.cg.details.GenerateOptions;
 import net.sf.JRecord.cg.details.ParseArgs;
@@ -35,7 +37,7 @@ import net.sf.JRecord.cg.velocity.GenerateVelocity;
 
 public class Generate {
 
-	public static void main(String[] args) throws IOException, JAXBException {
+	public static void main(String[] args) throws IOException, XMLStreamException, FactoryConfigurationError {
 		ParseArgs pa = new ParseArgs(args);
 
 		if (pa.get2Args("-h", "-help", pa.getArg("-?")) != null) {

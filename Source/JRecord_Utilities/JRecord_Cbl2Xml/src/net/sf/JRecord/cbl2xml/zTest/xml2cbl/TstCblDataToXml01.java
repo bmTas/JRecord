@@ -29,7 +29,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 
@@ -58,7 +57,7 @@ public class TstCblDataToXml01 {
 	
 	//private String firstLine = "TAR5839DCDC - Taras Ave                                                             30-68 Taras Ave                         Altona North                       3025      VICA";
 	@Test
-	public void testData2Xml() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
+	public void testData2Xml() throws IOException, SAXException, ParserConfigurationException, RecordException, XMLStreamException {
 		String copybookName, dataName, xmlDataName;
 		for (String[] d : files) { 
 			copybookName = Cb2XmlCode.getFullName("xmlCopybook/" + d[0]);
@@ -77,7 +76,7 @@ public class TstCblDataToXml01 {
 	}
 	
 	@Test
-	public void testData2XmlUseAddPo() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
+	public void testData2XmlUseAddPo() throws IOException, SAXException, ParserConfigurationException, RecordException, XMLStreamException {
 		String copybookName, dataName, xmlDataName;
 		for (String[] d : files) { 
 			copybookName = Cb2XmlCode.getFullName("xmlCopybook/" + d[0]);
@@ -97,7 +96,7 @@ public class TstCblDataToXml01 {
 	} 
 
 	@Test
-	public void testXml2Data() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
+	public void testXml2Data() throws IOException, SAXException, ParserConfigurationException, RecordException, XMLStreamException {
 		String xml2data;
 		String expected = loadLocationFile();
 		
@@ -114,7 +113,7 @@ public class TstCblDataToXml01 {
 
 	
 	private static byte[] data2xml(String dataFileName, String copybookFileName, boolean addPlusToNums) 
-	throws FileNotFoundException, RecordException, IOException, JAXBException, XMLStreamException, SAXException, ParserConfigurationException {
+	throws FileNotFoundException, RecordException, IOException, XMLStreamException, SAXException, ParserConfigurationException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 		Icb2xml2Xml xmlWriter = Cobol2GroupXml.newCb2Xml2Xml(copybookFileName)
@@ -134,7 +133,7 @@ public class TstCblDataToXml01 {
 	
 	
 	private static String xml2data(String dataFileName, String copybookFileName) 
-	throws FileNotFoundException, RecordException, IOException, JAXBException, XMLStreamException {
+	throws FileNotFoundException, RecordException, IOException, XMLStreamException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 		Cobol2GroupXml.newCb2Xml2Xml(copybookFileName)

@@ -22,5 +22,7 @@ public interface ICsvParserIds {
 	public static final int STANDARD_EMBEDDED_CR_NAMES_TXT_INQUOTE = 12;
 	public static final int BASIC_TXT_INQUOTE = 13;
 
+	public static final int REGULAR_EXPRESSION_PARSER = 40;
+
 	public static final int NUMBER_OF_PARSERS = 50;
 }

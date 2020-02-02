@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import javax.xml.bind.JAXBException;
+//
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -202,7 +202,7 @@ public interface Icb2xml2Xml extends Icb2xmlLoadOptions {
 	 * @throws XMLStreamException
 	 */
 	public void cobol2xml(String cobolFileName, String xmlFileName)  
-			throws  IOException, JAXBException, XMLStreamException;
+			throws  IOException, XMLStreamException;
 	
 	/**
 	 * Convert Cobol Data File to Xml file
@@ -215,7 +215,7 @@ public interface Icb2xml2Xml extends Icb2xmlLoadOptions {
 	 * @throws XMLStreamException
 	 */
 	public void cobol2xml(InputStream cobolStream, OutputStream xmlStream)
-			throws IOException, JAXBException, XMLStreamException;
+			throws IOException, XMLStreamException;
 
 	/**
 	 * Convert Input Xml-Data to Cobol Data-File
@@ -228,7 +228,7 @@ public interface Icb2xml2Xml extends Icb2xmlLoadOptions {
 	 * @throws XMLStreamException
 	 */
 	public void xml2Cobol(String xmlFileName, String cobolFileName)
-			throws IOException, JAXBException, XMLStreamException;
+			throws IOException, XMLStreamException;
 
 	/**
 	 * Convert a Xml-Data in to a Cobol Data 
@@ -240,8 +240,7 @@ public interface Icb2xml2Xml extends Icb2xmlLoadOptions {
 	 * @throws XMLStreamException
 	 */
 	public void xml2Cobol(InputStream xmlStream, OutputStream cobolStream)
-			throws IOException, JAXBException,
-			XMLStreamException;
+			throws IOException, XMLStreamException;
 
 	/**
 	 * Set "formatField". This class will format the field-output prior to writing to a file.

@@ -76,7 +76,9 @@ public class TstDateDerSer extends TestCase {
 					dd.mmStr + sep + dd.ddStr + sep + dd.yyyyStr, dd.mm2Str + sep + dd.dd2Str + sep + dd.yyyyStr);
 			tst1StrDate(fvChar, DateFieldSerDes.getYYYY_MM_DD(sep), dd.date,
 					dd.yyyyStr + sep + dd.mmStr + sep + dd.ddStr, dd.yyyyStr + sep + dd.mm2Str + sep + dd.dd2Str);
-
+		}
+		//char[] seps1 = {' ', '/', '-', '.'};
+		for (char sep : seps ) {
 			tst1StrDate(fvChar, DateFieldSerDes.getDD_Mth_YY(sep), dd.date,
 					dd.ddStr + sep + dd.MthStr + sep + dd.yy2Str, dd.dd2Str + sep + dd.MthStr + sep + dd.yy2Str);
 			tst1StrDate(fvChar, DateFieldSerDes.getMth_DD_YY(sep), dd.date,

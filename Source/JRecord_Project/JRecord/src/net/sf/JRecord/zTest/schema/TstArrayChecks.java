@@ -32,28 +32,35 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.stream.XMLStreamException;
-
-import org.w3c.dom.Document;
+//import javax.xml.bind.JAXBContext;
+//import javax.xml.bind.JAXBElement;
+//
+//import javax.xml.bind.Unmarshaller;
+//import javax.xml.stream.XMLStreamException;
+//
+//import org.w3c.dom.Document;
 
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.CharLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.Line;
+//import net.sf.JRecord.Numeric.ConversionManager;
+//import net.sf.JRecord.Numeric.Convert;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.schema.ArrayElementChecks;
+import net.sf.JRecord.schema.CobolSchemaDetails;
+import net.sf.JRecord.schema.CobolSchemaReader;
 import net.sf.JRecord.schema.IArrayItemCheck;
-import net.sf.JRecord.schema.jaxb.Condition;
-import net.sf.JRecord.schema.jaxb.Copybook;
+//import net.sf.JRecord.schema.jaxb.Condition;
+//import net.sf.JRecord.schema.jaxb.Copybook;
 import net.sf.JRecord.schema.jaxb.Item;
-import net.sf.cb2xml.def.Cb2xmlConstants;
-import net.sf.cb2xml.sablecc.lexer.LexerException;
-import net.sf.cb2xml.sablecc.parser.ParserException;
+//import net.sf.JRecord.schema.jaxb.IItem;
+
+//import net.sf.cb2xml.def.Cb2xmlConstants;
+//import net.sf.cb2xml.def.ICopybook;
+//import net.sf.cb2xml.sablecc.lexer.LexerException;
+//import net.sf.cb2xml.sablecc.parser.ParserException;
 import junit.framework.TestCase;
 
 
@@ -263,27 +270,41 @@ public class TstArrayChecks extends TestCase {
 	
 	private static Item getArrayItem() {
 		try {
-			Document doc = net.sf.JRecord.External.Def.Cb2Xml.convertToXMLDOM(
-					new StringReader(COBOL_COPYBOOK), "ArrayCheckData", ICopybookDialects.FMT_MAINFRAME,
-					false, Cb2xmlConstants.USE_STANDARD_COLUMNS);
-	        JAXBContext jc = JAXBContext.newInstance(Condition.class, Copybook.class, Item.class);
-	        
-	        Unmarshaller unmarshaller = jc.createUnmarshaller();
-	        JAXBElement<Copybook> jaxbCopybook = unmarshaller.unmarshal(doc, Copybook.class);
-	        return  findItem(jaxbCopybook.getValue().getCobolItems());
-
-		} catch (ParserException e) {
-			e.printStackTrace();
-		} catch (LexerException e) {
-			e.printStackTrace();
+			
+			CobolSchemaDetails cobolSchemaDetails = CobolSchemaReader.newCobolSchemaReader(new StringReader(COBOL_COPYBOOK), "ArrayCheckData")
+				.setDialect(ICopybookDialects.FMT_MAINFRAME)
+				.getCobolSchemaDetails();
+				
+//			Convert conv = ConversionManager.getInstance().getConverter4code(ICopybookDialects.FMT_MAINFRAME) ;
+//			ICopybook cobolItemTree = net.sf.cb2xml.Cb2Xml3
+//				.newBuilder(new StringReader(COBOL_COPYBOOK), "ArrayCheckData")
+//				.setDebug(false)
+//				.setCobolLineFormat(Cb2xmlConstants.USE_STANDARD_COLUMNS)
+//				.setLoadComments(false)
+//				.setXmlFormat(Cb2xmlConstants.Cb2xmlXmlFormat.CLASSIC)
+//				.setDialect(ICopybookDialects.FMT_MAINFRAME)
+//				.asCobolItemTree();
+//			Document doc = net.sf.JRecord.External.Def.Cb2Xml.convertToXMLDOM(
+//					new StringReader(COBOL_COPYBOOK), "ArrayCheckData", ICopybookDialects.FMT_MAINFRAME,
+//					false, Cb2xmlConstants.USE_STANDARD_COLUMNS);
+//	        JAXBContext jc = JAXBContext.newInstance(Condition.class, Copybook.class, Item.class);
+//	        
+//	        Unmarshaller unmarshaller = jc.createUnmarshaller();
+//	        JAXBElement<Copybook> jaxbCopybook = unmarshaller.unmarshal(doc, Copybook.class);
+	        return  findItem(cobolSchemaDetails.recordItems.get(0).items);
+//
+//		} catch (ParserException e) {
+//			e.printStackTrace();
+//		} catch (LexerException e) {
+//			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		} catch (XMLStreamException e) {
-			e.printStackTrace();
+//		} catch (JAXBException e) {
+//			e.printStackTrace();
+//		} catch (XMLStreamException e) {
+//			e.printStackTrace();
 		}
-		
+//		
 		return null;
 	}
 	

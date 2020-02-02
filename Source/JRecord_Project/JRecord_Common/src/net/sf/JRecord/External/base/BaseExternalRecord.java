@@ -123,6 +123,8 @@ implements IFieldUpdatedListner, IAddDependingOn {
 	private    int recordLength = -1;
 	private    int dialectCode = ICopybookDialects.FMT_MAINFRAME;
 	private String[] parentGroupNames;
+	
+	private String lineFormatParam = "";
 
 	private ExternalSelection recSelect;
 	private IRecordPositionOption recordPosistionOption = null;
@@ -1742,6 +1744,16 @@ implements IFieldUpdatedListner, IAddDependingOn {
 	public void setRecordSelection(ExternalSelection recSelect) {
 		this.recSelect = StreamLine.getExternalStreamLine().streamLine(recSelect);
 	}
+
+	public String getLineFormatParam() {
+		return lineFormatParam;
+	}
+
+
+	public void setLineFormatParam(String lineFormatParam) {
+		this.lineFormatParam = lineFormatParam;
+	}
+
 
 	/**
 	 * @return the embeddedCr

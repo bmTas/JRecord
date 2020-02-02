@@ -28,7 +28,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
+
 import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.Common.Constants;
@@ -47,18 +47,18 @@ import junit.framework.TestCase;
 
 public class TstReadingWriting11 extends TestCase {
 	
-	public void test11()  throws IOException, RecordException, XMLStreamException, JAXBException {
+	public void test11()  throws IOException, RecordException, XMLStreamException {
 		tst("ArrayDep11.cbl", "11", Constants.IO_STANDARD_TEXT_FILE, false);
 	}
 	
 	
-	public void test12()  throws IOException, RecordException, XMLStreamException, JAXBException {
+	public void test12()  throws IOException, RecordException, XMLStreamException {
 		tst("ArrayDep12.cbl", "12", Constants.IO_STANDARD_TEXT_FILE, false);
 	}
 	
 	
 	
-	private void tst(String copybook, String id, int fileOrg, boolean sep) throws IOException, RecordException, XMLStreamException, JAXBException {
+	private void tst(String copybook, String id, int fileOrg, boolean sep) throws IOException, RecordException, XMLStreamException {
 		String copybookFileName = TstXmlConstants.COBOL_DIRECTORY + copybook;
 		
 		ICobolIOBuilder ioBuilder = CobolIoProvider.getInstance()

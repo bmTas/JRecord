@@ -2,14 +2,15 @@ package test.gen;
 
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.cg.Generate;
 import net.sf.JRecord.cg.details.ArgumentOption;
 
 public class TstIoBldrSchemaGen01 {
 
-	public static void main(String[] args) throws IOException, JAXBException {
+	public static void main(String[] args) throws IOException,  XMLStreamException, FactoryConfigurationError {
 
 		String[] arguments1 = {
 				ArgumentOption.OPT_TEMPLATE, "schemaClass",

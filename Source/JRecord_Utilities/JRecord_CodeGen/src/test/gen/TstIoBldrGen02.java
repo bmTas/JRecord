@@ -2,7 +2,8 @@ package test.gen;
 
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.cg.Generate;
 import net.sf.JRecord.cg.details.ArgumentOption;
@@ -10,10 +11,10 @@ import net.sf.JRecord.cg.details.ArgumentOption;
 public class TstIoBldrGen02 {
 
 	private static final String PACKAGE_NAME = "example.ioBuilder.nameClass";
-	private static final String GENERATE_DIR = "G:/Temp/Gen/ioBuilderFN";
+	private static final String GENERATE_DIR = TstCommon.OUTPUT_DIRECTORY + "ioBuilderFN";
 	private static final String IO_BUILDER_FIELD_NAME_CLASS = "standard";
 
-	public static void main(String[] args) throws IOException, JAXBException {
+	public static void main(String[] args) throws IOException,  XMLStreamException, FactoryConfigurationError {
 
 		String[] arguments1 = {
 				ArgumentOption.OPT_TEMPLATE, IO_BUILDER_FIELD_NAME_CLASS,

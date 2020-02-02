@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
+
 import javax.xml.stream.XMLStreamException;
 
 import junit.framework.TestCase;
@@ -66,8 +66,6 @@ public class TestALine {
 			osXml.close();
 			osCbl.close();
 		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} catch (JAXBException e) {
 			throw new RuntimeException(e);
 		} catch (XMLStreamException e) {
 			throw new RuntimeException(e);

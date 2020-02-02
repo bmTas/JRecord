@@ -38,7 +38,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
+import javax.xml.stream.FactoryConfigurationError;
+import javax.xml.stream.XMLStreamException;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -49,8 +50,8 @@ import org.apache.velocity.exception.ParseErrorException;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.cg.details.IGenerateOptions;
 import net.sf.JRecord.cg.details.TemplateDtls;
-import net.sf.JRecord.cg.details.jaxb.SkelGenDefinition;
-import net.sf.JRecord.cg.details.jaxb.Skelton;
+import net.sf.JRecord.cg.details.xml.SkelGenDefinition;
+import net.sf.JRecord.cg.details.xml.Skelton;
 import net.sf.JRecord.cg.schema.RecordDef;
 
 
@@ -63,7 +64,7 @@ public class GenerateVelocity {
 	
 	public final List<GeneratedSkelDetails> generatedFiles = new ArrayList<GeneratedSkelDetails>();
 	
-	public GenerateVelocity(IGenerateOptions opts, Object sourceApp) throws IOException, JAXBException {
+	public GenerateVelocity(IGenerateOptions opts, Object sourceApp) throws IOException, XMLStreamException, FactoryConfigurationError {
 		
 	
 //		try {
@@ -73,7 +74,7 @@ public class GenerateVelocity {
 //		}
 	}
 	
-	private void generate(IGenerateOptions opts, Object sourceApp) throws IOException, JAXBException  {
+	private void generate(IGenerateOptions opts, Object sourceApp) throws IOException, XMLStreamException, FactoryConfigurationError  {
 		
 		SkelGenDefinition skeltonDetails = opts.getTemplateDtls().getSkeltons();
 

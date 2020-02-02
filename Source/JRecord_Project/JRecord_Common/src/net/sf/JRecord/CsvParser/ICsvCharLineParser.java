@@ -117,4 +117,9 @@ public interface ICsvCharLineParser {
 	 */
 	public String formatFieldList(List<? extends Object> fields, ICsvDefinition lineDef, int[] fieldTypes);
 
+	/**
+	 * Indicate wether the class can update lines
+	 * @return
+	 */
+	public boolean isUpdatable();
 }

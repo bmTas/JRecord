@@ -25,6 +25,7 @@
       
 package net.sf.JRecord.Common;
 
+import net.sf.JRecord.CsvParser.ICsvCharLineParser;
 import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.detailsBasic.CsvCharDetails;
 
@@ -66,4 +67,11 @@ public interface AbstractRecord {
 	 * @return adjusted position
 	 */
 	public abstract int calculateActualPosition(AbstractIndexedLine line, DependingOnDtls dependingOnDtls, int pos);
+	
+	
+	/**
+	 * Get a parser to split a line into seperate fields
+	 * @return
+	 */
+	public abstract ICsvCharLineParser getCharParser();
 }

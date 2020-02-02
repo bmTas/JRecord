@@ -30,6 +30,8 @@ package net.sf.JRecord.Details;
 
 import java.util.ArrayList;
 
+import net.sf.JRecord.CsvParser.ICsvCharLineParser;
+
 public class CsvLine extends ListLine {
 
 
@@ -64,7 +66,7 @@ public class CsvLine extends ListLine {
 		RecordDetail record = layout.getRecord( getPrefIdx());
 		
 		return record
-				.getParser()
+				.getCharParser()
 				.formatFieldList(
 						fields, record, record.getFieldTypes());
 	}
@@ -73,8 +75,12 @@ public class CsvLine extends ListLine {
 	public void setData(String newVal) {
 		RecordDetail record = layout.getRecord(getPrefIdx());
 
-		fields = new ArrayList<Object>(
-				record.getParser().getFieldList(newVal, record));
+		ICsvCharLineParser parser = record.getCharParser();
+		
+		if (parser.isUpdatable()) {
+			fields = new ArrayList<Object>(
+					parser.getFieldList(newVal, record));
+		}
 	}
 
 	

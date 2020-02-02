@@ -41,6 +41,9 @@ import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.External.Def.DependingOnDefinition.SizeField;
 import net.sf.JRecord.cgen.impl.ArrayFieldDefinition;
 import net.sf.JRecord.cgen.impl.ArrayFieldDefinition1;
+import net.sf.JRecord.fieldNameConversion.IRenameField;
+import net.sf.JRecord.schema.fieldRename.AbstractFieldLookup;
+import net.sf.JRecord.schema.fieldRename.IGetRecordFieldByName;
 import net.sf.JRecord.schema.jaxb.Item;
 import net.sf.JRecord.schema.jaxb.ItemRecordDtls;
 
@@ -74,10 +77,11 @@ public class UpdateSchemaItems implements ISchemaInformation {
 	private final boolean dropCopybook;
 	private final String copybookName1, copybookName2;
 	private final Map<String, IArrayItemCheck> arrayChecks;
-	private final Map<String, Integer> recordMap;
+//	private final Map<String, Integer> recordMap;
 	
 	private int duplicateFieldsStatus = -1;
-	private final int varRenameOption;
+//	private final int varRenameOption;
+	private final IRenameField renameField;
 	
 	private IGetRecordFieldByName fieldLookup = null;
 	//private List<Item> lastItems;
@@ -89,6 +93,20 @@ public class UpdateSchemaItems implements ISchemaInformation {
 	
 	private int maxRecordLevel = Integer.MIN_VALUE;
 	
+//	/**
+//	 * pdate a Cobol-Copybook items for use in
+//     * Generating / Reading Cobol Data files.
+//     * 
+//	 * @param copybook
+//	 * @param schema
+//	 * @param dropCopybook
+//	 * @param copybookName
+//	 * @param varRenameOption
+//	 */
+//	public UpdateSchemaItems(List<ItemRecordDtls> recordItems, LayoutDetail schema, Map<String, IArrayItemCheck> arrayChecks, boolean dropCopybook, String copybookName, int varRenameOption) {
+//		this(recordItems, schema, arrayChecks, dropCopybook, copybookName, StdFieldRenameItems.getRenameField(varRenameOption));
+//	}
+	
 	/**
 	 * pdate a Cobol-Copybook items for use in
      * Generating / Reading Cobol Data files.
@@ -99,7 +117,8 @@ public class UpdateSchemaItems implements ISchemaInformation {
 	 * @param copybookName
 	 * @param varRenameOption
 	 */
-	public UpdateSchemaItems(List<ItemRecordDtls> recordItems, LayoutDetail schema, Map<String, IArrayItemCheck> arrayChecks, boolean dropCopybook, String copybookName, int varRenameOption) {
+	public UpdateSchemaItems(List<ItemRecordDtls> recordItems, LayoutDetail schema, Map<String, IArrayItemCheck> arrayChecks,
+			boolean dropCopybook, String copybookName, IRenameField renameOption) {
 		//this.copybook = copybook;
 		this.schema = schema;
 		if (copybookName == null || copybookName.length() == 0) {
@@ -110,24 +129,23 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		copybookName = copybookName.toUpperCase();
 		this.copybookName1 = copybookName + "-";
 		this.copybookName2 = copybookName + "_";
-		this.varRenameOption = varRenameOption;
+		this.renameField = renameOption;
 		this.recordItems = recordItems;
 		this.arrayChecks = arrayChecks;
 
 		duplicateFieldNames = schema.getDuplicateFieldNames();
 		
 		updateRecords(recordItems, 0, new int[99], new int[99], null, new ArrayList<String>(45), false);
-		
-		if (schema.getRecordCount() < 2) {
-			recordMap = null;
-		} else {
-			recordMap = new HashMap<String, Integer>(schema.getRecordCount() * 2);
-			for (int i = 0; i < schema.getRecordCount(); i++) {
-				recordMap.put(updateName(schema.getRecord(i).getRecordName()).toLowerCase(), i);
-			}
-		}
+//		
+//		if (schema.getRecordCount() < 2) {
+//			recordMap = null;
+//		} else {
+//			recordMap = new HashMap<String, Integer>(schema.getRecordCount() * 2);
+//			for (int i = 0; i < schema.getRecordCount(); i++) {
+//				recordMap.put(updateName(schema.getRecord(i).getRecordName()).toLowerCase(), i);
+//			}
+//		}
 	}
-	
 	private void updateRecords(List<ItemRecordDtls> records, int indexs, int[] arraySizes, int[] elementSize, int[] currSize,
 			ArrayList<String> levels, boolean redefined) {
 		for (ItemRecordDtls rec : records) {
@@ -313,23 +331,23 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		}
 		return EMPTY_RECORD_MAP;
 	}
-	
-	/* (non-Javadoc)
-	 * @see net.sf.JRecord.schema.ISchemaDetails#getRecordIndex(java.lang.String)
-	 */
-	@Override
-	public final int getRecordIndex(String name) {
-		int r = 1;
-		if (schema.getRecordCount() > 1) {
-			String lcName = name.toLowerCase();
-			if (recordMap.containsKey(lcName)) {
-				r = recordMap.get(lcName);
-			} else {
-				r = schema.getRecordIndex(name);
-			}
-		}
-		return r;
-	}
+//	
+//	/* (non-Javadoc)
+//	 * @see net.sf.JRecord.schema.ISchemaDetails#getRecordIndex(java.lang.String)
+//	 */
+//	@Override
+//	public final int getRecordIndex(String name) {
+//		int r = 1;
+//		if (schema.getRecordCount() > 1) {
+//			String lcName = name.toLowerCase();
+//			if (recordMap.containsKey(lcName)) {
+//				r = recordMap.get(lcName);
+//			} else {
+//				r = schema.getRecordIndex(name);
+//			}
+//		}
+//		return r;
+//	}
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.schema.ISchemaDetails#getMaxRecordHierarchyLevel()
 	 */
@@ -402,50 +420,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 	 */
 	@Override
 	public String updateName(String name) {
-		int l = name.length();
-		StringBuilder b;
-		char c;
-		switch (varRenameOption) {
-		case RO_CAMEL_CASE:
-			boolean toUpper = false;
-			String lcName = name.toLowerCase();
-			String ucName = name.toUpperCase();
-			b = new StringBuilder(name.length()) ;
-			for (int i = 0; i < l; i++) {
-				c = name.charAt(i);
-				switch (c) {
-				case '-':
-				case ' ':
-				case '_':
-					toUpper = true;
-					break;
-				default:
-					if (toUpper) {
-						c = ucName.charAt(i);
-					} else {
-						c = lcName.charAt(i);
-					}
-					b.append(c);
-					
-					toUpper = false;
-				}
-			}
-			name = b.toString();
-			break;
-		case RO_MINUS_TO_UNDERSCORE:
-			b = new StringBuilder(name) ;
-			for (int i = 0; i < l; i++) {
-				switch (name.charAt(i)) {
-				case '-':
-				case ' ':
-					b.setCharAt(i, '_');
-					break;
-				}
-			}
-			name = b.toString();
-		}
-		
-		return name;
+		return renameField.toFieldName(name);
 	}
 	
 	
@@ -457,7 +432,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 	public final IGetRecordFieldByName getFieldLookup() {
 		if (fieldLookup == null) {
 			fieldLookup = updateLookupRecords(
-					new FieldLookup(schema, itemCount, getDuplicateFieldsStatus() ),  
+					new FieldLookup(renameField, schema, itemCount, getDuplicateFieldsStatus() ),  
 					recordItems);
 		}
 		return fieldLookup;
@@ -482,7 +457,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		for (Item item : items) {
 			if (item.getChildItems().size() > 0) {
 				updateLookup(tl, item.getChildItems()); 
-			} else if (tl.recFields == null || ! tl.schema.getDuplicateFieldNames().contains(item.fieldName.toUpperCase())) {
+			} else if (tl.recFields == null || ! tl.getSchema().getDuplicateFieldNames().contains(item.fieldName.toUpperCase())) {
 				tl.fields.put(item.nameToUse.toUpperCase(), item);
 			} else {
 				tl.recFields.put((item.names.get(0) + "." + item.nameToUse).toUpperCase(), item);
@@ -492,13 +467,13 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		return tl;
 	}
 
-	private static class FieldLookup implements IGetRecordFieldByName {
+	private static class FieldLookup extends AbstractFieldLookup implements IGetRecordFieldByName {
 
-		private final LayoutDetail schema;
 		private final HashMap<String, Item> fields, recFields;
 		
-		private FieldLookup(LayoutDetail schema, int size, int dup) {
-			this.schema = schema;
+		private FieldLookup(IRenameField renameFld, LayoutDetail schema, int size, int dup) {
+			super(renameFld);
+			super.setSchema(schema);
 			
 			this.fields = new HashMap<String, Item>(size * 2);
 			
@@ -507,14 +482,16 @@ public class UpdateSchemaItems implements ISchemaInformation {
 				t = new HashMap<String, Item>();
 			}
 			recFields = t;
+
 		}
+		
 		
 		/* (non-Javadoc)
 		 * @see net.sf.JRecord.cbl2xml.impl.IGetRecordFieldByName#getField(java.lang.String, java.lang.String)
 		 */
 		@Override
-		public IFieldDetail getField(String recordName, String fieldName, int[] indexs) {
-			String ucName = fieldName.toUpperCase();
+		public IFieldDetail getField(String recordName, List<String> fieldNames, int[] indexs) {
+			String ucName = fieldNames.get(fieldNames.size() - 1).toUpperCase();
 			Item itm = fields.get(ucName);
 			
 			if (itm == null && recFields != null) {
@@ -536,6 +513,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 				}
 				
 				String n = b.append(')').toString();
+				LayoutDetail schema = getSchema();
 				if (schema.getDuplicateFieldNames().contains(n.toUpperCase())) {
 					return itm.arrayDefinition.getField(indexs);
 				}

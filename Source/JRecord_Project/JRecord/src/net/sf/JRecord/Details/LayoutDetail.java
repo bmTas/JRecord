@@ -725,7 +725,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
      */
     @Deprecated 
     public final Object formatCsvField(IFieldDetail field,  int type, String value) {
-        ICsvCharLineParser parser = CsvParserManagerChar.getInstance().get(field.getRecord().getRecordStyle());
+        ICsvCharLineParser parser = field.getRecord().getCharParser();
         String val = parser.getField(field.getPos() - 1,
         		value,
         		new CsvDefinition(delimiter, field.getQuoteDefinition()));
@@ -880,70 +880,76 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
     private void buildFieldNameMap() {
 
     	if (fieldNameMap == null) {
-    		int i, j, k, size;
-    		IFieldDetail fld;
-    		String name, nameTmp;
-
-    		size = 0;
-    		for (i = 0; i < recordCount; i++) {
-    		    size += records[i].getFieldCount();
-    		}
-    		size = Math.max(16, (size * 4) / 3 + 4);
-
-    		fieldNameMap = new HashMap<String, IFieldDetail>(size);
-    		recordFieldNameMap  = new HashMap<String, IFieldDetail>(size);
-    		duplicateFieldNames = new HashSet<String>(10);
-
-    		for (i = 0; i < recordCount; i++) {
-     			for (j = 0; j < records[i].getFieldCount(); j++) {
-    			    fld = records[i].getField(j);
-    			    nameTmp = fld.getName();
-    			    name = nameTmp;
-    			    nameTmp = nameTmp + "~";
-    			    k = 1;
-    			    while (fieldNameMap.containsKey(name.toUpperCase())) {
-    			    	name = nameTmp + k++;
-    			    }
-			    	String ucFieldName;
-    			    if (k > 1 && ! duplicateFieldNames.contains((ucFieldName = fld.getName().toUpperCase()))) {
-    			    	IFieldDetail iFieldDetail = fieldNameMap.get(ucFieldName);
-    			    	if (fld.getPos() != iFieldDetail.getPos()
-    			  		|| fld.getLen() != iFieldDetail.getLen()
-    			  		|| fld.getDecimal() != iFieldDetail.getDecimal()
-    			  		|| fld.getType() != iFieldDetail.getType()
-    			    	|| fld.getFormat() != iFieldDetail.getFormat()
-    			    	|| (fld.getParamater() != null && ! fld.getParamater().equals(iFieldDetail.getParamater()))) {
-    			    		duplicateFieldNames.add(ucFieldName);
-    			    	}
-    			    }
-    			    fld.setLookupName(name);
-					fieldNameMap.put(name.toUpperCase(), fld);
-    				recordFieldNameMap.put(
-    						records[i].getRecordName() + "." + name.toUpperCase(),
-    						fld);
+    		synchronized (this) {
+    			if (fieldNameMap == null) {
+		    		int i, j, k, size;
+		    		IFieldDetail fld;
+		    		String name, nameTmp;
+		
+		    		size = 0;
+		    		for (i = 0; i < recordCount; i++) {
+		    		    size += records[i].getFieldCount();
+		    		}
+		    		size = Math.max(16, (size * 4) / 3 + 4);
+		
+		    		HashMap<String, IFieldDetail> tmpFieldNameMap = new HashMap<String, IFieldDetail>(size);
+		    		recordFieldNameMap  = new HashMap<String, IFieldDetail>(size);
+		    		duplicateFieldNames = new HashSet<String>(10);
+		
+		    		for (i = 0; i < recordCount; i++) {
+		     			for (j = 0; j < records[i].getFieldCount(); j++) {
+		    			    fld = records[i].getField(j);
+		    			    nameTmp = fld.getName();
+		    			    name = nameTmp;
+		    			    nameTmp = nameTmp + "~";
+		    			    k = 1;
+		    			    while (tmpFieldNameMap.containsKey(name.toUpperCase())) {
+		    			    	name = nameTmp + k++;
+		    			    }
+					    	String ucFieldName;
+		    			    if (k > 1 && ! duplicateFieldNames.contains((ucFieldName = fld.getName().toUpperCase()))) {
+		    			    	IFieldDetail iFieldDetail = tmpFieldNameMap.get(ucFieldName);
+		    			    	if (fld.getPos() != iFieldDetail.getPos()
+		    			  		|| fld.getLen() != iFieldDetail.getLen()
+		    			  		|| fld.getDecimal() != iFieldDetail.getDecimal()
+		    			  		|| fld.getType() != iFieldDetail.getType()
+		    			    	|| fld.getFormat() != iFieldDetail.getFormat()
+		    			    	|| (fld.getParamater() != null && ! fld.getParamater().equals(iFieldDetail.getParamater()))) {
+		    			    		duplicateFieldNames.add(ucFieldName);
+		    			    	}
+		    			    }
+		    			    fld.setLookupName(name);
+		    			    tmpFieldNameMap.put(name.toUpperCase(), fld);
+		    				recordFieldNameMap.put(
+		    						records[i].getRecordName() + "." + name.toUpperCase(),
+		    						fld);
+		    			}
+		    			records[i].setNumberOfFieldsAdded(0);
+		    		}
+		    		fieldNameMap = tmpFieldNameMap;
     			}
-    			records[i].setNumberOfFieldsAdded(0);
     		}
      	} else if (this.isBuildLayout()) {
-     		int j;
-     		IFieldDetail fld;
-
-       		for (int i = 0; i < recordCount; i++) {
-       			if (records[i].getNumberOfFieldsAdded() > 0) {
-       				for (j = 1; j <=  records[i].getFieldCount(); j++) {
-       	   			    fld = records[i].getField(records[i].getFieldCount() - j);
-//       	   			    System.out.println("Adding ... " + (records[i].getFieldCount() - j)
-//       	   			    		+ " " + fld.getName());
-        				fieldNameMap.put(fld.getName().toUpperCase(), fld);
-        				recordFieldNameMap.put(
-        						records[i].getRecordName() + "." + fld.getName().toUpperCase(),
-        						fld);
-
-      				}
-       	    		records[i].setNumberOfFieldsAdded(0);
-      			}
-       		}
-
+     		synchronized (this) {
+	     		int j;
+	     		IFieldDetail fld;
+	
+	       		for (int i = 0; i < recordCount; i++) {
+	       			if (records[i].getNumberOfFieldsAdded() > 0) {
+	       				for (j = 1; j <=  records[i].getFieldCount(); j++) {
+	       	   			    fld = records[i].getField(records[i].getFieldCount() - j);
+	//       	   			    System.out.println("Adding ... " + (records[i].getFieldCount() - j)
+	//       	   			    		+ " " + fld.getName());
+	        				fieldNameMap.put(fld.getName().toUpperCase(), fld);
+	        				recordFieldNameMap.put(
+	        						records[i].getRecordName() + "." + fld.getName().toUpperCase(),
+	        						fld);
+	
+	      				}
+	       	    		records[i].setNumberOfFieldsAdded(0);
+	      			}
+	       		}
+     		}
     	}
     }
 
@@ -1088,11 +1094,15 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 
 	private void updateCobolMaps() {
 		if (groupMap == null) {
-			groupMap = new HashMap<String, List<IItemDetails>>();
-			groupFieldMap = new HashMap<String, List<IItemDetails>>();
-			
-			for (int i = 0; i < recordCount; i++) {
-				records[i].updateNameCobolItemMap(groupMap, groupFieldMap);
+			synchronized (this) {
+				if (groupMap == null) {
+					groupMap = new HashMap<String, List<IItemDetails>>();
+					groupFieldMap = new HashMap<String, List<IItemDetails>>();
+					
+					for (int i = 0; i < recordCount; i++) {
+						records[i].updateNameCobolItemMap(groupMap, groupFieldMap);
+					}
+				}
 			}
 		}
 	}

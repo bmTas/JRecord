@@ -27,7 +27,6 @@ package net.sf.JRecord.cbl2xml.zTest;
 import java.io.IOException;
 import java.net.URL;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.Common.Constants;
@@ -48,7 +47,7 @@ public class TstCblData2Xml {
     }
 
 
-	public static void main(String[] args) throws RecordException, IOException, JAXBException, XMLStreamException {
+	public static void main(String[] args) throws RecordException, IOException, XMLStreamException {
 		String fullName = getFullName("StoreSales5.txt");
 		ICobol2Xml cbl2xml = Cobol2GroupXml.newCobol2Xml(getFullName("cbl2xml_Test112.cbl"));
 		cbl2xml.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE);

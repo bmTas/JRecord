@@ -1,14 +1,6 @@
 package net.sf.JRecord.x.cobol.copyReplacing;
 
-import java.io.Reader;
 import java.io.StringReader;
-
-import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
-import net.sf.JRecord.Numeric.ICopybookDialects;
-import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
-import net.sf.cb2xml.def.Cb2xmlConstants;
-import net.sf.cb2xml.def.Cb2xmlConstants.Cb2xmlXmlFormat;
 
 public class Tst {
 
@@ -32,16 +24,6 @@ public class Tst {
 					.replacing(":L2BS:", "LBS")
 					.asString()
 		);
-		
-//		Reader copybookReader = CopyReplacingBldr.newBldr(new StringReader(copybookStr), CobolColumnDetails.STANDARD_COLUMNS)
-//				.replacing(":L2BS:", "LBS")
-//				.newReader();
-//		ICobolIOBuilder iob = JRecordInterface1.COBOL.newIOBuilder(copybookReader, "RECORD")
-//				.setCopybookFileFormat(Cb2xmlConstants.FREE_FORMAT)
-//				.setDialect( ICopybookDialects.FMT_MAINFRAME)
-//                .setFont("cp819")/*tried with cp1047 and cp037 as well*/
-//                .setFileOrganization(Constants.IO_FIXED_LENGTH);
-		
 	}
 
 }

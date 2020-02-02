@@ -1156,7 +1156,7 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 	@Override
 	public int getDelimiterOrganisation() {
 		int delimiterOrganisation = ICsvDefinition.NORMAL_SPLIT;
-		ICsvCharLineParser parser =  getParser();
+		ICsvCharLineParser parser =  getCharParser();
 		if (parser != null && parser instanceof BasicCsvLineParser) {
 			BasicCsvLineParser bp = (BasicCsvLineParser) parser;
 			delimiterOrganisation = bp.delimiterOrganisation;
@@ -1400,31 +1400,37 @@ public class RecordDetail implements AbstractRecordX<FieldDetail>, ICsvDefinitio
 		return csvByteParser;
 	}
 
-	public final ICsvCharLineParser getParser() {
+	@Override
+	public final ICsvCharLineParser getCharParser() {
 		return csvCharParser; 
 	}
 
 	public final FieldDetail[] getArrayFields(FieldDetail field, String aname) {
 		if (arrays == null) {
-			arrays = new HashMap<String, RecordDetail.ArrayDtls>();
-			ArrayList<RecordDetail.ArrayDtls> arrayList = new ArrayList<RecordDetail.ArrayDtls>();
-			int pos;
-			for (int i = 0; i < fields.length; i++) {
-				if ((pos = fields[i].getName().indexOf('(')) > 0) {
-					String arrayName = fields[i].getName().substring(0, pos-1);
-					String id = (fields[i].getGroupName() +  arrayName).toLowerCase();
-					ArrayDtls dtls = arrays.get(id);
-					if (dtls == null) {
-						dtls = new ArrayDtls(fields[i].getGroupName(), arrayName);
-						arrays.put(id, dtls);
-						arrayList.add(dtls);
+			synchronized (this) {
+				if (arrays == null) {
+					HashMap<String, RecordDetail.ArrayDtls> tmpArrays = new HashMap<String, RecordDetail.ArrayDtls>();
+					ArrayList<RecordDetail.ArrayDtls> arrayList = new ArrayList<RecordDetail.ArrayDtls>();
+					int pos;
+					for (int i = 0; i < fields.length; i++) {
+						if ((pos = fields[i].getName().indexOf('(')) > 0) {
+							String arrayName = fields[i].getName().substring(0, pos-1);
+							String id = (fields[i].getGroupName() +  arrayName).toLowerCase();
+							ArrayDtls dtls = tmpArrays.get(id);
+							if (dtls == null) {
+								dtls = new ArrayDtls(fields[i].getGroupName(), arrayName);
+								tmpArrays.put(id, dtls);
+								arrayList.add(dtls);
+							}
+							dtls.fieldList.add(fields[i]);
+						}
 					}
-					dtls.fieldList.add(fields[i]);
+					for (RecordDetail.ArrayDtls ad : arrayList) {
+						ad.fields = ad.fieldList.toArray(new FieldDetail[ad.fieldList.size()]);
+						ad.fieldList = null;
+					}
+					arrays = tmpArrays;
 				}
-			}
-			for (RecordDetail.ArrayDtls ad : arrayList) {
-				ad.fields = ad.fieldList.toArray(new FieldDetail[ad.fieldList.size()]);
-				ad.fieldList = null;
 			}
 		}
 		

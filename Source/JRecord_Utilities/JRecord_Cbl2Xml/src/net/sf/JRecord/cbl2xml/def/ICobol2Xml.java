@@ -31,7 +31,9 @@ import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
+import net.sf.JRecord.fieldNameConversion.IRenameField;
 import net.sf.JRecord.schema.IArrayItemCheck;
+import net.sf.JRecord.schema.fieldRename.IGetRecordFieldByName;
 import net.sf.JRecord.schema.jaxb.interfaces.IFormatField;
 
 
@@ -95,6 +97,14 @@ public interface ICobol2Xml  extends  Icb2xml2Xml  {
 	 * @return this 
 	 */
 	public abstract ICobol2Xml setTagFormat(int tagFormat);
+	
+	/**
+	 * Define the Field Rename option
+	 * @param renameFieldClass class to rename cobol fields
+	 * @return this
+	 */
+	public abstract ICobol2Xml setRenameFieldClass(IRenameField renameFieldClass);
+
 
 	/**
 	 * Set the main <i>element</i> name in the generated Xml. By default this is "CobolData"
@@ -116,6 +126,8 @@ public interface ICobol2Xml  extends  Icb2xml2Xml  {
 	
 	public abstract ICobol2Xml setFormatField(IFormatField formatField);
 
+	public abstract ICobol2Xml setFieldNameLookup(IGetRecordFieldByName fieldNameLookup);
+
 //	/**
 //	 * Convert Cobol Data File to Xml file
 //	 * 
@@ -127,7 +139,7 @@ public interface ICobol2Xml  extends  Icb2xml2Xml  {
 //	 * @throws XMLStreamException
 //	 */
 //	public void cobol2xml(String cobolFileName, String xmlFileName)  
-//			throws  IOException, JAXBException, XMLStreamException;
+//			throws  IOException, XMLStreamException;
 //	
 //	/**
 //	 * Convert Cobol Data File to Xml file
@@ -140,7 +152,7 @@ public interface ICobol2Xml  extends  Icb2xml2Xml  {
 //	 * @throws XMLStreamException
 //	 */
 //	public void cobol2xml(InputStream cobolStream, OutputStream xmlStream)
-//			throws IOException, JAXBException, XMLStreamException;
+//			throws IOException, XMLStreamException;
 //
 //	/**
 //	 * Convert Input Xml-Data to Cobol Data-File
@@ -153,7 +165,7 @@ public interface ICobol2Xml  extends  Icb2xml2Xml  {
 //	 * @throws XMLStreamException
 //	 */
 //	public void xml2Cobol(String xmlFileName, String cobolFileName)
-//			throws IOException, JAXBException, XMLStreamException;
+//			throws IOException, XMLStreamException;
 //
 //	/**
 //	 * Convert a Xml-Data in to a Cobol Data 
@@ -165,7 +177,7 @@ public interface ICobol2Xml  extends  Icb2xml2Xml  {
 //	 * @throws XMLStreamException
 //	 */
 //	public void xml2Cobol(InputStream xmlStream, OutputStream cobolStream)
-//			throws IOException, JAXBException,
+//			throws IOException,
 //			XMLStreamException;
 
 	/**

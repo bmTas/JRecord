@@ -221,6 +221,7 @@ public interface Constants {
 	public static final String RE_XML_INIT_SPACES = "INITSPACES";
 	public static final String RE_XML_RECORDSEP   = "RecSep";
 	public static final String RE_XML_STYLE       = "STYLE";
+	public static final String RE_XML_STYLE_PARAM = "LINEFORMATPARAM";
 	public static final String RE_XML_SYSTEMNAME  = "SYSTEMNAME";
 	public static final String RE_XML_DEFAULTREC  = "DEFAULTRECORD";
 	public static final String RE_XML_TESTFIELD   = "TESTFIELD";

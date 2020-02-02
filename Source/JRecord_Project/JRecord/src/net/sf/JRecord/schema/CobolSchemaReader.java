@@ -34,8 +34,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
-
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
@@ -45,9 +43,10 @@ import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ICopybookLoaderCobol;
 import net.sf.JRecord.IO.builders.CblIOBuilderMultiSchemaBase;
-import net.sf.JRecord.Option.IReformatFieldNames;
 import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
 import net.sf.JRecord.detailsBasic.IItemDetails;
+import net.sf.JRecord.fieldNameConversion.IRenameField;
+import net.sf.JRecord.schema.fieldRename.StdFieldRenameItems;
 import net.sf.JRecord.schema.jaxb.ItemRecordDtls;
 
 
@@ -73,7 +72,8 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 //	private Copybook copybook = null;
 	//private UpdateSchemaItems itemDtls = null;
 	
-	private int tagFormat = IReformatFieldNames.RO_LEAVE_ASIS;
+//	private int tagFormat = IReformatFieldNames.RO_LEAVE_ASIS;
+	private IRenameField renameFieldClass = StdFieldRenameItems.LEAVE_ASIS;
 	
 	private HashMap<String, IArrayItemCheck> arrayChecks = new HashMap<String, IArrayItemCheck>();
 	
@@ -100,7 +100,7 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 		}
 	}
 	
-	public CobolSchemaDetails getCobolSchemaDetails() throws IOException, JAXBException {
+	public CobolSchemaDetails getCobolSchemaDetails() throws IOException {
 		CobolSchemaDetails cblDtls = cobolDtls;
 		if (cblDtls == null) {
 			synchronized (this) {
@@ -128,7 +128,7 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 			        }
 			        UpdateSchemaItems itemDtls = new UpdateSchemaItems(
 			        		recordItems, schema, arrayChecks,
-			        		super.isDropCopybookNameFromFields(), schema.getLayoutName(), tagFormat);
+			        		super.isDropCopybookNameFromFields(), schema.getLayoutName(), renameFieldClass);
 //			        if (schema.getRecordCount() == 1 && recordItems.size() > 1) {
 //			        	recordItems = new ArrayList<Item>(1);
 //			        	Item recItem = new Item();
@@ -176,13 +176,18 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 	 * @see ICobolSchemaDetails#setTagFormat(int)
 	 */
 	public final T setTagFormat(int tagFormat) {
-		this.tagFormat = tagFormat;
+		return setRenameFieldClass( StdFieldRenameItems.getRenameField(tagFormat));
+	}
+
+	public T setRenameFieldClass(IRenameField renameFieldClass) {
+		this.renameFieldClass = renameFieldClass;
 		synchronized (this) {
 			this.cobolDtls = null;
 		}
 	
 		return super.self;
 	}
+
 
 	/**
 	 * @return the rootRecordName
@@ -198,6 +203,14 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 		return super.self;
 	}
 
+	public static class CblSchemaReader extends CobolSchemaReader<ICobolSchemaReader> implements ICobolSchemaReader {
+
+		public CblSchemaReader(String copybookName, ICopybookLoaderCobol loader) {
+			super(copybookName, loader);
+		}
+		
+	}
+	
 
 	/**
 	 * Create a new <b>Extended Cobol Schema Reader</b>
@@ -219,7 +232,7 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 	 * @return Extended Cobol Schema Reader
 	 */
 	public static ICobolSchemaReader newCobolSchemaReader(Reader cobolCopybookReader, String copybookName) {
-		return (new CobolSchemaReader<ICobolSchemaReader>(copybookName, new CobolCopybookLoader()))
+		return (new CblSchemaReader(copybookName, new CobolCopybookLoader()))
 						.addCopyBook(cobolCopybookReader, copybookName);
 	}
 }

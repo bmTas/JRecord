@@ -64,7 +64,7 @@ public class TstGenerateOptions1 {
 		g = new GenerateOptions(new ParseArgs(arguments1));	
 		assertEquals(JAVA_POJO, g.getTemplateDtls().getTemplate());
 		chkValues1(g);
-		assertEquals(2, g.getTemplateDtls().getGenerateOptions().size());
+		assertEquals(3, g.getTemplateDtls().getGenerateOptions().size());
 		assertTrue(g.getTemplateDtls().getGenerateOptions().containsKey("bean"));
 		
 	}
