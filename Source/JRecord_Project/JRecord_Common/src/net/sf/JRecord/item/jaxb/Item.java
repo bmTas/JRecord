@@ -39,15 +39,15 @@ package net.sf.JRecord.item.jaxb;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+//import javax.xml.bind.annotation.XmlAccessType;
+//import javax.xml.bind.annotation.XmlAccessorType;
+//import javax.xml.bind.annotation.XmlAttribute;
+//import javax.xml.bind.annotation.XmlRootElement;
+//import javax.xml.bind.annotation.XmlSchemaType;
+//import javax.xml.bind.annotation.XmlTransient;
+//import javax.xml.bind.annotation.XmlType;
+//import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+//import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.External.Def.DependingOnDefinition;
@@ -99,27 +99,27 @@ import net.sf.JRecord.item.def.IItem;
  * 
  * 
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "condition",
-    "item"
-})
-@XmlRootElement(name = "item")
+//@XmlAccessorType(XmlAccessType.FIELD)
+//@XmlType(name = "", propOrder = {
+//    "condition",
+//    "item"
+//})
+//@XmlRootElement(name = "item")
 public class Item implements IItem {
 	
-	@XmlTransient
+//	@XmlTransient
 	public int itemType = TYPE_GROUP;
-	@XmlTransient
+//	@XmlTransient
 	public IFieldDetail fieldDefinition = null;
-	@XmlTransient
+//	@XmlTransient
 	public List<String> names = null;
-	@XmlTransient
+//	@XmlTransient
 	public String fieldName;
 //	@XmlTransient
 //	public boolean fieldRedefined = false;
 //	@XmlTransient
 //	public IOccursDependingDetails occursDependingValue = NullOccursDependingDtls.INSTANCE;
-	@XmlTransient
+//	@XmlTransient
 	public DependingOnDefinition.SizeField saveDtls, arraySizeField;
 	
 
@@ -145,66 +145,66 @@ public class Item implements IItem {
 
     protected List<Condition> condition;
     protected List<Item> item;
-    @XmlAttribute(name = "assumed-digits")
+//    @XmlAttribute(name = "assumed-digits")
     protected Integer assumedDigits;
-    @XmlAttribute(name = "depending-on")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "token")
+//    @XmlAttribute(name = "depending-on")
+//    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+//    @XmlSchemaType(name = "token")
     protected String dependingOn;
-    @XmlAttribute(name = "display-length", required = true)
+//    @XmlAttribute(name = "display-length", required = true)
     protected int displayLength;
-    @XmlAttribute(name = "editted-numeric")
+//    @XmlAttribute(name = "editted-numeric")
     protected Boolean edittedNumeric;
-    @XmlAttribute(name = "inherited-usage")
+//    @XmlAttribute(name = "inherited-usage")
     protected Boolean inheritedUsage;
-    @XmlAttribute(name = "insert-decimal-point")
+//    @XmlAttribute(name = "insert-decimal-point")
     protected Boolean insertDecimalPoint;
-    @XmlAttribute(name = "justified")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "token")
+//    @XmlAttribute(name = "justified")
+//    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+//    @XmlSchemaType(name = "token")
     protected String justified;
-    @XmlAttribute(name = "level", required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "token")
+//    @XmlAttribute(name = "level", required = true)
+//    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+//    @XmlSchemaType(name = "token")
     protected String level;
-    @XmlAttribute(name = "name", required = true)
-    @XmlSchemaType(name = "anySimpleType")
+//    @XmlAttribute(name = "name", required = true)
+//    @XmlSchemaType(name = "anySimpleType")
     protected String name;
-    @XmlAttribute(name = "numeric")
+//    @XmlAttribute(name = "numeric")
     protected Boolean numeric;
-    @XmlAttribute(name = "occurs")
+//    @XmlAttribute(name = "occurs")
     protected Integer occurs;
-    @XmlAttribute(name = "occurs-min")
+//    @XmlAttribute(name = "occurs-min")
     protected Integer occursMin;
-    @XmlAttribute(name = "picture")
-    @XmlSchemaType(name = "anySimpleType")
+//    @XmlAttribute(name = "picture")
+//    @XmlSchemaType(name = "anySimpleType")
     protected String picture;
-    @XmlAttribute(name = "position", required = true)
+//    @XmlAttribute(name = "position", required = true)
     protected int position;
-    @XmlAttribute(name = "redefined")
+//    @XmlAttribute(name = "redefined")
     protected Boolean redefined;
-    @XmlAttribute(name = "redefines")
+//    @XmlAttribute(name = "redefines")
     protected Boolean redefines;
-    @XmlAttribute(name = "scale")
+//    @XmlAttribute(name = "scale")
     protected Integer scale;
-    @XmlAttribute(name = "sign-position")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "token")
+//    @XmlAttribute(name = "sign-position")
+//    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+//    @XmlSchemaType(name = "token")
     protected String signPosition;
-    @XmlAttribute(name = "sign-separate")
+//    @XmlAttribute(name = "sign-separate")
     protected Boolean signSeparate;
-    @XmlAttribute(name = "signed")
+//    @XmlAttribute(name = "signed")
     protected Boolean signed;
-    @XmlAttribute(name = "storage-length", required = true)
+//    @XmlAttribute(name = "storage-length", required = true)
     protected int storageLength;
-    @XmlAttribute(name = "sync")
+//    @XmlAttribute(name = "sync")
     protected Boolean sync;
-    @XmlAttribute(name = "usage")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "token")
+//    @XmlAttribute(name = "usage")
+//    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+//    @XmlSchemaType(name = "token")
     protected String usage;
-    @XmlAttribute(name = "value")
-    @XmlSchemaType(name = "anySimpleType")
+//    @XmlAttribute(name = "value")
+//    @XmlSchemaType(name = "anySimpleType")
     protected String value;
 
     /**

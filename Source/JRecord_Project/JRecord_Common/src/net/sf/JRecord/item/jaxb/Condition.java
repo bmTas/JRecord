@@ -38,14 +38,14 @@ package net.sf.JRecord.item.jaxb;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+//import javax.xml.bind.annotation.XmlAccessType;
+//import javax.xml.bind.annotation.XmlAccessorType;
+//import javax.xml.bind.annotation.XmlAttribute;
+//import javax.xml.bind.annotation.XmlRootElement;
+//import javax.xml.bind.annotation.XmlSchemaType;
+//import javax.xml.bind.annotation.XmlType;
+//import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+//import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -70,24 +70,24 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * 
  * 
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "condition"
-})
-@XmlRootElement(name = "condition")
+//@XmlAccessorType(XmlAccessType.FIELD)
+//@XmlType(name = "", propOrder = {
+//    "condition"
+//})
+//@XmlRootElement(name = "condition")
 public class Condition {
 
     protected List<Condition> condition;
-    @XmlAttribute(name = "name")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "token")
+//    @XmlAttribute(name = "name")
+//    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+//    @XmlSchemaType(name = "token")
     protected String name;
-    @XmlAttribute(name = "through")
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "token")
+//    @XmlAttribute(name = "through")
+//    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+//    @XmlSchemaType(name = "token")
     protected String through;
-    @XmlAttribute(name = "value")
-    @XmlSchemaType(name = "anySimpleType")
+//    @XmlAttribute(name = "value")
+//    @XmlSchemaType(name = "anySimpleType")
     protected String value;
 
     /**

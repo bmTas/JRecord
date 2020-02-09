@@ -38,15 +38,15 @@ package net.sf.JRecord.item.jaxb;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+//import javax.xml.bind.annotation.XmlAccessType;
+//import javax.xml.bind.annotation.XmlAccessorType;
+//import javax.xml.bind.annotation.XmlAttribute;
+//import javax.xml.bind.annotation.XmlElement;
+//import javax.xml.bind.annotation.XmlRootElement;
+//import javax.xml.bind.annotation.XmlSchemaType;
+//import javax.xml.bind.annotation.XmlType;
+//import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+//import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import net.sf.JRecord.item.def.ICopybook;
 
@@ -71,18 +71,18 @@ import net.sf.JRecord.item.def.ICopybook;
  * 
  * 
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "item"
-})
-@XmlRootElement(name = "copybook")
+//@XmlAccessorType(XmlAccessType.FIELD)
+//@XmlType(name = "", propOrder = {
+//    "item"
+//})
+//@XmlRootElement(name = "copybook")
 public class Copybook implements ICopybook {
 
-    @XmlElement(required = true)
+//    @XmlElement(required = true)
     protected List<Item> item;
-    @XmlAttribute(name = "filename", required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    @XmlSchemaType(name = "token")
+//    @XmlAttribute(name = "filename", required = true)
+//    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+//    @XmlSchemaType(name = "token")
     protected String filename;
 
     /* (non-Javadoc)
