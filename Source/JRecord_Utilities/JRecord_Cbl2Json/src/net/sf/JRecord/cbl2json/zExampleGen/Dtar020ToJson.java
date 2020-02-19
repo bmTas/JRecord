@@ -37,7 +37,7 @@ package net.sf.JRecord.cbl2json.zExampleGen;
 
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
+
 import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.Option.JRecordConstantVars;
@@ -46,7 +46,7 @@ import net.sf.cobolToJson.Cobol2Json;
 public class Dtar020ToJson {
 
     public static void main(String[] args)
-    throws IOException, JAXBException, XMLStreamException {
+    throws IOException,  XMLStreamException {
    
         JRecordConstantVars constants = Cobol2Json.JR_CONSTANTS;
 	

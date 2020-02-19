@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
+
 import javax.xml.stream.XMLStreamException;
 
 import junit.framework.TestCase;
@@ -145,7 +145,7 @@ public class TstOccursDepending61 extends TestCase {
 //	}
 	
 
-	public void testConversionToXml1() throws IOException, JAXBException, XMLStreamException {
+	public void testConversionToXml1() throws IOException,  XMLStreamException {
 		String copybookFileName = TstXmlConstants.COBOL_DIRECTORY + "OccursDependingOn61a.cbl";
 
 		
@@ -163,7 +163,7 @@ public class TstOccursDepending61 extends TestCase {
 		}
 	}
 
-	public void testConversionToXml2() throws IOException, JAXBException, XMLStreamException {
+	public void testConversionToXml2() throws IOException,  XMLStreamException {
 		String copybookFileName = TstXmlConstants.COBOL_DIRECTORY + "OccursDependingOn61.cbl";
 
 		

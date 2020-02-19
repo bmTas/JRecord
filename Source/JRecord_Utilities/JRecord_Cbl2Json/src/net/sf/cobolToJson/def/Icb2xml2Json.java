@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import javax.xml.bind.JAXBException;
+
 
 import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
@@ -154,7 +154,7 @@ public interface Icb2xml2Json extends Icb2xmlLoadOptions {
 	 * @throws IOException 
 	 * @throws JAXBException
 	 */
-	public void cobol2json(String cobolFileName, String xmlFileName) throws IOException, JAXBException ;
+	public void cobol2json(String cobolFileName, String xmlFileName) throws IOException ;
 	
 	/**
 	 * Convert Cobol Data File to Json file
@@ -165,7 +165,7 @@ public interface Icb2xml2Json extends Icb2xmlLoadOptions {
 	 * @throws IOException
 	 * @throws JAXBException
 	 */
-	public void cobol2json(InputStream cobolStream, OutputStream xmlStream) throws IOException, JAXBException;
+	public void cobol2json(InputStream cobolStream, OutputStream xmlStream) throws IOException;
 
 
 	public void setPrettyPrint(boolean prettyPrint);
@@ -179,7 +179,7 @@ public interface Icb2xml2Json extends Icb2xmlLoadOptions {
 //	 * @throws IOException
 //	 */
 //	public void json2Cobol(String xmlFileName, String cobolFileName)
-//			throws IOException, JAXBException, XMLStreamException;
+//			throws IOException,  XMLStreamException;
 //
 //	/**
 //	 * Convert a Json-Data in to a Cobol Data 
@@ -189,6 +189,6 @@ public interface Icb2xml2Json extends Icb2xmlLoadOptions {
 //	 * @throws IOException
 //	 */
 //	public void json2Cobol(InputStream xmlStream, OutputStream cobolStream)
-//			throws IOException, JAXBException,
+//			throws IOException, 
 //			XMLStreamException;
 }

@@ -28,7 +28,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
+
 
 
 
@@ -72,24 +72,24 @@ public class TstCblDataToJson101 {
 
 	//private String firstLine = "TAR5839DCDC - Taras Ave                                                             30-68 Taras Ave                         Altona North                       3025      VICA";
 	@Test
-	public void testData2Json01() throws IOException, JAXBException {
+	public void testData2Json01() throws IOException {
 		for (String[] d : files01) {
 			check(d);
 		}
 	}
 	@Test
-	public void testData2JsonCC01() throws IOException, JAXBException {
+	public void testData2JsonCC01() throws IOException {
 		for (String[] d : files01) {
 			checkCamelCase(d);
 		}
 //		checkCamelCase(files01[0]);
 	}
 
-	public void testData2Json_DTAR107() throws IOException, JAXBException {
+	public void testData2Json_DTAR107() throws IOException {
 		check(files01[4]);
 	}
 
-	private void check(String[] d) throws IOException, JAXBException	 {
+	private void check(String[] d) throws IOException	 {
 		String copybookName;
 		String dataName;
 
@@ -116,7 +116,7 @@ public class TstCblDataToJson101 {
 	} 
 	
 
-	private void checkCamelCase(String[] d) throws IOException, JAXBException	 {
+	private void checkCamelCase(String[] d) throws IOException	 {
 		String copybookName;
 		String dataName;
 
@@ -149,7 +149,7 @@ public class TstCblDataToJson101 {
 
 	
 	private byte[] data2json(String dataFileName, String copybookFileName, boolean dropCopybookName, String fileType) 
-	throws  IOException, JAXBException {
+	throws  IOException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 		int fileOrg = Constants.IO_FIXED_LENGTH;
@@ -170,7 +170,7 @@ public class TstCblDataToJson101 {
 	
 	
 //	@Test
-//	public void testXml2Data() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
+//	public void testXml2Data() throws IOException, SAXException, ParserConfigurationException, RecordException,  XMLStreamException {
 //		byte[] xml2data;
 //		int size = files.length / 2;
 //		byte[][] expected = new byte[size][];
@@ -213,7 +213,7 @@ public class TstCblDataToJson101 {
 //	}
 //
 //	private byte[] xml2data(InputStream dataStream, String copybookFileName, boolean dropCopybookName, boolean vb) 
-//	throws FileNotFoundException, RecordException, IOException, JAXBException, XMLStreamException {
+//	throws FileNotFoundException, RecordException, IOException,  XMLStreamException {
 //		
 //		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 //		int fileOrg = Constants.IO_FIXED_LENGTH;

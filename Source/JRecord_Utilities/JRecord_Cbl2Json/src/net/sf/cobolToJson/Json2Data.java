@@ -5,7 +5,7 @@ package net.sf.cobolToJson;
 
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
+
 import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.Common.RecordException;
@@ -22,7 +22,7 @@ public class Json2Data {
 	 * @param args program arguments
 	 * 
 	 */
-	public static void main(String[] args) throws RecordException, IOException, JAXBException, XMLStreamException {
+	public static void main(String[] args) throws RecordException, IOException,  XMLStreamException {
 		throw new RuntimeException("Not implemented");
 //		ConvertOptions opts = new ConvertOptions(args);
 //		

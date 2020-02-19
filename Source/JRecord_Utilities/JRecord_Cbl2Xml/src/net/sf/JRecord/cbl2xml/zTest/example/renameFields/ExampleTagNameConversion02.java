@@ -14,6 +14,7 @@ import net.sf.JRecord.Details.FieldIterator;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.Option.JRecordConstantVars;
 import net.sf.JRecord.cbl2xml.Cobol2Xml;
+import net.sf.JRecord.cbl2xml.def.ICobol2Xml;
 import net.sf.JRecord.cbl2xml.zTest.xml2cbl.Cb2XmlCode;
 
 public class ExampleTagNameConversion02 {
@@ -32,18 +33,19 @@ public class ExampleTagNameConversion02 {
            		.add("DTAR020-DEPT-NO", "DEPT-NO")
            		.add("DTAR020-QTY-SOLD", "QTY-SOLD")
           		.add("DTAR020-SALE-PRICE", "SALE-PRICE")
+          		.add("DTAR020-KCODE-STORE-KEY", "KCODE-STORE-KEY")
            ;
         
-		Cobol2Xml.newCobol2Xml(dtar020FileName)
+		ICobol2Xml cbl2Xml = Cobol2Xml.newCobol2Xml(dtar020FileName)
 
                                          // Cobol Options
                          .setFileOrganization(constants.IO_FIXED_LENGTH)
                          .setDialect(constants.FMT_MAINFRAME)               
                          .setSplitCopybook(constants.SPLIT_NONE)      
                          .setFont("cp037")
-                         .setRenameFieldClass(rf)
-
-              .xml2Cobol(
+                         .setRenameFieldClass(rf);
+		
+		cbl2Xml.xml2Cobol(
             		  		new FileInputStream(Cb2XmlCode.getFullName("xml/DTAR020_DataY.xml")),
             		  		cblData	
             		  	);
@@ -56,7 +58,7 @@ public class ExampleTagNameConversion02 {
 			        .setFont("cp037")
 		        .newReader(new ByteArrayInputStream(cblData.toByteArray()));
         AbstractLine l;
-        
+         
         while( (l = reader.read()) != null) {
         	FieldIterator fieldIterator = l.getFieldIterator(0);
         	for(AbstractFieldValue val : fieldIterator) {
@@ -65,6 +67,11 @@ public class ExampleTagNameConversion02 {
         	System.out.println();
         }
         reader.close();
+        
+        ByteArrayOutputStream xmlOut = new ByteArrayOutputStream(cblData.size() * 25);
+        cbl2Xml.cobol2xml(new ByteArrayInputStream(cblData.toByteArray()), xmlOut);
+        System.out.println();
+        System.out.println(new String(xmlOut.toByteArray()));
     }
  
 	

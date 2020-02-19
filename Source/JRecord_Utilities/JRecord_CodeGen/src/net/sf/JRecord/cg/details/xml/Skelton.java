@@ -2,8 +2,6 @@ package  net.sf.JRecord.cg.details.xml;
 
 import java.util.Properties;
 
-import javax.xml.bind.annotation.XmlTransient;
-
 import net.sf.JRecord.Common.Conversion;
 
 public class  Skelton implements  ISkelton {

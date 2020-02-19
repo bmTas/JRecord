@@ -3,7 +3,7 @@ package net.sf.JRecord.cbl2json.zExample;
 import java.io.IOException;
 import java.net.URL;
 
-import javax.xml.bind.JAXBException;
+
 import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.Common.Constants;
@@ -28,7 +28,7 @@ public class TstCblData2Json {
     }
 
 
-	public static void main(String[] args) throws RecordException, IOException, JAXBException, XMLStreamException {
+	public static void main(String[] args) throws RecordException, IOException,  XMLStreamException {
 		ICobol2Json cbl2json = Cobol2Json.newCobol2Json(getFullName("cbl2xml_Test112.cbl"));
 		cbl2json.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE);
 		

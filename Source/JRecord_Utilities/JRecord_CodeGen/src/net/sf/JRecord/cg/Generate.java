@@ -27,7 +27,6 @@ package net.sf.JRecord.cg;
 
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLStreamException;
 

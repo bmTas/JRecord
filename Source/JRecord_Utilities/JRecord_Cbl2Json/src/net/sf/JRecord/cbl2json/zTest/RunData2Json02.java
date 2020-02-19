@@ -2,7 +2,7 @@ package net.sf.JRecord.cbl2json.zTest;
 
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
+
 import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.Common.RecordException;
@@ -12,7 +12,7 @@ import net.sf.cobolToJson.Data2Json;
 
 public class RunData2Json02 {
 
-	public static void main(String[] args) throws RecordException, IOException, JAXBException, XMLStreamException {
+	public static void main(String[] args) throws RecordException, IOException,  XMLStreamException {
 		String cbl1 =  Cbl2JsonCode.getFullName("cobol/amsPoDownload.cbl");
 		String forgText = "text";
 		String poRec = "PO-Record";

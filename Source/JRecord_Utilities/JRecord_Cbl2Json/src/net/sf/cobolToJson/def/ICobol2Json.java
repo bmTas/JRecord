@@ -126,7 +126,7 @@ public interface ICobol2Json  extends  Icb2xml2Json  {
 //	 * @throws XMLStreamException
 //	 */
 //	public void json2Cobol(String xmlFileName, String cobolFileName)
-//			throws IOException, JAXBException, XMLStreamException;
+//			throws IOException,  XMLStreamException;
 //
 //	/**
 //	 * Convert a Json-Data in to a Cobol Data 
@@ -138,7 +138,7 @@ public interface ICobol2Json  extends  Icb2xml2Json  {
 //	 * @throws XMLStreamException
 //	 */
 //	public void json2Cobol(InputStream xmlStream, OutputStream cobolStream)
-//			throws IOException, JAXBException,
+//			throws IOException, 
 //			XMLStreamException;
 //
 }

@@ -29,7 +29,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
+
 
 import org.junit.Test;
 
@@ -66,7 +66,7 @@ public class TstCblDataToJson102 {
 	
 	//private String firstLine = "TAR5839DCDC - Taras Ave                                                             30-68 Taras Ave                         Altona North                       3025      VICA";
 	@Test
-	public void testData2Xml() throws IOException,   JAXBException {
+	public void testData2Xml() throws IOException {
 		for (String[] d : files) {
 			checkData2Xml(d);
 		}
@@ -75,7 +75,7 @@ public class TstCblDataToJson102 {
 
 
 	private void checkData2Xml(String[] d) throws FileNotFoundException,
-			RecordException, IOException, JAXBException {
+			RecordException, IOException {
 		String copybookName;
 		String dataName;
 		String xmlData = Cbl2JsonCode.loadFile(Cbl2JsonCode.getFullName("json/" + d[2]), "\r\n", false);
@@ -108,7 +108,7 @@ public class TstCblDataToJson102 {
 	} 
 	
 	private byte[] data2xml1(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId) 
-	throws IOException, JAXBException {
+	throws IOException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);		
 		
@@ -119,7 +119,7 @@ public class TstCblDataToJson102 {
 	}
 	
 	private byte[] data2xml1a(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId) 
-	throws IOException, JAXBException {
+	throws IOException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);		
 		
@@ -129,7 +129,7 @@ public class TstCblDataToJson102 {
 	    return os.toByteArray();
 	}
 	private byte[] data2xml1b(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId) 
-	throws IOException, JAXBException {
+	throws IOException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);		
 		
@@ -161,7 +161,7 @@ public class TstCblDataToJson102 {
 	
 
 	private byte[] data2xml2(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId) 
-	throws IOException, JAXBException {
+	throws IOException {
 
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 
@@ -176,7 +176,7 @@ public class TstCblDataToJson102 {
 
 
 	private byte[] data2xml3(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId) 
-	throws IOException, JAXBException {
+	throws IOException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 
@@ -213,7 +213,7 @@ public class TstCblDataToJson102 {
     }
     
 //	@Test
-//	public void testXml2Data() throws IOException, SAXException, ParserConfigurationException, RecordException, JAXBException, XMLStreamException {
+//	public void testXml2Data() throws IOException, SAXException, ParserConfigurationException, RecordException,  XMLStreamException {
 //		byte[] xml2data;
 //		byte[][] expected = new byte[files.length][];
 //		String[] d = files[0];
@@ -261,7 +261,7 @@ public class TstCblDataToJson102 {
 
 //	@SuppressWarnings("unchecked")
 //	private byte[] xml2data1(InputStream xmlStream, String copybookFileName, String splitId) 
-//	throws FileNotFoundException, RecordException, IOException, JAXBException, XMLStreamException {
+//	throws FileNotFoundException, RecordException, IOException,  XMLStreamException {
 //		 
 //		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 //		

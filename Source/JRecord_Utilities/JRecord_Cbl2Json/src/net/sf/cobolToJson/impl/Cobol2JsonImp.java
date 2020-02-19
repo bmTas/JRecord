@@ -10,7 +10,7 @@ import java.io.Reader;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
+
 
 import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.Conversion;
@@ -89,12 +89,12 @@ public class Cobol2JsonImp extends CobolSchemaReader<ICobol2Json> implements ICo
 
 	
 	@Override
-	public void cobol2json(String cobolFileName, String jsonFileName) throws IOException, JAXBException  {
+	public void cobol2json(String cobolFileName, String jsonFileName) throws IOException  {
 		cobol2json(new FileInputStream(cobolFileName), new BufferedOutputStream(new FileOutputStream(jsonFileName), 0x4000));
 	}
 	
 	@Override
-	public void cobol2json(InputStream cobolStream, OutputStream jsonStream) throws IOException, JAXBException {
+	public void cobol2json(InputStream cobolStream, OutputStream jsonStream) throws IOException {
 		doInit();
 		
 		ISchemaIOBuilder iob = cobolSchemaDetails.ioBuilder;
@@ -214,7 +214,7 @@ public class Cobol2JsonImp extends CobolSchemaReader<ICobol2Json> implements ICo
  		
 	}
 	
-	private void doInit() throws IOException, JAXBException {
+	private void doInit() throws IOException {
 		cobolSchemaDetails = super.getCobolSchemaDetails();
 
 		itemDtls = cobolSchemaDetails.copybookInformation;
@@ -567,13 +567,13 @@ public class Cobol2JsonImp extends CobolSchemaReader<ICobol2Json> implements ICo
 
 //	@Override
 //	public void json2Cobol(String xmlFileName, String cobolFileName) 
-//	throws RecordException, IOException, JAXBException, XMLStreamException {
+//	throws RecordException, IOException,  XMLStreamException {
 //		json2Cobol(new FileInputStream(xmlFileName), new BufferedOutputStream(new FileOutputStream(cobolFileName), 0x4000));
 //	}
 //
 //	@Override
 //	public void json2Cobol(InputStream xmlStream, OutputStream cobolStream) 
-//	throws RecordException, IOException, JAXBException, XMLStreamException{
+//	throws RecordException, IOException,  XMLStreamException{
 //		//XMLInputFactory f = XMLInputFactory.newInstance();
 //		doInit();
 //		if (itemDtls.getDuplicateFieldsStatus() == UpdateSchemaItems.D_DUPLICATES) {

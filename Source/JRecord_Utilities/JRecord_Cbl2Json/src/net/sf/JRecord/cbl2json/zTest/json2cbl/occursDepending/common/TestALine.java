@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
+
 import junit.framework.TestCase;
 import net.sf.JRecord.Details.AbstractLine;
 
@@ -65,8 +65,6 @@ public class TestALine {
 			//cbl2Xml.xml2Cobol(new ByteArrayInputStream(xml.getBytes()), osCbl);
 			osXml.close();
 		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} catch (JAXBException e) {
 			throw new RuntimeException(e);
 		}
 		

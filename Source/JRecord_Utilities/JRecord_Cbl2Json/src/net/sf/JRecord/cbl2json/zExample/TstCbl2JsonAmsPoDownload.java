@@ -2,7 +2,7 @@ package net.sf.JRecord.cbl2json.zExample;
 
 import java.io.IOException;
 
-import javax.xml.bind.JAXBException;
+
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.External.CopybookLoader;
@@ -12,7 +12,7 @@ import net.sf.cobolToJson.Cobol2Json;
 
 public class TstCbl2JsonAmsPoDownload {
 
-	public static void main(String[] args) throws IOException, JAXBException {
+	public static void main(String[] args) throws IOException {
 		
 		// convert to Json, retain  separate records
 		Cobol2Json.newCobol2Json(Cbl2JsonCode.getFullName("cobol/amsPoDownload.cbl"))
