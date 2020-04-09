@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/JRecord_Project/JRecord/JRecord.iml" filepath="$PROJECT_DIR$/JRecord_Project/JRecord/JRecord.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JRecord_Utilities/JRecord_Cbl2Csv/JRecord_Cbl2Csv.iml" filepath="$PROJECT_DIR$/JRecord_Utilities/JRecord_Cbl2Csv/JRecord_Cbl2Csv.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JRecord_Utilities/JRecord_Cbl2Json/JRecord_Cbl2Json.iml" filepath="$PROJECT_DIR$/JRecord_Utilities/JRecord_Cbl2Json/JRecord_Cbl2Json.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JRecord_Utilities/JRecord_Cbl2Xml/JRecord_Cbl2Xml.iml" filepath="$PROJECT_DIR$/JRecord_Utilities/JRecord_Cbl2Xml/JRecord_Cbl2Xml.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JRecord_Utilities/JRecord_CodeGen/JRecord_CodeGen.iml" filepath="$PROJECT_DIR$/JRecord_Utilities/JRecord_CodeGen/JRecord_CodeGen.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JRecord_Project/JRecord_Common/JRecord_Common.iml" filepath="$PROJECT_DIR$/JRecord_Project/JRecord_Common/JRecord_Common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JRecord_Utilities/JRecord_Examples_Classic/JRecord_Examples_Classic.iml" filepath="$PROJECT_DIR$/JRecord_Utilities/JRecord_Examples_Classic/JRecord_Examples_Classic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JRecord_Project/JRecord_IO_Builder_Examples/JRecord_IO_Builder_Examples.iml" filepath="$PROJECT_DIR$/JRecord_Project/JRecord_IO_Builder_Examples/JRecord_IO_Builder_Examples.iml" />
+      <module fileurl="file://$PROJECT_DIR$/JRecord_Utilities/JRecord_SchemaCompare/JRecord_SchemaCompare.iml" filepath="$PROJECT_DIR$/JRecord_Utilities/JRecord_SchemaCompare/JRecord_SchemaCompare.iml" />
+    </modules>
+  </component>
+</project>

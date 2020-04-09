@@ -1,0 +1,37 @@
+<html>
+<head><title>net.sf.JRecord.External</title>
+<body>
+
+<p>This package holds classes that convert Record-Layouts (copybooks) between external Files
+and the internal representation. 
+It holds conversion routines, Generalised Record-Layout and code to read, write and convert copybooks between various 
+formats.
+
+<p>The most important Class's are: 
+    <ul compact>
+      <li><b>ExternalRecord</b> Record Layout interchange format. It can be read/written from external
+      files and converted to the internal format LayoutDetail. Use the method <b>asLayoutDetail</b>
+      to get the internal form.
+      <li><b>ToRecordLayout</b> Convert a ExternalRecord class to an LayoutDetail class.
+      <li><b>ToExternalRecord</b> Convert a LayoutDetail class to an ExternalRecord class.
+      <li><b>RecordEditorXmlLoader</b> Loads a RecordEditor-Xml Layout as ExternalRecord
+      <li><b>RecordEditorXmlWrite</b> Writes ExternalRecord to a file in the RecordEditor-Xml format
+    </ul>
+
+<p>There are several ways to load a RecordLayout
+<pre>
+<b>Loading an RecordEditor-XML:</b>
+         LayoutDetail layout = CopybookLoaderFactory.getInstance().getLayoutRecordEditXml(copybookName, null);
+
+<b>Using the Loader Factory CopybookLoaderFactory:</b>
+         CopybookLoader loader = CopybookLoaderFactory.getInstance()
+                 .getLoader(CopybookLoaderFactory.RECORD_EDITOR_XML_LOADER);
+         LayoutDetail layout = loader.loadCopyBook(copybookName, 0, 0, "", 0, 0, null).asLayoutDetail();
+
+<b>Creating the loader:</b>
+         CopybookLoader loader = new RecordEditorXmlLoader();
+         LayoutDetail layout = loader.loadCopyBook(copybookName, 0, 0, "", 0, 0, null).asLayoutDetail();
+	            
+</pre>
+</body>
+</html>
