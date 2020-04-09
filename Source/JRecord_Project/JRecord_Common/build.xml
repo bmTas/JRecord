@@ -37,7 +37,9 @@
 		</javac>
 	</target>
 
-	
+	<!-- TPF: https://sourceforge.net/p/cb2xml/SVN/1/tree/source/cb2xml/src/net/sf/cb2xml/Cb2Xml.java
+                  https://github.com/bmTas/cb2xml
+          -->
 	<target name="build" depends="compile" description="build jar">
 		<mkdir dir="${outputLib.dir}" />
 		<jar destfile="${JRecord_Common.jar}" filesonly="true">

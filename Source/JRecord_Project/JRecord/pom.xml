@@ -1,15 +1,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <groupId>net.sf</groupId>
-        <artifactId>jrecord</artifactId>
+        <groupId>net.sf.jrecord.jrecord-parent</groupId>
+        <artifactId>jrecord-project-parent</artifactId>
         <version>0.90.2</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
+
+    <groupId>net.sf.jrecord.jrecord-parent.jrecord-project-parent</groupId>
     <artifactId>jrecord-base</artifactId>
 
-    <build>
+    <name>JRecord Base</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.sf.jrecord.jrecord-parent.jrecord-project-parent</groupId>
+            <artifactId>jrecord-common</artifactId>
+        </dependency>
+    </dependencies>
+
+    <!-- build>
         <sourceDirectory>src</sourceDirectory>
         <testSourceDirectory>src</testSourceDirectory>
         <testResources>
@@ -54,14 +65,5 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>
-
-    <dependencies>
-        <dependency>
-            <groupId>net.sf</groupId>
-            <artifactId>jrecord-common</artifactId>
-            <version>${jrecord.version}</version>
-        </dependency>
-    </dependencies>
-
+    </build -->
 </project>
