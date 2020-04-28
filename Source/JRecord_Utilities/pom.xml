@@ -29,6 +29,11 @@
             </dependency>
             <dependency>
                 <groupId>net.sf.jrecord.jrecord-parent.jrecord-utilities-parent</groupId>
+                <artifactId>jrecord-cbl2json</artifactId>
+                <version>0.90.2</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.jrecord.jrecord-parent.jrecord-utilities-parent</groupId>
                 <artifactId>jrecord-cbl2csv</artifactId>
                 <version>0.90.2</version>
             </dependency>
@@ -76,21 +81,6 @@
                 <configuration>                
                 </configuration>
             </plugin>
-            <!-- plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>${start-class}</mainClass>
-                    <layout>ZIP</layout>
-                </configuration>
-            </plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
