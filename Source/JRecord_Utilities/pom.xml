@@ -13,8 +13,11 @@
 
     <modules>
         <module>JRecord_CodeGen</module>
+        <module>JRecord_Cbl2Json</module>
         <module>JRecord_Cbl2Csv</module>
         <module>JRecord_Cbl2Xml</module>
+        <module>JRecord_Examples_Classic</module>
+        <module>JRecord_SchemaCompare</module>
     </modules>
 
     <dependencyManagement>
