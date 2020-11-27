@@ -2,22 +2,19 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>net.sf</groupId>
-        <artifactId>jrecord</artifactId>
+        <groupId>net.sf.jrecord-parent</groupId>
+        <artifactId>jrecord-project-parent</artifactId>
         <version>0.90.2</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
+
+    <groupId>net.sf.jrecord-project-parent</groupId>
     <artifactId>jrecord-iobuilder-examples</artifactId>
 
-    <build>
-        <sourceDirectory>src</sourceDirectory>
-    </build>
-
     <dependencies>
-        <dependency>
-            <groupId>net.sf</groupId>
+        <!-- dependency>
+            <groupId>net.sf.jrecord.jrecord-project-parent</groupId>
             <artifactId>jrecord-base</artifactId>
             <version>${jrecord.version}</version>
-        </dependency>
+        </dependency -->
     </dependencies>
 </project>

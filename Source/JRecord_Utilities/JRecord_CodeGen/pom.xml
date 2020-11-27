@@ -1,23 +1,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>net.sf</groupId>
-        <artifactId>jrecord</artifactId>
-        <version>0.81</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
-    <artifactId>jrecord-codegen</artifactId>
 
-    <build>
-        <sourceDirectory>src</sourceDirectory>
-    </build>
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>net.sf.jrecord.jrecord-parent</groupId>
+        <artifactId>jrecord-utilities-parent</artifactId>
+        <version>0.90.2</version>
+    </parent>
+
+    <groupId>net.sf.jrecord.jrecord-parent.jrecord-utilities-parent</groupId>
+    <artifactId>jrecord-codegen</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>net.sf</groupId>
+            <groupId>net.sf.jrecord.jrecord-parent.jrecord-project-parent</groupId>
+            <artifactId>jrecord-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.jrecord.jrecord-parent.jrecord-project-parent</groupId>
             <artifactId>jrecord-base</artifactId>
-            <version>${jrecord.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.velocity</groupId>
@@ -26,5 +28,78 @@
         </dependency>
     </dependencies>
 
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${project.artifactId}-${project.version}-app</finalName>
+                            <minimizeJar>true</minimizeJar>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            <transformers>
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>net.sf.JRecord.cg.Generate</mainClass>
+                                </transformer>
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.handlers</resource>
+                                </transformer>
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.schemas</resource>
+                                </transformer>
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.tooling</resource>
+                                </transformer>
+                                <!-- Added below because without it Spring Boot won't work with the 
+                                    Shade Plugin -->
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/spring.factories</resource>
+                                </transformer>
+                            </transformers>
+                            <artifactSet>
+                                <excludes>
+                                    <exclude>org.junit.vintage:junit-vintage-engine</exclude>
+                                    <exclude>org.mockito:mockito-all</exclude>
+                                </excludes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
