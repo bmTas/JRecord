@@ -39,7 +39,7 @@ import net.sf.JRecord.External.ExternalRecord;
  * @author Bruce Martin
  *
  */
-public interface IIOBuilder extends ISchemaIOBuilder{
+public interface IIOBuilder extends ISchemaIOBuilder {
 
 
 	

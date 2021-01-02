@@ -62,7 +62,6 @@ import net.sf.JRecord.CsvParser.ICsvDefinition;
 import net.sf.JRecord.IO.builders.recordDeciders.SingleFieldDecider;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.CsvParser.ICsvByteLineParser;
-import net.sf.JRecord.CsvParser.CsvParserManagerChar;
 import net.sf.JRecord.CsvParser.CsvParserManagerByte;
 import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.Option.Options;

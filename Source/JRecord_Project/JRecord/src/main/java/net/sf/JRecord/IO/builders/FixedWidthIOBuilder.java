@@ -40,7 +40,7 @@ import net.sf.JRecord.def.IO.builders.IFixedWidthIOBuilder;
  * @author Bruce Martin
  *
  */
-public class FixedWidthIOBuilder extends CblIOBuilderBase<IFixed> 
+public class FixedWidthIOBuilder extends IOBuilderBase<IFixed> 
 implements IFixed /*, IFixedWidthIOBuilder, IDefineFixedFieldsByPosition, IDefineFixedFieldsByLength*/ {
 
 	private ExternalRecord record = new ExternalRecord();
@@ -63,7 +63,7 @@ implements IFixed /*, IFixedWidthIOBuilder, IDefineFixedFieldsByPosition, IDefin
 
 
 	/**
-	 * @see net.sf.JRecord.IO.builders.CblIOBuilderBase#checkOk(boolean)
+	 * @see net.sf.JRecord.IO.builders.IOBuilderBase#checkOk(boolean)
 	 * 
 	 * Used to validate schema prior to creating readers / writers
 	 */

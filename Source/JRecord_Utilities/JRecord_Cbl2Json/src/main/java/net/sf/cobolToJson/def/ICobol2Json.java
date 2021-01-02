@@ -1,5 +1,15 @@
 package net.sf.cobolToJson.def;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
+import java.util.List;
+
+import com.fasterxml.jackson.core.JsonParseException;
+
+import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 import net.sf.JRecord.Option.IRecordPositionOption;
@@ -50,6 +60,9 @@ public interface ICobol2Json  extends  Icb2xml2Json  {
 	@Override public abstract ICobol2Json setCopybookFileFormat(int copybookFileFormat);
 
 	@Override public abstract ICobol2Json setDropCopybookNameFromFields(boolean dropCopybookNameFromFields);
+	
+	@Override public ICobol2Json setPrettyPrint(boolean prettyPrint);
+
 
 	
 	/**
@@ -88,6 +101,95 @@ public interface ICobol2Json  extends  Icb2xml2Json  {
 	 * @return an IOBuilder related to the Cobol2Xml class
 	 */
 	public ISchemaIOBuilder asIOBuilder();
+
+	/**
+	 * Write a Coboi Stream data stream to a writer 
+	 * @param cobolStream Cobol Data Stream
+	 * @param writer where json is written to
+	 * @throws IOException
+	 */
+	void cobol2json(InputStream cobolStream, Writer writer) throws IOException;
+
+	/**
+	 * Convert a Single Cobol Record to the equivalent JSon
+	 * @param cobolData cobol data (byte array)
+	 * @param writer where the JSon is to be written
+	 * @throws IOException any IOException
+	 */
+	void singleCobolRecord2json(byte[] cobolData, Writer jsonWriter) throws IOException;
+
+	/**
+	 * Convert a Single Cobol Record to the equivalent Json String
+	 * @param cobolData Cobol data (array of bytes)
+	 * @return json string generated from the Cobol data 
+	 * @throws IOException
+	 */
+	String singleCobolRecord2jsonString(byte[] cobolData) throws IOException;
+
+	/**
+	 * Convert a json String to a Cobol record (as a byte array)
+	 * @param json json String
+	 * @return equivalent Cobol record (as a byte array)
+	 * 
+	 * @throws JsonParseException
+	 * @throws IOException
+	 */
+	byte[] jsonStringToSingleCobolRecord(String json) throws JsonParseException, IOException;
+
+	/**
+	 * Convert json to a Single Cobol record (as a stream of bytes) 
+	 * @param jsonReader a reader for the json String
+	 * @param outStream stream to write the cobol data
+	 * @return The Cobol2Json object for more updates
+	 * @throws JsonParseException
+	 * @throws IOException
+	 */
+	ICobol2Json jsonObjectToCobolFile(Reader jsonReader, OutputStream outStream) throws JsonParseException, IOException;
+
+	/**
+	 * Convert a json object to a single Cobol Record
+	 * @param jsonFileName name of the <i>json file</i> to be read
+	 * @param outFileName name of the <i>Cobol data file</i> where the Cobol data is to be written
+	 * @return Cobol2json object so more conversions can be run
+	 * 
+	 * @throws JsonParseException
+	 * @throws IOException
+	 */
+	ICobol2Json jsonObjectToCobolFile(String jsonFileName, String outFileName) throws JsonParseException, IOException;
+
+	/**
+	 * Convert a json array to a multiple Cobol Records
+	 * 
+	 * @param jsonReader reader to read the json from
+	 * @param outStream Stream to write the Cobol Data to
+	 * @return  Cobol2json object so more conversions can be run
+	 * 
+	 * @throws JsonParseException
+	 * @throws IOException
+	 */
+	ICobol2Json jsonArrayToCobolFile(Reader jsonReader, OutputStream outStream) throws JsonParseException, IOException;
+
+	/**
+	 * Convert a json array to a multiple Cobol Records
+	 * 
+	 * @param jsonFileName Name of File to read the Cobol data from
+	 * @param outFileName Name of File to write Cobol data to
+	 * @returnCobol2json object so more conversions can be run
+	 * 
+	 * @throws JsonParseException
+	 * @throws IOException
+	 */
+	ICobol2Json jsonArrayToCobolFile(String jsonFileName, String outFileName) throws JsonParseException, IOException;
+
+	/**
+	 * Convert JSon to a list of lines
+	 * @param jsonReader wherethe json is to be read from
+	 * @return List of Lines
+	 * @throws JsonParseException
+	 * @throws IOException
+	 */
+	List<AbstractLine> jsonArrayToCobolLines(Reader jsonReader)
+			throws JsonParseException, IOException;
 
 	
 //	/**

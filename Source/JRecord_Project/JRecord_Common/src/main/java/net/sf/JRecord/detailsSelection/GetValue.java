@@ -30,6 +30,7 @@ import java.util.List;
 
 import net.sf.JRecord.Common.AbstractIndexedLine;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 
 /**
@@ -150,7 +151,45 @@ public abstract class GetValue  implements IGetValue {
 		}
 	}
 
+	public static class PaddedFieldValue extends GetValue {
+		public PaddedFieldValue(IFieldDetail fieldDetail, int recordIdx) {
+			super( fieldDetail, recordIdx);
+		}
+		
+		
+		@Override
+		public Object getValue(AbstractIndexedLine line) {
+			Object ret = super.getValue(line);
+			if (ret != null && fieldDetail.getType() == Type.ftChar) {
+				String s = ret.toString();
+				int len = fieldDetail.getLen();
+				if (s.length() < len) {
+					StringBuilder b = new StringBuilder(len);
+					b.append(s);
+					b.setLength(len);
+					for (int i =  s.length(); i < len; i++) {
+						b.setCharAt(i, ' ');
+					}
+					ret = b.toString();
+				}
+			}
+			
+			
+			return ret;
+		}
+
+
+		/* (non-Javadoc)
+		 * @see net.sf.JRecord.detailsSelection.copy.IGetValue#getValue(java.util.List)
+		 */
+		@Override
+		public Object getValue(List<? extends AbstractIndexedLine> lines) {
+			throw new RuntimeException("passed a list of lines");
+		}
+	}
+
 	public static class Max extends GetValue {
+
 
 		public Max(IFieldDetail fieldDetail, int recordIdx) {
 			super(fieldDetail, recordIdx);

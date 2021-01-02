@@ -38,7 +38,8 @@ public class StdFieldRenameItems {
 					toUpper = false;
 				}
 			}
-			return b.toString();		}
+			return b.toString();
+		}
 	};
 	
 	public static final IRenameField MINUS_TO_UNDERSCORE = new IRenameField() {
@@ -72,7 +73,7 @@ public class StdFieldRenameItems {
 		IRenameField ret =  LEAVE_ASIS;
 	
 		switch (opt) {
-		case RO_CAMEL_CASE:				ret =CAMEL_CASE;			break;
+		case RO_CAMEL_CASE:				ret = CAMEL_CASE;			break;
 		case RO_MINUS_TO_UNDERSCORE:	ret = MINUS_TO_UNDERSCORE;
 		}
 		return ret;

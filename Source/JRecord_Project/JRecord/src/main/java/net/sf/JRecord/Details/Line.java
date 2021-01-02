@@ -92,10 +92,10 @@ public class Line extends BasicLine implements IGetByteData {
 	/**
 	 * Define a Null record
 	 *
-	 * @param group - Group of Record Layouts
+	 * @param schema - Group of Record Layouts
 	 */
-	public Line(final LayoutDetail group) {
-		super(defaultProvider, group);
+	public Line(final LayoutDetail schema) {
+		super(defaultProvider, schema);
 
 		newRecord = true;
 		data = NULL_RECORD;
@@ -106,26 +106,26 @@ public class Line extends BasicLine implements IGetByteData {
 	/**
 	 * Define a String record
 	 *
-	 * @param group - Group of Record Layouts
+	 * @param schema - Group of Record Layouts
 	 * @param rec - record
 	 */
-	public Line(final LayoutDetail group, final String rec) {
-		super(defaultProvider, group);
+	public Line(final LayoutDetail schema, final String rec) {
+		super(defaultProvider, schema);
 
-		data = Conversion.getBytes(rec, group.getFontName());
+		data = Conversion.getBytes(rec, schema.getFontName());
 	}
 
 
 	/**
 	 * Define a Byte record
 	 *
-	 * @param group - Group of Record Layouts
+	 * @param schema - Group of Record Layouts
 	 * @param rec - record
 	 */
-	public Line(final LayoutDetail group, final byte[] rec) {
-		super(defaultProvider, group);
+	public Line(final LayoutDetail schema, final byte[] rec) {
+		super(defaultProvider, schema);
 
-		layout = group;
+		layout = schema;
 
 		data = rec;
 	}
@@ -134,18 +134,18 @@ public class Line extends BasicLine implements IGetByteData {
 	/**
 	 * Create  a line from a selected part of a supplied byte array
 	 *
-	 * @param group current group of records
+	 * @param schema current group of records
 	 * @param buf input buffer
 	 * @param start start of the record (in the input buffer)
 	 * @param recordLen Record (or Line length)
 	 */
-	public Line(final LayoutDetail group, final byte[] buf,
+	public Line(final LayoutDetail schema, final byte[] buf,
 	        	final int start, final int recordLen) {
-		super(defaultProvider, group);
+		super(defaultProvider, schema);
 
 		data = new byte[Math.max(0, recordLen)];
 
-		layout = group;
+		layout = schema;
 
 		if (recordLen > 0) {
 		    System.arraycopy(buf, start, data, 0, recordLen);

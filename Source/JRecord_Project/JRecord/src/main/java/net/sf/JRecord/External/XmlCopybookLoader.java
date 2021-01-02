@@ -52,17 +52,20 @@
 
 package net.sf.JRecord.External;
 
-import net.sf.JRecord.External.base.BaseCb2xmlLoader;
+
+import net.sf.JRecord.External.base.BaseCobolItemLoader;
+import net.sf.JRecord.External.cb2xml.Cb2xmlCopybookReader;
+
 
 /**
  * This class will load a cb2xml XML Copybook into the Record Layout
  *
  * @author Bruce Martin
  */
-public class XmlCopybookLoader extends BaseCb2xmlLoader<ExternalRecord> 
+public class XmlCopybookLoader extends BaseCobolItemLoader<ExternalRecord> 
 implements ICopybookLoaderStream, ICopybookLoaderCobol {
 
     public XmlCopybookLoader() {
-		super(new ExternalRecordBuilder(), true);
+		super(true, new ExternalRecordBuilder(), new Cb2xmlCopybookReader());
 	}
 }

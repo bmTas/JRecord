@@ -58,8 +58,8 @@ public class Dtar020ToJson {
                          .setSplitCopybook(constants.SPLIT_NONE)      
                          .setFont("cp037")
 
-              .cobol2json("G:/Users/Bruce01/RecordEditor_HSQL/SampleFiles/DTAR020.bin", 
-                          "G:/Users/Bruce01/RecordEditor_HSQL/SampleFiles/DTAR020.bin.json");
+              .cobol2json("G:/Users/BruceTst01/RecordEditor_HSQL/SampleFiles/DTAR020.bin", 
+                          "G:/Users/BruceTst01/RecordEditor_HSQL/SampleFiles/DTAR020.bin.json");
     }
 }
 

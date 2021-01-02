@@ -15,6 +15,7 @@ import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.External.Def.Cb2xmlJrConsts;
 import net.sf.JRecord.External.Def.ExternalField;
+import net.sf.JRecord.External.cb2xml.IReadCopybook;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Numeric.ConversionManager;
 import net.sf.JRecord.Numeric.Convert;
@@ -35,6 +36,7 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
 
     private final boolean useJRecordNaming ;
     private final IExernalRecordBuilder<XRecord> recBuilder;
+    private final IReadCopybook readCopybook;
     
     
     private int stackSize = Cb2xmlJrConsts.CALCULATE_THREAD_SIZE;
@@ -45,10 +47,11 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
     				saveCb2xml;
     
     
-	public BaseCobolItemLoader(boolean useJRecordNaming, IExernalRecordBuilder<XRecord> recBuilder) {
+	public BaseCobolItemLoader(boolean useJRecordNaming, IExernalRecordBuilder<XRecord> recBuilder, IReadCopybook readCopybook) {
 		super();
 		this.useJRecordNaming = useJRecordNaming;
 		this.recBuilder = recBuilder;
+		this.readCopybook = readCopybook;
 	}
 
 	public void setKeepFillers(boolean keepFiller) {
@@ -133,11 +136,11 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
 			int copybookFormat, int binaryFormat, int systemId, AbsSSLogger log)
 			throws IOException {
 		
-		Copybook copybook;
+		Copybook copybook = readCopybook.getCopybook(reader, copyBookName, binaryFormat, false, copybookFormat, stackSize);
 
 //		try {
-			copybook = net.sf.JRecord.External.Def.Cb2Xml
-							.getCopybook(reader, copyBookName, binaryFormat, false, copybookFormat, stackSize);
+//			copybook = net.sf.JRecord.External.Def.Cb2Xml
+//							.getCopybook(reader, copyBookName, binaryFormat, false, copybookFormat, stackSize);
 //		} catch (ParserException e) {
 //			throw new IOException(e);
 //		} catch ( XMLStreamException e) {
@@ -487,8 +490,6 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
 			for (IItemJrUpd itm : items) {
 				search(itm.getChildItems());
 			}
-
 		}
 	}
-	
 }

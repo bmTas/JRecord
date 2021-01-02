@@ -45,7 +45,7 @@ import net.sf.JRecord.Numeric.ICopybookDialects;
 
 
 public class CblIOBuilderMultiSchemaBase<IOB>
-extends CblIOBuilderBase<IOB> implements IGetLoader  { 
+extends IOBuilderBase<IOB> implements IGetLoader  { 
 
 	private final String copybookname;
 	final ICopybookLoaderStream loader;

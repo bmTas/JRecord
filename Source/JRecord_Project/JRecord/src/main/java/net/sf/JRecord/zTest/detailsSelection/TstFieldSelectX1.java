@@ -30,9 +30,15 @@ package net.sf.JRecord.zTest.detailsSelection;
 
 import junit.framework.TestCase;
 import net.sf.JRecord.Common.FieldDetail;
+import net.sf.JRecord.Common.RecordException;
+import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.Details.Line;
+import net.sf.JRecord.External.CopybookLoader;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.detailsSelection.FieldSelect;
 import net.sf.JRecord.detailsSelection.FieldSelectX;
+import net.sf.JRecord.zTest.Common.TestCommonCode;
 
 public class TstFieldSelectX1 extends TestCase {
 
@@ -66,6 +72,7 @@ public class TstFieldSelectX1 extends TestCase {
 		{">= (Text)", "net.sf.JRecord.detailsSelection.FieldSelectX$GreaterThan", "false"},
 		{"< (Text)", "net.sf.JRecord.detailsSelection.FieldSelectX$LessThan", "false"},
 		{"<= (Text)", "net.sf.JRecord.detailsSelection.FieldSelectX$LessThan", "false"},
+		{"Regular Expression", "net.sf.JRecord.detailsSelection.FieldSelect$RegularEx", ""},
 	};
 
 
@@ -101,6 +108,13 @@ public class TstFieldSelectX1 extends TestCase {
 		{"<= (Text)", "net.sf.JRecord.detailsSelection.FieldSelectX$LessThan", "false"},
 
 	};
+	
+	private static final String COBOL_COPBOOK 
+		=  "       01 Detail-Record.\n"
+		+ "          05 Field-1                                Pic X(04).\n"
+		+ "          05 Field-2                                Pic X(05).\n"
+		+ "          05 Field-3                                Pic X(07).\n";
+
 
 
 	public void testGetTextField() {
@@ -145,4 +159,42 @@ public class TstFieldSelectX1 extends TestCase {
 		}
 	}
 
+	public void testRegExp() {
+		String[][] data = {
+				{"1 .*", "1   ", "t"},
+				{"1 .*", "1  2", "t"},
+				{"1 .*", "1", "t"},
+				{"1 .*", "2   ", "f"},
+				{"1 .*", "2  2", "f"},
+				{"1 .*", "2", "f"},
+				{"12.*", "1234", "t"},
+				{"12.*", "12 4", "t"},
+				{"12.*", "123", "t"},
+				{"12.*", "12", "t"},
+				{"12.*", "1", "f"},
+				{"1   .*", "1   ", "t"},
+				{"1   .*", "1  2", "f"},
+				{"1   .*", "1", "t"},
+				{"1   .*", "12", "f"},
+		};
+		
+		Line line = new Line(getLayout(), "            ");
+		String fldName = "Field-1";
+		FieldDetail fd = new FieldDetail(fldName, "", Type.ftChar, 0, "", 0, "");
+		fd.setPosLen(1, 4); 
+		for (String[] tstData : data) {
+			FieldSelect fs = FieldSelectX.get(fldName, tstData[0], "Regular Expression", fd);
+			line.getFieldValue(fd).set(tstData[1]);
+			assertEquals(line.getFullLine() + " >" + tstData[0] + " >" + tstData[1],
+					"t".equals(tstData[2]),
+					fs.isSelected(line));
+		} 
+	}
+	
+	
+	private LayoutDetail getLayout() throws RecordException {
+		return TestCommonCode.getLayoutFromCobolStr(COBOL_COPBOOK, "DETAIL-RECORD",
+				CopybookLoader.SPLIT_NONE, "", ICopybookDialects.FMT_MAINFRAME);
+
+	}
 }

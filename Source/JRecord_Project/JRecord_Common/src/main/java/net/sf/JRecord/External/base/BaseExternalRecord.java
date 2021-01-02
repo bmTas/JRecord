@@ -133,6 +133,7 @@ implements IFieldUpdatedListner, IAddDependingOn {
 	private boolean embeddedCr    = false;  //private String tstField = "";
 	private boolean initToSpaces  = false;  // for backward compatibility
 	protected boolean optimizeTypes = true;
+	protected boolean checkPicture = false;
 //	private boolean fileStructureUpdated = false; 
 //  private RecordDecider recordDecider = null;
   //private String tstFieldValue = "";
@@ -1232,7 +1233,7 @@ implements IFieldUpdatedListner, IAddDependingOn {
 	 */
 	protected FieldCreatorHelper createFieldHelper() {
 		FieldCreatorHelper fldHelper = new FieldCreatorHelper(
-				ICobolSplitOptions.SPLIT_NONE, dialectCode, useJRecordNaming, copybookPref, fontName);
+				ICobolSplitOptions.SPLIT_NONE, dialectCode, useJRecordNaming, copybookPref, fontName, checkPicture);
 		fldHelper.setDropCopybookFromFieldNames(dropCopybookFromFieldNames);
 		fldHelper.setParentGroup(parentGroupNames);
 		return fldHelper;

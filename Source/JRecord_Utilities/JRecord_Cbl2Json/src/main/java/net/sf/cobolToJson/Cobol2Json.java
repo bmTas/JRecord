@@ -26,27 +26,47 @@ public class Cobol2Json  {
 	public static final ArrayElementChecks  ARRAY_CHECK_BUILDER = ArrayElementChecks.INSTANCE;
 	
 
-	public static ICobol2Json newCobol2Json(String cobolCopybook) {
-		return Cobol2JsonImp.newCobol2Json(cobolCopybook);
+	/**
+	 * Create a Cobol-Data-to-Json converter from a Cobol Copybook File
+	 * @param cobolCopybookFileName Cobol copybook file name
+	 * @return Cobol2Json builder
+	 */
+	public static ICobol2Json newCobol2Json(String cobolCopybookFileName) {
+		return Cobol2JsonImp.newCobol2Json(cobolCopybookFileName);
 	}
 	
-	
-	public static ICobol2Json newCobol2Json(InputStream cobolCopybook, String copybookName)  {
-		return Cobol2JsonImp.newCobol2Json(cobolCopybook, copybookName);
+	/**
+	 * Create a Cobol-Data-to-Json converter from a Cobol Copybook read from an input stream
+	 * @param cobolCopybookStream stream to read the Cobol Copybook from
+	 * @param copybookName Copybook name
+	 * @return Cobol2Json builder
+	 */
+	public static ICobol2Json newCobol2Json(InputStream cobolCopybookStream, String copybookName)  {
+		return Cobol2JsonImp.newCobol2Json(cobolCopybookStream, copybookName);
 	}
 
+	/**
+	 * Create a Cobol-Data-to-Json converter from a Cobol Copybook read from a Reader
+	 * @param cobolCopybookReader reader to read the copybook from
+	 * @param copybookName Cobol copybook name
+	 * @return Cobol2Json builder
+	 */
 	public static ICobol2Json newCobol2Json(Reader cobolCopybookReader, String copybookName) {
 		return Cobol2JsonImp.newCobol2Json(cobolCopybookReader, copybookName);
 	}
 
-	
-	public static Icb2xml2Json newCb2Xml2Json(String cobolCopybook) {
-		return Cobol2JsonImp.newCb2Xml2Json(cobolCopybook);
+	/**
+	 * Convert cobol-data to Json using a  cb2xml copybook (Cobol copybook converted to Xml by cb2xml) 
+	 * @param cb2xmlCopybook filename of the cb2xml copybook
+	 * @return cb2xmll2Json builder
+	 */
+	public static Icb2xml2Json newCb2Xml2Json(String cb2xmlCopybook) {
+		return Cobol2JsonImp.newCb2Xml2Json(cb2xmlCopybook);
 	}
 	
 	
-	public static Icb2xml2Json newCb2Xml2Json(InputStream cobolCopybook, String copybookName) {
-		return Cobol2JsonImp.newCb2Xml2Json(cobolCopybook, copybookName);
+	public static Icb2xml2Json newCb2Xml2Json(InputStream cb2xmlCopybook, String copybookName) {
+		return Cobol2JsonImp.newCb2Xml2Json(cb2xmlCopybook, copybookName);
 	}
 
 
@@ -96,6 +116,13 @@ public class Cobol2Json  {
     	return r;
     }
     
+    /**
+     * 
+     * @param fieldName field name to test
+     * @param op operator (e.g. =, >, >=, <, <=, !=, = (Numeric), = (Text), Regular Expression, ...)
+     * @param value Value to test against
+     * @return Field Selection Test
+     */
     public static ExternalFieldSelection newFieldSelection(String fieldName, String op, String value) {
     	ExternalFieldSelection r = new ExternalFieldSelection(fieldName, value, op);
     	r.setCaseSensitive(false);

@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.IO.builders.CblIOBuilderBase;
+import net.sf.JRecord.IO.builders.IOBuilderBase;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.def.IO.builders.IIOBuilder;
 import net.sf.cb2xml.def.Cb2xmlConstants;
@@ -51,18 +51,18 @@ public class TstSetAttributes01 extends TestCase {
 				Constants.NULL_INTEGER, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null	
 		};
 		checkAttributes(
-				((CblIOBuilderBase)Cobol2Json
+				((IOBuilderBase)Cobol2Json
 						.newCobol2Json("")
 							.setDialect(ICopybookDialects.FMT_MAINFRAME)
 				).getAllAttributes(), 
 				attrs);
 		checkAttributes(
-				((CblIOBuilderBase)Cobol2Json
+				((IOBuilderBase)Cobol2Json
 						.newCobol2Json("")
 				).getAllAttributes(), 
 				attrs);
 		checkAttributes(
-				((CblIOBuilderBase)Cobol2Json
+				((IOBuilderBase)Cobol2Json
 						.newCb2Xml2Json("")
 				).getAllAttributes(), 
 				attrs);
@@ -82,20 +82,20 @@ public class TstSetAttributes01 extends TestCase {
 					fs, "", Boolean.FALSE, null		
 			};
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Json
+					((IOBuilderBase)Cobol2Json
 							.newCobol2Json("")
 								.setFileOrganization(fs)
 								.setDialect(ICopybookDialects.FMT_MAINFRAME)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Json
+					((IOBuilderBase)Cobol2Json
 							.newCobol2Json("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Json
+					((IOBuilderBase)Cobol2Json
 							.newCb2Xml2Json("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
@@ -106,7 +106,7 @@ public class TstSetAttributes01 extends TestCase {
 						fs, "", Boolean.FALSE, null		
 				};
 				checkAttributes(
-						((CblIOBuilderBase)Cobol2Json
+						((IOBuilderBase)Cobol2Json
 								.newCobol2Json("")
 									.setFileOrganization(fs)
 									.setDialect(d)
@@ -136,20 +136,20 @@ public class TstSetAttributes01 extends TestCase {
 					fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null		
 			};
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Json
+					((IOBuilderBase)Cobol2Json
 							.newCobol2Json("")
 								.setFileOrganization(fs)
 								.setDialect(ICopybookDialects.FMT_MAINFRAME)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Json
+					((IOBuilderBase)Cobol2Json
 							.newCobol2Json("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Json
+					((IOBuilderBase)Cobol2Json
 							.newCb2Xml2Json("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
@@ -160,7 +160,7 @@ public class TstSetAttributes01 extends TestCase {
 						fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null		
 				};
 				checkAttributes(
-						((CblIOBuilderBase)Cobol2Json
+						((IOBuilderBase)Cobol2Json
 								.newCobol2Json("")
 									.setFileOrganization(fs)
 									.setDialect(d)
@@ -178,18 +178,18 @@ public class TstSetAttributes01 extends TestCase {
 		};
 		ByteArrayInputStream is = new ByteArrayInputStream(new byte[]{});
 		checkAttributes(
-				((CblIOBuilderBase)Cobol2Json
+				((IOBuilderBase)Cobol2Json
 						.newCobol2Json(is, "") 
 							.setDialect(ICopybookDialects.FMT_MAINFRAME)
 				).getAllAttributes(), 
 				attrs);
 		checkAttributes(
-				((CblIOBuilderBase)Cobol2Json
+				((IOBuilderBase)Cobol2Json
 						.newCb2Xml2Json("")
 				).getAllAttributes(), 
 				attrs);
 		checkAttributes(
-				((CblIOBuilderBase)Cobol2Json
+				((IOBuilderBase)Cobol2Json
 						.newCobol2Json(is, "")
 				).getAllAttributes(), 
 				attrs);
@@ -210,20 +210,20 @@ public class TstSetAttributes01 extends TestCase {
 					fs, "", Boolean.FALSE, null
 			};
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Json
+					((IOBuilderBase)Cobol2Json
 							.newCobol2Json(is, "")
 								.setFileOrganization(fs)
 								.setDialect(ICopybookDialects.FMT_MAINFRAME)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Json
+					((IOBuilderBase)Cobol2Json
 							.newCb2Xml2Json("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Json
+					((IOBuilderBase)Cobol2Json
 							.newCobol2Json(is, "")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
@@ -234,7 +234,7 @@ public class TstSetAttributes01 extends TestCase {
 						fs, "", Boolean.FALSE, null	
 				};
 				checkAttributes(
-						((CblIOBuilderBase)Cobol2Json
+						((IOBuilderBase)Cobol2Json
 								.newCobol2Json(is, "")
 									.setFileOrganization(fs)
 									.setDialect(d)
@@ -265,20 +265,20 @@ public class TstSetAttributes01 extends TestCase {
 					fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null		
 			};
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Json
+					((IOBuilderBase)Cobol2Json
 							.newCobol2Json(is, "")
 								.setFileOrganization(fs)
 								.setDialect(ICopybookDialects.FMT_MAINFRAME)
 					).getAllAttributes(), 
 					attrs);
 				checkAttributes(
-					((CblIOBuilderBase)Cobol2Json
+					((IOBuilderBase)Cobol2Json
 							.newCb2Xml2Json("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Json
+					((IOBuilderBase)Cobol2Json
 							.newCobol2Json(is, "")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
@@ -290,7 +290,7 @@ public class TstSetAttributes01 extends TestCase {
 						fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null	
 				};
 				checkAttributes(
-						((CblIOBuilderBase)Cobol2Json
+						((IOBuilderBase)Cobol2Json
 								.newCobol2Json(is, "")
 									.setFileOrganization(fs)
 									.setDialect(d)
@@ -342,7 +342,7 @@ public class TstSetAttributes01 extends TestCase {
 		checkAttributes(attrs, bldr.getAllAttributes());
 		
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		CblIOBuilderBase bld = (CblIOBuilderBase<IIOBuilder>) Cobol2Json. newCobol2Json("xyz");
+		IOBuilderBase bld = (IOBuilderBase<IIOBuilder>) Cobol2Json. newCobol2Json("xyz");
 		bld.setDialect((Integer)attrs[0]);
 		bld.setSplitCopybook((Integer)attrs[1]);
 		bld.setCopybookFileFormat((Integer)attrs[2]);

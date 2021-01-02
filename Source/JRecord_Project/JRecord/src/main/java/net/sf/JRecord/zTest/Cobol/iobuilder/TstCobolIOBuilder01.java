@@ -38,7 +38,7 @@ import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
-import net.sf.JRecord.IO.builders.CblIOBuilderBase;
+import net.sf.JRecord.IO.builders.IOBuilderBase;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.def.IO.builders.IIOBuilder;
 import net.sf.cb2xml.def.Cb2xmlConstants;
@@ -83,31 +83,31 @@ public class TstCobolIOBuilder01 extends TestCase {
 		};
 		checkAttributes(new CblIoBldr(ICopybookDialects.FMT_MAINFRAME).getAttrs(), attrs);
 		checkAttributes(
-				((CblIOBuilderBase)JRecordInterface1.COBOL
+				((IOBuilderBase)JRecordInterface1.COBOL
 						.newIOBuilder("")
 							.setDialect(ICopybookDialects.FMT_MAINFRAME)
 				).getAllAttributes(), 
 				attrs);
 		checkAttributes(
-				((CblIOBuilderBase)JRecordInterface1.COBOL
+				((IOBuilderBase)JRecordInterface1.COBOL
 						.newIOBuilder("")
 				).getAllAttributes(), 
 				attrs);
 		checkAttributes(
-				((CblIOBuilderBase)JRecordInterface1.COBOL
+				((IOBuilderBase)JRecordInterface1.COBOL
 						.newMultiCopybookIOBuilder("")
 							.setDialect(ICopybookDialects.FMT_MAINFRAME)
 				).getAllAttributes(), 
 				attrs);
 		checkAttributes(
-				((CblIOBuilderBase)JRecordInterface1.COBOL
+				((IOBuilderBase)JRecordInterface1.COBOL
 						.newMultiCopybookIOBuilder("")
 							.addCopyBook("")
 							.setDialect(ICopybookDialects.FMT_MAINFRAME)
 				).getAllAttributes(), 
 				attrs);
 		checkAttributes(
-				((CblIOBuilderBase)JRecordInterface1.COBOL
+				((IOBuilderBase)JRecordInterface1.COBOL
 						.newMultiCopybookIOBuilder("")
 				).getAllAttributes(), 
 				attrs);
@@ -130,27 +130,27 @@ public class TstCobolIOBuilder01 extends TestCase {
 			cblIoBldr.setFileOrganization(fs);
 			checkAttributes(cblIoBldr.getAttrs(), attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newIOBuilder("")
 								.setFileOrganization(fs)
 								.setDialect(ICopybookDialects.FMT_MAINFRAME)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newIOBuilder("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newMultiCopybookIOBuilder("")
 								.setFileOrganization(fs)
 								.setDialect(ICopybookDialects.FMT_MAINFRAME)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newMultiCopybookIOBuilder("")
 								.addCopyBook("")
 								.setFileOrganization(fs)
@@ -158,7 +158,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newMultiCopybookIOBuilder("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
@@ -172,7 +172,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 				cblIoBldr.setFileOrganization(fs);
 				checkAttributes(cblIoBldr.getAttrs(), attrs1);
 				checkAttributes(
-						((CblIOBuilderBase)JRecordInterface1.COBOL
+						((IOBuilderBase)JRecordInterface1.COBOL
 								.newIOBuilder("")
 									.setFileOrganization(fs)
 									.setDialect(d)
@@ -180,14 +180,14 @@ public class TstCobolIOBuilder01 extends TestCase {
 						attrs1);
 
 				checkAttributes(
-						((CblIOBuilderBase)JRecordInterface1.COBOL
+						((IOBuilderBase)JRecordInterface1.COBOL
 								.newMultiCopybookIOBuilder("")
 									.setFileOrganization(fs)
 									.setDialect(d)
 						).getAllAttributes(), 
 						attrs1);
 				checkAttributes(
-						((CblIOBuilderBase)JRecordInterface1.COBOL
+						((IOBuilderBase)JRecordInterface1.COBOL
 								.newMultiCopybookIOBuilder("")
 									.addCopyBook("")
 									.setFileOrganization(fs)
@@ -220,27 +220,27 @@ public class TstCobolIOBuilder01 extends TestCase {
 			cblIoBldr.setFileOrganization(fs);
 			checkAttributes(cblIoBldr.getAttrs(), attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newIOBuilder("")
 								.setFileOrganization(fs)
 								.setDialect(ICopybookDialects.FMT_MAINFRAME)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newIOBuilder("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newMultiCopybookIOBuilder("")
 								.setFileOrganization(fs)
 								.setDialect(ICopybookDialects.FMT_MAINFRAME)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newMultiCopybookIOBuilder("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
@@ -254,7 +254,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 				cblIoBldr.setFileOrganization(fs);
 				checkAttributes(cblIoBldr.getAttrs(), attrs1);
 				checkAttributes(
-						((CblIOBuilderBase)JRecordInterface1.COBOL
+						((IOBuilderBase)JRecordInterface1.COBOL
 								.newIOBuilder("")
 									.setFileOrganization(fs)
 									.setDialect(d)
@@ -262,7 +262,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 						attrs1);
 
 				checkAttributes(
-						((CblIOBuilderBase)JRecordInterface1.COBOL
+						((IOBuilderBase)JRecordInterface1.COBOL
 								.newMultiCopybookIOBuilder("")
 									.setFileOrganization(fs)
 									.setDialect(d)
@@ -281,26 +281,26 @@ public class TstCobolIOBuilder01 extends TestCase {
 		};
 		ByteArrayInputStream is = new ByteArrayInputStream(new byte[]{});
 		checkAttributes(
-				((CblIOBuilderBase)JRecordInterface1.COBOL
+				((IOBuilderBase)JRecordInterface1.COBOL
 						.newIOBuilder(is, "")
 							.setDialect(ICopybookDialects.FMT_MAINFRAME)
 				).getAllAttributes(), 
 				attrs);
 		checkAttributes(
-				((CblIOBuilderBase)JRecordInterface1.COBOL
+				((IOBuilderBase)JRecordInterface1.COBOL
 						.newMultiCopybookIOBuilder("")
 								.addCopyBook(is, "")
 							.setDialect(ICopybookDialects.FMT_MAINFRAME)
 				).getAllAttributes(), 
 				attrs);
 		checkAttributes(
-				((CblIOBuilderBase)JRecordInterface1.COBOL
+				((IOBuilderBase)JRecordInterface1.COBOL
 						.newMultiCopybookIOBuilder("")
 								.addCopyBook(is, "")
 				).getAllAttributes(), 
 				attrs);
 		checkAttributes(
-				((CblIOBuilderBase)JRecordInterface1.COBOL
+				((IOBuilderBase)JRecordInterface1.COBOL
 						.newIOBuilder(is, "")
 				).getAllAttributes(), 
 				attrs);
@@ -324,14 +324,14 @@ public class TstCobolIOBuilder01 extends TestCase {
 			cblIoBldr.setFileOrganization(fs);
 			checkAttributes(cblIoBldr.getAttrs(), attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newIOBuilder(is, "")
 								.setFileOrganization(fs)
 								.setDialect(ICopybookDialects.FMT_MAINFRAME)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newMultiCopybookIOBuilder("")
 									.addCopyBook(is, "")
 								.setFileOrganization(fs)
@@ -339,14 +339,14 @@ public class TstCobolIOBuilder01 extends TestCase {
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newMultiCopybookIOBuilder("")
 									.addCopyBook(is, "")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newIOBuilder(is, "")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
@@ -360,14 +360,14 @@ public class TstCobolIOBuilder01 extends TestCase {
 				cblIoBldr.setFileOrganization(fs);
 				checkAttributes(cblIoBldr.getAttrs(), attrs1);
 				checkAttributes(
-						((CblIOBuilderBase)JRecordInterface1.COBOL
+						((IOBuilderBase)JRecordInterface1.COBOL
 								.newIOBuilder(is, "")
 									.setFileOrganization(fs)
 									.setDialect(d)
 						).getAllAttributes(), 
 						attrs1);
 				checkAttributes(
-						((CblIOBuilderBase)JRecordInterface1.COBOL
+						((IOBuilderBase)JRecordInterface1.COBOL
 								.newMultiCopybookIOBuilder("")
 										.addCopyBook(is, "")
 									.setFileOrganization(fs)
@@ -401,14 +401,14 @@ public class TstCobolIOBuilder01 extends TestCase {
 			cblIoBldr.setFileOrganization(fs);
 			checkAttributes(cblIoBldr.getAttrs(), attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newIOBuilder(is, "")
 								.setFileOrganization(fs)
 								.setDialect(ICopybookDialects.FMT_MAINFRAME)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newMultiCopybookIOBuilder("")
 									.addCopyBook(is, "")
 								.setFileOrganization(fs)
@@ -416,14 +416,14 @@ public class TstCobolIOBuilder01 extends TestCase {
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newMultiCopybookIOBuilder("")
 									.addCopyBook(is, "")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)JRecordInterface1.COBOL
+					((IOBuilderBase)JRecordInterface1.COBOL
 							.newIOBuilder(is, "")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
@@ -438,14 +438,14 @@ public class TstCobolIOBuilder01 extends TestCase {
 				cblIoBldr.setFileOrganization(fs);
 				checkAttributes(cblIoBldr.getAttrs(), attr1);
 				checkAttributes(
-						((CblIOBuilderBase)JRecordInterface1.COBOL
+						((IOBuilderBase)JRecordInterface1.COBOL
 								.newIOBuilder(is, "")
 									.setFileOrganization(fs)
 									.setDialect(d)
 						).getAllAttributes(), 
 						attr1);
 				checkAttributes(
-						((CblIOBuilderBase)JRecordInterface1.COBOL
+						((IOBuilderBase)JRecordInterface1.COBOL
 								.newMultiCopybookIOBuilder("")
 										.addCopyBook(is, "")
 									.setFileOrganization(fs)
@@ -496,7 +496,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 		checkAttributes(attrs, bldr.getAttrs());
 		
 		@SuppressWarnings("unchecked")
-		CblIOBuilderBase<IIOBuilder> bld = (CblIOBuilderBase<IIOBuilder>) JRecordInterface1.COBOL. newIOBuilder("xyz");
+		IOBuilderBase<IIOBuilder> bld = (IOBuilderBase<IIOBuilder>) JRecordInterface1.COBOL. newIOBuilder("xyz");
 		bld.setDialect((Integer)attrs[0]);
 		bld.setSplitCopybook((Integer)attrs[1]);
 		bld.setCopybookFileFormat((Integer)attrs[2]);
@@ -517,7 +517,7 @@ public class TstCobolIOBuilder01 extends TestCase {
 		}
 	}
 	
-	private static class CblIoBldr extends CblIOBuilderBase<IIOBuilder> implements IIOBuilder {
+	private static class CblIoBldr extends IOBuilderBase<IIOBuilder> implements IIOBuilder {
 
 		protected CblIoBldr(int dialect) {
 			super(dialect);

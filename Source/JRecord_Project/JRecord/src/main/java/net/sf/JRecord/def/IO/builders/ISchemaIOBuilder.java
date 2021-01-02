@@ -32,6 +32,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import net.sf.JRecord.ByteIO.IByteRecordReader;
 import net.sf.JRecord.ByteIO.IByteRecordWriter;
@@ -39,6 +40,8 @@ import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
+import net.sf.JRecord.IO.ListLineReader;
+import net.sf.JRecord.IO.ListLineWriter;
 
 
 /**
@@ -120,6 +123,14 @@ public interface ISchemaIOBuilder extends INewLineCreator {
 	public abstract AbstractLineReader newReader(InputStream datastream)
 			throws IOException;
 
+	/**
+	 * Create a Reader from a list of lines. Useful for testing / utilities
+	 * @param lines lines to be read
+	 * @return the new lineReader
+	 * @throws IOException
+	 */
+	public abstract AbstractLineReader newReader(List<? extends AbstractLine> lines) throws IOException;
+	
 	/**
 	 * Create a new LineReader for a user written IByteRecordreader.
 	 * A Byte-Record-Reader can be used to Wrap an external data store e.g.
@@ -210,7 +221,15 @@ public interface ISchemaIOBuilder extends INewLineCreator {
 	 * @return JRecord Line-Writer
 	 * @throws IOException
 	 */
-	public abstract AbstractLineWriter newWriter(IByteRecordWriter writer)
-			throws IOException;
+	public abstract AbstractLineWriter newWriter(IByteRecordWriter writer);
+	
+	/**
+	 * Create a writer where the output lines are stored in a List.
+	 * Useful for testing / some utilities
+	 * 
+	 * @return ListLineWriter
+	 */
+	public abstract ListLineWriter newListWriter();
+
 
 }

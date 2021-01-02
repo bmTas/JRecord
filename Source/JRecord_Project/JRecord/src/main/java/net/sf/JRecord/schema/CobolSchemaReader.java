@@ -47,6 +47,7 @@ import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
 import net.sf.JRecord.detailsBasic.IItemDetails;
 import net.sf.JRecord.fieldNameConversion.IRenameField;
 import net.sf.JRecord.schema.fieldRename.StdFieldRenameItems;
+import net.sf.JRecord.schema.jaxb.Item;
 import net.sf.JRecord.schema.jaxb.ItemRecordDtls;
 
 
@@ -97,6 +98,35 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 			super.clearLayout();
 			externalRecord = null;
 			iob = null;
+		}
+	}
+	
+	protected IRenameField getRenameToCobol() throws IOException  {
+		if (renameFieldClass == StdFieldRenameItems.LEAVE_ASIS) {
+			return StdFieldRenameItems.LEAVE_ASIS;
+		}
+		RenameFieldsMap renameFields = new RenameFieldsMap();
+		CobolSchemaDetails cblDtls = getCobolSchemaDetails();
+		for (ItemRecordDtls ir : cblDtls.recordItems) {
+			updateFieldMap(renameFields, ir.items);
+		}
+		return renameFields;
+	}
+	
+	private void updateFieldMap(RenameFieldsMap renameFields, List<Item> childItems) {
+		if (childItems != null) {
+			for (Item item : childItems) {
+				updateFieldMap(renameFields, item);
+			}
+		}
+	}
+	
+	private void updateFieldMap(RenameFieldsMap renameFields, Item item) {
+		List<Item> childItems = item.getChildItems();
+		if (childItems == null || childItems.size() == 0) {
+			renameFields.add(renameFieldClass.toFieldName(item.getName()).toUpperCase(), item.getName());
+		} else {
+			updateFieldMap(renameFields, childItems);
 		}
 	}
 	
@@ -211,6 +241,24 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 		
 	}
 	
+	private static  class RenameFieldsMap implements IRenameField {
+		private final HashMap<String, String> fieldNameMap = new HashMap<String, String>();
+
+		
+		public RenameFieldsMap add(String cobolName, String javaName) {
+			fieldNameMap.put(cobolName.toUpperCase(), javaName);
+			//cobolNameMap.put(javaName, cobolName);
+			
+			return this;
+		}
+		
+		@Override
+		public String toFieldName(String schemaFieldName) {
+			String ret = fieldNameMap.get(schemaFieldName.toUpperCase());
+			return ret == null ? schemaFieldName : ret ;
+		}
+	}
+
 
 	/**
 	 * Create a new <b>Extended Cobol Schema Reader</b>

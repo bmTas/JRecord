@@ -168,7 +168,7 @@ public interface Icb2xml2Json extends Icb2xmlLoadOptions {
 	public void cobol2json(InputStream cobolStream, OutputStream xmlStream) throws IOException;
 
 
-	public void setPrettyPrint(boolean prettyPrint);
+	public Icb2xml2Json setPrettyPrint(boolean prettyPrint);
 
 //	/**
 //	 * Convert Input Json-Data to Cobol Data-File

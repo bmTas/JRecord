@@ -124,11 +124,23 @@ public abstract class FieldSelectX extends FieldSelect {
 	}
 
 	public static FieldSelect get(String name, String value, String op, IFieldDetail fieldDef) {
-		return get(name, value, op, new GetValue.FieldValue(fieldDef, -1), false);
+		return get(name, value, op, createGetValue(op, -1, fieldDef), false);
 	}
 
 	public static FieldSelect get(String name, String value, String op, int recordIdx, IFieldDetail fieldDef, boolean caseSensitive) {
-		return get(name, value, op, new GetValue.FieldValue(fieldDef, recordIdx), caseSensitive);
+		return get(name, value, op, createGetValue(op, recordIdx, fieldDef), caseSensitive);
+	}
+
+	/**
+	 * @param recordIdx
+	 * @param fieldDef
+	 * @return
+	 */
+	private static GetValue createGetValue(String op, int recordIdx, IFieldDetail fieldDef) {
+		if (Constants.REG_EXP.equalsIgnoreCase(op)) {
+			return new GetValue.PaddedFieldValue(fieldDef, recordIdx);
+		}
+		return new GetValue.FieldValue(fieldDef, recordIdx);
 	}
 
 	public static FieldSelect get(String name, String value, String op, IGetValue fieldDef, boolean caseSensitive) {
@@ -142,12 +154,16 @@ public abstract class FieldSelectX extends FieldSelect {
 			ret = new FieldSelect.Contains(name, value, fieldDef);
 		} else if (EMPTY.equalsIgnoreCase(op)) {
 			ret = new FieldSelect.Empty(name, value, fieldDef);
+		} else if (Constants.HAS_DATA.equalsIgnoreCase(op)) {
+			ret = new FieldSelect.Empty(name, value, fieldDef, false);
 		} else if (DOES_NOT_CONTAIN.equalsIgnoreCase(op)) {
 			ret = new FieldSelect.DoesntContain(name, value, fieldDef);
 		} else if (STARTS_WITH.equalsIgnoreCase(op)) {
 			ret = new FieldSelect.StartsWith(name, value, fieldDef);
 		} else if (Constants.REG_EXP.equalsIgnoreCase(op)) {
 			ret = new FieldSelect.RegularEx(name, value, fieldDef);
+		} else if (Constants.ANY_VALUE.equalsIgnoreCase(op)) {
+			ret = new FieldSelect.TrueSelect();
 		} else {
 			ret = getBasic(name, value, op, fieldDef, caseSensitive);
 		}

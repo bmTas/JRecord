@@ -9,6 +9,7 @@ import java.io.InputStream;
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.base.BaseCobolItemLoader;
+import net.sf.JRecord.External.cb2xml.CobolCopybookReader;
 import net.sf.JRecord.Log.AbsSSLogger;
 
 
@@ -26,7 +27,7 @@ implements ICopybookLoaderStream, ICopybookLoaderCobol  {
 	 * @param recBuilder
 	 */
 	public CobolCopybookLoader() {
-		super(true, new ExternalRecordBuilder());
+		super(true, new ExternalRecordBuilder(), new CobolCopybookReader());
 	}
 	
 	/**

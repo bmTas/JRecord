@@ -31,7 +31,7 @@ import junit.framework.TestCase;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.IO.builders.CblIOBuilderBase;
+import net.sf.JRecord.IO.builders.IOBuilderBase;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.cbl2xml.Cobol2Xml;
 import net.sf.JRecord.cbl2xml.impl.Cobol2GroupXml;
@@ -75,18 +75,18 @@ public class TstSetAttributes01 extends TestCase {
 				Constants.NULL_INTEGER, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null	
 		};
 		checkAttributes(
-				((CblIOBuilderBase)Cobol2Xml
+				((IOBuilderBase)Cobol2Xml
 						.newCobol2Xml("")
 							.setDialect(ICopybookDialects.FMT_MAINFRAME)
 				).getAllAttributes(), 
 				attrs);
 		checkAttributes(
-				((CblIOBuilderBase)Cobol2Xml
+				((IOBuilderBase)Cobol2Xml
 						.newCobol2Xml("")
 				).getAllAttributes(), 
 				attrs);
 		checkAttributes(
-				((CblIOBuilderBase)Cobol2Xml
+				((IOBuilderBase)Cobol2Xml
 						.newCb2Xml2Xml("")
 				).getAllAttributes(), 
 				attrs);
@@ -106,20 +106,20 @@ public class TstSetAttributes01 extends TestCase {
 					fs, "", Boolean.FALSE, null		
 			};
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Xml
+					((IOBuilderBase)Cobol2Xml
 							.newCobol2Xml("")
 								.setFileOrganization(fs)
 								.setDialect(ICopybookDialects.FMT_MAINFRAME)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Xml
+					((IOBuilderBase)Cobol2Xml
 							.newCobol2Xml("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Xml
+					((IOBuilderBase)Cobol2Xml
 							.newCb2Xml2Xml("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
@@ -130,7 +130,7 @@ public class TstSetAttributes01 extends TestCase {
 						fs, "", Boolean.FALSE, null		
 				};
 				checkAttributes(
-						((CblIOBuilderBase)Cobol2Xml
+						((IOBuilderBase)Cobol2Xml
 								.newCobol2Xml("")
 									.setFileOrganization(fs)
 									.setDialect(d)
@@ -160,20 +160,20 @@ public class TstSetAttributes01 extends TestCase {
 					fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null		
 			};
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Xml
+					((IOBuilderBase)Cobol2Xml
 							.newCobol2Xml("")
 								.setFileOrganization(fs)
 								.setDialect(ICopybookDialects.FMT_MAINFRAME)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Xml
+					((IOBuilderBase)Cobol2Xml
 							.newCobol2Xml("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Xml
+					((IOBuilderBase)Cobol2Xml
 							.newCb2Xml2Xml("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
@@ -184,7 +184,7 @@ public class TstSetAttributes01 extends TestCase {
 						fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null		
 				};
 				checkAttributes(
-						((CblIOBuilderBase)Cobol2Xml
+						((IOBuilderBase)Cobol2Xml
 								.newCobol2Xml("")
 									.setFileOrganization(fs)
 									.setDialect(d)
@@ -202,18 +202,18 @@ public class TstSetAttributes01 extends TestCase {
 		};
 		ByteArrayInputStream is = new ByteArrayInputStream(new byte[]{});
 		checkAttributes(
-				((CblIOBuilderBase)Cobol2Xml
+				((IOBuilderBase)Cobol2Xml
 						.newCobol2Xml(is, "") 
 							.setDialect(ICopybookDialects.FMT_MAINFRAME)
 				).getAllAttributes(), 
 				attrs);
 		checkAttributes(
-				((CblIOBuilderBase)Cobol2Xml
+				((IOBuilderBase)Cobol2Xml
 						.newCb2Xml2Xml("")
 				).getAllAttributes(), 
 				attrs);
 		checkAttributes(
-				((CblIOBuilderBase)Cobol2Xml
+				((IOBuilderBase)Cobol2Xml
 						.newCobol2Xml(is, "")
 				).getAllAttributes(), 
 				attrs);
@@ -234,20 +234,20 @@ public class TstSetAttributes01 extends TestCase {
 					fs, "", Boolean.FALSE, null
 			};
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Xml
+					((IOBuilderBase)Cobol2Xml
 							.newCobol2Xml(is, "")
 								.setFileOrganization(fs)
 								.setDialect(ICopybookDialects.FMT_MAINFRAME)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Xml
+					((IOBuilderBase)Cobol2Xml
 							.newCb2Xml2Xml("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Xml
+					((IOBuilderBase)Cobol2Xml
 							.newCobol2Xml(is, "")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
@@ -258,7 +258,7 @@ public class TstSetAttributes01 extends TestCase {
 						fs, "", Boolean.FALSE, null	
 				};
 				checkAttributes(
-						((CblIOBuilderBase)Cobol2Xml
+						((IOBuilderBase)Cobol2Xml
 								.newCobol2Xml(is, "")
 									.setFileOrganization(fs)
 									.setDialect(d)
@@ -289,20 +289,20 @@ public class TstSetAttributes01 extends TestCase {
 					fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null		
 			};
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Xml
+					((IOBuilderBase)Cobol2Xml
 							.newCobol2Xml(is, "")
 								.setFileOrganization(fs)
 								.setDialect(ICopybookDialects.FMT_MAINFRAME)
 					).getAllAttributes(), 
 					attrs);
 				checkAttributes(
-					((CblIOBuilderBase)Cobol2Xml
+					((IOBuilderBase)Cobol2Xml
 							.newCb2Xml2Xml("")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
 					attrs);
 			checkAttributes(
-					((CblIOBuilderBase)Cobol2Xml
+					((IOBuilderBase)Cobol2Xml
 							.newCobol2Xml(is, "")
 								.setFileOrganization(fs)
 					).getAllAttributes(), 
@@ -314,7 +314,7 @@ public class TstSetAttributes01 extends TestCase {
 						fs, Conversion.DEFAULT_ASCII_CHARSET, Boolean.FALSE, null	
 				};
 				checkAttributes(
-						((CblIOBuilderBase)Cobol2Xml
+						((IOBuilderBase)Cobol2Xml
 								.newCobol2Xml(is, "")
 									.setFileOrganization(fs)
 									.setDialect(d)
@@ -366,7 +366,7 @@ public class TstSetAttributes01 extends TestCase {
 		checkAttributes(attrs, bldr.getAllAttributes());
 		
 		@SuppressWarnings({ "unchecked", "rawtypes" })
-		CblIOBuilderBase bld = (CblIOBuilderBase<IIOBuilder>) Cobol2Xml. newCobol2Xml("xyz");
+		IOBuilderBase bld = (IOBuilderBase<IIOBuilder>) Cobol2Xml. newCobol2Xml("xyz");
 		bld.setDialect((Integer)attrs[0]);
 		bld.setSplitCopybook((Integer)attrs[1]);
 		bld.setCopybookFileFormat((Integer)attrs[2]);

@@ -156,20 +156,27 @@ public abstract class BaseByteTextReader extends AbstractByteReader {
 		}
 
 		byte[] ret = null;
+		int srcPos;
 		int lno = getLineNo();
-
-		int srcPos = lineArray[lno];
-
-		if (srcPos < buffer.length && ((check4cr &&  buffer[srcPos] == byteCR) || (check4lf && buffer[srcPos] == byteLF))) {
-			srcPos += 1;
-			bytesRead += 1;
-		} 
+		
 		if (eof) {
-			if (bytesInBuffer <= srcPos) {
+			if (lineArray.length <= lno || bytesInBuffer <= lineArray[lno]) {
 				return null;
 			}
+			srcPos = lineArray[lno];
+
+			if (srcPos < buffer.length && ((check4cr &&  buffer[srcPos] == byteCR) || (check4lf && buffer[srcPos] == byteLF))) {
+				srcPos += 1;
+				bytesRead += 1;
+			} 
 			ret = new byte[bytesInBuffer - srcPos];
 		} else { 
+			srcPos = lineArray[lno];
+
+			if (srcPos < buffer.length && ((check4cr &&  buffer[srcPos] == byteCR) || (check4lf && buffer[srcPos] == byteLF))) {
+				srcPos += 1;
+				bytesRead += 1;
+			} 
 			int eolLength = eol.length;
 			if (check4cr
 			&& (lno+1 < lineArray.length) && (lineArray[lno+1] - eolLength - 1 < buffer.length)

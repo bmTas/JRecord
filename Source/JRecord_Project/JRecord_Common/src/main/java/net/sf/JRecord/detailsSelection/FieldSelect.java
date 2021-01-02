@@ -142,7 +142,7 @@ public abstract class FieldSelect extends ExternalFieldSelection implements Reco
 	public static class Contains extends FieldSelect {
 
 		protected Contains(String name, String value, IGetValue getValue) {
-			super(name, value, "Contains", getValue);
+			super(name, value, Constants.CONTAINS, getValue);
 		}
 
 
@@ -163,7 +163,7 @@ public abstract class FieldSelect extends ExternalFieldSelection implements Reco
 	public static class DoesntContain extends FieldSelect {
 
 		protected DoesntContain(String name, String value, IGetValue fieldDef) {
-			super(name, value, "Doesnt_Contain", fieldDef);
+			super(name, value, Constants.DOES_NOT_CONTAIN, fieldDef);
 		}
 
 
@@ -185,7 +185,7 @@ public abstract class FieldSelect extends ExternalFieldSelection implements Reco
 	public static class StartsWith extends FieldSelect {
 
 		protected StartsWith(String name, String value, IGetValue fieldDef) {
-			super(name, value, "Doesnt_Contain", fieldDef);
+			super(name, value, Constants.STARTS_WITH, fieldDef);
 		}
 
 
@@ -205,9 +205,9 @@ public abstract class FieldSelect extends ExternalFieldSelection implements Reco
 	}
 
 	public static class RegularEx extends FieldSelect {
-		final Pattern pattern;
+		private final Pattern pattern;
 		protected RegularEx(String name, String value, IGetValue fieldDef) {
-			super(name, value, "Doesnt_Contain", fieldDef);
+			super(name, value, Constants.REG_EXP, fieldDef);
 			pattern = Pattern.compile(value);
 		}
 		/* (non-Javadoc)
@@ -217,16 +217,38 @@ public abstract class FieldSelect extends ExternalFieldSelection implements Reco
 		public boolean isSelected(Object value) {
 			return value != null && pattern.matcher(value.toString()).matches();
 		}
-		
-		
 	}
+
+//	public static class RegularExPadField extends FieldSelect {
+//		final Pattern pattern;
+//		final FieldDetail fieldDef;
+//		protected RegularExPadField(String name, String value, FieldDetail fieldDef) {
+//			super(name, value, Constants.REG_EXP, fieldDef);
+//			pattern = Pattern.compile(value);
+//			this.fieldDef = fieldDef;
+//		}
+//		/* (non-Javadoc)
+//		 * @see net.sf.JRecord.detailsSelection.FieldSelect#isSelected(java.lang.Object)
+//		 */
+//		@Override
+//		public boolean isSelected(Object value) {
+//			return value != null && pattern.matcher(value.toString()).matches();
+//		}
+//	}
 
 	public static class Empty extends FieldSelect {
 
+		private final boolean expected;
+		
 		protected Empty(String name, String value, IGetValue fieldDef) {
 			super(name, value, Constants.EMPTY, fieldDef);
+			this.expected = true;
 		}
 
+		protected Empty(String name, String value, IGetValue fieldDef, boolean expected) {
+			super(name, value, expected ? Constants.EMPTY : Constants.HAS_DATA, fieldDef);
+			this.expected = expected;
+		}
 
 
 		/* (non-Javadoc)
@@ -234,17 +256,23 @@ public abstract class FieldSelect extends ExternalFieldSelection implements Reco
 		 */
 		@Override
 		public boolean isSelected(Object o) {
-			return o == null
+			return (o == null
 				|| o.toString() == null
 				|| o.toString().trim().length() == 0
-				|| (o instanceof IEmptyTest && ((IEmptyTest) o).isEmpty());
+				|| (o instanceof IEmptyTest && ((IEmptyTest) o).isEmpty())
+				) == expected;
 		}
 	}
 
 	public static class TrueSelect extends FieldSelect {
 
+		protected TrueSelect(String name,  IGetValue fieldDef) {
+			super(name, "", Constants.ANY_VALUE, fieldDef);
+
+		}
+
 		protected TrueSelect() {
-			super("", "", "True", null);
+			super("", "", Constants.ANY_VALUE, null);
 
 		}
 

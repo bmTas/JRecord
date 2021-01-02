@@ -213,7 +213,7 @@ public class RecordEditorXmlWriter implements CopybookWriter {
 
        List<? extends IItem> items = copybook.getItems();
        if (items != null && items.size() > 0) {
-    	   WriteXml wXml = new WriteXml(true, true, "");
+    	   WriteXml wXml = new WriteXml(true, true, true, "");
     	   
     	   writer.writeStartElement(Constants.RE_XML_COBOL_ITEMS);
     	   writer.writeAttribute(Constants.RE_XML_COPYBOOK_PREF, copybook.getCopybookPref());
@@ -365,6 +365,11 @@ public class RecordEditorXmlWriter implements CopybookWriter {
 		writer.writeEmptyElement(Constants.RE_XML_TST_FIELD);
 		writeAttr(writer, Constants.RE_XML_NAME, fld.getFieldName());
 	    writeAttr(writer, Constants.RE_XML_VALUE, fld.getRawFieldValue());
+	    
+	    String operator = fld.getOperator();
+		if (! ExternalFieldSelection.EQUALS_OPERATOR.equals( operator)) {
+	    	writeAttr(writer, Constants.RE_XML_OPERATOR, operator);
+	    }
 	}
 
 	private void writeAttr(XMLStreamWriter writer, String attr, String value)

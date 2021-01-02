@@ -28,6 +28,7 @@ public class FieldCreatorHelper {
 	private List<DependingOn> commonDependingOn;
 	private final int splitCopybook;
 	private final HashMap<String, String> fieldToNameWithArrayIndexs = new HashMap<String, String>();
+	private final boolean checkPicture;
     //private BaseExternalRecord<?> currentLayout;
     private boolean foundRedefine = false;
     
@@ -44,7 +45,8 @@ public class FieldCreatorHelper {
 
 
 
-	public FieldCreatorHelper(int splitCopybook, int dialect, boolean useJRecordNaming, String copyBookPref, String font) {
+	public FieldCreatorHelper(int splitCopybook, int dialect, boolean useJRecordNaming, String copyBookPref, String font,
+			boolean checkPicture) {
 		this.splitCopybook = splitCopybook;
 		//this.useJRecordNaming = useJRecordNaming;
 		this.copyBookPref = (useJRecordNaming 	? copyBookPref.toUpperCase() 
@@ -54,6 +56,7 @@ public class FieldCreatorHelper {
 		this.numTranslator = ConversionManager.getInstance().getConverter4code(dialect) ;
 		this.groupName = new ArrayList<String>();
     	this.groupName.add(".");
+    	this.checkPicture = checkPicture;
 	}
 
 	 
@@ -218,12 +221,14 @@ public class FieldCreatorHelper {
         int iType = Type.ftChar;
         picture = picture == null ? "" : picture;
         
-        if (isNumeric) {
+        if (isNumeric || checkPicture) {
         	boolean signed = picture.length() > 0 && (picture.charAt(0) == 's' || picture.charAt(0) == 'S');
         	iType = numTranslator.getTypeIdentifier(
         								usage == null ? "" : usage, 
         								picture, signed,
         								signSeperate, signPosition);
+        }
+        if ( iType != Type.ftChar) {
         } else if (justified) {
         	iType = Type.ftCharRightJust;
         } else if ("null-padded".equals(usage)) {

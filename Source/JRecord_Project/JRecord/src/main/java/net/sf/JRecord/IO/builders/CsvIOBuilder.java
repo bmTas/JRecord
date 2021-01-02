@@ -36,7 +36,7 @@ import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.def.IO.builders.ICsvIOBuilder;
 import net.sf.JRecord.def.IO.builders.IDefineCsvFields;
 
-public class CsvIOBuilder extends CblIOBuilderBase<ICsvIOBuilder> implements ICsvIOBuilder, IDefineCsvFields {
+public class CsvIOBuilder extends IOBuilderBase<ICsvIOBuilder> implements ICsvIOBuilder, IDefineCsvFields {
 
 	private ExternalRecord record = new ExternalRecord();
 	private boolean definedField = false;

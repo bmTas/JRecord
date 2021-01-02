@@ -163,7 +163,8 @@ public class BasicConversion implements AbstractConversion {
 		setName(Type.ftDecimal            , "Decimal");
 		setName(Type.ftBinaryInt          , "Binary Integer");
 		setName(Type.ftBinaryIntPositive  , "Binary Integer (only +ve)");
-		setName(Type.ftPostiveBinaryInt   , "Postive Binary Integer");
+		setName(Type.ftPostiveBinaryInt   , "Positive Binary Integer");
+		typeNumbers.put("Postive Binary Integer".toLowerCase(), Integer.valueOf(Type.ftPostiveBinaryInt ));
 		setName(Type.ftFloat              , "Float");
 		setName(Type.ftDouble             , "Double");
 		setName(Type.ftBit  , "Bit");
