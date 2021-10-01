@@ -88,7 +88,6 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <release>8</release>
                     <!-- This has been added due to the introduction of the aspectj-int module; refer to the
                          following link for an explanation:
 
