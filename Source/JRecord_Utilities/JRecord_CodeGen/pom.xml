@@ -26,6 +26,15 @@
             <artifactId>velocity</artifactId>
             <version>1.7</version>
         </dependency>
+
+         <!-- TPF: https://sourceforge.net/p/cb2xml/SVN/1/tree/source/cb2xml/src/net/sf/cb2xml/Cb2Xml.java
+                  https://github.com/bmTas/cb2xml
+          -->
+        <dependency>
+            <groupId>net.sf</groupId>
+            <artifactId>cb2xml_src</artifactId>
+            <version>1.01.3</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -57,6 +66,20 @@
                             <finalName>${project.artifactId}-${project.version}-app</finalName>
                             <minimizeJar>true</minimizeJar>
                             <filters>
+                                <filter>
+                                    <artifact>net.sf:cb2xml_src</artifact>
+                                    <includes>
+                                        <include>**</include>
+                                    </includes>
+                                </filter>
+                                <filter>
+                                    <artifact>org.apache.velocity:velocity</artifact>
+                                    <includes>
+                                        <include>**</include>
+                                    </includes>
+                                </filter>
+
+                                                                
                                 <filter>
                                     <artifact>*:*</artifact>
                                     <excludes>
