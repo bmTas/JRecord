@@ -50,14 +50,16 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
             IoBuilder<Line${r.extensionName}Pojo> iob = IoBuilder${generateOptions.schemaDefinition.extensionName}.newIoBuilder(copybookName);
             IWriter<Line${r.extensionName}Pojo> writer = iob.newWriter(outputFileName);
  
-            writer.write(create${r.extensionName}(data));
+            // TODO: Uncomment and replace data with correct type and instance
+            // writer.write(create${r.extensionName}(data));
 #*  *##end
 #else
             IoBuilder<Line${generateOptions.schemaDefinition.extensionName}Schema> iob = IoBuilder${generateOptions.schemaDefinition.extensionName}.newIoBuilder(copybookName);
             IWriter<Line${generateOptions.schemaDefinition.extensionName}Schema> writer = iob.newWriter(outputFileName);
  
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})
-            writer.write(create${r.extensionName}(data));
+            // TODO: Uncomment and replace data with correct type and instance
+            // writer.write(create${r.extensionName}(data));
 #*  *##end
 #end
 
@@ -75,17 +77,18 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
    * field in the Cobol File. You should modify the code to suit
    * your needs.
    *   As I do not know where the data is coming from, I have used
-   * SourceOfDataForTheCobolFile instead. You should replace this with your
+   * Object instead. You should replace this with your
    * class / classes  or remove it as needed.
    *   To put it another way, it time for you to start Coding
    */
 
 #*  *##foreach( $r in ${generateOptions.schemaDefinition.getRecords()})
-    private Line${r.extensionName}Pojo create${r.extensionName}(SourceOfDataForTheCobolFile data)
+    private Line${r.extensionName}Pojo create${r.extensionName}(Object data)
     throws IOException {
 
         Line${r.extensionName}Pojo line = new Line${r.extensionName}Pojo();
 
+        // TODO: Uncooment and replace data. ... with correct getter for your type
 #*      *##foreach($f in ${r.getFields()})
 #*          *##if (! ${f.isArrayItem()})
 #*              *##if (${f.getValue()})
@@ -95,13 +98,13 @@ public final class Write${generateOptions.schemaDefinition.extensionName} {
         line.set${f.extensionName}("${f.getValue()}");
 #*                  *##end
 #*              *##else
-        line.set${f.extensionName}(data. ...);
+        // line.set${f.extensionName}(data. ...);
 #*              *##end
 #*          *##end
 #*      *##end
 
 #*      *##foreach($a in ${r.getArrayDetailsList()})
-        line.set${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()}, data. ...);
+        // line.set${a.getFirstElement().extensionName}(${a.getZeroArrayIndex()}, data. ...);
 #*      *##end
 
         return line;
