@@ -15,6 +15,7 @@ import java.io.IOException;
 
 #*    *##if (${currentRecord.getArrayDetailsList().size()} > 0)
 import net.sf.JRecord.cgen.def.IArray1Dimension;
+import net.sf.JRecord.cgen.def.IArray2Dimension;
 import net.sf.JRecord.cgen.impl.ArrayFieldDefinition1;
 import net.sf.JRecord.Details.RecordDetail;
 #*    *##end 

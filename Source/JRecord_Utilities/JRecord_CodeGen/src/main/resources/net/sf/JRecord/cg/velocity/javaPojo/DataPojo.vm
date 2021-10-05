@@ -79,12 +79,13 @@ ${interfaceTxt} {
 #*              *##if( $last > 0)
 #*                  *##foreach ($ii in [1 .. ${last}])
 #*                      *##set( $iim1 = $ii - 1)
-        ${st}for (int idx${ii} = 0;idx${ii} < length${aa.get(0).getFirstElement().extensionName}[${iim1} - 1]; idx${ii}++) {
 #*                      *##foreach($a in $aa)
 #*                          *##set( $size = "length${aa.get(0).getFirstElement().extensionName}[${iim1}]")
-        ${st}    ${a.getFirstElement().javaName} #arrayIdx(${iim1}) = new ${a.getFirstFieldDef().getJavaType()}#foreach ($i in [$ii ..${a.getSizes().size()}])[${size}]#set($size = "")#end ;       	
+        ${st}${a.getFirstElement().javaName} #arrayIdx(${iim1}) = new ${a.getFirstFieldDef().getJavaType()}#foreach ($i in [$ii ..${a.getSizes().size()}])[${size}]#set($size = "")#end ;       	
 #*                      *##end#*
-                        *##set( $st = "${st}    ")
+#*                      *##set( $iim1 = $ii - 1)
+        ${st}for (int idx${ii} = 0;idx${ii} < length${aa.get(0).getFirstElement().extensionName}[${iim1}]; idx${ii}++) {
+#*                      *##set( $st = "${st}    ")
 #*                  *##end
 #*              *##end
 #*              *##foreach($a in ${aa})
@@ -103,8 +104,10 @@ ${interfaceTxt} {
 
 #*          *##end
 #*      *##end
+
     }
 #*  *##end
+
 
 #*  *##foreach($f in ${currentRecord.getFields()}) 
 #*      *##if (! ${f.isArrayItem()})
