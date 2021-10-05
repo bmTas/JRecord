@@ -9,7 +9,7 @@
 
     <groupId>net.sf.jrecord</groupId>
     <artifactId>jrecord-parent</artifactId>
-    <version>0.90.2</version>
+    <version>0.90.5</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -69,7 +69,6 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <release>8</release>
                     <!-- This has been added due to the introduction of the aspectj-int module; refer to the
                          following link for an explanation:
 

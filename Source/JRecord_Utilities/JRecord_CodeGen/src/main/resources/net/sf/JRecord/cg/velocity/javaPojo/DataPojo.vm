@@ -60,8 +60,9 @@ ${interfaceTxt} {
              *# ${a.getFirstElement().javaName};        
 #*  *##end
 
-#*  *##foreach($a in ${currentRecord.getArraySameSize()}) 
-    private int[] length${a.get(0).getFirstElement().extensionName} = {${a.get(0).getSizesAsString()}};
+## Define array size for all arrays
+#*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+    private int[] length${a.getFirstElement().extensionName} = {${a.getSizesAsString()}};
 #*  *##end	
 #*  *##if (${currentRecord.getArrayDetailsList().size()} > 0 || ${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/DataSchema.vm")})
     public Line${currentRecord.extensionName}Pojo() {
@@ -79,12 +80,13 @@ ${interfaceTxt} {
 #*              *##if( $last > 0)
 #*                  *##foreach ($ii in [1 .. ${last}])
 #*                      *##set( $iim1 = $ii - 1)
-        ${st}for (int idx${ii} = 0;idx${ii} < length${aa.get(0).getFirstElement().extensionName}[${iim1} - 1]; idx${ii}++) {
 #*                      *##foreach($a in $aa)
 #*                          *##set( $size = "length${aa.get(0).getFirstElement().extensionName}[${iim1}]")
-        ${st}    ${a.getFirstElement().javaName} #arrayIdx(${iim1}) = new ${a.getFirstFieldDef().getJavaType()}#foreach ($i in [$ii ..${a.getSizes().size()}])[${size}]#set($size = "")#end ;       	
+        ${st}${a.getFirstElement().javaName} #arrayIdx(${iim1}) = new ${a.getFirstFieldDef().getJavaType()}#foreach ($i in [$ii ..${a.getSizes().size()}])[${size}]#set($size = "")#end ;       	
 #*                      *##end#*
-                        *##set( $st = "${st}    ")
+#*                      *##set( $iim1 = $ii - 1)
+        ${st}for (int idx${ii} = 0;idx${ii} < length${aa.get(0).getFirstElement().extensionName}[${iim1}]; idx${ii}++) {
+#*                      *##set( $st = "${st}    ")
 #*                  *##end
 #*              *##end
 #*              *##foreach($a in ${aa})
@@ -103,8 +105,10 @@ ${interfaceTxt} {
 
 #*          *##end
 #*      *##end
+
     }
 #*  *##end
+
 
 #*  *##foreach($f in ${currentRecord.getFields()}) 
 #*      *##if (! ${f.isArrayItem()})
@@ -116,6 +120,13 @@ ${interfaceTxt} {
     ${overideSet}
     public void set${f.extensionName}(${f.getJavaType()} value) {
         this.${f.javaName} = value;
+## Add calling array size setters to change array shape if the array depends on this field for its size 
+#*          *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+#*              *##if ( ${a.getFirstFieldDef().getDependingOn()} && ${a.getFirstFieldDef().getDependingOn().getFieldDetail().getName()} == ${f.getFieldDetail().getName()}  ) 
+        // ${a.getFirstFieldDef().getFieldDetail().getName()} DEPENDS ON ${a.getFirstFieldDef().getDependingOn().getFieldDetail().getName()}
+        set${a.getFirstElement().extensionName}ArrayLength(0, value);
+#*              *##end
+#*         *##end
     }
 
 #*      *##end
@@ -134,12 +145,52 @@ ${interfaceTxt} {
 
 #*  *##end
 
-	
-#*  *##foreach($a in ${currentRecord.getArraySameSize()}) 
-    public int  get${a.get(0).getFirstElement().extensionName}ArrayLength(int indexNumber) {
-        return length${a.get(0).getFirstElement().extensionName}[indexNumber];
+
+
+## Generate getters for array sizes
+#*  *##foreach($a in ${currentRecord.getArrayDetailsList()}) 
+    public int get${a.getFirstElement().extensionName}ArrayLength(int indexNumber) {
+        return length${a.getFirstElement().extensionName}[indexNumber];
     }
 #*  *##end
+
+## Generate setters for array sizes, support 1D and 2D arrays 
+## Support for "DEPENDS ON"
+    // Allow resizing of the array for "DEPENDS ON" support
+#*  *##foreach($aa in ${currentRecord.getArrayDetailsList()})
+#*    *##set( $st = "")
+#*    *##set( $last = ${aa.getSizes().size()} - 1)
+    public void set${aa.getFirstElement().extensionName}ArrayLength(int indexNumber, int size) {
+        length${aa.getFirstElement().extensionName}[indexNumber] = size;
+#*    *##if( $last > 0)
+#*      *##foreach ($ii in [1 .. ${last}])
+#*        *##set( $iim1 = $ii - 1)
+#*        *##set( $iim1 = $ii - 1)
+        ${st}// Catering for 2D Array
+        ${aa.getFirstElement().javaName} = new ${aa.getFirstFieldDef().getJavaType()}[size][];
+        ${st}for (int idx${ii} = 0;idx${ii} < length${aa.getFirstElement().extensionName}[${iim1}]; idx${ii}++) {
+        ${st}   ${aa.getFirstElement().javaName}[idx${ii}] = new ${aa.getFirstFieldDef().getJavaType()}[length${aa.getFirstElement().extensionName}[1]];
+#*        *##if (${aa.getFirstFieldDef().getJavaType()} == "short")
+        ${st}   Arrays.fill(${aa.getFirstElement().javaName} [idx${ii}] ,  (short) ${aa.getFirstFieldDef().getFieldInitialise()});      	
+#*        *##else
+        ${st}   Arrays.fill(${aa.getFirstElement().javaName} [idx${ii}] , ${aa.getFirstFieldDef().getFieldInitialise()});      	
+#*        *##end
+        }
+#*        *##set( $st = "${st}    ")
+#*      *##end
+#*    *##else
+        ${aa.getFirstElement().javaName} = new ${aa.getFirstFieldDef().getJavaType()}[size];
+#*      *##if (${aa.getFirstFieldDef().getJavaType()} == "short")
+        Arrays.fill(${aa.getFirstElement().javaName}, (short) ${aa.getFirstFieldDef().getFieldInitialise()});      	
+#*      *##else
+        Arrays.fill(${aa.getFirstElement().javaName}, ${aa.getFirstFieldDef().getFieldInitialise()});      	
+#*      *##end
+#*    *##end
+   
+    }
+#*  *##end
+
+
 #*  *##if (${generateOptions.getTemplateDtls().getGenerateOption("skel=javaPojo/Code.vm")})
 	
     public void set(I${currentRecord.extensionName} value) {
@@ -158,7 +209,6 @@ ${interfaceTxt} {
     
 #*         *##foreach($as in ${currentRecord.getArraySameSize()}) 
 #*             *##set($n = "from.get${as.get(0).getFirstElement().extensionName}ArrayLength")
-##${as.get(0).getForLoops("pojo")}    
 ${as.get(0).getForLoops("pojo.get${as.get(0).getFirstElement().extensionName}")}    
 #*             *##foreach($a in ${as}) 
            ${a.getFirstElement().javaName}[${a.getCallIndexParameters()}] = pojo.get${a.getFirstElement().extensionName}(${a.getCallIndexParameters()});

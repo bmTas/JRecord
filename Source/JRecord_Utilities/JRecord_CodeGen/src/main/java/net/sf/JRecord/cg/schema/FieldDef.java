@@ -45,10 +45,16 @@ public class FieldDef extends JavaDetails {
 	public final boolean shortNumber;
 	public final IClassDef classDef;
 	
+	private final FieldDef dependingOn;
 
 
 	public FieldDef(String cobolName, FieldDetail fieldDef, ArrayElement ai, String schemaName,
 			boolean isCsv) {
+		this(cobolName, fieldDef, ai, schemaName, isCsv, null);
+	}
+
+	public FieldDef(String cobolName, FieldDetail fieldDef, ArrayElement ai, String schemaName,
+		boolean isCsv, FieldDef dependingOn) {		
 		super(cobolName, schemaName, null);
 		int type = fieldDef.getType();
 		JavaTypeDetails td = new JavaTypeDetails(isCsv, fieldDef);
@@ -65,6 +71,7 @@ public class FieldDef extends JavaDetails {
 				: classDef.getJrecAs());
 
 		shortNumber = TypeManager.getInstance().getShortType(type, fieldDef.getLen(), fieldDef.getFontName()) != type;
+		this.dependingOn = dependingOn;
 	}
 
 	/**
@@ -74,6 +81,13 @@ public class FieldDef extends JavaDetails {
 		return fieldDetail;
 	}
 	
+	/**
+	 * @return the dependingOn
+	 */
+	public final FieldDef getDependingOn() {
+		return dependingOn;
+	}
+
 	/**
 	 * @return the arrayDetails
 	 */

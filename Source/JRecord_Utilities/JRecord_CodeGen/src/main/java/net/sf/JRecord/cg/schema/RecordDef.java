@@ -113,7 +113,19 @@ public class RecordDef extends JavaDetails {
 				ai = null;
 				if (fldName.indexOf('(') > 0) {
 					ai = ArrayElement.newArrayItem(fldName, schemaName);
-					fieldDef = new FieldDef(fldName, field, ai, schemaName, isCsv);
+
+					// Determine if array elements has a 'DEPENDS ON'
+					FieldDef dependingOn = null;
+					if (null != field.getDependingOnDtls() && null != field.getDependingOnDtls().getDependingOn()) {
+						// Try and find the field the array is depending on
+						for (FieldDef fdSearch : fields) {
+							if (fdSearch.getFieldDetail().getName().equals(field.getDependingOnDtls().getDependingOn().getField().getName())) {
+								dependingOn = fdSearch;
+								break;
+							}
+						}
+					}
+					fieldDef = new FieldDef(fldName, field, ai, schemaName, isCsv, dependingOn);
 					
 					if (arrayMap.containsKey(ai.arrayName)) {
 						ad = arrayMap.get(ai.arrayName);
