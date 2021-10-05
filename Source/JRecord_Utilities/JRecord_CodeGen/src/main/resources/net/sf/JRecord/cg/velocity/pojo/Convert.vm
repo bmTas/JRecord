@@ -342,7 +342,8 @@ ${as.get(0).getEndForLoops()}
 
 #* *##foreach($as in ${currentRecord.getArraySameSize()}) 
 #*     #set($n = "from.get${as.get(0).getFirstElement().extensionName}.ArrayLength")*#
-${as.get(0).getForLoops("array${as.get(0).getFirstElement().extensionName}.getArrayLength")}    
+## Use pojo getxxxArrayLength method incase array has a "DEPENDS ON" to ensure instance length is used
+${as.get(0).getForLoops("pojo.get${as.get(0).getFirstElement().extensionName}ArrayLength")}    
 #*     *##foreach($a in ${as})
 ##	          // ${a.getFirstFieldDef()} u.setField(array${a.getFirstElement().extensionName}.get(${a.getCallIndexParameters()})).${a.getFirstFieldDef().getAsType()}()
             pojo.set${a.getFirstElement().extensionName}(${a.getCallIndexParameters()},
@@ -393,7 +394,8 @@ ${as.get(0).getEndForLoops()}
     
 #* *##foreach($as in ${currentRecord.getArraySameSize()}) 
 #*     *##set($n = "from.get${as.get(0).getFirstElement().extensionName}ArrayLength")
-${as.get(0).getForLoops("array${as.get(0).getFirstElement().extensionName}.getArrayLength")}    
+##Use current POJO array length rather than copybook defined array length incase a DEPENDS ON exists
+${as.get(0).getForLoops("pojo.get${as.get(0).getFirstElement().extensionName}ArrayLength")}    
 ##${as.get(0).getForLoops("pojo")}    
 #*     *##foreach($a in ${as}) 
            u.setField(array${a.getFirstElement().extensionName}.get(${a.getCallIndexParameters()}))
