@@ -4,7 +4,7 @@
     <parent>
         <groupId>net.sf.jrecord</groupId>
         <artifactId>jrecord-parent</artifactId>
-        <version>0.90.2</version>
+        <version>0.90.5</version>
     </parent>
 
     <groupId>net.sf.jrecord.jrecord-parent</groupId>
@@ -25,32 +25,32 @@
             <dependency>
                 <groupId>net.sf.jrecord.jrecord-parent.jrecord-utilities-parent</groupId>
                 <artifactId>jrecord-codegen</artifactId>
-                <version>0.90.2</version>
+                <version>0.90.5</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.jrecord.jrecord-parent.jrecord-utilities-parent</groupId>
                 <artifactId>jrecord-cbl2json</artifactId>
-                <version>0.90.2</version>
+                <version>0.90.5</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.jrecord.jrecord-parent.jrecord-utilities-parent</groupId>
                 <artifactId>jrecord-cbl2csv</artifactId>
-                <version>0.90.2</version>
+                <version>0.90.5</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.jrecord.jrecord-parent.jrecord-utilities-parent</groupId>
                 <artifactId>jrecord-cbl2xml</artifactId>
-                <version>0.90.2</version>
+                <version>0.90.5</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.jrecord.jrecord-parent.jrecord-project-parent</groupId>
                 <artifactId>jrecord-common</artifactId>
-                <version>0.90.2</version>
+                <version>0.90.5</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.jrecord.jrecord-parent.jrecord-project-parent</groupId>
                 <artifactId>jrecord-base</artifactId>
-                <version>0.90.2</version>
+                <version>0.90.5</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

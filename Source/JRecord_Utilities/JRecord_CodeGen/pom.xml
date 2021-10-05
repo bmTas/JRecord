@@ -6,7 +6,7 @@
     <parent>
         <groupId>net.sf.jrecord.jrecord-parent</groupId>
         <artifactId>jrecord-utilities-parent</artifactId>
-        <version>0.90.2</version>
+        <version>0.90.5</version>
     </parent>
 
     <groupId>net.sf.jrecord.jrecord-parent.jrecord-utilities-parent</groupId>
