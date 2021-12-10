@@ -51,6 +51,8 @@ import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.def.IO.builders.ICobolCopybookIOProvider;
 import net.sf.JRecord.def.IO.builders.IIOCopybookProvider;
 import net.sf.JRecord.def.IO.builders.Icb2xmlIOProvider;
+import net.sf.cb2xml.copybookReader.IReadCobolCopybook;
+import net.sf.cb2xml.copybookReader.ReadCobolCopybook;
 
 
 public class FileSchemaBuilder implements ICobolCopybookIOProvider, IIOCopybookProvider, Icb2xmlIOProvider {
@@ -66,17 +68,28 @@ public class FileSchemaBuilder implements ICobolCopybookIOProvider, IIOCopybookP
 		this.schemaType = schemaType;
 	}
 	
+	@Override
+	public ReadCobolCopybook newCobolCopybookReader() {
+		return new ReadCobolCopybook();
+	}
+	
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.IO.builders.ICobolIOCopybookProvider#newIOBuilder(java.lang.String)
 	 */
 	@Override
 	public CblIOBuilderMultiSchema newIOBuilder(String copybookFilename) {
-    	try {
-    		return new CblIOBuilderMultiSchema(copybookFilename, (ICopybookLoaderStream) lf.getLoader(schemaType), ICopybookDialects.FMT_MAINFRAME);
-		} catch (ReflectiveOperationException e) {
-			throw new RuntimeException(e);
-		}
+    	return new CblIOBuilderMultiSchema(copybookFilename, (ICopybookLoaderStream) lf.getLoader(schemaType), ICopybookDialects.FMT_MAINFRAME);
     }
+	
+	@Override
+	public CblIOBuilderMultiSchema newIOBuilder(IReadCobolCopybook copyybookReader) {
+		CblIOBuilderMultiSchema ret = new CblIOBuilderMultiSchema(
+				copyybookReader.getCopybookName(), 
+				(ICopybookLoaderStream) lf.getLoader(schemaType));
+		
+		ret.addCopyBook(copyybookReader);
+		return ret;
+	}
 
 	
 	/* (non-Javadoc)
@@ -84,18 +97,10 @@ public class FileSchemaBuilder implements ICobolCopybookIOProvider, IIOCopybookP
 	 */
 	@Override
 	public CblIOBuilderMultiSchema newIOBuilder(InputStream cobolCopybookStream, String copybookName) {
-    	try {
-    		return new CblIOBuilderMultiSchema(
+   		return new CblIOBuilderMultiSchema(
     				cobolCopybookStream, copybookName, 
     				(ICopybookLoaderStream) lf.getLoader(schemaType), 
 					ICopybookDialects.FMT_MAINFRAME);
-//			return new CblIOBuilderSchemaStream( 
-//					cobolCopybookStream, copybookName,
-//					(ICopybookLoaderStream) lf.getLoader(schemaType), 
-//					ICopybookDialects.FMT_MAINFRAME);
-		} catch (ReflectiveOperationException e) {
-			throw new RuntimeException(e);
-		}
     }
 	
 	
@@ -105,15 +110,11 @@ public class FileSchemaBuilder implements ICobolCopybookIOProvider, IIOCopybookP
 	 */
 	@Override
 	public CblIOBuilderMultiSchema newIOBuilder(Reader copybookReader, String copybookName) {
-		try {
-			CblIOBuilderMultiSchema ret = new CblIOBuilderMultiSchema(
-					 copybookName, 
-					(ICopybookLoaderStream) lf.getLoader(schemaType));
-			ret.addCopyBook(copybookReader, copybookName);
-			return ret;
-		} catch (ReflectiveOperationException e) {
-			throw new RuntimeException(e);
-		}
+		CblIOBuilderMultiSchema ret = new CblIOBuilderMultiSchema(
+				 copybookName, 
+				(ICopybookLoaderStream) lf.getLoader(schemaType));
+		ret.addCopyBook(copybookReader, copybookName);
+		return ret;
 	}
 
 	/**

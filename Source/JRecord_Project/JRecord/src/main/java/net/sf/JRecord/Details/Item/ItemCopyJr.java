@@ -10,7 +10,7 @@ import net.sf.JRecord.External.base.FieldCreatorHelper;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.cgen.def.IArrayExtended;
-import net.sf.JRecord.cgen.impl.ArrayFieldDefinition1;
+import net.sf.JRecord.cgen.support.ArrayFieldDefinition1;
 import net.sf.JRecord.detailsBasic.ArrayIndexDtls;
 import net.sf.JRecord.detailsBasic.ItemCopy;
 import net.sf.JRecord.detailsBasic.ItemDtl;

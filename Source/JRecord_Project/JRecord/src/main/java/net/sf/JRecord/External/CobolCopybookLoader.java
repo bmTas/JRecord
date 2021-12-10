@@ -11,6 +11,8 @@ import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.base.BaseCobolItemLoader;
 import net.sf.JRecord.External.cb2xml.CobolCopybookReader;
 import net.sf.JRecord.Log.AbsSSLogger;
+import net.sf.cb2xml.analysis.Copybook;
+import net.sf.cb2xml.copybookReader.IReadCobolCopybook;
 
 
 /**
@@ -85,4 +87,27 @@ implements ICopybookLoaderStream, ICopybookLoaderCobol  {
         return available;
     }
 
+    public ExternalRecord loadCopyBook(
+    		IReadCobolCopybook copybookReader,
+            final int splitCopybookOption, final int dbIdx, final String font,
+            final int copybookFormat,
+            final int cobolDialect,
+            final int systemId,
+            final AbsSSLogger log) {
+    	
+    	Copybook copybook = net.sf.JRecord.External.Def.Cb2Xml.getCopybook(
+    			copybookReader, cobolDialect, false, copybookFormat, getStackSize());
+		return loadCopybook(copybook, copybookReader.getCopybookName(), splitCopybookOption, dbIdx, font, cobolDialect, systemId);
+
+    }
+    
+
+	@Override
+	public CobolCopybookLoader doClone() {
+		try {
+			return (CobolCopybookLoader) clone();
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

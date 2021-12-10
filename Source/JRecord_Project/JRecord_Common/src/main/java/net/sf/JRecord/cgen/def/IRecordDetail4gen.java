@@ -43,21 +43,61 @@ import net.sf.JRecord.detailsSelection.RecordSelection;
  */
 public interface IRecordDetail4gen {
 
+	/**
+	 * 
+	 * @return number of fields in a Record
+	 */
 	public abstract int getFieldCount();
 	
-	public abstract FieldDetail getField(int idx);
+	/**
+	 * Get a specific field
+	 * @param index index of the field being requested
+	 * @return requested field
+	 */
+	public abstract FieldDetail getField(int index);
 	
+	/**
+	 * 
+	 * @return Record name
+	 */
 	public abstract String getRecordName();
 	
+	/**
+	 * For the RecordEditor to know which Record to use for a line in a file,
+	 * it uses Record-Activation-criteria crtiteria of each record.
+	 * @return Record-Activation-criteria
+	 */
 	public abstract RecordSelection getRecordSelection();
 	
 	public abstract IRecordPositionOption getRecordPositionOption();
 	
+	/**
+	 * 
+	 * @return Record-Type code
+	 */
 	public abstract int getRecordType();
 
+	/**
+	 * 
+	 * @return Record-Style code
+	 */
 	public abstract int getRecordStyle();
+	
+	/**
+	 * 
+	 * @return Record-Length
+	 */
+	public abstract int getLength();
 
+	/**
+	 * 
+	 * @return Csv-Details (if applicable)
+	 */
 	public abstract CsvCharDetails getQuoteDefinition();
 	
+	/**
+	 * 
+	 * @return Cobol Definition
+	 */
 	public abstract List<? extends IItemDetails> getCobolItems();
 }

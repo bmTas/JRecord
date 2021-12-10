@@ -43,7 +43,7 @@ import net.sf.JRecord.Log.AbsSSLogger;
  * @author Bruce Martin
  *
  */
-public class CsvNamesFirstLineFileLoader implements CopybookLoader {
+public class CsvNamesFirstLineFileLoader implements CopybookLoader, Cloneable {
 
 	private String fieldSeperator = ",";
 	
@@ -93,6 +93,17 @@ public class CsvNamesFirstLineFileLoader implements CopybookLoader {
 		return ToExternalRecord.getInstance()
 				.getExternalRecord(r.getLayout(), Conversion.getCopyBookId(copyBookFile), systemId);
 	}
+	
+
+	@Override
+	public CsvNamesFirstLineFileLoader doClone() {
+		try {
+			return (CsvNamesFirstLineFileLoader) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 
 	/**
 	 * Create class to load Layout from CSV file with names on the first Line with Tab used
@@ -103,6 +114,6 @@ public class CsvNamesFirstLineFileLoader implements CopybookLoader {
 	public static final class Tab extends CsvNamesFirstLineFileLoader {
 		public Tab() {
 			super("\t");
-		}
+		}		
 	}
 }

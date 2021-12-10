@@ -35,6 +35,7 @@ import java.util.ArrayList;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.RecordException;
+import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ICopybookLoaderStream;
 import net.sf.JRecord.External.ISetDropCopybookName;
@@ -102,6 +103,16 @@ extends IOBuilderBase<IOB> implements IGetLoader  {
 
 	public IOB addCopyBook(Reader reader, String copybookName) {
 		copybooks.add(new CreateExternalFromReader(this, reader, copybookName));
+		return super.self;
+	}
+
+	
+	public IOB addCopyBook(net.sf.cb2xml.copybookReader.IReadCobolCopybook reader) {
+		if (! (loader instanceof CobolCopybookLoader)) {
+			throw new RecordException("A cobol Copybook reader can only be used with Cobol-Copybooks");
+		}
+
+		copybooks.add(new CreateExternalFromCopybookReader(this, reader));
 		return super.self;
 	}
 

@@ -39,7 +39,7 @@ import net.sf.JRecord.Log.AbsSSLogger;
 
 import org.xml.sax.SAXException;
 
-public class XmlFileLoader implements CopybookLoader {
+public class XmlFileLoader implements CopybookLoader, Cloneable {
 
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.External.CopybookLoader#loadCopyBook(java.lang.String, int, int, java.lang.String, int, int, net.sf.JRecord.Log.AbsSSLogger)
@@ -70,5 +70,16 @@ public class XmlFileLoader implements CopybookLoader {
 		return ToExternalRecord.getInstance()
 				.getExternalRecord(r.getLayout(), Conversion.getCopyBookId(copyBookFile), systemId);
 	}
+	
+
+	@Override
+	public XmlFileLoader doClone() {
+		try {
+			return (XmlFileLoader) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 
 }

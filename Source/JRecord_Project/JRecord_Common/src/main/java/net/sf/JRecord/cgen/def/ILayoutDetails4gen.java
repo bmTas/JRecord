@@ -27,18 +27,72 @@ package net.sf.JRecord.cgen.def;
 
 import net.sf.JRecord.detailsBasic.CsvCharDetails;
 
+/**
+ * This is Interface that is implemented by LayoutDetails classes in both JRecord and the RecordEditor.
+ * It allows CodeGen to be use with both systems
+ * 
+ * @author Bruce Martin
+ *
+ */
 public interface ILayoutDetails4gen {
 
+	/**
+	 * Get The File Structure Code (IO Type)
+	 * @returnFile Structure Code
+	 */
 	public abstract int getFileStructure();
-	
+
+	/**
+	 * Get the Schema (Layout) Type Code
+	 * @return Schema (Layout) Type Code
+	 */
 	public abstract int getLayoutType();
+	
+	/**
+	 * Get the Schema (Layout) name
+	 * @return Schema (Layout) name
+	 */
 	public abstract String getLayoutName();
 	
+	/**
+	 * Get the number of records  in the Schema
+	 * @return number of records
+	 */
 	public abstract int getRecordCount();
 	
-	public abstract IRecordDetail4gen getRecord(int recordNum);
+	/**
+	 * Get a specified record
+	 * @param recordIndex  which record do you want
+	 * @return requested record
+	 */
+	public abstract IRecordDetail4gen getRecord(int recordIndex);
 
+	/**
+	 * @return wether it is a Csv Schema (Layout) or not ??
+	 */
 	public abstract boolean isCsvLayout();
 
+	/**
+	 * Get the Field delimiter (only available for Csv Files).
+	 * @return
+	 */
 	public abstract CsvCharDetails getDelimiterDetails();
+	
+	/**
+	 * 
+	 * @return wether the Schema describe a binary or Text file
+	 */
+	public boolean isBinary();
+	
+	/**
+	 * 
+	 * @return The font-name (encoding)
+	 */
+	public String getFontName();
+	
+	/**
+	 * get the maximum possible record length
+	 * @return maximum possible record length
+	 */
+	public int getMaximumRecordLength();
 }

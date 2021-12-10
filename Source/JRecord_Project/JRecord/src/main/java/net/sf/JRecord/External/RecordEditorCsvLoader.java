@@ -73,6 +73,14 @@ public class RecordEditorCsvLoader {
     	public Tab() {
     		super(new ExternalRecordBuilder(), "\t");
     	}
+    	
+    	public ICopybookLoaderStream doClone() {
+    		try {
+    			return (ICopybookLoaderStream) super.clone();
+    		} catch (CloneNotSupportedException e) {
+    			throw new RuntimeException(e);
+    		}
+    	}
     }
 
 
@@ -85,6 +93,14 @@ public class RecordEditorCsvLoader {
     implements ICopybookLoaderStream {
     	public Comma() {
     		super(new ExternalRecordBuilder(), ",");
+    	}
+       	
+    	public ICopybookLoaderStream doClone() {
+    		try {
+    			return (ICopybookLoaderStream) super.clone();
+    		} catch (CloneNotSupportedException e) {
+    			throw new RuntimeException(e);
+    		}
     	}
     }
 }

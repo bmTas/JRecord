@@ -37,6 +37,7 @@ import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Types.Type;
+import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.cgen.support.Code2JRecordConstants;
 import net.sf.cobolToJson.Cobol2Json;
 import net.sf.cobolToJson.impl.Cobol2JsonImp;
@@ -74,8 +75,8 @@ public class TstLoadingCobol02 extends TestCase {
 			createField("Numeric-comp-fld-8", 13, 4, Type.ftBinaryBigEndian),
 			createField("Numeric-comp-5-fld-2", 17, 2, Type.ftBinaryBigEndian),
 			createField("Numeric-comp-5-fld-4", 19, 2, Type.ftBinaryBigEndian),
-			createField("pcomp-fld-2", 21, 2, Type.ftBinaryBigEndianPositive),
-			createField("pcomp-fld-4", 23, 2, Type.ftBinaryBigEndianPositive),
+			createField("pcomp-fld-2", 21, 2, Type.ftPositiveBinaryBigEndian), //ftBinaryBigEndianPositive),
+			createField("pcomp-fld-4", 23, 2, Type.ftPositiveBinaryBigEndian), //ftBinaryBigEndianPositive),
 			createField("pic9-fld-5", 25, 5, Type.ftZonedNumeric),
 		}, {
 			createField("Numeric-comp-fld-2", 1, 2, Type.ftBinaryBigEndian),
@@ -85,8 +86,8 @@ public class TstLoadingCobol02 extends TestCase {
 			createField("Numeric-comp-fld-8", 13, 4, Type.ftBinaryBigEndian),
 			createField("Numeric-comp-5-fld-2", 17, 2, Type.ftBinaryInt),
 			createField("Numeric-comp-5-fld-4", 19, 2, Type.ftBinaryInt),
-			createField("pcomp-fld-2", 21, 2, Type.ftBinaryBigEndianPositive),
-			createField("pcomp-fld-4", 23, 2, Type.ftBinaryBigEndianPositive),
+			createField("pcomp-fld-2", 21, 2, Type.ftPositiveBinaryBigEndian), //ftBinaryBigEndianPositive),
+			createField("pcomp-fld-4", 23, 2, Type.ftPositiveBinaryBigEndian), // ftBinaryBigEndianPositive),
 			createField("pic9-fld-5", 25, 5, Type.ftFjZonedNumeric),
 		}, {
 			createField("Numeric-comp-fld-2", 1, 1, Type.ftBinaryBigEndian),
@@ -96,8 +97,8 @@ public class TstLoadingCobol02 extends TestCase {
 			createField("Numeric-comp-fld-8", 12, 4, Type.ftBinaryBigEndian),
 			createField("Numeric-comp-5-fld-2", 16, 1, Type.ftBinaryInt),
 			createField("Numeric-comp-5-fld-4", 17, 2, Type.ftBinaryInt),
-			createField("pcomp-fld-2", 19, 1, Type.ftBinaryBigEndianPositive),
-			createField("pcomp-fld-4", 20, 2, Type.ftBinaryBigEndianPositive),
+			createField("pcomp-fld-2", 19, 1, Type.ftPositiveBinaryBigEndian), //ftBinaryBigEndianPositive),
+			createField("pcomp-fld-4", 20, 2, Type.ftPositiveBinaryBigEndian), //ftBinaryBigEndianPositive),
 			createField("pic9-fld-5", 22, 5, Type.ftGnuCblZonedNumeric),
 		}, {
 			createField("Numeric-comp-fld-2", 1, 1, Type.ftBinaryBigEndian),
@@ -107,8 +108,8 @@ public class TstLoadingCobol02 extends TestCase {
 			createField("Numeric-comp-fld-8", 10, 4, Type.ftBinaryBigEndian),
 			createField("Numeric-comp-5-fld-2", 14, 1, Type.ftBinaryInt),
 			createField("Numeric-comp-5-fld-4", 15, 2, Type.ftBinaryInt),
-			createField("pcomp-fld-2", 17, 1, Type.ftBinaryBigEndianPositive),
-			createField("pcomp-fld-4", 18, 2, Type.ftBinaryBigEndianPositive),
+			createField("pcomp-fld-2", 17, 1, Type.ftPositiveBinaryBigEndian), //ftBinaryBigEndianPositive),
+			createField("pcomp-fld-4", 18, 2, Type.ftPositiveBinaryBigEndian), //ftBinaryBigEndianPositive),
 			createField("pic9-fld-5", 20, 5, Type.ftGnuCblZonedNumeric),
 		},
 	};
@@ -222,6 +223,7 @@ public class TstLoadingCobol02 extends TestCase {
 		    .setFont(opts.font);
 		LayoutDetail l = bldr.getLayout();
 		RecordDetail record = l.getRecord(0);
+		TypeManager typeMgr = TypeManager.getSystemTypeManager();
 		
 		assertEquals(opts.fileOrganization, l.getFileStructure());
 		assertEquals(opts.font, l.getFontName());
@@ -242,7 +244,15 @@ public class TstLoadingCobol02 extends TestCase {
 				assertEquals(eField.getName(), field.getName());
 				assertEquals(eField.getPos(),  field.getPos());
 				assertEquals(eField.getLen(),  field.getLen());
-				assertEquals(eField.getType(), field.getType());
+
+				if (eField.getType() != field.getType()
+				&& (typeMgr.getShortType(eField.getType(), eField.getLen(), opts.font)) != field.getType()) {
+					System.out.println("---> " + i + "\t" + opts.dialect + " " + field.getName() 
+						+ "\t" + eField.getType() 
+						+ "\t" + typeMgr.getShortType(eField.getType(), eField.getLen(), opts.font)
+						+ "\t" + field.getType());
+					assertEquals(eField.getType(), field.getType());
+				}
 				assertEquals(opts.font, field.getFontName());
 			}
 		}

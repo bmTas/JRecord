@@ -35,8 +35,7 @@ import java.io.IOException;
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.External.CopybookLoader;
-/** This requires JRecord Version 0.81.5 or later */
-import net.sf.JRecord.cgen.impl.IoBuilder;
+import net.sf.JRecord.cgen.impl.io.IoBuilder;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
 

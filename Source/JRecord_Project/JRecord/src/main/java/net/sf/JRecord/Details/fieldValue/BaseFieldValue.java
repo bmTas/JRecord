@@ -55,7 +55,7 @@ import net.sf.JRecord.Types.TypeManager;
  * @author Bruce Martin
  *
  */
-public abstract class BaseFieldValue  {
+public abstract class BaseFieldValue implements IDecimalField, IBigIntegerField, ILongField, IStringField  {
 
 	protected IFieldDetail field;
 
@@ -72,6 +72,7 @@ public abstract class BaseFieldValue  {
 	/**
 	 * @see IFieldValue#asBigDecimal()
 	 */
+	@Override
 	public final BigDecimal asBigDecimal() {
 		Object ret = getValue();
 
@@ -87,6 +88,7 @@ public abstract class BaseFieldValue  {
 	/**
 	 * @see IFieldValue#asBigInteger()
 	 */
+	@Override
 	public final BigInteger asBigInteger() {
 		Object ret = getValue();
 
@@ -133,6 +135,7 @@ public abstract class BaseFieldValue  {
 	/**
 	 * @see IFieldValue#asLong()
 	 */
+	@Override
 	public final long asLong() {
 		Object ret = getValue();
 
@@ -235,6 +238,7 @@ public abstract class BaseFieldValue  {
 	/**
 	 * @see IFieldValue#set(long)
 	 */
+	@Override
 	public final void set(long value) {
 		set(Long.valueOf(value));
 	}
@@ -242,6 +246,7 @@ public abstract class BaseFieldValue  {
 	/**
 	 * @see IFieldValue#set(java.lang.Object)
 	 */
+	@Override
 	public abstract void set(Object value);
 
 	/**
@@ -256,6 +261,7 @@ public abstract class BaseFieldValue  {
 	 * Wether it is a Numeric field
 	 * @return is a Numeric field
 	 */
+	@Override
 	public final boolean isNumeric() {
 		return getType().isNumeric();
 	}
@@ -264,6 +270,7 @@ public abstract class BaseFieldValue  {
 	 * Wether it is a binary Field
 	 * @return is a binary field
 	 */
+	@Override
 	public final boolean isBinary() {
 		return getType().isBinary();
 	}

@@ -112,18 +112,8 @@ public class TypePackedDecimal extends TypeNum {
 	        val += "C";
 	    }
 
-	    //if (val.length() < 17) {
 	    Conversion.setBigInt(record, pos, len, new BigInteger(val, BASE_16), true);
-//	    } else {
-//	    	int split = val.length() - 16;
-//
-//	    	Conversion.setLong(record, pos, len, Long.parseLong(val.substring(split), BASE_16), true);
-//	    	Conversion.setLong(record, pos, len-8, Long.parseLong(val.substring(0, split), BASE_16), true);
-////	    	System.out.println("Comp3 Error: " + split + " " + val + "  >" + val.substring(0, split) + " " + val.substring(split)
-////	    			+ " ~~>> " +  Conversion.getMainframePackedDecimal(record,
-////							 pos,
-////							 len));
-//	    }
+
 	    return record;
     }
 }

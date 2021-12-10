@@ -1,4 +1,4 @@
-package net.sf.JRecord.cgen.impl;
+package net.sf.JRecord.cgen.impl.io;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -159,6 +159,7 @@ implements IFieldUpdatedListner, IAddDependingOn {
 					dropCopybookFromFieldNames, 
 					//saveCb2xml = false,
 					useJRecordNaming;
+	private int splitOption = ICobolSplitOptions.SPLIT_NONE;
 	
 
 	@SuppressWarnings("unchecked")
@@ -843,6 +844,22 @@ implements IFieldUpdatedListner, IAddDependingOn {
 	 */
 	public int getDialectCode() {
 		return dialectCode;
+	}
+
+
+	/**
+	 * @return the splitOption
+	 */
+	public int getSplitOption() {
+		return splitOption;
+	}
+
+
+	/**
+	 * @param splitOption the splitOption to set
+	 */
+	public void setSplitOption(int splitOption) {
+		this.splitOption = splitOption;
 	}
 
 
@@ -1877,5 +1894,9 @@ implements IFieldUpdatedListner, IAddDependingOn {
 		}
 		
 		return ret;
+	}
+	
+	protected CobolConversionOptions getCobolConversionOptions() {
+		return new CobolConversionOptions(dialectCode, splitOption, dropCopybookFromFieldNames);
 	}
 }

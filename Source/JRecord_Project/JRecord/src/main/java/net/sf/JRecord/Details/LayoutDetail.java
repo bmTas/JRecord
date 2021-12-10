@@ -59,6 +59,7 @@ import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.CsvParser.ICsvCharLineParser;
 import net.sf.JRecord.CsvParser.ICsvDefinition;
+import net.sf.JRecord.External.base.CobolConversionOptions;
 import net.sf.JRecord.IO.builders.recordDeciders.SingleFieldDecider;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.CsvParser.ICsvByteLineParser;
@@ -149,6 +150,8 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	
 	private final int maxPossibleLength, minPossibleLength;
 	
+	private final CobolConversionOptions cobolConversionOption;
+	
 
 	private Map<String, List<IItemDetails>> groupMap, groupFieldMap;
 	
@@ -177,7 +180,23 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	        		   final int pFileStructure) 
 	{
 		this(	pLayoutName, pRecords, pDescription, pLayoutType, pRecordSep, pEolIndicator, 
-				pFontName, pRecordDecider, pFileStructure, null, false, -1);
+				pFontName, pRecordDecider, pFileStructure, null, false, -1, null);
+	}
+	
+	@Deprecated
+	public LayoutDetail(final String pLayoutName,
+ 		   final RecordDetail[] pRecords,
+ 		   final String pDescription,
+ 		   final int pLayoutType,
+ 		   final byte[] pRecordSep,
+ 		   final String pEolIndicator,
+ 		   final String pFontName,
+ 		   		 RecordDecider pRecordDecider,
+ 		   final int pFileStructure,
+ 		   final IRecordPositionOption rpOpt,
+ 		         boolean  initToSpaces,
+ 		         int recordLength) {
+		this(pLayoutName, pRecords, pDescription, pLayoutType, pRecordSep, pEolIndicator, pFontName, pRecordDecider, pFileStructure, rpOpt, initToSpaces, recordLength, null);
 	}
 	
 	public LayoutDetail(final String pLayoutName,
@@ -191,7 +210,8 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
  		   final int pFileStructure,
  		   final IRecordPositionOption rpOpt,
  		         boolean  initToSpaces,
- 		         int recordLength) {
+ 		         int recordLength,
+ 		         CobolConversionOptions cobolConversionOption) {
 	    super();
 
         int i, j;
@@ -208,6 +228,9 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 		//this.decider       = pRecordDecider;
 		this.fileStructure = CommonBits.translateFileStructureToNotAskFont(pFileStructure);
 		this.recordCount   = pRecords.length;
+		this.cobolConversionOption = cobolConversionOption == null 
+				? CobolConversionOptions.STANDARD_OPTIONS
+				: cobolConversionOption;
 //		this.setDecider(pRecordDecider);
 		
 
@@ -1240,5 +1263,12 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 //		}
 //
 //	}
+
+	/**
+	 * @return the cobolConversionOption
+	 */
+	public CobolConversionOptions getCobolConversionOption() {
+		return cobolConversionOption;
+	}
 }
 

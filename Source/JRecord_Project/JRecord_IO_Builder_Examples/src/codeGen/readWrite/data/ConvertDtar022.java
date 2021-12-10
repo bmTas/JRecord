@@ -31,8 +31,6 @@ package codeGen.readWrite.data;
 
 import java.io.IOException;
 
-
-import net.sf.JRecord.cgen.impl.BasePojoConverter;
 import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
 
 import net.sf.JRecord.Common.IFieldDetail;
@@ -42,6 +40,7 @@ import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.Line;
 import net.sf.JRecord.Details.fieldValue.IFieldValueUpdLine;
 import net.sf.JRecord.Details.fieldValue.LineFieldCreator;
+import net.sf.JRecord.cgen.impl.derSer.BasePojoConverter;
 
 public class ConvertDtar022 extends BasePojoConverter<LineDtar022Pojo> {
  

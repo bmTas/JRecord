@@ -169,10 +169,22 @@ public class Cobol2JsonImp extends CobolSchemaReader<ICobol2Json> implements ICo
  		try {
 	    	writer.writeStartObject();
 			if (recordItems.size() == 1) {
-				writer.writeArrayFieldStart(itemDtls.updateName(schema.getRecord(0).getRecordName()));
+		    	ItemRecordDtls itemRecordDtls = recordItems.get(0);
+		    	List<Item> itemList = recordItems.get(0).items;
+		    	Item itm;
+				String recordName = schema.getRecord(0).getRecordName();
+				if (itemList.size() == 1 
+				&& (itm =itemList.get(0)).getItemType() == Item.TYPE_GROUP
+				&& itm.getChildItems().size() > 0) {
+					if (itm.getName() != null && itm.getName().length() > 0) {
+						recordName = itm.getName();
+					}
+					itemList = itm.getChildItems();
+				}
+				writer.writeArrayFieldStart(itemDtls.updateName(recordName));
 			    while ((l = reader.read()) != null) {
 			    	writer.writeStartObject();
-			    	writeItems(writer, lineItemHelper.setLine(l), recordItems.get(0).items, new IntStack());
+					writeItems(writer, lineItemHelper.setLine(l), itemList, new IntStack());
 			        writer.writeEndObject();
 			    }
 			} else if (schema.hasTreeStructure()) {

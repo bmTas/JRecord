@@ -34,7 +34,7 @@ import net.sf.JRecord.schema.jaxb.Item;
 /**
  * Purpose: Convert Cobol-Data-Files <---> Xml files
  *  
- * @author Moddy Te'eni. 
+ * @author Moddy Te'eni. Bruce Martin
  *
  */
 public class Cobol2JsonSchema extends CobolSchemaReader<Cobol2JsonSchema>  {
@@ -83,7 +83,7 @@ public class Cobol2JsonSchema extends CobolSchemaReader<Cobol2JsonSchema>  {
         LayoutDetail schema =  iob.getLayout();
        	JsonGenerator writer = new JsonFactory().createGenerator(jsonStream);
 //        List<Item> items = cobolSchemaDetails.recordItems.stream().flatMap( ri -> ri.items.stream()).collect(toList());
-        List<Item> items = new ArrayList<>();// = cobolSchemaDetails.recordItems.stream().flatMap( ri -> ri.items.stream()).collect(toList());
+        List<Item> items = new ArrayList<Item>();// = cobolSchemaDetails.recordItems.stream().flatMap( ri -> ri.items.stream()).collect(toList());
         List<Object> oList = cobolSchemaDetails.recordItems.stream().flatMap( ri -> ri.items.stream()).collect(toList());
         for ( Object o : oList) {
         	items.add((Item) o);

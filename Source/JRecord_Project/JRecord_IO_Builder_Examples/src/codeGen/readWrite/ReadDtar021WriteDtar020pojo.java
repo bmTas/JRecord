@@ -37,9 +37,7 @@ import java.io.IOException;
 
 import net.sf.JRecord.cgen.def.IReader;
 import net.sf.JRecord.cgen.def.IWriter;
-import net.sf.JRecord.cgen.impl.IoBuilder;
-
-
+import net.sf.JRecord.cgen.impl.io.IoBuilder;
 import codeGen.readWrite.io.IoBuilderDtar021;
 import codeGen.readWrite.io.IoBuilderDtar022;
 import codeGen.readWrite.data.LineDtar021Pojo;

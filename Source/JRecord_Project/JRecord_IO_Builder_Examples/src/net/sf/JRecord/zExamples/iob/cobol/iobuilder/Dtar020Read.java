@@ -29,10 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Conversion;
-import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.Details.fieldValue.IFieldValue;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
@@ -48,16 +45,10 @@ public class Dtar020Read {
 	   Dtar020.ClassDtar020 dtar020 = Dtar020.DTAR020;
 
  	   AbstractLineReader reader  = iob.newReader("G:\\Users\\Bruce01\\RecordEditor_HSQL\\SampleFiles\\DTAR020.bin"); 
- 	   
 
 	   while ((line = reader.read()) != null) { 
-		  // line.setFieldText(recordIdx, fieldIdx, value);
-		  //  line.getFieldValue(dtar020.keycodeNo).set
-		   IFieldValue fieldValue = line.getFieldValue(dtar020.keycodeNo);
-		   setToSpaces1(line.getFieldValue(dtar020.keycodeNo));
-			   
 		   System.out.println(
-				     "\t" + fieldValue.asString()
+				     "\t" + line.getFieldValue(dtar020.keycodeNo).asString()
 				   + "\t" + line.getFieldValue(dtar020.deptNo).asString()
 				   + "\t" + line.getFieldValue(dtar020.qtySold).asString()
 				   + "\t" + line.getFieldValue(dtar020.salePrice).asString()
@@ -65,19 +56,5 @@ public class Dtar020Read {
 	   }
 
 	}
-
-	private static void setToSpaces1(IFieldValue fieldValue) {
-		IFieldDetail fieldDetail = fieldValue.getFieldDetail();
-		int len = fieldDetail.getLen();
-		String spaceHex = Conversion.isEbcidic(fieldDetail.getFontName())
-			   ? "40"
-			   : "20";
-		StringBuilder b = new StringBuilder(len * 2 );
-		for (int i = 0; i < len; i++) {
-		   b.append(spaceHex);
-		}
-		fieldValue.setHex(b.toString());
-	}
-
 
 }

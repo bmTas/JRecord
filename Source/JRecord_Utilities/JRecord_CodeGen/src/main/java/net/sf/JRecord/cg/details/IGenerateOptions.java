@@ -1,5 +1,6 @@
 package net.sf.JRecord.cg.details;
 
+import net.sf.JRecord.cg.details.codes.ArgumentOption;
 import net.sf.JRecord.cg.schema.CodeGenFileName;
 import net.sf.JRecord.cg.schema.LayoutDef;
 
@@ -108,5 +109,6 @@ public interface IGenerateOptions {
 	 */
 	public abstract int getJRecordVersion();
 
+	public String getJRecordPackageId(String id);
 
 }

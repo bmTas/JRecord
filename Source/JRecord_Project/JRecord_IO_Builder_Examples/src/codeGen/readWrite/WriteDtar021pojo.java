@@ -36,9 +36,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 import net.sf.JRecord.cgen.def.IWriter;
-import net.sf.JRecord.cgen.impl.IoBuilder;
-
-
+import net.sf.JRecord.cgen.impl.io.IoBuilder;
 import codeGen.readWrite.io.IoBuilderDtar021;
 import codeGen.readWrite.data.LineDtar021Pojo;
 

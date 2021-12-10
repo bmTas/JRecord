@@ -62,7 +62,7 @@ import net.sf.JRecord.Common.ILineFieldNames;
  * @author Bruce Martin
  *
  */
-public interface AbstractLine extends ILineFieldNames {
+public interface AbstractLine extends ILineFieldNames, IGetLayout {
     /**
      *   This method completely replaces a lines value. It is used to determine
      * a records prefered record layout

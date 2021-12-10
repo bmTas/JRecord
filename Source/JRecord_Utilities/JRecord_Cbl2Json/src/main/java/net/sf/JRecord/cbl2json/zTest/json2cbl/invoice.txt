@@ -1,0 +1,2 @@
+000000001test-lastname       test-firstname      0000002INV00000012016-12-011000Invoice for cable1  0002INVS11INVS12INV00000022016-12-022000Invoice for cable2  0002INVS21INVS22
+000000002test-lastname2      test-firstname2     0000001INV00000012015-12-011000Invoice for cable6  0001INVS1 

@@ -30,8 +30,18 @@ package net.sf.JRecord.cgen.def;
 
 import net.sf.JRecord.Common.IFieldDetail;
 
-public interface IArray1Dimension {
+public interface IArray1Dimension extends IArraySize {
 
+	/**
+	 * Get a JRecord <b>Field Definition</b> for an array element
+	 * @param indexs Array index
+	 * @return requested <b>Field Definition</b>
+	 */
 	public abstract IFieldDetail get(int indexs);
-	public abstract int getArrayLength(int indexNumber);
+	
+	/**
+	 * Get The Array Size
+	 * @return Array Size
+	 */
+	public abstract int getArrayLength();
 }

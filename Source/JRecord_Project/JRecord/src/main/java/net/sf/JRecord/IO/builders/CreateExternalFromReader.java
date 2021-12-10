@@ -31,7 +31,6 @@ package net.sf.JRecord.IO.builders;
 import java.io.Reader;
 import java.io.StringReader;
 
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ICopybookLoaderStream;
 
@@ -68,7 +67,7 @@ public class CreateExternalFromReader  extends CreateExternalBase  implements IC
 		ICopybookLoaderStream loader = parent. getLoader();
 		
 		//if (loader instanceof ICopybookLoaderStream) {
-		return ((ICopybookLoaderStream)loader)
+		return loader
 			.loadCopyBook(new StringReader(copybookStr), copybookName, splitCopybook, 0, 
 					parent.getFont(), parent.getCopybookFileFormat(), 
 					parent.getDialect(), 0, parent.getLog());

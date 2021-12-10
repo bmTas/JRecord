@@ -37,10 +37,10 @@ import java.util.List;
 import net.sf.JRecord.ByteIO.IByteRecordReader;
 import net.sf.JRecord.ByteIO.IByteRecordWriter;
 import net.sf.JRecord.Details.AbstractLine;
+import net.sf.JRecord.Details.IGetLayout;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
-import net.sf.JRecord.IO.ListLineReader;
 import net.sf.JRecord.IO.ListLineWriter;
 
 
@@ -54,7 +54,7 @@ import net.sf.JRecord.IO.ListLineWriter;
  * @author Bruce Martin
  *
  */
-public interface ISchemaIOBuilder extends INewLineCreator {
+public interface ISchemaIOBuilder extends INewLineCreator, IGetLayout {
 
 	/**
 	 * Create new empty Line 

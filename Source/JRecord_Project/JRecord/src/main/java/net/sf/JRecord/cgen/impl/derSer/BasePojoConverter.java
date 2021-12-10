@@ -1,4 +1,4 @@
-package net.sf.JRecord.cgen.impl;
+package net.sf.JRecord.cgen.impl.derSer;
 
 
 import java.io.IOException;

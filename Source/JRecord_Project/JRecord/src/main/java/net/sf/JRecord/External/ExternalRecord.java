@@ -642,7 +642,8 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	            this.getFileStructure(),
 	            null,
 	            this.isInitToSpaces(),
-	            this.getRecordLength());
+	            this.getRecordLength(),
+	            super.getCobolConversionOptions());
 	}
 
 

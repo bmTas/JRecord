@@ -56,13 +56,20 @@ public class TstCblDataToJson102 {
 			{"amsPoDownload.cbl",  "Ams_PODownload_20041231.txt",  "amsPoDownload_tree.json", "1a", "01"},
 			{"amsPoDownload.cbl",  "Ams_PODownload_20041231.txt",  "amsPoDownload_singleTree.json", "1b", "01"},
 	};
+	
+	private String[][] files2 ={
+			{"invoice.cbl",  "invoice.txt",  "invoice.json", "3", "N"},
+			{"ODArray01.cbl",  "ODArray01.txt",  "ODArray01.json", "3", "N"},
+			{"ODArray61.cbl",  "ODArray61.txt",  "ODArray61.json", "3", "N"},
+			{"ODArray61a.cbl",  "ODArray61.txt",  "ODArray61a.json", "3", "N"},
+	};
 	private static final int[] TAG_FORMATS = {
 		 IReformatFieldNames.RO_UNDERSCORE, IReformatFieldNames.RO_LEAVE_ASIS, //IReformatFieldNames.RO_CAMEL_CASE
 	};
 
 
-	private int tagFormat;
-	boolean isBinary;
+//	private int tagFormat;
+//	boolean isBinary;
 	
 	//private String firstLine = "TAR5839DCDC - Taras Ave                                                             30-68 Taras Ave                         Altona North                       3025      VICA";
 	@Test
@@ -72,6 +79,12 @@ public class TstCblDataToJson102 {
 		}
 	}
 	
+	@Test
+	public void testData2Xml2() throws IOException {
+		for (String[] d : files2) {
+			checkData2Xml(d);
+		}
+	}
 
 
 	private void checkData2Xml(String[] d) throws FileNotFoundException,
@@ -81,22 +94,22 @@ public class TstCblDataToJson102 {
 		String xmlData = Cbl2JsonCode.loadFile(Cbl2JsonCode.getFullName("json/" + d[2]), "\r\n", false);
 		
 		for (int tf : TAG_FORMATS) {
-			tagFormat = tf;
 			System.out.println("Checking: " + d[0] + ", " + tf);
 			copybookName = Cbl2JsonCode.getFullName("cobol/" + d[0]);
 			dataName = Cbl2JsonCode.getFullName(d[1]);
 	
 			byte[] doc;
+			boolean dropCopybookName = "Y".equalsIgnoreCase(d[3]);
 			if ("1".equals(d[3])) {
-				doc = data2xml1(dataName, copybookName, "Y".equalsIgnoreCase(d[3]), d[4]);
+				doc = data2xml1(dataName, copybookName, dropCopybookName, d[4], tf);
 			} else if ("1a".equals(d[3])) {
-				doc = data2xml1a(dataName, copybookName, "Y".equalsIgnoreCase(d[3]), d[4]);
+				doc = data2xml1a(dataName, copybookName, dropCopybookName, d[4], tf);
 			} else if ("1b".equals(d[3])) {
-				doc = data2xml1b(dataName, copybookName, "Y".equalsIgnoreCase(d[3]), d[4]);
+				doc = data2xml1b(dataName, copybookName, dropCopybookName, d[4], tf);
 			} else if ("2".equals(d[3])) {
-				doc = data2xml2(dataName, copybookName, "Y".equalsIgnoreCase(d[3]), d[4]);
+				doc = data2xml2(dataName, copybookName, dropCopybookName, d[4], tf);
 			} else {
-				doc = data2xml3(dataName, copybookName, "Y".equalsIgnoreCase(d[3]), d[4]);
+				doc = data2xml3(dataName, copybookName, dropCopybookName, d[4], tf);
 			}
 	
 			System.out.println("Copybook: " + d[0] + " " + d[2]);
@@ -107,33 +120,33 @@ public class TstCblDataToJson102 {
 		}
 	} 
 	
-	private byte[] data2xml1(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId) 
+	private byte[] data2xml1(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId, int tagFormat) 
 	throws IOException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);		
 		
-		createPoBuilder(copybookFileName, splitId)
+		createPoBuilder(copybookFileName, splitId, tagFormat)
 				      .cobol2json(new FileInputStream(dataFileName), os);
 
 	    return os.toByteArray();
 	}
 	
-	private byte[] data2xml1a(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId) 
+	private byte[] data2xml1a(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId, int tagFormat) 
 	throws IOException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);		
 		
-		createPoTreeBuilder(copybookFileName, splitId)
+		createPoTreeBuilder(copybookFileName, splitId, tagFormat)
 				      .cobol2json(new FileInputStream(dataFileName), os);
 
 	    return os.toByteArray();
 	}
-	private byte[] data2xml1b(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId) 
+	private byte[] data2xml1b(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId, int tagFormat) 
 	throws IOException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);		
 		
-		createPoTreeBuilder(copybookFileName, splitId)
+		createPoTreeBuilder(copybookFileName, splitId, tagFormat)
 						.setRootRecord("PO-Record")
 				      .cobol2json(new FileInputStream(dataFileName), os);
 
@@ -141,8 +154,8 @@ public class TstCblDataToJson102 {
 	}
 
 
-	public ICobol2Json createPoTreeBuilder(String copybookFileName, String splitId) {
-		return createPoBuilder(copybookFileName, splitId)
+	public ICobol2Json createPoTreeBuilder(String copybookFileName, String splitId, int tagFormat) {
+		return createPoBuilder(copybookFileName, splitId, tagFormat)
 				.setRecordParent("Product-Record", "PO-Record")
 				.setRecordParent("Location-Record", "Product-Record");
 	}
@@ -152,20 +165,20 @@ public class TstCblDataToJson102 {
 	 * @param splitId
 	 * @return
 	 */
-	public ICobol2Json createPoBuilder(String copybookFileName, String splitId) {
-		return createXmlBuilder(copybookFileName, splitId)
+	public ICobol2Json createPoBuilder(String copybookFileName, String splitId, int tagFormat) {
+		return createXmlBuilder(copybookFileName, splitId, tagFormat)
 					      .setRecordSelection("PO-Record", newFieldSelection("Record-Type","H1"))
 					      .setRecordSelection("Product-Record", newFieldSelection("Record-Type","D1"))
 					      .setRecordSelection("Location-Record", newFieldSelection("Record-Type","S1"));
 	}
 	
 
-	private byte[] data2xml2(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId) 
+	private byte[] data2xml2(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId, int tagFormat) 
 	throws IOException {
 
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 
-		createXmlBuilder(copybookFileName, splitId)
+		createXmlBuilder(copybookFileName, splitId, tagFormat)
 					      .setRecordPositionCode("Header-Record",  Options.RP_FIRST_RECORD_IN_FILE)
 					      .setRecordPositionCode("Detail-Record",  Options.RP_MIDDLE_RECORDS)
 					      .setRecordPositionCode("Trailer-Record", Options.RP_LAST_RECORD_IN_FILE)
@@ -175,13 +188,13 @@ public class TstCblDataToJson102 {
 	}
 
 
-	private byte[] data2xml3(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId) 
+	private byte[] data2xml3(String dataFileName, String copybookFileName, boolean dropCopybookName, String splitId, int tagFormat) 
 	throws IOException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 
 				
-		createXmlBuilder(copybookFileName, splitId)
+		createXmlBuilder(copybookFileName, splitId, tagFormat)
 				      .cobol2json(new FileInputStream(dataFileName), os);
 
 	    return os.toByteArray();
@@ -192,7 +205,7 @@ public class TstCblDataToJson102 {
 	 * @param copybookFileName
 	 * @return
 	 */
-	private ICobol2Json createXmlBuilder(String copybookFileName, String splitId) {
+	private ICobol2Json createXmlBuilder(String copybookFileName, String splitId, int tagFormat) {
 		int split = CopybookLoader.SPLIT_01_LEVEL;
 		if ("N".equals(splitId)) {
 			split = CopybookLoader.SPLIT_NONE;

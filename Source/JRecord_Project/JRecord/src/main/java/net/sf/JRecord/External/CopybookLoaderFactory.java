@@ -97,7 +97,8 @@ public class CopybookLoaderFactory {
 
 	private String[] loaderName;
 	private String[] parameterFile;
-	private Class<? extends CopybookLoader>[] loader;
+//	private Class<? extends CopybookLoader>[] loader;
+	private CopybookLoader[] skeltonLoader;
 
 	private int numberLoaded = 0;
 
@@ -121,13 +122,13 @@ public class CopybookLoaderFactory {
 	 * Create a Factory with a specified number of loaders
 	 * @param maximumNumberOfLoaders maximum number of loaders allowed
 	 */
-	@SuppressWarnings("unchecked")
 	public CopybookLoaderFactory(final int maximumNumberOfLoaders) {
 		super();
 
 		loaderName    = new String[maximumNumberOfLoaders];
 		parameterFile = new String[maximumNumberOfLoaders];
-		loader        = new Class[maximumNumberOfLoaders];
+		//loader        = new Class[maximumNumberOfLoaders];
+		skeltonLoader = new CopybookLoader[maximumNumberOfLoaders];
 
 		registerAll();
 	}
@@ -143,28 +144,49 @@ public class CopybookLoaderFactory {
 
 
 	protected final void registerStandardLoaders1() {
-		register("cb2xml XML Copybook", XmlCopybookLoader.class, "");
+//		register("cb2xml XML Copybook", XmlCopybookLoader.class, "");
+//		if (CobolCopybookLoader.isAvailable()) {
+//			register("Cobol Copybook", CobolCopybookLoader.class, "");
+//		} else {
+//	    	register("Empty - Cobol placeholder", NoCb2xml.class, "");
+//	    }
+//		recordEditorXml = numberLoaded;
+//		register("RecordEditor XML Copybook",RecordEditorXmlLoader.class, "");
+//
+		
+		register("cb2xml XML Copybook", new XmlCopybookLoader(), "");
 		if (CobolCopybookLoader.isAvailable()) {
-			register("Cobol Copybook", CobolCopybookLoader.class, "");
+			register("Cobol Copybook", new CobolCopybookLoader(), "");
 		} else {
-	    	register("Empty - Cobol placeholder", NoCb2xml.class, "");
+	    	register("Empty - Cobol placeholder", new NoCb2xml(), "");
 	    }
 		recordEditorXml = numberLoaded;
-		register("RecordEditor XML Copybook",RecordEditorXmlLoader.class, "");
+		register("RecordEditor XML Copybook", new RecordEditorXmlLoader(), "");
+
 
 	}
 
 	protected final void registerStandardLoaders2() {
 
+//		csv1 = numberLoaded;
+//		register("Comma CSV (names first line)", CsvNamesFirstLineFileLoader.class, "");
+//		csv2   = numberLoaded;
+//		register("Tab CSV (names first line)", CsvNamesFirstLineFileLoader.Tab.class, "");
+//		register("RecordEditor Csv Copybook (Comma Seperator)",RecordEditorCsvLoader.Comma.class, "");
+//		register("RecordEditor Tab Copybook (Tab Seperator)",RecordEditorCsvLoader.Tab.class, "");
+//		register("DB - CSV extract Copybook", DbCsvCopybookLoader.class, "");
+//		xml1 = numberLoaded;
+//		register("XML File", XmlFileLoader.class, "");
+		
 		csv1 = numberLoaded;
-		register("Comma CSV (names first line)", CsvNamesFirstLineFileLoader.class, "");
+		register("Comma CSV (names first line)", new CsvNamesFirstLineFileLoader(), "");
 		csv2   = numberLoaded;
-		register("Tab CSV (names first line)", CsvNamesFirstLineFileLoader.Tab.class, "");
-		register("RecordEditor Csv Copybook (Comma Seperator)",RecordEditorCsvLoader.Comma.class, "");
-		register("RecordEditor Tab Copybook (Tab Seperator)",RecordEditorCsvLoader.Tab.class, "");
-		register("DB - CSV extract Copybook", DbCsvCopybookLoader.class, "");
+		register("Tab CSV (names first line)", new CsvNamesFirstLineFileLoader.Tab(), "");
+		register("RecordEditor Csv Copybook (Comma Seperator)", new RecordEditorCsvLoader.Comma(), "");
+		register("RecordEditor Tab Copybook (Tab Seperator)", new RecordEditorCsvLoader.Tab(), "");
+		register("DB - CSV extract Copybook", new DbCsvCopybookLoader(), "");
 		xml1 = numberLoaded;
-		register("XML File", XmlFileLoader.class, "");
+		register("XML File", new XmlFileLoader(), "");
 	}
 
 
@@ -200,17 +222,24 @@ public class CopybookLoaderFactory {
 		return ret;
 	}
 
-	/**
-	 * Register a new Copybook loader
-	 *
-	 * @param name Copybook loader's name
-	 * @param loaderClass The loader class
-	 * @param propertiesFile properties file
-	 */
-	public final void register(String name, Class<? extends CopybookLoader> loaderClass, String propertiesFile) {
+//	/**
+//	 * Register a new Copybook loader
+//	 *
+//	 * @param name Copybook loader's name
+//	 * @param loaderClass The loader class
+//	 * @param propertiesFile properties file
+//	 */
+//	public final void register(String name, Class<? extends CopybookLoader> loaderClass, String propertiesFile) {
+//
+//		loaderName[numberLoaded] = name;
+//		loader[numberLoaded] =  loaderClass;
+//		parameterFile[numberLoaded++] = propertiesFile;
+//	}
+
+	public final void register(String name, CopybookLoader exampleLoader, String propertiesFile) {
 
 		loaderName[numberLoaded] = name;
-		loader[numberLoaded] =  loaderClass;
+		skeltonLoader[numberLoaded] =  exampleLoader;
 		parameterFile[numberLoaded++] = propertiesFile;
 	}
 
@@ -235,8 +264,9 @@ public class CopybookLoaderFactory {
 	 * @throws IllegalAccessException error
 	 * @throws InstantiationException error
 	 */
-	public CopybookLoader getLoader(int loaderId) throws IllegalAccessException, InstantiationException {
-		return loader[loaderId].newInstance();
+	public CopybookLoader getLoader(int loaderId) {
+		return skeltonLoader[loaderId].doClone();
+		//return loader[loaderId].newInstance();
 	}
 
 	/**
@@ -327,7 +357,7 @@ public class CopybookLoaderFactory {
 	 * @author Bruce Martin
 	 *
 	 */
-	public static class NoCb2xml implements ICopybookLoaderStream {
+	public static class NoCb2xml implements ICopybookLoaderStream, Cloneable {
 
 		private static final String CB2XML_MISSING 
 				= "cb2xml.jar is missing !!!\n"
@@ -357,5 +387,14 @@ public class CopybookLoaderFactory {
 			throw new RecordException(CB2XML_MISSING);
 		}
 		
+      	
+    	public ICopybookLoaderStream doClone() {
+    		try {
+    			return (ICopybookLoaderStream) super.clone();
+    		} catch (CloneNotSupportedException e) {
+    			throw new RuntimeException(e);
+    		}
+    	}
+
 	}
 }

@@ -38,7 +38,7 @@ import net.sf.JRecord.Log.AbsSSLogger;
  * @author Bruce Martin
  *
  */
-public abstract class BaseCopybookLoader implements CopybookLoader {
+public abstract class BaseCopybookLoader implements CopybookLoader, Cloneable {
 
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.External.CopybookLoader#loadCopyBook(java.lang.String, int, int, java.lang.String, int, int, net.sf.JRecord.Log.AbsSSLogger)
@@ -48,6 +48,15 @@ public abstract class BaseCopybookLoader implements CopybookLoader {
 			int splitCopybookOption, int dbIdx, String font, int binFormat,
 			int systemId, AbsSSLogger log) throws Exception {
 		return loadCopyBook(copyBookFile, splitCopybookOption, dbIdx, font, CommonBits.getDefaultCobolTextFormat(), binFormat, systemId, log);
+	}
+
+	@Override
+	public BaseCopybookLoader doClone() {
+		try {
+			return (BaseCopybookLoader) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

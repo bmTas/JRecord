@@ -1,5 +1,6 @@
 package net.sf.JRecord.Details.fieldValue;
 
+import net.sf.JRecord.Common.AbstractFieldValue;
 
 /**
  * Field Value used in line
@@ -8,8 +9,10 @@ package net.sf.JRecord.Details.fieldValue;
  *
  */
 
-@SuppressWarnings("deprecation")
-public interface IFieldValue extends net.sf.JRecord.Details.IFieldValue {
+public interface IFieldValue extends AbstractFieldValue,
+	IDecimalField, ILongField, IStringField {
+	
+	
 	public abstract void setToHighValues();
 
 	public abstract void setToLowValues();
@@ -37,8 +40,7 @@ public interface IFieldValue extends net.sf.JRecord.Details.IFieldValue {
 	 * @return wether the field is spaces
 	 */
 	public abstract boolean isSpaces();
-	
-	
+
 	/**
 	 * wether hex update operations (setHex setToHigh/Low Values)
 	 * are supported 
@@ -56,4 +58,10 @@ public interface IFieldValue extends net.sf.JRecord.Details.IFieldValue {
 	 * in an Occurs-Depending
 	 */
 	public abstract boolean isFieldInRecord();
+	
+
+	/**
+	 * Set the fieldValue to spaces
+	 */
+	public void setToSpaces();
 }

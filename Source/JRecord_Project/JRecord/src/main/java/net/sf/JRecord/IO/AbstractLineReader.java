@@ -40,6 +40,7 @@ import java.io.InputStream;
 
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.DefaultLineProvider;
+import net.sf.JRecord.Details.IGetLayout;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
 import net.sf.JRecord.Details.SpecialRecordIds;
@@ -69,7 +70,7 @@ import net.sf.JRecord.External.ExternalRecord;
  * @author Bruce Martin
  *
  */
-public abstract class AbstractLineReader implements IReadLine {
+public abstract class AbstractLineReader implements IReadLine, IGetLayout {
 
     public static final String NOT_OPEN_MESSAGE = "File has not been opened";
     

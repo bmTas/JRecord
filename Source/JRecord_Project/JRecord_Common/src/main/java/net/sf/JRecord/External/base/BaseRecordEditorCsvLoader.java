@@ -77,7 +77,7 @@ import net.sf.JRecord.Types.Type;
  * @author Bruce Martin
  *
  */
-public class BaseRecordEditorCsvLoader<XRecord extends BaseExternalRecord<XRecord>>  {
+public class BaseRecordEditorCsvLoader<XRecord extends BaseExternalRecord<XRecord>> implements Cloneable  {
 
     //private static HashMap typeConv = new HashMap();
 

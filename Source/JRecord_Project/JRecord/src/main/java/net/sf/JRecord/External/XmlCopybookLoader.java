@@ -68,4 +68,14 @@ implements ICopybookLoaderStream, ICopybookLoaderCobol {
     public XmlCopybookLoader() {
 		super(true, new ExternalRecordBuilder(), new Cb2xmlCopybookReader());
 	}
+    
+  	
+	public ICopybookLoaderStream doClone() {
+		try {
+			return (ICopybookLoaderStream) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 }

@@ -52,6 +52,7 @@ import net.sf.JRecord.Numeric.Convert;
 import net.sf.cb2xml.ICb2XmlBuilder;
 import net.sf.cb2xml.def.Cb2xmlConstants;
 import net.sf.cb2xml.analysis.Copybook;
+import net.sf.cb2xml.copybookReader.IReadCobolCopybook;
 import net.sf.cb2xml.sablecc.lexer.LexerException;
 import net.sf.cb2xml.sablecc.parser.ParserException;
 
@@ -89,60 +90,13 @@ public class Cb2Xml {
 	 * @throws ParserException 
 	 * @throws XMLStreamException 
 	 */
+	@Deprecated
 	public static Document convertToXMLDOM(File file, int cobolDialect, boolean debug, int format, AbsSSLogger log) 
 			throws ParserException, LexerException, IOException, XMLStreamException {
 		return convertToXMLDOM(
 				net.sf.cb2xml.Cb2Xml3
 					.newBuilder(file),
 				cobolDialect, debug, format);
-	
-//		//log = TextLog.getLog(log);
-//		
-////		try {
-//			Reader sr;
-//			CopyBookAnalyzer.setNumericDetails((NumericDefinition) conv.getNumericDefinition());
-//			
-//			switch (format) {
-//			case Cb2xmlConstants.USE_STANDARD_COLUMNS:
-//			case Cb2xmlConstants.USE_COLS_6_TO_80:
-//			case Cb2xmlConstants.USE_LONG_LINE:
-//				preProcessed = CobolPreprocessor.preProcess(new FileInputStream(file), FIRST_COBOL_COLUMN, END_COLS[format]);
-//				sr = new StringReader(preProcessed);
-//				break;
-//			case Cb2xmlConstants.FREE_FORMAT:
-//				sr = new FileReader(file);
-//				firstColumn = 0;
-//				break;
-////			case Cb2xmlConstants.USE_PROPERTIES_FILE:
-//			default:
-//				preProcessed = CobolPreprocessor.preProcess(new FileInputStream(file));
-//				sr = new StringReader(preProcessed);
-//			}
-//			PushbackReader pbr = new PushbackReader(sr, 1000);
-//			if (debug) {
-//			    log.logMsg(AbsSSLogger.TESTING, "*** debug mode ***");
-//				lexer = new DebugLexer(pbr);
-//			} else {
-//				lexer = new Lexer(pbr);
-//			}
-//			Parser parser = new Parser(lexer);
-//			Start ast = parser.parse();
-//			CopyBookAnalyzer copyBookAnalyzer = new CopyBookAnalyzer(file.getName(), parser);
-//			ast.apply(copyBookAnalyzer);
-//			document = copyBookAnalyzer.getDocument();
-////		} catch (ParserException pe) {
-////			pe.printStackTrace();
-////		    log.logMsg(AbsSSLogger.ERROR, "*** fatal parse error ***");
-////		    log.logMsg(AbsSSLogger.ERROR, pe.getMessage());
-////			if (debug) {
-////			    log.logMsg(AbsSSLogger.ERROR, "=== buffer dump start ===");
-////			    log.logMsg(AbsSSLogger.ERROR, ((DebugLexer) lexer).getBuffer().toString());
-////			    log.logMsg(AbsSSLogger.ERROR, "=== buffer dump end ===");
-////			}
-////		} catch (Exception e) {
-////			e.printStackTrace();
-////		}
-//		return document;
 	}
 
 	/**
@@ -168,6 +122,7 @@ public class Cb2Xml {
 	 * @throws IOException
 	 * @throws XMLStreamException
 	 */
+	@Deprecated
 	public static Document convertToXMLDOM(
 			InputStream is, String name,  int cobolDialect, 
 			boolean debug, int copybookFormat) 
@@ -202,6 +157,7 @@ public class Cb2Xml {
 	 * @throws IOException
 	 * @throws XMLStreamException
 	 */
+	@Deprecated
 	public static Document convertToXMLDOM(Reader reader, String name,  int cobolDialect, boolean debug, int format) 
 			throws ParserException, LexerException, IOException, XMLStreamException {
 		
@@ -255,6 +211,22 @@ public class Cb2Xml {
 		//synchronized (SYNC) {
 			return net.sf.cb2xml.Cb2Xml3
 					.newBuilderJRec(reader, name)
+							.setDebug(debug)
+							.setCobolLineFormat(format)
+							.setLoadComments(false)
+							.setStackSize(stackSize)
+							.setDialect(conv)
+						.asCobolItemTree();
+			
+		//}
+	}
+
+	public static Copybook getCopybook(IReadCobolCopybook reader, int cobolDialect, boolean debug,
+			int format, int stackSize) {
+		Convert conv = ConversionManager.getInstance().getConverter4code(cobolDialect) ;
+		//synchronized (SYNC) {
+			return  net.sf.cb2xml.Cb2Xml3
+					.newBuilderJRec(reader)
 							.setDebug(debug)
 							.setCobolLineFormat(format)
 							.setLoadComments(false)

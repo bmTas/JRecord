@@ -95,4 +95,7 @@ public interface CopybookLoader extends ICobolSplitOptions {
             final int binFormat,
             final int systemId,
             final AbsSSLogger log) throws Exception;
+    
+    
+    public CopybookLoader doClone();
 }

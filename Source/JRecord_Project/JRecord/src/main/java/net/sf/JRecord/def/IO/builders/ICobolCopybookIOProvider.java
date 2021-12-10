@@ -31,6 +31,9 @@ package net.sf.JRecord.def.IO.builders;
 import java.io.InputStream;
 import java.io.Reader;
 
+import net.sf.cb2xml.copybookReader.IReadCobolCopybook;
+import net.sf.cb2xml.copybookReader.ReadCobolCopybook;
+
 /**
  * Interface to create CobolIOBuilders (a Builder builder).
  * <pre>{@code
@@ -96,8 +99,7 @@ public interface ICobolCopybookIOProvider {
 
 	 * 
 	 */
-	public abstract ICobolIOBuilder newIOBuilder(
-			String copybookFileame);
+	public abstract ICobolIOBuilder newIOBuilder(String copybookFileame);
 
 	/**
 	 * Create a new Cobol IOBulder for a file.
@@ -158,8 +160,7 @@ public interface ICobolCopybookIOProvider {
 	 * @param copybookReader Cobol Copybook Reader
 	 * @param copybookName Name of the Cobol Copybook
 	 * @return Cobol IOBuilder
-	 * 
-	 *     * 
+	 *  
      * The CodeGen utility can generate basic JRecord code. It is available<ul>
      * <li>as part of the <b>RecordEditor</b> see 
      * <a href="http://record-editor.sourceforge.net/RecordEditorGenerate.htm#HDRJRECGEN">http://record-editor.sourceforge.net/RecordEditorGenerate.htm#HDRJRECGEN</a>
@@ -176,5 +177,46 @@ public interface ICobolCopybookIOProvider {
 	 * @return requested IOBuilder
 	 */
 	public abstract ICobolMultiCopybookIOBuilder newMultiCopybookIOBuilder(String copybookname);
+
+	/**
+	 * Create a new IoBilder from a <b>Copybook reader class</b> see {@link IReadCobolCopybook}
+	 * 
+	 * <p><b>Usage:</b>
+	 * 
+	 * <pre>
+	 *	ReadCobolCopybook copybook = JRecordInterface1.COBOL.newCobolCopybookReader()
+	 *			.addCobolCopybook("Copbook_File_Name")
+	 *			.addFreeFormatCobolText("" +
+	 *					" 05 RECORD-Name        PIC X.\n" + 
+	 *					"    88 REC_Val         VALUE \"1\".\n");
+	 *		
+	 *	ICobolIOBuilder iob = JRecordInterface1.COBOL.newIOBuilder(copybook);  
+	 * </pre></p>
+	 * 
+	 * @param copyybookReader Cobol Copybook Reader
+	 * @return new IOBuilder
+	 */
+	public abstract ICobolIOBuilder newIOBuilder(IReadCobolCopybook copyybookReader);
+
+	/**
+	 * Create a new <b>CobolCopybookReader</b>. A CobolCopybookReader  can<ul>
+	 * <li>Load and Combine one or more Cobol Copybooks
+	 * <li>Expand basic <n>Cobol Copy</b> statements.
+	 * </ul>
+	 * <p><b>Usage:</b>
+	 * 
+	 * <pre>
+	 *	ReadCobolCopybook copybook = JRecordInterface1.COBOL.newCobolCopybookReader()
+	 *			.addCobolCopybook("Copbook_File_Name")
+	 *			.addFreeFormatCobolText("" +
+	 *					" 05 RECORD-Name        PIC X.\n" + 
+	 *					"    88 REC_Val         VALUE \"1\".\n");
+	 *		
+	 *	ICobolIOBuilder iob = JRecordInterface1.COBOL.newIOBuilder(copybook);  
+	 * </pre>
+	 *   
+	 * @return CobolCopybookReader
+	 */
+	public abstract ReadCobolCopybook newCobolCopybookReader();
 
 }

@@ -25,6 +25,7 @@
       
 package net.sf.JRecord.cg.details;
 
+import net.sf.JRecord.cg.details.codes.ArgumentOption;
 import net.sf.JRecord.utilityClasses.ParseArguments;
 
 public class ParseArgs extends ParseArguments   {

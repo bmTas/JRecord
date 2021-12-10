@@ -28,7 +28,7 @@ import net.sf.cb2xml.def.IItem;
 import net.sf.cb2xml.def.IItemBase;
 import net.sf.cb2xml.def.IItemJrUpd;
 
-public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
+public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> implements Cloneable {
 
 
     private static final String STR_YES = "Y";
@@ -53,7 +53,6 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
 		this.recBuilder = recBuilder;
 		this.readCopybook = readCopybook;
 	}
-
 	public void setKeepFillers(boolean keepFiller) {
 		this.keepFiller = keepFiller;
 	}
@@ -64,6 +63,14 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
 
 	public void setSaveCb2xmlDocument(boolean saveCb2xml) {
 		this.saveCb2xml = saveCb2xml;
+	}
+
+
+	/**
+	 * @return the stackSize
+	 */
+	protected int getStackSize() {
+		return stackSize;
 	}
 
 
@@ -224,6 +231,7 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> {
             }
         }
         ret.setFileStructure(numTranslator.getFileStructure(multipleRecordLengths, binary));
+        ret.setSplitOption(splitCopybook);
 
         freeDBs(dbIdx);       
 
