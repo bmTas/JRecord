@@ -6,6 +6,7 @@ convert Cobol-Data-Files to/from Csv/Xml files.</li>
  <li>Are you going to write <i>your own generic</i> interface ???. If so look at the <b>CobolSchemaReader</b> class
 and see how it is used in Cobol2Xml. Also If copying files, look at <b>Copy</b> class.</li>
 </ul>
+
 <h2><a id="javaInterface">Getting started with JRecord Java interface</a></h3>
 <p>The starting point for the most common JRecord operations is the <b><font color="blue">JRecordInterface1</font> class</b>.
 For Cobol operataions you start with <b><font color="blue">JRecordInterface1</font>.<font color="green">COBOL</font></b>. 
@@ -36,15 +37,26 @@ available for the various methods:</p>
 
 
 
-<h3><a id="CodeGen">Code Generation</a></h3>
+<h2><a id="CodeGen">Code Generation</a></h3>
 <p>To help you get started with JRecord, there are 2 Code Generators available:<ul>
  <li>In the Cobol-Import section of the <a href="https://sourceforge.net/projects/record-editor/">RecordEditor</a>
 you can specify a Cobol Copybook and a Sample data file. The RecordEditor should be able to figure out
 the correct file options and it can create a IOBuilder + Field-Name class for the Cobol-Copybook/File. This 
 should be useful for new user trying to figure out which options to use. There is more on this in the.
 See <a href="Docs/JRecordIntro.htm#HDRCBLIMPORT">RecordEditor in JRecord Guide</a> for details</li>
+ <li>CodeGen is now supplied with JRecord.
  <li>The <a href="Docs/JRecordIntro.htm#HDRCODEGEN">JRecord CodeGen</a> sub-project will generate a skelton Java~JRecord Read/write programs from a Cobol Copybook.</li>
 </ul>
+
+<h3>Recordeditor: Generating Java JRecord from the Cobol Copybook</h3>
+<p>The best way to get started with JRecord is to use the <a href="Docs/RecordEditorGenerate.htm">JRecord-Code Generator</a> in
+the <a href="https://sourceforge.net/projects/record-editor/">RecordEditor</a> package. In the <a href="https://sourceforge.net/projects/record-editor/">RecordEditor</a>
+Select the <b>Generate &gt;&gt;&gt;&gt; Java~JRecord code for cobol</b>:
+
+<p><img SRC="Docs/Diagram/CobolGen01a.png"/></p>
+
+<p>See the <a href="Docs/RecordEditorGenerate.htm">JRecord-Code Generator Documentation</a> for more details on 
+the <a href="https://sourceforge.net/projects/record-editor/">RecordEditor</a> Code Generator.
 
 <h3>JRecord CodeGen Utility</h3>
 <p>The <a href="https://sourceforge.net/projects/jrecord/files/jrecord_CodeGen/">CodeGen</a> utility will generate sample read/write programs for a Cobol Copybook.
@@ -62,7 +74,27 @@ The <b>CodeGen</b> utility can be downloaded from</p>
 <span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">15 </font></span><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font><font color="#cc6600"> </font>       <font color="#ff0000">03</font>  DTAR020-SALE-PRICE         <font color="#006699"><strong>PIC</strong></font> S9(<font color="#ff0000">9</font>)V99 <font color="#006699"><strong>COMP-3</strong></font>.
 </font></pre>
 <p>
-</p><p>To call <b>CodeGen</b> in a bat file:
+</p>
+<b>Java Interface</b>
+<p>There is a builder style interface to CodeGen. In the following example, the <b>analyseDataFileSetAttributes</b> codegen to try and determine file
+attributes from the sample data file.
+
+<pre><font color="#000000"><span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066"> 5 </font></span>        CodeGenInterface.TEMPLATES.<font color="#9966ff">newTempateBuilder</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020</font><font color="#ff00cc">.</font><font color="#ff00cc">cbl</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 6 </font></span>                .<font color="#9966ff">setDataFile</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">DTAR020</font><font color="#ff00cc">.</font><font color="#ff00cc">bin</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 7 </font></span>                .<font color="#9966ff">analyseDataFileSetAttributes</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 8 </font></span>                .<font color="#9966ff">setTemplate</font><font color="#000000"><strong>(</strong></font>StandardTemplates.STANDARD<font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000"> 9 </font></span>                .<font color="#9966ff">setPackageName</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">dtar020</font><font color="#ff00cc">.</font><font color="#ff00cc">standard</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#990066">10 </font></span>                .<font color="#9966ff">setOutputDirectory</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">G</font><font color="#ff00cc">:</font><font color="#6600cc">\\</font><font color="#ff00cc">Temp</font><font color="#6600cc">\\</font><font color="#ff00cc">Gen</font><font color="#6600cc">\\</font><font color="#ff00cc">TestCodeGen</font><font color="#6600cc">\\</font><font color="#ff00cc">dtar020</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">11 </font></span>                .<font color="#9966ff">generateJava</font><font color="#000000"><strong>(</strong></font><font color="#000000"><strong>)</strong></font>
+<span style="background:#dbdbdb; border-right:solid 2px black; margin-right:5px; "><font color="#000000">12 </font></span>                .<font color="#9966ff">writeTemplateBuilderCode</font><font color="#000000"><strong>(</strong></font><font color="#ff00cc">&quot;</font><font color="#ff00cc">build</font><font color="#ff00cc">&quot;</font><font color="#000000"><strong>)</strong></font>; 
+</font></pre>
+
+
+<p>There are examples of generating Java-JRecord code using the <b>standard</b> Template in the <a href="CodeGenExample/standard">CodeGenExample/standard</a> directory.</p>
+<p>Basically to generate Java code for a Mainframe EBCDIC Fixed-Record-Length  file:</p>
+
+<b>bat Interface</b>
+<p>To call <b>CodeGen</b> in a bat file:
 </p><pre><p>
   java -jar ../../lib/JRecordCodeGen.jar  ^
 <font color="blue">               -Template           standard</font> ^

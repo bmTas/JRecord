@@ -68,26 +68,26 @@ public interface IFixedWidthIOBuilder extends IIOBuilder {
 
 	/**
 	 *
-	 * <p>File Organization or File Structure (e.g. VB, Fixed Width Etc. Use Constants.IO_*
+	 * <p>File Organization or File Structure (e.g. VB, Fixed Width Etc. Use IFileStructureConstants.IO_*
 	 * The main options are:<ul>
-	 *   <li><b>Constants.IO_DEFAULT</b> - JRecord will decide the actual method based on other values (The Default Value).
+	 *   <li><b>IFileStructureConstants.IO_DEFAULT</b> - JRecord will decide the actual method based on other values (The Default Value).
 	 *   It is generally better to explicitly set the File-Organisation (or file-Structure).
-	 *   <li><b>Constants.IO_STANDARD_TEXT_FILE</b> - Standard Windows/*nix/Mac text file using  \n, \n\r etc as a record (or line) delimiter.
-	 *   <li><b>Constants.IO_UNICODE_TEXT</b> - Standard Windows/*nix/Mac Unicode / double byte text file using  \n, \n\r etc 
+	 *   <li><b>IFileStructureConstants.IO_STANDARD_TEXT_FILE</b> - Standard Windows/*nix/Mac text file using  \n, \n\r etc as a record (or line) delimiter.
+	 *   <li><b>IFileStructureConstants.IO_UNICODE_TEXT</b> - Standard Windows/*nix/Mac Unicode / double byte text file using  \n, \n\r etc 
 	 *   as a record (or line) delimiter. It ensures record are stored in character format (instead of bytes).
-	 *   <li><b>Constants.IO_FIXED_LENGTH</b> - Every Record (or line) is a standard Fixed length based on the Maximum
+	 *   <li><b>IFileStructureConstants.IO_FIXED_LENGTH</b> - Every Record (or line) is a standard Fixed length based on the Maximum
 	 *   schema (LayoutDetail) record length.
-	 *   <li><b>Constants.IO_FIXED_LENGTH_CHAR</b> - Fixed length character file (typically used for Fixed-Length unicode files).
-	 *   <li><b>Constants.IO_VB</b> - Mainframe VB (Variable Record length file). Records consist of a Record-Length followed by the Record-Data.
-	 *   <li><b>Constants.IO_VB_DUMP</b> - Raw Block format of a Mainframe-VB file. You get this format  if you specify RECFM=U when reading it on the mainframe.
-	 *   <li><b>Constants.IO_VB_GNU_COBOL</b> - GNU (open-Cobol) VB format.
+	 *   <li><b>IFileStructureConstants.IO_FIXED_LENGTH_CHAR</b> - Fixed length character file (typically used for Fixed-Length unicode files).
+	 *   <li><b>IFileStructureConstants.IO_VB</b> - Mainframe VB (Variable Record length file). Records consist of a Record-Length followed by the Record-Data.
+	 *   <li><b>IFileStructureConstants.IO_VB_DUMP</b> - Raw Block format of a Mainframe-VB file. You get this format  if you specify RECFM=U when reading it on the mainframe.
+	 *   <li><b>IFileStructureConstants.IO_VB_GNU_COBOL</b> - GNU (open-Cobol) VB format.
 	 * </ul>
 	 *<pre>
      *<b>Example:</b> 
 	 *      {@code
      *      AbstractLineReader r = JRecordInterface1.FIXED_WIDTH
      *              .newIOBuilder("file-name")
-     *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+     *                  .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
      *}</pre> 
      *
      *

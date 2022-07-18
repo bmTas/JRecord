@@ -52,9 +52,9 @@ import net.sf.JRecord.ByteIO.CsvByteReader;
 import net.sf.JRecord.ByteIO.IByteReader;
 import net.sf.JRecord.Common.AbstractManager;
 import net.sf.JRecord.Common.CommonBits;
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IBasicFileSchema;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.CharLineProvider;
 import net.sf.JRecord.Details.DefaultLineProvider;
 import net.sf.JRecord.Details.LineProvider;
@@ -67,7 +67,7 @@ import net.sf.JRecord.charIO.StandardCharReader;
 /**
  * LineIOprovider - This class returns a LineIO class appropriate for
  * the supplied file structure. All the Files Structures are available as
- * Constants.IO_*.
+ * IFileStructureConstants.IO_*.
  * 
  * <b>Note:</b> This is part of the "old JRecord Interface". 
  * Most users  will be better off using {@link net.sf.JRecord.net.sf.JRecord.JRecordInterface1} to 
@@ -102,13 +102,13 @@ public class LineIOProvider implements AbstractManager {
      */
     @Deprecated
     public static final int[] FILE_STRUCTURE_ID = {
-    	Constants.IO_DEFAULT,
-    	Constants.IO_FIXED_LENGTH,
-    	Constants.IO_BINARY_IBM_4680,
-    	Constants.IO_VB,
-    	Constants.IO_VB_DUMP,
-    	Constants.IO_VB_FUJITSU,
-    	Constants.IO_VB_GNU_COBOL};
+    	IFileStructureConstants.IO_DEFAULT,
+    	IFileStructureConstants.IO_FIXED_LENGTH,
+    	IFileStructureConstants.IO_BINARY_IBM_4680,
+    	IFileStructureConstants.IO_VB,
+    	IFileStructureConstants.IO_VB_DUMP,
+    	IFileStructureConstants.IO_VB_FUJITSU,
+    	IFileStructureConstants.IO_VB_GNU_COBOL};
     /**
      * Was used in the RecordEditor, not needed for jarecord
      */
@@ -231,19 +231,19 @@ public class LineIOProvider implements AbstractManager {
     		lineProvider = getLineProvider(fileStructure, fs.getFontName());
     	}
 		switch (fileStructure) {
-		case Constants.IO_TEXT_BYTE_ENTER_FONT:
-		case Constants.IO_BIN_TEXT:		return new LineReaderWrapper(new ByteTextReader(fs.getFontName()));
-//       	case Constants.IO_BIN_TEXT:		return new BinTextReader(lLineProvider,  false);
-       	case Constants.IO_BIN_NAME_1ST_LINE:
+		case IFileStructureConstants.IO_TEXT_BYTE_ENTER_FONT:
+		case IFileStructureConstants.IO_BIN_TEXT:		return new LineReaderWrapper(new ByteTextReader(fs.getFontName()));
+//       	case IFileStructureConstants.IO_BIN_TEXT:		return new BinTextReader(lLineProvider,  false);
+       	case IFileStructureConstants.IO_BIN_NAME_1ST_LINE:
        									return new BinTextReader(lineProvider,  true, new ByteTextReader(fs.getFontName()));
-		case Constants.IO_CSV:			return new LineReaderWrapper(getCsvReader(fs, false));
-		case Constants.IO_UNICODE_CSV:	return new TextLineReader(lineProvider, false, getCsvCharReader(fs, false));
-		case Constants.IO_BIN_CSV:		return new BinTextReader(lineProvider,  false, getCsvReader(fs, false));
+		case IFileStructureConstants.IO_CSV:			return new LineReaderWrapper(getCsvReader(fs, false));
+		case IFileStructureConstants.IO_UNICODE_CSV:	return new TextLineReader(lineProvider, false, getCsvCharReader(fs, false));
+		case IFileStructureConstants.IO_BIN_CSV:		return new BinTextReader(lineProvider,  false, getCsvReader(fs, false));
 
-		case Constants.IO_UNICODE_CSV_NAME_1ST_LINE: 
+		case IFileStructureConstants.IO_UNICODE_CSV_NAME_1ST_LINE: 
 			return  new TextLineReader(lineProvider, true, getCsvCharReader(fs, true));
-		case Constants.IO_CSV_NAME_1ST_LINE:
-		case Constants.IO_BIN_CSV_NAME_1ST_LINE:
+		case IFileStructureConstants.IO_CSV_NAME_1ST_LINE:
+		case IFileStructureConstants.IO_BIN_CSV_NAME_1ST_LINE:
 			return new BinTextReader(lineProvider,  true, getCsvReader(fs, true));
 		default:
 			return getLineReader(fileStructure, lineProvider);
@@ -291,26 +291,26 @@ public class LineIOProvider implements AbstractManager {
             lLineProvider = provider;
         }
 
-		//System.out.println(" ~~ IOProvider ~ " + fileStructure + " " + Constants.IO_GENERIC_CSV);
+		//System.out.println(" ~~ IOProvider ~ " + fileStructure + " " + IFileStructureConstants.IO_GENERIC_CSV);
 
        	switch (fileStructure) {
-    	case Constants.IO_CONTINOUS_NO_LINE_MARKER:	return new ContinuousLineReader(lLineProvider);
-    	case Constants.IO_BINARY_IBM_4680:			return new Binary4680LineReader(lLineProvider);
+    	case IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER:	return new ContinuousLineReader(lLineProvider);
+    	case IFileStructureConstants.IO_BINARY_IBM_4680:			return new Binary4680LineReader(lLineProvider);
 
-		case Constants.IO_FIXED_CHAR_ENTER_FONT:
-    	case Constants.IO_FIXED_LENGTH_CHAR:		return new FixedLengthTextReader(lLineProvider);
+		case IFileStructureConstants.IO_FIXED_CHAR_ENTER_FONT:
+    	case IFileStructureConstants.IO_FIXED_LENGTH_CHAR:		return new FixedLengthTextReader(lLineProvider);
 
-    	case Constants.IO_XML_BUILD_LAYOUT:
-       	case Constants.IO_XML_USE_LAYOUT:			return new XmlLineReader(fileStructure == Constants.IO_XML_BUILD_LAYOUT);
+    	case IFileStructureConstants.IO_XML_BUILD_LAYOUT:
+       	case IFileStructureConstants.IO_XML_USE_LAYOUT:			return new XmlLineReader(fileStructure == IFileStructureConstants.IO_XML_BUILD_LAYOUT);
 
-		case Constants.IO_TEXT_BYTE_ENTER_FONT:
-       	case Constants.IO_BIN_TEXT:					return new BinTextReader(lLineProvider, false);
-       	case Constants.IO_BIN_NAME_1ST_LINE:		return new BinTextReader(lLineProvider, true);
+		case IFileStructureConstants.IO_TEXT_BYTE_ENTER_FONT:
+       	case IFileStructureConstants.IO_BIN_TEXT:					return new BinTextReader(lLineProvider, false);
+       	case IFileStructureConstants.IO_BIN_NAME_1ST_LINE:		return new BinTextReader(lLineProvider, true);
 
-       	case Constants.IO_NAME_1ST_LINE:
-       	case Constants.IO_CSV_NAME_1ST_LINE:
-       	case Constants.IO_UNICODE_NAME_1ST_LINE:	return new TextLineReader(lLineProvider, true);
-       	case Constants.IO_UNICODE_TEXT:				return new TextLineReader(CHAR_LINE_PROVIDER, false);
+       	case IFileStructureConstants.IO_NAME_1ST_LINE:
+       	case IFileStructureConstants.IO_CSV_NAME_1ST_LINE:
+       	case IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE:	return new TextLineReader(lLineProvider, true);
+       	case IFileStructureConstants.IO_UNICODE_TEXT:				return new TextLineReader(CHAR_LINE_PROVIDER, false);
        	default:
        		AbstractByteReader byteReader
        				= ByteIOProvider.getInstance().getByteReader(fileStructure);
@@ -370,29 +370,29 @@ public class LineIOProvider implements AbstractManager {
 
 
     	switch (fileStructure) {
-    	case Constants.IO_CONTINOUS_NO_LINE_MARKER:	return new ContinuousLineWriter();
-    	case Constants.IO_BINARY_IBM_4680:			return new LineWriterWrapper(new BinaryByteWriter());
+    	case IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER:	return new ContinuousLineWriter();
+    	case IFileStructureConstants.IO_BINARY_IBM_4680:			return new LineWriterWrapper(new BinaryByteWriter());
     	
-    	case Constants.IO_FIXED_BYTE_ENTER_FONT:
-    	case Constants.IO_FIXED_LENGTH:				return new FixedLengthWriter();
+    	case IFileStructureConstants.IO_FIXED_BYTE_ENTER_FONT:
+    	case IFileStructureConstants.IO_FIXED_LENGTH:				return new FixedLengthWriter();
 
-    	case Constants.IO_FIXED_CHAR_ENTER_FONT:
-      	case Constants.IO_FIXED_LENGTH_CHAR:		return new LineWriterWrapperChar(fileStructure);
-    	case Constants.IO_XML_BUILD_LAYOUT:
-       	case Constants.IO_XML_USE_LAYOUT:			return new XmlLineWriter();
+    	case IFileStructureConstants.IO_FIXED_CHAR_ENTER_FONT:
+      	case IFileStructureConstants.IO_FIXED_LENGTH_CHAR:		return new LineWriterWrapperChar(fileStructure);
+    	case IFileStructureConstants.IO_XML_BUILD_LAYOUT:
+       	case IFileStructureConstants.IO_XML_USE_LAYOUT:			return new XmlLineWriter();
 
-    	case Constants.IO_TEXT_BYTE_ENTER_FONT:
-       	case Constants.IO_CSV:
-       	case Constants.IO_BIN_CSV:
-      	case Constants.IO_BIN_TEXT:					return new BinTextWriter(false);
-       	case Constants.IO_BIN_NAME_1ST_LINE:		return new BinTextWriter(true);
-    	case Constants.IO_TEXT_CHAR_ENTER_FONT:
-       	case Constants.IO_UNICODE_TEXT:
-       	case Constants.IO_UNICODE_CSV:				return new TextLineWriter(false);
-       	case Constants.IO_NAME_1ST_LINE:
-       	case Constants.IO_CSV_NAME_1ST_LINE:      		
-       	case Constants.IO_UNICODE_CSV_NAME_1ST_LINE:
-       	case Constants.IO_UNICODE_NAME_1ST_LINE:	return new TextLineWriter(true);
+    	case IFileStructureConstants.IO_TEXT_BYTE_ENTER_FONT:
+       	case IFileStructureConstants.IO_CSV:
+       	case IFileStructureConstants.IO_BIN_CSV:
+      	case IFileStructureConstants.IO_BIN_TEXT:					return new BinTextWriter(false);
+       	case IFileStructureConstants.IO_BIN_NAME_1ST_LINE:		return new BinTextWriter(true);
+    	case IFileStructureConstants.IO_TEXT_CHAR_ENTER_FONT:
+       	case IFileStructureConstants.IO_UNICODE_TEXT:
+       	case IFileStructureConstants.IO_UNICODE_CSV:				return new TextLineWriter(false);
+       	case IFileStructureConstants.IO_NAME_1ST_LINE:
+       	case IFileStructureConstants.IO_CSV_NAME_1ST_LINE:      		
+       	case IFileStructureConstants.IO_UNICODE_CSV_NAME_1ST_LINE:
+       	case IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE:	return new TextLineWriter(true);
        	default:
             AbstractByteWriter byteWriter = ByteIOProvider.getInstance().getByteWriter(fileStructure, charset);
 
@@ -411,10 +411,10 @@ public class LineIOProvider implements AbstractManager {
      * @return wether a Copybook file is required
      */
     public boolean isCopyBookFileRequired(int fileStructure) {
-    	return ! ( fileStructure == Constants.IO_XML_BUILD_LAYOUT
-    			|| fileStructure == Constants.IO_GENERIC_CSV
-    			|| fileStructure == Constants.IO_NAME_1ST_LINE
-    			|| fileStructure == Constants.IO_CSV_NAME_1ST_LINE);
+    	return ! ( fileStructure == IFileStructureConstants.IO_XML_BUILD_LAYOUT
+    			|| fileStructure == IFileStructureConstants.IO_GENERIC_CSV
+    			|| fileStructure == IFileStructureConstants.IO_NAME_1ST_LINE
+    			|| fileStructure == IFileStructureConstants.IO_CSV_NAME_1ST_LINE);
     }
 
 
@@ -466,27 +466,27 @@ public class LineIOProvider implements AbstractManager {
     private LineProvider getLineProvider(int fileStructure, String charset, boolean binary) {
 
     	switch (fileStructure) {
-    	case Constants.IO_XML_BUILD_LAYOUT:
-    	case Constants.IO_XML_USE_LAYOUT:
+    	case IFileStructureConstants.IO_XML_BUILD_LAYOUT:
+    	case IFileStructureConstants.IO_XML_USE_LAYOUT:
        		if (xmlProvider == null) {
        			xmlProvider = new XmlLineProvider();
        		}
        		return xmlProvider;
-//    	case Constants.IO_FIXED_LENGTH_CHAR:
-//    	case Constants.IO_UNICODE_CSV:
-//    	case Constants.IO_UNICODE_CSV_NAME_1ST_LINE:
-//    	case Constants.IO_UNICODE_NAME_1ST_LINE:
-//    	case Constants.IO_UNICODE_TEXT:
+//    	case IFileStructureConstants.IO_FIXED_LENGTH_CHAR:
+//    	case IFileStructureConstants.IO_UNICODE_CSV:
+//    	case IFileStructureConstants.IO_UNICODE_CSV_NAME_1ST_LINE:
+//    	case IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE:
+//    	case IFileStructureConstants.IO_UNICODE_TEXT:
 //    		return CHAR_LINE_PROVIDER;
     		
-    	case Constants.IO_FIXED_BYTE_ENTER_FONT:
-    	case Constants.IO_TEXT_BYTE_ENTER_FONT:
-       	case Constants.IO_FIXED_LENGTH:
+    	case IFileStructureConstants.IO_FIXED_BYTE_ENTER_FONT:
+    	case IFileStructureConstants.IO_TEXT_BYTE_ENTER_FONT:
+       	case IFileStructureConstants.IO_FIXED_LENGTH:
     		return DEFAULT_PROVIDER;
-//    	case Constants.IO_VB:	
-//    	case Constants.IO_VB_DUMP:	
-//    	case Constants.IO_VB_FUJITSU:	
-//    	case Constants.IO_VB_GNU_COBOL:	
+//    	case IFileStructureConstants.IO_VB:	
+//    	case IFileStructureConstants.IO_VB_DUMP:	
+//    	case IFileStructureConstants.IO_VB_FUJITSU:	
+//    	case IFileStructureConstants.IO_VB_GNU_COBOL:	
 //    		return DEFAULT_PROVIDER;
       	}
     	if (CommonBits.getLineType(fileStructure) == CommonBits.LT_TEXT) {

@@ -44,6 +44,8 @@ import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.zTest.Common.CommonCodeFields;
 import net.sf.JRecord.zTest.Common.TstConstants;
+import net.sf.cb2xml.Cb2Xml3;
+import net.sf.cb2xml.def.ICopybookJrUpd;
 import junit.framework.TestCase;
 
 public class TstCobolIOBuilder02 extends TestCase {
@@ -144,6 +146,22 @@ public class TstCobolIOBuilder02 extends TestCase {
 
 	}
 	
+	
+
+	public void testRightJustified2() throws IOException {
+		ICopybookJrUpd cb2xmlCopbook = Cb2Xml3.newBuilder(RIGHTJUST_COPYBOOK)
+											.asCobolItemTree();
+
+		CommonCodeFields.check(	
+				JRecordInterface1.COBOL.newIOBuilder(cb2xmlCopbook),
+				new CommonCodeFields.CblBldrOptions(ICopybookDialects.FMT_MAINFRAME, Constants.IO_FIXED_LENGTH, false, ""),
+				RIGHT_JUST_FIELDS,
+				"Right-Just"
+				);
+
+	}
+
+	
 	public void test01() throws IOException {
 		tst(getFileIOBuilder(), false);
 	}
@@ -153,6 +171,15 @@ public class TstCobolIOBuilder02 extends TestCase {
 		tst(getFileIOBuilder(), true);
 	}
 
+	
+	public void test01c() throws IOException {
+		tstMainframe(getIOBuilderFromCb2xmlCopybook(), false);
+	}
+
+	
+	public void test02c() throws IOException {
+		tstMainframe(getIOBuilderFromCb2xmlCopybook(), true);
+	}
 	
 	public void test21() throws IOException {
 		tst(getStreamIOBuilder(), false);
@@ -214,7 +241,24 @@ public class TstCobolIOBuilder02 extends TestCase {
 			}
 		}
 	}
-	
+	private void tstMainframe(ICobolIOBuilder bldr, boolean dropRecordName) throws IOException {
+		FieldDetail[][] expected = getExpectedFields(dropRecordName);
+		
+		for (int j = 0; j < FONTS.length; j++) {
+			for (int k = 0; k < FILE_STRUCTURES.length; k++) {
+				int i = 0;
+				int d = ICopybookDialects.FMT_MAINFRAME;
+				CommonCodeFields.check(	
+							bldr,
+							new CommonCodeFields.CblBldrOptions(d, FILE_STRUCTURES[k], dropRecordName, FONTS[j]),
+							expected[i++],
+							FONTS[j] + " ~ " + (i-1) + ", " + d
+							);
+				
+			}
+		}
+	}
+
 	private static FieldDetail[][] getExpectedFields(boolean dropRecordName) {
 		FieldDetail[][] ret = FIELDS;
 		int l = "Numeric-".length();
@@ -259,9 +303,16 @@ public class TstCobolIOBuilder02 extends TestCase {
 		return FieldDetail.newFixedWidthField(name, type, pos, len, 0, "");
 	}
 	
+	private static ICobolIOBuilder getIOBuilderFromCb2xmlCopybook() throws FileNotFoundException {
+		ICopybookJrUpd cb2xmlCopybook = Cb2Xml3.newBuilder(COPYBOOK_NAME).asCobolItemTree();
+		return JRecordInterface1.COBOL.newIOBuilder(cb2xmlCopybook);
+	}
+	
+	
 	private static ICobolIOBuilder getFileIOBuilder() {
 		return JRecordInterface1.COBOL.newIOBuilder(COPYBOOK_NAME);
 	}
+
 	
 	private static ICobolIOBuilder getStreamIOBuilder() throws FileNotFoundException {
 		if (streamIoBuilder == null) {

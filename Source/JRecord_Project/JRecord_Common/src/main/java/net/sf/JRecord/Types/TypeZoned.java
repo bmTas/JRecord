@@ -54,6 +54,7 @@ package net.sf.JRecord.Types;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
+import net.sf.JRecord.Types.smallBin.CheckZoned;
 
 /**
  * Define mainframe Zoned Decimal Type
@@ -230,4 +231,15 @@ public class TypeZoned extends TypeNum {
 			record[endPos] = (byte) (record[endPos] & andByte);
 		}
     }
+	
+
+	@Override
+	public boolean isValid(IFieldDetail fldDef, String value) {
+		return CheckZoned.checkMainframeZoned(fldDef, value);
+	}
+
+	@Override
+	public boolean isValid(int position, IFieldDetail fldDef, byte[] line) {
+		return CheckZoned.checkMainframeZoned(position, fldDef, line);
+	}
 }

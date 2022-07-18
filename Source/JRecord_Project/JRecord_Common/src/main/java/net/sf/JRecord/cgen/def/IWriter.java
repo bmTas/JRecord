@@ -37,7 +37,17 @@ import java.io.IOException;
  * @param <Line> Class of the line to be written
  */
 public interface IWriter<Line> {
+	/**
+	 * Write a Record to a file
+	 * @param record record to be written
+	 * @throws IOException
+	 */
 	public abstract void write(Line record) throws IOException;
+	
+	/**
+	 * Close the file
+	 * @throws IOException
+	 */
 	public void close() throws IOException;
 
 }

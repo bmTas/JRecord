@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
@@ -67,7 +67,7 @@ public final class WriteLargeFixedWidthFile {
         	ICobolIOBuilder iob = JRecordInterface1.COBOL
         			.newIOBuilder(copybookName)
         				.setDialect(ICopybookDialects.FMT_MAINFRAME)
-        				.setFileOrganization(Constants.IO_FIXED_LENGTH);
+        				.setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH);
            
             AbstractLineReader reader  = iob.newReader(salesFile);
             AbstractLineWriter writer  = iob.newWriter(new BufferedOutputStream(new FileOutputStream(salesFileOut), 256 * 256 * 64));

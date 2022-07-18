@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.Numeric.ICopybookDialects;
@@ -34,7 +34,7 @@ public class DateTst {
         		.newIOBuilder(copybookName)
         			.setDialect( ICopybookDialects.FMT_MAINFRAME)
         			.setFont(Conversion.DEFAULT_ASCII_CHARSET)
-        			.setFileOrganization(Constants.IO_FIXED_LENGTH)
+        			.setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
         			;
         
         AbstractLineWriter writer = ioBldr.newWriter("/home/bruce/work/temp/DateTst.bin");

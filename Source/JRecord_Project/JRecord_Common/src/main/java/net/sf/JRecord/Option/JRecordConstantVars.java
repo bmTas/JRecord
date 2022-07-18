@@ -25,7 +25,7 @@
       
 package net.sf.JRecord.Option;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 
 
@@ -77,40 +77,40 @@ public class JRecordConstantVars {
      * 
      * IO Options
      */
-    public final int IO_STANDARD_TEXT_FILE	 = Constants.IO_STANDARD_TEXT_FILE;
+    public final int IO_STANDARD_TEXT_FILE	 = IFileStructureConstants.IO_STANDARD_TEXT_FILE;
 		                                           
-    public final int IO_FIXED_LENGTH_RECORDS = Constants.IO_FIXED_LENGTH_RECORDS;
-    public final int IO_BINARY_IBM_4680		 = Constants.IO_BINARY_IBM_4680;
-    public final int IO_VB					 = Constants.IO_VB;
-    public final int IO_VB_DUMP				 = Constants.IO_VB_DUMP;
-    public final int IO_VB_DUMP2			 = Constants.IO_VB_DUMP2;
-    public final int IO_VB_FUJITSU			 = Constants.IO_VB_FUJITSU;
-    public final int IO_VB_GNU_COBOL		 = Constants.IO_VB_GNU_COBOL;                                                                               
-    public final int IO_BIN_TEXT			 = Constants.IO_BIN_TEXT;
-    public final int IO_FIXED_LENGTH_CHAR	 = Constants.IO_FIXED_LENGTH_CHAR		        ;
+    public final int IO_FIXED_LENGTH_RECORDS = IFileStructureConstants.IO_FIXED_LENGTH_RECORDS;
+    public final int IO_BINARY_IBM_4680		 = IFileStructureConstants.IO_BINARY_IBM_4680;
+    public final int IO_VB					 = IFileStructureConstants.IO_VB;
+    public final int IO_VB_DUMP				 = IFileStructureConstants.IO_VB_DUMP;
+    public final int IO_VB_DUMP2			 = IFileStructureConstants.IO_VB_DUMP2;
+    public final int IO_VB_FUJITSU			 = IFileStructureConstants.IO_VB_FUJITSU;
+    public final int IO_VB_GNU_COBOL		 = IFileStructureConstants.IO_VB_GNU_COBOL;                                                                               
+    public final int IO_BIN_TEXT			 = IFileStructureConstants.IO_BIN_TEXT;
+    public final int IO_FIXED_LENGTH_CHAR	 = IFileStructureConstants.IO_FIXED_LENGTH_CHAR		        ;
     @SuppressWarnings("deprecation")
-	public final int IO_VBS					 = Constants.IO_VBS;
+	public final int IO_VBS					 = IFileStructureConstants.IO_VBS;
                                                                                                
                                                                                                 
-    public final int IO_CONTINOUS_NO_LINE_MARKER = Constants.IO_CONTINOUS_NO_LINE_MARKER;
+    public final int IO_CONTINOUS_NO_LINE_MARKER = IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER;
                                                                                                  
-    public final int IO_CSV				     = Constants.IO_CSV;
-    public final int IO_BIN_CSV				 = Constants.IO_BIN_CSV;
-    public final int IO_UNICODE_CSV			 = Constants.IO_UNICODE_CSV;
+    public final int IO_CSV				     = IFileStructureConstants.IO_CSV;
+    public final int IO_BIN_CSV				 = IFileStructureConstants.IO_BIN_CSV;
+    public final int IO_UNICODE_CSV			 = IFileStructureConstants.IO_UNICODE_CSV;
                                                                                         
-    public final int IO_CSV_NAME_1ST_LINE	 = Constants.IO_CSV_NAME_1ST_LINE		        ;
-    public final int IO_BIN_CSV_NAME_1ST_LINE= Constants.IO_BIN_CSV_NAME_1ST_LINE;
-    public final int IO_UNICODE_CSV_NAME_1ST_LINE = Constants.IO_UNICODE_CSV_NAME_1ST_LINE	        ;
+    public final int IO_CSV_NAME_1ST_LINE	 = IFileStructureConstants.IO_CSV_NAME_1ST_LINE		        ;
+    public final int IO_BIN_CSV_NAME_1ST_LINE= IFileStructureConstants.IO_BIN_CSV_NAME_1ST_LINE;
+    public final int IO_UNICODE_CSV_NAME_1ST_LINE = IFileStructureConstants.IO_UNICODE_CSV_NAME_1ST_LINE	        ;
                                                                                         
-    public final int IO_NAME_1ST_LINE		 = Constants.IO_NAME_1ST_LINE;        
-    public final int IO_BIN_NAME_1ST_LINE	 = Constants.IO_BIN_NAME_1ST_LINE		        ;
-    public final int IO_UNICODE_NAME_1ST_LINE= Constants.IO_UNICODE_NAME_1ST_LINE;
+    public final int IO_NAME_1ST_LINE		 = IFileStructureConstants.IO_NAME_1ST_LINE;        
+    public final int IO_BIN_NAME_1ST_LINE	 = IFileStructureConstants.IO_BIN_NAME_1ST_LINE		        ;
+    public final int IO_UNICODE_NAME_1ST_LINE= IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE;
                                                                                         
-    public final int IO_STANDARD_UNICODE_TEXT_FIL = Constants.IO_STANDARD_UNICODE_TEXT_FILE        ;
+    public final int IO_STANDARD_UNICODE_TEXT_FIL = IFileStructureConstants.IO_STANDARD_UNICODE_TEXT_FILE        ;
     
-    public final int IO_UNICODE_TEXT	= Constants.IO_UNICODE_TEXT;
-    public final int IO_FIXED_LENGTH	= Constants.IO_FIXED_LENGTH;	                                      
-    public final int IO_TEXT_LINE		= Constants.IO_TEXT_LINE;	
+    public final int IO_UNICODE_TEXT	= IFileStructureConstants.IO_UNICODE_TEXT;
+    public final int IO_FIXED_LENGTH	= IFileStructureConstants.IO_FIXED_LENGTH;	                                      
+    public final int IO_TEXT_LINE		= IFileStructureConstants.IO_TEXT_LINE;	
     
     
     /* ------------------------------------------------------------------------------

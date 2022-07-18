@@ -30,8 +30,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
 
-import net.sf.JRecord.Common.Conversion;
-
 public class MicroFocusByteReader extends AbstractByteReader {
 
 	

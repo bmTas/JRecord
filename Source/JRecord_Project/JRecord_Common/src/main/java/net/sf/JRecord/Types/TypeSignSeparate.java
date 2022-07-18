@@ -38,6 +38,9 @@
       
 package net.sf.JRecord.Types;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 
@@ -168,7 +171,6 @@ public class TypeSignSeparate extends TypeNum {
      */
     private String fromSignSeparate(String numSignSeparate) {
          if (numSignSeparate == null || numSignSeparate.length() == 0 || numSignSeparate.equals("-")) {
-            // throw ...
             return "";
         }
 
@@ -195,8 +197,25 @@ public class TypeSignSeparate extends TypeNum {
         return ret;
 
     }
+    
+//    
+//
+//  @Override
+//	protected String checkValue(IFieldDetail field, String value) throws RecordException {
+//		String num = fromSignSeparate(value).trim();
+//		
+//		// using BigInteger to test if valid
+//		if (isActualDecimal) {
+//			new BigDecimal(num);
+//		} else {
+//			new BigInteger(num);
+//		}
+//		
+//		return num;
+//	}
 
-  /**
+
+/**
    * Pad a string S with a size of N with char C
    * on the left (True) or on the right(false)
    *
@@ -227,12 +246,37 @@ public class TypeSignSeparate extends TypeNum {
   }
 
 
-/**
- * @return the isLeadingSign
- */
-public final boolean isLeadingSign() {
-	return isLeadingSign;
-}
+	/**
+	 * @return the isLeadingSign
+	 */
+	public final boolean isLeadingSign() {
+		return isLeadingSign;
+	}
 
+
+	@Override
+	public boolean isValid(IFieldDetail fldDef, String value) {
+		String num = fromSignSeparate(value);
+		if (num.length() == 0 || "+".equals(num)) { return false; } 
+		char signCh = num.charAt(0);
+		int pos = signCh == '-' || signCh == '+' ? 1 : 0 ;
+		for (int i = pos; i < num.length(); i++) {
+			if ((num.charAt(i) >= '0' && num.charAt(i) <= '9') 
+			|| (this.isActualDecimal && (num.charAt(i) == getDecimalChar()))) {
+			} else {
+				return false;
+			}
+		}
+		return true;
+	}
+//
+//
+//	@Override
+//	public boolean isValid(int pos, IFieldDetail fldDef, byte[] line) {
+//		// TODO Auto-generated method stub
+//		return super.isValid(pos, fldDef, line);
+//	}
+
+	
 }
 

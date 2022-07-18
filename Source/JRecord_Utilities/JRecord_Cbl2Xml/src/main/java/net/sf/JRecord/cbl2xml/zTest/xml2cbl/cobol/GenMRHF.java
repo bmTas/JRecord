@@ -28,7 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.CopybookLoader;
@@ -49,7 +49,7 @@ public class GenMRHF {
 		iob = JRecordInterface1.COBOL
 				.newIOBuilder(Cb2XmlCode.getFullName("cobol/MRHF.cbl"))
 					.setSplitCopybook(CopybookLoader.SPLIT_01_LEVEL)
-					.setFileOrganization(Constants.IO_UNICODE_TEXT)
+					.setFileOrganization(IFileStructureConstants.IO_UNICODE_TEXT)
 					.setDialect(ICopybookDialects.FMT_MAINFRAME)
 				;
 		schema = iob.getLayout();

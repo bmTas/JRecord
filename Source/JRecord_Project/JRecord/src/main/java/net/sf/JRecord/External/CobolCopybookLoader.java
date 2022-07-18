@@ -7,19 +7,21 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import net.sf.JRecord.Common.CommonBits;
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.base.BaseCobolItemLoader;
 import net.sf.JRecord.External.cb2xml.CobolCopybookReader;
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.cb2xml.analysis.Copybook;
-import net.sf.cb2xml.copybookReader.IReadCobolCopybook;
+import net.sf.cb2xml.copybookReader.ICobolCopybookTextSource;
+import net.sf.cb2xml.def.Cb2xmlConstants;
 
 
 /**
  * @author Bruce Martin
  */
 public class CobolCopybookLoader extends BaseCobolItemLoader<ExternalRecord> 
-implements ICopybookLoaderStream, ICopybookLoaderCobol  {
+implements ICopybookLoaderCobol  {
 
 	private static boolean available = true;
     private static boolean toCheck = true;
@@ -88,7 +90,7 @@ implements ICopybookLoaderStream, ICopybookLoaderCobol  {
     }
 
     public ExternalRecord loadCopyBook(
-    		IReadCobolCopybook copybookReader,
+    		ICobolCopybookTextSource copybookReader,
             final int splitCopybookOption, final int dbIdx, final String font,
             final int copybookFormat,
             final int cobolDialect,
@@ -96,8 +98,8 @@ implements ICopybookLoaderStream, ICopybookLoaderCobol  {
             final AbsSSLogger log) {
     	
     	Copybook copybook = net.sf.JRecord.External.Def.Cb2Xml.getCopybook(
-    			copybookReader, cobolDialect, false, copybookFormat, getStackSize());
-		return loadCopybook(copybook, copybookReader.getCopybookName(), splitCopybookOption, dbIdx, font, cobolDialect, systemId);
+    			copybookReader, cobolDialect, false, Cb2xmlConstants.FREE_FORMAT, getStackSize());
+		return loadCopybook(copybook, Conversion.getCopyBookId(copybookReader.getCopybookName()), splitCopybookOption, dbIdx, font, cobolDialect, systemId);
 
     }
     

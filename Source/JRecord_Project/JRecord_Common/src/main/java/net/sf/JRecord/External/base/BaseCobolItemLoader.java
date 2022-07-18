@@ -24,6 +24,7 @@ import net.sf.JRecord.Option.ICobolSplitOptions;
 import net.sf.cb2xml.analysis.BaseItem;
 import net.sf.cb2xml.analysis.Copybook;
 import net.sf.cb2xml.analysis.Item;
+import net.sf.cb2xml.def.ICopybookJrUpd;
 import net.sf.cb2xml.def.IItem;
 import net.sf.cb2xml.def.IItemBase;
 import net.sf.cb2xml.def.IItemJrUpd;
@@ -169,7 +170,7 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 	 * @param systemId
 	 * @return
 	 */
-	public XRecord loadCopybook(Copybook copybook, String copyBookName, int splitCopybook, int dbIdx, String font,
+	public XRecord loadCopybook(ICopybookJrUpd copybook, String copyBookName, int splitCopybook, int dbIdx, String font,
 			int binaryFormat, int systemId) {
 		XRecord ret;
        	List<? extends IItemJrUpd> copybookItems = copybook.getChildItems();

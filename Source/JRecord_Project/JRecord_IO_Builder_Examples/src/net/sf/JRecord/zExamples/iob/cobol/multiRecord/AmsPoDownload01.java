@@ -26,7 +26,7 @@
 package net.sf.JRecord.zExamples.iob.cobol.multiRecord;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.IRecordDeciderX;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -74,7 +74,7 @@ public class AmsPoDownload01 {
     	ICobolIOBuilder ioBldr = JRecordInterface1.COBOL
     				.newIOBuilder(copyName)
     					.setDialect(ICopybookDialects.FMT_FUJITSU)
-    					.setFileOrganization(Constants.IO_BIN_TEXT)
+    					.setFileOrganization(IFileStructureConstants.IO_BIN_TEXT)
     					.setSplitCopybook(CopybookLoader.SPLIT_01_LEVEL)
     					.setRecordDecider(recordDecider);
     	

@@ -34,8 +34,8 @@
 
 package net.sf.JRecord.zExamples.cobol.toCsv;
 
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.CsvParser.CsvParserManagerChar;
 import net.sf.JRecord.External.base.ExternalConversion;
 import net.sf.JRecord.Numeric.ICopybookDialects;
@@ -108,7 +108,7 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
     
     public ParseArgsCobol2Csv(String[] arguments) {
     	this(false, arguments);
- //   	this(Constants.IO_DEFAULT, Constants.IO_UNICODE_NAME_1ST_LINE, arguments);
+ //   	this(IFileStructureConstants.IO_DEFAULT, IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE, arguments);
    }
 
     
@@ -130,8 +130,8 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
 	    outFont = args.get2Args(ARG_OUTPUT_FONT1, ARG_OUTPUT_FONT, "");
 	    copybookName = args.get2Args(ARG_COPYBOOK1, ARG_COPYBOOK, "");
 	    String  fStruct = args.get2Args(ARG_STRUCTURE, ARG_STRUCTURE1, "");
-	    String  csvDef = Integer.toString(Constants.IO_UNICODE_NAME_1ST_LINE);
-	    String  cblDef = fStruct.length()>0 ? fStruct : Integer.toString(Constants.IO_DEFAULT);
+	    String  csvDef = Integer.toString(IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE);
+	    String  cblDef = fStruct.length()>0 ? fStruct : Integer.toString(IFileStructureConstants.IO_DEFAULT);
 	    String  inDefault = cblDef, 
 	    		outDefault = csvDef; 
 	    if (toCsv) {
@@ -261,25 +261,25 @@ public class ParseArgsCobol2Csv implements IUpdateFieldName {
         System.out.println("    " + ARG_INPUT_STRUCTURE   + "  or " + ARG_INPUT_STRUCTURE1   + "\t: Input File Structure:");
         System.out.println("    " + ARG_OUTPUT_STRUCTURE   + " or " + ARG_OUTPUT_STRUCTURE1  + "\t: Output File Structure:");
 
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_DEFAULT)       + "\t: Determine by  ");
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_TEXT_LINE)     + "\t: Use Standard Text IO ");
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_FIXED_LENGTH)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_DEFAULT)       + "\t: Determine by  ");
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_TEXT_LINE)     + "\t: Use Standard Text IO ");
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_FIXED_LENGTH)
                 + "\t: Fixed record Length binary ");
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_BINARY_IBM_4680)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_BINARY_IBM_4680)
                 + "\t: Binary File, length based on record ");
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_VB)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_VB)
                 + "\t: Mainframe VB File "); 
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_VB_DUMP)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_VB_DUMP)
                 + "\t: Mainframe VB File including BDW (block descriptor word)");
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_VB_FUJITSU)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_VB_FUJITSU)
                 + "\t: Fujitsu Cobol VB File "); 
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_VB_GNU_COBOL)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_VB_GNU_COBOL)
                 + "\t: Gnu Cobol VB File "); 
         //System.out.println("        " +  Common.NAME_1ST_LINE_IO
         //      + " : CSV file with names on first line");
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_UNICODE_NAME_1ST_LINE)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE)
         		+ "\tStandard Csv file with colum names on the first line");
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_UNICODE_TEXT)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_UNICODE_TEXT)
         		+ "\tCsv file with out colum names on the first line");
 
         System.out.println("    " + ARG_BINARY + "\t: Cobol Dialect");

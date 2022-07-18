@@ -77,7 +77,7 @@ public class TypeCharPadded extends TypeChar {
 //    }
 
     /**
-     * @see net.sf.JRecord.Types.TypeChar#getPadByte(java.lang.String)
+     * @see net.sf.JRecord.Types.BaseType#getPadByte(java.lang.String)
      */
     protected byte getPadByte(String font) {
         return padByte;

@@ -166,4 +166,10 @@ public interface AbstractFieldValue {
 	 * @return Type Name
 	 */
 	public abstract String getTypeName();
+	
+	/**
+	 * Wether the field is valid
+	 * @return if the field in the record isValid()
+	 */
+	public abstract boolean isValid();
 }

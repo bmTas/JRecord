@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.Line;
@@ -202,7 +202,7 @@ public class ContinuousRead6 {
     	ICobolMultiCopybookIOBuilder IOBldr = JRecordInterface1.COBOL
     				.newMultiCopybookIOBuilder("MultiRecordTest")
     					.setDialect(ICopybookDialects.FMT_FUJITSU)
-     					.setFileOrganization(Constants.IO_CONTINOUS_NO_LINE_MARKER)
+     					.setFileOrganization(IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER)
      					.addCopyBook(new ByteArrayInputStream(CPY1_BYTES), "Record-A")
      						.setRecordSelectionCurrentCopybook(newFieldSelection(RECORD_TYPE, REC_A_ID))
      					.addCopyBook(new ByteArrayInputStream(CPY2_BYTES), "MultiRecord")

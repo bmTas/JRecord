@@ -31,6 +31,7 @@ package net.sf.JRecord.IO.builders;
 import java.io.IOException;
 
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.def.IO.builders.ICsvIOBuilder;
@@ -47,7 +48,7 @@ public class CsvIOBuilder extends IOBuilderBase<ICsvIOBuilder> implements ICsvIO
 	private CsvIOBuilder(String delim, String quote) {
 
 		super(0);
-		super.setFileOrganization(Constants.IO_UNICODE_NAME_1ST_LINE);
+		super.setFileOrganization(IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE);
 		super.setFont("");
 
 		record.setQuote(quote);
@@ -109,12 +110,12 @@ public class CsvIOBuilder extends IOBuilderBase<ICsvIOBuilder> implements ICsvIO
 		if (definedField) {
 		} else if (input) {
 			switch (super.getFileOrganization()) {
-			case Constants.IO_UNICODE_NAME_1ST_LINE:
-			case Constants.IO_UNICODE_CSV_NAME_1ST_LINE:
-			case Constants.IO_NAME_1ST_LINE:
-			case Constants.IO_CSV_NAME_1ST_LINE:
-			case Constants.IO_BIN_NAME_1ST_LINE:
-			case Constants.IO_BIN_CSV_NAME_1ST_LINE:
+			case IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE:
+			case IFileStructureConstants.IO_UNICODE_CSV_NAME_1ST_LINE:
+			case IFileStructureConstants.IO_NAME_1ST_LINE:
+			case IFileStructureConstants.IO_CSV_NAME_1ST_LINE:
+			case IFileStructureConstants.IO_BIN_NAME_1ST_LINE:
+			case IFileStructureConstants.IO_BIN_CSV_NAME_1ST_LINE:
 				break;
 			default:
 				throw new RecordException("Unless you are reading from a file with field names on the first line, "

@@ -29,8 +29,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -85,7 +85,7 @@ public class Xmpl_DuplicateNames2 {
 		ICobolIOBuilder ioBldr = JRecordInterface1.COBOL
 				.newIOBuilder(new ByteArrayInputStream(cobolCopybook.getBytes()), "COMPANY-RECORD")
 					.setDialect(ICopybookDialects.FMT_MAINFRAME)
-					.setFileOrganization(Constants.IO_BIN_TEXT);
+					.setFileOrganization(IFileStructureConstants.IO_BIN_TEXT);
 		
 		LayoutDetail schema = ioBldr.getLayout();
 		int recordIdx = 0;  // since there is only one record type, the record index must be zero
@@ -101,7 +101,7 @@ public class Xmpl_DuplicateNames2 {
 		IFieldDetail baField = record.getGroupField("B", "A", "Field-1");
 		IFieldDetail caField = record.getGroupField("C", "A", "Field-1");
 
-			// Retrieve the File-Reader Constants.IO_BIN_TEXT does byte level read lines
+			// Retrieve the File-Reader IFileStructureConstants.IO_BIN_TEXT does byte level read lines
 			// i.e. it retrieves lines (of bytes) from the file.
 		AbstractLineReader reader  = ioBldr.newReader(new ByteArrayInputStream(dataFile.getBytes()));
 		AbstractLine line;

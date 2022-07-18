@@ -42,6 +42,7 @@ import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.External.CopybookLoaderFactory;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ICopybookLoaderStream;
@@ -51,8 +52,9 @@ import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.def.IO.builders.ICobolCopybookIOProvider;
 import net.sf.JRecord.def.IO.builders.IIOCopybookProvider;
 import net.sf.JRecord.def.IO.builders.Icb2xmlIOProvider;
-import net.sf.cb2xml.copybookReader.IReadCobolCopybook;
+import net.sf.cb2xml.copybookReader.ICobolCopybookTextSource;
 import net.sf.cb2xml.copybookReader.ReadCobolCopybook;
+import net.sf.cb2xml.def.ICopybookJrUpd;
 
 
 public class FileSchemaBuilder implements ICobolCopybookIOProvider, IIOCopybookProvider, Icb2xmlIOProvider {
@@ -82,12 +84,23 @@ public class FileSchemaBuilder implements ICobolCopybookIOProvider, IIOCopybookP
     }
 	
 	@Override
-	public CblIOBuilderMultiSchema newIOBuilder(IReadCobolCopybook copyybookReader) {
+	public CblIOBuilderMultiSchema newIOBuilder(ICobolCopybookTextSource copyybookReader) {
 		CblIOBuilderMultiSchema ret = new CblIOBuilderMultiSchema(
-				copyybookReader.getCopybookName(), 
+				Conversion.getCopyBookId(copyybookReader.getCopybookName()), 
 				(ICopybookLoaderStream) lf.getLoader(schemaType));
 		
-		ret.addCopyBook(copyybookReader);
+		return ret.addCopyBook(copyybookReader);
+		//return ret;
+	}
+
+	
+	@Override
+	public CblIOBuilderMultiSchema newIOBuilder(ICopybookJrUpd copyybook) {
+		CblIOBuilderMultiSchema ret = new CblIOBuilderMultiSchema(
+				Conversion.getCopyBookId(copyybook.getFilename()), 
+				(ICopybookLoaderStream) lf.getLoader(schemaType));
+		
+		ret.addCopyBook(copyybook);
 		return ret;
 	}
 

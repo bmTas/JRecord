@@ -1,1 +1,0 @@
-package net.sf.JRecord.cg.details.xml;

@@ -172,11 +172,11 @@ public abstract class BaseCsvByteLineParser implements ICsvByteLineParser {
 //
 //		if ((csvDefinition.isEmbeddedNewLine() || allowReturnInFields)
 //		&& quote != null && quote.length() > 0) {
-//			ret = Constants.IO_CSV;
+//			ret = IFileStructureConstants.IO_CSV;
 //			if (bin) {
-//				ret = Constants.IO_BIN_CSV;
+//				ret = IFileStructureConstants.IO_BIN_CSV;
 //			} else if (! csvDefinition.isSingleByteFont()) {
-//				ret = Constants.IO_UNICODE_CSV;
+//				ret = IFileStructureConstants.IO_UNICODE_CSV;
 //			}
 //
 //			if (namesOnFirstLine) {

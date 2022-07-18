@@ -32,21 +32,21 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-
+import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLStreamException;
 
-import net.sf.JRecord.Common.Constants;
+import org.junit.Test;
+import org.xml.sax.SAXException;
+
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.cbl2xml.impl.Cobol2GroupXml;
 import net.sf.JRecord.schema.jaxb.impl.AddPlusToNumeric;
 import net.sf.JRecord.schema.jaxb.impl.DoNothingFormat;
 import net.sf.JRecord.schema.jaxb.interfaces.IFormatField;
-
-import org.junit.Test;
-import org.xml.sax.SAXException;
 
 public class TstCblDataToXml02 {
 
@@ -133,9 +133,9 @@ public class TstCblDataToXml02 {
 	throws FileNotFoundException, RecordException, IOException, XMLStreamException, SAXException, ParserConfigurationException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
-		int fileOrg = Constants.IO_FIXED_LENGTH;
+		int fileOrg = IFileStructureConstants.IO_FIXED_LENGTH;
 		if (vb) {
-			fileOrg = Constants.IO_VB;
+			fileOrg = IFileStructureConstants.IO_VB;
 		}
 		
 		IFormatField formatField = DoNothingFormat.INSTANCE;
@@ -191,9 +191,9 @@ public class TstCblDataToXml02 {
 	throws FileNotFoundException, RecordException, IOException, XMLStreamException {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
-		int fileOrg = Constants.IO_FIXED_LENGTH;
+		int fileOrg = IFileStructureConstants.IO_FIXED_LENGTH;
 		if (vb) {
-			fileOrg = Constants.IO_VB;
+			fileOrg = IFileStructureConstants.IO_VB;
 		}
 
 		Cobol2GroupXml.newCobol2Xml(copybookFileName)

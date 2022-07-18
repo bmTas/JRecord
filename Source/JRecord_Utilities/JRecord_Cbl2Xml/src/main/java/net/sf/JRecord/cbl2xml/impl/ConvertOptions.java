@@ -27,7 +27,7 @@ package net.sf.JRecord.cbl2xml.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Option.ICobolSplitOptions;
 import net.sf.JRecord.Option.IReformatFieldNames;
@@ -64,12 +64,12 @@ public class ConvertOptions {
 		OPT_RECSEL, OPT_PARENT,		
 	};
 	private static final Opts[] FILE_ORGANISATION_OPTS = {
-		new Opts("Text", "    ", "Standard Windows/Unix text file (single byte characterset)", Constants.IO_BIN_TEXT),
-		new Opts("FixedWidth",   "File where lines (records) are the same length no \\n", Constants.IO_FIXED_LENGTH),
-		new Opts("UnicodeText", "    ", "Standard Windows/Unix Unicode text file", Constants.IO_UNICODE_TEXT),
-		new Opts("FixedText", "    ", "Fixed width Text (possibly unicode)", Constants.IO_FIXED_LENGTH_CHAR),
-		new Opts("Mainframe_VB", "Mainframe VB, file consists of <record-length><record-data>", Constants.IO_VB),
-		new Opts("GNUCobol_VB",  "GNU Cobol VB, file consists of <record-length><record-data>", Constants.IO_VB_GNU_COBOL)
+		new Opts("Text", "    ", "Standard Windows/Unix text file (single byte characterset)", IFileStructureConstants.IO_BIN_TEXT),
+		new Opts("FixedWidth",   "File where lines (records) are the same length no \\n", IFileStructureConstants.IO_FIXED_LENGTH),
+		new Opts("UnicodeText", "    ", "Standard Windows/Unix Unicode text file", IFileStructureConstants.IO_UNICODE_TEXT),
+		new Opts("FixedText", "    ", "Fixed width Text (possibly unicode)", IFileStructureConstants.IO_FIXED_LENGTH_CHAR),
+		new Opts("Mainframe_VB", "Mainframe VB, file consists of <record-length><record-data>", IFileStructureConstants.IO_VB),
+		new Opts("GNUCobol_VB",  "GNU Cobol VB, file consists of <record-length><record-data>", IFileStructureConstants.IO_VB_GNU_COBOL)
 	};
 
 	private static final Opts[] DIALECT_OPTS = {

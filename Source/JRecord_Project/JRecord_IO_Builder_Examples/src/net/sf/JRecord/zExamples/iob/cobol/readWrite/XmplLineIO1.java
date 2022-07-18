@@ -39,7 +39,7 @@
 package net.sf.JRecord.zExamples.iob.cobol.readWrite;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.Numeric.ICopybookDialects;
@@ -70,7 +70,7 @@ public final class XmplLineIO1 {
         ICobolIOBuilder ioBldr = JRecordInterface1.COBOL
         		.newIOBuilder(copybookName)
         			.setDialect( ICopybookDialects.FMT_INTEL)
-        			.setFileOrganization(Constants.IO_TEXT_LINE);
+        			.setFileOrganization(IFileStructureConstants.IO_TEXT_LINE);
         			
         //CobolIoProvider ioProvider = CobolIoProvider.getInstance();
         AbstractLine line;

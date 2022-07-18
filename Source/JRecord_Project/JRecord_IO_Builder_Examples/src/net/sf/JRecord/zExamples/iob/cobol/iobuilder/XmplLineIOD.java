@@ -38,7 +38,7 @@
       
 package net.sf.JRecord.zExamples.iob.cobol.iobuilder;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.CobolIoProvider;
@@ -71,7 +71,7 @@ public final class XmplLineIOD {
         	ICobolIOBuilder iob = CobolIoProvider.getInstance()
 					.newIOBuilder(copybookName)
 						.setFont("cp037")                                   // US EBCDIC
-						.setFileOrganization(Constants.IO_FIXED_LENGTH_RECORDS);  
+						.setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH_RECORDS);  
         	AbstractLineReader reader = iob.newReader(salesFile);
 
             while ((saleRecord = reader.read()) != null) {

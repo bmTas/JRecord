@@ -36,6 +36,7 @@ import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.XmlConstants;
+import net.sf.JRecord.Types.TypeManager;
 
 public abstract class ListLine extends BaseLine {
 
@@ -73,8 +74,10 @@ public abstract class ListLine extends BaseLine {
 	public Object getField(int typeId, IFieldDetail field) {
 	    return getFieldRaw(preferredLayout, field.getPos() - getAdj());
 	}
+
 	
-	
+
+
 
 	/**
 	 * @see net.sf.JRecord.Details.AbstractLine#getField(int, int)
@@ -295,6 +298,14 @@ public abstract class ListLine extends BaseLine {
 			&& fields.get(pos) != null;
 	}
 
+
+	@Override
+	public boolean isValid(IFieldDetail fldDef) {
+		Object o = getFieldRaw(preferredLayout, fldDef.getPos() - getAdj());
+		String s = o == null ? "" : o.toString();
+		return TypeManager.getInstance().getType(fldDef.getType()).isValid(fldDef, s);
+	}
+	
 	@Override
 	public void setData(byte[] newVal) {
 		setData(Conversion.toString(newVal, layout.getFontName()));

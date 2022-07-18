@@ -63,7 +63,7 @@ import net.sf.JRecord.External.cb2xml.Cb2xmlCopybookReader;
  * @author Bruce Martin
  */
 public class XmlCopybookLoader extends BaseCobolItemLoader<ExternalRecord> 
-implements ICopybookLoaderStream, ICopybookLoaderCobol {
+implements ICopybookLoaderCobol {
 
     public XmlCopybookLoader() {
 		super(true, new ExternalRecordBuilder(), new Cb2xmlCopybookReader());

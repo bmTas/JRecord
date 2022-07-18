@@ -2,11 +2,12 @@ package net.sf.JRecord.x.cobol.copyReplacing;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
 import net.sf.JRecord.Common.Conversion;
-import net.sf.cb2xml.CobolPreprocessor;
+import net.sf.cb2xml.copybookReader.BasicReadCobolCopybook;
 
 /**
  * Class to replace strings in a Cobol Copybook. It is a 
@@ -36,8 +37,14 @@ public class CopyReplacingBldr {
 	
 	private CopyReplacingBldr(Reader copybookReader, CobolColumnDetails colDetails) {
 		
-			copybook = new StringBuilder(
-						CobolPreprocessor.preProcess(copybookReader, colDetails.getStartColumn(), colDetails.getEndColumn()));
+			try {
+				copybook = new StringBuilder(
+						BasicReadCobolCopybook.newCopybookReader(copybookReader, "xxx")
+								.setColumns(colDetails.getStartColumn(), colDetails.getEndColumn())
+								.getFreeFormatCopybookText());
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 	}
 	
 	public CopyReplacingBldr replacing(String from, String to) {

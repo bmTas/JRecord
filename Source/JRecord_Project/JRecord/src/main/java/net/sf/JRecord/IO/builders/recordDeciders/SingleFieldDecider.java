@@ -1,5 +1,6 @@
 package net.sf.JRecord.IO.builders.recordDeciders;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -7,10 +8,11 @@ import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.Details.IRecordDeciderX;
 import net.sf.JRecord.Details.LayoutDetail;
+import net.sf.JRecord.def.IO.builders.recordDeciders.ISingleFieldDecider;
+import net.sf.JRecord.def.recordSelection.IRecordSelectionDetails;
 
-public abstract class SingleFieldDecider implements IRecordDeciderX, Cloneable {
+public abstract class SingleFieldDecider implements Cloneable, ISingleFieldDecider {
 
 	private final String recordTypeFieldName, defaultRecordName;
 
@@ -76,7 +78,39 @@ public abstract class SingleFieldDecider implements IRecordDeciderX, Cloneable {
 			return defaultIdx;
 		}
 		throw new RecordException("RecordDecider: invalid record Decider field: " + v + " " + line.getFullLine());
+	}
 
+	/**
+	 * @return the recordTypeFieldName
+	 */
+	@Override
+	public String getRecordTypeFieldName() {
+		return recordTypeFieldName;
+	}
+
+	/**
+	 * @return the defaultRecordName
+	 */
+	@Override
+	public String getDefaultRecordName() {
+		return defaultRecordName;
+	}
+
+	/**
+	 * @return the allowOtherRecordTypes
+	 */
+	@Override
+	public boolean isAllowOtherRecordTypes() {
+		return allowOtherRecordTypes;
+	}
+	
+	@Override
+	public List<IRecordSelectionDetails> getRecordSelectionDetails() {
+		ArrayList<IRecordSelectionDetails> r = new ArrayList<IRecordSelectionDetails>(selections.length);
+		for (IRecordSelectionDetails recSel : selections) {
+			r.add(recSel);
+		}
+		return r;
 	}
 
 	public static class SmallDecider extends SingleFieldDecider {

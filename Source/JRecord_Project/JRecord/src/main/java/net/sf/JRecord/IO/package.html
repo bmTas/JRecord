@@ -45,7 +45,7 @@ the classes in this package via either <b>CobolIOProvider</b> or <b>LineIOProvid
 <pre>
 The following example deminstrates creating a line and writing it to a File:
 
-           <font color="brown"><b>int</b></font> fileStructure = Constants.IO_FIXED_LENGTH;
+           <font color="brown"><b>int</b></font> fileStructure = IFileStructureConstants.IO_FIXED_LENGTH;
            CopybookLoader loader = <font color="brown"><b>new</b></font> RecordEditorXmlLoader();
            ExternalRecord extlayout = loader.loadCopyBook(copybookName, 0, 0, "", 0, 0, <font color="brown"><b>null</b></font>);
 	        

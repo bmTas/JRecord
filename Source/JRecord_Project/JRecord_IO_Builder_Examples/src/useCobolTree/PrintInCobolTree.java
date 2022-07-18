@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.IO.AbstractLineReader;
@@ -17,7 +17,7 @@ public class PrintInCobolTree {
 	public void print(String copybook, String fileName) throws IOException {
 		ICobolIOBuilder iob = JRecordInterface1.COBOL.newIOBuilder(copybook)
 				.setFont("cp037")
-				.setFileOrganization(Constants.IO_FIXED_LENGTH);
+				.setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH);
 		LayoutDetail layout = iob.getLayout();
 		AbstractLineReader reader = iob.newReader(fileName);
 		AbstractLine l;

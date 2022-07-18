@@ -51,11 +51,11 @@ public class TypeCharNullTerminated extends TypeChar {
      * create a null terminated char type (ie C style string)
      */
     public TypeCharNullTerminated() {
-        super(true, true);
+        super(true, true,  false, false, true);
     }
 
     /**
-     * @see net.sf.JRecord.Types.TypeChar#getFieldEnd(int, IFieldDetail, byte[])
+     * @see net.sf.JRecord.Types.BaseType#getFieldEnd(int, IFieldDetail, byte[])
      */
     @Override
     protected int getFieldEnd(int position, IFieldDetail currField, byte[] record) {
@@ -70,7 +70,7 @@ public class TypeCharNullTerminated extends TypeChar {
     }
 
     /**
-     * @see net.sf.JRecord.Types.TypeChar#getPadByte(String)
+     * @see net.sf.JRecord.Types.BaseType#getPadByte(String)
      * 
      */
     protected byte getPadByte(String font) {

@@ -49,7 +49,7 @@ import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.fieldValue.LineFieldCreator;
 import net.sf.JRecord.Types.Type;
-import net.sf.JRecord.Types.TypeChar;
+import net.sf.JRecord.Types.BaseType;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.Types.TypeNum;
 
@@ -546,11 +546,19 @@ public class Line extends BasicLine implements IGetByteData {
 			ret = ((TypeNum) t).isDefined(this, data, field);
 		} else {
 			int pos = field.calculateActualPosition(this);
-			ret = ! TypeChar.isHexZero(data, pos, field.getLen());
+			ret = ! BaseType.isHexZero(data, pos, field.getLen());
 		}
 		return ret;
 	}
 
+
+
+
+	@Override
+	public boolean isValid(IFieldDetail fldDef) {
+		return TypeManager.getInstance().getType(fldDef.getType())
+				.isValid(fldDef.calculateActualPosition(this), fldDef, data);
+	}
 
 
 

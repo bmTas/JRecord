@@ -26,7 +26,7 @@
 package net.sf.JRecord.zExamples.iob.cobol.iobuilder;
 
 
-import net.sf.JRecord.cgen.def.*;
+import net.sf.JRecord.cgen.def.IFieldName1Dimension;
 import net.sf.JRecord.cgen.impl.array.ArrayFieldName;
 
 /**

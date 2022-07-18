@@ -49,15 +49,15 @@ public abstract class BasicTextLineReader extends AbstractLineReader {
 		super(provider);
 	}
 
-	  protected void open(ICharReader r, InputStream inputStream, LayoutDetail layout, String font)
-	  throws IOException {
+	protected void open(ICharReader r, InputStream inputStream, LayoutDetail layout)
+			throws IOException {
 
-		  reader = r;
-		  inStream = inputStream;
-		  setLayout(layout);
+		reader = r;
+		inStream = inputStream;
+		setLayout(layout);
 
-		  reader.open(inputStream, font);
-	  }
+		//reader.open(inputStream, font);
+	}
 
 	/**
 	 * Method to do the actual read. It is called by read in AbstractLineReader

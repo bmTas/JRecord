@@ -87,11 +87,6 @@ public abstract class BasicLine extends BaseLine {
 	@Override
 	public int getPreferredLayoutIdxAlt() {
 		if (preferredLayoutAlt == Constants.NULL_INTEGER) {
-			int defaultIdx = Constants.NULL_INTEGER;
-			int i = 0;
-			int defCount = -1;
-			//RecordDetail rec;
-			RecordSelection sel;
 			int size = layout.getRecordCount();
 
 			if (size == 1) {
@@ -99,30 +94,38 @@ public abstract class BasicLine extends BaseLine {
 			} else if (layout.getDecider() != null) {
 			    preferredLayoutAlt = layout.getDecider().getPreferedIndex(this);
 			}
-
-
-	    	//System.out.println();
-			while ((i < size) && (preferredLayoutAlt == Constants.NULL_INTEGER)) {
-				sel = layout.getRecord(i).getRecordSelection();
-				switch (sel.isSelected(this)) {
-				case DEFAULT:
-					if (sel.size() > defCount) {
-						defaultIdx = i;
-						defCount = sel.size();
+			
+			if (preferredLayoutAlt < 0) {
+				int defaultIdx = Constants.NULL_INTEGER;
+				int i = 0;
+				int defCount = -1;
+				//RecordDetail rec;
+				RecordSelection sel;
+	
+	
+		    	//System.out.println();
+				while ((i < size) && (preferredLayoutAlt == Constants.NULL_INTEGER)) {
+					sel = layout.getRecord(i).getRecordSelection();
+					switch (sel.isSelected(this)) {
+					case DEFAULT:
+						if (sel.size() > defCount) {
+							defaultIdx = i;
+							defCount = sel.size();
+						}
+						break;
+	
+					case YES:
+						preferredLayoutAlt = i;
+						break;
+						
+					case NO:
 					}
-					break;
-
-				case YES:
-					preferredLayoutAlt = i;
-					break;
-					
-				case NO:
+	
+					i += 1;
 				}
-
-				i += 1;
-			}
-			if (preferredLayoutAlt == Constants.NULL_INTEGER) {
-				preferredLayoutAlt = defaultIdx;
+				if (preferredLayoutAlt < 0) {
+					preferredLayoutAlt = defaultIdx;
+				}
 			}
 		}
 

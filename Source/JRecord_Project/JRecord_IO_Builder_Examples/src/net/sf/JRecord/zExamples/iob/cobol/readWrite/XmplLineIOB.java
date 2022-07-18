@@ -26,8 +26,8 @@
 package net.sf.JRecord.zExamples.iob.cobol.readWrite;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.IO.AbstractLineReader;
@@ -59,7 +59,7 @@ public final class XmplLineIOB {
 	        		.newIOBuilder(copybookName)
 	        			.setDialect( ICopybookDialects.FMT_MAINFRAME)
 	        			.setFont("cp037")
-	        			.setFileOrganization(Constants.IO_FIXED_LENGTH)
+	        			.setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
 	        			.setDropCopybookNameFromFields(true);
 
 	        try {

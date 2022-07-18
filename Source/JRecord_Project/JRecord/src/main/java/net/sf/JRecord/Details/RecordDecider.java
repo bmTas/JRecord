@@ -42,7 +42,7 @@ package net.sf.JRecord.Details;
  * Cobol Copybooks do not provide a means to determine which
  * Record applies to a particular Data-Line. Most of the
  * time this does not matter but there are exceptions 
- * (e.g. <b>Constants.IO_CONTINOUS_NO_LINE_MARKER</b>).
+ * (e.g. <b>IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER</b>).
  * 
  * <p>One way to tell
  * JRecord / RecordEditor which Record to use for a Data-line

@@ -27,7 +27,7 @@ package net.sf.JRecord.zExamples.iob.csv;
 
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineReader;
 
@@ -55,7 +55,7 @@ public final class XmplLineIO5br {
 	        try {
 	        	AbstractLineReader reader = JRecordInterface1.CSV
 	        			.newIOBuilder("x'00'", "\"")
-	        					.setFileOrganization(Constants.IO_BIN_NAME_1ST_LINE)
+	        					.setFileOrganization(IFileStructureConstants.IO_BIN_NAME_1ST_LINE)
 	        					.newReader(salesFile);
 				
 	            while ((saleRecord = reader.read()) != null) {

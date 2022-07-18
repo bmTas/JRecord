@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.Line;
@@ -163,7 +163,7 @@ public class ContinuousRead2 {
     				.newIOBuilder(copyName)
     					.setDialect(ICopybookDialects.FMT_FUJITSU)
     					.setSplitCopybook(CopybookLoader.SPLIT_01_LEVEL)
-    					.setFileOrganization(Constants.IO_CONTINOUS_NO_LINE_MARKER)
+    					.setFileOrganization(IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER)
     					;
     	
     	// For IO_CONTINOUS you must either

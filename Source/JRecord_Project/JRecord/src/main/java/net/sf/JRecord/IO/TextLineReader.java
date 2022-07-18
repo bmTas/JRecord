@@ -46,14 +46,16 @@ import java.util.List;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.CsvParser.ICsvCharLineParser;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.CsvParser.CsvParserManagerChar;
+import net.sf.JRecord.CsvParser.ICsvCharLineParser;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.charIO.ICharReader;
+import net.sf.JRecord.charIO.IOpenInputStream;
 import net.sf.JRecord.charIO.StandardCharReader;
 import net.sf.JRecord.detailsBasic.CsvCharDetails;
 
@@ -138,13 +140,28 @@ public class TextLineReader extends BasicTextLineReader {
 			font = layout.getFontName();
 		}
     	
-    	super.open(reader, inputStream, layout, font);
-
-		if (namesInFile) {
-			createLayout(getReader(), inputStream, font);
+		if (reader instanceof IOpenInputStream) {
+			((IOpenInputStream) reader).open(inputStream, font);
 		}
+    	super.open(reader, inputStream, layout);
+
+    	openWithSuppliedReader(layout);
     }
 
+
+    public void openWithSuppliedReader(LayoutDetail layout)
+    throws IOException {
+   	
+		if (namesInFile) {
+	    	String font = "";
+			if (layout != null) {
+				font = layout.getFontName();
+			}
+	 		createLayout(layout, getReader(), font);
+		} else {
+			super.setLayout((LayoutDetail) layout);
+		}
+    }
 
     /**
      * create a layout
@@ -153,15 +170,15 @@ public class TextLineReader extends BasicTextLineReader {
      *
      * @throws IOException sny IO error that occurs
      */
-    protected void createLayout(ICharReader pReader, InputStream inputStream, String font) throws IOException {
-        LayoutDetail layout;
+    protected void createLayout(LayoutDetail baseLayout, ICharReader pReader, String font) throws IOException {
+    	LayoutDetail layout;
 
         RecordDetail rec = null;
 	    int fieldType = Type.ftChar;
         int decimal   = 0;
         int format    = 0;
         int parser    = 0;
-        int structure = Constants.IO_NAME_1ST_LINE;
+        int structure = IFileStructureConstants.IO_NAME_1ST_LINE;
         String param  = "";
         CsvCharDetails delim  = defaultDelim;
         CsvCharDetails quote  = defaultQuote;
@@ -170,9 +187,9 @@ public class TextLineReader extends BasicTextLineReader {
         boolean embeddedCr = false;
 
 	    try {
-	    	LayoutDetail baseLayout = getLayout();
+	    	//LayoutDetail baseLayout = getLayout();
 			int ts = baseLayout.getFileStructure();
-	    	if (ts != Constants.IO_GENERIC_CSV) {
+	    	if (ts != IFileStructureConstants.IO_GENERIC_CSV) {
 	    		structure = ts;
 	    	}
 

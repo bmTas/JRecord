@@ -36,9 +36,10 @@ import net.sf.JRecord.ByteIO.ByteTextReader;
 import net.sf.JRecord.ByteIO.IByteReader;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.CsvParser.CsvDefinition;
-import net.sf.JRecord.CsvParser.ICsvDefinition;
 import net.sf.JRecord.CsvParser.CsvParserManagerByte;
+import net.sf.JRecord.CsvParser.ICsvDefinition;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
 import net.sf.JRecord.Details.RecordDetail;
@@ -103,7 +104,7 @@ public class BinTextReader extends LineReaderWrapper {
         int decimal   = 0;
         int format    = 0;
         int parser    = 0;
-        int structure = Constants.IO_NAME_1ST_LINE;
+        int structure = IFileStructureConstants.IO_NAME_1ST_LINE;
         String param  = "";
 //        byte[] delim  = {0}; 
 //        String delimStr = "x'00'";
@@ -118,7 +119,7 @@ public class BinTextReader extends LineReaderWrapper {
 	    try {
 	    	LayoutDetail suppliedLayout = getLayout();
 			int ts = suppliedLayout.getFileStructure();
-	    	if (ts != Constants.IO_GENERIC_CSV) {
+	    	if (ts != IFileStructureConstants.IO_GENERIC_CSV) {
 	    		structure = ts;
 	    	}
 	    	delim     = suppliedLayout.getDelimiterDetails();

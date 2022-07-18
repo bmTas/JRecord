@@ -9,7 +9,7 @@
 
     <groupId>net.sf.jrecord</groupId>
     <artifactId>jrecord-parent</artifactId>
-    <version>0.90.5</version>
+    <version>0.93</version>
     <packaging>pom</packaging>
 
     <properties>

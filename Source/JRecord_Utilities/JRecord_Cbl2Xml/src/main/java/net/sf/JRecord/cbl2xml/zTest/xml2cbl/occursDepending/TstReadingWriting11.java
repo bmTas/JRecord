@@ -28,11 +28,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-
 import javax.xml.stream.XMLStreamException;
 
-import net.sf.JRecord.Common.Constants;
-import net.sf.JRecord.Common.RecordException; 
+import junit.framework.TestCase;
+import net.sf.JRecord.Common.IFileStructureConstants;
+import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
@@ -43,17 +43,16 @@ import net.sf.JRecord.cbl2xml.impl.Cobol2GroupXml;
 import net.sf.JRecord.cbl2xml.zTest.xml2cbl.Cb2XmlCode;
 import net.sf.JRecord.cbl2xml.zTest.xml2cbl.TstXmlConstants;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
-import junit.framework.TestCase;
 
 public class TstReadingWriting11 extends TestCase {
 	
 	public void test11()  throws IOException, RecordException, XMLStreamException {
-		tst("ArrayDep11.cbl", "11", Constants.IO_STANDARD_TEXT_FILE, false);
+		tst("ArrayDep11.cbl", "11", IFileStructureConstants.IO_STANDARD_TEXT_FILE, false);
 	}
 	
 	
 	public void test12()  throws IOException, RecordException, XMLStreamException {
-		tst("ArrayDep12.cbl", "12", Constants.IO_STANDARD_TEXT_FILE, false);
+		tst("ArrayDep12.cbl", "12", IFileStructureConstants.IO_STANDARD_TEXT_FILE, false);
 	}
 	
 	

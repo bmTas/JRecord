@@ -36,12 +36,11 @@ package codeGen.readWrite;
 import java.io.IOException;
 
 import net.sf.JRecord.JRecordInterface1;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
-
 import net.sf.JRecord.IO.AbstractLineWriter;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
 /**
  * Write Cobol file using a Cobol Copybook (Dtar021).
@@ -69,7 +68,7 @@ public final class WriteDtar021standard {
 			ICobolIOBuilder iob = JRecordInterface1.COBOL
 					.newIOBuilder(copybookName)
 					.setFont("cp037")
-					.setFileOrganization(Constants.IO_FIXED_LENGTH)
+					.setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
 					.setSplitCopybook(CopybookLoader.SPLIT_NONE)
 					;  
 			AbstractLineWriter writer = iob.newWriter(outputFileName);

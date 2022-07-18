@@ -28,21 +28,23 @@
 
 package net.sf.JRecord.IO.builders;
 
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.ICopybookLoaderStream;
-import net.sf.cb2xml.copybookReader.IReadCobolCopybook;
+import net.sf.cb2xml.copybookReader.ICobolCopybookTextSource;
+import net.sf.cb2xml.def.Cb2xmlConstants;
 
 public class CreateExternalFromCopybookReader extends CreateExternalBase implements ICreateExternal  {
 
-	private final IReadCobolCopybook copybookReader;
+	private final ICobolCopybookTextSource copybookReader;
 //	private final CblIOBuilderMultiSchema parent;
 
 	
 
-	public CreateExternalFromCopybookReader(IGetLoader parent, IReadCobolCopybook copybookReader) {
-		super(parent, copybookReader.getCopybookName()); 
+	public CreateExternalFromCopybookReader(IGetLoader parent, ICobolCopybookTextSource copybookReader) {
+		super(parent, Conversion.getCopyBookId(copybookReader.getCopybookName())); 
 		this.copybookReader = copybookReader;
 	} 
 
@@ -52,11 +54,11 @@ public class CreateExternalFromCopybookReader extends CreateExternalBase impleme
 		ICopybookLoaderStream loader = parent.getLoader();
 		
 		if (! (loader instanceof CobolCopybookLoader)) {
-			throw new RecordException("A cobol Copybook reader can only be used with Cobol-Copybooks");
+			throw new RecordException(ONLY_USED_WITH_COBOL);
 		}
 		
 		return ((CobolCopybookLoader) loader).loadCopyBook(copybookReader, splitCopybook, 0, parent.getFont(), 
-				parent.getCopybookFileFormat(), parent.getDialect(), 0, parent.getLog());
+				Cb2xmlConstants.FREE_FORMAT, parent.getDialect(), 0, parent.getLog());
 		
 	}
 }

@@ -27,8 +27,8 @@ package net.sf.JRecord.zExamples.iob.cobol.iobuilder;
 
 import java.io.IOException;
 
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -80,7 +80,7 @@ public class AmsReceipt06 {
     	String copybookFileame = this.getClass().getResource(copybookFileName).getFile();
     	iobuilder = CobolIoProvider.getInstance()
     						.newIOBuilder(copybookFileame, ICopybookDialects.FMT_FUJITSU)
-    								.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE)
+    								.setFileOrganization(IFileStructureConstants.IO_STANDARD_TEXT_FILE)
     								.setSplitCopybook(CopybookLoader.SPLIT_REDEFINE);
     		
     	readFile();

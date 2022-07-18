@@ -25,7 +25,7 @@
       
 package net.sf.JRecord.Numeric;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Types.Type;
 import net.sf.cb2xml.def.Cb2xmlConstants;
 import net.sf.cb2xml.def.NumericDefinition;
@@ -42,7 +42,7 @@ import net.sf.cb2xml.def.NumericDefinition;
     private final int binId;
     private final boolean usePositiveInteger;
 
-    private int defaultVbFileStructure = Constants.IO_DEFAULT;
+    private int defaultVbFileStructure = IFileStructureConstants.IO_DEFAULT;
 
     // Using Object instead of BasicNumericDefinition to avoid dependency on cb2xml.
     // It allows the class to be used in RecordEditor Edit Properties without cb2xml or with an old
@@ -232,7 +232,7 @@ import net.sf.cb2xml.def.NumericDefinition;
 		if (multipleRecordLengths && binary) {
 			return defaultVbFileStructure;
 		}
-		return Constants.IO_DEFAULT;
+		return IFileStructureConstants.IO_DEFAULT;
 	}
 
 	/**

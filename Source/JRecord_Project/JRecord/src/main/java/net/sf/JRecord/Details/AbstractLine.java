@@ -317,4 +317,14 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout {
 	 */
 
 	boolean isFieldInLine(IFieldDetail fd);
+	
+	/**
+	 * This does a basic field validation test. This is basically for checking Cobol Numeric 
+	 * fields. It does not check Cobol Edited Numeric fields. This is new and there may
+	 * be some errors.
+	 * 
+	 * @param fd Field to check
+	 * @return wether the field is valid or not
+	 */
+	boolean isValid(IFieldDetail fd);
 }

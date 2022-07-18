@@ -31,12 +31,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-
+import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLStreamException;
 
-import net.sf.JRecord.Common.Constants;
+import org.junit.Test;
+import org.xml.sax.SAXException;
+
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
@@ -46,9 +49,6 @@ import net.sf.JRecord.Option.IReformatFieldNames;
 import net.sf.JRecord.cbl2xml.def.ICobol2Xml;
 import net.sf.JRecord.cbl2xml.impl.Cobol2GroupXml;
 import net.sf.JRecord.cbl2xml.zTest.xml2cbl.cobol.HierarchyRecordDef;
-
-import org.junit.Test;
-import org.xml.sax.SAXException;
 
 public class TstRecordTree01 {
 
@@ -154,7 +154,7 @@ public class TstRecordTree01 {
 		
 		ICobol2Xml ret = Cobol2GroupXml
 								.newCobol2Xml(copybookFileName)
-								      .setFileOrganization(Constants.IO_UNICODE_TEXT)
+								      .setFileOrganization(IFileStructureConstants.IO_UNICODE_TEXT)
 								      .setDialect(ICopybookDialects.FMT_INTEL)
 								      .setSplitCopybook(CopybookLoader.SPLIT_01_LEVEL) 
 								      
@@ -176,7 +176,7 @@ public class TstRecordTree01 {
 		int split = CopybookLoader.SPLIT_01_LEVEL;
 		
 		ICobol2Xml ret = Cobol2GroupXml.newCobol2Xml(copybookFileName)
-					      .setFileOrganization(Constants.IO_UNICODE_TEXT)
+					      .setFileOrganization(IFileStructureConstants.IO_UNICODE_TEXT)
 					      .setDialect(ICopybookDialects.FMT_MAINFRAME)
 					      .setSplitCopybook(split);
 		@SuppressWarnings("unchecked")

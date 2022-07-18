@@ -28,7 +28,7 @@ package net.sf.JRecord.zExamples.iob.FixedWidth;
 import java.io.IOException;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineReader;
@@ -46,7 +46,7 @@ public class DefineSchemaUsingLengths2 {
 	public DefineSchemaUsingLengths2() {
 		try {
 			AbstractLineReader reader = JRecordInterface1.FIXED_WIDTH.newIOBuilder()
-									.setFileOrganization(Constants.IO_FIXED_LENGTH)
+									.setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
 									.setFont("CP037")
 									.defineFieldsByLength()
 										.addFieldByLength("Sku"  , Type.ftChar,   8, 0)

@@ -376,7 +376,10 @@ public class TstTypesGeneral extends TestCase {
 					
 					break;
 				default:
-					assertEquals(charset + " Test number: " + typeId, v, actualValue);
+					if (! v.equals(actualValue)) {
+						actualValue = fieldValue.asString();
+						assertEquals(charset + " Test number: " + typeId, v, actualValue);
+					}
 				}
 				
 				if (t.isBinary() || skipForChar 

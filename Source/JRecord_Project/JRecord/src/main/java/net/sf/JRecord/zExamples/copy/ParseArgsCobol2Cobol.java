@@ -34,7 +34,7 @@
 
 package net.sf.JRecord.zExamples.copy;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.External.base.ExternalConversion;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.utilityClasses.ParseArguments;
@@ -96,8 +96,8 @@ public class ParseArgsCobol2Cobol {
 	    outFont = args.getArg(ARG_OUTPUT_FONT, ""); 
 	    inCopybookName = args.getArg(ARG_IN_COPYBOOK);
 	    outCopybookName = args.getArg(ARG_OUT_COPYBOOK);
-	    inFileStructure = ExternalConversion.getFileStructure(0, args.getArg(ARG_IN_STRUCTURE, "" + Constants.IO_DEFAULT));
-	    outFileStructure = ExternalConversion.getFileStructure(0, args.getArg(ARG_OUT_STRUCTURE, "" + Constants.IO_DEFAULT));
+	    inFileStructure = ExternalConversion.getFileStructure(0, args.getArg(ARG_IN_STRUCTURE, "" + IFileStructureConstants.IO_DEFAULT));
+	    outFileStructure = ExternalConversion.getFileStructure(0, args.getArg(ARG_OUT_STRUCTURE, "" + IFileStructureConstants.IO_DEFAULT));
 
 
 	    infilePresent = present(infile);
@@ -134,19 +134,19 @@ public class ParseArgsCobol2Cobol {
         System.out.println("    " + ARG_IN_FILE     + "  or " + ARG_IN_FILE1     + " \t: Input file");
         System.out.println("    " + ARG_IN_COPYBOOK  + "\t: Cobol/Xml Copybook file");
         System.out.println("    " + ARG_IN_STRUCTURE + "\t: Input File Structure (or File-Organisation):");
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_DEFAULT)       + "\t: Determine by  ");
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_TEXT_LINE)     + "\t: Use Standard Text IO ");
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_FIXED_LENGTH)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_DEFAULT)       + "\t: Determine by  ");
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_TEXT_LINE)     + "\t: Use Standard Text IO ");
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_FIXED_LENGTH)
                 + "\t: Fixed record Length binary ");
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_BINARY_IBM_4680)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_BINARY_IBM_4680)
                 + "\t: Binary File, length based on record ");
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_VB)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_VB)
                 + "\t: Mainframe VB File "); 
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_VB_DUMP)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_VB_DUMP)
                 + "\t: Mainframe VB File including BDW (block descriptor word)");
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_VB_FUJITSU)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_VB_FUJITSU)
                 + "\t: Fujitsu Cobol VB File "); 
-        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, Constants.IO_VB_GNU_COBOL)
+        System.out.println("        " + ExternalConversion.getFileStructureAsString(0, IFileStructureConstants.IO_VB_GNU_COBOL)
                 + "\t: Gnu Cobol VB File "); 
         System.out.println("    " + ARG_INPUT_FONT   + "\t: Input font or character set");
         System.out.println("    " + ARG_IN_BINARY + "\t: Cobol Dialect");

@@ -46,18 +46,17 @@ import java.io.Reader;
 
 import javax.xml.stream.XMLStreamException;
 
+import org.w3c.dom.Document;
+
 import net.sf.JRecord.Log.AbsSSLogger;
 import net.sf.JRecord.Numeric.ConversionManager;
 import net.sf.JRecord.Numeric.Convert;
 import net.sf.cb2xml.ICb2XmlBuilder;
-import net.sf.cb2xml.def.Cb2xmlConstants;
 import net.sf.cb2xml.analysis.Copybook;
-import net.sf.cb2xml.copybookReader.IReadCobolCopybook;
+import net.sf.cb2xml.copybookReader.ICobolCopybookTextSource;
+import net.sf.cb2xml.def.Cb2xmlConstants;
 import net.sf.cb2xml.sablecc.lexer.LexerException;
 import net.sf.cb2xml.sablecc.parser.ParserException;
-
-
-import org.w3c.dom.Document;
 
 
 /**
@@ -221,14 +220,14 @@ public class Cb2Xml {
 		//}
 	}
 
-	public static Copybook getCopybook(IReadCobolCopybook reader, int cobolDialect, boolean debug,
+	public static Copybook getCopybook(ICobolCopybookTextSource reader, int cobolDialect, boolean debug,
 			int format, int stackSize) {
 		Convert conv = ConversionManager.getInstance().getConverter4code(cobolDialect) ;
 		//synchronized (SYNC) {
 			return  net.sf.cb2xml.Cb2Xml3
 					.newBuilderJRec(reader)
 							.setDebug(debug)
-							.setCobolLineFormat(format)
+//							.setCobolLineFormat(format)
 							.setLoadComments(false)
 							.setStackSize(stackSize)
 							.setDialect(conv)

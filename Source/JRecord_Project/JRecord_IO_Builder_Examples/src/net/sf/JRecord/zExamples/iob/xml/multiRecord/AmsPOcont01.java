@@ -28,7 +28,7 @@ package net.sf.JRecord.zExamples.iob.xml.multiRecord;
 import java.io.IOException;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.External.ExternalRecord;
@@ -87,7 +87,7 @@ public class AmsPOcont01 {
  
     	IOBldr = JRecordInterface1.SCHEMA_XML
     				.newIOBuilder(copyName)
-    					.setFileOrganization(Constants.IO_CONTINOUS_NO_LINE_MARKER)
+    					.setFileOrganization(IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER)
     					;
 
 //		

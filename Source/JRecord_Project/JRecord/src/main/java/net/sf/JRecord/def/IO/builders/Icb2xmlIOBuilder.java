@@ -43,7 +43,7 @@ import net.sf.JRecord.Option.IRecordPositionOption;
  *      {@code
  *      AbstractLineReader r = JRecordInterface1.COBOL
  *              .newIOBuilder("file-name")
- *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+ *                  .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
  *                  .setDialect(ICopybookDialects.FMT_FUJITSU)
  *              .newReader("Data-Filename");
  * }</pre> 

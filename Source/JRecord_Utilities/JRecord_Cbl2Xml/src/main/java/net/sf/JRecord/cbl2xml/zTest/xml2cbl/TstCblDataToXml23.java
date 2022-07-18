@@ -31,7 +31,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-
+import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLStreamException;
@@ -39,7 +39,7 @@ import javax.xml.stream.XMLStreamException;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
@@ -175,7 +175,7 @@ public class TstCblDataToXml23 {
 			split = CopybookLoader.SPLIT_HIGHEST_REPEATING;
 		}
 		return Cobol2GroupXml.newCobol2Xml(copybookFileName)
-					      .setFileOrganization(Constants.IO_BIN_TEXT)
+					      .setFileOrganization(IFileStructureConstants.IO_BIN_TEXT)
 					      .setDialect(ICopybookDialects.FMT_FUJITSU)
 					      .setSplitCopybook(split)
 					      .setTagFormat(tagFormat);

@@ -31,6 +31,7 @@ package net.sf.JRecord;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.External.CopybookLoaderFactory;
+import net.sf.JRecord.ExternalRecordSelection.ExternalSelectionBuilder;
 import net.sf.JRecord.IO.builders.CsvIOBuilder;
 import net.sf.JRecord.IO.builders.FileSchemaBuilder;
 import net.sf.JRecord.IO.builders.FixedWidthIOBuilder;
@@ -60,7 +61,7 @@ import net.sf.JRecord.def.IO.builders.recordDeciders.IRecordDeciderBuilder;
  * <b>Example:</b><pre>{@code
  *      AbstractLineReader r = JRecordInterface1.COBOL
  *              .newIOBuilder("file-name")
- *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+ *                  .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
  *                  .setDialect(ICopybookDialects.FMT_FUJITSU)
  *              .newReader("Data-Filename");
  * }</pre> 
@@ -77,7 +78,7 @@ public class JRecordInterface1 {
      * <pre>{@code
      *      AbstractLineReader r = JRecordInterface1.COBOL
      *              .newIOBuilder("file-name.cbl")
-     *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+     *                  .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
      *                  .setDialect(ICopybookDialects.FMT_FUJITSU)
      *              .newReader("Data-Filename");
      * }</pre> 
@@ -98,7 +99,7 @@ public class JRecordInterface1 {
      * {@code
      *      AbstractLineReader r = JRecordInterface1.COBOL
      *              .newIOBuilder("file-name.xml")
-     *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+     *                  .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
      *              .newReader("Data-Filename");
      * }</pre> 
      */
@@ -193,7 +194,7 @@ public class JRecordInterface1 {
      * Cobol Copybooks do not provide a means to determine which
 	 * Record applies to a particular Data-Line. Most of the
 	 * time this does not matter but there are exceptions 
-	 * (e.g. <b>Constants.IO_CONTINOUS_NO_LINE_MARKER</b>).
+	 * (e.g. <b>IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER</b>).
 	 * 
 	 * <p>One way to tell
 	 * JRecord / RecordEditor which Record to use for a Data-line
@@ -238,6 +239,25 @@ public class JRecordInterface1 {
 	 *  </pre>
      */
     public static final IRecordDeciderBuilder RECORD_DECIDER_BUILDER = new RecordDeciderBuilder();
+    
+    /**
+     * Builder to create Record Selection criteria from Field test and <i>and</i> and <i>or</i> 
+     * boolean operators. Example of usage
+     * <pre>
+     *   ExternalSelectionBuilder selBldr = JRecordInterface1.RECORD_SELECTION_BUILDER;
+     *
+     *   ICobolIOBuilder ioBldr = JRecordInterface1.COBOL
+     *    			  .newIOBuilder(copyName)
+     *    				.setFileOrganization(IFileStructureConstants.IO_BIN_TEXT)
+     *    				.setSplitCopybook(CopybookLoader.SPLIT_01_LEVEL)
+     *    					
+     *    				.setRecordSelection("Location-Record", selBldr.newFieldSelectionEquals("Record-Type", "H1"))
+     *    				.setRecordSelection("Product-Record",  selBldr.newFieldSelectionEquals("Record-Type", "D1"))
+     *    				.setRecordSelection("Location-Record", selBldr.newFieldSelectionEquals("Record-Type", "S1"));
+     *                   
+     * </pre>
+     */
+    public static final ExternalSelectionBuilder RECORD_SELECTION_BUILDER = new ExternalSelectionBuilder();
     
     /**
      * This class creates Csv-IO-Builders {@link CsvIOBuilder}

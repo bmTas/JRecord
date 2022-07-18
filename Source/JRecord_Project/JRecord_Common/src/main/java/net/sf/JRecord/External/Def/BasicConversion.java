@@ -30,6 +30,7 @@ import java.util.HashMap;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Numeric.ConversionManager;
 import net.sf.JRecord.Numeric.Convert;
 import net.sf.JRecord.Types.Type;
@@ -55,44 +56,44 @@ public class BasicConversion implements AbstractConversion {
 //   	   String rdOcVb = "Open Cobol VB";
 
     	
-        keys[i] = Constants.IO_DEFAULT;                externalNames[i] = "Default";                 names[i++] = rdDefault;
-        keys[i] = Constants.IO_TEXT_LINE;              externalNames[i] = "Text";                    names[i++] = "Text IO";
-        keys[i] = Constants.IO_BIN_TEXT;               externalNames[i] = "Byte_Text";               names[i++] = "Text IO (byte Based)";
-        keys[i] = Constants.IO_UNICODE_TEXT;           externalNames[i] = "Text_Unicode";            names[i++] = "Text IO (Unicode)";
-        keys[i] = Constants.IO_FIXED_LENGTH;           externalNames[i] = "Fixed_Length";            names[i++] = rdFixed;
-        keys[i] = Constants.IO_FIXED_LENGTH_CHAR;      externalNames[i] = "Fixed_Length_Char";       names[i++] = "Fixed Length Char";
+        keys[i] = IFileStructureConstants.IO_DEFAULT;                externalNames[i] = "Default";                 names[i++] = rdDefault;
+        keys[i] = IFileStructureConstants.IO_TEXT_LINE;              externalNames[i] = "Text";                    names[i++] = "Text IO";
+        keys[i] = IFileStructureConstants.IO_BIN_TEXT;               externalNames[i] = "Byte_Text";               names[i++] = "Text IO (byte Based)";
+        keys[i] = IFileStructureConstants.IO_UNICODE_TEXT;           externalNames[i] = "Text_Unicode";            names[i++] = "Text IO (Unicode)";
+        keys[i] = IFileStructureConstants.IO_FIXED_LENGTH;           externalNames[i] = "Fixed_Length";            names[i++] = rdFixed;
+        keys[i] = IFileStructureConstants.IO_FIXED_LENGTH_CHAR;      externalNames[i] = "Fixed_Length_Char";       names[i++] = "Fixed Length Char";
         
-        keys[i] = Constants.IO_BINARY_IBM_4680;        externalNames[i] = "Binary";                  names[i++] = rdLineBin;
-        keys[i] = Constants.IO_VB;                     externalNames[i] = "Mainframe_VB";            names[i++] = rdVb;
-        keys[i] = Constants.IO_VB_DUMP;                externalNames[i] = "Mainframe_VB_As_RECFMU";  names[i++] = rdVbDump;
-        keys[i] = Constants.IO_VB_DUMP2;               externalNames[i] = "VB_DUMP2"; 				 names[i++] = "VB_DUMP2";
-        keys[i] = Constants.IO_VB_FUJITSU;             externalNames[i] = "FUJITSU_VB";              names[i++] = "Fujitsu Variable Binary";
-        keys[i] = Constants.IO_VB_GNU_COBOL;           externalNames[i] = "Gnu_Cobol_VB";            names[i++] = "GNU Cobol VB";
-        keys[i] = Constants.IO_MICROFOCUS;             externalNames[i] = "Microfocus_Format";       names[i++] = "Experimental Microfocus Header File";
-        keys[i] = Constants.IO_UNKOWN_FORMAT;          externalNames[i] = "UNKOWN_FORMAT";           names[i++] = "Unknown File Format";
-        keys[i] = Constants.IO_WIZARD;                 externalNames[i] = "FILE_WIZARD";             names[i++] = "File Wizard";
-        keys[i] = Constants.IO_CSV;                    externalNames[i] = "CSV_EMBEDDED_CR";         names[i++] = "Csv Embedded Cr";
-        keys[i] = Constants.IO_UNICODE_CSV;            externalNames[i] = "UNICODE_CSV_EMBEDDED_CR"; names[i++] = "Unicode Csv Embedded Cr";
-        keys[i] = Constants.IO_NAME_1ST_LINE;          externalNames[i] = "CSV_NAME_1ST_LINE";       names[i++] = "Csv Name on 1st line";
-        keys[i] = Constants.IO_CSV_NAME_1ST_LINE;      externalNames[i] = "CSV_NAME_1ST_LINE_EMBEDDED_CR"; names[i++] = "Csv Name on 1st line (Embedded Cr)";
-        keys[i] = Constants.IO_BIN_NAME_1ST_LINE;      externalNames[i] = "Byte_Text_NAME_1ST_LINE"; names[i++] = "Text IO (byte Based) name 1st Line";
-        keys[i] = Constants.IO_UNICODE_NAME_1ST_LINE;  externalNames[i] = "UNICODE_CSV_NAME_1ST_LINE";  names[i++] = "Unicode Name on 1st line";
-        keys[i] = Constants.IO_UNICODE_CSV_NAME_1ST_LINE;externalNames[i] = "UNICODE_CSV_NAME_1ST_LINE_EMBEDDED_CR";      names[i++] = "Unicode Name on 1st line (Embedded Cr)";
+        keys[i] = IFileStructureConstants.IO_BINARY_IBM_4680;        externalNames[i] = "Binary";                  names[i++] = rdLineBin;
+        keys[i] = IFileStructureConstants.IO_VB;                     externalNames[i] = "Mainframe_VB";            names[i++] = rdVb;
+        keys[i] = IFileStructureConstants.IO_VB_DUMP;                externalNames[i] = "Mainframe_VB_As_RECFMU";  names[i++] = rdVbDump;
+        keys[i] = IFileStructureConstants.IO_VB_DUMP2;               externalNames[i] = "VB_DUMP2"; 				 names[i++] = "VB_DUMP2";
+        keys[i] = IFileStructureConstants.IO_VB_FUJITSU;             externalNames[i] = "FUJITSU_VB";              names[i++] = "Fujitsu Variable Binary";
+        keys[i] = IFileStructureConstants.IO_VB_GNU_COBOL;           externalNames[i] = "Gnu_Cobol_VB";            names[i++] = "GNU Cobol VB";
+        keys[i] = IFileStructureConstants.IO_MICROFOCUS;             externalNames[i] = "Microfocus_Format";       names[i++] = "Experimental Microfocus Header File";
+        keys[i] = IFileStructureConstants.IO_UNKOWN_FORMAT;          externalNames[i] = "UNKOWN_FORMAT";           names[i++] = "Unknown File Format";
+        keys[i] = IFileStructureConstants.IO_WIZARD;                 externalNames[i] = "FILE_WIZARD";             names[i++] = "File Wizard";
+        keys[i] = IFileStructureConstants.IO_CSV;                    externalNames[i] = "CSV_EMBEDDED_CR";         names[i++] = "Csv Embedded Cr";
+        keys[i] = IFileStructureConstants.IO_UNICODE_CSV;            externalNames[i] = "UNICODE_CSV_EMBEDDED_CR"; names[i++] = "Unicode Csv Embedded Cr";
+        keys[i] = IFileStructureConstants.IO_NAME_1ST_LINE;          externalNames[i] = "CSV_NAME_1ST_LINE";       names[i++] = "Csv Name on 1st line";
+        keys[i] = IFileStructureConstants.IO_CSV_NAME_1ST_LINE;      externalNames[i] = "CSV_NAME_1ST_LINE_EMBEDDED_CR"; names[i++] = "Csv Name on 1st line (Embedded Cr)";
+        keys[i] = IFileStructureConstants.IO_BIN_NAME_1ST_LINE;      externalNames[i] = "Byte_Text_NAME_1ST_LINE"; names[i++] = "Text IO (byte Based) name 1st Line";
+        keys[i] = IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE;  externalNames[i] = "UNICODE_CSV_NAME_1ST_LINE";  names[i++] = "Unicode Name on 1st line";
+        keys[i] = IFileStructureConstants.IO_UNICODE_CSV_NAME_1ST_LINE;externalNames[i] = "UNICODE_CSV_NAME_1ST_LINE_EMBEDDED_CR";      names[i++] = "Unicode Name on 1st line (Embedded Cr)";
  
-        keys[i] = Constants.IO_UNICODE_NAME_1ST_LINE;  externalNames[i] = "UNICODE_CSV_NAME_1ST_LINE_"; names[i++] = "Unicode Name on 1st line";
-        keys[i] = Constants.IO_GENERIC_CSV;            externalNames[i] = "CSV_GENERIC";            names[i++] = "Generic CSV (Choose details at run time)";
+        keys[i] = IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE;  externalNames[i] = "UNICODE_CSV_NAME_1ST_LINE_"; names[i++] = "Unicode Name on 1st line";
+        keys[i] = IFileStructureConstants.IO_GENERIC_CSV;            externalNames[i] = "CSV_GENERIC";            names[i++] = "Generic CSV (Choose details at run time)";
 
-        keys[i] = Constants.IO_XML_USE_LAYOUT;         externalNames[i] = "XML_Use_Layout";         names[i++] = "XML - Existing Layout";
-        keys[i] = Constants.IO_XML_BUILD_LAYOUT;       externalNames[i] = "XML_Build_Layout";       names[i++] = "XML - Build Layout";
-        keys[i] = Constants.IO_CONTINOUS_NO_LINE_MARKER;       externalNames[i] = "Continuous";  		    names[i++] = "Continuous no eol marker";
-        keys[i] = Constants.IO_VBS;                    externalNames[i] = "Mainframe_VBS";            names[i++] = "Variable Block Spanned (VBS)";
-//        keys[i] = Constants.IO_VB_GNU_COBOL;           externalNames[i] = "Open_Cobol_VB";           names[i++] = "Open Cobol VB";;
+        keys[i] = IFileStructureConstants.IO_XML_USE_LAYOUT;         externalNames[i] = "XML_Use_Layout";         names[i++] = "XML - Existing Layout";
+        keys[i] = IFileStructureConstants.IO_XML_BUILD_LAYOUT;       externalNames[i] = "XML_Build_Layout";       names[i++] = "XML - Build Layout";
+        keys[i] = IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER;       externalNames[i] = "Continuous";  		    names[i++] = "Continuous no eol marker";
+        keys[i] = IFileStructureConstants.IO_VBS;                    externalNames[i] = "Mainframe_VBS";            names[i++] = "Variable Block Spanned (VBS)";
+//        keys[i] = IFileStructureConstants.IO_VB_GNU_COBOL;           externalNames[i] = "Open_Cobol_VB";           names[i++] = "Open Cobol VB";;
         keys[i] = Constants.NULL_INTEGER;              externalNames[i] = null;                     names[i] = null;
 
-        keys[i] = Constants.IO_FIXED_BYTE_ENTER_FONT;  externalNames[i] = "FIXED_BYTE_ENTER_FONT";   names[i++] = "Fixed Byte, enter font";
-        keys[i] = Constants.IO_FIXED_CHAR_ENTER_FONT;  externalNames[i] = "FIXED_CHAR_ENTER_FONT";   names[i++] = "Fixed Char, enter font";
-        keys[i] = Constants.IO_TEXT_BYTE_ENTER_FONT;   externalNames[i] = "TEXT_BYTE_ENTER_FONT";    names[i++] = "Text IO (Byte), Enter Font";
-        keys[i] = Constants.IO_TEXT_CHAR_ENTER_FONT;   externalNames[i] = "TEXT_CHAR_ENTER_FONT";    names[i++] = "Text IO (Char), Enter Font";
+        keys[i] = IFileStructureConstants.IO_FIXED_BYTE_ENTER_FONT;  externalNames[i] = "FIXED_BYTE_ENTER_FONT";   names[i++] = "Fixed Byte, enter font";
+        keys[i] = IFileStructureConstants.IO_FIXED_CHAR_ENTER_FONT;  externalNames[i] = "FIXED_CHAR_ENTER_FONT";   names[i++] = "Fixed Char, enter font";
+        keys[i] = IFileStructureConstants.IO_TEXT_BYTE_ENTER_FONT;   externalNames[i] = "TEXT_BYTE_ENTER_FONT";    names[i++] = "Text IO (Byte), Enter Font";
+        keys[i] = IFileStructureConstants.IO_TEXT_CHAR_ENTER_FONT;   externalNames[i] = "TEXT_CHAR_ENTER_FONT";    names[i++] = "Text IO (Char), Enter Font";
         
         if (i < keys.length) {
         	keys[i] = Constants.NULL_INTEGER;

@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import net.sf.JRecord.Common.AbstractManager;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Types.Type;
 import net.sf.cb2xml.def.Cb2xmlConstants;
 
@@ -71,13 +71,13 @@ public class ConversionManager implements AbstractManager {
 
         Convert mainframeConverter = (new BasicConvert(
 				ICopybookDialects.FMT_MAINFRAME, "Mainframe", ICopybookDialects.FMT_MAINFRAME, MAINFRAME_BIN_SIZES,
-				MAINFRAME_SYNC, true, 4, 4)).setDefaultVbFileStructure(Constants.IO_VB);
+				MAINFRAME_SYNC, true, 4, 4)).setDefaultVbFileStructure(IFileStructureConstants.IO_VB);
 //        Convert mainframeZLConverter = (new BasicConvert(
 // 				ICopybookDialects.FMT_MAINFRAME_SIGN_LEADING_ZONED, "Mainframe Sign Leading Zoned", ICopybookDialects.FMT_MAINFRAME, MAINFRAME_BIN_SIZES,
-// 				MAINFRAME_SYNC, false, 4, 4)).setDefaultVbFileStructure(Constants.IO_VB);
+// 				MAINFRAME_SYNC, false, 4, 4)).setDefaultVbFileStructure(IFileStructureConstants.IO_VB);
        Convert fujitsuConverter = (
         			new GnuCobol(ICopybookDialects.FMT_FUJITSU, "Fujitsu", MAINFRAME_BIN_SIZES, MAINFRAME_SYNC, 4, 8)
-        		).setDefaultVbFileStructure(Constants.IO_VB_FUJITSU);
+        		).setDefaultVbFileStructure(IFileStructureConstants.IO_VB_FUJITSU);
 
         registerConverter(new BasicConvert(ICopybookDialects.FMT_INTEL, "Intel", ICopybookDialects.FMT_INTEL, MAINFRAME_BIN_SIZES, false));
 		registerConverter(mainframeConverter);
@@ -194,12 +194,12 @@ public class ConversionManager implements AbstractManager {
     private static class GnuCobol extends BasicConvert {
     	public GnuCobol(int id, String name,  int[] binarySizes, int[] syncAt) {
     		super(id,  name, ICopybookDialects.FMT_BIG_ENDIAN, binarySizes, syncAt, true, 4, 8);
-    		setDefaultVbFileStructure(Constants.IO_VB_GNU_COBOL);
+    		setDefaultVbFileStructure(IFileStructureConstants.IO_VB_GNU_COBOL);
     	}
 
     	public GnuCobol(int id, String name,  int[] binarySizes, int[] syncAt, int floatSync, int doubleSync) {
     		super(id,  name, ICopybookDialects.FMT_BIG_ENDIAN, binarySizes, syncAt, true, floatSync, doubleSync);
-    		setDefaultVbFileStructure(Constants.IO_VB_GNU_COBOL);
+    		setDefaultVbFileStructure(IFileStructureConstants.IO_VB_GNU_COBOL);
     	}
 
     	public int getTypeIdentifier(String usage, String picture, boolean signed,
@@ -224,12 +224,12 @@ public class ConversionManager implements AbstractManager {
     private static class OpenCobolBE extends BasicConvert {
     	public OpenCobolBE(int id, String name,  int[] binarySizes, int[] syncAt) {
     		super(id,  name, ICopybookDialects.FMT_BIG_ENDIAN, binarySizes, syncAt, true, 4, 8);
-    		setDefaultVbFileStructure(Constants.IO_VB_GNU_COBOL);
+    		setDefaultVbFileStructure(IFileStructureConstants.IO_VB_GNU_COBOL);
    	}
 
     public OpenCobolBE(int id, String name,  int[] binarySizes, int[] syncAt, int floatSync, int doubleSync) {
     		super(id,  name, ICopybookDialects.FMT_BIG_ENDIAN, binarySizes, syncAt, true, floatSync, doubleSync);
-    		setDefaultVbFileStructure(Constants.IO_VB_GNU_COBOL);
+    		setDefaultVbFileStructure(IFileStructureConstants.IO_VB_GNU_COBOL);
     	}
     }
 }

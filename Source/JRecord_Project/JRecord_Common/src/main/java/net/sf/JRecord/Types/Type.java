@@ -257,4 +257,21 @@ public interface Type {
      * for our German user's
      */
     public abstract char getDecimalChar();
+    
+    /**
+     * Check String value
+     * @param fldDef field definition
+     * @param value value to be tested
+     * @return wether it is valid
+     */
+    public boolean isValid(IFieldDetail fldDef, String value);
+    
+    /**
+     * 
+     * @param pos position in the line
+     * @param fldDef field definition
+     * @param line line containg the field
+     * @return
+     */
+    public boolean isValid(int pos, IFieldDetail fldDef, byte[] line);
 }

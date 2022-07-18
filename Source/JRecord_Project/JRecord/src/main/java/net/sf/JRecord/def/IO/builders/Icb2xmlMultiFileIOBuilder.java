@@ -44,7 +44,7 @@ import net.sf.JRecord.Option.IRecordPositionOption;
  *      {@code
  *      AbstractLineReader r = JRecordInterface1.CB2XML
  *              .newMultiCopybookIOBuilder()
- *                      .setFileOrganization(Constants.IO_FIXED_LENGTH)
+ *                      .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
  *                  .addCopyBook("copybook1.xml")
  *                  .addCopyBook("copybook2.xml")
  *              .newReader("Data-Filename");

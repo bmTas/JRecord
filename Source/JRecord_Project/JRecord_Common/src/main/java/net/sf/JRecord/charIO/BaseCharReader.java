@@ -30,19 +30,25 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 
-public abstract class BaseCharReader implements ICharReader {
+public abstract class BaseCharReader implements ICharReader, IOpenInputStream {
 
 	protected BufferedReader reader;
 
 
-	@Override
-	public void open(String fileName, String font) throws IOException {
-	    open(new FileInputStream(fileName), font);
+	
+	public ICharReader open(String fileName, String font) throws IOException {
+	    return open(new FileInputStream(fileName), font);
+	}
+
+	public ICharReader open(Reader reader) throws IOException {
+		reader = new BufferedReader(reader);
+		return this;
 	}
 
 	@Override
-	public void open(InputStream inputStream, String font) throws IOException {
+	public ICharReader open(InputStream inputStream, String font) throws IOException {
 		InputStreamReader stdReader;
 		if (font == null || font.length() == 0) {
 		    stdReader = new InputStreamReader(inputStream);
@@ -55,7 +61,7 @@ public abstract class BaseCharReader implements ICharReader {
 		}
 	
 		reader = new BufferedReader(stdReader);
-	
+		return this;
 	}
 
 	@Override

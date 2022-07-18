@@ -8,7 +8,9 @@ import java.util.Collections;
 import java.util.List;
 
 import net.sf.cb2xml.analysis.BaseItem;
+import net.sf.cb2xml.analysis.Condition;
 import net.sf.cb2xml.analysis.Item;
+import net.sf.cb2xml.def.ICondition;
 import net.sf.cb2xml.def.IItem;
 
 /**
@@ -38,6 +40,13 @@ public class ItemJRec extends Item implements IItemJRecUpd {
 		List<? extends IItem> childItms = item.getChildItems();
 		for (int i = 0; i < childItms.size(); i++) {
 			new ItemJRec(this, childItms.get(i));
+		}
+		
+		List<? extends ICondition> conditions = item.getConditions();
+		for (ICondition c : conditions) {
+			if (c instanceof Condition) {
+				super.addCondition((Condition) c);
+			}
 		}
 	}
 

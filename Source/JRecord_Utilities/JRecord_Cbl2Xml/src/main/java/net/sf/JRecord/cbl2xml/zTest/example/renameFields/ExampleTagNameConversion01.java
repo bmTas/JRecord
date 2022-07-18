@@ -9,6 +9,7 @@ import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.AbstractFieldValue;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.FieldIterator;
 import net.sf.JRecord.IO.AbstractLineReader;
@@ -30,7 +31,7 @@ public class ExampleTagNameConversion01 {
 		Cobol2Xml.newCobol2Xml(dtar020FileName)
 
                                          // Cobol Options
-                         .setFileOrganization(constants.IO_FIXED_LENGTH)
+                         .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
                          .setDialect(constants.FMT_MAINFRAME)               
                          .setSplitCopybook(constants.SPLIT_NONE)      
                          .setFont("cp037")
@@ -43,7 +44,7 @@ public class ExampleTagNameConversion01 {
 		
         AbstractLineReader reader = JRecordInterface1.COBOL.newIOBuilder(dtar020FileName)
         
-			        .setFileOrganization(constants.IO_FIXED_LENGTH)
+			        .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
 			        .setDialect(constants.FMT_MAINFRAME)               
 			        .setSplitCopybook(constants.SPLIT_NONE)      
 			        .setFont("cp037")

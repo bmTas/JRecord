@@ -31,15 +31,17 @@ package net.sf.JRecord.def.IO.builders;
 import java.io.InputStream;
 import java.io.Reader;
 
-import net.sf.cb2xml.copybookReader.IReadCobolCopybook;
+import net.sf.JRecord.IO.builders.CblIOBuilderMultiSchema;
+import net.sf.cb2xml.copybookReader.ICobolCopybookTextSource;
 import net.sf.cb2xml.copybookReader.ReadCobolCopybook;
+import net.sf.cb2xml.def.ICopybookJrUpd;
 
 /**
  * Interface to create CobolIOBuilders (a Builder builder).
  * <pre>{@code
  *      AbstractLineReader r = JRecordInterface1.COBOL
  *              .newIOBuilder("file-name")
- *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+ *                  .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
  *                  .setDialect(ICopybookDialects.FMT_FUJITSU)
  *              .newReader("Data-Filename");
  * }</pre> 
@@ -57,7 +59,7 @@ public interface ICobolCopybookIOProvider {
 	 * 
 	 *      AbstractLineReader r = JRecordInterface1.COBOL
 	 *              .<b>newIOBuilder("file-name")</b>
-	 *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+	 *                  .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
 	 *                  .setDialect(ICopybookDialects.FMT_FUJITSU)
 	 *              .newReader("Data-Filename");
 	 * </pre> 
@@ -109,7 +111,7 @@ public interface ICobolCopybookIOProvider {
 	 *       
 	 *      AbstractLineReader r = JRecordInterface1.COBOL
 	 *             .<b>newIOBuilder(cobolCopybookStream, "My-Cobol-Record")</b>
-	 *                 .setFileOrganization(Constants.IO_FIXED_LENGTH)
+	 *                 .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
 	 *                 .setDialect(ICopybookDialects.FMT_FUJITSU)
 	 *             .newReader("Data-Filename");
 	 * </pre> 
@@ -179,7 +181,7 @@ public interface ICobolCopybookIOProvider {
 	public abstract ICobolMultiCopybookIOBuilder newMultiCopybookIOBuilder(String copybookname);
 
 	/**
-	 * Create a new IoBilder from a <b>Copybook reader class</b> see {@link IReadCobolCopybook}
+	 * Create a new IoBilder from a <b>Copybook reader class</b> see {@link ICobolCopybookTextSource}
 	 * 
 	 * <p><b>Usage:</b>
 	 * 
@@ -193,13 +195,20 @@ public interface ICobolCopybookIOProvider {
 	 *	ICobolIOBuilder iob = JRecordInterface1.COBOL.newIOBuilder(copybook);  
 	 * </pre></p>
 	 * 
-	 * @param copyybookReader Cobol Copybook Reader
+	 * @param copybookReader Cobol Copybook Reader
 	 * @return new IOBuilder
 	 */
-	public abstract ICobolIOBuilder newIOBuilder(IReadCobolCopybook copyybookReader);
+	public abstract ICobolIOBuilder newIOBuilder(ICobolCopybookTextSource copybookReader);
 
 	/**
-	 * Create a new <b>CobolCopybookReader</b>. A CobolCopybookReader  can<ul>
+	 * Create a new IoBilder from a <b>Cb2xml Copybook class</b> see {@link ICopybookJrUpd}
+	 * @param copyybook Cobol copybook (cb2xml Copybook format)
+	 * @return new IOBuilder
+	 */
+	public abstract CblIOBuilderMultiSchema newIOBuilder(ICopybookJrUpd copyybook);
+
+	/**
+	 * Create a new <b>CobolCopybookReader</b> ( {@link ReadCobolCopybook}). A CobolCopybookReader  can<ul>
 	 * <li>Load and Combine one or more Cobol Copybooks
 	 * <li>Expand basic <n>Cobol Copy</b> statements.
 	 * </ul>

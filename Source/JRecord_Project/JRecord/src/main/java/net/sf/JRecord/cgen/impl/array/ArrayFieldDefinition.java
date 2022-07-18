@@ -157,7 +157,7 @@ public class ArrayFieldDefinition implements IArrayStdDef {
 			return null;
 		} 
 		
-		return new DependingOnDtls(d.dependingOn, indexs[lvl], bld(d, lvl-1, indexs), false);
+		return new DependingOnDtls(d.dependingOn, indexs[lvl], d.arrayIndexNumber, bld(d, lvl-1, indexs), false);
 	}
 	
 	private boolean cmp(DependingOnDtls d, int[] indexs) {

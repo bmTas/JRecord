@@ -59,6 +59,9 @@ public class FixedLengthTextReader extends BasicTextLineReader {
 		
 		String font = layout.getFontName();
     	
-    	super.open(new FixedLengthCharReader(layout.getMaximumRecordLength()), inputStream, layout, font);
+    	super.open(new FixedLengthCharReader(
+    			layout.getMaximumRecordLength()).open(inputStream, font), 
+    			inputStream, 
+    			layout);
     }
 }

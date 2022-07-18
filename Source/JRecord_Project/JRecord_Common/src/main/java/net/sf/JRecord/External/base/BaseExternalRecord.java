@@ -1235,7 +1235,7 @@ implements IFieldUpdatedListner, IAddDependingOn {
 					fldHelper, 
 					items,
 					"",
-					null, fldHelper.getInitialLevel(), 0);
+					null, fldHelper.getInitialLevel(), 0, 0);
 		
 			if (fldHelper.lastFiller != null 
 			&& (fldHelper.lastFiller.getPos() + fldHelper.lastFiller.getLen() > fldHelper.lastEndPos)) {
@@ -1261,7 +1261,8 @@ implements IFieldUpdatedListner, IAddDependingOn {
 			List<? extends IItemJRecUpd> itms, String nameSuffix,
 			DependingOnDtls dependOnParentDtls,
 			int level,
-			int basePos) {
+			int basePos,
+			int arrayIndexNumber) {
 
 		for (IItemJRecUpd itm  : itms) {
 			if (itm.getLevelNumber() == 88) {
@@ -1288,7 +1289,7 @@ implements IFieldUpdatedListner, IAddDependingOn {
 							createField(
 									fldHelper, level, itm, 
 									fldHelper.updateFieldNameIndex(nameSuffix, i), // problem area
-									createDependingOnDtls(dependOn, dependOnParentDtls, i),
+									createDependingOnDtls(dependOn, dependOnParentDtls, i, arrayIndexNumber),
 									basePos + i * itm.getStorageLength());
 						}						
 					} else {
@@ -1296,25 +1297,27 @@ implements IFieldUpdatedListner, IAddDependingOn {
 							loadItems(
 									fldHelper, childItems, 
 									fldHelper.updateFieldNameIndex(nameSuffix, i),
-									createDependingOnDtls(dependOn, dependOnParentDtls, i),
+									createDependingOnDtls(dependOn, dependOnParentDtls, i,arrayIndexNumber ),
 									level+1,
-									basePos + i * itm.getStorageLength());
+									basePos + i * itm.getStorageLength(),
+									arrayIndexNumber + 1);
 						}
 					}		
 				} else if (itm.getOccurs() == 0) {
 				} else if (numChildItems == 0) {
 					createField(fldHelper, level, itm, nameSuffix, dependOnParentDtls, basePos);
 				} else {
-					loadItems(fldHelper, childItems, nameSuffix, dependOnParentDtls, level+1, basePos);
+					loadItems(fldHelper, childItems, nameSuffix, dependOnParentDtls, level+1, basePos, arrayIndexNumber);
 				}
 			}
 		}
 	}
 
-	private DependingOnDtls createDependingOnDtls(DependingOn dependOn, DependingOnDtls dependOnParentDtls, int idx) {
+	private DependingOnDtls createDependingOnDtls(DependingOn dependOn, DependingOnDtls dependOnParentDtls, 
+			int idx, int arrayIndexNumber) {
         DependingOnDtls dependOnDtls = dependOnParentDtls;
         if (dependOn != null) {
-        	dependOnDtls = new DependingOnDtls(dependOn, idx, dependOnParentDtls);
+        	dependOnDtls = new DependingOnDtls(dependOn, idx, arrayIndexNumber, dependOnParentDtls);
         }
         return dependOnDtls;
 	}

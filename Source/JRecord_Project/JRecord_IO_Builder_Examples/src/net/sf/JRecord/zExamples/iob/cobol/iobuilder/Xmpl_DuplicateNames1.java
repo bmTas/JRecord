@@ -28,8 +28,8 @@ package net.sf.JRecord.zExamples.iob.cobol.iobuilder;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -83,7 +83,7 @@ public class Xmpl_DuplicateNames1 {
 			
 		ICobolIOBuilder ioBuilder = CobolIoProvider.getInstance()
 										.newIOBuilder(cobolCopybookStream, "COMPANY-RECORD")
-											.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE); 
+											.setFileOrganization(IFileStructureConstants.IO_STANDARD_TEXT_FILE); 
 												// Setting the FileOrganisation is Not needed in this case 
 												// but it is a good idea to set the 
 												// file organization (structure) rather than 

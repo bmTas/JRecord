@@ -1,7 +1,7 @@
 package codeGen.readWrite;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.IO.AbstractLineWriter;
@@ -18,7 +18,7 @@ public class WriteDtar022standard {
 	        ICobolIOBuilder iobWrite = JRecordInterface1.COBOL
 	                .newIOBuilder(outCopybookName)
 	                   .setFont("cp037")
-	                   .setFileOrganization(Constants.IO_FIXED_LENGTH)
+	                   .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
 	                   .setSplitCopybook(CopybookLoader.SPLIT_NONE)
 	                       ;  
 	        AbstractLineWriter writer = iobWrite.newWriter(outputFileName);

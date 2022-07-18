@@ -30,6 +30,7 @@ import java.io.IOException;
 import junit.framework.TestCase;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.IO.builders.IOBuilderBase;
 import net.sf.JRecord.Numeric.ICopybookDialects;
@@ -95,9 +96,9 @@ public class TstSetAttributes01 extends TestCase {
 	@SuppressWarnings({ "deprecation", "rawtypes" })
 	public void testDefaultValues2() {
 		int[] fileStructures = {
-				Constants.IO_STANDARD_UNICODE_TEXT_FILE, Constants.IO_FIXED_LENGTH_CHAR,
-				Constants.IO_UNICODE_CSV, Constants.IO_UNICODE_CSV_NAME_1ST_LINE,
-				Constants.IO_UNICODE_NAME_1ST_LINE, Constants.IO_UNICODE_TEXT
+				IFileStructureConstants.IO_STANDARD_UNICODE_TEXT_FILE, IFileStructureConstants.IO_FIXED_LENGTH_CHAR,
+				IFileStructureConstants.IO_UNICODE_CSV, IFileStructureConstants.IO_UNICODE_CSV_NAME_1ST_LINE,
+				IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE, IFileStructureConstants.IO_UNICODE_TEXT
 		};
 		
 		for (int fs : fileStructures) {
@@ -146,12 +147,12 @@ public class TstSetAttributes01 extends TestCase {
 	@SuppressWarnings({ "deprecation", "rawtypes" })
 	public void testDefaultValues3() {
 		int[] fileStructures = {
-				Constants.IO_BIN_TEXT, Constants.IO_BIN_CSV,
-				Constants.IO_CONTINOUS_NO_LINE_MARKER, Constants.IO_CSV,
-				Constants.IO_NAME_1ST_LINE, 
-				Constants.IO_FIXED_LENGTH, Constants.IO_FIXED_LENGTH_RECORDS,
-				Constants.IO_VB, Constants.IO_VB_DUMP, Constants.IO_VB_FUJITSU,
-				Constants.IO_VB_GNU_COBOL
+				IFileStructureConstants.IO_BIN_TEXT, IFileStructureConstants.IO_BIN_CSV,
+				IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER, IFileStructureConstants.IO_CSV,
+				IFileStructureConstants.IO_NAME_1ST_LINE, 
+				IFileStructureConstants.IO_FIXED_LENGTH, IFileStructureConstants.IO_FIXED_LENGTH_RECORDS,
+				IFileStructureConstants.IO_VB, IFileStructureConstants.IO_VB_DUMP, IFileStructureConstants.IO_VB_FUJITSU,
+				IFileStructureConstants.IO_VB_GNU_COBOL
 		};
 		
 		for (int fs : fileStructures) {
@@ -222,9 +223,9 @@ public class TstSetAttributes01 extends TestCase {
 	@SuppressWarnings({ "deprecation", "rawtypes" })
 	public void testDefaultValues22() throws IOException {
 		int[] fileStructures = {
-				Constants.IO_STANDARD_UNICODE_TEXT_FILE, Constants.IO_FIXED_LENGTH_CHAR,
-				Constants.IO_UNICODE_CSV, Constants.IO_UNICODE_CSV_NAME_1ST_LINE,
-				Constants.IO_UNICODE_NAME_1ST_LINE, Constants.IO_UNICODE_TEXT
+				IFileStructureConstants.IO_STANDARD_UNICODE_TEXT_FILE, IFileStructureConstants.IO_FIXED_LENGTH_CHAR,
+				IFileStructureConstants.IO_UNICODE_CSV, IFileStructureConstants.IO_UNICODE_CSV_NAME_1ST_LINE,
+				IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE, IFileStructureConstants.IO_UNICODE_TEXT
 		};
 		ByteArrayInputStream is = new ByteArrayInputStream(new byte[]{});
 		
@@ -274,12 +275,12 @@ public class TstSetAttributes01 extends TestCase {
 	@SuppressWarnings({ "deprecation", "rawtypes" })
 	public void testDefaultValues23() throws IOException {
 		int[] fileStructures = {
-				Constants.IO_BIN_TEXT, Constants.IO_BIN_CSV,
-				Constants.IO_CONTINOUS_NO_LINE_MARKER, Constants.IO_CSV,
-				Constants.IO_NAME_1ST_LINE, 
-				Constants.IO_FIXED_LENGTH, Constants.IO_FIXED_LENGTH_RECORDS,
-				Constants.IO_VB, Constants.IO_VB_DUMP, Constants.IO_VB_FUJITSU,
-				Constants.IO_VB_GNU_COBOL
+				IFileStructureConstants.IO_BIN_TEXT, IFileStructureConstants.IO_BIN_CSV,
+				IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER, IFileStructureConstants.IO_CSV,
+				IFileStructureConstants.IO_NAME_1ST_LINE, 
+				IFileStructureConstants.IO_FIXED_LENGTH, IFileStructureConstants.IO_FIXED_LENGTH_RECORDS,
+				IFileStructureConstants.IO_VB, IFileStructureConstants.IO_VB_DUMP, IFileStructureConstants.IO_VB_FUJITSU,
+				IFileStructureConstants.IO_VB_GNU_COBOL
 		};
 		ByteArrayInputStream is = new ByteArrayInputStream(new byte[]{});
 		
@@ -328,7 +329,7 @@ public class TstSetAttributes01 extends TestCase {
 	public void testAttrs01() {
 		Object[] attrs = {
 				ICopybookDialects.FMT_GNU_COBOL, CopybookLoader.SPLIT_01_LEVEL,  Cb2xmlConstants.USE_COLS_6_TO_80,
-				Constants.IO_BIN_CSV, "cp037", Boolean.TRUE
+				IFileStructureConstants.IO_BIN_CSV, "cp037", Boolean.TRUE
 		};
 		setAndCheckAttributes(attrs);
 	}
@@ -337,7 +338,7 @@ public class TstSetAttributes01 extends TestCase {
 //	public void testAttrs02() {
 //		Object[] attrs = {
 //				ICopybookDialects.FMT_FUJITSU, CopybookLoader.SPLIT_REDEFINE,  Cb2xmlConstants.USE_LONG_LINE,
-//				Constants.IO_FIXED_LENGTH, "ibm037", Boolean.FALSE
+//				IFileStructureConstants.IO_FIXED_LENGTH, "ibm037", Boolean.FALSE
 //				
 //		};
 //		setAndCheckAttributes(attrs);

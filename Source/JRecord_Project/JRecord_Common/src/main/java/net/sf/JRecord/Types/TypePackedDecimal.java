@@ -46,6 +46,8 @@ import java.math.BigInteger;
 
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Common.RecordException;
+import net.sf.JRecord.Types.smallBin.CheckPackedDecimal;
 
 /**
  * Mainframe Packed Decimal Type.
@@ -116,4 +118,16 @@ public class TypePackedDecimal extends TypeNum {
 
 	    return record;
     }
+    
+
+	@Override
+	public boolean isValid(IFieldDetail fldDef, String value) {
+		throw new RecordException("Packed decimals are a binary format. It makes no sense to check a Text field");
+	}
+
+	@Override
+	public boolean isValid(int position, IFieldDetail fldDef, byte[] line) {
+		return CheckPackedDecimal.checkPackedDecimal(position, fldDef, line);
+	}
+
 }

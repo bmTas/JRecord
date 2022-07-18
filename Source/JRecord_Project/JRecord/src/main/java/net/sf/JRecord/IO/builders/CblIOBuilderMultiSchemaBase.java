@@ -47,6 +47,9 @@ import net.sf.JRecord.Numeric.ICopybookDialects;
 
 public class CblIOBuilderMultiSchemaBase<IOB>
 extends IOBuilderBase<IOB> implements IGetLoader  { 
+	
+	protected static final String ONLY_USED_WITH_COBOL = "A cobol Copybook reader can only be used with Cobol-Copybooks";
+
 
 	private final String copybookname;
 	final ICopybookLoaderStream loader;
@@ -107,12 +110,21 @@ extends IOBuilderBase<IOB> implements IGetLoader  {
 	}
 
 	
-	public IOB addCopyBook(net.sf.cb2xml.copybookReader.IReadCobolCopybook reader) {
+	public IOB addCopyBook(net.sf.cb2xml.copybookReader.ICobolCopybookTextSource reader) {
 		if (! (loader instanceof CobolCopybookLoader)) {
-			throw new RecordException("A cobol Copybook reader can only be used with Cobol-Copybooks");
+			throw new RecordException(ONLY_USED_WITH_COBOL);
 		}
 
 		copybooks.add(new CreateExternalFromCopybookReader(this, reader));
+		return super.self;
+	}
+	
+	public IOB addCopyBook(net.sf.cb2xml.def.ICopybookJrUpd copybook) {
+		if (! (loader instanceof CobolCopybookLoader)) {
+			throw new RecordException(ONLY_USED_WITH_COBOL);
+		}
+
+		copybooks.add(new CreateExternalFromCb2xmlCopybook(this, copybook));
 		return super.self;
 	}
 

@@ -59,7 +59,7 @@ import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
  *
  *        try {
  *             AbstractLineReader reader  = ioProvider.getLineReader(
- *                 Constants.IO_TEXT_LINE, ICopybookDialects.FMT_INTEL,
+ *                 IFileStructureConstants.IO_TEXT_LINE, ICopybookDialects.FMT_INTEL,
  *                 CopybookLoader.SPLIT_NONE, copybookName, vendorFile
  *             );
  * </pre>

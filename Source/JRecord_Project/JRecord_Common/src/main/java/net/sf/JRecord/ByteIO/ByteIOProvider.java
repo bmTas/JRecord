@@ -42,8 +42,8 @@ package net.sf.JRecord.ByteIO;
 
 import java.io.UnsupportedEncodingException;
 
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IBasicFileSchema;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 
 /**
@@ -83,8 +83,8 @@ public class ByteIOProvider {
     public AbstractByteReader getByteReader(IBasicFileSchema schema) {
     	int fileStructure = schema.getFileStructure();
 		switch (fileStructure) {
-		case Constants.IO_TEXT_BYTE_ENTER_FONT:		
-		case Constants.IO_BIN_TEXT:		
+		case IFileStructureConstants.IO_TEXT_BYTE_ENTER_FONT:		
+		case IFileStructureConstants.IO_BIN_TEXT:		
     		return new ByteTextReader(schema.getFontName());
     	}
         return getByteReader(fileStructure, schema.getMaximumRecordLength());
@@ -103,17 +103,17 @@ public class ByteIOProvider {
     public AbstractByteReader getByteReader(int fileStructure, int length) {
 
        	switch(fileStructure) {
-       		case Constants.IO_FIXED_BYTE_ENTER_FONT:		
-       		case Constants.IO_FIXED_LENGTH:		return new FixedLengthByteReader(length);
-			case Constants.IO_VBS: 				return new VbsByteReader(false, true);
-			case Constants.IO_VB: 				return new VbByteReader(VbByteReader.MODE_NO_BLOCK_LENGTH, true);
-			case Constants.IO_VB_DUMP:			return new VbDumpByteReader();
-			case Constants.IO_VB_DUMP2:			return new VbByteReader(VbByteReader.MODE_BLOCK_LENGTH_2, true);
-			case Constants.IO_VB_FUJITSU:		return new FujitsuVbByteReader();
-			case Constants.IO_VB_GNU_COBOL:		return new VbByteReader(VbByteReader.MODE_NO_BLOCK_LENGTH, false);
-			case Constants.IO_TEXT_BYTE_ENTER_FONT:			
-			case Constants.IO_BIN_TEXT:			return new ByteTextReader();
-			case Constants.IO_MICROFOCUS:		return new MicroFocusByteReader();
+       		case IFileStructureConstants.IO_FIXED_BYTE_ENTER_FONT:		
+       		case IFileStructureConstants.IO_FIXED_LENGTH:		return new FixedLengthByteReader(length);
+			case IFileStructureConstants.IO_VBS: 				return new VbsByteReader(false, true);
+			case IFileStructureConstants.IO_VB: 				return new VbByteReader(VbByteReader.MODE_NO_BLOCK_LENGTH, true);
+			case IFileStructureConstants.IO_VB_DUMP:			return new VbDumpByteReader();
+			case IFileStructureConstants.IO_VB_DUMP2:			return new VbByteReader(VbByteReader.MODE_BLOCK_LENGTH_2, true);
+			case IFileStructureConstants.IO_VB_FUJITSU:		return new FujitsuVbByteReader();
+			case IFileStructureConstants.IO_VB_GNU_COBOL:		return new VbByteReader(VbByteReader.MODE_NO_BLOCK_LENGTH, false);
+			case IFileStructureConstants.IO_TEXT_BYTE_ENTER_FONT:			
+			case IFileStructureConstants.IO_BIN_TEXT:			return new ByteTextReader();
+			case IFileStructureConstants.IO_MICROFOCUS:		return new MicroFocusByteReader();
 	    }
         return null;
     }
@@ -138,7 +138,7 @@ public class ByteIOProvider {
     public AbstractByteWriter getByteWriter(IBasicFileSchema schema) {
     	int fileStructure = schema.getFileStructure();
 		switch(fileStructure) {
-		case Constants.IO_FIXED_LENGTH:	return new FixedLengthByteWriter(schema.getMaximumRecordLength());
+		case IFileStructureConstants.IO_FIXED_LENGTH:	return new FixedLengthByteWriter(schema.getMaximumRecordLength());
     	}
     	return getByteWriter(fileStructure, schema.getFontName());
     }
@@ -155,14 +155,14 @@ public class ByteIOProvider {
 	public AbstractByteWriter getByteWriter(int fileStructure, String characterSet) {
 
     	switch(fileStructure) {
-//    		case Constants.IO_FIXED_LENGTH:		return new BinaryByteWriter();
-    		case Constants.IO_VBS:				throw new RecordException("Writing VBS files is not supported; use IO_VB");
-    		case Constants.IO_VB: 				return new VbByteWriter();
-    		case Constants.IO_VB_DUMP2:
-    		case Constants.IO_VB_DUMP:			return new VbDumpByteWriter();
-    		case Constants.IO_VB_FUJITSU:		return new FujitsuVbByteWriter();
-    		case Constants.IO_VB_GNU_COBOL:		return new VbByteWriter(false);
-			case Constants.IO_BIN_TEXT:
+//    		case IFileStructureConstants.IO_FIXED_LENGTH:		return new BinaryByteWriter();
+    		case IFileStructureConstants.IO_VBS:				throw new RecordException("Writing VBS files is not supported; use IO_VB");
+    		case IFileStructureConstants.IO_VB: 				return new VbByteWriter();
+    		case IFileStructureConstants.IO_VB_DUMP2:
+    		case IFileStructureConstants.IO_VB_DUMP:			return new VbDumpByteWriter();
+    		case IFileStructureConstants.IO_VB_FUJITSU:		return new FujitsuVbByteWriter();
+    		case IFileStructureConstants.IO_VB_GNU_COBOL:		return new VbByteWriter(false);
+			case IFileStructureConstants.IO_BIN_TEXT:
 				if (characterSet != null && characterSet.length() > 0 ) {
 					try {
 						return new ByteTextWriter("\n".getBytes(characterSet));
@@ -170,7 +170,7 @@ public class ByteIOProvider {
 					}
 				}
 				return new ByteTextWriter();
-//    		case (Constants.IO_BIN_TEXT):			return new FixedLengthByteWriter(false, false, Constants.);
+//    		case (IFileStructureConstants.IO_BIN_TEXT):			return new FixedLengthByteWriter(false, false, Constants.);
         }
 
         return null;

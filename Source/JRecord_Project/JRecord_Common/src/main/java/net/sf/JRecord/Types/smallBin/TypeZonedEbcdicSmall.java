@@ -2,8 +2,8 @@ package net.sf.JRecord.Types.smallBin;
 
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.Common.FieldConversionError;
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Types.TypeZoned;
 
 public class TypeZonedEbcdicSmall extends TypeBaseXBinary {
@@ -51,8 +51,8 @@ public class TypeZonedEbcdicSmall extends TypeBaseXBinary {
 		for (int i = position - 1; i < en; i++) {
 			d = record[i] & 0x0F;
 			if (d > 9) { 
-				throw new RecordException(field.getName() + ": Invalid Zoned Decimal: "
-								+ Conversion.getString(record, position, en, "cp037"));
+				throw new FieldConversionError(field, field.getName() + ": Invalid Zoned Decimal: "
+								+ Conversion.getString(record, position, en, "cp037"), null);
 			}
 			val = val * 10 + d;
 		}
@@ -69,8 +69,8 @@ public class TypeZonedEbcdicSmall extends TypeBaseXBinary {
 			break;
 		default:
 			if (record[en-1] < NUMERIC_BYTES[0] || record[en-1] > NUMERIC_BYTES[1]) {
-				throw new RecordException(field.getName() + ": Invalid Zoned Decimal: " 
-							+ Conversion.getString(record, position, en, "cp037"));
+				throw new FieldConversionError(field, field.getName() + ": Invalid Zoned Decimal: " 
+							+ Conversion.getString(record, position, en, "cp037"), null);
 			}
 		}
 		return val;
@@ -98,4 +98,15 @@ public class TypeZonedEbcdicSmall extends TypeBaseXBinary {
 		return record;
 	}
 
+	
+
+	@Override
+	public boolean isValid(IFieldDetail fldDef, String value) {
+		return CheckZoned.checkMainframeZoned(fldDef, value);
+	}
+
+	@Override
+	public boolean isValid(int position, IFieldDetail fldDef, byte[] line) {
+		return CheckZoned.checkMainframeZoned(position, fldDef, line);
+	}
 }

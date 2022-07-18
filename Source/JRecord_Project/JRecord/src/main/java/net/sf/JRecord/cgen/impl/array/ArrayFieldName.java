@@ -32,8 +32,10 @@ import net.sf.JRecord.cgen.def.IFieldName1Dimension;
 import net.sf.JRecord.cgen.def.IFieldName2Dimension;
 import net.sf.JRecord.cgen.def.IFieldName3Dimension;
 import net.sf.JRecord.cgen.def.IFieldName4Dimension;
+import net.sf.JRecord.cgen.def.IFieldNameAnyDimension;
 
-public class ArrayFieldName implements IFieldName1Dimension, IFieldName2Dimension, IFieldName3Dimension , IFieldName4Dimension {
+public class ArrayFieldName implements IFieldName1Dimension, IFieldName2Dimension, IFieldName3Dimension , 
+	IFieldName4Dimension, IFieldNameAnyDimension {
 
 	private final String name;
 	
@@ -48,7 +50,7 @@ public class ArrayFieldName implements IFieldName1Dimension, IFieldName2Dimensio
 	 */
 	@Override
 	public String get(int index1) {
-		return genName(index1);
+		return getFieldName(index1);
 	}
 
 	/* (non-Javadoc)
@@ -56,7 +58,7 @@ public class ArrayFieldName implements IFieldName1Dimension, IFieldName2Dimensio
 	 */
 	@Override
 	public String get(int index1, int index2) {
-		return genName(index1, index2);
+		return getFieldName(index1, index2);
 	}
 
 	/* (non-Javadoc)
@@ -64,15 +66,16 @@ public class ArrayFieldName implements IFieldName1Dimension, IFieldName2Dimensio
 	 */
 	@Override
 	public String get(int index1, int index2, int index3) {
-		return genName(index1, index2, index3);
+		return getFieldName(index1, index2, index3);
 	}
 
 	@Override
 	public String get(int index1, int index2, int index3, int index4) {
-		return genName(index1, index2, index3, index4);
+		return getFieldName(index1, index2, index3, index4);
 	}
 
-	private String genName(int... indexs) {
+	@Override
+	public String getFieldName(int... indexs) {
 		StringBuilder b = new StringBuilder(name);
 		String sep = " (";
 		

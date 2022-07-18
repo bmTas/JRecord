@@ -151,6 +151,17 @@ public abstract class BaseFieldValueLine implements IFieldValueUpdLine {
 		return this.theLine.isDefined(field);
 	}
 
+	@Override
+	public boolean isValid() {
+
+		if (field == null) {
+			return false;
+		} 
+		
+		return this.theLine.isValid(field);
+	}
+
+
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.Details.IFieldValue#isByteRecord()
 	 */

@@ -29,7 +29,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.cbl2xml.zTest.xml2cbl.Cb2XmlCode;
@@ -41,7 +41,7 @@ public class CreateArrayFile {
 		ICobolIOBuilder ioBldr = JRecordInterface1.COBOL
 						.newIOBuilder(Cb2XmlCode.getFullName("cobol/ArrayCopybook.cbl"))
 								.setDialect(ICopybookDialects.FMT_FUJITSU)
-								.setFileOrganization(Constants.IO_STANDARD_TEXT_FILE)
+								.setFileOrganization(IFileStructureConstants.IO_STANDARD_TEXT_FILE)
 						;
 		BufferedWriter w = new BufferedWriter( new FileWriter("G:\\temp\\ArrayFile.txt"));
 		

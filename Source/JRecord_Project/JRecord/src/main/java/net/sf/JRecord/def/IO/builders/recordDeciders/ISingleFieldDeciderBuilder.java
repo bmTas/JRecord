@@ -1,7 +1,5 @@
 package net.sf.JRecord.def.IO.builders.recordDeciders;
 
-import net.sf.JRecord.Details.IRecordDeciderX;
-
 public interface ISingleFieldDeciderBuilder {
 
 	/**
@@ -27,5 +25,5 @@ public interface ISingleFieldDeciderBuilder {
 	 * Create the RecordDecider
 	 * @return newly created <b>record-decider</b>
 	 */
-	IRecordDeciderX build();
+	ISingleFieldDecider build(); 
 }

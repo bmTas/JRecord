@@ -28,11 +28,13 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-
 import javax.xml.stream.XMLStreamException;
 
+//import net.sf.JRecord.zTest.Cobol.occursDependingOn.Code;
+//import net.sf.JRecord.zTest.Cobol.occursDependingOn.WriteSampleFile;
+import junit.framework.TestCase;
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
@@ -43,32 +45,29 @@ import net.sf.JRecord.cbl2xml.zTest.xml2cbl.Cb2XmlCode;
 import net.sf.JRecord.cbl2xml.zTest.xml2cbl.Code;
 import net.sf.JRecord.cbl2xml.zTest.xml2cbl.TstXmlConstants;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
-//import net.sf.JRecord.zTest.Cobol.occursDependingOn.Code;
-//import net.sf.JRecord.zTest.Cobol.occursDependingOn.WriteSampleFile;
-import junit.framework.TestCase;
 
 public class TstReadingWriting extends TestCase {
 	
 	private static final int MAX_SALES_COUNT = 12;
 
 	public void test01()  throws IOException, RecordException,  XMLStreamException {
-		tst("OccursDepending1.cbl", Constants.IO_STANDARD_TEXT_FILE, "1");
+		tst("OccursDepending1.cbl", IFileStructureConstants.IO_STANDARD_TEXT_FILE, "1");
 	}
 	
 //	public void test02()  throws IOException, RecordException {
-//		tst("OccursDepending1.cbl", Constants.IO_VB);
+//		tst("OccursDepending1.cbl", IFileStructureConstants.IO_VB);
 //	}
 //	
 //	public void test03()  throws IOException, RecordException {
-//		tst("OccursDepending1.cbl", Constants.IO_STANDARD_UNICODE_TEXT_FILE);
+//		tst("OccursDepending1.cbl", IFileStructureConstants.IO_STANDARD_UNICODE_TEXT_FILE);
 //	}
 	
 	public void test04()  throws IOException, RecordException, XMLStreamException {
-		tst("OccursDepending2.cbl", Constants.IO_STANDARD_TEXT_FILE, "2");
+		tst("OccursDepending2.cbl", IFileStructureConstants.IO_STANDARD_TEXT_FILE, "2");
 	}
 //	
 //	public void test05()  throws IOException, RecordException {
-//		tst("OccursDepending2.cbl", Constants.IO_VB_FUJITSU);
+//		tst("OccursDepending2.cbl", IFileStructureConstants.IO_VB_FUJITSU);
 //	}
 	
 	private void tst(String copybook, int fileOrg, String id) throws IOException, RecordException, XMLStreamException {

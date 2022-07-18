@@ -60,22 +60,23 @@ import net.sf.JRecord.Common.IFieldDetail;
  */
 public final class DependingOnDtls implements IDependingOnIndexDtls {
 	public final DependingOn dependingOn;
-	public final int index;
+	public final int index, arrayIndexNumber;
 	public final DependingOnDtls parent;
 	public final boolean firstIdx;
 	private List<DependingOn> children = null;
 	private int reliableCalculationsTo;
 	
-	public DependingOnDtls(DependingOn dependingOn, int index,
+	public DependingOnDtls(DependingOn dependingOn, int index, int arrayIndexNumber,
 			DependingOnDtls parent) {
-		this(dependingOn, index, parent, true);
+		this(dependingOn, index, arrayIndexNumber, parent, true);
 	}
 	
-	public DependingOnDtls(DependingOn dependingOn, int index,
+	public DependingOnDtls(DependingOn dependingOn, int index, int arrayIndexNumber,
 			DependingOnDtls parent, boolean permanent) {
 		super();
 		this.dependingOn = dependingOn;
 		this.index = index;
+		this.arrayIndexNumber = arrayIndexNumber;
 		this.parent = parent;
 		this.firstIdx = index == 0 
 				     && (parent == null || parent.firstIdx);

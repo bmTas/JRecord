@@ -111,7 +111,7 @@ public class DbCsvCopybookLoader extends BaseCopybookLoader {
 	@SuppressWarnings("deprecation")
 	private void insertFields(ExternalRecord parentRec, String copyBookFile,
 			int dbIdx, String font) {
-		String s, name, typeStr, system, lastSystem, lastCopybookName, CopybookName;
+		String s, name, typeStr, system, lastSystem, lastCopybookName, copybookName;
 		BasicCsvLineParser t = BasicCsvLineParser.getInstance();
 		String[] fields = new String[7];
 		ExternalField field;
@@ -138,7 +138,7 @@ public class DbCsvCopybookLoader extends BaseCopybookLoader {
 					try {
 						idx = 0;
 						system = fields[idx++];
-						CopybookName = fields[idx++];
+						copybookName = fields[idx++];
 						name = fields[idx++];
 						pos  = Integer.parseInt(fields[idx++]) + 1;
 						typeStr = fields[idx++];
@@ -161,14 +161,14 @@ public class DbCsvCopybookLoader extends BaseCopybookLoader {
 						field = new ExternalField(pos, len, name, "", type,
 								decimal, 0, "", "", "", i);
 
-						if (rec == null || (! system.equals(lastSystem)) || (! CopybookName.equals(lastCopybookName))) {
+						if (rec == null || (! system.equals(lastSystem)) || (! copybookName.equals(lastCopybookName))) {
 //							System.out.println();
 //							System.out.println("~~>" + lastSystem +">  >" + lastCopybookName + "> " + (rec == null)
 //									+ " " + (! system.equals(lastSystem))
 //									+ " " +  (! CopybookName.equals(lastCopybookName)));
 //							System.out.println("@@>" + system +">  >" + CopybookName + ">");
 							rec = ExternalRecord.getNullRecord(
-									CopybookName,
+									copybookName,
 									rt,
 									font);
 							parentRec.addRecord(rec);
@@ -180,7 +180,7 @@ public class DbCsvCopybookLoader extends BaseCopybookLoader {
 							rec.setSystemName(system.trim());
 
 							lastSystem = system;
-							lastCopybookName = CopybookName;
+							lastCopybookName = copybookName;
 						}
 						rec.addRecordField(field);
 						i += 1;

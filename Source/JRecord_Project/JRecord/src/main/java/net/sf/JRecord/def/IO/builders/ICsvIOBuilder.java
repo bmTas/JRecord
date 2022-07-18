@@ -60,22 +60,22 @@ public interface ICsvIOBuilder extends IIOBuilder {
 
 	/**
 	 * File Organization or File Structure, For Csv files, the main options are:<ul>
-	 *   <li><b>Constants.IO_UNICODE_NAME_1ST_LINE</b> - Standard Csv File <b>with names on the first line</b> of the file.
+	 *   <li><b>IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE</b> - Standard Csv File <b>with names on the first line</b> of the file.
 	 *   It supports either Unicode or single byte character-sets. Embedded <b>\n</b> are <b>not</b> supported.
-	 *   <li><b>Constants.IO_UNICODE_TEXT</b> - Standard Csv File <b><font color="blue">with out</font> names on the first line</b> of the file.
+	 *   <li><b>IFileStructureConstants.IO_UNICODE_TEXT</b> - Standard Csv File <b><font color="blue">with out</font> names on the first line</b> of the file.
 	 *   It supports either Unicode or single byte character-sets. Embedded <b>\n</b> are <b>not</b> supported.
-	 *   <li><b>Constants.IO_UNICODE_CSV_NAME_1ST_LINE</b> - Standard Csv File <b>with names on the first line</b> of the file.
+	 *   <li><b>IFileStructureConstants.IO_UNICODE_CSV_NAME_1ST_LINE</b> - Standard Csv File <b>with names on the first line</b> of the file.
 	 *   It supports either Unicode or single byte character-sets. Embedded <b>\n <font color="blue"></b>are</font> supported.
-	 *   <li><b>Constants.IO_UNICODE_CSV</b> - Standard Csv File <b><font color="blue">with out</font> names on the first line</b> of the file.
+	 *   <li><b>IFileStructureConstants.IO_UNICODE_CSV</b> - Standard Csv File <b><font color="blue">with out</font> names on the first line</b> of the file.
 	 *   It supports either Unicode or single byte character-sets. Embedded <b>\n <font color="blue"></b>are</font> supported.
-	 *   <li><b>Constants.IO_NAME_1ST_LINE</b> - Standard <b>Single Byte</b> (ascii ?) Csv File <b>with names on the first line</b> of the file.
+	 *   <li><b>IFileStructureConstants.IO_NAME_1ST_LINE</b> - Standard <b>Single Byte</b> (ascii ?) Csv File <b>with names on the first line</b> of the file.
 	 *   It supports single byte character-sets. Embedded <b>\n</b> are <b>not</b> supported.
-	 *   <li><b>Constants.IO_STANDARD_TEXT_FILE</b> - Standard <b>Single Byte</b> (ascii ?) Csv File <b><font color="blue">with out</font> names on the first line</b> of the file.
+	 *   <li><b>IFileStructureConstants.IO_STANDARD_TEXT_FILE</b> - Standard <b>Single Byte</b> (ascii ?) Csv File <b><font color="blue">with out</font> names on the first line</b> of the file.
 	 *   It supports single byte character-sets. Embedded <b>\n</b> are <b>not</b> supported.<p>&nbsp;</p>
-	 *   <li><b>Constants.IO_BIN_NAME_1ST_LINE</b> - Standard <b>Single Byte</b> (ascii ?) Csv File <b>with names on the first line</b> of the file.
+	 *   <li><b>IFileStructureConstants.IO_BIN_NAME_1ST_LINE</b> - Standard <b>Single Byte</b> (ascii ?) Csv File <b>with names on the first line</b> of the file.
 	 *   The <b><font color="blue">field separator</font>/b> is specified as a <b><font color="blue">hex</font>/b> character (e.g. x'00').
 	 *   It supports single byte character-sets. Embedded <b>\n</b> are <b>not</b> supported.
-	 *   <li><b>Constants.IO_BIN_TEXT</b> - Standard <b>Single Byte</b> (ascii ?) Csv File <b><font color="blue">with out</font> names on the first line</b> of the file.
+	 *   <li><b>IFileStructureConstants.IO_BIN_TEXT</b> - Standard <b>Single Byte</b> (ascii ?) Csv File <b><font color="blue">with out</font> names on the first line</b> of the file.
 	 *   The <b><font color="blue">field separator</font>/b> is specified as a <b><font color="blue">hex</font>/b> character (e.g. x'00').
 	 *   It supports single byte character-sets. Embedded <b>\n</b> are <b>not</b> supported.<br/>
 	 * </ul>

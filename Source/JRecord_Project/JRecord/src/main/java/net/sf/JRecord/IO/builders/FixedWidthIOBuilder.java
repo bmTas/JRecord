@@ -28,7 +28,7 @@
 
 package net.sf.JRecord.IO.builders;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.def.IO.builders.IDefineFixedFieldsByLength;
 import net.sf.JRecord.def.IO.builders.IDefineFixedFieldsByPosition;
@@ -52,7 +52,7 @@ implements IFixed /*, IFixedWidthIOBuilder, IDefineFixedFieldsByPosition, IDefin
 	 */ 
 	private FixedWidthIOBuilder() {
 		super(0);
-		setFileOrganization(Constants.IO_STANDARD_TEXT_FILE);
+		setFileOrganization(IFileStructureConstants.IO_STANDARD_TEXT_FILE);
 	}
 
 	@Override

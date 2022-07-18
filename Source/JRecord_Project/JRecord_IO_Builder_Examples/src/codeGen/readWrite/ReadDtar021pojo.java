@@ -35,10 +35,10 @@ package codeGen.readWrite;
 
 import java.io.IOException;
 
+import codeGen.readWrite.data.LineDtar021Pojo;
+import codeGen.readWrite.io.IoBuilderDtar021;
 import net.sf.JRecord.cgen.def.IReader;
 import net.sf.JRecord.cgen.impl.io.IoBuilder;
-import codeGen.readWrite.io.IoBuilderDtar021;
-import codeGen.readWrite.data.LineDtar021Pojo;
 
 
 /**

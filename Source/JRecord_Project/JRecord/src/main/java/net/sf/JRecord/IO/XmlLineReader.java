@@ -46,6 +46,7 @@ import javax.xml.stream.XMLStreamReader;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.XmlConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -157,7 +158,7 @@ public class XmlLineReader extends AbstractLineReader {
 		if (buildLayout || pLayout == null) {
             try {
             	pLayout = new LayoutDetail("XML Document", new RecordDetail[] {null, null, null, null, null},
-                    			"", Constants.RT_XML, null, null, "", null, Constants.IO_XML_BUILD_LAYOUT
+                    			"", Constants.RT_XML, null, null, "", null, IFileStructureConstants.IO_XML_BUILD_LAYOUT
                       );
             } catch (Exception e) {
                 e.printStackTrace();

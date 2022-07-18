@@ -3,6 +3,7 @@
  */
 package net.sf.JRecord.Types.smallBin;
 
+import net.sf.JRecord.Common.FieldConversionError;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 
@@ -31,7 +32,7 @@ public class TypeIntLittleEndian extends TypeBaseXBinary {
 		int len = field.getLen();
 	    int pos = position + len - 2;	
 		if (record.length <= pos) {
-			throw new RecordException("Invalid int (little endian, record is to short: " + field.getName());
+			throw new FieldConversionError(field, "Invalid int (little endian, record is to short: " + field.getName(), null);
 		}
 		
 		long v = normal && (record[pos] < 0) ? -1 : 0;

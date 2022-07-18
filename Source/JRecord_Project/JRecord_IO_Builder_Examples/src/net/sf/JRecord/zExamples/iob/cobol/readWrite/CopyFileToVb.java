@@ -29,7 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
@@ -53,12 +53,12 @@ public class CopyFileToVb {
 		AbstractLineReader r 
 				= JRecordInterface1.COBOL
 					.newIOBuilder(copybookName)
-						.setFileOrganization(Constants.IO_CONTINOUS_NO_LINE_MARKER)
+						.setFileOrganization(IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER)
 						.setFont("cp037")
 					.newReader(dataIn);
 		AbstractLineWriter w = JRecordInterface1.COBOL
 					.newIOBuilder(copybookName)
-						.setFileOrganization(Constants.IO_VB)
+						.setFileOrganization(IFileStructureConstants.IO_VB)
 						.setFont("cp037")
 					.newWriter(dataOut);
 		AbstractLine l;

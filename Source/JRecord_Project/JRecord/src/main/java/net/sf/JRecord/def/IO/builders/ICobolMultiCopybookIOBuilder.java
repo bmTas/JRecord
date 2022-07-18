@@ -45,7 +45,7 @@ import net.sf.JRecord.Option.IRecordPositionOption;
  *      {@code
  *      AbstractLineReader r = JRecordInterface1.COBOL
  *              .newMultiCopybookIOBuilder()
- *                      .setFileOrganization(Constants.IO_FIXED_LENGTH)
+ *                      .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
  *                      .setDialect(ICopybookDialects.FMT_FUJITSU)
  *                  .addCopyBook("copybook1.cbl")
  *                  .addCopyBook("copybook2.cbl")

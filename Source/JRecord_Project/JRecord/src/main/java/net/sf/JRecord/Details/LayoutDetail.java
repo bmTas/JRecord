@@ -56,6 +56,7 @@ import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IBasicFileSchema;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.CsvParser.ICsvCharLineParser;
 import net.sf.JRecord.CsvParser.ICsvDefinition;
@@ -523,8 +524,8 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	public boolean useByteRecord() {
 		
 		switch (fileStructure) {
-		case Constants.IO_BIN_TEXT:
-		case Constants.IO_FIXED_LENGTH:
+		case IFileStructureConstants.IO_BIN_TEXT:
+		case IFileStructureConstants.IO_FIXED_LENGTH:
 			return true;
 		}
 		return binary;
@@ -624,19 +625,19 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
     public int getFileStructure() {
         int ret;// = fileStructure;
 
-        if (fileStructure == Constants.IO_NAME_1ST_LINE &&  isBinCSV()) {
-        	ret = Constants.IO_BIN_NAME_1ST_LINE;
-        } else if (fileStructure > Constants.IO_TEXT_LINE) {
+        if (fileStructure == IFileStructureConstants.IO_NAME_1ST_LINE &&  isBinCSV()) {
+        	ret = IFileStructureConstants.IO_BIN_NAME_1ST_LINE;
+        } else if (fileStructure > IFileStructureConstants.IO_TEXT_LINE) {
         	ret = fileStructure;
-        } else if (fileStructure == Constants.IO_TEXT_LINE) {
+        } else if (fileStructure == IFileStructureConstants.IO_TEXT_LINE) {
 			ret = checkTextType();
         } else if (getLayoutType() == Constants.rtGroupOfBinaryRecords
                &&  recordCount > 1) {
-		    ret = Constants.IO_BINARY_IBM_4680;
+		    ret = IFileStructureConstants.IO_BINARY_IBM_4680;
 		} else if (isBinary()) {
-		    ret = Constants.IO_FIXED_LENGTH;
+		    ret = IFileStructureConstants.IO_FIXED_LENGTH;
 		} else if ( isBinCSV()) {
-			ret = Constants.IO_BIN_TEXT;
+			ret = IFileStructureConstants.IO_BIN_TEXT;
 		} else {
 			ret = checkTextType();
 		}
@@ -648,13 +649,13 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
     private int checkTextType() {
     	int ret = fileStructure;
     	if ( isBinCSV()) {
-			ret = Constants.IO_BIN_TEXT;
+			ret = IFileStructureConstants.IO_BIN_TEXT;
 		} else if (multiByteCharset) {
-    		return Constants.IO_UNICODE_TEXT;
+    		return IFileStructureConstants.IO_UNICODE_TEXT;
 		} else if (fontName != null && ! "".equals(fontName) && ! fontName.equals(Conversion.getDefaultSingleByteCharacterset())){
-		    ret = Constants.IO_TEXT_LINE;
+		    ret = IFileStructureConstants.IO_TEXT_LINE;
 		} else {
-			ret = Constants.IO_BIN_TEXT;
+			ret = IFileStructureConstants.IO_BIN_TEXT;
 		}
 
     	return ret;
@@ -1048,7 +1049,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	    //System.out.println("~~ " + inColumn + " " + ret + " "
 	    //        + layout.getRecord(layoutIndex).getRecordName() + " " + layout.getRecord(layoutIndex).getFieldCount());
 
-	    if (ret > 0 && getFileStructure() == Constants.IO_XML_BUILD_LAYOUT) {
+	    if (ret > 0 && getFileStructure() == IFileStructureConstants.IO_XML_BUILD_LAYOUT) {
 	        int len = getRecord(recordIndex).getFieldCount();
 
             if (ret > len - 3) {
@@ -1064,7 +1065,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 
 	    int ret = inColumn;
 
-	    if (ret > 0 && getFileStructure() == Constants.IO_XML_BUILD_LAYOUT) {
+	    if (ret > 0 && getFileStructure() == IFileStructureConstants.IO_XML_BUILD_LAYOUT) {
 	        int len = getRecord(recordIndex).getFieldCount();
 
             if (ret < 3) {
@@ -1155,8 +1156,8 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
      * @return is it an XML layout
      */
     public final boolean isXml() {
-        return fileStructure == Constants.IO_XML_USE_LAYOUT
-            || fileStructure == Constants.IO_XML_BUILD_LAYOUT;
+        return fileStructure == IFileStructureConstants.IO_XML_USE_LAYOUT
+            || fileStructure == IFileStructureConstants.IO_XML_BUILD_LAYOUT;
     }
 
     /**
@@ -1164,7 +1165,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
      * @return Wether it is ok to add Attributes to this layout
      */
     public final boolean isOkToAddAttributes() {
-    	return fileStructure == Constants.IO_XML_BUILD_LAYOUT;
+    	return fileStructure == IFileStructureConstants.IO_XML_BUILD_LAYOUT;
     }
 
     /**
@@ -1172,8 +1173,8 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
      * @return determine wether the layout is built or not
      */
     public final boolean isBuildLayout() {
-    	return fileStructure == Constants.IO_XML_BUILD_LAYOUT
-    	    || fileStructure == Constants.IO_NAME_1ST_LINE;
+    	return fileStructure == IFileStructureConstants.IO_XML_BUILD_LAYOUT
+    	    || fileStructure == IFileStructureConstants.IO_NAME_1ST_LINE;
     }
 
 

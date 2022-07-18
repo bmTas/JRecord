@@ -44,7 +44,7 @@ import java.io.Reader;
  * @author Bruce Martin
  *
  */
-public class CsvCharReader implements ICharReader {
+public class CsvCharReader implements ICharReader, IOpenInputStream {
 
 	private static final char[] CR_CHARS = {'\r'};
 	private static final char[] CRLF_CHARS = {'\r', '\n'};
@@ -128,16 +128,14 @@ public class CsvCharReader implements ICharReader {
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.charIO.ICharReader#open(java.lang.String)
 	 */
-	@Override
-	public void open(String fileName, String font) throws IOException {
-        open(new FileInputStream(fileName), font);
+	public ICharReader open(String fileName, String font) throws IOException {
+        return open(new FileInputStream(fileName), font);
 	}
 
 	/* (non-Javadoc)
 	 * @see net.sf.JRecord.charIO.ICharReader#open(java.io.InputStream)
 	 */
-	@Override
-	public void open(InputStream inputStream, String font) throws IOException {
+	public ICharReader open(InputStream inputStream, String font) throws IOException {
 		this.inStream = inputStream;
 		if (font == null || font.length() == 0) {
 			this.in = new InputStreamReader(inputStream);
@@ -216,7 +214,7 @@ public class CsvCharReader implements ICharReader {
 
 		findLinesInBuffer(0);
 		lineNo = -1;
-
+		return this;
 	}
 
 

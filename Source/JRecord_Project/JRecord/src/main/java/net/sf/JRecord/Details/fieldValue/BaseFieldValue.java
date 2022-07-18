@@ -33,9 +33,12 @@ import java.math.BigInteger;
 
 import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Common.RecordException;
+import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.External.base.ExternalConversion;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
+import net.sf.JRecord.exceptions.FieldConversionException;
 
 /**
  * Reference to one field in a line (or Record).
@@ -58,6 +61,7 @@ import net.sf.JRecord.Types.TypeManager;
 public abstract class BaseFieldValue implements IDecimalField, IBigIntegerField, ILongField, IStringField  {
 
 	protected IFieldDetail field;
+	private final AbstractLine line;
 
 
 	/**
@@ -66,6 +70,12 @@ public abstract class BaseFieldValue implements IDecimalField, IBigIntegerField,
 	 * @param fieldDetails Field Description
 	 */
 	public BaseFieldValue(IFieldDetail fieldDetails) {
+		field = fieldDetails;
+		line = null;
+	}
+
+	public BaseFieldValue(AbstractLine line, IFieldDetail fieldDetails) {
+		this.line = line;
 		field = fieldDetails;
 	}
 
@@ -81,7 +91,11 @@ public abstract class BaseFieldValue implements IDecimalField, IBigIntegerField,
 		} else if (ret instanceof BigDecimal) {
 			return (BigDecimal) ret;
 		} else {
-			return new BigDecimal(ret.toString());
+			try {
+				return new BigDecimal(ret.toString());
+			} catch (Exception e) {
+				throw new FieldConversionException(line, field, "Conversion Error in field: " + field.getName(), e);
+			}
 		}
 	}
 
@@ -97,7 +111,11 @@ public abstract class BaseFieldValue implements IDecimalField, IBigIntegerField,
 		} else if (ret instanceof BigInteger) {
 			return (BigInteger) ret;
 		} else {
-			return new BigInteger(ret.toString());
+			try {
+				return new BigInteger(ret.toString());
+			} catch (Exception e) {
+				throw new FieldConversionException(line, field, "Conversion Error in field: " + field.getName(), e);
+			}
 		}
 	}
 
@@ -112,7 +130,11 @@ public abstract class BaseFieldValue implements IDecimalField, IBigIntegerField,
 		} else if (ret instanceof Number) {
 			return ((Number) ret).doubleValue();
 		} else {
-			return Double.parseDouble(ret.toString());
+			try {
+				return Double.parseDouble(ret.toString());
+			} catch (NumberFormatException e) {
+				throw new FieldConversionException(line, field, "Conversion Error in field: " + field.getName(), e);
+			}
 		}
 	}
 
@@ -128,7 +150,11 @@ public abstract class BaseFieldValue implements IDecimalField, IBigIntegerField,
 		} else if (ret instanceof Number) {
 			return ((Number) ret).floatValue();
 		} else {
-			return Float.parseFloat(ret.toString());
+			try {
+				return Float.parseFloat(ret.toString());
+			} catch (NumberFormatException e) {
+				throw new FieldConversionException(line, field, "Conversion Error in field: " + field.getName(), e);
+			}
 		}
 	}
 
@@ -144,14 +170,18 @@ public abstract class BaseFieldValue implements IDecimalField, IBigIntegerField,
 		} else if (ret instanceof Number) {
 			return ((Number) ret).longValue();
 		} else {
-			String s = ret.toString();
-			if (s.trim().length() == 0) {
-				return 0;
+			try {
+				String s = ret.toString();
+				if (s.trim().length() == 0) {
+					return 0;
+				}
+				if (s.indexOf(".") >= 0) {
+					return new BigDecimal(s).longValue();
+				}
+				return Long.parseLong(s);
+			} catch (NumberFormatException e) {
+				throw new FieldConversionException(line, field, "Conversion Error in field: " + field.getName(), e);
 			}
-			if (s.indexOf(".") >= 0) {
-				return new BigDecimal(s).longValue();
-			}
-			return Long.parseLong(s);
 		}
 	}
 

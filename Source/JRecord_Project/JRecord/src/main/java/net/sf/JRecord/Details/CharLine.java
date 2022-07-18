@@ -35,7 +35,7 @@ import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.CsvParser.ICsvCharLineParser;
 import net.sf.JRecord.CsvParser.CsvDefinition;
 import net.sf.JRecord.Types.Type;
-import net.sf.JRecord.Types.TypeChar;
+import net.sf.JRecord.Types.BaseType;
 import net.sf.JRecord.Types.TypeManager;
 
 public class CharLine extends BasicLine {
@@ -124,6 +124,23 @@ public class CharLine extends BasicLine {
 
 
 	private String getFieldText(IFieldDetail fldDef) {
+
+		String s = getFieldRawText(fldDef);
+		if (s.length() == 0) { return s; }
+		
+		int len = s.length() - 1;
+		if (s.length() > 0 && s.charAt(len) == ' ') {
+			while (len > 0 && s.charAt(len) == ' ') {
+				len -= 1;
+			}
+			
+			s = s.substring(0, len+1);
+		}
+
+		return s;
+	}
+	
+	private String getFieldRawText(IFieldDetail fldDef) {
 		int start = fldDef.calculateActualPosition(this) - 1;
 		String tData = data;
 
@@ -135,16 +152,7 @@ public class CharLine extends BasicLine {
 	    if (tData.length() < start || tempLen < 1 || start < 0) {
 	        return "";
 	    }
-		String s = tData.substring(start, start + tempLen);
-		int len = s.length() - 1;
-		if (s.length() > 0 && " ".equals(s.substring(len))) {
-			while (len > 0 && " ".equals(s.substring(len - 1, len))) {
-				len -= 1;
-			}
-			s = s.substring(0, len);
-		}
-
-		return s;
+		return tData.substring(start, start + tempLen);
 	}
 
 
@@ -214,7 +222,7 @@ public class CharLine extends BasicLine {
 
 			int len = field.getLen();
 			if (s.length() < len
-			&&	type instanceof TypeChar && ! ((TypeChar) type).isLeftJustified()) {
+			&&	type instanceof BaseType && ! ((BaseType) type).isLeftJustified()) {
 				s = Conversion.padFront(s, len - s.length(), ' ');
 			} 
 			updateData(field.calculateActualPosition(this), len, s);
@@ -260,7 +268,7 @@ public class CharLine extends BasicLine {
 		int en = start + Math.max(len, length) - dataBld.length();
 
 		//System.out.print(" --> " + dataBld.length());
-		for (i = 0; i <= en; i++) {
+		for (i = 0; i < en; i++) {
 			dataBld.append(' ');
 		}
 		for (i = 0; i < len; i++) {
@@ -304,6 +312,12 @@ public class CharLine extends BasicLine {
 		}
 		return true;
 		
+	}
+
+
+	@Override
+	public boolean isValid(IFieldDetail fldDef) {
+		return TypeManager.getInstance().getType(fldDef.getType()).isValid(fldDef, getFieldRawText(fldDef));
 	}
 
 }

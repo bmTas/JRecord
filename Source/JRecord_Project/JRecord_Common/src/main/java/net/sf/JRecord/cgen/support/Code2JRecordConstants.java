@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.CsvParser.ICsvParserIds;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Option.ICobolSplitOptions;
@@ -398,48 +399,48 @@ public class Code2JRecordConstants {
 	@SuppressWarnings("deprecation")
 	private static void initIoTypes() {
 
-		if (IO_TYPE [Constants.IO_PROTO_SD_SINGLE_MESSAGE] == null) {
-		    IO_TYPE [Constants.IO_DEFAULT              ] = "IO_DEFAULT";
-		    IO_TYPE [Constants.IO_STANDARD_TEXT_FILE   ] = "IO_STANDARD_TEXT_FILE";
-		    IO_TYPE [Constants.IO_FIXED_LENGTH_RECORDS ] = "IO_FIXED_LENGTH_RECORDS";
-		    IO_TYPE [Constants.IO_FIXED_BYTE_ENTER_FONT] = "IO_FIXED_LENGTH_RECORDS";
-		    IO_TYPE [Constants.IO_BINARY_IBM_4680      ] = "IO_BINARY_IBM_4680";
-		    IO_TYPE [Constants.IO_VB                   ] = "IO_VB";
-		    IO_TYPE [Constants.IO_VBS                  ] = "IO_VBS";
-		    IO_TYPE [Constants.IO_VB_DUMP              ] = "IO_VB_DUMP";
-		    IO_TYPE [Constants.IO_VB_DUMP2             ] = "IO_VB_DUMP2";
-		    IO_TYPE [Constants.IO_VB_FUJITSU           ] = "IO_VB_FUJITSU";
-		    IO_TYPE [Constants.IO_VB_GNU_COBOL         ] = "IO_VB_GNU_COBOL";
-		    IO_TYPE [Constants.IO_BIN_TEXT             ] = "IO_BIN_TEXT";
-		    IO_TYPE [Constants.IO_TEXT_BYTE_ENTER_FONT ] = "IO_BIN_TEXT";
-		    IO_TYPE [Constants.IO_FIXED_LENGTH_CHAR    ] = "IO_FIXED_LENGTH_CHAR";
-		    IO_TYPE [Constants.IO_FIXED_CHAR_ENTER_FONT] = "IO_FIXED_LENGTH_CHAR";
-		    IO_TYPE [Constants.IO_UNKOWN_FORMAT        ] = "IO_UNKOWN_FORMAT";
-		    IO_TYPE [Constants.IO_WIZARD               ] = "IO_WIZARD";                                         
-		    IO_TYPE [Constants.IO_MICROFOCUS           ] = "IO_MICROFOCUS";
-		    IO_TYPE [Constants.IO_CSV                  ] = "IO_CSV";
-		    IO_TYPE [Constants.IO_BIN_CSV              ] = "IO_BIN_CSV";
-		    IO_TYPE [Constants.IO_UNICODE_CSV          ] = "IO_UNICODE_CSV";
-		    IO_TYPE [Constants.IO_CSV_NAME_1ST_LINE    ] = "IO_CSV_NAME_1ST_LINE";
-		    IO_TYPE [Constants.IO_BIN_CSV_NAME_1ST_LINE] = "IO_BIN_CSV_NAME_1ST_LINE";
-		    IO_TYPE [Constants.IO_NAME_1ST_LINE        ] = "IO_NAME_1ST_LINE";
-		    IO_TYPE [Constants.IO_GENERIC_CSV          ] = "IO_GENERIC_CSV";
-		    IO_TYPE [Constants.IO_BIN_NAME_1ST_LINE    ] = "IO_BIN_NAME_1ST_LINE";
-		    IO_TYPE [Constants.IO_UNICODE_NAME_1ST_LINE] = "IO_UNICODE_NAME_1ST_LINE";
-		    IO_TYPE [Constants.IO_XML_USE_LAYOUT       ] = "IO_XML_USE_LAYOUT";
-		    IO_TYPE [Constants.IO_XML_BUILD_LAYOUT     ] = "IO_XML_BUILD_LAYOUT";
-		    IO_TYPE [Constants.IO_PROTO_DELIMITED      ] = "IO_PROTO_DELIMITED";
-		    IO_TYPE [Constants.IO_PROTO_SINGLE_MESSAGE ] = "IO_PROTO_SINGLE_MESSAGE";
-		    IO_TYPE [Constants.IO_PROTO_SD_DELIMITED   ] = "IO_PROTO_SD_DELIMITED";
-		    IO_TYPE [Constants.IO_THRIFT_FILE          ] = "IO_THRIFT_FILE";
-		    IO_TYPE [Constants.IO_AVRO_FILE            ] = "IO_AVRO_FILE";
-		    IO_TYPE [Constants.IO_GETTEXT_PO           ] = "IO_GETTEXT_PO";
-		    IO_TYPE [Constants.IO_TIP                  ] = "IO_TIP";
-		    IO_TYPE [Constants.IO_CONTINOUS_NO_LINE_MARKER   ] = "IO_CONTINOUS_NO_LINE_MARKER";
-		    IO_TYPE [Constants.IO_UNICODE_CSV_NAME_1ST_LINE  ] = "IO_UNICODE_CSV_NAME_1ST_LINE";
-		    IO_TYPE [Constants.IO_STANDARD_UNICODE_TEXT_FILE ] = "IO_STANDARD_UNICODE_TEXT_FILE";
-		    IO_TYPE [Constants.IO_TEXT_CHAR_ENTER_FONT       ] = "IO_STANDARD_UNICODE_TEXT_FILE";
-		    IO_TYPE [Constants.IO_PROTO_SD_SINGLE_MESSAGE    ] = "IO_PROTO_SD_SINGLE_MESSAGE";
+		if (IO_TYPE [IFileStructureConstants.IO_PROTO_SD_SINGLE_MESSAGE] == null) {
+		    IO_TYPE [IFileStructureConstants.IO_DEFAULT              ] = "IO_DEFAULT";
+		    IO_TYPE [IFileStructureConstants.IO_STANDARD_TEXT_FILE   ] = "IO_STANDARD_TEXT_FILE";
+		    IO_TYPE [IFileStructureConstants.IO_FIXED_LENGTH_RECORDS ] = "IO_FIXED_LENGTH_RECORDS";
+		    IO_TYPE [IFileStructureConstants.IO_FIXED_BYTE_ENTER_FONT] = "IO_FIXED_LENGTH_RECORDS";
+		    IO_TYPE [IFileStructureConstants.IO_BINARY_IBM_4680      ] = "IO_BINARY_IBM_4680";
+		    IO_TYPE [IFileStructureConstants.IO_VB                   ] = "IO_VB";
+		    IO_TYPE [IFileStructureConstants.IO_VBS                  ] = "IO_VBS";
+		    IO_TYPE [IFileStructureConstants.IO_VB_DUMP              ] = "IO_VB_DUMP";
+		    IO_TYPE [IFileStructureConstants.IO_VB_DUMP2             ] = "IO_VB_DUMP2";
+		    IO_TYPE [IFileStructureConstants.IO_VB_FUJITSU           ] = "IO_VB_FUJITSU";
+		    IO_TYPE [IFileStructureConstants.IO_VB_GNU_COBOL         ] = "IO_VB_GNU_COBOL";
+		    IO_TYPE [IFileStructureConstants.IO_BIN_TEXT             ] = "IO_BIN_TEXT";
+		    IO_TYPE [IFileStructureConstants.IO_TEXT_BYTE_ENTER_FONT ] = "IO_BIN_TEXT";
+		    IO_TYPE [IFileStructureConstants.IO_FIXED_LENGTH_CHAR    ] = "IO_FIXED_LENGTH_CHAR";
+		    IO_TYPE [IFileStructureConstants.IO_FIXED_CHAR_ENTER_FONT] = "IO_FIXED_LENGTH_CHAR";
+		    IO_TYPE [IFileStructureConstants.IO_UNKOWN_FORMAT        ] = "IO_UNKOWN_FORMAT";
+		    IO_TYPE [IFileStructureConstants.IO_WIZARD               ] = "IO_WIZARD";                                         
+		    IO_TYPE [IFileStructureConstants.IO_MICROFOCUS           ] = "IO_MICROFOCUS";
+		    IO_TYPE [IFileStructureConstants.IO_CSV                  ] = "IO_CSV";
+		    IO_TYPE [IFileStructureConstants.IO_BIN_CSV              ] = "IO_BIN_CSV";
+		    IO_TYPE [IFileStructureConstants.IO_UNICODE_CSV          ] = "IO_UNICODE_CSV";
+		    IO_TYPE [IFileStructureConstants.IO_CSV_NAME_1ST_LINE    ] = "IO_CSV_NAME_1ST_LINE";
+		    IO_TYPE [IFileStructureConstants.IO_BIN_CSV_NAME_1ST_LINE] = "IO_BIN_CSV_NAME_1ST_LINE";
+		    IO_TYPE [IFileStructureConstants.IO_NAME_1ST_LINE        ] = "IO_NAME_1ST_LINE";
+		    IO_TYPE [IFileStructureConstants.IO_GENERIC_CSV          ] = "IO_GENERIC_CSV";
+		    IO_TYPE [IFileStructureConstants.IO_BIN_NAME_1ST_LINE    ] = "IO_BIN_NAME_1ST_LINE";
+		    IO_TYPE [IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE] = "IO_UNICODE_NAME_1ST_LINE";
+		    IO_TYPE [IFileStructureConstants.IO_XML_USE_LAYOUT       ] = "IO_XML_USE_LAYOUT";
+		    IO_TYPE [IFileStructureConstants.IO_XML_BUILD_LAYOUT     ] = "IO_XML_BUILD_LAYOUT";
+		    IO_TYPE [IFileStructureConstants.IO_PROTO_DELIMITED      ] = "IO_PROTO_DELIMITED";
+		    IO_TYPE [IFileStructureConstants.IO_PROTO_SINGLE_MESSAGE ] = "IO_PROTO_SINGLE_MESSAGE";
+		    IO_TYPE [IFileStructureConstants.IO_PROTO_SD_DELIMITED   ] = "IO_PROTO_SD_DELIMITED";
+		    IO_TYPE [IFileStructureConstants.IO_THRIFT_FILE          ] = "IO_THRIFT_FILE";
+		    IO_TYPE [IFileStructureConstants.IO_AVRO_FILE            ] = "IO_AVRO_FILE";
+		    IO_TYPE [IFileStructureConstants.IO_GETTEXT_PO           ] = "IO_GETTEXT_PO";
+		    IO_TYPE [IFileStructureConstants.IO_TIP                  ] = "IO_TIP";
+		    IO_TYPE [IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER   ] = "IO_CONTINOUS_NO_LINE_MARKER";
+		    IO_TYPE [IFileStructureConstants.IO_UNICODE_CSV_NAME_1ST_LINE  ] = "IO_UNICODE_CSV_NAME_1ST_LINE";
+		    IO_TYPE [IFileStructureConstants.IO_STANDARD_UNICODE_TEXT_FILE ] = "IO_STANDARD_UNICODE_TEXT_FILE";
+		    IO_TYPE [IFileStructureConstants.IO_TEXT_CHAR_ENTER_FONT       ] = "IO_STANDARD_UNICODE_TEXT_FILE";
+		    IO_TYPE [IFileStructureConstants.IO_PROTO_SD_SINGLE_MESSAGE    ] = "IO_PROTO_SD_SINGLE_MESSAGE";
 		}
 	}
 	

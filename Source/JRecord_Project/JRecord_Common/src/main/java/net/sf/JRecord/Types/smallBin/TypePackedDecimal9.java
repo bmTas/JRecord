@@ -4,6 +4,7 @@
 package net.sf.JRecord.Types.smallBin;
 
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.Common.FieldConversionError;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 
@@ -21,27 +22,12 @@ public class TypePackedDecimal9 extends TypeBaseXBinary {
 
 	private static final int UNSIGNED_NYBLE = 0x0F;
 
-	private static final int NEGATIVE_SIGN_NYBLE = 0x0D;
+	private static final int NEGATIVE_SIGN_NYBLE = CheckPackedDecimal.NEGATIVE_SIGN_NYBLE;
 
-	private static final byte[] toNum
-	    =	{ 00, 01, 02, 03, 04, 05, 06, 07,  8,  9, -1, -1, -1, -1, -1, -1
-    	    , 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, -1, -1, -1, -1, -1, -1
-    	    , 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, -1, -1, -1, -1, -1, -1
-    	    , 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, -1, -1, -1, -1, -1, -1
-    	    , 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, -1, -1, -1, -1, -1, -1
-    	    , 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, -1, -1, -1, -1, -1, -1
-    	    , 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, -1, -1, -1, -1, -1, -1
-    	    , 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, -1, -1, -1, -1, -1, -1
-    	    , 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, -1, -1, -1, -1, -1, -1
-    	    , 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, -1, -1, -1, -1, -1, -1
-    	    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1  
-    	    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1  
-    	    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1  
-    	    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1  
-    	    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1  
-    	    , -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }; 
+	private static final byte[] TO_NUM = CheckPackedDecimal.TO_NUM;
+
 	
-	private static final byte[] toPD
+	private static final byte[] TO_PD
 		=  { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09
 	       , 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19
 	       , 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29
@@ -91,35 +77,35 @@ public class TypePackedDecimal9 extends TypeBaseXBinary {
 
 		switch (field.getLen()) {
 		case 9: 
-			v = toNum[record[pos++] & 0xFF];
+			v = TO_NUM[record[pos++] & 0xFF];
 			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret = v;
 		case 8: 
-			v = toNum[record[pos++] & 0xFF];
+			v = TO_NUM[record[pos++] & 0xFF];
 			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret =  ret * 100 + v;
 		case 7: 
-			v = toNum[record[pos++] & 0xFF];
+			v = TO_NUM[record[pos++] & 0xFF];
 			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret = ret * 100 + v;
 		case 6: 
-			v = toNum[record[pos++] & 0xFF];
+			v = TO_NUM[record[pos++] & 0xFF];
 			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret = ret * 100 + v;
 		case 5: 
-			v = toNum[record[pos++] & 0xFF];
+			v = TO_NUM[record[pos++] & 0xFF];
 			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret = ret * 100 + v;
 		case 4: 
-			v = toNum[record[pos++] & 0xFF];
+			v = TO_NUM[record[pos++] & 0xFF];
 			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret = ret * 100 + v;
 		case 3: 
-			v = toNum[record[pos++] & 0xFF];
+			v = TO_NUM[record[pos++] & 0xFF];
 			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret = ret * 100 + v;
 		case 2: 
-			v = toNum[record[pos++] & 0xFF];
+			v = TO_NUM[record[pos++] & 0xFF];
 			if (v < 0) {invalidMessage(field, pos + 2 - position, record[pos-1]);}
 			ret = ret * 100 + v;
 		}
@@ -137,8 +123,8 @@ public class TypePackedDecimal9 extends TypeBaseXBinary {
 	}
 		
 	private void invalidMessage(IFieldDetail field, int pos, byte b) {
-		throw new RecordException("Invalid Packed decimal at: " + pos + " in field: " + field.getName()
-				+ " Byte: " + Integer.toHexString(b & 0xFF));
+		throw new FieldConversionError(field, "Invalid Packed decimal at: " + pos + " in field: " + field.getName()
+				+ " Byte: " + Integer.toHexString(b & 0xFF), null);
 	}
 
 	/* (non-Javadoc)
@@ -165,28 +151,28 @@ public class TypePackedDecimal9 extends TypeBaseXBinary {
 
 		switch (field.getLen()) {
 		case 9: 
-			record[pos--] = toPD[(int) (value % 100)];
+			record[pos--] = TO_PD[(int) (value % 100)];
 			value = value / 100;
 		case 8: 
-			record[pos--] = toPD[(int) (value % 100)];
+			record[pos--] = TO_PD[(int) (value % 100)];
 			value = value / 100;
 		case 7: 
-			record[pos--] = toPD[(int) (value % 100)];
+			record[pos--] = TO_PD[(int) (value % 100)];
 			value = value / 100;
 		case 6: 
-			record[pos--] = toPD[(int) (value % 100)];
+			record[pos--] = TO_PD[(int) (value % 100)];
 			value = value / 100;
 		case 5: 
-			record[pos--] = toPD[(int) (value % 100)];
+			record[pos--] = TO_PD[(int) (value % 100)];
 			value = value / 100;
 		case 4: 
-			record[pos--] = toPD[(int) (value % 100)];
+			record[pos--] = TO_PD[(int) (value % 100)];
 			value = value / 100;
 		case 3: 
-			record[pos--] = toPD[(int) (value % 100)];
+			record[pos--] = TO_PD[(int) (value % 100)];
 			value = value / 100;
 		case 2: 
-			record[pos--] = toPD[(int) (value % 100)];
+			record[pos--] = TO_PD[(int) (value % 100)];
 			value = value / 100;
 		}
 		
@@ -195,6 +181,16 @@ public class TypePackedDecimal9 extends TypeBaseXBinary {
 		}
 		
 		return record;
+	}
+
+	@Override
+	public boolean isValid(IFieldDetail fldDef, String value) {
+		throw new RecordException("Packed decimals are a binary format. It makes no sense to check a Text field");
+	}
+
+	@Override
+	public boolean isValid(int position, IFieldDetail fldDef, byte[] line) {
+		return CheckPackedDecimal.checkPackedDecimal(position, fldDef, line);
 	}
 
 	

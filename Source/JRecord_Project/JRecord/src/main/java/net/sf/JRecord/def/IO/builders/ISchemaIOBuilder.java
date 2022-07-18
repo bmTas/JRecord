@@ -90,7 +90,7 @@ public interface ISchemaIOBuilder extends INewLineCreator, IGetLayout {
 	 *   
      *   AbstractLineReader reader = JRecordInterface1.COBOL
      *           .newIOBuilder("file-name")
-     *               .setFileOrganization(Constants.IO_FIXED_LENGTH)
+     *               .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
      *           .<b>newReader("Data-Filename")</b>;
      *              
      *   while ((l = reader.read()) != null) { ... }
@@ -112,7 +112,7 @@ public interface ISchemaIOBuilder extends INewLineCreator, IGetLayout {
 	 *<b>Example:</b>
      *      AbstractLineReader reader = JRecordInterface1.COBOL
      *              .newIOBuilder("file-name")
-     *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+     *                  .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
      *              .<b>newReader(dataStream)</b>;
      *              
      *      while ((l = reader.read()) != null) { ... }
@@ -144,7 +144,7 @@ public interface ISchemaIOBuilder extends INewLineCreator, IGetLayout {
 	 *<b>Example:</b>
      *      AbstractLineReader reader = JRecordInterface1.COBOL
      *              .newIOBuilder("file-name")
-     *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+     *                  .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
      *              .<b>newReader(byteRecordReader)</b>;
      *              
      *      while ((l = reader.read()) != null) { ... }
@@ -166,7 +166,7 @@ public interface ISchemaIOBuilder extends INewLineCreator, IGetLayout {
 	 *      
      *      ICobolIOBuilder ioBldr = RecordInterface1.COBOL
      *                             .newIOBuilder("CoboolCopybook)
-     *                                 .setFileOrganization(Constants.IO_FIXED_LENGTH);
+     *                                 .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH);
      *      LaytoutDetail schema = ioBldr.getLayout();
      *      AbstractLineWriter writer = ioBldr.<b>newWriter("DataFileName")</b>;
      *      Line line = new Line(schema);
@@ -196,7 +196,7 @@ public interface ISchemaIOBuilder extends INewLineCreator, IGetLayout {
 	 *      
      *      ICobolIOBuilder ioBldr = RecordInterface1.COBOL
      *                             .newIOBuilder("CoboolCopybook)
-     *                                 .setFileOrganization(Constants.IO_FIXED_LENGTH);
+     *                                 .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH);
      *      LaytoutDetail schema = ioBldr.getLayout();
      *      AbstractLineWriter writer = ioBldr.<b>newWriter(dataStream)</b>;
      *      Line line = new Line(schema);

@@ -25,7 +25,7 @@
       
 package net.sf.JRecord.Numeric;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Types.Type;
 import net.sf.cb2xml.def.BasicNumericDefinition;
 import net.sf.cb2xml.def.Cb2xmlConstants;
@@ -85,7 +85,7 @@ public class GenericNumericDefinition implements NumericDefinition, Convert {
 	private String name;
 
 
-    private int defaultVbFileStructure = Constants.IO_DEFAULT;
+    private int defaultVbFileStructure = IFileStructureConstants.IO_DEFAULT;
 
 
 	public GenericNumericDefinition(int id, int binaryId,
@@ -368,7 +368,7 @@ public class GenericNumericDefinition implements NumericDefinition, Convert {
 		if (multipleRecordLengths && binary) {
 			return defaultVbFileStructure;
 		}
-		return Constants.IO_DEFAULT;
+		return IFileStructureConstants.IO_DEFAULT;
 	}
 
 	/**

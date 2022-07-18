@@ -50,7 +50,7 @@ import net.sf.JRecord.Common.RecordException;
  *
  * @version 0.55
  */
-public class TypeBit extends TypeChar {
+public class TypeBit extends BaseType {
 
     /**
      * Bit Type definition
@@ -111,4 +111,18 @@ public class TypeBit extends TypeChar {
         }
         return val;
     }
+
+
+	@Override
+	public boolean isValid(IFieldDetail fldDef, String value) {
+		return true;
+	}
+
+
+	@Override
+	public boolean isValid(int pos, IFieldDetail fldDef, byte[] line) {
+		return true;
+	}
+    
+    
 }

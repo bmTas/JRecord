@@ -39,6 +39,7 @@ package net.sf.JRecord.Types;
 
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Types.smallBin.CheckZoned;
 
 /**
  * Fujitsu Type Zoned Decimal type.
@@ -196,4 +197,15 @@ public class TypeFjZoned extends TypeNum {
 
         return ret;
     }
+    
+
+	@Override
+	public boolean isValid(IFieldDetail fldDef, String value) {
+		return CheckZoned.checkAsciiZoned(fldDef, value);
+	}
+
+	@Override
+	public boolean isValid(int position, IFieldDetail fldDef, byte[] line) {
+		return CheckZoned.checkAsciiZoned(position, fldDef, line);
+	}
 }

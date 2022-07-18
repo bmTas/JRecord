@@ -23,7 +23,7 @@ public abstract class ItemCopy implements IAddDependingOn {
 		List<ItemDtl> list = null;
 		if (items != null) {
 			list = copy(fldHelper, null, false, items, ArrayIndexDtls.EMPTY, fldHelper.getInitialLevel());
-			loadItems(fldHelper, list, ArrayIndexDtls.EMPTY, null, fldHelper.getInitialLevel(), 0);
+			loadItems(fldHelper, list, ArrayIndexDtls.EMPTY, null, fldHelper.getInitialLevel(), 0, 0);
 		}
 		return list;
 	}
@@ -85,7 +85,8 @@ public abstract class ItemCopy implements IAddDependingOn {
 			List<ItemDtl> itms, ArrayIndexDtls idxDtls,
 			DependingOnDtls dependOnParentDtls,
 			int level,
-			int basePos) {
+			int basePos, 
+			int arrayIndexNumber) {
 
 		for (ItemDtl itm  : itms) {
 			if (itm.getLevelNumber() != 88) {
@@ -128,7 +129,7 @@ public abstract class ItemCopy implements IAddDependingOn {
 									createField(
 											fldHelper, level, itm, 
 											newIdxDtls, // problem area
-											createDependingOnDtls(dependOn, dependOnParentDtls, i),
+											createDependingOnDtls(dependOn, dependOnParentDtls, i, arrayIndexNumber),
 											basePos + i * itm.getStorageLength(),
 											true)
 									);
@@ -139,9 +140,10 @@ public abstract class ItemCopy implements IAddDependingOn {
 							loadItems(
 									fldHelper, childItems, 
 									newIdxDtls,
-									createDependingOnDtls(dependOn, dependOnParentDtls, i),
+									createDependingOnDtls(dependOn, dependOnParentDtls, i, arrayIndexNumber),
 									level+1,
-									basePos + i * itm.getStorageLength());
+									basePos + i * itm.getStorageLength(),
+									arrayIndexNumber + 1);
 						}
 					}		
 				} else if (itm.getOccurs() == 0) {
@@ -152,7 +154,7 @@ public abstract class ItemCopy implements IAddDependingOn {
 								createField(fldHelper, level, itm, idxDtls, dependOnParentDtls, basePos, true));
 					}
 				} else {
-					loadItems(fldHelper, childItems, idxDtls, dependOnParentDtls, level+1, basePos);
+					loadItems(fldHelper, childItems, idxDtls, dependOnParentDtls, level+1, basePos, arrayIndexNumber);
 				}
 			}
 		}
@@ -174,10 +176,10 @@ public abstract class ItemCopy implements IAddDependingOn {
 		return dependingOn;
 	}
 
-	private DependingOnDtls createDependingOnDtls(DependingOn dependOn, DependingOnDtls dependOnParentDtls, int idx) {
+	private DependingOnDtls createDependingOnDtls(DependingOn dependOn, DependingOnDtls dependOnParentDtls, int idx, int arrayIndexNumber) {
         DependingOnDtls dependOnDtls = dependOnParentDtls;
         if (dependOn != null) {
-        	dependOnDtls = new DependingOnDtls(dependOn, idx, dependOnParentDtls);
+        	dependOnDtls = new DependingOnDtls(dependOn, idx, arrayIndexNumber, dependOnParentDtls);
         }
         return dependOnDtls;
 	}

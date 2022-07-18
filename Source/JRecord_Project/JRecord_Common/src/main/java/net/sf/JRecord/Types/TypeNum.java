@@ -67,7 +67,7 @@ import net.sf.JRecord.Common.RecordException;
  *
  * @version 0.55
  */
-public class TypeNum extends TypeChar {
+public class TypeNum extends BaseType {
 
     public static  final byte HIGH_NYBLE = (byte) 0xf0;
     public static final byte ZONED_POSITIVE_NYBLE_AND = (byte) 0xCF;
@@ -444,7 +444,7 @@ public class TypeNum extends TypeChar {
 	}
 	
 	
-	public final String checkValue(IFieldDetail field, String value)
+	protected String checkValue(IFieldDetail field, String value)
 				throws RecordException {
 
 		String val = value;
@@ -470,7 +470,7 @@ public class TypeNum extends TypeChar {
 	            }
 	            new BigInteger(val);
 	        } catch (final Exception ex) {
-	        	ex.printStackTrace();
+	        	//ex.printStackTrace();
 	            throw new RecordException(field.getName() + " Invalid Integer :" + val + ": ~ " + ex);
 	        }
 	    } else {
@@ -653,5 +653,27 @@ public class TypeNum extends TypeChar {
 			throw new RecordException("Only positive numbers are allowed");
 		}
 		return v;
+	}
+
+	@Override
+	public boolean isValid(IFieldDetail fldDef, String value) {
+		return checkValid(fldDef, value);
+	}
+
+	@Override
+	public boolean isValid(int pos, IFieldDetail fldDef, byte[] line) {
+		int fieldEnd = Math.min(pos-1 + fldDef.getLen(), line.length);
+		return checkValid(fldDef, Conversion.getString(line, pos-1, fieldEnd, fldDef.getFontName()));
+	}
+	
+	private boolean checkValid(IFieldDetail fldDef, String value) {
+		if (! isBinary()) {
+			try {
+				checkValue(fldDef, value);
+			} catch (Exception e) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

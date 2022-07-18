@@ -25,7 +25,7 @@
       
 package net.sf.JRecord.zExamples.iob.cobol.iobuilder;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
@@ -67,11 +67,11 @@ public final class XmplReadWrite02 {
         	ICobolIOBuilder iobIn  = CobolIoProvider.getInstance()
         								.newIOBuilder(copybookName)
         									.setFont("cp037")       
-        									.setFileOrganization(Constants.IO_FIXED_LENGTH_RECORDS);  
+        									.setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH_RECORDS);  
         	ICobolIOBuilder iobOut  = CobolIoProvider.getInstance()
 										.newIOBuilder(outCopybookame)
 											.setFont("cp037")       
-											.setFileOrganization(Constants.IO_FIXED_LENGTH_RECORDS);  
+											.setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH_RECORDS);  
             AbstractLineReader reader = iobIn.newReader(salesFile);
             AbstractLineWriter writer = iobOut.newWriter(salesFileOut);
             AbstractLine outLine = iobOut.newLine();

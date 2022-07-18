@@ -35,7 +35,7 @@ import javax.xml.stream.XMLStreamException;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.cbl2xml.def.Icb2xml2Xml;
 import net.sf.JRecord.cbl2xml.impl.Cobol2GroupXml;
@@ -117,7 +117,7 @@ public class TstCblDataToXml01 {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 		Icb2xml2Xml xmlWriter = Cobol2GroupXml.newCb2Xml2Xml(copybookFileName)
-					  .setFileOrganization(Constants.IO_STANDARD_TEXT_FILE)
+					  .setFileOrganization(IFileStructureConstants.IO_STANDARD_TEXT_FILE)
 					  .setXmlMainElement("copybook");
 		
 		if (addPlusToNums) {
@@ -137,7 +137,7 @@ public class TstCblDataToXml01 {
 		
 		ByteArrayOutputStream os = new ByteArrayOutputStream(0x10000);
 		Cobol2GroupXml.newCb2Xml2Xml(copybookFileName)
-					  .setFileOrganization(Constants.IO_STANDARD_TEXT_FILE)
+					  .setFileOrganization(IFileStructureConstants.IO_STANDARD_TEXT_FILE)
 					  .xml2Cobol(new FileInputStream(dataFileName), os);
 		return new String(os.toByteArray());
 

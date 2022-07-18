@@ -31,8 +31,8 @@ package net.sf.JRecord.IO;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.sf.JRecord.ByteIO.ByteTextWriter;
 import net.sf.JRecord.ByteIO.BinaryByteWriter;
+import net.sf.JRecord.ByteIO.ByteTextWriter;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.CsvParser.CsvParserManagerChar;
 import net.sf.JRecord.Details.AbstractLine;

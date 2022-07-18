@@ -4,7 +4,7 @@
     <parent>
         <groupId>net.sf.jrecord</groupId>
         <artifactId>jrecord-parent</artifactId>
-        <version>0.90.5</version>
+        <version>0.93</version>
     </parent>
 
     <groupId>net.sf.jrecord.jrecord-parent</groupId>
@@ -12,8 +12,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>JRecord_CodeGen</module>
-        <module>JRecord_Cbl2Json</module>
+        <!--module>JRecord_CodeGen</module-->
+        <!--module>JRecord_Cbl2Json</module-->
         <module>JRecord_Cbl2Csv</module>
         <module>JRecord_Cbl2Xml</module>
         <module>JRecord_Examples_Classic</module>
@@ -22,35 +22,35 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
+            <!--dependency>
                 <groupId>net.sf.jrecord.jrecord-parent.jrecord-utilities-parent</groupId>
                 <artifactId>jrecord-codegen</artifactId>
-                <version>0.90.5</version>
-            </dependency>
-            <dependency>
+                <version>0.93</version>
+            </dependency-->
+            <!--dependency>
                 <groupId>net.sf.jrecord.jrecord-parent.jrecord-utilities-parent</groupId>
                 <artifactId>jrecord-cbl2json</artifactId>
-                <version>0.90.5</version>
-            </dependency>
+                <version>0.93</version>
+            </dependency-->
             <dependency>
                 <groupId>net.sf.jrecord.jrecord-parent.jrecord-utilities-parent</groupId>
                 <artifactId>jrecord-cbl2csv</artifactId>
-                <version>0.90.5</version>
+                <version>0.93</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.jrecord.jrecord-parent.jrecord-utilities-parent</groupId>
                 <artifactId>jrecord-cbl2xml</artifactId>
-                <version>0.90.5</version>
+                <version>0.93</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.jrecord.jrecord-parent.jrecord-project-parent</groupId>
                 <artifactId>jrecord-common</artifactId>
-                <version>0.90.5</version>
+                <version>0.93</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.jrecord.jrecord-parent.jrecord-project-parent</groupId>
                 <artifactId>jrecord-base</artifactId>
-                <version>0.90.5</version>
+                <version>0.93</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

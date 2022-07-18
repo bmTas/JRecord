@@ -35,7 +35,7 @@ import java.io.InputStream;
  * <pre>{@code
  *      AbstractLineReader r = JRecordInterface1.CB2XML
  *              .newIOBuilder("file-name")
- *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+ *                  .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
  *                  .setDialect(ICopybookDialects.FMT_FUJITSU)
  *              .newReader("Data-Filename");
  * }</pre> 
@@ -53,7 +53,7 @@ public interface Icb2xmlIOProvider {
 	 * 
 	 *      AbstractLineReader r = JRecordInterface1.CB2XML
 	 *              .<b>newIOBuilder("file-name")</b>
-	 *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+	 *                  .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
 	 *                  .setDialect(ICopybookDialects.FMT_FUJITSU)
 	 *              .newReader("Data-Filename");
 	 * </pre> 
@@ -99,7 +99,7 @@ public interface Icb2xmlIOProvider {
 	 *       
 	 *      AbstractLineReader r = JRecordInterface1.CB2XML
 	 *             .<b>newIOBuilder(cobolCopybookStream, "My-Cobol-Record")</b>
-	 *                 .setFileOrganization(Constants.IO_FIXED_LENGTH)
+	 *                 .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
 	 *                 .setDialect(ICopybookDialects.FMT_FUJITSU)
 	 *             .newReader("Data-Filename");
 	 * </pre> 

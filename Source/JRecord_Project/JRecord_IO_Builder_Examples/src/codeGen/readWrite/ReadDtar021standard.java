@@ -33,10 +33,10 @@ package codeGen.readWrite;
 
 
 import net.sf.JRecord.JRecordInterface1;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.IO.AbstractLineReader;
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.External.CopybookLoader;
+import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 
 
@@ -67,7 +67,7 @@ public final class ReadDtar021standard {
            ICobolIOBuilder iob = JRecordInterface1.COBOL
                                .newIOBuilder(copybookName)
                                   .setFont("cp037")
-                                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+                                  .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
                                   .setSplitCopybook(CopybookLoader.SPLIT_NONE)
                                       ;  
 

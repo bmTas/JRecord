@@ -30,6 +30,7 @@ package net.sf.JRecord.External;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.FieldDetail;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.External.Def.ExternalField;
@@ -141,8 +142,8 @@ public final class ToExternalRecord {
 
 	private int fixIOType(int ioType) {
 		int ret = ioType;
-		if (ret == Constants.IO_XML_BUILD_LAYOUT) {
-			ret = Constants.IO_XML_USE_LAYOUT;
+		if (ret == IFileStructureConstants.IO_XML_BUILD_LAYOUT) {
+			ret = IFileStructureConstants.IO_XML_USE_LAYOUT;
 		}
 		return ret;
 	}

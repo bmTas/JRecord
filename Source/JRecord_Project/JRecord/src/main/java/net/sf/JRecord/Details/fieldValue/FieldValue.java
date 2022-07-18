@@ -58,7 +58,7 @@ public class FieldValue extends BaseFieldValue implements IFieldValueUpdLine {
 	private AbstractLine theLine;
 	//final IFieldDetail field;
 	final int recordNum;
-	final int fieldNum;;
+	final int fieldNum;
 
 	/**
 	 * Create a field value
@@ -67,7 +67,7 @@ public class FieldValue extends BaseFieldValue implements IFieldValueUpdLine {
 	 * @param fieldDetails Field Description
 	 */
 	public FieldValue(AbstractLine line, IFieldDetail fieldDetails) {
-		super(fieldDetails);
+		super(line, fieldDetails);
 		theLine = line;
 		recordNum = -1;
 		fieldNum = -1;
@@ -81,7 +81,7 @@ public class FieldValue extends BaseFieldValue implements IFieldValueUpdLine {
 	 * @param fieldIndex field index of the field
 	 */
 	public FieldValue(AbstractLine line, int recordIndex, int fieldIndex) {
-		super(null);
+		super(line, null);
 		theLine = line;
 		recordNum = recordIndex;
 		fieldNum = fieldIndex;
@@ -187,6 +187,17 @@ public class FieldValue extends BaseFieldValue implements IFieldValueUpdLine {
 		return this.theLine.isDefined(field);
 	}
 
+
+	@Override
+	public boolean isValid() {
+		IFieldDetail fld = getFieldDetail();
+
+		if (fld == null) {
+			return false;
+		} 
+		
+		return this.theLine.isValid(fld);
+	}
 
 	/**
 	 * Get The field Definition

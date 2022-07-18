@@ -6,7 +6,7 @@
     <parent>
         <groupId>net.sf.jrecord</groupId>
         <artifactId>jrecord-parent</artifactId>
-        <version>0.90.5</version>
+        <version>0.93</version>
     </parent>
 
     <groupId>net.sf.jrecord.jrecord-parent</groupId>
@@ -31,7 +31,7 @@
         <dependency>
             <groupId>net.sf.jrecord.jrecord-parent.jrecord-project-parent</groupId>
             <artifactId>jrecord-common</artifactId>
-            <version>0.90.5</version>
+            <version>0.93</version>
         </dependency>
     </dependencies>
     </dependencyManagement>
@@ -45,7 +45,7 @@
         <!-- dependency>
             <groupId>net.sf.cb2xml</groupId>
             <artifactId>cb2xml_src</artifactId>
-            <version>1.01.1</version>
+            <version>1.01.4</version>
         </dependency-->
         <dependency>
             <groupId>junit</groupId>

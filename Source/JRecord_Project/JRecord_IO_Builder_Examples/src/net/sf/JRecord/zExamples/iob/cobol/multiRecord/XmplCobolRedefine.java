@@ -32,7 +32,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.IO.AbstractLineReader;
@@ -127,7 +127,7 @@ public class XmplCobolRedefine {
 		return  JRecordInterface1.COBOL.newIOBuilder(bs, "RedefTest")
 					.setSplitCopybook(CopybookLoader.SPLIT_REDEFINE)
 					.setDialect(ICopybookDialects.FMT_INTEL)
-					.setFileOrganization(Constants.IO_BIN_TEXT);
+					.setFileOrganization(IFileStructureConstants.IO_BIN_TEXT);
 				
 //				(new CobolCopybookLoader())
 //					.loadCopyBook(

@@ -31,6 +31,7 @@ import java.util.StringTokenizer;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Types.Type;
 
 /**
@@ -148,11 +149,11 @@ public abstract class BaseCsvLineParser implements ICsvCharLineParser, ICsvByteL
 
 		if ((csvDefinition.isEmbeddedNewLine() || allowReturnInFields)
 		&& quote != null && quote.length() > 0) {
-			ret = Constants.IO_CSV;
+			ret = IFileStructureConstants.IO_CSV;
 			if (bin) {
-				ret = Constants.IO_BIN_CSV;
+				ret = IFileStructureConstants.IO_BIN_CSV;
 			} else if (! csvDefinition.isSingleByteFont()) {
-				ret = Constants.IO_UNICODE_CSV;
+				ret = IFileStructureConstants.IO_UNICODE_CSV;
 			}
 
 			if (namesOnFirstLine) {

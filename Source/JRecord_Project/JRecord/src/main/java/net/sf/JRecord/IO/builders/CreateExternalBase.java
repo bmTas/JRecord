@@ -36,6 +36,10 @@ import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
 
 public abstract class CreateExternalBase {
+	
+	protected static final String ONLY_USED_WITH_COBOL = "A cobol Copybook reader can only be used with Cobol-Copybooks";
+
+	
 	final IGetLoader parent;
 	private final String recordName;
 	private ExternalRecord lastExternalRecord;

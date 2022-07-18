@@ -58,7 +58,7 @@ import net.sf.JRecord.External.ExternalRecord;
  *      {@code
  *      AbstractLineReader reader = JRecordInterface1.COBOL
  *              .newIOBuilder("file-name")
- *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+ *                  .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
  *                  .setDialect(ICopybookDialects.FMT_FUJITSU)
  *              .newReader("Data-Filename");
  *              

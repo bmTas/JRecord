@@ -29,8 +29,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -84,7 +84,7 @@ public class Xmpl_DuplicateNames1 {
 		ICobolIOBuilder ioBldr = JRecordInterface1.COBOL
 				.newIOBuilder(new ByteArrayInputStream(cobolCopybook.getBytes()), "COMPANY-RECORD")
 					.setDialect(ICopybookDialects.FMT_INTEL)
-					.setFileOrganization(Constants.IO_BIN_TEXT);
+					.setFileOrganization(IFileStructureConstants.IO_BIN_TEXT);
 		
 		LayoutDetail schema = ioBldr.getLayout();
 

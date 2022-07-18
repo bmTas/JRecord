@@ -30,7 +30,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
@@ -71,11 +71,11 @@ public final class XmplLineIO5n {
 
         try {
           // When reading a Csv without names on the first line:
-          // 1) use FileStructure = Constants.IO_TEXT_LINE
+          // 1) use FileStructure = IFileStructureConstants.IO_TEXT_LINE
           // 2) you must define the fields
         	AbstractLineReader reader = JRecordInterface1.CSV
         			.newIOBuilder("\t", "\"")
-       					.setFileOrganization(Constants.IO_UNICODE_TEXT)
+       					.setFileOrganization(IFileStructureConstants.IO_UNICODE_TEXT)
        					.defineFields()
        						.addCsvField("KEYCODE-NO",  Type.ftChar, 0)
        						.addCsvField("Store-NO",    Type.ftNumAnyDecimal, 0)
@@ -87,10 +87,10 @@ public final class XmplLineIO5n {
 					.newReader(salesFile);
       	  // Define the output record (with the fields)
       	  // without names on the first line:
-      	  // 1) use FileStructure = Constants.IO_TEXT_LINE
+      	  // 1) use FileStructure = IFileStructureConstants.IO_TEXT_LINE
           // 2) you must define the fields
         	ICsvIOBuilder outIOBlbdr = JRecordInterface1.CSV.newIOBuilder(";", "\"")
-       				.setFileOrganization(Constants.IO_UNICODE_TEXT)
+       				.setFileOrganization(IFileStructureConstants.IO_UNICODE_TEXT)
 					.defineFields()
 						.addCsvField(FLD_SKU,   Type.ftChar, 0)
 						.addCsvField(FLD_STORE, Type.ftNumAnyDecimal, 0)

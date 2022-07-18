@@ -9,7 +9,9 @@ import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.External.Item.IItemJRec;
 import net.sf.JRecord.cgen.def.IArrayExtended;
 import net.sf.cb2xml.analysis.BaseItem;
+import net.sf.cb2xml.analysis.Condition;
 import net.sf.cb2xml.analysis.Item;
+import net.sf.cb2xml.def.ICondition;
 
 /**
  * Cobol Item Definition
@@ -97,6 +99,13 @@ public class ItemDtl extends Item implements IItemDetails {
 		formatId = baseItem.getFormatId();
 		parameter = baseItem.getParameter();
 		super.set(baseItem);
+		List<? extends ICondition> conditions = baseItem.getConditions();
+		for (ICondition c : conditions) {
+			if (c instanceof Condition) {
+				super.addCondition((Condition) c);
+			}
+		}
+
 	}
 
 	/* (non-Javadoc)

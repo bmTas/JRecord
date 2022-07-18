@@ -38,6 +38,7 @@ import junit.framework.TestCase;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.charIO.CsvCharReader;
 import net.sf.JRecord.charIO.ICharReader;
+import net.sf.JRecord.charIO.IOpenInputStream;
 import net.sf.JRecord.charIO.StandardCharReader;
 
 /**
@@ -142,7 +143,8 @@ public class TstCharReader3 extends TestCase {
 		String b;
 		int i = 0;
 
-		r.open(getFile1(fl, font, eol1, eol2), font);
+		
+		((IOpenInputStream) r).open(getFile1(fl, font, eol1, eol2), font);
 
 		while ((b = r.read()) != null) {
 			assertEquals(id + ": " + i, fl.formatLine(i), b);

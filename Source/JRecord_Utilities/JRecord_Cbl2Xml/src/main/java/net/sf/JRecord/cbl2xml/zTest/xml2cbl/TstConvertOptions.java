@@ -24,12 +24,12 @@
 
 package net.sf.JRecord.cbl2xml.zTest.xml2cbl;
 
-import net.sf.JRecord.Common.Constants;
+import junit.framework.TestCase;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.Option.IReformatFieldNames;
 import net.sf.JRecord.cbl2xml.def.ICobol2Xml;
 import net.sf.JRecord.cbl2xml.impl.ConvertOptions;
-import junit.framework.TestCase;
 
 public class TstConvertOptions extends TestCase {
 	String cbl1 = "amsPoDownload.cbl";
@@ -58,7 +58,7 @@ public class TstConvertOptions extends TestCase {
 				 "-output", out1,
 		};
 
-		checkPoTree(new ConvertOptions(args1), ICopybookDialects.FMT_MAINFRAME, IReformatFieldNames.RO_LEAVE_ASIS, Constants.IO_BIN_TEXT);
+		checkPoTree(new ConvertOptions(args1), ICopybookDialects.FMT_MAINFRAME, IReformatFieldNames.RO_LEAVE_ASIS, IFileStructureConstants.IO_BIN_TEXT);
 	}
 	
 
@@ -73,7 +73,7 @@ public class TstConvertOptions extends TestCase {
 				 "-output", out1,
 		};
 
-		checkPoTree(new ConvertOptions(args1), ICopybookDialects.FMT_GNU_COBOL, IReformatFieldNames.RO_UNDERSCORE, Constants.IO_FIXED_LENGTH);
+		checkPoTree(new ConvertOptions(args1), ICopybookDialects.FMT_GNU_COBOL, IReformatFieldNames.RO_UNDERSCORE, IFileStructureConstants.IO_FIXED_LENGTH);
 	}
 
 
@@ -88,7 +88,7 @@ public class TstConvertOptions extends TestCase {
 				 "-output", out1,
 		};
 
-		checkPoTree(new ConvertOptions(args1), ICopybookDialects.FMT_FUJITSU, IReformatFieldNames.RO_CAMEL_CASE, Constants.IO_VB);
+		checkPoTree(new ConvertOptions(args1), ICopybookDialects.FMT_FUJITSU, IReformatFieldNames.RO_CAMEL_CASE, IFileStructureConstants.IO_VB);
 	}
 
 
@@ -168,7 +168,7 @@ public class TstConvertOptions extends TestCase {
 			boolean dropCopybookName, String mainXmlTag, ConvertOptions opts) {
 		assertEquals(ICopybookDialects.FMT_MAINFRAME, opts.dialect);
 		assertEquals(dropCopybookName, opts.dropCopybookName);
-		assertEquals(Constants.IO_FIXED_LENGTH, opts.fileOrganisation);
+		assertEquals(IFileStructureConstants.IO_FIXED_LENGTH, opts.fileOrganisation);
 		assertEquals(font, opts.font);
 		assertEquals(in, opts.inputFile);
 		assertEquals(mainXmlTag, opts.mainXmlTag);
