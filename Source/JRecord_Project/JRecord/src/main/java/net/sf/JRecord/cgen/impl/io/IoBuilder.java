@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import net.sf.JRecord.ByteIO.ByteIOProvider;
+import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDecider;
@@ -37,12 +38,17 @@ public class IoBuilder<Pojo> {
 	private final Icb2xmlLoadOptions recordSelectionDtls;
 	private final LayoutDetail schema;
 	
-	public <T extends IIOBuilder & Icb2xmlLoadOptions> IoBuilder(IPojoConverter<Pojo> pojoConverter, T builder) throws IOException {
+	public <T extends IIOBuilder> IoBuilder(IPojoConverter<Pojo> pojoConverter, T builder) throws IOException {
 		this.pojoConverter = pojoConverter;
+		
 		this.builder = builder;
-		this.recordSelectionDtls = builder;
+		this.recordSelectionDtls = builder instanceof Icb2xmlLoadOptions ? (Icb2xmlLoadOptions) builder : null;
 		this.schema = builder.getLayout();
 		this.useByteIo = ByteIOProvider.getInstance().getByteReader(schema) != null;
+	}
+
+	public LayoutDetail getLayout() {
+		return schema;
 	}
 
 	/**
@@ -124,9 +130,19 @@ public class IoBuilder<Pojo> {
 	 * @return this IOBuilder
 	 */
 	public IoBuilder<Pojo> setRecordSelection(String recordName, ExternalSelection selectionCriteria) {
+		checkRecordSelection("setRecordSelection");
 		recordSelectionDtls.setRecordSelection(recordName, selectionCriteria);
 		
 		return this;
+	}
+
+	/**
+	 * 
+	 */
+	protected void checkRecordSelection(String method) {
+		if (recordSelectionDtls == null) {
+			throw new RecordException("method " + method + " is not available for IoBuilder " + builder.getClass().getName());
+		}
 	}
 
 	/**
@@ -135,6 +151,7 @@ public class IoBuilder<Pojo> {
 	 * @return this IoBuilder
 	 */
 	public IoBuilder<Pojo> setRecordDecider(RecordDecider recordDecider) {
+		checkRecordSelection("setRecordDecider");
 		recordSelectionDtls.setRecordDecider(recordDecider);
 		
 		return this;

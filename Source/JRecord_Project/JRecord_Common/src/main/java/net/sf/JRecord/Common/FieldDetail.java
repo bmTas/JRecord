@@ -493,6 +493,32 @@ public class FieldDetail implements IFieldDetail {
 		return OptionResult.UNKOWN;
 	}
 	
+
+	/**
+	 * @return the cobolItem
+	 */
+	@Override
+	public IItemDetails getCobolItem() {
+		return cobolItem;
+	}
+
+
+	/**
+	 * @param cobolItem the cobolItem to set
+	 */
+	public void setCobolItem(IItemDetails cobolItem) {
+		this.cobolItem = cobolItem;
+	}
+	
+	/**
+	 * This method is for CodeGen/RecordEditor Utility.
+	 * Do not use it in JRecord
+	 * @return Java if it has been set by 
+	 */
+	public String getJavaTypeIfSet() {
+		return cobolItem == null ? null : cobolItem.getJavaType();
+	}
+	
 	public static final FieldDetail newFixedWidthField(
 					   final String pName,
 	        		   final int pType,
@@ -520,28 +546,4 @@ public class FieldDetail implements IFieldDetail {
 }
 
 
-	/**
-	 * @return the cobolItem
-	 */
-	@Override
-	public IItemDetails getCobolItem() {
-		return cobolItem;
-	}
-
-
-	/**
-	 * @param cobolItem the cobolItem to set
-	 */
-	public void setCobolItem(IItemDetails cobolItem) {
-		this.cobolItem = cobolItem;
-	}
-	
-	/**
-	 * This method is for CodeGen/RecordEditor Utility.
-	 * Do not use it in JRecord
-	 * @return Java if it has been set by 
-	 */
-	public String getJavaTypeIfSet() {
-		return cobolItem == null ? null : cobolItem.getJavaType();
-	}
  }

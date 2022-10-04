@@ -30,6 +30,7 @@ package net.sf.JRecord.External.base;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import net.sf.JRecord.Common.Constants;
@@ -51,6 +52,9 @@ import net.sf.JRecord.Option.ICobolSplitOptions;
 import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
+import net.sf.JRecord.cgen.def.rename.IUpdateField;
+import net.sf.JRecord.cgen.def.rename.IUpdateRecord;
+import net.sf.JRecord.cgen.def.rename.IUpdateSchema;
 import net.sf.cb2xml.def.ICopybook;
 import net.sf.cb2xml.def.IItemJrUpd;
 
@@ -98,7 +102,7 @@ import net.sf.cb2xml.def.IItemJrUpd;
  */
 public class BaseExternalRecord<xRecord extends BaseExternalRecord<xRecord>> 
 extends AbstractUpdatableRecord 
-implements IFieldUpdatedListner, IAddDependingOn {
+implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 
 	protected static final int POSITION_IDX = 0;
 	protected static final int LENGTH_IDX = 1;
@@ -1902,4 +1906,27 @@ implements IFieldUpdatedListner, IAddDependingOn {
 	protected CobolConversionOptions getCobolConversionOptions() {
 		return new CobolConversionOptions(dialectCode, splitOption, dropCopybookFromFieldNames);
 	}
+
+
+	@Override
+	public void fieldUpdated() {
+		fieldUpdated(null);
+	}
+
+
+	@Override
+	public List<? extends IUpdateField> getUpdateFields() {
+		return fields;
+	}
+
+
+	@Override
+	public List<? extends IUpdateRecord> getUpdateRecords() {
+		if (subRecords.size() == 0 || fields.size() > 0) {
+			return Collections.singletonList(this);
+		}
+		return subRecords;
+	}
+	
+	
 }

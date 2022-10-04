@@ -45,6 +45,8 @@ public interface IFieldDetail {
 	public abstract int getDecimal();
 
 	public abstract int getLen();
+	
+	public abstract String getGroupName();
 
 	public abstract String getName();
 	

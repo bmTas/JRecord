@@ -152,9 +152,9 @@ public class XmlLineWriter extends AbstractLineWriter {
         int fieldCount   = rec.getFieldCount();
         //String name = toString(line.getField(idx, 0));
 		String name = toString(line.getLayout().getRecord(line.getPreferredLayoutIdx()).getRecordName());
-        String prefix = line.getFieldValue(XmlConstants.PREFIX).asString();
-        String namespace = line.getFieldValue(XmlConstants.NAMESPACE).asString();
-        boolean end = "true".equals(line.getFieldValue(XmlConstants.END_ELEMENT).asString().toLowerCase());
+        String prefix = line.getFieldValueIfExists(XmlConstants.PREFIX).asString();
+        String namespace = line.getFieldValueIfExists(XmlConstants.NAMESPACE).asString();
+        boolean end = "true".equals(line.getFieldValueIfExists(XmlConstants.END_ELEMENT).asString().toLowerCase());
         String attrName;
         Object value;
 

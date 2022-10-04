@@ -25,7 +25,7 @@
       
 package net.sf.JRecord.External.Def;
 
-
+import net.sf.JRecord.cgen.def.rename.IUpdateField;
 
 /**
  * External (ie read from a file/ DB) Field definition
@@ -34,7 +34,7 @@ package net.sf.JRecord.External.Def;
  * @author Bruce Martin
  *
  */
-public class ExternalField extends AbstractUpdatableRecord {
+public class ExternalField extends AbstractUpdatableRecord implements IUpdateField {
 
   private int position;
   private int length;

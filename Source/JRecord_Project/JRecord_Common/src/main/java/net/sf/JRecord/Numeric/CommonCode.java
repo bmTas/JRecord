@@ -135,10 +135,12 @@ public class CommonCode {
 	}
 
 	public static final boolean checkPictureNumeric(String pict, char decimalChar) {
+		if (pict == null || pict.length() == 0) {return false; }
 		boolean foundDot = false;
 		boolean check = false;
 		boolean minusAllowed = pict.charAt(0) == '-';
 		boolean plusAllowed = pict.charAt(0) == '+';
+
         boolean leadingSign = minusAllowed || plusAllowed;
 		char ch;
 		pict = pict.toUpperCase();
