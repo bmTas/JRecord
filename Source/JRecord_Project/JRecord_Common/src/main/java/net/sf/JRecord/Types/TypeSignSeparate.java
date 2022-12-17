@@ -41,6 +41,7 @@ package net.sf.JRecord.Types;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
 
@@ -269,6 +270,14 @@ public class TypeSignSeparate extends TypeNum {
 		}
 		return true;
 	}
+	
+
+	@Override
+	public boolean isValid(int pos, IFieldDetail fldDef, byte[] line) {
+		int fieldEnd = Math.min(pos-1 + fldDef.getLen(), line.length);
+		return isValid(fldDef, Conversion.getString(line, pos-1, fieldEnd, fldDef.getFontName()));
+	}
+
 //
 //
 //	@Override

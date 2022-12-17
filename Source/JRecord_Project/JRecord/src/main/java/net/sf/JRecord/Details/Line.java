@@ -42,6 +42,7 @@ package net.sf.JRecord.Details;
 import java.math.BigInteger;
 import java.util.Arrays;
 
+import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
@@ -447,6 +448,9 @@ public class Line extends BasicLine implements IGetByteData {
 //            if (field.calculateActualEnd(this) == 101) {
 //            	 System.out.println("~~ " + field.calculateActualEnd(this));
 //            }
+            if (pos < 0 && value == CommonBits.NULL_VALUE) {
+            	return;
+            }
             ensureCapacity(pos + field.getLen() - 1);
 //            System.out.println("~~ " + field.calculateActualEnd(this));
 			data = TypeManager.getSystemTypeManager().getType(type)

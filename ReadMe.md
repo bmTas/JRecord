@@ -24,6 +24,10 @@ and see how it is used in Cobol2Xml. Also If copying files, look at **Copy** cla
 * [JRecord Forums on Sourceforge](https://sourceforge.net/p/jrecord/discussion/)
 * [JRecord Tickets on Sourceforge](https://sourceforge.net/p/jrecord/_list/tickets)
 
+**Current JRecord Download:
+
+* [JRecord Download Version 0.93](https://sourceforge.net/projects/jrecord/files/jrecord/Version_0.93/)
+
 ## JRecord
 
 ### Introduction
@@ -39,7 +43,9 @@ field at the start of the record) files. Standard Text files are also supported
 
 For Documentation see [JRecord Documentation](Docs/JRecordIntro.htm)
 
+
 ### Getting started with JRecord Java interface
+
 The easiest way to access **JRecord** is via **IOBuilders** (using the **JRecordInterface1** class):
 
 ```java
@@ -64,7 +70,7 @@ the **Code Generation** options.
 ### Code Generation
 To help you get started with JRecord, there are 2 Code Generate options available:
  
-* The **JRecord CodeGen** sub-project will generate a skelton Java~JRecord Read/write programs from a Cobol Copybook.
+* The [JRecord CodeGen](https://github.com/bmTas/JRecordCodeGen) sub-project will generate a skelton Java~JRecord Read/write programs from a Cobol Copybook.
 * **JRecord CodeGen** is now part of the [RecordEditor](https://sourceforge.net/projects/record-editor/)
 see [RecordEditor Generate option](Docs/RecordEditorGenerate.htm) for details. Also see 
 
@@ -163,6 +169,28 @@ In the future, I hope to release a Cobol-Version of the RecordEditor that uses C
 descriptions. This will replace the old JRecord-Utilities. This is unlikely to be released before the end of 2015 though.
 
 ##  Change Summary
+
+#### Changes 0.93.0
+
+This versions includes
+
+* Use of cb2xml version 1.01.5 or later is required.
+* Creating 2 new interfaces **IFileStructureConstants** (File Structure/Organisation constants) and ISelectionOperators (Record Selection operator constants) have created. The values where previously in Constants Interface, the Constants Interface now extends the new interfaces.
+* Copying cb2xml Conditions into JRecord-Layouts (file schema's). This is useful in CodeGen
+* Cb2xml ICobolCopybookTextSource interface can be used as a Copybook source.
+* CodeGen improvements
+
+Changes that should not matter to users of JRecord
+
+* Minor fix to Record-Layout-Selection
+* Fix for trailing space in getFieldText method
+* Adding validation method **isValid()** to the FieldValue class.
+* Many internal changes (e.g. add isValid method to type interface, add isPositiveNumeric method to TypeManager class).
+* Change Type hierachy, **BaseType** is the new Top of the **Type** Class Hierarchy (instead of TypeChar). Numeric Types are either TypeNum or Extend TypeNum. TypeNum extend BaseType (instead of TypeChar).
+* Adding RECORD_SELECTION_BUILDER to JRecordInterface1
+* CodeGen related changes, these include:
+    * Create Java Interface to CodeGen. This new Java interface has file-analysis option that will analyse a sample file and try and determine the file strucure and Record Mapping.
+    * Option to rename duplicate fields
      
 ### Changes 0.90
 

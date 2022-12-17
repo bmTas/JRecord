@@ -62,6 +62,8 @@ public interface ICobol2Xml  extends  Icb2xml2Xml  {
 	 */
 
 	public abstract ICobol2Xml setDialect(int dialect);
+	
+	@Override public abstract Icb2xml2Xml setCopybookFileFormat(int copybookFileFormat);
 
 	@Override public abstract ICobol2Xml setFont(String font);
 

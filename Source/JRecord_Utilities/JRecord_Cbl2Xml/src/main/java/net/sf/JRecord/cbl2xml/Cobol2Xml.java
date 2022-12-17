@@ -39,6 +39,8 @@ import net.sf.JRecord.cbl2xml.impl.RecordParent;
 import net.sf.JRecord.cbl2xml.impl.RecordSelect;
 import net.sf.JRecord.schema.ArrayElementChecks;
 import net.sf.JRecord.schema.jaxb.impl.AddPlusToNumeric;
+import net.sf.cb2xml.copybookReader.ICobolCopybookTextSource;
+import net.sf.cb2xml.def.Cb2xmlConstants;
 
 /**
  * This class creates the Cobol <==> Xml and cb2xml <==> Xml builders
@@ -60,10 +62,15 @@ public class Cobol2Xml  {
 		return Cobol2GroupXml.newCobol2Xml(cobolCopybook, copybookName);
 	}
 
+	public static ICobol2Xml newCobol2Xml(ICobolCopybookTextSource cobolCopybookDtls) {
+		ICobol2Xml cobol2Xml = Cobol2GroupXml.newCobol2Xml(cobolCopybookDtls.getFreeFormatCopybookReader(), cobolCopybookDtls.getCopybookName());
+		cobol2Xml.setCopybookFileFormat(Cb2xmlConstants.FREE_FORMAT);
+		return cobol2Xml;
+	}
+
 	public static ICobol2Xml newCobol2Xml(Reader cobolCopybookReader, String copybookName) {
 		return Cobol2GroupXml.newCobol2Xml(cobolCopybookReader, copybookName);
 	}
-
 	
 	public static Icb2xml2Xml newCb2Xml2Xml(String cobolCopybook) {
 		return Cobol2GroupXml.newCb2Xml2Xml(cobolCopybook);
@@ -74,6 +81,7 @@ public class Cobol2Xml  {
 		return Cobol2GroupXml.newCb2Xml2Xml(cobolCopybook, copybookName);
 	}
 
+	
 
 	protected static Icb2xml2Xml newXmlConverter(ConvertOptions opts) {
 		Icb2xml2Xml cbl2xml;

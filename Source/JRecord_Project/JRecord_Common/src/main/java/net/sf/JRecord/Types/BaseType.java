@@ -49,6 +49,7 @@ import java.util.Arrays;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.RecordException;
+import net.sf.JRecord.detailsBasic.IItemDetails;
 
 /**
  * Type Char
@@ -228,6 +229,14 @@ public abstract class BaseType implements Type {
 		String font = field.getFontName();
 		int pos = position - 1;
 		int len = field.getLen();
+		
+		if (pos < 0) {
+			IItemDetails cobolItem = field.getCobolItem();
+			String pic = cobolItem == null ? "" : cobolItem.getPicture();
+			
+			throw new RuntimeException("Invalid record position: " + position + " Type: " + this.getClass().getName()
+					+ " Field Name: " + field.getName() + " Picture: " + pic);
+		}
 
         if (leftJust) {
 		    byte[] byteVal = getBytes(val, font);

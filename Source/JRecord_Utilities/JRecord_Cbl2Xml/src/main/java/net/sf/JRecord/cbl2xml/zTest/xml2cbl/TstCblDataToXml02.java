@@ -32,7 +32,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLStreamException;
@@ -88,7 +87,6 @@ public class TstCblDataToXml02 {
 	 * @throws FileNotFoundException
 	 * @throws RecordException
 	 * @throws IOException
-	 * @throws JAXBException
 	 * @throws XMLStreamException
 	 * @throws SAXException
 	 * @throws ParserConfigurationException

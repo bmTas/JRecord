@@ -44,6 +44,8 @@ import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.IO.LineIOProvider;
 import net.sf.JRecord.def.IO.builders.INewLineCreator;
+import net.sf.JRecord.def.IO.builders.ISchemaIOBuilder;
+import net.sf.JRecord.util.copy.IFieldNameTbl;
 
 /**
  * This is a Class containing static methods to read a file using a Schema and write the
@@ -186,6 +188,20 @@ public class Copy {
 	public static int copyFileUsingMap(AbstractLineReader reader, AbstractLineWriter writer,  LayoutDetail outSchema,
 			List<String> nameList, INewLineCreator lineCreator) 
 	throws IOException {
+		
+		return copyFileUsingMap(reader, writer, outSchema, new ListFieldNameTbl(nameList), lineCreator);
+	}
+	
+	public static int copyFileUsingMap(AbstractLineReader reader, AbstractLineWriter writer,  ISchemaIOBuilder ioBuilder,
+			IFieldNameTbl nameList) 
+	throws IOException {
+		return copyFileUsingMap(reader, writer, ioBuilder.getLayout(), nameList, ioBuilder);
+	}
+	
+	public static int copyFileUsingMap(AbstractLineReader reader, AbstractLineWriter writer,  LayoutDetail outSchema,
+			IFieldNameTbl nameList, INewLineCreator lineCreator) 
+	throws IOException {
+
 
 		AbstractLine inLine = reader.read();
 		LayoutDetail inSchema = reader.getLayout();
@@ -210,12 +226,16 @@ public class Copy {
 		
 
 		for (int i = 0; i < fieldCount; i++) {
-			fieldMapping.add(inRecordDef.getField(nameList.get(i)));
+			FieldDetail field = null;
+			for (int col = 0; field == null && col < nameList.getColumnCount(i); col++) {
+				field = inRecordDef.getField(nameList.getName(i, col));
+			}
+			fieldMapping.add(field);
 			//fieldMapping.add(map.get(outRecordDef.getField(i).getLookupName().toLowerCase()));
-			if (fieldMapping.get(fieldMapping.size() - 1) == null) {
+			if (field == null) {
 				System.out.println("No Field Match found for " + outRecordDef.getField(i).getLookupName());
 				missingFields = true;
-			}
+			} 
 		}
 		
 		if (missingFields) {
@@ -343,7 +363,8 @@ public class Copy {
 	 * Do the actual file copy
 	 * @param reader file reader to read the data from
 	 * @param writer file writer to write the output data
-	 * @param fieldMapping mapping between input record and output record
+	 * @param fieldMapping Contains the input field name associated with a output field.
+	 *                     fieldMapping.get(5) should return the        
 	 * @param inLine input line
 	 * @param outLine output line that will be writtent to the file
 	 * @return number of records written
@@ -370,7 +391,10 @@ public class Copy {
 					
 					if (fieldValue.isFieldInRecord()) {
 						if (fieldMapping.get(fldNum) == null) {
-							fieldValue.set(CommonBits.NULL_VALUE);
+							try {
+								fieldValue.set(CommonBits.NULL_VALUE);
+							} catch (Exception e) {
+							}
 						} else {
 							IFieldValue sfv = inLine.getFieldValue(fieldMapping.get(fldNum));
 							

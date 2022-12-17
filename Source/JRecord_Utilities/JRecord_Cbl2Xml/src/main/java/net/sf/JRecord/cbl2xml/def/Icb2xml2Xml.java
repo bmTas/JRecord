@@ -126,6 +126,7 @@ public interface Icb2xml2Xml extends Icb2xmlLoadOptions {
 	 *   <li><b>Cb2xmlConstants.USE_STANDARD_COLUMNS</b> -  use columns 6-72 (normal format for mainframe copybooks), this is the default.
 	 *   <li><b>Cb2xmlConstants.USE_COLS_6_TO_80</b> -  use columns 6-80
 	 *   <li><b>Cb2xmlConstants.USE_LONG_LINE</b> -  use columns 6-10000
+	 *   <li><b>Cb2xmlConstants.FREE_FORMAT</> - Free format - start in column 1 
 	 *   <li><b>Cb2xmlConstants.USE_PROPERTIES_FILE</b> -  columns are supplied in cb2xml.properties file.
 	 * </ul>
 	 * @param copybookFileFormat the copybookFileFormat to set
