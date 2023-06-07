@@ -42,6 +42,7 @@ import net.sf.JRecord.External.Def.DependingOnDefinition.SizeField;
 import net.sf.JRecord.cgen.impl.array.ArrayFieldDefinition;
 import net.sf.JRecord.cgen.support.ArrayFieldDefinition1;
 import net.sf.JRecord.fieldNameConversion.IRenameField;
+import net.sf.JRecord.schema.GroupUpdateDetails.UpdateDetails;
 import net.sf.JRecord.schema.fieldRename.AbstractFieldLookup;
 import net.sf.JRecord.schema.fieldRename.IGetRecordFieldByName;
 import net.sf.JRecord.schema.jaxb.Item;
@@ -76,8 +77,9 @@ public class UpdateSchemaItems implements ISchemaInformation {
 	private final HashMap<String,Item> arrayItems = new HashMap<String, Item>();
 	private final boolean dropCopybook;
 	private final String copybookName1, copybookName2;
-	private final Map<String, IArrayItemCheck> arrayChecks;
+//	private final Map<String, IArrayItemCheck> arrayChecks;
 //	private final Map<String, Integer> recordMap;
+	private final GroupUpdateDetails updateDetails;
 	
 	private int duplicateFieldsStatus = -1;
 //	private final int varRenameOption;
@@ -117,7 +119,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 	 * @param copybookName
 	 * @param varRenameOption
 	 */
-	public UpdateSchemaItems(List<ItemRecordDtls> recordItems, LayoutDetail schema, Map<String, IArrayItemCheck> arrayChecks,
+	public UpdateSchemaItems(List<ItemRecordDtls> recordItems, LayoutDetail schema, GroupUpdateDetails updateDetails,
 			boolean dropCopybook, String copybookName, IRenameField renameOption) {
 		//this.copybook = copybook;
 		this.schema = schema;
@@ -131,7 +133,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		this.copybookName2 = copybookName + "_";
 		this.renameField = renameOption;
 		this.recordItems = recordItems;
-		this.arrayChecks = arrayChecks;
+		this.updateDetails = updateDetails;
 
 		duplicateFieldNames = schema.getDuplicateFieldNames();
 		
@@ -227,6 +229,15 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		item.nameToUse = updateName(name);
 
 		levels.add(genFieldName(item.fieldName)); 
+		
+		if (name != null && name.length() > 0) {
+			UpdateDetails groupUpdates = updateDetails.getUpdateDetails(item.getGroupNames());
+			item.arrayValidation = groupUpdates.getArrayCheck();
+			item.formatFieldImplementation = groupUpdates.getFormatField();
+			item.writeCheck = groupUpdates.getWriteCheck();
+			item.redefinesCheck = groupUpdates.getRedefineSelection();
+		}
+
 		if (hasOccurs) {
 			arraySizes[indexs] = item.getOccurs();
 			elementSize[indexs] = item.getStorageLength();
@@ -238,9 +249,6 @@ public class UpdateSchemaItems implements ISchemaInformation {
 //					firstArraySize = item.getOccurs();
 //				}
 			
-			if (ucName != null && ucName.length() > 0) {
-				item.arrayValidation = arrayChecks.get(ucName);
-			}
 			arrayItems.put(item.nameToUse.toUpperCase(), item);
 		}
 		String dependingOn = item.getDependingOn();

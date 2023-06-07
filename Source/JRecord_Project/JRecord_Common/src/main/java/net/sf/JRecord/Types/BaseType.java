@@ -229,7 +229,7 @@ public abstract class BaseType implements Type {
 		String font = field.getFontName();
 		int pos = position - 1;
 		int len = field.getLen();
-		
+
 		if (pos < 0) {
 			IItemDetails cobolItem = field.getCobolItem();
 			String pic = cobolItem == null ? "" : cobolItem.getPicture();

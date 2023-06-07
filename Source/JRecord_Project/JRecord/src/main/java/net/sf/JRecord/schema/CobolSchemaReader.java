@@ -49,6 +49,9 @@ import net.sf.JRecord.fieldNameConversion.IRenameField;
 import net.sf.JRecord.schema.fieldRename.StdFieldRenameItems;
 import net.sf.JRecord.schema.jaxb.Item;
 import net.sf.JRecord.schema.jaxb.ItemRecordDtls;
+import net.sf.JRecord.schema.jaxb.interfaces.IFormatField;
+import net.sf.JRecord.schema.jaxb.interfaces.IRedefineSelection;
+import net.sf.JRecord.schema.jaxb.interfaces.IWriteCheck;
 
 
 /**
@@ -76,7 +79,8 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 //	private int tagFormat = IReformatFieldNames.RO_LEAVE_ASIS;
 	private IRenameField renameFieldClass = StdFieldRenameItems.LEAVE_ASIS;
 	
-	private HashMap<String, IArrayItemCheck> arrayChecks = new HashMap<String, IArrayItemCheck>();
+	//private HashMap<String, IArrayItemCheck> arrayChecks = new HashMap<String, IArrayItemCheck>();
+	GroupUpdateDetails updateDetails = new GroupUpdateDetails();
 	
 	private ISchemaIOBuilder iob = null;
 	
@@ -139,34 +143,16 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 					schema = externalRecord.asLayoutDetail();
 					iob = JRecordInterface1.SCHEMA.newIOBuilder(schema);
 					
-//					List<Cb2xmlDocument> cb2xmlDocuments = externalRecord.getCb2xmlDocuments();
-//					
-//					if (cb2xmlDocuments.size() != 1) {
-//						throw new RuntimeException("Expecting 1 cb2xml document but got: " + cb2xmlDocuments.size());
-//					} 
-//					
-//			        JAXBContext jc = JAXBContext.newInstance(Condition.class, Copybook.class, Item.class);
-//			        
-//			        Unmarshaller unmarshaller = jc.createUnmarshaller();
-//			        JAXBElement<Copybook> jaxbCopybook = unmarshaller.unmarshal(((Document) cb2xmlDocuments.get(0).cb2xmlDocument), Copybook.class);
-//			        Copybook cpybook = jaxbCopybook.getValue();
-//			        this.cobolItems = cpybook.getCobolItems();
+
 			        List<ItemRecordDtls> recordItems = new ArrayList<ItemRecordDtls>(schema.getRecordCount());
 			        for (int i = 0; i < schema.getRecordCount(); i++) {
 			        	List<? extends IItemDetails> cobolItms = schema.getRecord(i).getCobolItems();
 						recordItems.add(new ItemRecordDtls(i, schema.getRecord(i), cobolItms));
 			        }
 			        UpdateSchemaItems itemDtls = new UpdateSchemaItems(
-			        		recordItems, schema, arrayChecks,
+			        		recordItems, schema, updateDetails,
 			        		super.isDropCopybookNameFromFields(), schema.getLayoutName(), renameFieldClass);
-//			        if (schema.getRecordCount() == 1 && recordItems.size() > 1) {
-//			        	recordItems = new ArrayList<Item>(1);
-//			        	Item recItem = new Item();
-//			        	recItem.initFields(schema.getLayoutName(), cobolItems);
-//			        	recItem.nameToUse = itemDtls.updateName(recItem.fieldName);
-//			        	
-//			        	recordItems.add(recItem);
-//			        }
+
 					cobolDtls = new CobolSchemaDetails(schema, recordItems, iob, itemDtls);
 					cblDtls = cobolDtls;
 				}
@@ -175,8 +161,98 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 		return cblDtls;
 	}
 
-	public final T setArrayCheck(String arrayName, IArrayItemCheck check) {
-		arrayChecks.put(arrayName.toUpperCase(), check);
+	/**
+	 * Set class to check wether array field should be priunted
+	 * @param arrayName array to be checked
+	 * @param arrayCheck class to check the array
+	 * @return builder for more updates
+	 */
+	public final T setArrayCheck(String arrayName, IArrayItemCheck arrayCheck) {
+		updateDetails.setArrayCheck(arrayName, arrayCheck);
+		clearLayout();
+		return super.self;
+	}
+
+	/**
+	 * Set class to format a field before writing
+	 * @param fieldName name of field to be formatted.
+	 * @param formatField Class to format the field for writing
+	 * @return builder for more updates
+	 */
+	public final T setFormatField(String fieldName, IFormatField formatField) {
+		updateDetails.setFormatField(fieldName, formatField);
+		clearLayout();
+		return super.self;
+	}
+
+	/**
+	 * Set a group/field write check method
+	 * @param groupName group/field name
+	 * @param writeCheck class to check wether to write the item 
+	 * @return builder for more updates
+	 */
+	public final T setWriteCheck(String groupName, IWriteCheck writeCheck) {
+		updateDetails.setWriteCheck(groupName, writeCheck);
+		clearLayout();
+		return super.self;
+	}
+	/**
+	 * Set a Redefines Selection class. This class has a method to select which
+	 * redefine-group to use
+	 * @param groupName group/field name
+	 * @param redefineSelection class to select which redefine-item to use
+	 * @return builder for more updates
+	 */
+	public final T setRedefineSelection(String groupName, IRedefineSelection redefineSelection) {
+		updateDetails.setRedefineSelection(groupName, redefineSelection);
+		clearLayout();
+		return super.self;
+	}
+
+	/**
+	 * Set class to check wether array field should be priunted
+	 * @param groupNames Cobol-names that identify the array to be checked
+	 * @param arrayCheck class to check the array
+	 * @return builder for more updates
+	 */
+	public final T setArrayCheck(List<String> groupNames, IArrayItemCheck arrayCheck) {
+		updateDetails.setArrayCheck(groupNames, arrayCheck);
+		clearLayout();
+		return super.self;
+	}
+
+	/**
+	 * Set class to format a field before writing
+	 * @param groupNames Cobol-names that identify the field to be formatted.
+	 * @param formatField Class to format the field for writing
+	 * @return builder for more updates
+	 */
+	public final T setFormatField(List<String> groupNames, IFormatField formatField) {
+		updateDetails.setFormatField(groupNames, formatField);
+		clearLayout();
+		return super.self;
+	}
+
+	/**
+	 * Set a group/field write check method
+	 * @param groupNames Cobol-names that identify  group/field to be check before it is written
+	 * @param writeCheck class to check wether to write the item 
+	 * @return builder for more updates
+	 */
+	public final T setWriteCheck(List<String> groupNames, IWriteCheck writeCheck) {
+		updateDetails.setWriteCheck(groupNames, writeCheck);
+		clearLayout();
+		return super.self;
+	}
+	/**
+	 * Set a Redefines Selection class. This class has a method to select which
+	 * redefine-group to use
+	 * @param groupNames Cobol-names that identify the redefines group/field 
+	 * @param redefineSelection class to select which redefine-item to use
+	 * @return builder for more updates
+	 */
+	public final T setRedefineSelection(List<String> groupNames, IRedefineSelection redefineSelection) {
+		updateDetails.setRedefineSelection(groupNames, redefineSelection);
 		clearLayout();
 		return super.self;
 	}

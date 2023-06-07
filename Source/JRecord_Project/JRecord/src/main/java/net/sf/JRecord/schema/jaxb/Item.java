@@ -37,6 +37,7 @@
 package net.sf.JRecord.schema.jaxb; 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 //import javax.xml.bind.annotation.XmlAccessType;
@@ -50,10 +51,14 @@ import java.util.List;
 //import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.External.Def.DependingOnDefinition;
 import net.sf.JRecord.cgen.def.IArrayAnyDimension;
 import net.sf.JRecord.detailsBasic.IItemDetails;
 import net.sf.JRecord.schema.IArrayItemCheck;
+import net.sf.JRecord.schema.jaxb.interfaces.IFormatField;
+import net.sf.JRecord.schema.jaxb.interfaces.IRedefineSelection;
+import net.sf.JRecord.schema.jaxb.interfaces.IWriteCheck;
 import net.sf.cb2xml.def.ICondition;
 
 
@@ -121,6 +126,10 @@ public class Item implements IItem {
 	public String nameToUse, fieldName;
 	//@XmlTransient
 	public IArrayItemCheck arrayValidation = null;
+	public IWriteCheck writeCheck;
+	public IFormatField formatFieldImplementation;
+	public IRedefineSelection redefinesCheck;
+
 	//@XmlTransient
 	public boolean fieldRedefined = false;
 //	//@XmlTransient
@@ -129,29 +138,30 @@ public class Item implements IItem {
 	public DependingOnDefinition.SizeField saveDtls, arraySizeField;
 	
 
-	public void initFields(String name, List<Item> childItems) {
-    	fieldName = name;
-    	nameToUse = name;
-    	this.name = name;
-    	fieldRedefined = false;
-    	itemType = IItem.TYPE_GROUP;
-    	
-    	position = 1;
-    	
-    	storageLength = 0;
-    	displayLength = 0;
-    	for (Item ii : childItems) {
-    		storageLength += ii.storageLength;
-    		displayLength += ii.displayLength;
-    	}
-    	
-    	item = childItems;
-    	level = "00";
-
-	}
+//	public void initFields(String name, List<Item> childItems) {
+//    	fieldName = name;
+//    	nameToUse = name;
+//    	this.name = name;
+//    	fieldRedefined = false;
+//    	itemType = IItem.TYPE_GROUP;
+//    	
+//    	position = 1;
+//    	
+//    	storageLength = 0;
+//    	displayLength = 0;
+//    	for (Item ii : childItems) {
+//    		storageLength += ii.storageLength;
+//    		displayLength += ii.displayLength;
+//    	}
+//    	
+//    	item = childItems;
+//    	level = "00";
+//    	createRedefinesLists();
+//	}
 
     protected List<Condition> condition;
-    protected List<Item> item;
+    private List<Item> item;
+    private List<IItem> redefinedList;
     //@XmlAttribute(name = "assumed-digits")
     protected Integer assumedDigits;
     //@XmlAttribute(name = "depending-on")
@@ -218,13 +228,23 @@ public class Item implements IItem {
     //@XmlSchemaType(name = "anySimpleType")
     protected String value;
 
-    public Item() {
-    }
+    private final Item parent;
+    private final int relativeLevel;
+    //private final int 
+    
+//    public Item() {
+//    }
     
 
     
     public Item(IItemDetails itm) {
-    	
+    	this(null, itm);
+    }
+    
+    private Item(Item parent, IItemDetails itm) {
+    	 
+    	this.parent = parent;
+    	this.relativeLevel = parent == null ? 1 : parent.relativeLevel + 1;
     	this.arrayDefinition = itm.getArrayDefinition();
     	this.condition       = Condition.toConditionList(itm.getConditions());
     	this.dependingOn     = itm.getDependingOn();
@@ -233,6 +253,7 @@ public class Item implements IItem {
     	this.fieldName       = itm.getFieldName();
     	this.name            = this.fieldName;
     	this.nameToUse       = this.fieldName;
+ 
     	
     	List<? extends IItemDetails> childItems = itm.getChildItems();
     	if (childItems == null || childItems.size() == 0) {
@@ -240,7 +261,7 @@ public class Item implements IItem {
     	} else {
     		item = new ArrayList<Item>(childItems.size());
     		for (IItemDetails ci : childItems) {
-    			item.add(new Item(ci));
+    			item.add(new Item(this, ci));
     		}
     	}
     	//this.itemType = itm.getType();
@@ -261,6 +282,39 @@ public class Item implements IItem {
     	this.signPosition = itm.getSignClause().signPosition.getName();
     	this.sync = itm.isSync() ? true : null;
     	this.usage = itm.getUsage().getName();
+    	createRedefinesLists();
+    }
+    
+    private void createRedefinesLists() {
+    	if (item == null || item.size() == 0) { return; }
+    	ArrayList<IItem> redefinedList=null;
+    	String redefineName = null;
+    	
+    	for (int i = 0; i < item.size(); i++) {
+    		Item itm = item.get(i);
+			if (itm.isFieldRedefined()) {
+				redefineName = itm.getName();
+				redefinedList = new ArrayList<>();
+				itm.redefinedList = redefinedList;
+				redefinedList.add(itm);
+    		} else if (itm.redefines != null && itm.redefines.length() > 0) {
+    			if (itm.redefines.equals(redefineName)) {
+    				redefinedList.add(itm);
+    			}
+    		} else {
+    			redefineName = null;
+    		}
+    	}
+    }
+    
+    public List<String> getGroupNames() {
+    	String[] groups = new String[relativeLevel];
+    	Item itm = this;
+    	for (int idx = relativeLevel-1; idx >= 0; idx--) {
+    		groups[idx] = itm.nameToUse;
+    		itm = itm.parent;
+    	}
+    	return Arrays.asList(groups);
     }
     
     /**
@@ -818,6 +872,39 @@ public class Item implements IItem {
 	@Override
 	public final boolean isFieldRedefined() {
 		return fieldRedefined;
+	}
+	
+	@Override
+	public boolean isOkToWriteItem(AbstractLine line) {
+		return writeCheck == null ? true : writeCheck.isOkToWrite(this, line);
+	}
+	
+	@Override
+	public boolean isFormatFieldAvailable() {
+		return formatFieldImplementation != null;
+	}
+	
+	@Override
+	public String formatField(String value) {
+		if (formatFieldImplementation == null) { return value; }
+		return formatFieldImplementation.format(this, this.fieldDefinition, value);
+	}
+
+
+
+	@Override
+	public int getRedefineItemCount() {
+		return redefinedList == null ? 0 : redefinedList.size() ;
+	}
+
+
+
+	@Override
+	public List<IItem> getRedefinedItemsToUses(AbstractLine line) {
+		if (redefinesCheck == null) {
+			return redefinedList;
+		}
+		return redefinesCheck.selectRedefinedItemToWrite(redefinedList, line);
 	}
 
 }

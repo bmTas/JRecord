@@ -341,6 +341,7 @@ public class BaseRecordEditorXmlLoader<XRecord extends BaseExternalRecord<XRecor
 			itmBldr.setFieldRedefined(rBldr.getBooleanAttr(Cb2xmlConstants.REDEFINED));
 			itmBldr.setInheritedUsage(rBldr.getBooleanAttr(Cb2xmlConstants.INHERITED_USAGE));
 			itmBldr.setJustified(rBldr.getJustified());
+
 			itmBldr.setNumericClass(rBldr.getNumericClass());
 			itmBldr.setOccursMin(rBldr.getIntAttr(Cb2xmlConstants.OCCURS_MIN));
 			itmBldr.setOccurs(rBldr.getIntAttr(Cb2xmlConstants.OCCURS));

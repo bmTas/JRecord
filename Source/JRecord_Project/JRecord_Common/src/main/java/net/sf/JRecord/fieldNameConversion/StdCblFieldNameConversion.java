@@ -98,8 +98,17 @@ public class StdCblFieldNameConversion implements IFieldNameConversion {
 	 * @see net.sf.JRecord.cg.nameConversion.INameConversion#toClassName(java.lang.String)
 	 */
 	@Override
-	public String toClassName(String b) {
-		return toJavaId(b, 'c');
+	public String toClassName(String s) {
+		StringBuilder b = convertToPgmId(s, s, true);
+		if (b == null || b.length() == 0) {
+			return "";
+		}
+		if ((b.charAt(0) >= 'a' && b.charAt(0) <= 'z')) {
+			b.setCharAt(0, Character.toUpperCase(b.charAt(0)));
+		} else if (b.charAt(0) < 'A' || b.charAt(0) > 'Z') {
+			b.insert(0, 'c');
+		}
+		return b.toString();
 	}
 
 	

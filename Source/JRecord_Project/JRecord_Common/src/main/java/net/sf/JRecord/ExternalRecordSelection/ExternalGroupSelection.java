@@ -27,7 +27,7 @@ package net.sf.JRecord.ExternalRecordSelection;
 
 import java.util.ArrayList;
 
-public class ExternalGroupSelection<fs extends ExternalSelection> implements ExternalSelection {
+public class ExternalGroupSelection<fs extends ExternalSelection> implements IExternalSelectionGroup {
 
 	private ArrayList<fs> items ;
 	private int type = ExternalSelection.TYPE_AND;
@@ -81,6 +81,7 @@ public class ExternalGroupSelection<fs extends ExternalSelection> implements Ext
 	 * @return
 	 * @see java.util.ArrayList#get(int)
 	 */
+	@Override
 	public fs get(int index) {
 		return items.get(index);
 	}

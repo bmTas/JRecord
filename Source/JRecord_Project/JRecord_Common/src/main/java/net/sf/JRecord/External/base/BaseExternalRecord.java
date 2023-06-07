@@ -151,7 +151,7 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	private String copybookPref;
 
 
-	protected ArrayList<xRecord> subRecords = new ArrayList<xRecord>();
+	private ArrayList<IChildRecord<xRecord>> childRecords = new ArrayList<>();
 	protected ArrayList<ExternalField> fields = new ArrayList<ExternalField>(250);
 	protected ArrayList<DependingOn> dependingOn = new ArrayList<DependingOn>(3);
 	private DependingOnDefinition dependingOnDef;
@@ -680,9 +680,9 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
            recordStyle = val;
            updateStatus = UPDATED;
       }
-      if (subRecords != null && subRecords.size() > 0) {
-    	  for (xRecord r : subRecords) {
-    		  r.setRecordStyle(val);
+      if (childRecords != null && childRecords.size() > 0) {
+    	  for (IChildRecord<xRecord> r : childRecords) {
+    		  r.getExternalRecord().setRecordStyle(val);
     	  }
       }
       return self;
@@ -725,7 +725,7 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
    * @return wether added correctly
    */
   public boolean addRecord(xRecord o) {
-      return subRecords.add(o);
+      return childRecords.add(new ChildRecordDetails<xRecord>(o));
   }
 
 
@@ -863,6 +863,9 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * @param splitOption the splitOption to set
 	 */
 	public void setSplitOption(int splitOption) {
+	    if ((this.splitOption != splitOption) || (updateStatus == NULL_INT_VALUE)) {
+		   updateStatus = UPDATED;
+		}		
 		this.splitOption = splitOption;
 	}
 
@@ -928,9 +931,21 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * @return requested sub record
 	 */
 	public xRecord getRecord(int index) {
-	    return subRecords.get(index);
+	    return childRecords.get(index).getExternalRecord();
 	}
 
+	
+	public int getChildRecordCount() {
+		return childRecords.size();
+	}
+	
+	public IChildRecord<xRecord> getChildRecord(int index) {
+		return childRecords.get(index);
+	}
+
+	protected List<IChildRecord<xRecord>> getChildRecords() {
+		return childRecords;
+	}
 	
 //  Code for implementing IBasicSchema
 //
@@ -975,16 +990,16 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	    	throw new RuntimeException("Invalid Record Name: " + recordName);
 	    }
 	    
-	    for (int i = subRecords.size() - 1; i >= 0; i--) {
-	    	xRecord rec = subRecords.get(i);
+	    for (int i = childRecords.size() - 1; i >= 0; i--) {
+	    	xRecord rec = childRecords.get(i).getExternalRecord();
 			if (recordName.equalsIgnoreCase(rec.getRecordName())) {
 	    		return rec;
 	    	}
 	    }
 	    
 	    StringBuilder b = new StringBuilder("Record Names: ");
-	    for (int i = subRecords.size() - 1; i >= 0; i--) {
-	    	b.append(subRecords.get(i).getRecordName()).append("; ");
+	    for (int i = childRecords.size() - 1; i >= 0; i--) {
+	    	b.append(childRecords.get(i).getExternalRecord().getRecordName()).append("; ");
 	    }
 
 	    throw new RuntimeException("No Record named \"" + recordName + "\" exists: " + b.toString());
@@ -996,7 +1011,7 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * @return number of subrecords
 	 */
 	public int getNumberOfRecords() {
-	    return subRecords.size();
+	    return childRecords.size();
 	}
 
 	public void fieldUpdated(ExternalField field) {
@@ -1070,8 +1085,8 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 				}
 			}
 			ExternalField f;
-			for (xRecord r :subRecords) {
-				f = r.getRecordField(name);
+			for (IChildRecord<xRecord> r :childRecords) {
+				f = r.getExternalRecord().getRecordField(name);
 				if (f != null) { return f;}
 			}
 		}
@@ -1371,6 +1386,9 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * @deprecated Was originally Used in the RecordEditor; it serves not purpose in JRecord. 
 	 */
 	public void setSystemName(String newSystemName) {
+	    if ((newSystemName != null && ! newSystemName.equals(splitOption != splitOption)) || (updateStatus == NULL_INT_VALUE)) {
+		   updateStatus = UPDATED;
+		}		
 		this.systemName = newSystemName;
 	}
 
@@ -1505,6 +1523,10 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * @param parentRecord the parentRecord to set
 	 */
 	public void setParentRecord(int parentRecord) {
+	    if ((this.parentRecord != parentRecord) || (updateStatus == NULL_INT_VALUE)) {
+	       updateStatus = UPDATED;
+		}
+
 		this.parentRecord = parentRecord;
 	}
 
@@ -1526,8 +1548,8 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * @param isNew wether they are new records or not
 	 */
 	public final void setChildrenNew(boolean isNew) {
-		for (int i = 0; i < subRecords.size(); i++) {
-			subRecords.get(i).setNew(isNew);
+		for (int i = 0; i < childRecords.size(); i++) {
+			childRecords.get(i).getExternalRecord().setNew(isNew);
 		}
 	}
 
@@ -1568,9 +1590,9 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 			fields = tmpFields;
 		}
 
-		if (subRecords != null) {
-			for (i = 0; i < subRecords.size(); i++) {
-				subRecords.get(i).dropFiller();
+		if (childRecords != null) {
+			for (i = 0; i < childRecords.size(); i++) {
+				childRecords.get(i).getExternalRecord().dropFiller();
 			}
 		}
 	}
@@ -1588,17 +1610,19 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 		int i,j;
 		String parent;
 
-		if (subRecords != null) {
-			for (i = 0; i < subRecords.size(); i++) {
-				parent = ((BaseExternalRecord<xRecord>)subRecords.get(i)).parentName; // getParentName();
+		if (childRecords != null) {
+			for (i = 0; i < childRecords.size(); i++) {
+				BaseExternalRecord<xRecord> childRecord = (BaseExternalRecord<xRecord>)childRecords.get(i).getExternalRecord();
+				parent = childRecord.parentName; // getParentName();
 				if (parent != null && ! "".equalsIgnoreCase(parent)) {
-					for (j = 0; j < subRecords.size(); j++) {
+					for (j = 0; j < childRecords.size(); j++) {
 //						System.out.println("~~>> " + i + ", " + j
 //								+ " >" + parent + "< >"
 //								+ subRecords.get(j).getRecordName() + "<");
-						if (parent.equalsIgnoreCase(subRecords.get(j).getRecordName())) {
-							subRecords.get(i).setParentRecord(j);
-							subRecords.get(i).setParentName(null);
+						xRecord rec = childRecords.get(j).getExternalRecord();
+						if (parent.equalsIgnoreCase(rec.getRecordName())) {
+							childRecord.setParentRecord(j);
+							childRecord.setParentName(null);
 							break;
 						}
 					}
@@ -1629,6 +1653,11 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * @param tmpParentName new parent name
 	 */
 	public final void setParentName(String tmpParentName) {
+
+		if ((tmpParentName != null && ! tmpParentName.equals(updateStatus)) || (updateStatus == NULL_INT_VALUE)) {
+		   updateStatus = UPDATED;
+		}
+	    
 		this.parentName = tmpParentName;
 	}
 
@@ -1660,6 +1689,10 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * @param lineNumberOfFieldNames the lineNumberOfFieldNames to set
 	 */
 	public void setLineNumberOfFieldNames(int lineNumberOfFieldNames) {
+		
+	    if ((this.lineNumberOfFieldNames != lineNumberOfFieldNames) || (updateStatus == NULL_INT_VALUE)) {
+	       updateStatus = UPDATED;
+		}
 		this.lineNumberOfFieldNames = lineNumberOfFieldNames;
 	}
 
@@ -1674,6 +1707,9 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * @param recordLength the recordLength to set
 	 */
 	public final void setRecordLength(int recordLength) {
+	    if ((this.recordLength != recordLength) || (updateStatus == NULL_INT_VALUE)) {
+		    updateStatus = UPDATED;
+		}
 		this.recordLength = recordLength;
 	}
 
@@ -1681,6 +1717,10 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * @param optimizeTypes the optimizeTypes to set
 	 */
 	public void setOptimizeTypes(boolean optimizeTypes) {
+		
+	    if ((this.optimizeTypes != optimizeTypes) || (updateStatus == NULL_INT_VALUE)) {
+	       updateStatus = UPDATED;
+		}
 		this.optimizeTypes = optimizeTypes;
 	}
 
@@ -1697,11 +1737,11 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	}
 	
 	public boolean isCsv() {
-		if (subRecords.size() == 0) {
+		if (childRecords.size() == 0) {
 			return isCsv(this);
 		} else {
-			for (int i = 0; i < subRecords.size(); i++) {
-				if (isCsv(subRecords.get(i))) {
+			for (int i = 0; i < childRecords.size(); i++) {
+				if (isCsv(childRecords.get(i).getExternalRecord())) {
 					return true;
 				}
 			}
@@ -1727,8 +1767,8 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 		}
 		
 		
-		for (xRecord r : rec.subRecords) {
-			if (checkBinary(r)) {
+		for (IChildRecord<xRecord> r : rec.childRecords) {
+			if (checkBinary(r.getExternalRecord())) {
 				return true;
 			}
 		}
@@ -1753,6 +1793,10 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * @param defaultRecord the defaultRecord to set
 	 */
 	public void setDefaultRecord(boolean defaultRecord) {
+		
+	    if ((this.defaultRecord != defaultRecord) || (updateStatus == NULL_INT_VALUE)) {
+          updateStatus = UPDATED;
+	    }
 		this.defaultRecord = defaultRecord;
 	}
 
@@ -1767,6 +1811,9 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * @param recSelect the recSelect to set
 	 */
 	public void setRecordSelection(ExternalSelection recSelect) {
+	    if ((this.recSelect != recSelect) || (updateStatus == NULL_INT_VALUE)) {
+		   updateStatus = UPDATED;
+		}
 		this.recSelect = StreamLine.getExternalStreamLine().streamLine(recSelect);
 	}
 
@@ -1776,6 +1823,9 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 
 
 	public void setLineFormatParam(String lineFormatParam) {
+	    if ((this.lineFormatParam != null && ! this.lineFormatParam.equals(lineFormatParam)) || (updateStatus == NULL_INT_VALUE)) {
+		   updateStatus = UPDATED;
+	    }
 		this.lineFormatParam = lineFormatParam;
 	}
 
@@ -1791,7 +1841,10 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * @param embeddedCr the embeddedCr to set
 	 */
 	public void setEmbeddedCr(boolean embeddedCr) {
-		this.embeddedCr = embeddedCr;
+	    if ((this.embeddedCr != embeddedCr) || (updateStatus == NULL_INT_VALUE)) {
+	       updateStatus = UPDATED;
+		}
+		this.embeddedCr = embeddedCr;		
 	}
 
 
@@ -1806,6 +1859,10 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * @param recordOption the recordOption to set
 	 */
 	public final void setRecordPositionOption(IRecordPositionOption recordOption) {
+	    if ((this.recordPosistionOption != recordOption) || (updateStatus == NULL_INT_VALUE)) {
+		   updateStatus = UPDATED;
+		}
+		
 		this.recordPosistionOption = recordOption;
 	}
 
@@ -1820,6 +1877,9 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * @param initToSpaces the initToSpaces to set
 	 */
 	public final void setInitToSpaces(boolean initToSpaces) {
+	    if ((this.initToSpaces != initToSpaces) || (updateStatus == NULL_INT_VALUE)) {
+	       updateStatus = UPDATED;
+	    }
 		this.initToSpaces = initToSpaces;
 	}
 
@@ -1922,11 +1982,34 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 
 	@Override
 	public List<? extends IUpdateRecord> getUpdateRecords() {
-		if (subRecords.size() == 0 || fields.size() > 0) {
+		if (childRecords.size() == 0 || fields.size() > 0) {
 			return Collections.singletonList(this);
 		}
-		return subRecords;
+		List<xRecord> records = new ArrayList<>(childRecords.size()); 
+		for (IChildRecord<xRecord> child : childRecords) {
+			records.add(child.getExternalRecord());
+		}
+		return records;
 	}
 	
-	
+	private static class ChildRecordDetails<xRecord extends BaseExternalRecord<xRecord>> implements IChildRecord<xRecord> {
+
+		private final xRecord record;
+		
+		public ChildRecordDetails(xRecord record) {
+			super();
+			this.record = record;
+		}
+
+		@Override
+		public ExternalSelection getRecordSelection() {
+			return record.getRecordSelection();
+		}
+
+		@Override
+		public xRecord getExternalRecord() {
+			return record;
+		}
+		
+	}
 }

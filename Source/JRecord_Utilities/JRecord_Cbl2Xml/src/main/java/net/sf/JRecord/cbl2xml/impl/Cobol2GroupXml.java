@@ -32,6 +32,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,7 @@ import net.sf.JRecord.schema.jaxb.ItemRecordDtls;
 import net.sf.JRecord.schema.jaxb.LineItemHelper;
 import net.sf.JRecord.schema.jaxb.impl.DoNothingFormat;
 import net.sf.JRecord.schema.jaxb.interfaces.IFormatField;
+import net.sf.cb2xml.util.IndentXmlWriter;
 
 
 /**
@@ -94,7 +96,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 	private XMLOutputFactory xmlOutputFactory = null;
 	private XMLInputFactory  xmlInputFactory = null;
 	
-	private boolean skipValidation;
+	private boolean skipValidation, pretty=false;
 	
 	private IFormatField formatField = DoNothingFormat.INSTANCE;
 
@@ -199,12 +201,23 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 	}
 
 	@Override
+	public final ICobol2Xml setPrettyPrint(boolean pretty) {
+		this.pretty = pretty;
+		return this;
+	}
+
+	@Override
 	public void cobol2xml(String cobolFileName, String xmlFileName) throws RecordException, IOException, XMLStreamException {
 		cobol2xml(new FileInputStream(cobolFileName), new BufferedOutputStream(new FileOutputStream(xmlFileName), 0x4000));
 	}
 	
 	@Override
 	public void cobol2xml(InputStream cobolStream, OutputStream xmlStream) throws IOException,  XMLStreamException {
+		cobol2xml(cobolStream, new OutputStreamWriter(xmlStream, STANDARD_FONT));
+	}
+	
+	@Override
+	public void cobol2xml(InputStream cobolStream, Writer xmlWriter) throws IOException,  XMLStreamException {
 		doInit();
 		
         AbstractLineReader r = cobolSchemaDetails.ioBuilder.newReader(cobolStream);
@@ -213,7 +226,11 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
         if (f == null) {
         	f = XMLOutputFactory.newInstance();
         }
-       	XMLStreamWriter writer = f.createXMLStreamWriter(new OutputStreamWriter(xmlStream, STANDARD_FONT));
+       	XMLStreamWriter writer = f.createXMLStreamWriter(xmlWriter);
+		if (pretty) {
+			writer = new IndentXmlWriter(writer);
+		}
+
        // List<? extends IItem> items = cobolSchemaDetails.cobolCopybook.getCobolItems(); 
        	List<ItemRecordDtls> recordItems = cobolSchemaDetails.recordItems;
         LineItemHelper lineHelper = new LineItemHelper(schema);
@@ -268,7 +285,7 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 
         writer.writeEndDocument();
         writer.close();
-        xmlStream.close();
+        xmlWriter.close();
         r.close();
 	}
 	
@@ -332,7 +349,9 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 	private void writeItem(XMLStreamWriter writer, LineItemHelper l, IItem item, IntStack indexs) throws XMLStreamException {
 
 		String name = item.getName();
-		if (name == null || item.getName().length() == 0 || "filler".equalsIgnoreCase(item.getName())) {
+		if (! item.isOkToWriteItem(l.getLine())) {
+			
+		} else if (name == null || item.getName().length() == 0 || "filler".equalsIgnoreCase(name)) {
 			if (item.getItemType() == IItem.TYPE_GROUP) {
 				if (item.getOccurs() != null && item.getOccurs() > 1) {
 					writeArray(writer, l, item, "filler", indexs);
@@ -358,13 +377,20 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 	 */
 	private void writeAnItem(XMLStreamWriter writer, LineItemHelper l, IItem item,
 			IntStack indexs) throws XMLStreamException {
-		if (item.getItemType() == IItem.TYPE_GROUP) {
+		if (! item.isOkToWriteItem(l.getLine())) {
+			
+		} else if (item.getItemType() == IItem.TYPE_GROUP) {
 			writeItems(writer, l, item.getChildItems(), indexs);
 		} else if (indexs.size == 0) {
-			writeText(writer, item, l.getFieldValue(item, null));
+			writeField(writer, item, l.getFieldValue(item, null));
 		} else {
-			writeText(writer, item, l.getFieldValue(item, indexs.toArray()));
+			writeField(writer, item, l.getFieldValue(item, indexs.toArray()));
 		}
+	}
+
+	public void writeText(XMLStreamWriter writer, IItem item, IFieldValue fieldValue)
+			throws XMLStreamException {
+		writeField(writer, item, fieldValue);
 	}
 
 	/**
@@ -373,9 +399,9 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 	 * @param s
 	 * @throws XMLStreamException
 	 */
-	public void writeText(XMLStreamWriter writer, IItem item, IFieldValue fieldValue)
+	private void writeField(XMLStreamWriter writer, IItem item, IFieldValue fieldValue)
 			throws XMLStreamException {
-		String s = formatField.format(item, fieldValue.getFieldDetail(), fieldValue.asString());
+		String s = formatField.format(item, fieldValue.getFieldDetail(), item.formatField(fieldValue.asString()));
 		int len;
 		if (s != null && (len = s.length() - 1) >= 0) {
 			if (s.charAt(len) == 0) {
@@ -483,9 +509,27 @@ public class Cobol2GroupXml extends CobolSchemaReader<ICobol2Xml> implements ICo
 	}
 	
 	private void writeItems(XMLStreamWriter writer, LineItemHelper l, List<? extends IItem> items, IntStack indexs) throws XMLStreamException {
-		for (IItem item : items) {
-			writeItem(writer, l, item, indexs);
+		int i = 0;
+		while (i < items.size()) {
+			IItem item = items.get(i);
+			if (item.getRedefineItemCount() > 0) { 		
+				List<IItem> itemsToUses = item.getRedefinedItemsToUses(l.getLine());
+				
+				if (itemsToUses != null) {
+					for (IItem redefItm : itemsToUses) {
+						writeItem(writer, l, redefItm, indexs);
+					}
+				}
+				
+				i += item.getRedefineItemCount();
+			} else {
+				writeItem(writer, l, item, indexs);
+				i += 1;
+			}
 		}
+//		for (IItem item : items) {
+//			writeItem(writer, l, item, indexs);
+//		}
 	}
 	
 	@Override

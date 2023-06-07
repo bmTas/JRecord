@@ -36,6 +36,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import net.sf.JRecord.Common.IGetData;
+
+
 
 /**
  * This abstract class is the base class for all <b>Byte~Writer</b>
@@ -70,6 +73,11 @@ public abstract class AbstractByteWriter implements IByteRecordWriter {
      */
     public abstract void open(OutputStream outputStream)
     throws IOException;
+
+    @Override
+    public void write(IGetData lineData) throws IOException {
+    	write(lineData.getData());
+    }
 
 
     /* (non-Javadoc)

@@ -36,6 +36,7 @@ public class Cb2xmlDocument {
 	
 	public Cb2xmlDocument(int splitOption, String splitAtLevel, Object cb2xmlDocument) {
 		super();
+
 		this.splitOption = splitOption;
 		this.splitAtLevel = splitAtLevel;
 		this.cb2xmlDocument = cb2xmlDocument;

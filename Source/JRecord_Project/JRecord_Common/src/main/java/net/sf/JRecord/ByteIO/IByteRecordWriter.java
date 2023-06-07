@@ -2,6 +2,8 @@ package net.sf.JRecord.ByteIO;
 
 import java.io.IOException;
 
+import net.sf.JRecord.Common.IGetData;
+
 
 /**
  * Write byte array records to where ever
@@ -26,5 +28,13 @@ public interface IByteRecordWriter {
 	 * @throws IOException any IOerror
 	 */
 	void close() throws IOException;
+
+
+	/**
+	 * Write from a data source
+	 * @param lineData data source
+	 * @throws IOException any IoError
+	 */
+	void write(IGetData lineData) throws IOException;
 
 }

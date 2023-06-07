@@ -40,7 +40,7 @@ public class CsvParserManagerChar extends BasicNamedManager<ICsvCharLineParser> 
 	private static final boolean USE_NEW_CSV_PARSERS = true;
 
 
-	private static CsvParserManagerChar instance = null;
+	private static final CsvParserManagerChar instance = new CsvParserManagerChar(true);
 
 //	private Parser[] list = new Parser[NUMBER_OF_PARSERS];
 //	private String[] names = new String[NUMBER_OF_PARSERS];
@@ -141,9 +141,6 @@ public class CsvParserManagerChar extends BasicNamedManager<ICsvCharLineParser> 
 	 * @return the instance
 	 */
 	public static CsvParserManagerChar getInstance() {
-		if (instance == null) {
-			instance = new CsvParserManagerChar(USE_NEW_CSV_PARSERS);
-		}
 		return instance;
 	}
 

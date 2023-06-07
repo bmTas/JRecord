@@ -10,7 +10,7 @@ import net.sf.JRecord.Common.AbstractFieldValue;
  */
 
 public interface IFieldValue extends AbstractFieldValue,
-	IDecimalField, ILongField, IStringField {
+	IDecimalField, ILongField, IStringField, IBigIntegerField {
 	
 	
 	public abstract void setToHighValues();

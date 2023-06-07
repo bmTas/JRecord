@@ -74,8 +74,8 @@ public class TstLoadingCobol02 extends TestCase {
 			createField("Numeric-comp-fld-8", 13, 4, Type.ftBinaryBigEndian),
 			createField("Numeric-comp-5-fld-2", 17, 2, Type.ftBinaryBigEndian),
 			createField("Numeric-comp-5-fld-4", 19, 2, Type.ftBinaryBigEndian),
-			createField("pcomp-fld-2", 21, 2, Type.ftBinaryBigEndianPositive),
-			createField("pcomp-fld-4", 23, 2, Type.ftBinaryBigEndianPositive),
+			createField("pcomp-fld-2", 21, 2, Type.ftPositiveBinaryBigEndian),
+			createField("pcomp-fld-4", 23, 2, Type.ftPositiveBinaryBigEndian),
 			createField("pic9-fld-5", 25, 5, Type.ftZonedNumeric),
 		}, {
 			createField("Numeric-comp-fld-2", 1, 2, Type.ftBinaryBigEndian),
@@ -85,8 +85,8 @@ public class TstLoadingCobol02 extends TestCase {
 			createField("Numeric-comp-fld-8", 13, 4, Type.ftBinaryBigEndian),
 			createField("Numeric-comp-5-fld-2", 17, 2, Type.ftBinaryInt),
 			createField("Numeric-comp-5-fld-4", 19, 2, Type.ftBinaryInt),
-			createField("pcomp-fld-2", 21, 2, Type.ftBinaryBigEndianPositive),
-			createField("pcomp-fld-4", 23, 2, Type.ftBinaryBigEndianPositive),
+			createField("pcomp-fld-2", 21, 2, Type.ftPositiveBinaryBigEndian),
+			createField("pcomp-fld-4", 23, 2, Type.ftPositiveBinaryBigEndian),
 			createField("pic9-fld-5", 25, 5, Type.ftFjZonedNumeric),
 		}, {
 			createField("Numeric-comp-fld-2", 1, 1, Type.ftBinaryBigEndian),
@@ -96,8 +96,8 @@ public class TstLoadingCobol02 extends TestCase {
 			createField("Numeric-comp-fld-8", 12, 4, Type.ftBinaryBigEndian),
 			createField("Numeric-comp-5-fld-2", 16, 1, Type.ftBinaryInt),
 			createField("Numeric-comp-5-fld-4", 17, 2, Type.ftBinaryInt),
-			createField("pcomp-fld-2", 19, 1, Type.ftBinaryBigEndianPositive),
-			createField("pcomp-fld-4", 20, 2, Type.ftBinaryBigEndianPositive),
+			createField("pcomp-fld-2", 19, 1, Type.ftPositiveBinaryBigEndian),
+			createField("pcomp-fld-4", 20, 2, Type.ftPositiveBinaryBigEndian),
 			createField("pic9-fld-5", 22, 5, Type.ftGnuCblZonedNumeric),
 		}, {
 			createField("Numeric-comp-fld-2", 1, 1, Type.ftBinaryBigEndian),
@@ -107,8 +107,8 @@ public class TstLoadingCobol02 extends TestCase {
 			createField("Numeric-comp-fld-8", 10, 4, Type.ftBinaryBigEndian),
 			createField("Numeric-comp-5-fld-2", 14, 1, Type.ftBinaryInt),
 			createField("Numeric-comp-5-fld-4", 15, 2, Type.ftBinaryInt),
-			createField("pcomp-fld-2", 17, 1, Type.ftBinaryBigEndianPositive),
-			createField("pcomp-fld-4", 18, 2, Type.ftBinaryBigEndianPositive),
+			createField("pcomp-fld-2", 17, 1, Type.ftPositiveBinaryBigEndian),
+			createField("pcomp-fld-4", 18, 2, Type.ftPositiveBinaryBigEndian),
 			createField("pic9-fld-5", 20, 5, Type.ftGnuCblZonedNumeric),
 		},
 	};
@@ -253,12 +253,15 @@ public class TstLoadingCobol02 extends TestCase {
 	}
 	
 	private static Cobol2GroupXml getFileIOBuilder() {
-		return (Cobol2GroupXml) Cobol2Xml.newCobol2Xml(COPYBOOK_NAME);
+		Cobol2GroupXml newCobol2Xml = (Cobol2GroupXml) Cobol2Xml.newCobol2Xml(COPYBOOK_NAME);
+		 newCobol2Xml.setOptimizeTypes(false);
+		return newCobol2Xml;
 	}
 	
 	private static Cobol2GroupXml getStreamIOBuilder() throws FileNotFoundException {
 		if (streamIoBuilder == null) {
 			streamIoBuilder = (Cobol2GroupXml) Cobol2Xml.newCobol2Xml(new FileInputStream(COPYBOOK_NAME), Conversion.getCopyBookId(COPYBOOK_NAME));
+			streamIoBuilder.setOptimizeTypes(false);
 		}
 		return streamIoBuilder;
 	}
@@ -267,6 +270,7 @@ public class TstLoadingCobol02 extends TestCase {
 	private static Cobol2GroupXml getReaderIOBuilder() throws FileNotFoundException {
 		if (readerIoBuilder == null) {
 			readerIoBuilder = (Cobol2GroupXml) Cobol2Xml.newCobol2Xml(new FileReader(COPYBOOK_NAME), Conversion.getCopyBookId(COPYBOOK_NAME));
+			readerIoBuilder.setOptimizeTypes(false);
 		}
 		return readerIoBuilder;
 	}

@@ -31,6 +31,7 @@ package net.sf.JRecord.schema.jaxb;
 import java.util.List;
 
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.cgen.def.IArrayAnyDimension;
 import net.sf.JRecord.schema.IArrayItemCheck;
 
@@ -284,5 +285,36 @@ public interface IItem {
 	 */
 	@Deprecated
 	public int getODArraySizeIdx();
+
+	/**
+	 * Format the field for output
+	 * @param value field value
+	 * @return formatted field
+	 */
+	String formatField(String value);
+	
+	
+	int getRedefineItemCount();
+	
+	/**
+	 * Get the Item/Items to process from the redefined items
+	 * 
+	 * @param line line being processed
+	 * @return Items to be written
+	 */
+	List<IItem> getRedefinedItemsToUses(AbstractLine line);
+
+	/**
+	 * Wether there is an option to format the field
+	 * @return format field option
+	 */
+	boolean isFormatFieldAvailable();
+
+	/**
+	 * Check if it is ok to write the item for this line
+	 * @param line line to check
+	 * @return wether to write the item or not
+	 */
+	boolean isOkToWriteItem(AbstractLine line);
 
 }

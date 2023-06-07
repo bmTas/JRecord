@@ -47,6 +47,7 @@ import net.sf.JRecord.External.Def.ExternalField;
 import net.sf.JRecord.External.Item.IItemJRec;
 import net.sf.JRecord.External.base.BaseExternalRecord;
 import net.sf.JRecord.External.base.FieldCreatorHelper;
+import net.sf.JRecord.External.base.IChildRecord;
 import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.detailsBasic.IItemDetails;
 
@@ -406,7 +407,12 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	 * @return Sub records
 	 */
 	public ExternalRecord[] toArray() {
-		return subRecords.toArray(new ExternalRecord[subRecords.size()]);
+		List<IChildRecord<ExternalRecord>> childRecords = super.getChildRecords();
+		ExternalRecord[] recArray = new ExternalRecord[childRecords.size()];
+		for (int i = 0; i < childRecords.size(); i++) {
+			recArray[i] = childRecords.get(i).getExternalRecord();
+		}
+		return recArray;
 	}
 
 

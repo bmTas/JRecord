@@ -27,6 +27,7 @@ package net.sf.JRecord.cbl2xml.def;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Writer;
 
 //
 import javax.xml.stream.XMLInputFactory;
@@ -39,6 +40,8 @@ import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.def.IO.builders.Icb2xmlLoadOptions;
 import net.sf.JRecord.schema.IArrayItemCheck;
 import net.sf.JRecord.schema.jaxb.interfaces.IFormatField;
+import net.sf.JRecord.schema.jaxb.interfaces.IRedefineSelection;
+import net.sf.JRecord.schema.jaxb.interfaces.IWriteCheck;
 
 /**
  * Class To convert <i>Cobol Data Files</i> to/from <i>Xml Data files</i> using a cb2xml Xml-Schema,
@@ -149,6 +152,33 @@ public interface Icb2xml2Xml extends Icb2xmlLoadOptions {
 	 * @return this Builder
 	 */
 	public abstract Icb2xml2Xml setArrayCheck(String arrayName, IArrayItemCheck check);
+	
+	
+	/**
+	 * Set format field class
+	 * @param fieldName field-name to be formated
+	 * @param formatField class to format the field
+	 * @return this Builder
+	 */
+	public abstract Icb2xml2Xml setFormatField(String fieldName, IFormatField formatField);
+
+	/**
+	 * Set class to check if group/field should be written
+	 * @param groupName group/field name
+	 * @param writeCheck class to do the check
+	 * @return this Builder
+	 */
+	public abstract Icb2xml2Xml setWriteCheck(String groupName, IWriteCheck writeCheck);
+	
+	/**
+	 * Set a Redefines Selection class. This class has a method to select which
+	 * redefine-group to use
+	 * @param groupName group/field name
+	 * @param redefineSelection class to select which redefine-item to use
+	 * @return builder for more updates
+	 */
+	public Icb2xml2Xml setRedefineSelection(String groupName, IRedefineSelection redefineSelection);
+
 
 	/**
 	 * Supply your own Xml input factory
@@ -204,6 +234,18 @@ public interface Icb2xml2Xml extends Icb2xmlLoadOptions {
 	 */
 	public void cobol2xml(String cobolFileName, String xmlFileName)  
 			throws  IOException, XMLStreamException;
+	
+
+	/**
+	 * Write Cobol data file as Xml
+	 * @param cobolStream Cobol Data input stream
+	 * @param xmlWriter writer where the xml is to be written
+	 * @throws IOException
+	 * @throws XMLStreamException
+	 */
+	public void cobol2xml(InputStream cobolStream, Writer xmlWriter) throws IOException, XMLStreamException;
+
+
 	
 	/**
 	 * Convert Cobol Data File to Xml file

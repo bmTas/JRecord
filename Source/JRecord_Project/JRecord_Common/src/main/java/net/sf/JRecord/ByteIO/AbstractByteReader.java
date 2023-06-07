@@ -36,6 +36,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.sf.JRecord.Common.ISetData;
+
+
 
 /**
  * This abstract class is the base class for all <b>Byte~Reader</b>
@@ -69,6 +72,16 @@ public abstract class AbstractByteReader implements IByteReader {
         open(new FileInputStream(fileName));
     }
 
+
+
+	@Override
+	public boolean readInto(ISetData destination) throws IOException {
+		byte[] data = read();
+		if (data == null) { return false; }
+		destination.setData(data);
+		
+		return true;
+	}
 
 
 

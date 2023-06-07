@@ -137,6 +137,12 @@ public class AbstractUpdatableRecord {
 	 */
 	public void setNew(boolean pInserted) {
 		this.newRecord = pInserted;
+		
+		if (pInserted) {
+			this.updateStatus = NEW_RECORD;
+		} else if (this.updateStatus == NEW_RECORD){
+			updateStatus = UPDATED;
+		}
 	}
 
 	public final boolean equals(String val, String fieldValue) {

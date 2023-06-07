@@ -27,7 +27,7 @@ package net.sf.JRecord.ExternalRecordSelection;
 
 import net.sf.JRecord.Common.Constants;
 
-public class ExternalFieldSelection implements ExternalSelection {
+public class ExternalFieldSelection implements IExternalSelectionField {
 
 	public static final String EQUALS_OPERATOR = "=";
 	

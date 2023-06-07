@@ -126,9 +126,9 @@ public class Cb2XmlCode {
 
 	public static void compare(String id, String e, String a) {
 		if (e.length() != a.length()) {
-			if (Cb2XmlCode.IS_NIX) {
+			if (Cb2XmlCode.IS_NIX || Cb2XmlCode.IS_MAC) {
 				e = Conversion.replace(e, "\r\n", "\n").toString();
-			}
+			} 
 		}
 		a = fix(a, e);
 		e = fix(e, a);
@@ -405,7 +405,7 @@ public class Cb2XmlCode {
     
 	public static String loadFile(String fileName, boolean addToEnd) throws IOException {
 		String recordSep = "\r\n";
-		if (IS_NIX) {
+		if (IS_NIX || IS_MAC) {
 			recordSep = "\n";
 		}
 		

@@ -8,6 +8,8 @@ import junit.framework.TestCase;
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.ByteIO.IByteRecordReader;
 import net.sf.JRecord.ByteIO.IByteRecordWriter;
+import net.sf.JRecord.Common.IGetData;
+import net.sf.JRecord.Common.ISetData;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
@@ -81,6 +83,15 @@ public class TstByteRecordIO extends TestCase {
 			this.lines = lines;
 		}
 
+		@Override
+		public boolean readInto(ISetData line) throws IOException {
+			byte[] data = read();
+			if (data == null) { return false; }
+			line.setData(data);
+			
+			return true;
+		}
+
 		/* (non-Javadoc)
 		 * @see net.sf.JRecord.ByteIO.IByteRecordReader#read()
 		 */
@@ -104,6 +115,12 @@ public class TstByteRecordIO extends TestCase {
 	private static class ByteRecWriter implements IByteRecordWriter {
 		ArrayList<String> list = new ArrayList<String>();
 		
+		
+		@Override
+		public void write(IGetData lineData) throws IOException {
+			write(lineData.getData());
+		}
+
 		/* (non-Javadoc)
 		 * @see net.sf.JRecord.ByteIO.IByteRecordWriter#write(byte[])
 		 */

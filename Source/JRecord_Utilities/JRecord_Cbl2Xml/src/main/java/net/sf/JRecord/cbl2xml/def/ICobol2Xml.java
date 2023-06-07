@@ -24,8 +24,13 @@
 
 package net.sf.JRecord.cbl2xml.def;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Writer;
+
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
 
 import net.sf.JRecord.Details.RecordDecider;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
@@ -35,6 +40,8 @@ import net.sf.JRecord.fieldNameConversion.IRenameField;
 import net.sf.JRecord.schema.IArrayItemCheck;
 import net.sf.JRecord.schema.fieldRename.IGetRecordFieldByName;
 import net.sf.JRecord.schema.jaxb.interfaces.IFormatField;
+import net.sf.JRecord.schema.jaxb.interfaces.IRedefineSelection;
+import net.sf.JRecord.schema.jaxb.interfaces.IWriteCheck;
 
 
 /**
@@ -63,7 +70,7 @@ public interface ICobol2Xml  extends  Icb2xml2Xml  {
 
 	public abstract ICobol2Xml setDialect(int dialect);
 	
-	@Override public abstract Icb2xml2Xml setCopybookFileFormat(int copybookFileFormat);
+	@Override public abstract ICobol2Xml setCopybookFileFormat(int copybookFileFormat);
 
 	@Override public abstract ICobol2Xml setFont(String font);
 
@@ -83,6 +90,20 @@ public interface ICobol2Xml  extends  Icb2xml2Xml  {
 	@Override public abstract ICobol2Xml setDropCopybookNameFromFields(boolean dropCopybookNameFromFields);
 
 	@Override public abstract ICobol2Xml setArrayCheck(String arrayName, IArrayItemCheck check);
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override public abstract ICobol2Xml setFormatField(String fieldName, IFormatField formatField);
+
+	/**
+	 *  {@inheritDoc}
+	 */
+	@Override ICobol2Xml  setWriteCheck(String groupName, IWriteCheck writeCheck);
+	
+	/**
+	 *  {@inheritDoc}
+	 */
+	@Override ICobol2Xml setRedefineSelection(String groupName, IRedefineSelection redefineSelection);
 
 	@Override public abstract ICobol2Xml setXmlInputFactory(XMLInputFactory xmlInputFactory);
 	
@@ -90,7 +111,7 @@ public interface ICobol2Xml  extends  Icb2xml2Xml  {
 
 	/**
 	 * Set The Format  of Xml
-	 * @param tagFormat How to format Cobol-names as Xml-Tags, valuies<ul>
+	 * @param tagFormat How to format Cobol-names as Xml-Tags, values<ul>
 	 * <li><b>IReformatFieldNames.RO_LEAVE_ASIS</b> (Default) Keep the Cobol variable name
 	 * <li><b>IReformatFieldNames.RO_MINUS_TO_UNDERSCORE</b> Convert Minus (-) to underscore (_) in Cobol name.
 	 * Cobol-Var-Name ==&gt; Cobol_Var_Name
@@ -188,8 +209,12 @@ public interface ICobol2Xml  extends  Icb2xml2Xml  {
 	 */
 	public ISchemaIOBuilder asIOBuilder();
 
-
-
+	/**
+	 * 
+	 * @param pretty pretty print (indent) the xml
+	 * @return builder for more updates
+	 */
+	ICobol2Xml setPrettyPrint(boolean pretty);
 
 
 }
