@@ -13,8 +13,8 @@ import org.junit.Test;
 
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.AbstractFieldValue;
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.IO.AbstractLineReader;
@@ -116,7 +116,7 @@ public class TstMultiRecordCobol2Csv2 {
 		
 		ICobolIOBuilder ioBldr = CobolToCsvBldr.newCobolIOBuilder(poDownloadCobolFileName)
 				.setFont(Conversion.DEFAULT_ASCII_CHARSET)
-				.setFileOrganization(Constants.IO_BIN_TEXT)
+				.setFileOrganization(IFileStructureConstants.IO_BIN_TEXT)
 				.setSplitCopybook(CopybookLoader.SPLIT_01_LEVEL)
 				.setRecordDecider(JRecordInterface1.RECORD_DECIDER_BUILDER.singleFieldDeciderBuilder("Record-Type", false)
 						.addRecord("1", "record-1")

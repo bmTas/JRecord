@@ -38,16 +38,16 @@ import java.io.IOException;
 import java.util.zip.GZIPOutputStream;
 
 import net.sf.JRecord.JRecordInterface1;
+import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDetail;
-import net.sf.JRecord.Common.Constants;
-import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.Numeric.ConversionManager;
 import net.sf.JRecord.Numeric.Convert;
+import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.test.schema.cobol.gen.data.LineCopybookRecordJR;
 import net.sf.JRecord.test.schema.cobol.gen.data.LineDialectRecordJR;
 import net.sf.JRecord.test.schema.cobol.gen.data.LineFieldRecordJR;
@@ -88,7 +88,7 @@ public final class WriteJrSchema {
 
        
        iob = JRecordInterface1.COBOL   .newIOBuilder(this.getClass().getResource(copybookName).openStream(), "JR_Schema_Test")
-                                           .setFileOrganization(Constants.IO_TEXT_LINE)
+                                           .setFileOrganization(IFileStructureConstants.IO_TEXT_LINE)
                                            .setSplitCopybook(CopybookLoader.SPLIT_01_LEVEL)
                                        ;  
 

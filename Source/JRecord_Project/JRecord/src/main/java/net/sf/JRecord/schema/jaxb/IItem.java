@@ -317,4 +317,10 @@ public interface IItem {
 	 */
 	boolean isOkToWriteItem(AbstractLine line);
 
+	/**
+	 * Can this item be flattened ???
+	 * @return wether this item can be flattened
+	 */
+	boolean isCanBeFlattened();
+
 }

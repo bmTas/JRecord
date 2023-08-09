@@ -124,7 +124,8 @@ public class ArrayFieldDefinition1 implements IArrayStdDef, IArrayExtended {
 	@Override
 	public IFieldDetail getField(int... indexs) {
 		if (indexs.length != numberOfElements.length) { 
-			throw new RecordException("You must supply " + numberOfElements.length + " indexs");
+			throw new RecordException("You must supply " + numberOfElements.length + " indexs and not " + indexs.length
+					+ " indexs");
 		}
 		int idx = 0;
 		

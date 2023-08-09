@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.test.schema.cobol.io.IParms;
 import net.sf.JRecord.utilityClasses.ParseArguments;
@@ -18,7 +18,7 @@ import net.sf.JRecord.utilityClasses.ParseArguments;
  */
 public class ParmDetails implements IParms {
 	public static final Opts MAINFRAME_VB
-		= new Opts("Mainframe_VB", "Mainframe VB, file consists of <record-length><record-data>", Constants.IO_VB);
+		= new Opts("Mainframe_VB", "Mainframe VB, file consists of <record-length><record-data>", IFileStructureConstants.IO_VB);
 	
 	public static final String ARG_DIALECT = "-dialect";
 	public static final String ARG_DIRECTORY = "-directory";
@@ -41,13 +41,13 @@ public class ParmDetails implements IParms {
 	};
 
 	private static final Opts[] FILE_ORGANISATION_OPTS = {
-		new Opts("Default", "    ", "JRecord choose based on Copybook", Constants.IO_DEFAULT),
-		new Opts("Text", "    ", "Standard Windows/Unix text file (single byte characterset)", Constants.IO_BIN_TEXT),
-		new Opts("UnicodeText", "    ", "Standard Windows/Unix Unicode text file", Constants.IO_UNICODE_TEXT),
-		new Opts("FixedWidth",   "File where lines (records) are the same length no \\n", Constants.IO_FIXED_LENGTH),
-		new Opts("FixedText", "    ", "Fixed width Text (possibly unicode)", Constants.IO_FIXED_LENGTH_CHAR),
+		new Opts("Default", "    ", "JRecord choose based on Copybook", IFileStructureConstants.IO_DEFAULT),
+		new Opts("Text", "    ", "Standard Windows/Unix text file (single byte characterset)", IFileStructureConstants.IO_BIN_TEXT),
+		new Opts("UnicodeText", "    ", "Standard Windows/Unix Unicode text file", IFileStructureConstants.IO_UNICODE_TEXT),
+		new Opts("FixedWidth",   "File where lines (records) are the same length no \\n", IFileStructureConstants.IO_FIXED_LENGTH),
+		new Opts("FixedText", "    ", "Fixed width Text (possibly unicode)", IFileStructureConstants.IO_FIXED_LENGTH_CHAR),
 		MAINFRAME_VB,
-		new Opts("GNUCobol_VB",  "GNU Cobol VB, file consists of <record-length><record-data>", Constants.IO_VB_GNU_COBOL)
+		new Opts("GNUCobol_VB",  "GNU Cobol VB, file consists of <record-length><record-data>", IFileStructureConstants.IO_VB_GNU_COBOL)
 	};
 
 	public final String directory, font, outputFileName, inputFileName;

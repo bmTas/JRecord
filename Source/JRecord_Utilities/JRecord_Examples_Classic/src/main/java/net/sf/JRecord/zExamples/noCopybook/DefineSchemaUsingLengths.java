@@ -27,7 +27,7 @@ package net.sf.JRecord.zExamples.noCopybook;
 
 import java.io.IOException;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -48,7 +48,7 @@ public class DefineSchemaUsingLengths {
 	public DefineSchemaUsingLengths() {
 		try {
 			LayoutDetail schema = ExternalRecord
-									.newFixedWidthRecord("My_Record", Constants.IO_TEXT_LINE, "")
+									.newFixedWidthRecord("My_Record", IFileStructureConstants.IO_TEXT_LINE, "")
 										.addFieldByLength("Sku"  , Type.ftChar,   8, 0)
 										.addFieldByLength("Store", Type.ftNumRightJustified, 3, 0)
 										.addFieldByLength("Date" , Type.ftNumRightJustified, 6, 0)

@@ -29,7 +29,7 @@ package net.sf.JRecord.zExamples.csv;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.Line;
@@ -64,11 +64,11 @@ public final class XmplLineIO5n {
 	        AbstractLine saleRecord;
 	        
 	          // When reading a Csv without names on the first line:
-	          // 1) use FileStructure = Constants.IO_TEXT_LINE
+	          // 1) use FileStructure = IFileStructureConstants.IO_TEXT_LINE
 	          // 2) you must define the fields
 	    	ExternalRecord inputCsvRecordDefinition 
 	    		= ExternalRecord	
-	    			.newCsvRecord("", Constants.IO_TEXT_LINE, "", "\t", "\"")
+	    			.newCsvRecord("", IFileStructureConstants.IO_TEXT_LINE, "", "\t", "\"")
 						.addCsvField("KEYCODE-NO",  Type.ftChar, 0)
 						.addCsvField("Store-NO",    Type.ftNumAnyDecimal, 0)
 						.addCsvField("Date",        Type.ftNumAnyDecimal, 0)
@@ -79,11 +79,11 @@ public final class XmplLineIO5n {
 	    	
 	    	  // Define the output record (with the fields)
 	    	  // without names on the first line:
-	    	  // 1) use FileStructure = Constants.IO_TEXT_LINE
+	    	  // 1) use FileStructure = IFileStructureConstants.IO_TEXT_LINE
 	          // 2) you must define the fields
 			ExternalRecord outputCsvRecordDefinition 
 				= ExternalRecord
-					.newCsvRecord("", Constants.IO_TEXT_LINE, "", "|", "\"")
+					.newCsvRecord("", IFileStructureConstants.IO_TEXT_LINE, "", "|", "\"")
 						.addCsvField("Sku",   Type.ftChar, 0)
 						.addCsvField("Store", Type.ftNumAnyDecimal, 0)
 						.addCsvField("Date",  Type.ftNumAnyDecimal, 0)

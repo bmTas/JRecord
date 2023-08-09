@@ -16,7 +16,7 @@ import net.sf.JRecord.utilityClasses.ParseArguments;
  */
 public class ParmDetails implements IParms {
 //	public static final Opts MAINFRAME_VB
-//		= new Opts("Mainframe_VB", "Mainframe VB, file consists of <record-length><record-data>", Constants.IO_VB);
+//		= new Opts("Mainframe_VB", "Mainframe VB, file consists of <record-length><record-data>", IFileStructureConstants.IO_VB);
 	
 
 	public static final String ARG_DIRECTORY = "-directory";

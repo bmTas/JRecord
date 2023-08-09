@@ -51,6 +51,7 @@ import net.sf.JRecord.cbl2csv.args.CommonCsv2CblCode;
 import net.sf.JRecord.cbl2csv.args.ParseArgsCobol2Csv;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.def.IO.builders.ICsvIOBuilder;
+import net.sf.JRecord.util.copy.IFieldNameTbl;
 import net.sf.JRecord.utilityClasses.Copy;
 
 
@@ -73,7 +74,7 @@ public class Csv2Cobol {
 //	private static String csvXml 
 //					= "<RECORD RECORDNAME=\"Generic CSV\" COPYBOOK=\"\" "
 //					+     "DELIMITER=\"|\" DESCRIPTION=\"Generic CSV\" "
-//					+     "FILESTRUCTURE=\"" + Constants.IO_NAME_1ST_LINE + "\" STYLE=\"0\" RECORDTYPE=\"Delimited\" LIST=\"Y\" "
+//					+     "FILESTRUCTURE=\"" + IFileStructureConstants.IO_NAME_1ST_LINE + "\" STYLE=\"0\" RECORDTYPE=\"Delimited\" LIST=\"Y\" "
 //					+     "QUOTE=\"\" RecSep=\"default\">"
 //					+        "<FIELDS><FIELD NAME=\"Field 1\" POSITION=\"1\" TYPE=\"Char\"/></FIELDS>"
 //					+ "</RECORD>";
@@ -132,21 +133,53 @@ public class Csv2Cobol {
 				iobOut.newWriter(outStream), outSchema, getNameList(csvArgs, outSchema), iobOut);
 	}
     
-    private static List<String> getNameList(ParseArgsCobol2Csv csvArgs, LayoutDetail schema) {
-    	ArrayList<String> list = new ArrayList<String>(schema.getRecord(0).getFieldCount());
+    private static IFieldNameTbl getNameList(ParseArgsCobol2Csv csvArgs, LayoutDetail schema) {
+    	//ArrayList<String> list = new ArrayList<String>(schema.getRecord(0).getFieldCount());
+    	FieldNamesTbl names = new FieldNamesTbl(schema.getRecord(0).getFieldCount());
     	FieldDetail  f;
     	
     	for (int i = 0; i < schema.getRecordCount(); i++) {
     		for (int j = 0; j < schema.getRecord(0).getFieldCount(); j++) {
     			f = schema.getField(i, j);
-    			list.add(csvArgs.updateName(f.getLookupName()));
+    			names.addNames(csvArgs.updateName(f.getLookupName()), csvArgs.updateNameAlt(f.getLookupName()));
     		}
     	}
-    	
-    	return list;
+      	
+    	return names;
     }
     
- 
+    private static class FieldNamesTbl implements IFieldNameTbl {
+
+    	private final List<String> fieldNames1,  fieldNames2 ;
+    	
+    	private FieldNamesTbl(int fieldCount) {
+    		fieldNames1 = new ArrayList<>(fieldCount);
+       		fieldNames2 = new ArrayList<>(fieldCount);
+    	}
+    	
+    	public void addNames(String name1, String name2) {
+    		fieldNames1.add(name1);
+    		fieldNames2.add(name1 == null || name1.equals(name2) ? null : name2);
+    	}
+  
+
+    	@Override
+    	public int getRowCount() {
+    		return fieldNames1.size();
+    	}
+
+    	@Override
+    	public int getColumnCount(int row) {
+    		return fieldNames2.get(row) == null ? 1 : 2;
+    	}
+
+    	@Override
+    	public String getName(int row, int column) {
+    		return column == 0 ? fieldNames1.get(row) : fieldNames2.get(row);
+    	}
+
+    }
+
     
 //    /**
 //     * This method updates field names, converting cobol '-' to _ and (,) to _
@@ -192,7 +225,7 @@ public class Csv2Cobol {
 //     */
 //    private static LayoutDetail getCsvLayout(ParseArgsCobol2Csv csvArgs) throws Exception {
 //    	ExternalRecord csvRec 
-//    			= ExternalRecord.newCsvRecord("Csv", Constants.IO_NAME_1ST_LINE, csvArgs.inFont, csvArgs.sep, csvArgs.quote)
+//    			= ExternalRecord.newCsvRecord("Csv", IFileStructureConstants.IO_NAME_1ST_LINE, csvArgs.inFont, csvArgs.sep, csvArgs.quote)
 //    							.asExternalRecord();
 //    	
 //    	csvRec.setRecordStyle(csvArgs.csvParser);

@@ -315,28 +315,28 @@ public abstract class BaseType implements Type {
 	 * @param record record to be updated
 	 * @param val value to be copied
 	 * @param pos field position
-	 * @param len field length
+	 * @param fieldLength field length
 	 * @param pad pad character
 	 * @param font fontname to use
 	 *
 	 */
 	protected final void copyRightJust(byte[] record,
 	        				   String val,
-	        				   int pos, int len,
+	        				   int pos, int fieldLength,
 	        				   String pad,
 	        				   String font) {
-	    int l = val.length();
+	    int valueLength = val.length();
 
 		byte[] bytes = getBytes(val, font);
-		if (l == len) {
+		if (valueLength == fieldLength) {
 			//System.out.println(record.length + " " + val + " " + pos + " " + len);
-			System.arraycopy(bytes, 0, record, pos, len);
-		} else if (l > len) {
-		    throw new RecordException("Character Field is to big: " + val + " Field Length: " + len);
+			System.arraycopy(bytes, 0, record, pos, fieldLength);
+		} else if (valueLength > fieldLength) {
+		    throw new RecordException("Character Field is to big: " + val + " Field Length: " + fieldLength);
 		} else {
-			padWith(record, pos, len - val.length(), pad, font);
+			padWith(record, pos, fieldLength - valueLength, pad, font);
 			System.arraycopy(bytes, 0, record,
-							 pos + len - val.length(), val.length());
+							 pos + fieldLength - valueLength, valueLength);
 		}
 	}
 

@@ -441,14 +441,14 @@ public class Line extends BasicLine implements IGetByteData {
     	
         if (field.isFixedFormat()) {
             int pos = field.calculateActualPosition(this);
-//            if (pos < 0) {
+//            if (pos <= 0) {
 //            	pos = field.calculateActualPosition(this);
 //            }
             
 //            if (field.calculateActualEnd(this) == 101) {
 //            	 System.out.println("~~ " + field.calculateActualEnd(this));
 //            }
-            if (pos < 0 && value == CommonBits.NULL_VALUE) {
+            if (pos <= 0 && value == CommonBits.NULL_VALUE) {
             	return;
             }
             ensureCapacity(pos + field.getLen() - 1);
@@ -567,13 +567,12 @@ public class Line extends BasicLine implements IGetByteData {
 
 
 	@Override
-	public final net.sf.JRecord.Details.fieldValue.IFieldValue  getFieldValue(IFieldDetail field) {
+	public net.sf.JRecord.Details.fieldValue.IFieldValue  getFieldValue(IFieldDetail field) {
 		return FIELD_VALUE_CREATOR.newFieldValue(this, field);
 	}
 
 	@Override
 	public final net.sf.JRecord.Details.fieldValue.IFieldValue  getFieldValue(int recordIdx, int fieldIdx) {
-		FieldDetail field = layout.getField(recordIdx, fieldIdx);
-		return FIELD_VALUE_CREATOR.newFieldValue(this, field);
+		return getFieldValue(layout.getField(recordIdx, fieldIdx));
 	}
 }

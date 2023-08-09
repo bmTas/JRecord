@@ -29,6 +29,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.Line;
@@ -65,7 +66,7 @@ public class XmplEbcdicWriter03 {
 			schemaBldr.setRecSepList(Constants.CR_STRING);
 			
 			LayoutDetail schema = schemaBldr.asLayoutDetail();
-			AbstractLineWriter w = LineIOProvider.getInstance().getLineWriter(Constants.IO_BIN_TEXT, charset);
+			AbstractLineWriter w = LineIOProvider.getInstance().getLineWriter(IFileStructureConstants.IO_BIN_TEXT, charset);
 
 			System.out.println("Output File: " + fileName);
 			w.open(fileName);

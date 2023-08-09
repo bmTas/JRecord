@@ -88,6 +88,7 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 	
 //	private List<Item> cobolItems = null;
 	private String rootRecord;
+	private boolean flatten = false;
 	
 	
 	
@@ -135,31 +136,41 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 	}
 	
 	public CobolSchemaDetails getCobolSchemaDetails() throws IOException {
-		CobolSchemaDetails cblDtls = cobolDtls;
+		cobolDtls = getCobolSchemaDetails(updateDetails, cobolDtls);
+		return cobolDtls;
+	}
+	
+	public CobolSchemaDetails getCobolSchemaDetails(IGroupUpdateDetails updateDtls) throws IOException {
+		return getCobolSchemaDetails(updateDtls, null);
+	}
+	
+	private CobolSchemaDetails getCobolSchemaDetails(IGroupUpdateDetails updateDtls, CobolSchemaDetails cblDtls) throws IOException {
 		if (cblDtls == null) {
 			synchronized (this) {
-				if (cobolDtls == null) {
-					externalRecord = super.getExternalRecord();
-					schema = externalRecord.asLayoutDetail();
-					iob = JRecordInterface1.SCHEMA.newIOBuilder(schema);
-					
+				externalRecord = super.getExternalRecord();
+				schema = externalRecord.asLayoutDetail();
+				iob = JRecordInterface1.SCHEMA.newIOBuilder(schema);
+				
 
-			        List<ItemRecordDtls> recordItems = new ArrayList<ItemRecordDtls>(schema.getRecordCount());
-			        for (int i = 0; i < schema.getRecordCount(); i++) {
-			        	List<? extends IItemDetails> cobolItms = schema.getRecord(i).getCobolItems();
-						recordItems.add(new ItemRecordDtls(i, schema.getRecord(i), cobolItms));
-			        }
-			        UpdateSchemaItems itemDtls = new UpdateSchemaItems(
-			        		recordItems, schema, updateDetails,
-			        		super.isDropCopybookNameFromFields(), schema.getLayoutName(), renameFieldClass);
+		        List<ItemRecordDtls> recordItems = new ArrayList<ItemRecordDtls>(schema.getRecordCount());
+		        for (int i = 0; i < schema.getRecordCount(); i++) {
+		        	List<? extends IItemDetails> cobolItms = schema.getRecord(i).getCobolItems();
+					recordItems.add(new ItemRecordDtls(i, schema.getRecord(i), cobolItms));
+		        }
+		        UpdateSchemaItems itemDtls = new UpdateSchemaItems(
+		        		recordItems, schema, updateDtls,
+		        		super.isDropCopybookNameFromFields(), schema.getLayoutName(), renameFieldClass, flatten);
 
-					cobolDtls = new CobolSchemaDetails(schema, recordItems, iob, itemDtls);
-					cblDtls = cobolDtls;
-				}
+		        cblDtls = new CobolSchemaDetails(schema, recordItems, iob, itemDtls);
 			}
 		}
 		return cblDtls;
 	}
+
+	protected GroupUpdateDetails getUpdateDetails() {
+		return updateDetails;
+	}
+
 
 	/**
 	 * Set class to check wether array field should be priunted
@@ -269,6 +280,17 @@ public class CobolSchemaReader<T> extends CblIOBuilderMultiSchemaBase<T> impleme
 	}
 	
 	
+
+	public boolean isFlatten() {
+		return flatten;
+	}
+
+
+	public T setFlattenStructure(boolean flatten) {
+		this.flatten = flatten;
+		return self;
+	}
+
 
 	public final ISchemaIOBuilder asIOBuilder() {
 		if (iob != null) {

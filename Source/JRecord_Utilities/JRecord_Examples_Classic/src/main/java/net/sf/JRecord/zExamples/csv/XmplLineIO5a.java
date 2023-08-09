@@ -30,7 +30,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import net.sf.JRecord.Common.CommonBits;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.Line;
@@ -68,12 +68,12 @@ public final class XmplLineIO5a {
 		          // When reading a Csv file with names on the first line you do not
 		          // need to specify the fields
 				LayoutDetail inSchema  = ExternalRecord	
-		    									.newCsvRecord("", Constants.IO_NAME_1ST_LINE, "", "\t", "\"") 
+		    									.newCsvRecord("", IFileStructureConstants.IO_NAME_1ST_LINE, "", "\t", "\"") 
 		    									.asLayoutDetail();
 		    	  // Define the output record (with the fields)
 				LayoutDetail outSchema 
 					= ExternalRecord
-						.newCsvRecord("", Constants.IO_NAME_1ST_LINE, "", ";", "\"")
+						.newCsvRecord("", IFileStructureConstants.IO_NAME_1ST_LINE, "", ";", "\"")
 							.addCsvField("Sku",   Type.ftChar, 0)
 							.addCsvField("Store", Type.ftNumAnyDecimal, 0)
 							.addCsvField("Date",  Type.ftNumAnyDecimal, 0)

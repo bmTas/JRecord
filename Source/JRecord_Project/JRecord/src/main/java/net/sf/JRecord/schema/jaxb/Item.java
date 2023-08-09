@@ -130,6 +130,7 @@ public class Item implements IItem {
 	public IFormatField formatFieldImplementation;
 	public IRedefineSelection redefinesCheck;
 
+	public boolean canBeFlattened = true;
 	//@XmlTransient
 	public boolean fieldRedefined = false;
 //	//@XmlTransient
@@ -228,7 +229,7 @@ public class Item implements IItem {
     //@XmlSchemaType(name = "anySimpleType")
     protected String value;
 
-    private final Item parent;
+    public final Item parent;
     private final int relativeLevel;
     //private final int 
     
@@ -519,7 +520,12 @@ public class Item implements IItem {
         return numeric;
     }
 
-    /**
+    @Override
+    public boolean isCanBeFlattened() {
+		return canBeFlattened;
+	}
+
+	/**
      * Sets the value of the numeric property.
      * 
      * @param value

@@ -38,8 +38,8 @@
       
 package net.sf.JRecord.zExamples.cobol.readWrite;
 
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.IO.AbstractLineReader;
@@ -76,7 +76,7 @@ public final class XmplLineIO2 {
 
         try {
             AbstractLineReader reader  = ioProvider.getLineReader(
-                    Constants.IO_TEXT_LINE, ICopybookDialects.FMT_INTEL,
+                    IFileStructureConstants.IO_TEXT_LINE, ICopybookDialects.FMT_INTEL,
                     CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS, 
                     copybookName, vendorFile
             );

@@ -2,7 +2,7 @@ package net.sf.JRecord.zExamples.cobol.toCsv.test;
 
 import java.io.IOException;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
@@ -15,7 +15,7 @@ public class MulRecCobol2Csv14 {
 		/*  Proper definition:
 		ICobolIOBuilder ioBldr = CobolToCsvBldr.newCobolIOBuilder("/home/bruce/work/Cobol2Csv_user/zUser/CopyBook.txt")
 					.setFont("cp037")
-					.setFileOrganization(Constants.IO_BIN_TEXT)
+					.setFileOrganization(IFileStructureConstants.IO_BIN_TEXT)
 					.setSplitCopybook(CopybookLoader.SPLIT_01_LEVEL)
 	                .setRecordSelection("MFC1-HDR-REC", new ExternalFieldSelection("MFC1-HDR-RECORD-ID", "CISHDR"))
 	                .setRecordSelection("MFC1-DTL-REC", new ExternalFieldSelection("MFC1-DTL-RECORD-ID", "CISDTL"))
@@ -29,7 +29,7 @@ public class MulRecCobol2Csv14 {
 		String dir = "/home/bruce/work/Cobol2Csv_user/zUser/";
         ICobolIOBuilder ioBldr = CobolToCsvBldr.newCobolIOBuilder(dir + "shw_cpy.txt")
                 .setFont("cp037")
-                .setFileOrganization(Constants.IO_FIXED_LENGTH)
+                .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
                 .setSplitCopybook(CopybookLoader.SPLIT_01_LEVEL)
                 .setRecordSelection("ESCROW-HEADER", new ExternalFieldSelection("EH-REC-TYP", "0"))
                 .setRecordSelection("ESCROW-RECORD",

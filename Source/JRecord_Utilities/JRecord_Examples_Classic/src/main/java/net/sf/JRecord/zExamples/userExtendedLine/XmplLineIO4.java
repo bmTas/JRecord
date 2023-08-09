@@ -38,7 +38,7 @@
       
 package net.sf.JRecord.zExamples.userExtendedLine;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
@@ -103,7 +103,7 @@ public final class XmplLineIO4 {
         LineDTAR0020 saleRecord;
 
         try {
-            int fileStructure = Constants.IO_FIXED_LENGTH;
+            int fileStructure = IFileStructureConstants.IO_FIXED_LENGTH;
             CobolIoProvider ioProvider = CobolIoProvider.getInstance();
             AbstractLineReader reader  = ioProvider.getLineReader(
                     fileStructure, ICopybookDialects.FMT_MAINFRAME,

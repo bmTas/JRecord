@@ -45,7 +45,7 @@ public class CobolToCsvBldr implements ICobolToCsvDefinition, ICobolToCsvBldr {
 	 * 
 	 *      AbstractLineReader r = CobolToCsvBldr
 	 *              .<b>newIOBuilder("file-name")</b>
-	 *                  .setFileOrganization(Constants.IO_FIXED_LENGTH)
+	 *                  .setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
 	 *                  .setDialect(ICopybookDialects.FMT_FUJITSU)
 	 *              .newReader("Data-Filename");
 	 * </pre> 

@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.Details.FieldIterator;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.Details.fieldValue.IFieldValue;

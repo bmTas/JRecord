@@ -30,7 +30,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.CopybookLoader;
@@ -67,7 +67,7 @@ public final class WriteLargeFixedWidthFile {
         List<AbstractLine> lines = new ArrayList<AbstractLine>(300);
 
         try {
-            int fileStructure = Constants.IO_FIXED_LENGTH;
+            int fileStructure = IFileStructureConstants.IO_FIXED_LENGTH;
             CobolIoProvider ioProvider = CobolIoProvider.getInstance();
             AbstractLineReader reader  = ioProvider.getLineReader(
             		fileStructure, ICopybookDialects.FMT_MAINFRAME, CopybookLoader.SPLIT_NONE,  Cb2xmlConstants.USE_STANDARD_COLUMNS, 

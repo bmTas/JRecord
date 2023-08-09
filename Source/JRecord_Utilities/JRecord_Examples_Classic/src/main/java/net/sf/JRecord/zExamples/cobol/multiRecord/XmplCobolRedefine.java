@@ -31,7 +31,7 @@ package net.sf.JRecord.zExamples.cobol.multiRecord;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -95,7 +95,7 @@ public class XmplCobolRedefine {
 		String recordType;
 		InputStream inputFile = array2stream(fileData);
 		LayoutDetail layout = getLayout();
-		AbstractLineReader reader = LineIOProvider.getInstance().getLineReader(Constants.IO_BIN_TEXT);
+		AbstractLineReader reader = LineIOProvider.getInstance().getLineReader(IFileStructureConstants.IO_BIN_TEXT);
 		AbstractLine l;
 		
 		reader.open(inputFile, layout);

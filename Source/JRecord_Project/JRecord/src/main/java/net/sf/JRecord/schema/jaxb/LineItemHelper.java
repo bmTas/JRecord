@@ -19,9 +19,13 @@ import net.sf.JRecord.External.Def.DependingOnDefinition;
 public class LineItemHelper {
 	private AbstractLine line;
 	private final int[] sizes;
+	private final boolean arraySizeOne;
 	
 	public LineItemHelper(LayoutDetail schema) {
-		
+		this(schema, false);
+	}
+	public LineItemHelper(LayoutDetail schema, boolean arraySizeOne) {
+
 		int numArraySizeFields = 0;
 		for (int i = 0; i < schema.getRecordCount(); i++) {
 			DependingOnDefinition dependingOn = schema.getRecord(i).getDependingOn();
@@ -35,6 +39,7 @@ public class LineItemHelper {
 			sizes = new int[numArraySizeFields];
 		}
 		this.sizes = sizes;
+		this.arraySizeOne = arraySizeOne;
 	}
 	
 	/**
@@ -79,6 +84,9 @@ public class LineItemHelper {
 	}
 	
 	public int getArrayCount(IItem item, int[] indexs) {
+		if (arraySizeOne) {
+			return 1;
+		}
 		int num = item.getOccurs();
 		
 		@SuppressWarnings("deprecation")

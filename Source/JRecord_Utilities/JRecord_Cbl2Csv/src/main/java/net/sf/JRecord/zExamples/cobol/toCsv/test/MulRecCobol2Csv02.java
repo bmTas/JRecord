@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.net.URL;
 
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.cbl2csv.imp.CobolToCsvBldr;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
@@ -20,7 +20,7 @@ public class MulRecCobol2Csv02 {
 		URL resource = Data.AMS_PO_DATA_RESOUCE;
 		ICobolIOBuilder ioBldr = CobolToCsvBldr.newCobolIOBuilder(poDownloadCobolFileName)
 					.setFont(Conversion.DEFAULT_ASCII_CHARSET)
-					.setFileOrganization(Constants.IO_BIN_TEXT)
+					.setFileOrganization(IFileStructureConstants.IO_BIN_TEXT)
 					.setSplitCopybook(CopybookLoader.SPLIT_01_LEVEL)
 					.setRecordDecider(JRecordInterface1.RECORD_DECIDER_BUILDER.singleFieldDeciderBuilder("Record-Type", false)
 									.addRecord("H1", "PO-Record")

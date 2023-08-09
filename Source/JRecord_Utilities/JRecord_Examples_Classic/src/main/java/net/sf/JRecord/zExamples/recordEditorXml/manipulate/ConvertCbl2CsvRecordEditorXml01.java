@@ -30,6 +30,7 @@ import java.io.FileOutputStream;
 
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.CsvParser.CsvParserManagerChar;
 import net.sf.JRecord.External.CobolCopybookLoader;
 import net.sf.JRecord.External.CopybookLoader;
@@ -106,7 +107,7 @@ public class ConvertCbl2CsvRecordEditorXml01 {
      */
     private static void updateFieldsForRecord(ExternalRecord rec) {
     	ExternalField recordField;
-    	rec.setFileStructure(Constants.IO_NAME_1ST_LINE);
+    	rec.setFileStructure(IFileStructureConstants.IO_NAME_1ST_LINE);
     	rec.setRecordType(Constants.rtDelimited);
     	rec.setQuote("\"");
     	rec.setDelimiter("<Tab>");

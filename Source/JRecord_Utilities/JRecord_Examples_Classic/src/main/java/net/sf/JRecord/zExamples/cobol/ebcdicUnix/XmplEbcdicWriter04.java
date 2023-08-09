@@ -28,6 +28,7 @@ package net.sf.JRecord.zExamples.cobol.ebcdicUnix;
 import java.io.ByteArrayInputStream;
 
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.Line;
@@ -64,7 +65,7 @@ public class XmplEbcdicWriter04 {
 			schemaBldr.setRecSepList(Constants.CR_STRING);
 			
 			LayoutDetail schema = schemaBldr.asLayoutDetail();
-			AbstractLineWriter w = LineIOProvider.getInstance().getLineWriter(Constants.IO_TEXT_LINE);
+			AbstractLineWriter w = LineIOProvider.getInstance().getLineWriter(IFileStructureConstants.IO_TEXT_LINE);
 
 			System.out.println("Output File: " + fileName);
 			w.open(fileName);

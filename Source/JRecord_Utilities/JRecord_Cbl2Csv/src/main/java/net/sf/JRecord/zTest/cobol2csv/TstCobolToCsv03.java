@@ -36,15 +36,15 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 
+import junit.framework.TestCase;
 import net.sf.JRecord.JRecordInterface1;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.cbl2csv.Cobol2Csv;
 import net.sf.JRecord.cbl2csv.Csv2Cobol;
 import net.sf.JRecord.cbl2csv.args.ParseArgsCobol2Csv;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 //import net.sf.JRecord.zExamples.cobol.toCsv.ParseArgsCobol2Csv;
 import net.sf.JRecord.zTest.Common.TstConstants;
-import junit.framework.TestCase;
 
 
 /**
@@ -85,7 +85,7 @@ public class TstCobolToCsv03 extends TestCase {
 		for (String delim: DELIMS) {
 			for (String repl : CONV) {
 				for (String q : QUOTES) {
-					tstCsv(delim, repl, q, Constants.IO_BIN_TEXT);
+					tstCsv(delim, repl, q, IFileStructureConstants.IO_BIN_TEXT);
 				}
 			}
 		}
@@ -95,7 +95,7 @@ public class TstCobolToCsv03 extends TestCase {
 		for (String delim: DELIMS) {
 			for (String repl : CONV) {
 				for (String q : QUOTES) {
-					tstCsv(delim, repl, q, Constants.IO_UNICODE_TEXT);
+					tstCsv(delim, repl, q, IFileStructureConstants.IO_UNICODE_TEXT);
 				}
 			}
 		}
@@ -105,7 +105,7 @@ public class TstCobolToCsv03 extends TestCase {
 		for (String delim: DELIMS) {
 			for (String repl : CONV) {
 				for (String q : QUOTES) {
-					tstCsv(delim, repl, q, Constants.IO_UNICODE_NAME_1ST_LINE);
+					tstCsv(delim, repl, q, IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE);
 				}
 			}
 		}
@@ -114,7 +114,7 @@ public class TstCobolToCsv03 extends TestCase {
 		for (String delim: DELIMS) {
 			for (String repl : CONV) {
 				for (String q : QUOTES) {
-					tstCsv(delim, repl, q, Constants.IO_NAME_1ST_LINE);
+					tstCsv(delim, repl, q, IFileStructureConstants.IO_NAME_1ST_LINE);
 				}
 			}
 		}

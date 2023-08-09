@@ -28,8 +28,8 @@ package net.sf.JRecord.zExamples.cobol.specialCases;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -107,7 +107,7 @@ public class Xmpl_DuplicateNames1 {
 			//Get the compane-name field definition.
 		IFieldDetail companyNameFld = schema.getFieldFromName("COMPANY-NAME");
 
-		AbstractLineReader reader  = LineIOProvider.getInstance().getLineReader(Constants.IO_BIN_TEXT);
+		AbstractLineReader reader  = LineIOProvider.getInstance().getLineReader(IFileStructureConstants.IO_BIN_TEXT);
 		AbstractLine line;
 
 		reader.open(new ByteArrayInputStream(dataFile.getBytes()), schema);

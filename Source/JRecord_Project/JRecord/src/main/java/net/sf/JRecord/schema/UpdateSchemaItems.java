@@ -29,6 +29,7 @@
 package net.sf.JRecord.schema;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,6 @@ import net.sf.JRecord.External.Def.DependingOnDefinition.SizeField;
 import net.sf.JRecord.cgen.impl.array.ArrayFieldDefinition;
 import net.sf.JRecord.cgen.support.ArrayFieldDefinition1;
 import net.sf.JRecord.fieldNameConversion.IRenameField;
-import net.sf.JRecord.schema.GroupUpdateDetails.UpdateDetails;
 import net.sf.JRecord.schema.fieldRename.AbstractFieldLookup;
 import net.sf.JRecord.schema.fieldRename.IGetRecordFieldByName;
 import net.sf.JRecord.schema.jaxb.Item;
@@ -71,15 +71,13 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		{"(1, 0, 0, 0)", "(0, 1, 0, 0)", "(0, 0, 1, 0)", "(0, 0, 0, 1)", "(0, 0, 0, 0)"},
 	};
 
-	//private final Copybook copybook;
 	private final LayoutDetail schema;
 	private final Set<String> duplicateFieldNames;
 	private final HashMap<String,Item> arrayItems = new HashMap<String, Item>();
 	private final boolean dropCopybook;
 	private final String copybookName1, copybookName2;
-//	private final Map<String, IArrayItemCheck> arrayChecks;
-//	private final Map<String, Integer> recordMap;
-	private final GroupUpdateDetails updateDetails;
+
+	private final IGroupUpdateDetails updateDetails;
 	
 	private int duplicateFieldsStatus = -1;
 //	private final int varRenameOption;
@@ -94,6 +92,9 @@ public class UpdateSchemaItems implements ISchemaInformation {
 	private boolean redefinedBinaryField = false;
 	
 	private int maxRecordLevel = Integer.MIN_VALUE;
+	
+	private final IFieldList fields;
+//	private ArrayList<Item> fields = new ArrayList<>();
 	
 //	/**
 //	 * pdate a Cobol-Copybook items for use in
@@ -119,8 +120,8 @@ public class UpdateSchemaItems implements ISchemaInformation {
 	 * @param copybookName
 	 * @param varRenameOption
 	 */
-	public UpdateSchemaItems(List<ItemRecordDtls> recordItems, LayoutDetail schema, GroupUpdateDetails updateDetails,
-			boolean dropCopybook, String copybookName, IRenameField renameOption) {
+	public UpdateSchemaItems(List<ItemRecordDtls> recordItems, LayoutDetail schema, IGroupUpdateDetails updateDetails,
+			boolean dropCopybook, String copybookName, IRenameField renameOption, boolean flatten) {
 		//this.copybook = copybook;
 		this.schema = schema;
 		if (copybookName == null || copybookName.length() == 0) {
@@ -134,10 +135,11 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		this.renameField = renameOption;
 		this.recordItems = recordItems;
 		this.updateDetails = updateDetails;
+		this.fields = flatten ? new FieldList() : new DoNothinfFieldList();
 
 		duplicateFieldNames = schema.getDuplicateFieldNames();
 		
-		updateRecords(recordItems, 0, new int[99], new int[99], null, new ArrayList<String>(45), false);
+		updateRecords(recordItems, 0, new ArrayDetails(), new ArrayList<String>(45), false);
 //		
 //		if (schema.getRecordCount() < 2) {
 //			recordMap = null;
@@ -148,13 +150,22 @@ public class UpdateSchemaItems implements ISchemaInformation {
 //			}
 //		}
 	}
-	private void updateRecords(List<ItemRecordDtls> records, int indexs, int[] arraySizes, int[] elementSize, int[] currSize,
+	private void updateRecords(List<ItemRecordDtls> records, int indexs, ArrayDetails arrayDetails,
 			ArrayList<String> levels, boolean redefined) {
+		boolean keepTopItem = records.size() > 1;
 		for (ItemRecordDtls rec : records) {
 			Map<String, SizeField> nameSizeFieldMap = rec.record.getDependingOn().getNameSizeFieldMap();
+			fields.clear();
 			for (int i = 0; i < rec.items.size(); i++) {
-				updateItem(nameSizeFieldMap, indexs, arraySizes, elementSize, currSize, levels, redefined, rec.items.get(i));
+				updateItem(nameSizeFieldMap, indexs, arrayDetails, null, levels, redefined, rec.items.get(i));
 			}
+			if (keepTopItem && rec.items.size() == 1) {
+				rec.items.get(0).canBeFlattened = false;
+			}
+//			if (records.size() > 1 && rec.items.size() == 1) {
+//				rec.items.get(0).canBeFlattened = false;
+//			}
+			fields.updateForDuplicateNames();
 		}
 	}
 	
@@ -184,10 +195,10 @@ public class UpdateSchemaItems implements ISchemaInformation {
 	
 	private void update(
 			Map<String, SizeField> sfMap, List<Item> itemList,
-			int indexs, int[] arraySizes, int[] elementSize, int[] currSize, ArrayList<String> levels, boolean redefined) {
+			int indexs, ArrayDetails arrayDetails, int[] currSizes, ArrayList<String> levels, boolean redefined) {
 		 
 		for (Item item : itemList) {
-			updateItem(sfMap, indexs, arraySizes, elementSize, currSize, levels, redefined, item);
+			updateItem(sfMap, indexs, arrayDetails, currSizes, levels, redefined, item);
 		}
 	}
 
@@ -202,7 +213,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 	 */
 	public void updateItem(
 			Map<String, SizeField> sfMap,
-			int indexs, int[] arraySizes, int[] elementSize, int[] currSizes,
+			int indexs, ArrayDetails arrayDetails, int[] currSizes,
 			ArrayList<String> levels, boolean redefined, Item item)
 			throws RuntimeException {
 		String name = item.getName();
@@ -231,7 +242,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		levels.add(genFieldName(item.fieldName)); 
 		
 		if (name != null && name.length() > 0) {
-			UpdateDetails groupUpdates = updateDetails.getUpdateDetails(item.getGroupNames());
+			IItemUpdateDetails groupUpdates = updateDetails.getUpdateDetails(item.getGroupNames());
 			item.arrayValidation = groupUpdates.getArrayCheck();
 			item.formatFieldImplementation = groupUpdates.getFormatField();
 			item.writeCheck = groupUpdates.getWriteCheck();
@@ -239,18 +250,14 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		}
 
 		if (hasOccurs) {
-			arraySizes[indexs] = item.getOccurs();
-			elementSize[indexs] = item.getStorageLength();
-			currSizes = new int[indexs + 1];
-			System.arraycopy(arraySizes, 0, currSizes, 0, currSizes.length);
+			arrayDetails.updateSizes(indexs, item.getOccurs(), item.getStorageLength());
+			currSizes = arrayDetails.getCurrentSizes(indexs);
 			newIndexs += 1;
-			//System.out.println(item.getName() + " " + newIndexs);
-//				if (firstArraySize < 0) {
-//					firstArraySize = item.getOccurs();
-//				}
 			
 			arrayItems.put(item.nameToUse.toUpperCase(), item);
 		}
+//		int[] currSizes = arrayDetails.getCurrentSizes(indexs);
+
 		String dependingOn = item.getDependingOn();
 		if (dependingOn != null && dependingOn.length() > 0) {
 			item.arraySizeField = sfMap.get(dependingOn.toLowerCase());
@@ -258,9 +265,10 @@ public class UpdateSchemaItems implements ISchemaInformation {
 		item.saveDtls = sfMap.get(item.fieldName.toLowerCase());
 		if (item.getChildItems().size() > 0) {
 			if (hasOccurs) {
-				item.arrayDefinition = new ArrayFieldDefinition(null, ucName, item.getPosition(), newIndexs, arraySizes, elementSize);
+				item.arrayDefinition = new ArrayFieldDefinition(null, ucName, item.getPosition(), newIndexs,
+						arrayDetails.arraySizes, arrayDetails.elementSize);
 			}
-			update(sfMap, item.getChildItems(), newIndexs, arraySizes, elementSize, currSizes, levels, redef); 
+			update(sfMap, item.getChildItems(), newIndexs, arrayDetails, currSizes, levels, redef); 
 		} else if ("filler".equalsIgnoreCase(name)) {
 		} else if (newIndexs == 0) {
 			item.itemType = Item.TYPE_FIELD;
@@ -271,6 +279,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 			} else {
 				item.fieldDefinition = schema.getFieldFromName(item.fieldName);
 			}
+			fields.add(item);
 		} else if (newIndexs > 4) {
 			throw new RuntimeException("To many array indexs: " + newIndexs + ", only 1 to 4 are supported");
 		} else {
@@ -290,6 +299,7 @@ public class UpdateSchemaItems implements ISchemaInformation {
 			RecordDetail record = (RecordDetail)field.getRecord();
 			item.arrayDefinition = new ArrayFieldDefinition1(currSizes,
 					record.getArrayFields(field, item.fieldName));
+			fields.add(item);
 		}
 		levels.remove(levels.size() - 1);
 	}
@@ -530,5 +540,82 @@ public class UpdateSchemaItems implements ISchemaInformation {
 			return null;
 		}
 		
+	}
+	
+	private static class ArrayDetails {
+		int[] arraySizes = new int[99], elementSize= new int[99];
+		
+		public void updateSizes(int indexs, int occurs, int storageLength) {
+			arraySizes[indexs] = occurs;
+			elementSize[indexs] = storageLength;
+		}
+		
+		public int[] getCurrentSizes(int indexs) {
+			int[] currSizes = new int[indexs + 1];
+			System.arraycopy(arraySizes, 0, currSizes, 0, currSizes.length);
+			return currSizes;
+		}
+		
+	}
+	
+	private static interface IFieldList {
+
+		void updateForDuplicateNames();
+
+		void clear();
+
+		boolean add(Item e);
+	}
+	
+	private static class FieldList implements IFieldList {
+		private ArrayList<Item> fields = new ArrayList<>();
+
+		@Override
+		public boolean add(Item e) {
+			return fields.add(e);
+		}
+
+		@Override
+		public void clear() {
+			fields.clear();
+		}
+
+		@Override
+		public void updateForDuplicateNames() {
+			fields.sort(new Comparator<Item>() {
+				@Override public int compare(Item o1, Item o2) {
+					return String.CASE_INSENSITIVE_ORDER.compare(o1.nameToUse, o2.nameToUse);
+				}		
+			});
+			
+			for (int i = 0; i < fields.size() - 2; i++) {
+				String nameToUse = fields.get(i).nameToUse;
+				if (nameToUse != null && nameToUse.equalsIgnoreCase(fields.get(i+1).nameToUse)) {
+					updateParentFlattenStatus(i);
+					updateParentFlattenStatus(i+1);
+				}
+			}
+		}
+
+		private void updateParentFlattenStatus(int i) {
+			Item parent = fields.get(i).parent;
+			if (parent != null) {
+				parent.canBeFlattened = false;
+			}
+		}
+	}
+	
+	private static class DoNothinfFieldList implements IFieldList {
+
+		@Override
+		public boolean add(Item e) {
+			return true;
+		}
+
+		@Override
+		public void clear() {}
+
+		@Override
+		public void updateForDuplicateNames() {}
 	}
 }

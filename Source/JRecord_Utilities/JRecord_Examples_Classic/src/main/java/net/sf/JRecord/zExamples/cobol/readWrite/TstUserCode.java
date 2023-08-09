@@ -25,7 +25,7 @@
       
 package net.sf.JRecord.zExamples.cobol.readWrite;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.IO.AbstractLineReader;
@@ -41,7 +41,7 @@ public class TstUserCode {
     private TstUserCode() throws Exception {
     	CobolIoProvider ioProvider = CobolIoProvider.getInstance();
     	AbstractLineReader reader  = ioProvider.getLineReader(
-                Constants.IO_FIXED_LENGTH,  
+                IFileStructureConstants.IO_FIXED_LENGTH,  
                 Convert.FMT_MAINFRAME,
                 CopybookLoader.SPLIT_NONE, 
                 Cb2xmlConstants.USE_SUPPLIED_COLUMNS,

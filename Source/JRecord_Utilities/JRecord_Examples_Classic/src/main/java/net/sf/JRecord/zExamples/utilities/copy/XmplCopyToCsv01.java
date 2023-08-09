@@ -28,7 +28,7 @@ package net.sf.JRecord.zExamples.utilities.copy;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.External.CopybookLoader;
@@ -66,7 +66,7 @@ public final class XmplCopyToCsv01 {
         System.out.println("Output File: " + salesFileOut);
 
         try {
-            int fileStructure = Constants.IO_FIXED_LENGTH;
+            int fileStructure = IFileStructureConstants.IO_FIXED_LENGTH;
             CobolIoProvider ioProvider = CobolIoProvider.getInstance();
             AbstractLineReader reader  = ioProvider.getLineReader(
                    fileStructure, ICopybookDialects.FMT_MAINFRAME,

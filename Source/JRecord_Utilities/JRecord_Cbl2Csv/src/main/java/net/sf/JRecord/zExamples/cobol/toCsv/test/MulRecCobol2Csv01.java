@@ -2,7 +2,7 @@ package net.sf.JRecord.zExamples.cobol.toCsv.test;
 
 import java.io.IOException;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.cbl2csv.imp.CobolToCsvBldr;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
@@ -14,7 +14,7 @@ public class MulRecCobol2Csv01 {
 		ICobolIOBuilder ioBldr = CobolToCsvBldr.newCobolIOBuilder(Data.DTAR020_COPYBOOK_FILE_NAME)
 					.setFont("cp037")
 					.setDialect(ICopybookDialects.FMT_MAINFRAME)
-					.setFileOrganization(Constants.IO_FIXED_LENGTH);
+					.setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH);
 				
 		CobolToCsvBldr.newMultiRecordCsvBuilder()
 					.setCsvHeader(true)

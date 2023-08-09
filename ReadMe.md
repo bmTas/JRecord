@@ -1,4 +1,4 @@
-## JRecord 0.90 Readme
+## JRecord 0.93.1 Readme
 This release contains extra functions for the CodeGen utility,
 Csv parsing changes and fix for duplicate field processing.
 
@@ -20,6 +20,7 @@ and see how it is used in Cobol2Xml. Also If copying files, look at **Copy** cla
 
 * [JRecord on Sourceforge](https://sourceforge.net/projects/jrecord/)
 * [JRecord Download](https://sourceforge.net/projects/jrecord/files/)
+* [JRecord Wiki](https://sourceforge.net/p/jrecord/wiki/Home/)
 * [JRecord Questions on stackoverflow](https://stackoverflow.com/questions/tagged/jrecord)
 * [JRecord Forums on Sourceforge](https://sourceforge.net/p/jrecord/discussion/)
 * [JRecord Tickets on Sourceforge](https://sourceforge.net/p/jrecord/_list/tickets)

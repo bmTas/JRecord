@@ -45,31 +45,31 @@ public class TestCsv2Cobol_1 {
 	 */
 	public static void main(String[] a) {
 
-		String inputFileName1 = Data.DTAR020_BIN_RESOURCE.getFile();
+		String inputFileName1 = Data.class.getResource("DTAR020_Small_uc.csv").getFile();
 		String[] args1 = {
 				"-I", inputFileName1, 
-				"-O", ExampleConstants.TEMP_DIR + "o_DTAR020.bin", 
+				"-O", ExampleConstants.TEMP_DIR + "o_DTAR020_Small_uc.bin", 
 				"-C", Data.DTAR020_COPYBOOK_FILE_NAME, 
 				"-Q", "\"",                /* Quote           */
 				"-FS", "Fixed_Length",     /* File Structure  */
-				"-OC", "CP273",            /* Input Character set   */
+//				"-Rename", "0",
+				"-OC", "CP037",            /* Input Character set   */
 		}; /* Field Seperator will default to \t */
 		
 		Csv2Cobol.main(args1); 
-		
-		String inputFileName2 = TestCsv2Cobol_1.class.getResource("DTAR1000_Store_file_std_02.csv").getFile();
-		String[] args2= {
+
+		String inputFileName2 = Data.class.getResource("DTAR020_Small_dash.csv").getFile();
+		String[] args2 = {
 				"-I", inputFileName2, 
-				"-O", ExampleConstants.TEMP_DIR + "o_DTAR1000_Store_file_std_02.bin", 
-				"-C", TestCobol2Csv02_2.class.getResource("DTAR1000.cbl").getFile(), 
-				"-Q", "\"",               /* Quote           */
-				"-FS", "Mainframe_VB",    /* File Structure  */
-				"-OC", "CP273",           /* Character set   */
-				"-D", ";"                 /* Field Seperator */ 
+				"-O", ExampleConstants.TEMP_DIR + "o_DTAR020_Small_dash.bin", 
+				"-C", Data.DTAR020_COPYBOOK_FILE_NAME, 
+				"-Q", "\"",                /* Quote           */
+				"-FS", "Fixed_Length",     /* File Structure  */
+//				"-Rename", "0",
+				"-OC", "CP037",            /* Input Character set   */
 		}; /* Field Seperator will default to \t */
 		
 		Csv2Cobol.main(args2); 
-
 	}
 
 }

@@ -104,7 +104,7 @@ public class LogExample {
 //     */
 //    private static void updateFieldsForRecord(ExternalRecord rec) {
 //    	ExternalField recordField;
-//    	rec.setFileStructure(Constants.IO_NAME_1ST_LINE);
+//    	rec.setFileStructure(IFileStructureConstants.IO_NAME_1ST_LINE);
 //    	rec.setRecordType(Constants.rtDelimited);
 //    	rec.setQuote("\"");
 //    	rec.setDelimiter("<Tab>");

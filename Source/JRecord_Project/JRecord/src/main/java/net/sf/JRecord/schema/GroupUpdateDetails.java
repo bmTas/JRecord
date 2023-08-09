@@ -8,104 +8,105 @@ import net.sf.JRecord.schema.jaxb.interfaces.IFormatField;
 import net.sf.JRecord.schema.jaxb.interfaces.IRedefineSelection;
 import net.sf.JRecord.schema.jaxb.interfaces.IWriteCheck;
 
-public class GroupUpdateDetails {
+public class GroupUpdateDetails implements IGroupUpdateDetails {
 	
 
-	private static final UpdateDetails DEFAULT_UPDATE_DETAIL = new UpdateDetails();
+	public static final IItemUpdateDetails DEFAULT_UPDATE_DETAIL = new ItemUpdateDetails();
 
-	private HashMap<String, UpdateDetails> updates = new HashMap<>();
-	private List<GroupListUpdateDetails> listOfUpdates = new ArrayList<>();
+	private HashMap<String, ItemUpdateDetails> updates = new HashMap<>();
+	private List<ItemListUpdateDetails> listOfUpdates = new ArrayList<>();
 	
 	public void setArrayCheck(String name, IArrayItemCheck arrayCheck) {
-		UpdateDetails updateDetails = getCreateGroupUpdate(name);
+		ItemUpdateDetails updateDetails = getCreateGroupUpdate(name);
 		if (updateDetails != null) {
 			updateDetails.arrayCheck = arrayCheck;
 		}
 	}
 	
 	public void setFormatField(String name, IFormatField formatField) {
-		UpdateDetails updateDetails = getCreateGroupUpdate(name);
+		ItemUpdateDetails updateDetails = getCreateGroupUpdate(name);
 		if (updateDetails != null) {
 			updateDetails.formatField = formatField;
 		}
 	}
 	
 	public void setRedefineSelection(String name, IRedefineSelection redefineSelection) {
-		UpdateDetails updateDetails = getCreateGroupUpdate(name);
+		ItemUpdateDetails updateDetails = getCreateGroupUpdate(name);
 		if (updateDetails != null) {
 			updateDetails.redefineSelection = redefineSelection;
 		}
 	}
 	
 	public void setWriteCheck(String name, IWriteCheck writeCheck) {
-		UpdateDetails updateDetails = getCreateGroupUpdate(name);
+		ItemUpdateDetails updateDetails = getCreateGroupUpdate(name);
 		if (updateDetails != null) {
 			updateDetails.writeCheck = writeCheck;
 		}
 	}
 	
 	public void setFormatField(List<String> names, IFormatField formatField) {
-		UpdateDetails updateDetails = getCreateGroupUpdate(names);
+		ItemUpdateDetails updateDetails = getCreateGroupUpdate(names);
 		if (updateDetails != null) {
 			updateDetails.formatField = formatField;
 		}
 	}
 	
 	public void setArrayCheck(List<String> names, IArrayItemCheck arrayCheck) {
-		UpdateDetails updateDetails = getCreateGroupUpdate(names);
+		ItemUpdateDetails updateDetails = getCreateGroupUpdate(names);
 		if (updateDetails != null) {
 			updateDetails.arrayCheck = arrayCheck;
 		}
 	}
 	
 	public void setRedefineSelection(List<String> names, IRedefineSelection redefineSelection) {
-		UpdateDetails updateDetails = getCreateGroupUpdate(names);
+		ItemUpdateDetails updateDetails = getCreateGroupUpdate(names);
 		if (updateDetails != null) {
 			updateDetails.redefineSelection = redefineSelection;
 		}
 	}
 	
 	public void setWriteCheck(List<String> names, IWriteCheck writeCheck) {
-		UpdateDetails updateDetails = getCreateGroupUpdate(names);
+		ItemUpdateDetails updateDetails = getCreateGroupUpdate(names);
 		if (updateDetails != null) {
 			updateDetails.writeCheck = writeCheck;
 		}
 	}
 
-	private UpdateDetails getCreateGroupUpdate(String name) {
+	private ItemUpdateDetails getCreateGroupUpdate(String name) {
 		if (name == null || name.length() == 0) { return null; }
 		String nameLC = name.toLowerCase();
-		UpdateDetails updateDetails = updates.get(nameLC);
+		ItemUpdateDetails updateDetails = updates.get(nameLC);
 		if (updateDetails == null) {
-			updateDetails = new UpdateDetails();
+			updateDetails = new ItemUpdateDetails();
 			updates.put(nameLC, updateDetails);
 		}
 		return updateDetails;
 	}
 
-	private UpdateDetails getCreateGroupUpdate(List<String> names) {
+	private ItemUpdateDetails getCreateGroupUpdate(List<String> names) {
 		if (names == null || names.size() == 0) { return null; }
 		String nameLC = toNamesString(names);
 		
-		for (GroupListUpdateDetails ld : listOfUpdates) {
+		for (ItemListUpdateDetails ld : listOfUpdates) {
 			if (ld.groupNameStr.equals(nameLC)) {
 				return ld.updateDetails;
 			}
 		}
 		
-		GroupListUpdateDetails ld = new GroupListUpdateDetails(names, nameLC);
+		ItemListUpdateDetails ld = new ItemListUpdateDetails(names, nameLC);
 		listOfUpdates.add(ld);
 		
 		return ld.updateDetails;
 	}
 	
 
-	public UpdateDetails getUpdateDetails(List<String> names) {
+	@Override
+	public IItemUpdateDetails getUpdateDetails(List<String> names) {
 		String lastName;
-		if (names == null || names.size() == 0 || (lastName = names.get(names.size() - 1)) == null) { return null; }
+		if (names == null || names.size() == 0 || (lastName = names.get(names.size() - 1)) == null) { return DEFAULT_UPDATE_DETAIL; }
 		String nameLC = toNamesString(names);
 		
-		for (GroupListUpdateDetails ld : listOfUpdates) {
+		for (ItemListUpdateDetails ld : listOfUpdates) {
 			if (lastName.equalsIgnoreCase(ld.groupNames[ld.groupNames.length - 1]) 
 				&& ld.isMatch(nameLC)) {
 				return ld.updateDetails;
@@ -113,7 +114,7 @@ public class GroupUpdateDetails {
 		}
 
 
-		UpdateDetails updateDetails = updates.get(lastName.toLowerCase());
+		ItemUpdateDetails updateDetails = updates.get(lastName.toLowerCase());
 		return updateDetails == null ? DEFAULT_UPDATE_DETAIL : updateDetails;
 	}
 //	
@@ -130,31 +131,36 @@ public class GroupUpdateDetails {
 		return b.toString().toLowerCase();
 	}
 
-	public static class UpdateDetails {
+	private static class ItemUpdateDetails implements IItemUpdateDetails {
 		private IArrayItemCheck arrayCheck;
 		private IWriteCheck writeCheck;
 		private IFormatField formatField ;
 		private IRedefineSelection redefineSelection;
 		
+		@Override
 		public IArrayItemCheck getArrayCheck() {
 			return arrayCheck;
 		}
+		@Override
 		public IWriteCheck getWriteCheck() {
 			return writeCheck;
 		}
+		@Override
 		public IFormatField getFormatField() {
 			return formatField;
 		}
+		@Override
 		public IRedefineSelection getRedefineSelection() {
 			return redefineSelection;
 		}
 	}
 	
-	private static class GroupListUpdateDetails {
+	private static class ItemListUpdateDetails {
 		final String[] groupNames;
 		final String groupNameStr;
-		final UpdateDetails updateDetails = new UpdateDetails();
-		public GroupListUpdateDetails(List<String> groupNamesList, String groupNameStr) {
+		final ItemUpdateDetails updateDetails = new ItemUpdateDetails();
+		
+		public ItemListUpdateDetails(List<String> groupNamesList, String groupNameStr) {
 			super();
 			this.groupNames = groupNamesList.toArray(new String[groupNamesList.size()]);
 			this.groupNameStr = groupNameStr;

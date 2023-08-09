@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.Comparator;
 
 import net.sf.JRecord.JRecordInterface1;
-
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.test.schema.cobol.gen.data.LayoutDtls;
 

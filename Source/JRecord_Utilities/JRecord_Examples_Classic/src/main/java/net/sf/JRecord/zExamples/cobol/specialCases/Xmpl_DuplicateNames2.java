@@ -28,8 +28,8 @@ package net.sf.JRecord.zExamples.cobol.specialCases;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -98,9 +98,9 @@ public class Xmpl_DuplicateNames2 {
 		IFieldDetail baField = record.getUniqueFieldGroupsInSequence("Field-1", "B", "A");
 		IFieldDetail caField = record.getUniqueFieldGroupsInSequence("Field-1", "C", "A");
 
-			// Retrieve the File-Reader Constants.IO_BIN_TEXT does byte level read lines
+			// Retrieve the File-Reader IFileStructureConstants.IO_BIN_TEXT does byte level read lines
 			// i.e. it retrieves lines (of bytes) from the file.
-		AbstractLineReader reader  = LineIOProvider.getInstance().getLineReader(Constants.IO_BIN_TEXT);
+		AbstractLineReader reader  = LineIOProvider.getInstance().getLineReader(IFileStructureConstants.IO_BIN_TEXT);
 		AbstractLine line;
 
 		reader.open(new ByteArrayInputStream(dataFile.getBytes()), schema);

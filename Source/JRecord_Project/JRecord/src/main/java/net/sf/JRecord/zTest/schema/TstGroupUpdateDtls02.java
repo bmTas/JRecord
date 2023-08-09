@@ -12,6 +12,7 @@ import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.schema.ArrayElementChecks;
 import net.sf.JRecord.schema.GroupUpdateDetails;
 import net.sf.JRecord.schema.IArrayItemCheck;
+import net.sf.JRecord.schema.IItemUpdateDetails;
 import net.sf.JRecord.schema.jaxb.IItem;
 import net.sf.JRecord.schema.jaxb.impl.AddPlusToNumeric;
 import net.sf.JRecord.schema.jaxb.impl.DoNothingFormat;
@@ -88,7 +89,7 @@ public class TstGroupUpdateDtls02 {
 	private void checkFormatField(GroupUpdateDetails upd, List<List<String>> cobolNames) {
 		int idx = 0;
 		for (List<String> f : cobolNames) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(f);
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(f);
 			assertTrue(toNamesString(f), FORMATS[(idx++) % FORMATS.length] == updateDetails.getFormatField());
 			assertTrue(toNamesString(f), null == updateDetails.getArrayCheck());
 			assertTrue(toNamesString(f), null == updateDetails.getRedefineSelection());
@@ -142,7 +143,7 @@ public class TstGroupUpdateDtls02 {
 		j = 0;
 		idx = 2;
 		for (List<String> f : COBOL_NAMES) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(f);
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(f);
 			
 			IFormatField format = j == 0 || j > FORMATS.length ? null : FORMATS[j-1] ;
 			assertTrue(toNamesString(f), ARRAY_CHECKS[(idx++)] == updateDetails.getArrayCheck());
@@ -162,7 +163,7 @@ public class TstGroupUpdateDtls02 {
 			ArrayList<IRedefineSelection> redefs, ArrayList<IWriteCheck> writeChecks) {
 		int j = 0;
 		for (List<String> f : cobolNames) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(f);
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(f);
 			
 			IFormatField format = j == 0 || j > FORMATS.length ? null : FORMATS[j-1] ;
 			assertTrue(toNamesString(f), ARRAY_CHECKS[(j)] == updateDetails.getArrayCheck());
@@ -178,7 +179,7 @@ public class TstGroupUpdateDtls02 {
 			ArrayList<IRedefineSelection> redefs) {
 		int j = 0;
 		for (List<String> f : cobolNames) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(f);
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(f);
 			
 			IFormatField format = j == 0 || j > FORMATS.length ? null : FORMATS[j-1] ;
 			assertTrue(toNamesString(f), ARRAY_CHECKS[(j)] == updateDetails.getArrayCheck());
@@ -193,7 +194,7 @@ public class TstGroupUpdateDtls02 {
 	private void checkUpdateFieldFormats(GroupUpdateDetails upd, List<List<String>> cobolNames) {
 		int j = 0;
 		for (List<String> f : cobolNames) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(f);
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(f);
 			
 			IFormatField format = j == 0 || j > FORMATS.length ? null : FORMATS[j-1] ;
 			assertTrue(toNamesString(f), ARRAY_CHECKS[(j++)] == updateDetails.getArrayCheck());
@@ -215,7 +216,7 @@ public class TstGroupUpdateDtls02 {
 		
 		j = 0;
 		for (List<String> f : COBOL_NAMES) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(f);
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(f);
 			assertTrue(toNamesString(f), ARRAY_CHECKS[(j++)] == updateDetails.getArrayCheck());
 			assertTrue(toNamesString(f), null == updateDetails.getFormatField());
 			assertTrue(toNamesString(f), null == updateDetails.getRedefineSelection());
@@ -235,7 +236,7 @@ public class TstGroupUpdateDtls02 {
 		
 		j = 0;
 		for (List<String> f : COBOL_NAMES) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(f);
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(f);
 			assertTrue(toNamesString(f), null == updateDetails.getArrayCheck());
 			assertTrue(toNamesString(f), null == updateDetails.getFormatField());
 			assertTrue(toNamesString(f), redefs.get(j++) == updateDetails.getRedefineSelection());
@@ -253,7 +254,7 @@ public class TstGroupUpdateDtls02 {
 		
 		j = 0;
 		for (List<String> f : COBOL_NAMES) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(f);
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(f);
 			assertTrue(toNamesString(f), null == updateDetails.getArrayCheck());
 			assertTrue(toNamesString(f), null == updateDetails.getFormatField());
 			assertTrue(toNamesString(f), null == updateDetails.getRedefineSelection());

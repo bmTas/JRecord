@@ -28,19 +28,19 @@
 
 package net.sf.JRecord.zTest.cobol2csv;
 
-import net.sf.JRecord.Common.Constants;
-import net.sf.JRecord.External.base.ExternalConversion;
-import net.sf.JRecord.Numeric.ConversionManager;
-import net.sf.JRecord.Numeric.ICopybookDialects;import net.sf.JRecord.Option.ICobolSplitOptions;
-import net.sf.JRecord.cbl2csv.args.ParseArgsCobol2Csv;
-import net.sf.JRecord.cbl2csv.args.RecordSelect;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import junit.framework.TestCase;
+import net.sf.JRecord.Common.IFileStructureConstants;
+import net.sf.JRecord.External.base.ExternalConversion;
+import net.sf.JRecord.Numeric.ConversionManager;
+import net.sf.JRecord.Numeric.ICopybookDialects;
+import net.sf.JRecord.Option.ICobolSplitOptions;
+import net.sf.JRecord.cbl2csv.args.ParseArgsCobol2Csv;
+import net.sf.JRecord.cbl2csv.args.RecordSelect;
 
 
 /**
@@ -258,9 +258,9 @@ public class TstCobo2CsvArgs extends TestCase {
 	public void testFileStructure() {
 		
 		int[] structures = {
-				Constants.IO_DEFAULT, Constants.IO_FIXED_LENGTH, Constants.IO_FIXED_LENGTH_CHAR,
-				Constants.IO_BIN_TEXT, Constants.IO_TEXT_LINE, Constants.IO_UNICODE_TEXT,
-				Constants.IO_VB, Constants.IO_VB_FUJITSU, Constants.IO_VB_GNU_COBOL,
+				IFileStructureConstants.IO_DEFAULT, IFileStructureConstants.IO_FIXED_LENGTH, IFileStructureConstants.IO_FIXED_LENGTH_CHAR,
+				IFileStructureConstants.IO_BIN_TEXT, IFileStructureConstants.IO_TEXT_LINE, IFileStructureConstants.IO_UNICODE_TEXT,
+				IFileStructureConstants.IO_VB, IFileStructureConstants.IO_VB_FUJITSU, IFileStructureConstants.IO_VB_GNU_COBOL,
 		};
 		for (int fileOrganisation : structures) {
 			String[] a = {

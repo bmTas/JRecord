@@ -28,7 +28,7 @@ package net.sf.JRecord.zExamples.recordEditorXml.manipulate;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.External.CopybookWriterManager;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.External.base.RecordEditorXmlWriter;
@@ -40,12 +40,12 @@ public class WriteSchemas {
 	public static void main(String[] args) throws FileNotFoundException, Exception {
 		
 		ExternalRecord csvInputSchema  = ExternalRecord	
-									.newCsvRecord("", Constants.IO_NAME_1ST_LINE, "", "\t", "\"") 
+									.newCsvRecord("", IFileStructureConstants.IO_NAME_1ST_LINE, "", "\t", "\"") 
 									.asExternalRecord();
 // Define the output record (with the fields)
 		ExternalRecord csvOutputSchema 
 				= ExternalRecord
-						.newCsvRecord("", Constants.IO_NAME_1ST_LINE, "", ";", "\"")
+						.newCsvRecord("", IFileStructureConstants.IO_NAME_1ST_LINE, "", ";", "\"")
 							.addCsvField("Sku",   Type.ftChar, 0)
 							.addCsvField("Store", Type.ftNumAnyDecimal, 0)
 							.addCsvField("Date",  Type.ftNumAnyDecimal, 0)

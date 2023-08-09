@@ -27,7 +27,7 @@ package net.sf.JRecord.zExamples.noCopybook;
 
 import java.io.IOException;
 
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -49,7 +49,7 @@ public class DefineSchemaUsingPosition {
 		try {
 			ExternalRecord r =
 					ExternalRecord
-						.newFixedWidthRecord("My_Record", Constants.IO_TEXT_LINE, "")
+						.newFixedWidthRecord("My_Record", IFileStructureConstants.IO_TEXT_LINE, "")
 							.addFieldByPosition("Sku"  , Type.ftChar             ,  1, 0)
 							.addFieldByPosition("Store", Type.ftNumRightJustified,  9, 0)
 							.addFieldByPosition("Date" , Type.ftNumRightJustified, 12, 0)

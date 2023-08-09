@@ -29,7 +29,7 @@ import java.io.IOException;
 
 import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.CommonBits;
-import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.CharLine;
@@ -57,7 +57,7 @@ public class WriteCsvFile {
 		CommonBits.setUseCsvLine(true);
 		try {
 			LayoutDetail inSchema = ExternalRecord
-						.newFixedWidthRecord("My_Record", Constants.IO_TEXT_LINE, "")
+						.newFixedWidthRecord("My_Record", IFileStructureConstants.IO_TEXT_LINE, "")
 							.addFieldByLength("Sku"  , Type.ftChar,              8, 0)
 							.addFieldByLength("Store", Type.ftNumRightJustified, 3, 0)
 							.addFieldByLength("Date" , Type.ftNumRightJustified, 6, 0)
@@ -68,7 +68,7 @@ public class WriteCsvFile {
 			
 			   // For output Csv files you need to define the fields
 			LayoutDetail outSchema = ExternalRecord
-						.newCsvRecord("", Constants.IO_NAME_1ST_LINE, "", ";", "\"")
+						.newCsvRecord("", IFileStructureConstants.IO_NAME_1ST_LINE, "", ";", "\"")
 							.addCsvField("Sku",   Type.ftChar, 0)
 							.addCsvField("Store", Type.ftNumAnyDecimal, 0)
 							.addCsvField("Date",  Type.ftNumAnyDecimal, 0)

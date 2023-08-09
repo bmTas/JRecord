@@ -32,14 +32,16 @@ import java.io.File;
 
 public class ExampleConstants {
 
-	public static final String TEMP_DIR = checkExists("G:\\Temp\\", System.getProperty("java.io.tmpdir") + "/");
+	public static final String TEMP_DIR = checkExists("/home/brucemartin/work/temp/Cbl2CsvOut/", "G:\\Temp\\");
 	
 	
-	private static String checkExists(String dir1, String dir2) {
-		if (new File(dir1).exists()) {
-			return dir1;
+	private static String checkExists(String... dirs) {
+		for (String dir1 : dirs) {
+			if (new File(dir1).exists()) {
+				return dir1;
+			}
 		}
-		return dir2;
+		return System.getProperty("java.io.tmpdir") + "/";
 	}
 			
 			

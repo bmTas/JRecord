@@ -12,6 +12,7 @@ import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.schema.ArrayElementChecks;
 import net.sf.JRecord.schema.GroupUpdateDetails;
 import net.sf.JRecord.schema.IArrayItemCheck;
+import net.sf.JRecord.schema.IItemUpdateDetails;
 import net.sf.JRecord.schema.jaxb.IItem;
 import net.sf.JRecord.schema.jaxb.impl.AddPlusToNumeric;
 import net.sf.JRecord.schema.jaxb.impl.DoNothingFormat;
@@ -59,7 +60,7 @@ public class TstGroupUpdateDtls01 {
 		
 		j = 0;
 		for (String f : FIELD_NAMES) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
 			assertTrue(f, FORMATS[(j++) % FORMATS.length] == updateDetails.getFormatField());
 			assertTrue(f, null == updateDetails.getArrayCheck());
 			assertTrue(f, null == updateDetails.getRedefineSelection());
@@ -75,7 +76,7 @@ public class TstGroupUpdateDtls01 {
 		}
 		int j = 0;
 		for (String f : FIELD_NAMES) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
 			
 			IFormatField format = j == 0 || j > FORMATS.length ? null : FORMATS[j-1] ;
 			assertTrue(f, ARRAY_CHECKS[(j++)] == updateDetails.getArrayCheck());
@@ -94,7 +95,7 @@ public class TstGroupUpdateDtls01 {
 
 		j = 0;
 		for (String f : FIELD_NAMES) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
 			
 			IFormatField format = j == 0 || j > FORMATS.length ? null : FORMATS[j-1] ;
 			assertTrue(f, ARRAY_CHECKS[(j)] == updateDetails.getArrayCheck());
@@ -114,7 +115,7 @@ public class TstGroupUpdateDtls01 {
 
 		j = 0;
 		for (String f : FIELD_NAMES) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
 			
 			IFormatField format = j == 0 || j > FORMATS.length ? null : FORMATS[j-1] ;
 			assertTrue(f, ARRAY_CHECKS[(j)] == updateDetails.getArrayCheck());
@@ -136,7 +137,7 @@ public class TstGroupUpdateDtls01 {
 		j = 0;
 		idx = 2;
 		for (String f : FIELD_NAMES) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
 			
 			IFormatField format = j == 0 || j > FORMATS.length ? null : FORMATS[j-1] ;
 			assertTrue(f, ARRAY_CHECKS[(idx++)] == updateDetails.getArrayCheck());
@@ -163,7 +164,7 @@ public class TstGroupUpdateDtls01 {
 		
 		j = 0;
 		for (String f : FIELD_NAMES) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
 			assertTrue(f, ARRAY_CHECKS[(j++)] == updateDetails.getArrayCheck());
 			assertTrue(f, null == updateDetails.getFormatField());
 			assertTrue(f, null == updateDetails.getRedefineSelection());
@@ -183,7 +184,7 @@ public class TstGroupUpdateDtls01 {
 		
 		j = 0;
 		for (String f : FIELD_NAMES) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
 			assertTrue(f, null == updateDetails.getArrayCheck());
 			assertTrue(f, null == updateDetails.getFormatField());
 			assertTrue(f, redefs.get(j++) == updateDetails.getRedefineSelection());
@@ -201,7 +202,7 @@ public class TstGroupUpdateDtls01 {
 		
 		j = 0;
 		for (String f : FIELD_NAMES) {
-			GroupUpdateDetails.UpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
+			IItemUpdateDetails updateDetails = upd.getUpdateDetails(Arrays.asList(f));
 			assertTrue(f, null == updateDetails.getArrayCheck());
 			assertTrue(f, null == updateDetails.getFormatField());
 			assertTrue(f, null == updateDetails.getRedefineSelection());

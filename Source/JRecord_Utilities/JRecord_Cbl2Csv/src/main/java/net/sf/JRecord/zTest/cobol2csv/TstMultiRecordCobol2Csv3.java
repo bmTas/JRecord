@@ -11,8 +11,8 @@ import org.junit.Test;
 
 import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.Common.AbstractFieldValue;
-import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.External.CopybookLoader;
 import net.sf.JRecord.IO.AbstractLineReader;
@@ -221,7 +221,7 @@ public class TstMultiRecordCobol2Csv3 {
 		
 		ICobolIOBuilder ioBldr = CobolToCsvBldr.newCobolIOBuilder(dtar020CobolFileName)
 				.setFont("cp037")
-				.setFileOrganization(Constants.IO_FIXED_LENGTH)
+				.setFileOrganization(IFileStructureConstants.IO_FIXED_LENGTH)
 				.setSplitCopybook(CopybookLoader.SPLIT_NONE)
 				.setOptimizeTypes(false)
 		;
