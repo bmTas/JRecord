@@ -366,8 +366,8 @@ public class BasicConversion implements AbstractConversion {
      */
     public static int getStructure(String name) {
     	for (int i = 0; i < numberOfEntries && keys[i] != Constants.NULL_INTEGER; i++) {
-    		if (externalNames[i].equalsIgnoreCase(name)) {
-    			return keys[i];
+    		if (externalNames[i].equalsIgnoreCase(name) || names[i].equalsIgnoreCase(name)) {
+     			return keys[i];
     		}
     	}
     	return Constants.NULL_INTEGER;
