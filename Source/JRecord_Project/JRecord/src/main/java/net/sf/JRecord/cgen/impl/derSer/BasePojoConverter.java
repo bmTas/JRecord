@@ -19,30 +19,42 @@ import net.sf.JRecord.def.IO.builders.INewLineCreator;
  */
 public abstract class BasePojoConverter<Pojo> implements IPojoConverter<Pojo>, INewLineCreator {
 
-	private final AbstractLine tmpLine;
+	//private final AbstractLine tmpLine;
 	private final INewLineCreator lineCreator;
 	
 	public BasePojoConverter(INewLineCreator lineCreator) {
 		this.lineCreator = lineCreator;
+//		try {
+//			this.tmpLine = lineCreator.newLine();
+//		} catch (IOException e) {
+//			throw new RecordException("Error creating line", e);
+//		}
+	}
+
+	@Override
+	public Pojo deserialize(byte[] rec) {
 		try {
-			this.tmpLine = lineCreator.newLine();
+			AbstractLine line = newLine(rec);
+			return toPojo(line);
 		} catch (IOException e) {
 			throw new RecordException("Error creating line", e);
 		}
 	}
 
+	/**
+	 * Convert a Pojo to Cobol equivalent (array of bytes) 
+	 * based on the Cobol Copybook
+	 */
 	@Override
-	public Pojo deserialize(byte[] rec) {
-		tmpLine.setData(rec);
-		return toPojo(tmpLine);
-	}
-
-	@Override
-	public byte[] serialize(Pojo rec) {
-		updateLine(tmpLine, rec);
-		return tmpLine.getData();
+	public byte[] serialize(Pojo pojo) {
+		return toLine(pojo).getData();
 	}
 	
+	/**
+	 * Convert a Pojo to JRecord-Line (Cobol record with JRecord access routines)
+	 * @param pojo  pojo java representation of a Cobol Record to be converted into the equivalent Cobol
+	 * @return JRecord-Line (Cobol record with JRecord access routines)
+	 */
 	public AbstractLine toLine(Pojo pojo) {
 		AbstractLine line;
 		try {
@@ -54,9 +66,66 @@ public abstract class BasePojoConverter<Pojo> implements IPojoConverter<Pojo>, I
 		updateLine(line, pojo);
 		return line;
 	}
+	
+	/**
+	 * Convert a pojo the a Cobol Record (String format) as described by 
+	 * the Cobol copybook
+	 * @param pojo pojo java representation of a Cobol Record
+	 * @return Cobol Record (as a String) this only works if there are no binary fields
+	 */
+	public String toString(Pojo pojo) {
+		return toLine(pojo).getFullLine();
+	}
 
+	/**
+	 * Create new JRecord Line
+	 */
 	public AbstractLine newLine() throws IOException {
 		return lineCreator.newLine();
 	}
 
+	/**
+	 * Convert a String, described by a Cobol copybook, into a  java equivalent Pojo
+	 * @param data Cobol data to be converted to a Pojo
+	 * @return Cobol Data reformated as a Java pojo.
+	 * @throws IOException
+	 */
+	public Pojo newPojo(String data) throws IOException {
+		return toPojo(newLine(data));		
+	}
+	
+	/**
+	 * Convert an array of bytes (Cobol record described by a Cobol Copybook) into an equivalent java Pojo
+	 * @param data Cobol data to be converted to a Pojo
+	 * @return Cobol data reformated as a java pojo
+	 * @throws IOException
+	 */
+	public Pojo newPojo(byte[] data) throws IOException {
+		return toPojo(newLine(data));		
+	}
+	
+	
+	/**
+	 * Create a JRecord Line from a byte array
+	 * @param data byte array containing the byte data
+	 * @return requested line
+	 * @throws IOException
+	 */
+	public AbstractLine newLine(byte[] data) throws IOException {
+		AbstractLine line =  lineCreator.newLine();
+		line.setData(data);
+		return line;
+	}
+	
+	/**
+	 * Create a JRecord Line from a String
+	 * @param data String containing the data
+	 * @return requested line with the supplied data
+	 * @throws IOException any error that occurs
+	 */
+	public AbstractLine newLine(String data) throws IOException {
+		AbstractLine line =  lineCreator.newLine();
+		line.setData(data);
+		return line;
+	}
 }

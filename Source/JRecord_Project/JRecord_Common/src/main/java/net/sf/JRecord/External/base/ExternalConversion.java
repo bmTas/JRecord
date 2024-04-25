@@ -34,6 +34,7 @@ import net.sf.JRecord.External.Def.AbstractConversion;
 import net.sf.JRecord.External.Def.BasicConversion;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.TypeManager;
+import net.sf.JRecord.constantNames.ConstantNames;
 
 /**
  * This class holds conversions from external representations of types / formats etc to the internal
@@ -108,19 +109,7 @@ public final class ExternalConversion {
 	 * @return Record Type Id
 	 */
 	public final static int getRecordType(int dbIdx, String typeStr) {
-		int type = Constants.NULL_INTEGER;
-
-	   	for (int i = 0; i < keys.length && keys[i] != Constants.NULL_INTEGER; i++) {
-    		if (names[i].equalsIgnoreCase(typeStr)) {
-    			return keys[i];
-    		}
-    	}
-
-		try {
-			type = Integer.parseInt(typeStr);
-		} catch (Exception e) {	}
-
-		return type;
+		return ConstantNames.getConstantConversions().getRecordTypes().getCode(typeStr);
 	}
 
 
@@ -155,7 +144,7 @@ public final class ExternalConversion {
 
 		fileStructure = BasicConversion.getStructure(fileStructureStr);
 
-		if (fileStructure == Constants.NULL_INTEGER) {
+		if (fileStructure < 0) {
 			try {
 				fileStructure = Integer.parseInt(fileStructureStr);
 			} catch (Exception e) {	}
@@ -281,23 +270,7 @@ public final class ExternalConversion {
 	 * @return Record-Type Name
 	 */
 	public final static String getRecordTypeAsString(int dbIdx, int recordType) {
-		String recordTypeStr = "";
-
-    	for (int i = 0; i < keys.length && keys[i] != Constants.NULL_INTEGER; i++) {
-    		if (keys[i] == recordType) {
-    			return names[i];
-    		}
-    	}
-
-		try {
-			recordTypeStr = Integer.toString(recordType);
-		} catch (Exception e) {	}
-
-		if (recordType < 0) {
-			recordTypeStr = "";
-		}
-
-		return recordTypeStr;
+		return  ConstantNames.getConstantConversions().getRecordTypes().getConstantName(recordType);
 	}
 
 
@@ -357,23 +330,23 @@ public final class ExternalConversion {
     	return ret;
     }
 
-    /**
-     * Get all Record-Type Id's / Record-Type Names
-     * @return Record-Type Id's / Record-Type Names
-     */
-    public final static ArrayList<BasicKeyedField> getRecordTypes() {
-    	ArrayList<BasicKeyedField> ret = new ArrayList<BasicKeyedField>();
-    	BasicKeyedField fld;
-
-    	for (int i = 0; i < names.length && ! "".equals(names[i]); i++) {
- 			fld = new BasicKeyedField();
-			fld.key = keys[i];
-			fld.name = names[i];
-			ret.add(fld);
-    	}
-
-    	return ret;
-    }
+//    /**
+//     * Get all Record-Type Id's / Record-Type Names
+//     * @return Record-Type Id's / Record-Type Names
+//     */
+//    public final static ArrayList<BasicKeyedField> getRecordTypes() {
+//    	ArrayList<BasicKeyedField> ret = new ArrayList<BasicKeyedField>();
+//    	BasicKeyedField fld;
+//
+//    	for (int i = 0; i < names.length && names[i] != null && names[i].length() > 0; i++) {
+// 			fld = new BasicKeyedField();
+//			fld.key = keys[i];
+//			fld.name = names[i];
+//			ret.add(fld);
+//    	}
+//
+//    	return ret;
+//    }
 
 	/**
 	 * Define the invalid File name characters and there replacement Chars

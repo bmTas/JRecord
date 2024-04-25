@@ -202,7 +202,7 @@ public class CharLine extends BasicLine {
 
 	@Override
 	public void setData(String newVal) {
-		data = newVal;
+		data =newVal == null ? "" : newVal;
 		clearOdBuffers();
 	}
 

@@ -37,6 +37,7 @@ import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
+import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LayoutGetFieldByName;
@@ -754,17 +755,32 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 
 
 
-
-	public static IFixedWidthSchemaBuilder newFixedWidthRecord(String name, int fileStructure, String fontName) {
-		ExternalRecord r =  getNullRecord(name, Constants.rtRecordLayout, fontName);
+	/**
+	 * Create a fixed width schema
+	 * @param schemaName Schema-Name of the schema being created
+	 * @param fileStructure file structure constant i.e IFileStructureConstants.IO_STANDARD_TEXT_FILE 
+	 *        or IFileStructureConstants.IO_FIXED_LENGTH_RECORDS
+	 * @param fontName font or encoding name
+	 * @return Fixed-Width Schema-Builder
+	 */
+	public static IFixedWidthSchemaBuilder newFixedWidthRecord(String schemaName, int fileStructure, String fontName) {
+		ExternalRecord r =  getNullRecord(schemaName, Constants.rtRecordLayout, fontName);
 		r.setFileStructure(fileStructure);
 
 		return r;
 	}
 
-
-	public static ICsvSchemaBuilder newCsvRecord(String name, int fileStructure, String fontName, String delimeter, String quote) {
-		ExternalRecord r =  new ExternalRecord(-1, name, "", Constants.rtDelimited, 0, "N",
+	/**
+	 * Create Csv Schema
+	 * @param schemaName Name of the Csv-Schema
+	 * @param fileStructure FileStructure of the file normally IFileStructureConstants.IO_STANDARD_TEXT_FILE
+	 * @param fontName  font or encoding name
+	 * @param delimeter field delimiter or field separator (e.g. ",") 
+	 * @param quote quote character (e.g. "\"" or "'")
+	 * @return CsvSchemaBuilder
+	 */
+	public static ICsvSchemaBuilder newCsvRecord(String schemaName, int fileStructure, String fontName, String delimeter, String quote) {
+		ExternalRecord r =  new ExternalRecord(-1, schemaName, "", Constants.rtDelimited, 0, "N",
 				"", delimeter, quote, 0, Constants.DEFAULT_STRING, Constants.SYSTEM_EOL_BYTES, fontName, 0, fileStructure, false);
 
 		return r;

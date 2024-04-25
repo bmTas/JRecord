@@ -51,5 +51,18 @@ public interface ICopybookDialects {
 	public static final int FMT_OPEN_COBOL_BE = FMT_GNU_COBOL_BE;
 	public static final int FMT_OPEN_COBOL_MVS_BE = FMT_GNU_COBOL_MVS_BE;
 
-
-}
+	public static final String FMT_INTEL_NAME = "Intel";
+	public static final String FMT_MAINFRAME_NAME = "Mainframe";
+	public static final String FMT_FUJITSU_NAME = "Fujitsu";
+	public static final String FMT_BIG_ENDIAN_NAME = "Big-Endian (Old)";
+	public static final String FMT_GNU_COBOL_NAME = "GNU Cobol Little Endian (Intel)";
+	public static final String FMT_FS2000_NAME = "GNU Cobol bs2000 Little Endian (Intel)";
+	public static final String FMT_GNU_COBOL_MVS_NAME = "GNU Cobol MVS Little Endian (Intel)";
+	public static final String FMT_GNU_COBOL_MF_NAME = "GNU Cobol Micro Focus (Intel)";
+	public static final String FMT_GNU_COBOL_BE_NAME = "GNU Cobol Big Endian";
+	public static final String FMT_FS2000_BE_NAME = "GNU Cobol bs2000 Big Endian";
+	public static final String FMT_GNU_COBOL_MVS_BE_NAME = "GNU Cobol MVS Big Endian";
+	public static final String FMT_OC_MICRO_FOCUS_BE_NAME = "GNU Cobol Micro Focus Big E";
+//	public static final String FMT_MICRO_FOCUS_NAME = "";
+	public static final String FMT_MAINFRAME_COMMA_DECIMAL_NAME = "Mainframe Decimal_Point=','";
+	public static final String FMT_FUJITSU_COMMA_DECIMAL_NAME = "Fujitsu Decimal_Point=','";}

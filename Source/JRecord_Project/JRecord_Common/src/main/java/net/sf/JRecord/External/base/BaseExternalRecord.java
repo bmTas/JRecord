@@ -700,7 +700,8 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
   /**
    *  This method sets the vaule of FileStructure
    *
-   * @param val value to be assigned to FileStructure
+   * @param val value to be assigned to FileStructure i.e IFileStructureConstants.IO_STANDARD_TEXT_FILE 
+	 *        or IFileStructureConstants.IO_FIXED_LENGTH_RECORDS
    */
   public xRecord setFileStructure(int val) {
 
@@ -1383,10 +1384,10 @@ implements IFieldUpdatedListner, IAddDependingOn, IUpdateSchema, IUpdateRecord {
 	 * Set the System Name
 	 * @param newSystemName new System Name
 	 * 
-	 * @deprecated Was originally Used in the RecordEditor; it serves not purpose in JRecord. 
+	 * @deprecated Was originally Used in the RecordEditor; it serves no purpose in JRecord. 
 	 */
 	public void setSystemName(String newSystemName) {
-	    if ((newSystemName != null && ! newSystemName.equals(splitOption != splitOption)) || (updateStatus == NULL_INT_VALUE)) {
+	    if ((newSystemName != null && ! newSystemName.equals(systemName)) || (updateStatus == NULL_INT_VALUE)) {
 		   updateStatus = UPDATED;
 		}		
 		this.systemName = newSystemName;

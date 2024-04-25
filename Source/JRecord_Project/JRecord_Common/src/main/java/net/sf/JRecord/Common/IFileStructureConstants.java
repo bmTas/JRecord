@@ -41,7 +41,7 @@ public interface IFileStructureConstants {
      * very limited testing against real VBS files.
      * <p>I <b>strongly</b> suggest you <b>copy</b> the file from <b>VBS</b> to <b>VB</b>/<b>FB</b> on the mainframe
      * and use <b>IO_VB</b> / <b>IO_FIXED_LENGTH</b> instead of the IO_VBS option. Also you can only 
-     * read VBS files, there is now Write option. 
+     * read VBS files, there is no Write option. 
      */
     public static final int IO_VBS  = 12;
     public static final int IO_VB_DUMP2=14;

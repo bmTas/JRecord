@@ -92,11 +92,8 @@ public abstract class CreateExternalBase {
 	}
 	
 	/**
-	 * Not used
-	 * @return
-	 * @deprecated not used in JRecord will be removed
+	 * 
 	 */
-	@Deprecated
 	public ExternalRecord createExternalRecord() throws Exception {
 		
 		ICopybookLoaderStream loader = parent.getLoader();

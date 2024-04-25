@@ -134,7 +134,7 @@ public class LineIOProvider implements AbstractManager {
 		    };
     }
 
-   @Deprecated
+    @Deprecated
     public static final String[] FILE_STRUCTURE = {
         "Default Reader",
         "Fixed Length Binary",

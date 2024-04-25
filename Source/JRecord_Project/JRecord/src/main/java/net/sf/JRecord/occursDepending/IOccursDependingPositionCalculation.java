@@ -7,7 +7,7 @@ import net.sf.JRecord.External.Def.DependingOnDtls;
 
 /**
  * This Interface defines a series of <i>Stratergies</i> for
- * calculating field positions when Occurs Depending isd used in Cobol.
+ * calculating field positions when Occurs Depending is used in Cobol.
  * 
  * @author Bruce Martin
  *

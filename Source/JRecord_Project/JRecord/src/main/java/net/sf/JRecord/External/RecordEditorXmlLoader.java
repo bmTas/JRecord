@@ -125,7 +125,8 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 			throws IOException {
 		return (new BaseRecordEditorXmlLoader<ExternalRecord>(
 								new XmlReader(reader),
-								new ExternalRecordBuilder()
+								new ExternalRecordBuilder(),
+								null
 					)).loadCopyBook(copyBookName, font, log);
 	}
 

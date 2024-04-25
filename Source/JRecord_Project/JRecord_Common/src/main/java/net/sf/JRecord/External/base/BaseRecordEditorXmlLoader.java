@@ -41,7 +41,6 @@ import net.sf.JRecord.Common.XmlConstants;
 
 import net.sf.JRecord.External.Def.AbstractConversion;
 import net.sf.JRecord.External.Def.ExternalField;
-import net.sf.JRecord.External.base.ExternalConversion;
 import net.sf.JRecord.ExternalRecordSelection.ExternalFieldSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalGroupSelection;
 import net.sf.JRecord.ExternalRecordSelection.ExternalSelection;
@@ -74,11 +73,16 @@ public class BaseRecordEditorXmlLoader<XRecord extends BaseExternalRecord<XRecor
 		
 		private final ILineReader xmlReader;
 	    private final IExernalRecordBuilder<XRecord> recBuilder;
+	    private final ILoadCopybook<XRecord> loadCopyBook;
 
-		public BaseRecordEditorXmlLoader(ILineReader xmlReader, IExernalRecordBuilder<XRecord> recBuilder) {
+
+		public BaseRecordEditorXmlLoader(ILineReader xmlReader, 
+				IExernalRecordBuilder<XRecord> recBuilder,
+				ILoadCopybook<XRecord> loadCopyBook) {
 			super();
 			this.xmlReader = xmlReader;
 			this.recBuilder = recBuilder;
+			this.loadCopyBook = loadCopyBook;
 		}
 
 

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.External.Def.BasicConversion;
 import net.sf.JRecord.External.base.ExternalConversion;
 
@@ -88,12 +89,20 @@ public class TstExternalConversion1 {
 	@Test
 	public void testBasicConversionGetStructureCodeFromName() {
 		for (int i = 0; i < STRUCTURE_DETAILS.length; i++) {
-			assertEquals(i + " " + STRUCTURE_DETAILS[i].code + " ", 
+			assertEquals(i + " " + STRUCTURE_DETAILS[i].code + " " + STRUCTURE_DETAILS[i].externalName, 
 					STRUCTURE_DETAILS[i].code, BasicConversion.getStructure(STRUCTURE_DETAILS[i].externalName));
+			assertEquals(i + " " + STRUCTURE_DETAILS[i].code + " " + STRUCTURE_DETAILS[i].externalName, 
+					STRUCTURE_DETAILS[i].code, BasicConversion.getStructure(STRUCTURE_DETAILS[i].externalName.toLowerCase()));
+			assertEquals(i + " " + STRUCTURE_DETAILS[i].code + " " + STRUCTURE_DETAILS[i].externalName, 
+					STRUCTURE_DETAILS[i].code, BasicConversion.getStructure(STRUCTURE_DETAILS[i].externalName.toUpperCase()));
 		}
 		for (int i = 0; i < STRUCTURE_DETAILS.length; i++) {
 			assertEquals(i + " " + STRUCTURE_DETAILS[i].code + " ", 
 					STRUCTURE_DETAILS[i].code, BasicConversion.getStructure(STRUCTURE_DETAILS[i].internalName));
+			assertEquals(i + " " + STRUCTURE_DETAILS[i].code + " ", 
+					STRUCTURE_DETAILS[i].code, BasicConversion.getStructure(STRUCTURE_DETAILS[i].internalName.toLowerCase()));
+			assertEquals(i + " " + STRUCTURE_DETAILS[i].code + " ", 
+					STRUCTURE_DETAILS[i].code, BasicConversion.getStructure(STRUCTURE_DETAILS[i].internalName.toUpperCase()));
 		}
 	}
 	
@@ -102,6 +111,10 @@ public class TstExternalConversion1 {
 		for (int i = 0; i < STRUCTURE_DETAILS.length; i++) {
 			assertEquals(i + " " + STRUCTURE_DETAILS[i].code + " ", 
 					STRUCTURE_DETAILS[i].code, ExternalConversion.getFileStructure(0, STRUCTURE_DETAILS[i].externalName));
+			assertEquals(i + " " + STRUCTURE_DETAILS[i].code + " ", 
+					STRUCTURE_DETAILS[i].code, ExternalConversion.getFileStructure(0, STRUCTURE_DETAILS[i].externalName.toLowerCase()));
+			assertEquals(i + " " + STRUCTURE_DETAILS[i].code + " ", 
+					STRUCTURE_DETAILS[i].code, ExternalConversion.getFileStructure(0, STRUCTURE_DETAILS[i].externalName.toUpperCase()));
 		}
 		for (int i = 0; i < STRUCTURE_DETAILS.length; i++) {
 			assertEquals(i + " " + STRUCTURE_DETAILS[i].code + " ", 
@@ -115,6 +128,100 @@ public class TstExternalConversion1 {
 			assertEquals(i + " " + STRUCTURE_DETAILS[i].code + " ", 
 					STRUCTURE_DETAILS[i].externalName, ExternalConversion.getFileStructureAsString(0, STRUCTURE_DETAILS[i].code));
 		}
+	}
+	
+//	private static int[] recordType = {
+//			Constants.rtBinaryRecord, 
+//			Constants.rtRecordLayout, 
+//			Constants.rtDelimited,      
+//			Constants.rtDelimitedAndQuote,   
+//			Constants.RT_XML, 
+//			Constants.rtGroupOfRecords,        
+//			Constants.rtGroupOfBinaryRecords,
+//			Constants.rtFixedLengthRecords,    
+//	};
+//	@Test
+//	public void testRecordTypeName1() {
+//		String[] xx = {
+//				"Constants.rtBinaryRecord",
+//				"Constants.rtRecordLayout",
+//				"Constants.rtDelimited",
+//				"Constants.rtDelimitedAndQuote",
+//				"Constants.RT_XML",
+//				"Constants.rtGroupOfRecords",                
+//				"Constants.rtGroupOfBinaryRecords",
+//				"Constants.rtFixedLengthRecords",
+//		};
+//		for (int i = 0; i < recordType.length; i++) {
+//			System.out.println("\tnew ConversionNames(" + xx[i] 
+//					+ ", \"" + ExternalConversion.getRecordTypeAsString(0, recordType[i]) + "\", null),");
+//		}
+//	}
+	
+	private static ConversionNames[] RECORD_TYPES = {
+			new ConversionNames(Constants.rtBinaryRecord, "BinaryRecord", null),
+			new ConversionNames(Constants.rtRecordLayout, "RecordLayout", null),
+			new ConversionNames(Constants.rtDelimited, "Delimited", null),
+			new ConversionNames(Constants.rtDelimitedAndQuote, "DelimitedAndQuote", null),
+			new ConversionNames(Constants.RT_XML, "XML", null),
+			new ConversionNames(Constants.rtGroupOfRecords, "GroupOfRecords", null),
+			new ConversionNames(Constants.rtGroupOfBinaryRecords, "GroupOfBinaryRecords", null),
+			new ConversionNames(Constants.rtFixedLengthRecords, "FixedLengthRecords", null),
+	};
+	
+	@Test
+	public void testRecordTypeNames1() {
+		for (int i = 0; i < RECORD_TYPES.length; i++) {
+			ConversionNames cn = RECORD_TYPES[i];
+			assertEquals(cn.internalName, ExternalConversion.getRecordTypeAsString(0, cn.code));
+			assertEquals(cn.code, ExternalConversion.getRecordType(0, cn.internalName));
+			assertEquals(cn.code, ExternalConversion.getRecordType(0, ""+ cn.code));
+		}
+	}
+	
+	@Test
+	public void testRecordTypeNames2() {
+		ConversionNames[] lookup = getRecordTypesLookup();
+		
+		for (int i = 0; i < lookup.length; i++) {
+			ConversionNames cn = lookup[i];
+			if (cn == null) {
+				assertEquals("" + i, ExternalConversion.getRecordTypeAsString(0, i));
+				assertEquals(i, ExternalConversion.getRecordType(0, "" + i));
+			} else {
+				assertEquals(cn.internalName, ExternalConversion.getRecordTypeAsString(0, i));
+				assertEquals(i, ExternalConversion.getRecordType(0, cn.internalName));
+				assertEquals(cn.code, ExternalConversion.getRecordType(0, ""+ cn.code));
+			}
+		}
+		
+	}
+	
+//	@Test
+//	public void testGetRecordTypes() {
+//		ConversionNames[] lookup = getRecordTypesLookup();
+//		ArrayList<BasicKeyedField> recordTypes = ExternalConversion.getRecordTypes();
+//		
+//		for (BasicKeyedField rt : recordTypes) {
+//			ConversionNames cn = lookup[rt.key];
+//			String id = "" + rt.key + " " + rt.name;
+//			assertNotNull(id, cn);
+//			
+//			if (cn != null) {
+//				assertEquals(id, cn.internalName, rt.name);
+//			}
+//		}
+//	}
+
+
+	private ConversionNames[] getRecordTypesLookup() {
+		ConversionNames[] lookup = new ConversionNames[15];
+		
+		for (int i = 0; i < RECORD_TYPES.length; i++) {
+			ConversionNames cn = RECORD_TYPES[i];
+			lookup[cn.code] = cn;
+		}
+		return lookup;
 	}
 
 	private static class ConversionNames {

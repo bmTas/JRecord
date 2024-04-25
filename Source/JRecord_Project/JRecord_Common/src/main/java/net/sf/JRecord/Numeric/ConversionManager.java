@@ -70,7 +70,7 @@ public class ConversionManager implements AbstractManager {
         super();
 
         Convert mainframeConverter = (new BasicConvert(
-				ICopybookDialects.FMT_MAINFRAME, "Mainframe", ICopybookDialects.FMT_MAINFRAME, MAINFRAME_BIN_SIZES,
+				ICopybookDialects.FMT_MAINFRAME, ICopybookDialects.FMT_MAINFRAME_NAME, ICopybookDialects.FMT_MAINFRAME, MAINFRAME_BIN_SIZES,
 				MAINFRAME_SYNC, true, 4, 4)).setDefaultVbFileStructure(IFileStructureConstants.IO_VB);
 //        Convert mainframeZLConverter = (new BasicConvert(
 // 				ICopybookDialects.FMT_MAINFRAME_SIGN_LEADING_ZONED, "Mainframe Sign Leading Zoned", ICopybookDialects.FMT_MAINFRAME, MAINFRAME_BIN_SIZES,
@@ -79,20 +79,21 @@ public class ConversionManager implements AbstractManager {
         			new GnuCobol(ICopybookDialects.FMT_FUJITSU, "Fujitsu", MAINFRAME_BIN_SIZES, MAINFRAME_SYNC, 4, 8)
         		).setDefaultVbFileStructure(IFileStructureConstants.IO_VB_FUJITSU);
 
-        registerConverter(new BasicConvert(ICopybookDialects.FMT_INTEL, "Intel", ICopybookDialects.FMT_INTEL, MAINFRAME_BIN_SIZES, false));
+        registerConverter(new BasicConvert(ICopybookDialects.FMT_INTEL, ICopybookDialects.FMT_INTEL_NAME, ICopybookDialects.FMT_INTEL, MAINFRAME_BIN_SIZES, false));
 		registerConverter(mainframeConverter);
 		registerConverter(fujitsuConverter);
-        registerConverter(new BasicConvert(ICopybookDialects.FMT_BIG_ENDIAN, "Big-Endian (Old)", ICopybookDialects.FMT_BIG_ENDIAN, MAINFRAME_BIN_SIZES, false));
+        registerConverter(new BasicConvert(ICopybookDialects.FMT_BIG_ENDIAN, ICopybookDialects.FMT_BIG_ENDIAN_NAME, ICopybookDialects.FMT_BIG_ENDIAN, MAINFRAME_BIN_SIZES, false));
 
-        registerConverter(new GnuCobol(ICopybookDialects.FMT_GNU_COBOL, "GNU Cobol Little Endian (Intel)", BIN_SIZES_1248, BIN_SIZES_1248));
-        registerConverter(new GnuCobol(ICopybookDialects.FMT_FS2000, "GNU Cobol bs2000 Little Endian (Intel)",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
-        registerConverter(new GnuCobol(ICopybookDialects.FMT_GNU_COBOL_MVS, "GNU Cobol MVS Little Endian (Intel)",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
-        registerConverter(new GnuCobol(ICopybookDialects.FMT_OC_MICRO_FOCUS, "GNU Cobol Micro Focus (Intel)",  BIN_SIZES_1_TO_8, NO_SYNC, 1 , 1));
+        registerConverter(new GnuCobol(ICopybookDialects.FMT_GNU_COBOL, ICopybookDialects.FMT_GNU_COBOL_NAME, BIN_SIZES_1248, BIN_SIZES_1248));
+        registerConverter(new GnuCobol(ICopybookDialects.FMT_FS2000, ICopybookDialects.FMT_FS2000_NAME,  MAINFRAME_BIN_SIZES, FS2000_SYNC));
+        registerConverter(new GnuCobol(ICopybookDialects.FMT_GNU_COBOL_MVS, ICopybookDialects.FMT_GNU_COBOL_MVS_NAME,  MAINFRAME_BIN_SIZES, FS2000_SYNC));
+//        registerConverter(new GnuCobol(ICopybookDialects.FMT_OC_MICRO_FOCUS, "GNU Cobol Micro Focus (Intel)",  BIN_SIZES_1_TO_8, NO_SYNC, 1 , 1));
+        registerConverter(new GnuCobol(ICopybookDialects.FMT_GNU_COBOL_MF, ICopybookDialects.FMT_GNU_COBOL_MF_NAME,  BIN_SIZES_1_TO_8, NO_SYNC, 1 , 1));
 
-        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_GNU_COBOL_BE, "GNU Cobol Big Endian", BIN_SIZES_1248, BIN_SIZES_1248));
-        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_FS2000_BE, "GNU Cobol bs2000 Big Endian",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
-        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_GNU_COBOL_MVS_BE, "GNU Cobol MVS Big Endian",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
-        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_OC_MICRO_FOCUS_BE, "GNU Cobol Micro Focus Big E",  BIN_SIZES_1_TO_8, NO_SYNC, 1 , 1));
+        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_GNU_COBOL_BE, ICopybookDialects.FMT_GNU_COBOL_BE_NAME, BIN_SIZES_1248, BIN_SIZES_1248));
+        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_FS2000_BE, ICopybookDialects.FMT_FS2000_BE_NAME,  MAINFRAME_BIN_SIZES, FS2000_SYNC));
+        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_GNU_COBOL_MVS_BE, ICopybookDialects.FMT_GNU_COBOL_MVS_BE_NAME,  MAINFRAME_BIN_SIZES, FS2000_SYNC));
+        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_OC_MICRO_FOCUS_BE, ICopybookDialects.FMT_OC_MICRO_FOCUS_BE_NAME,  BIN_SIZES_1_TO_8, NO_SYNC, 1 , 1));
         
   //      registerConverter(mainframeZLConverter);
         registerConverter(new CommaDecimal(ICopybookDialects.FMT_MAINFRAME_COMMA_DECIMAL, mainframeConverter));
@@ -116,7 +117,58 @@ public class ConversionManager implements AbstractManager {
 //        registerConverter(new BasicConvert(idx++, "Little Endian (2:4:8) use Positive Int", Convert.FMT_INTEL, MAINFRAME_BIN_SIZES, true));
 //        registerConverter(new BasicConvert(idx++, "Little Endian (1:2:4:8) use Positive Int", Convert.FMT_INTEL, BIN_SIZES_1248, true));
 //        registerConverter(new BasicConvert(idx++, "Little Endian (1-8) use Positive Int", Convert.FMT_INTEL, BIN_SIZES_1_TO_8, true));
-   }
+    }
+//    public ConversionManager() {
+//        super();
+//
+//        Convert mainframeConverter = (new BasicConvert(
+//				ICopybookDialects.FMT_MAINFRAME, "Mainframe", ICopybookDialects.FMT_MAINFRAME, MAINFRAME_BIN_SIZES,
+//				MAINFRAME_SYNC, true, 4, 4)).setDefaultVbFileStructure(IFileStructureConstants.IO_VB);
+////        Convert mainframeZLConverter = (new BasicConvert(
+//// 				ICopybookDialects.FMT_MAINFRAME_SIGN_LEADING_ZONED, "Mainframe Sign Leading Zoned", ICopybookDialects.FMT_MAINFRAME, MAINFRAME_BIN_SIZES,
+//// 				MAINFRAME_SYNC, false, 4, 4)).setDefaultVbFileStructure(IFileStructureConstants.IO_VB);
+//       Convert fujitsuConverter = (
+//        			new GnuCobol(ICopybookDialects.FMT_FUJITSU, "Fujitsu", MAINFRAME_BIN_SIZES, MAINFRAME_SYNC, 4, 8)
+//        		).setDefaultVbFileStructure(IFileStructureConstants.IO_VB_FUJITSU);
+//
+//        registerConverter(new BasicConvert(ICopybookDialects.FMT_INTEL, "Intel", ICopybookDialects.FMT_INTEL, MAINFRAME_BIN_SIZES, false));
+//		registerConverter(mainframeConverter);
+//		registerConverter(fujitsuConverter);
+//        registerConverter(new BasicConvert(ICopybookDialects.FMT_BIG_ENDIAN, "Big-Endian (Old)", ICopybookDialects.FMT_BIG_ENDIAN, MAINFRAME_BIN_SIZES, false));
+//
+//        registerConverter(new GnuCobol(ICopybookDialects.FMT_GNU_COBOL, "GNU Cobol Little Endian (Intel)", BIN_SIZES_1248, BIN_SIZES_1248));
+//        registerConverter(new GnuCobol(ICopybookDialects.FMT_FS2000, "GNU Cobol bs2000 Little Endian (Intel)",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
+//        registerConverter(new GnuCobol(ICopybookDialects.FMT_GNU_COBOL_MVS, "GNU Cobol MVS Little Endian (Intel)",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
+//        registerConverter(new GnuCobol(ICopybookDialects.FMT_OC_MICRO_FOCUS, "GNU Cobol Micro Focus (Intel)",  BIN_SIZES_1_TO_8, NO_SYNC, 1 , 1));
+//
+//        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_GNU_COBOL_BE, "GNU Cobol Big Endian", BIN_SIZES_1248, BIN_SIZES_1248));
+//        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_FS2000_BE, "GNU Cobol bs2000 Big Endian",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
+//        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_GNU_COBOL_MVS_BE, "GNU Cobol MVS Big Endian",  MAINFRAME_BIN_SIZES, FS2000_SYNC));
+//        registerConverter(new OpenCobolBE(ICopybookDialects.FMT_OC_MICRO_FOCUS_BE, "GNU Cobol Micro Focus Big E",  BIN_SIZES_1_TO_8, NO_SYNC, 1 , 1));
+//        
+//  //      registerConverter(mainframeZLConverter);
+//        registerConverter(new CommaDecimal(ICopybookDialects.FMT_MAINFRAME_COMMA_DECIMAL, mainframeConverter));
+//        registerConverter(new CommaDecimal(ICopybookDialects.FMT_FUJITSU_COMMA_DECIMAL, fujitsuConverter));
+//        //registerConverter(new MicroFocusCobol());
+//
+//        LoadConversion loader = new LoadConversion();
+//        Convert conv;
+//
+//        for (int i = 0; i < 32; i++) {
+//        	if ((conv = loader.getConversion(i)) != null) {
+////        		System.out.println("Registering " + conv.getIdentifier() + " " + conv.getName());
+//        		registerConverter(conv);
+//        	}
+//        }
+//
+////        idx = Convert.FMT_MICRO_FOCUS + 1;
+////
+////         registerConverter(new BasicConvert(idx++, "Big-Endian 2:4:8 use Positive Int", Convert.FMT_BIG_ENDIAN, MAINFRAME_BIN_SIZES, true));
+////
+////        registerConverter(new BasicConvert(idx++, "Little Endian (2:4:8) use Positive Int", Convert.FMT_INTEL, MAINFRAME_BIN_SIZES, true));
+////        registerConverter(new BasicConvert(idx++, "Little Endian (1:2:4:8) use Positive Int", Convert.FMT_INTEL, BIN_SIZES_1248, true));
+////        registerConverter(new BasicConvert(idx++, "Little Endian (1-8) use Positive Int", Convert.FMT_INTEL, BIN_SIZES_1_TO_8, true));
+//   }
 
 
     /* (non-Javadoc)

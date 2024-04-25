@@ -48,12 +48,16 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
     				saveCb2xml;
     
     
-	public BaseCobolItemLoader(boolean useJRecordNaming, IExernalRecordBuilder<XRecord> recBuilder, IReadCopybook readCopybook) {
+	public BaseCobolItemLoader(boolean useJRecordNaming, 
+			IExernalRecordBuilder<XRecord> recBuilder,
+			IReadCopybook readCopybook) {
 		super();
 		this.useJRecordNaming = useJRecordNaming;
 		this.recBuilder = recBuilder;
 		this.readCopybook = readCopybook;
 	}
+	
+	
 	public void setKeepFillers(boolean keepFiller) {
 		this.keepFiller = keepFiller;
 	}
