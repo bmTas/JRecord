@@ -5,7 +5,7 @@
     <parent>
         <groupId>net.sf.jrecord.jrecord-parent</groupId>
         <artifactId>jrecord-project-parent</artifactId>
-        <version>0.93</version>
+        <version>0.94</version>
     </parent>
 
     <groupId>net.sf.jrecord.jrecord-parent.jrecord-project-parent</groupId>
@@ -18,11 +18,11 @@
         </dependency -->
          <!-- TPF: https://sourceforge.net/p/cb2xml/SVN/1/tree/source/cb2xml/src/net/sf/cb2xml/Cb2Xml.java
                   https://github.com/bmTas/cb2xml
-          -->
+           -->
         <dependency>
             <groupId>net.sf</groupId>
             <artifactId>cb2xml_src</artifactId>
-            <version>1.01.6</version>
+            <version>1.01.7</version>
         </dependency>
     </dependencies>
 </project>
