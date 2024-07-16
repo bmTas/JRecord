@@ -36,6 +36,7 @@ package net.sf.JRecord.Details;
 
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Common.ILineFieldNames;
+import net.sf.JRecord.Common.ISetData;
 
 /**
  * Interface to represent one Line in a file. Used through out JRecord / RecordEditor
@@ -62,7 +63,7 @@ import net.sf.JRecord.Common.ILineFieldNames;
  * @author Bruce Martin
  *
  */
-public interface AbstractLine extends ILineFieldNames, IGetLayout {
+public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
     /**
      *   This method completely replaces a lines value. It is used to determine
      * a records prefered record layout

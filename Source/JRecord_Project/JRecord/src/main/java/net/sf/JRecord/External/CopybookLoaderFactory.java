@@ -82,10 +82,10 @@ public class CopybookLoaderFactory {
 	public static final int RECORD_EDITOR_COMMA_CSV_LOADER;
 
 	static {
-		int idx = 1;
-		if (CobolCopybookLoader.isAvailable()) {
-			idx = 2;
-		}
+		int idx = 2;
+//		if (CobolCopybookLoader.isAvailable()) {
+//			idx = 2;
+//		}
 		RECORD_EDITOR_XML_LOADER       = idx++;
 		COMMA_NAMES_1ST_LINE_LOADER    = idx++;
 		TAB_NAMES_1ST_LINE_LOADER      = idx++;

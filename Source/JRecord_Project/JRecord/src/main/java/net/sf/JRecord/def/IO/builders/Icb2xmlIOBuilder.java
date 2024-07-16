@@ -88,6 +88,10 @@ public interface Icb2xmlIOBuilder extends IIOBuilder, Icb2xmlLoadOptions {
 	
 	@Override public abstract Icb2xmlIOBuilder setRecordDecider(RecordDecider recordDecider);
 
+	@Override Icb2xmlLoadOptions setRecordLength(int recordLength);
+
+	@Override Icb2xmlLoadOptions setInitToSpaces(boolean initToSpaces);
+
 	/**
 	 * Old parameter, can be ignore most of the time
 	 * @param log the log to set

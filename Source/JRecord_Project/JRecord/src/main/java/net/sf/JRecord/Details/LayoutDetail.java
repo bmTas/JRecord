@@ -620,7 +620,8 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
     /**
      * Return the file structure
      *
-     * @return file structure
+     * @return file structure. The various file structure's are constants in
+	 * interface {@link net.sf.JRecord.Common.IFileStructureConstants}.
      */
     public int getFileStructure() {
         int ret;// = fileStructure;
