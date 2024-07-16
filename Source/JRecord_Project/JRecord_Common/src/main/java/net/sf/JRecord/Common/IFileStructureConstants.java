@@ -8,19 +8,50 @@ package net.sf.JRecord.Common;
  */
 public interface IFileStructureConstants {
 	public static final int IO_DEFAULT      = 0;
+	/**
+	 * Standard Windows/Linux/Unix/mac ascii text file with \n line ending's.
+	 * It is read as bytes (Java Stream). 
+	 * For unicode use IO_UNICODE_TEXT
+	 */
 	public static final int IO_STANDARD_TEXT_FILE    = 1;
 		/** alias for IO_STANDARD_TEXT_FILE*/
     public static final int IO_TEXT_LINE    = IO_STANDARD_TEXT_FILE;
+    /**
+     * Each line is a Fixed length. There are no line ending characters.
+     * The file is read as bytes so supports binary fields\ but not unicode.
+     * For unicode files use IO_FIXED_LENGTH_CHAR
+     */
     public static final int IO_FIXED_LENGTH_RECORDS = 2;
     	/** Alias for IO_FIXED_LENGTH_RECORDS */
     public static final int IO_FIXED_LENGTH = IO_FIXED_LENGTH_RECORDS;
     public static final int IO_BINARY_IBM_4680 = 3;
+    /**
+     * Mainframe recfm=VB file. Each line consists of a line length followed by the lines data. 
+     * There is no Block information, just the file data.
+      */
     public static final int IO_VB           = 4;
+    /**
+     * Mainframe Recfm=VB including, It includes both disk-block data + the file data.
+     * IO_VB contains file data but no block data.
+     */
     public static final int IO_VB_DUMP      = 5;
+    /**
+     * Fujitsu Cobols VB files. They contain line-lengths at both the start and end of the line.
+     */
     public static final int IO_VB_FUJITSU   = 7;
+    /**
+     * GNU Cobols VB files. Each line consists of a line-length followed by the Line Data.
+     */
     public static final int IO_VB_GNU_COBOL = 8;
     public static final int IO_VB_OPEN_COBOL= IO_VB_GNU_COBOL;
+    /**
+     * Text file, it is read as byte (java stream) instead of as Characters. It does not handle Unicode.
+     */
     public static final int IO_BIN_TEXT     = 9;
+    /**
+     * Each line (or record) is a fixed number of characters. There are no line ending characters.
+     * It will support unicode files but not binary files.
+     */
     public static final int IO_FIXED_LENGTH_CHAR = 10;
     
     /**

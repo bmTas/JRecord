@@ -61,7 +61,7 @@ public class ConstantDetails {
 	/**
 	 * @return the jrecordConstant
 	 */
-	String getJRecordConstant() {
+	public String getJRecordConstantNoClassName() {
 		return jrecordConstant;
 	}
 	

@@ -181,6 +181,7 @@ public interface Type {
 	public static final int ftZonedAsciiSmallPositive = 153;
 
 	public static final int NT_TEXT              = 1;
+	public static final int NT_OTHER             = 6;
 	public static final int NT_DATE              = 11;
 	public static final int NT_NUMBER            = 21;
 

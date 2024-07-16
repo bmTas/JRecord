@@ -434,6 +434,9 @@ public class Code2JRecordConstants {
 //		return "Cb2xmlConstants." + COPYBOOK_FORMAT[format];
 //	}
 
+	public static String getJRecordIoTypeNameNoClass(int fileStructure) {
+		return CONSTANT_CONVERSIONS.getFileStructureNames().getConstantDetails(fileStructure).getJRecordConstantNoClassName();
+	}
 
 	public static String getJRecordIoTypeName(int fileStructure) {
 		return CONSTANT_CONVERSIONS.getFileStructureNames().getJRecordConstantName(fileStructure);

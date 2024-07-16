@@ -123,6 +123,12 @@ public class TypeBit extends BaseType {
 	public boolean isValid(int pos, IFieldDetail fldDef, byte[] line) {
 		return true;
 	}
+
+
+	@Override
+	public int getFieldType() {
+		return Type.NT_OTHER;
+	}
     
     
 }

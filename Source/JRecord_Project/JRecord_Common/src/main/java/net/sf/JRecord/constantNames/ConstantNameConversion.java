@@ -59,7 +59,7 @@ public class ConstantNameConversion implements IInterfaceDetails {
 			} else {
 				codeMap.put(code, details);
 			}
-			addNamesToMap(details, details.getExternalName(), details.getJRecordConstant(), details.getSimpleName());
+			addNamesToMap(details, details.getExternalName(), details.getJRecordConstantNoClassName(), details.getSimpleName());
 			addNamesToMap(details, details.getExtraNames());
 			//nameLookup.put(Integer.toString(details.getCode()), details);
 		}
@@ -116,7 +116,7 @@ public class ConstantNameConversion implements IInterfaceDetails {
 	public String getJRecordConstantName(int code) {
 		ConstantDetails cd = getConstantDetails(code);
 		if (cd != null) {
-			return simpleName + "." + cd.getJRecordConstant();
+			return simpleName + "." + cd.getJRecordConstantNoClassName();
 		}
 		return Integer.toString(code);
 	}

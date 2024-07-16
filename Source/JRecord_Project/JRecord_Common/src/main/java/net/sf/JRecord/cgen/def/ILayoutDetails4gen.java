@@ -37,8 +37,10 @@ import net.sf.JRecord.detailsBasic.CsvCharDetails;
 public interface ILayoutDetails4gen {
 
 	/**
-	 * Get The File Structure Code (IO Type)
-	 * @returnFile Structure Code
+	 * Get The File Structure Code (IO Type) {@link net.sf.JRecord.Common.IFileStructureConstants}
+	 * @return File Structure Code. The various file structure's are constants in
+	 * interface {@link net.sf.JRecord.Common.IFileStructureConstants}.
+     * i.e. IFileStructureConstants.IO_STANDARD_TEXT_FILE
 	 */
 	public abstract int getFileStructure();
 

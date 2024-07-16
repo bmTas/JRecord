@@ -25,6 +25,7 @@
       
 package net.sf.JRecord.Common;
 
+import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.Option.IOptionResult;
 import net.sf.JRecord.Option.IOptionType;
 import net.sf.JRecord.detailsBasic.CsvCharDetails;
@@ -92,5 +93,17 @@ public interface IFieldDetail {
 	public abstract int calculateActualEnd(AbstractIndexedLine line);
 
 	public abstract IItemDetails getCobolItem();
+
+	/**
+	 * This method is for CodeGen/RecordEditor Utility.
+	 * Do not use it in JRecord
+	 * @return Java if it has been set by 
+	 */
+	String getJavaTypeIfSet();
+
+	/**
+	 * @return the dependingOnDtls
+	 */
+	DependingOnDtls getDependingOnDtls();
 
 }

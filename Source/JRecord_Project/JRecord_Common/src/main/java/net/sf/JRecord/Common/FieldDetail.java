@@ -472,6 +472,7 @@ public class FieldDetail implements IFieldDetail {
 	/**
 	 * @return the dependingOnDtls
 	 */
+	@Override
 	public final DependingOnDtls getDependingOnDtls() {
 		return dependingOnDtls;
 	}
@@ -515,6 +516,7 @@ public class FieldDetail implements IFieldDetail {
 	 * Do not use it in JRecord
 	 * @return Java if it has been set by 
 	 */
+	@Override
 	public String getJavaTypeIfSet() {
 		return cobolItem == null ? null : cobolItem.getJavaType();
 	}

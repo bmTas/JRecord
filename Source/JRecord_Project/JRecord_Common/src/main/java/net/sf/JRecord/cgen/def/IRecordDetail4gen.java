@@ -27,7 +27,7 @@ package net.sf.JRecord.cgen.def;
 
 import java.util.List;
 
-import net.sf.JRecord.Common.FieldDetail;
+import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Option.IRecordPositionOption;
 import net.sf.JRecord.detailsBasic.CsvCharDetails;
 import net.sf.JRecord.detailsBasic.IItemDetails;
@@ -54,7 +54,7 @@ public interface IRecordDetail4gen {
 	 * @param index index of the field being requested
 	 * @return requested field
 	 */
-	public abstract FieldDetail getField(int index);
+	public abstract IFieldDetail getField(int index);
 	
 	/**
 	 * 
