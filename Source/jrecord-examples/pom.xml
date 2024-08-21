@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>net.sf.jrecord</groupId>
+  <artifactId>jrecord-examples</artifactId>
+  <version>0.93.3</version>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>jrecord-examples-common</module>
+  	<module>Cbl2Csv</module>
+  	<module>jrecord-examples-classic</module>
+  	<module>jrecord-schema-compare</module>
+  	<module>jrecord-iobuilder-example</module>
+  </modules>
+   
+  
+	<repositories>
+		<!-- Jitpack -->
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>com.github.bmTas</groupId>
+			<artifactId>cb2xml</artifactId>
+			<version>1.01.08</version>
+		</dependency>
+
+<!--		<dependency>
+			<groupId>
+				net.sf</groupId>
+			<artifactId>cb2xml</artifactId>
+			<version>1.01.07</version>
+		</dependency>
+-->
+		<dependency>
+			<groupId>
+				net.sf.jrecord</groupId>
+			<artifactId>JRecord</artifactId>
+			<version>0.93.3</version>
+		</dependency>
+	</dependencies>
+
+ 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>
+						1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>
