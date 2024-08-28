@@ -9,16 +9,14 @@
   
   <dependencies>
 		<dependency>
-			<groupId>
-				net.sf.jrecord</groupId>
+			<groupId>net.sf.jrecord</groupId>
 			<artifactId>jrecord-examples-common</artifactId>
 			<version>0.93.3</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>
-				4.13.1</version>
+			<version>4.13.1</version>
 			<scope>test</scope>
 		</dependency>
   </dependencies>
