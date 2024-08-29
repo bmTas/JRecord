@@ -9,8 +9,7 @@
   
   	<dependencies>
 		<dependency>
-			<groupId>
-				net.sf.jrecord</groupId>
+			<groupId>net.sf.jrecord</groupId>
 			<artifactId>jrecord-examples-common</artifactId>
 			<version>0.93.3</version>
 		</dependency>
