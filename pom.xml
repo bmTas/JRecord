@@ -64,6 +64,25 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.8.6.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>spotbugs</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <xmlOutput>false</xmlOutput> <!-- Disable XML report generation -->
+                    <htmlOutput>true</htmlOutput> <!-- Enable HTML report generation -->
+                    <outputDirectory>${project.build.directory}/spotbugs</outputDirectory> <!-- Where the report will be saved -->
+                    <effort>Max</effort>
+                    <threshold>Low</threshold>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.13.0</version>
