@@ -41,7 +41,7 @@ import net.sf.JRecord.Types.BaseType;
 import net.sf.JRecord.Types.TypeManager;
 
 
-public class CharLine2 extends BasicLine implements Cloneable{
+public class CharLine2 extends BasicLine implements Cloneable {
 
 	private static final LineProvider defaultProvider = new CharLineProvider();
 
