@@ -38,9 +38,9 @@ import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.BaseType;
 import net.sf.JRecord.Types.TypeManager;
 
-public class CharLine extends BasicLine {
+public class CharLine extends BasicLine implements Cloneable {
 
-	private static LineProvider defaultProvider = new CharLineProvider();
+	private static final LineProvider defaultProvider = new CharLineProvider();
 
 	private String data;
 
@@ -63,9 +63,7 @@ public class CharLine extends BasicLine {
 	    if ((tmpData.length() < start) || (tempLen < 1) || (start < 1)) {
 	        return NULL_RECORD;
 	    }
-	    //System.out.println();
-	    //System.out.println("getData --> " + " " + start + ", " + len + ", " + tempLen + " ~ " + tmpData.length()
-	    // 		+ " " + tmpData);
+
 		return Conversion.getBytes(
 				tmpData.substring(
 						start - 1,
@@ -105,7 +103,7 @@ public class CharLine extends BasicLine {
 
 			return type.getField(bytes, 1, tmpField);
 		} else {
-			return layout.formatCsvField(field, typeId, data.toString());
+			return layout.formatCsvField(field, typeId, data);
 		}
 	}
 
@@ -126,10 +124,10 @@ public class CharLine extends BasicLine {
 	private String getFieldText(IFieldDetail fldDef) {
 
 		String s = getFieldRawText(fldDef);
-		if (s.length() == 0) { return s; }
+		if (s.isEmpty()) { return s; }
 		
 		int len = s.length() - 1;
-		if (s.length() > 0 && s.charAt(len) == ' ') {
+		if (s.charAt(len) == ' ') {
 			while (len > 0 && s.charAt(len) == ' ') {
 				len -= 1;
 			}
@@ -163,7 +161,7 @@ public class CharLine extends BasicLine {
 
 
 	/**
-	 * Get the Prefered Record Layou Index for this record
+	 * Get the Preferred Record Layout Index for this record
 	 *
 	 * @return Index of the Record Layout based on the Values
 	 */
@@ -236,8 +234,7 @@ public class CharLine extends BasicLine {
 		        Type typeVal = TypeManager.getSystemTypeManager().getType(typeId);
 		        String s = typeVal.formatValueForRecord(field, value.toString());
 	
-	            data =
-	            		parser.setField(field.calculateActualPosition(this) - 1,
+	            data = parser.setField(field.calculateActualPosition(this) - 1,
 	            				typeVal.getFieldType(),
 	            				data,
 	            				new CsvDefinition(layout.getDelimiterDetails(), field.getQuoteDefinition()), s);
@@ -265,9 +262,8 @@ public class CharLine extends BasicLine {
 		int start = pos -1;
 		int len = Math.min(value.length(), length);
 		StringBuilder dataBld = new StringBuilder(data);
-		int en = start + Math.max(len, length) - dataBld.length();
+		int en = start + length - dataBld.length();
 
-		//System.out.print(" --> " + dataBld.length());
 		for (i = 0; i < en; i++) {
 			dataBld.append(' ');
 		}
@@ -285,8 +281,11 @@ public class CharLine extends BasicLine {
     /**
      * @see java.lang.Object#clone()
      */
-    public Object clone() {
-    	return lineProvider.getLine(layout, data);
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Object o = super.clone();
+        ((CharLine) o).data = data;
+        return lineProvider.getLine(((CharLine) o).layout, ((CharLine) o).data);
     }
 
     

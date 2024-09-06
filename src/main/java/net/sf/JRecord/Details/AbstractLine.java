@@ -65,14 +65,14 @@ import net.sf.JRecord.Common.ISetData;
  */
 public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
     /**
-     *   This method completely replaces a lines value. It is used to determine
-     * a records prefered record layout
+     *   This method completely replaces a line value.
+     *   It is used to determine a record preferred record layout
      *
      * @param rec buffer holding the record
      * @param start Start of the record
      * @param len length of the record
      */
-    public abstract void replace(final byte[] rec, final int start,
+    void replace(final byte[] rec, final int start,
             final int len);
 
     /**
@@ -83,14 +83,14 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      *
      * @return field value (raw Text)
      */
-    public abstract String getFieldText(final int recordIdx, final int fieldIdx);
+    String getFieldText(final int recordIdx, final int fieldIdx);
 
     /**
      * Get the full line as text
      *
      * @return line as text
      */
-    public abstract String getFullLine();
+    String getFullLine();
 
     /**
      * Get the field value as Hex
@@ -100,7 +100,7 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      *
      * @return field value as a Hex String
      */
-    public abstract String getFieldHex(final int recordIdx, final int fieldIdx);
+    String getFieldHex(final int recordIdx, final int fieldIdx);
 
     /**
      * Get the field as bytes
@@ -108,7 +108,7 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      * @param fieldIdx field index (or identifier)
      * @return field as bytes
      */
-    public abstract byte[] getFieldBytes(final int recordIdx, final int fieldIdx);
+    byte[] getFieldBytes(final int recordIdx, final int fieldIdx);
 
 
     /**
@@ -116,7 +116,7 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      *
      * @return Index of the Record Layout based on the Values
      */
-    public abstract int getPreferredLayoutIdxAlt();
+    int getPreferredLayoutIdxAlt();
 
     /**
      * Get the byte value for a specified position and length
@@ -124,24 +124,24 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      * @param len length to extract
      * @return the requested bytes
      */
-    public abstract byte[] getData(int start, int len);
+    byte[] getData(int start, int len);
 
     /**
      * get The dat in the line as an Array of Bytes
      * @return Returns the record.
      */
-    public abstract byte[] getData();
+    byte[] getData();
 
     /**
      * Set the line value to the supplied string
      * @param newVal new value for the line
      */
-    public abstract void setData(String newVal);
+    void setData(String newVal);
     /**
      * Set the line value to the supplied byte array
      * @param newVal new value for the line
      */
-    public abstract void setData(byte[] newVal);
+    void setData(byte[] newVal);
 
     /**
      * Set the record Layout - Description of the Line
@@ -150,19 +150,19 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      * controlled. <b>Only</b> use it in JRecord if you know what you are doing.
      * Basically it works if the Layouts are <b>very</b> similar.
      */
-    public abstract void setLayout(final LayoutDetail pLayout);
+    void setLayout(final LayoutDetail pLayout);
 
     /**
      * Get the Layout
      * @return Returns the layouts.
      */
-    public abstract LayoutDetail getLayout();
+    LayoutDetail getLayout();
 
     /**
      * Set Record Index to be used when writing this line
      * @param pWriteLayout The writeLayout to set.
      */
-    public abstract void setWriteLayout(final int pWriteLayout);
+    void setWriteLayout(final int pWriteLayout);
 
     /**
      * Set the line provider
@@ -171,7 +171,7 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      * 
      * @deprecated for use in JRecord
      */
-    public abstract void setLineProvider(LineProvider pLineProvider);
+    void setLineProvider(LineProvider pLineProvider);
 
     /**
      * Gets a fields value
@@ -183,7 +183,7 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      *
      * @deprecated for use in JRecord, otherwise use {@link AbstractLine#getFieldValue(int, int)}
      */
-    public abstract Object getField(final int recordIdx, final int fieldIdx);
+    Object getField(final int recordIdx, final int fieldIdx);
 
 
     /**
@@ -194,9 +194,9 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      *
      * @return the request field (formated)
      */
-    public abstract net.sf.JRecord.Details.fieldValue.IFieldValue  getFieldValue(final int recordIdx, final int fieldIdx);
+    net.sf.JRecord.Details.fieldValue.IFieldValue  getFieldValue(final int recordIdx, final int fieldIdx);
 
-    public abstract net.sf.JRecord.Details.fieldValue.IFieldValue getFieldValue(String fieldName);
+    net.sf.JRecord.Details.fieldValue.IFieldValue getFieldValue(String fieldName);
     /**
      * Get a fields value
      *
@@ -204,17 +204,17 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      *
      * @return fields Value
      */
-    public abstract net.sf.JRecord.Details.fieldValue.IFieldValue getFieldValue(IFieldDetail field);
+    net.sf.JRecord.Details.fieldValue.IFieldValue getFieldValue(IFieldDetail field);
 
     /**
      * Set a field via its name
      *
-     * @param fieldName fieldname to be updated
+     * @param fieldName fieldName to be updated
      * @param value value to be applied to the field
      *
      * @deprecated use {@link AbstractLine#getFieldValue(IFieldDetail)}.set(..)
      */
-    public abstract void setField(String fieldName, Object value);
+    void setField(String fieldName, Object value);
 
     /**
      * Sets a field to a new value
@@ -225,7 +225,7 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      *
      * @deprecated for use in JRecord, use {@link AbstractLine#getFieldValue(int, int)}.set(..)
      */
-    public abstract void setField(final int recordIdx, final int fieldIdx,
+    void setField(final int recordIdx, final int fieldIdx,
             Object val);
 
     /**
@@ -236,7 +236,7 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      *
      * @deprecated for use in JRecord, use {@link AbstractLine#getFieldValue(IFieldDetail)}.set(..)
      */
-    public abstract void setField(IFieldDetail field, Object value);
+    void setField(IFieldDetail field, Object value);
 
     /**
      * Set the field with a Text value - ie update the field
@@ -247,7 +247,7 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      * @param value new value
      *
      */
-    public abstract void setFieldText(final int recordIdx, final int fieldIdx,
+    void setFieldText(final int recordIdx, final int fieldIdx,
             String value);
 
     /**
@@ -256,33 +256,27 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      * @param fieldIdx field index
      * @param val hex value
      */
-    public abstract String setFieldHex(final int recordIdx, final int fieldIdx,
+     String setFieldHex(final int recordIdx, final int fieldIdx,
             String val);
 
-//     was RecordEditor related but The RecordEditor has its own AbstractLine
-//    
-//    /**
-//     * Test if Tree rebuild is required
-//     */
-//    public abstract boolean isRebuildTreeRequired();
 
     /**
      * Get all fields for a Record (by name)
      * @param recordName name of the Record
      * @return iterator over fields
      */
-    public abstract FieldIterator getFieldIterator(String recordName);
+    FieldIterator getFieldIterator(String recordName);
 
     /**
      * Get all fields for a Record (by record-index)
      * @param recordNumber index of the Record
      * @return iterator over fields
      */
-    public abstract FieldIterator getFieldIterator(int recordNumber);
+    FieldIterator getFieldIterator(int recordNumber);
 
     /**
      * Check if a field is defined in the record (or line).
-     * <br>For Csv / Xml files, the field must exist in the "record"
+     * <br>For Csv / XML files, the field must exist in the "record"
      * <br>For Fixed width files<ul>
      *   <li>The record must be long enough to hold the field
      *   <li>The field value must not be hex zero's. This creates a potential problem with
@@ -292,29 +286,29 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      * @param rec Record Index
      * @param fldNum Field Index
      * 
-     * @return wether the field exists in the line
+     * @return whether the field exists in the line
      */
-    public boolean isDefined(int rec, int fldNum);
+    boolean isDefined(int rec, int fldNum);
 
     
     /**
     * Check if a field is defined in the record (or line).
-     * <br>For Csv / Xml files, the field must exist in the "record"
+     * <br>For Csv / XML files, the field must exist in the "record"
      * <br>For Fixed width files<ul>
      *   <li>The record must be long enough to hold the field
      *   <li>The field value must not be hex zero's. This creates a potential problem with
      * Comp fields.
      * </ul>  
      * 
-     * @param fld field-defi9ni9tion
-     * @return wether the field exists in the line
+     * @param fld field-definition
+     * @return whether the field exists in the line
      */
-    public boolean isDefined(IFieldDetail fld);
+    boolean isDefined(IFieldDetail fld);
 
 	/**
 	 * This basically checks to see if 
 	 * @param fd field to check
-	 * @return wether this field is actual present
+	 * @return whether this field is actual present
 	 */
 
 	boolean isFieldInLine(IFieldDetail fd);
@@ -325,7 +319,7 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
 	 * be some errors.
 	 * 
 	 * @param fd Field to check
-	 * @return wether the field is valid or not
+	 * @return whether the field is valid or not
 	 */
 	boolean isValid(IFieldDetail fd);
 }

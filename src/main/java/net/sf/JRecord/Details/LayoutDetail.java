@@ -105,16 +105,6 @@ import net.sf.JRecord.detailsBasic.IItemDetails;
  *          CopybookLoader loader = new RecordEditorXmlLoader();
  *          LayoutDetail layout = loader.loadCopyBook(copybookName, 0, 0, "", 0, 0, null).asLayoutDetail();
  *
- * @param pLayoutName Record Layout Name
- * @param pRecords All the sub records
- * @param pDescription Records Description
- * @param pLayoutType Record Type
- * @param pRecordSep Record Separator
- * @param pEolIndicator End of line indicator
- * @param pFontName Canonical Name
- * @param pRecordDecider used to decide which layout to use
- * @param pFileStructure file structure
- *
  *
  * @author Bruce Martin
  * @version 0.55
@@ -123,8 +113,8 @@ import net.sf.JRecord.detailsBasic.IItemDetails;
 public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	
 
-	private String layoutName;
-	private String description;
+	private final String layoutName;
+	private final String description;
 	private byte[] recordSep;
 	private final int layoutType;
 	private RecordDetail[] records;
@@ -139,7 +129,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	private HashSet<String> duplicateFieldNames = null;
 	
 	private CsvCharDetails delimiter;
-	private int fileStructure;
+	private final int fileStructure;
 
 	private int recordCount;
 	
@@ -217,7 +207,6 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 
         int i, j;
         boolean first = true;
-        //int lastSize = -1;
 
 
 	    this.layoutName    = pLayoutName;
@@ -226,14 +215,12 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 		this.layoutType    = pLayoutType;
 		this.recordSep     = pRecordSep;
 		this.fontName      = pFontName;
-		//this.decider       = pRecordDecider;
 		this.fileStructure = CommonBits.translateFileStructureToNotAskFont(pFileStructure);
 		this.recordCount   = pRecords.length;
 		this.cobolConversionOption = cobolConversionOption == null 
 				? CobolConversionOptions.STANDARD_OPTIONS
 				: cobolConversionOption;
-//		this.setDecider(pRecordDecider);
-		
+
 
 		if (fontName == null) {
 		    fontName = "";
@@ -264,7 +251,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 
 		if (Constants.DEFAULT_STRING.equals(pEolIndicator)
 		||  pRecordSep == null) {
-		    eolString = System.getProperty("line.separator");
+		    eolString = System.lineSeparator();
 		    if (recordSep != null && recordSep.length < eolString.length()) {
 		    	eolString = Conversion.toString(recordSep, pFontName);
 		    }
@@ -288,7 +275,6 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 			case Constants.rtBinaryRecord:
 			    binary = true;
 			break;
-//			case Constants.rtBinaryRecord:
             case Constants.rtGroupOfRecords:
 			case Constants.rtRecordLayout:
 				binary = binaryField;
@@ -314,7 +300,6 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 				if ((record.getRecordType() == Constants.rtDelimitedAndQuote
 		          || record.getRecordType() == Constants.rtDelimited)
 		        &&  (!delimiter.equals(recordDelimiter))) {
-//		        	fixedLength = false;
 		            if (first) {
 		                delimiter = recordDelimiter;
 		                first = false;
@@ -331,7 +316,6 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	    }
 		
 
-	    //List<E>
 	    int maxSize = 0;
 	    int minSize = recordCount > 0 ? Integer.MAX_VALUE: 0;
 		for (i = 0; i < recordCount; i++) {
@@ -344,12 +328,11 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	    this.headerTrailerRecords = hasFilePosRecords;
 	    csvLayout = csv;
 	    
-//	    this.setDecider(pRecordDecider);
-		if (pRecordDecider != null && pRecordDecider instanceof IRecordDeciderX) {
+		if (pRecordDecider instanceof IRecordDeciderX) {
 			if (pRecordDecider instanceof SingleFieldDecider) {
 				try {
-					pRecordDecider = (RecordDecider) ((SingleFieldDecider) pRecordDecider).clone();
-				} catch (CloneNotSupportedException e) {
+					pRecordDecider = ((SingleFieldDecider) pRecordDecider).clone();
+				} catch (CloneNotSupportedException ignored) {
 				}
 			}
 			((IRecordDeciderX) pRecordDecider).setLayout(this);
@@ -567,13 +550,6 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
         return fontName;
     }
 
-    
-
-//    @Override
-//	public String getQuote() {
-//		return records[0].getQuote();
-//	}
-//
 
 	@Override
 	public CsvCharDetails getQuoteDetails() {
@@ -597,24 +573,10 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
      */
     public int getMaximumRecordLength() {
     	return maxPossibleLength;
-//        int i;
-//        int maxSize = 0;
-//		for (i = 0; i < recordCount; i++) {
-//			maxSize = java.lang.Math.max(maxSize, records[i].getLength());
-//		}
-//
-//		return maxSize;
     }
 
     public int getMinimumRecordLength() {
     	return minPossibleLength;
-//        int i;
-//        int maxSize = 0;
-//		for (i = 0; i < recordCount; i++) {
-//			maxSize = java.lang.Math.max(maxSize, records[i].getLength());
-//		}
-//
-//		return maxSize;
     }
 
     /**
@@ -642,18 +604,17 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 		} else {
 			ret = checkTextType();
 		}
-       //System.out.println(" ~~ getFileStructure " + fileStructure + " " + ret);
 
 		return ret;
     }
 
     private int checkTextType() {
-    	int ret = fileStructure;
+    	int ret;
     	if ( isBinCSV()) {
 			ret = IFileStructureConstants.IO_BIN_TEXT;
 		} else if (multiByteCharset) {
     		return IFileStructureConstants.IO_UNICODE_TEXT;
-		} else if (fontName != null && ! "".equals(fontName) && ! fontName.equals(Conversion.getDefaultSingleByteCharacterset())){
+		} else if (fontName != null && !fontName.isEmpty() && ! fontName.equals(Conversion.getDefaultSingleByteCharacterset())){
 		    ret = IFileStructureConstants.IO_TEXT_LINE;
 		} else {
 			ret = IFileStructureConstants.IO_BIN_TEXT;
@@ -693,17 +654,6 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
     }
 
 
-//    /**
-//	 * @param decider the decider to set
-//	 */
-//	protected final void setDecider(RecordDecider decider) {
-//		this.decider = decider;
-//		
-//		if (decider != null && decider instanceof IRecordDeciderX) {
-//			((IRecordDeciderX) decider).setLayout(this);
-//		}
-//	}
-
 
 	/**
      * Get a fields value
@@ -719,7 +669,6 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
     @Deprecated 
     public Object getField(final byte[] record, int type, IFieldDetail field) {
 
-    	//System.out.print(" ---> getField ~ 1");
         if (field.isFixedFormat()) {
             return TypeManager.getSystemTypeManager().getType(type) //field.getType())
 					.getField(record, field.getPos(), field);
@@ -733,7 +682,6 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
     @Deprecated 
     public final Object getCsvField(final byte[] record, int type, IFieldDetail field) {
         if (isBinCSV()) {
-        	//System.out.print(" 3 ");
         	ICsvByteLineParser byteLineParser = CsvParserManagerByte.getInstance().get(field.getRecord().getRecordStyle());
         	String value = byteLineParser.getField(field.getPos() - 1, record, 
         			new CsvDefinition(delimiter, field.getQuoteDefinition()));
@@ -773,16 +721,11 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 
             fldDef.setPosLen(1, rec.length);
 
-//            System.out.println(" ~ " + TypeManager.getSystemTypeManager().getType(type)
-//					.getField(Conversion.getBytes(value, font),
-//					          1,
-//					          fldDef));
             return TypeManager.getSystemTypeManager().getType(type)
 					.getField(rec,
 					          1,
 					          fldDef);
         }
-        //System.out.println();
 
         return "";
     }
@@ -876,7 +819,6 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 //            record = Conversion.getBytes(newLine, font);
 //        }
         
-        //System.out.println(" ---> setField ~ Done");
         return record;
     }
 
@@ -962,8 +904,6 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	       			if (records[i].getNumberOfFieldsAdded() > 0) {
 	       				for (j = 1; j <=  records[i].getFieldCount(); j++) {
 	       	   			    fld = records[i].getField(records[i].getFieldCount() - j);
-	//       	   			    System.out.println("Adding ... " + (records[i].getFieldCount() - j)
-	//       	   			    		+ " " + fld.getName());
 	        				fieldNameMap.put(fld.getName().toUpperCase(), fld);
 	        				recordFieldNameMap.put(
 	        						records[i].getRecordName() + "." + fld.getName().toUpperCase(),
@@ -991,7 +931,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 
 	/**
 	 * get the field delimiter
-	 * @return the field delimeter
+	 * @return the field delimiter
 	 *
 	 * @deprecated use getDelimiterDetails().asBytes()
 	 */
@@ -1007,9 +947,9 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
     public void setDelimiter(String delimiter) {
     	CsvCharDetails delim = CsvCharDetails.newDelimDefinition(delimiter, fontName);
     	if (this.records != null) {
-    		for (int i=0; i < records.length; i++) {
-    			records[i].setDelimiter(delim);
-    		}
+            for (RecordDetail record : records) {
+                record.setDelimiter(delim);
+            }
     	}
 		this.delimiter = delim;
 	}
@@ -1018,9 +958,9 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	/**
      /**
      * This is a function used by the RecordEditor to get a field using
-     * recalculated columns. Basically for XML copybooks,
+     * recalculated columns. Basically, for XML copybooks,
      * the End and FollowingText columns
-     * are moved from from 2 and 3 to  the end of the record.
+     * are moved from 2 and 3 to the end of the record.
      * Function probably does not belong here but as good as any spot.
      *
      * @param layoutIdx  record index
@@ -1035,8 +975,8 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 
     /**
      * This is a function used by the RecordEditor to recalculate
-     * columns. Basically for XML copybooks, the End and FollowingText
-     * columns are moved from from 2 and 3 to  the end of the record.
+     * columns. Basically, for XML copybooks, the End and FollowingText
+     * columns are moved from 2 and 3 to the end of the record.
      * Function probably does not belong here but as good as any spot.
      *
      * @param recordIndex record index
@@ -1046,9 +986,6 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
     public int getAdjFieldNumber(int recordIndex, int inColumn) {
 
 	    int ret = inColumn;
-
-	    //System.out.println("~~ " + inColumn + " " + ret + " "
-	    //        + layout.getRecord(layoutIndex).getRecordName() + " " + layout.getRecord(layoutIndex).getFieldCount());
 
 	    if (ret > 0 && getFileStructure() == IFileStructureConstants.IO_XML_BUILD_LAYOUT) {
 	        int len = getRecord(recordIndex).getFieldCount();
@@ -1084,7 +1021,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
      */
     public Map<String, IFieldDetail> getFieldNameMap() {
     	buildFieldNameMap();
-		return new HashMap<String, IFieldDetail>(fieldNameMap);
+		return new HashMap<>(fieldNameMap);
 	}
 
     /**
@@ -1093,7 +1030,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
      */
 	public Map<String, IFieldDetail> getRecordFieldNameMap() {
 		buildFieldNameMap();
-		return new HashMap<String, IFieldDetail>(recordFieldNameMap);
+		return new HashMap<>(recordFieldNameMap);
 	}
 
 	/**
@@ -1120,8 +1057,8 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 		if (groupMap == null) {
 			synchronized (this) {
 				if (groupMap == null) {
-					groupMap = new HashMap<String, List<IItemDetails>>();
-					groupFieldMap = new HashMap<String, List<IItemDetails>>();
+					groupMap = new HashMap<>();
+					groupFieldMap = new HashMap<>();
 					
 					for (int i = 0; i < recordCount; i++) {
 						records[i].updateNameCobolItemMap(groupMap, groupFieldMap);
@@ -1153,8 +1090,8 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 
 
 	/**
-     * Wether this is an XML Layout
-     * @return is it an XML layout
+     * Whether this is an XML Layout
+     * @return is it an XML layout?
      */
     public final boolean isXml() {
         return fileStructure == IFileStructureConstants.IO_XML_USE_LAYOUT
@@ -1162,16 +1099,16 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
     }
 
     /**
-     * Wether it is ok to add Attributes to this layout
-     * @return Wether it is ok to add Attributes to this layout
+     * Whether it is ok to add Attributes to this layout
+     * @return Whether it is ok to add Attributes to this layout
      */
     public final boolean isOkToAddAttributes() {
     	return fileStructure == IFileStructureConstants.IO_XML_BUILD_LAYOUT;
     }
 
     /**
-     * determine wether the layout is built or not
-     * @return determine wether the layout is built or not
+     * determine whether the layout is built or not
+     * @return determine whether the layout is built or not
      */
     public final boolean isBuildLayout() {
     	return fileStructure == IFileStructureConstants.IO_XML_BUILD_LAYOUT
@@ -1182,7 +1119,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 	/**
 	 * check if a Tree Structure has been defined for the layout
 	 * i.e. is there a hierarchy between the various layouts
-	 * @return wether there is a Tree Structure defined
+	 * @return whether there is a Tree Structure defined
 	 */
 	public final boolean hasTreeStructure() {
 		return treeStructure;
@@ -1224,9 +1161,9 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 			return null;
 		}
 
-		List<IFieldDetail> fldsFound = new ArrayList<IFieldDetail>();
+		List<IFieldDetail> fldsFound = new ArrayList<>();
 		int idx = getRecordIndex(fieldNames[0]);
-		if (idx >= 0 && fieldNames.length > 0) {
+		if (idx >= 0) {
 			return records[idx].getGroupFieldX(1, fieldNames);
 		} else {
 			String fldName = fieldNames[fieldNames.length-1];
@@ -1254,17 +1191,7 @@ public class LayoutDetail implements IBasicFileSchema, ILayoutDetails4gen {
 		}
 		throw new RecordException("No Field Found: " + b);
 	}
-//	
-//	private IFieldDetail checkFld(IFieldDetail fld, IFieldDetail newFld, String fldName) {
-//		if ( fld == null) {
-//			return newFld;
-//		} else if (newFld == null) {
-//			return fld;
-//		} else {
-//			throw new RuntimeException("Found multiple fields named " + fldName + "; there should be only one");
-//		}
-//
-//	}
+
 
 	/**
 	 * @return the cobolConversionOption
