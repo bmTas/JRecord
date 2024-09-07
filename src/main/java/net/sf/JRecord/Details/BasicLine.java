@@ -28,11 +28,13 @@
 
 package net.sf.JRecord.Details;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.detailsSelection.RecordSelection;
 
+@Slf4j
 public abstract class BasicLine extends BaseLine {
 
 	protected static final byte[] NULL_RECORD = new byte[0];
@@ -99,11 +101,8 @@ public abstract class BasicLine extends BaseLine {
 				int defaultIdx = Constants.NULL_INTEGER;
 				int i = 0;
 				int defCount = -1;
-				//RecordDetail rec;
 				RecordSelection sel;
 	
-	
-		    	//System.out.println();
 				while ((i < size) && (preferredLayoutAlt == Constants.NULL_INTEGER)) {
 					sel = layout.getRecord(i).getRecordSelection();
 					switch (sel.isSelected(this)) {
@@ -167,7 +166,7 @@ public abstract class BasicLine extends BaseLine {
 			return getField(layout.getField(recordIdx, fieldIdx));
 
 		} catch (final Exception ex) {
-			ex.printStackTrace();
+            log.error("Error retrieving field value for field index: {} ", fieldIdx, ex);
 			return "";
 		}
 	}
@@ -200,7 +199,7 @@ public abstract class BasicLine extends BaseLine {
 	/**
 	 * Set a field via its name
 	 *
-	 * @param fieldName fieldname to be updated
+	 * @param fieldName fieldName to be updated
 	 * @param value value to be applied to the field
 	 *
 	 */
@@ -225,7 +224,7 @@ public abstract class BasicLine extends BaseLine {
     }
     
     /**
-     * Set the fields type (overriding the type on the Field)
+     * Set the field type (overriding the type on the Field)
      * @param type type-identifier to use
      * @param field Field-definition
      * @param value new field value
@@ -245,13 +244,11 @@ public abstract class BasicLine extends BaseLine {
 
 	    IFieldDetail field = layout.getField(recordIdx, fieldIdx);
 
-	    //adjustLengthIfNecessary(field, recordIdx);
-
 	   	setField(field, val);
 	}
 	
 	/**
-	 * Check for Occurs depending size field update
+	 * Check for Occurs depending on size field update
 	 * 
 	 * @param field field being updated
 	 */
@@ -279,10 +276,10 @@ public abstract class BasicLine extends BaseLine {
     }
     
 	/**
-	 * Check wether a field is defined in the record
+	 * Check whether a field is defined in the record or not
 	 * @param recIdx record Index
 	 * @param fldIdx field Index
-	 * @return wether the field is defined
+	 * @return whether the field is defined or not
 	 */
 	public final boolean isDefined(int recIdx, int fldIdx) {
 		return isDefined(layout.getRecord(recIdx).getField(fldIdx));

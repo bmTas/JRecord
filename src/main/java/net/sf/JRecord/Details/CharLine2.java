@@ -40,9 +40,10 @@ import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.Types.BaseType;
 import net.sf.JRecord.Types.TypeManager;
 
-public class CharLine2 extends BasicLine {
 
-	private static LineProvider defaultProvider = new CharLineProvider();
+public class CharLine2 extends BasicLine implements Cloneable {
+
+	private static final LineProvider defaultProvider = new CharLineProvider();
 
 	private char[] data;
 	private int dataLength;
@@ -56,16 +57,11 @@ public class CharLine2 extends BasicLine {
 
 	@Override
 	public byte[] getData(int start, int len) {
-		//String tmpData = data;
 	    int tempLen = Math.min(len, data.length - start + 1);
 
 	    if ((dataLength < start) || (tempLen < 1) || (start < 1)) {
 	        return NULL_RECORD;
 	    }
-	    //System.out.println();
-	    //System.out.println("getData --> " + " " + start + ", " + len + ", " + tempLen + " ~ " + tmpData.length()
-	    // 		+ " " + tmpData);
-	   
 	    
 		return Conversion.getBytes(
 				subString(
@@ -127,10 +123,10 @@ public class CharLine2 extends BasicLine {
 	private String getFieldText(IFieldDetail fldDef) {
 
 		String s = getFieldRawText(fldDef);
-		if (s.length() == 0) { return s; }
+		if (s.isEmpty()) { return s; }
 		
 		int len = s.length() - 1;
-		if (s.length() > 0 && s.charAt(len) == ' ') {
+		if (s.charAt(len) == ' ') {
 			while (len > 0 && s.charAt(len) == ' ') {
 				len -= 1;
 			}
@@ -165,7 +161,7 @@ public class CharLine2 extends BasicLine {
 
 
 	/**
-	 * Get the Preferred Record Layou Index for this record
+	 * Get the Preferred Record Layout Index for this record
 	 *
 	 * @return Index of the Record Layout based on the Values
 	 */
@@ -204,7 +200,7 @@ public class CharLine2 extends BasicLine {
 
 	@Override
 	public void setData(String newVal) {
-		if (newVal == null || newVal.length() == 0) {
+		if (newVal == null || newVal.isEmpty()) {
 			int recLength = 10;
 			if (layout != null) {
 				if (layout.isCsvLayout()) {
@@ -284,18 +280,13 @@ public class CharLine2 extends BasicLine {
 	private void updateData(int pos, int length, String value) {
 		int i;
 		int start = pos -1;
-		int len = Math.min(value.length(), length);
-		//StringBuilder dataBld = new StringBuilder(data);
-		//int en = start + Math.max(len, length) - data.length;
+		int len = Math.min(value.length(), length);;
 		
 		if (data.length < pos + length) {
-			//int newLength = Math.max(pos + length, layout.getMinimumRecordLength());
 			char[] tmp = new char[pos + length];
 			System.arraycopy(data, 0, tmp, 0, data.length);
 			data = tmp;
 		}
-		//data.count = Math.max(data.count, pos + length);
-
 
 		for (i = 0; i < len; i++) {
 			data[start + i] =  value.charAt(i);
@@ -311,8 +302,11 @@ public class CharLine2 extends BasicLine {
     /**
      * @see java.lang.Object#clone()
      */
-    public Object clone() {
-    	return lineProvider.getLine(layout, subString(0, dataLength));
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        CharLine2 ret = (CharLine2) super.clone();
+        ret.data = data.clone();
+    	return lineProvider.getLine(ret.layout, subString(0, dataLength));
     }
 
     

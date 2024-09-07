@@ -54,7 +54,7 @@ public interface LineProvider {
      *
      * @return new line
      */
-    public abstract AbstractLine getLine(LayoutDetail recordDescription);
+    AbstractLine getLine(LayoutDetail recordDescription);
 
 
     /**
@@ -65,7 +65,7 @@ public interface LineProvider {
      *
      * @return line
      */
-    public abstract AbstractLine getLine(LayoutDetail recordDescription, String linesText);
+    AbstractLine getLine(LayoutDetail recordDescription, String linesText);
 
     /**
      * Build a Line
@@ -75,5 +75,5 @@ public interface LineProvider {
      *
      * @return line
      */
-    public abstract AbstractLine getLine(LayoutDetail recordDescription, byte[] lineBytes);
+    AbstractLine getLine(LayoutDetail recordDescription, byte[] lineBytes);
 }
