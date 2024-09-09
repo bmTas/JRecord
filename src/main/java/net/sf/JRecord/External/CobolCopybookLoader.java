@@ -45,45 +45,43 @@ import net.sf.cb2xml.def.Cb2xmlConstants;
 /**
  * @author Bruce Martin
  */
-public class CobolCopybookLoader extends BaseCobolItemLoader<ExternalRecord> 
-implements ICopybookLoaderCobol  {
+public class CobolCopybookLoader extends BaseCobolItemLoader<ExternalRecord>
+        implements ICopybookLoaderCobol {
 
-	public CobolCopybookLoader() {
-		super(true, new ExternalRecordBuilder(), new CobolCopybookReader());
-	}
-	
-	/**
+    public CobolCopybookLoader() {
+        super(true, new ExternalRecordBuilder(), new CobolCopybookReader());
+    }
+
+    /**
      * Insert an XML Dom Copybook into the Copybook DB
      *
-     * @param copyBookName Copy Book file Name
+     * @param copyBookName  Copy Book file Name
      * @param splitCopybook whether to split a copy book on a redefine / 01
-     * @param dbIdx Database Index
-     * @param font font name to use
-     * @param binaryFormat binary format to use
-     * @param systemId System Identifier
-     * @param log log where any messages should be written
-     *
+     * @param dbIdx         Database Index
+     * @param font          font name to use
+     * @param binaryFormat  binary format to use
+     * @param systemId      System Identifier
+     * @param log           log where any messages should be written
      * @return return the record that has been read in
      */
     public final ExternalRecord loadCopyBook(
-    								InputStream inputStream, //Document copyBookXml,
-    		                             String copyBookName,
-            						  		int splitCopybook,
-            						  		int dbIdx,
-                  						  final String font,
-                						  final int binaryFormat,
-                						  final int systemId,
-                						  final AbsSSLogger log)
-    				{
-    	try {
-			return loadCopyBook(inputStream, copyBookName, splitCopybook, dbIdx, font, CommonBits.getDefaultCobolTextFormat(), binaryFormat, systemId, log);
-		} catch (IOException e) {
-			throw new RecordException("IO Exception: " + e, e);
+            InputStream inputStream, //Document copyBookXml,
+            String copyBookName,
+            int splitCopybook,
+            int dbIdx,
+            final String font,
+            final int binaryFormat,
+            final int systemId,
+            final AbsSSLogger log) {
+        try {
+            return loadCopyBook(inputStream, copyBookName, splitCopybook, dbIdx, font, CommonBits.getDefaultCobolTextFormat(), binaryFormat, systemId, log);
+        } catch (IOException e) {
+            throw new RecordException("IO Exception: " + e, e);
 
-		}
+        }
     }
 
-   /**
+    /**
      * Whether cb2xml is available (needed for converting a Cobol Copybook
      * to an XML Dom representation
      *
@@ -97,26 +95,26 @@ implements ICopybookLoaderCobol  {
     }
 
     public ExternalRecord loadCopyBook(
-    		ICobolCopybookTextSource copybookReader,
+            ICobolCopybookTextSource copybookReader,
             final int splitCopybookOption, final int dbIdx, final String font,
             final int copybookFormat,
             final int cobolDialect,
             final int systemId,
             final AbsSSLogger log) {
-    	
-    	Copybook copybook = net.sf.JRecord.External.Def.Cb2Xml.getCopybook(
-    			copybookReader, cobolDialect, false, Cb2xmlConstants.FREE_FORMAT, getStackSize());
-		return loadCopybook(copybook, Conversion.getCopyBookId(copybookReader.getCopybookName()), splitCopybookOption, dbIdx, font, cobolDialect, systemId);
+
+        Copybook copybook = net.sf.JRecord.External.Def.Cb2Xml.getCopybook(
+                copybookReader, cobolDialect, false, Cb2xmlConstants.FREE_FORMAT, getStackSize());
+        return loadCopybook(copybook, Conversion.getCopyBookId(copybookReader.getCopybookName()), splitCopybookOption, dbIdx, font, cobolDialect, systemId);
 
     }
-    
 
-	@Override
-	public CobolCopybookLoader doClone() {
-		try {
-			return (CobolCopybookLoader) clone();
-		} catch (CloneNotSupportedException e) {
-			throw new RuntimeException(e);
-		}
-	}
+
+    @Override
+    public CobolCopybookLoader doClone() {
+        try {
+            return (CobolCopybookLoader) clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
