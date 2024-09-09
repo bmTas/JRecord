@@ -52,24 +52,17 @@ public final class ToExternalRecord {
 	 * @param system
 	 * @return layout in ExternalRecord format
 	 */
-	public final ExternalRecord getExternalRecord(LayoutDetail layout, String copybookName, int system) {
-		//int rt = Constants.rtGroupOfRecords;
-		//int type = recordDefinition.getLayoutType();
-
-//		System.out.println();
-//		System.out.println("layout type >> " + layout.getFileStructure());
+	public ExternalRecord getExternalRecord(LayoutDetail layout, String copybookName, int system) {
 
 		String fldSep = layout.getDelimiterDetails().jrDefinition();
 		String quote = "";
 		if (layout.getRecordCount() > 0) {
-			//AbstractRecordDetail r = layout.getRecord(0);
-			//fldSep = r.getDelimiter();
 			quote = layout.getRecord(0).getQuoteDefinition().jrDefinition();
 		}
 		ExternalRecord rec = new ExternalRecord(
 				-1, copybookName, layout.getDescription(),
 				Constants.rtGroupOfRecords, system, "Y", copybookName,
-				getSeperator(fldSep), quote, 0, "default",
+				getSeparator(fldSep), quote, 0, "default",
 				layout.getRecordSep(), layout.getFontName(),
 				0, fixIOType(layout.getFileStructure())
 		);
@@ -103,7 +96,7 @@ public final class ToExternalRecord {
 
 		rec = new ExternalRecord(
 				id, name, "", record.getRecordType(),
-				system, "N", copybookName + "_" + name, getSeperator(record.getDelimiterDetails().jrDefinition()),
+				system, "N", copybookName + "_" + name, getSeparator(record.getDelimiterDetails().jrDefinition()),
 				record.getQuoteDefinition().jrDefinition(), 0, "default", layout.getRecordSep(), record.getFontName(),
 				record.getRecordStyle(), fixIOType(layout.getFileStructure()), embeddedCr
 		);
@@ -118,27 +111,11 @@ public final class ToExternalRecord {
 							"", "", i
 			);
 
-//			if (dtl.getDefaultValue() != null
-//			&& ! "".equals(dtl.getDefaultValue().toString())) {
-//				field.setDefault(dtl.getDefaultValue().toString());
-//			}
 			rec.addRecordField(field);
 		}
 		return rec;
 	}
 
-//	/**
-//	 * Correct the length for XML / CSV files
-//	 * @param len length
-//	 * @return corrected length
-//	 */
-//	private int fixLength(int len) {
-//		int ret = len;
-//		if (len < 0) {
-//			ret = 0;
-//		}
-//		return ret;
-//	}
 
 	private int fixIOType(int ioType) {
 		int ret = ioType;
@@ -149,11 +126,9 @@ public final class ToExternalRecord {
 	}
 
 
-	private static String getSeperator(String sep) {
+	private static String getSeparator(String sep) {
 		String s = sep;
 		if ("\t".equals(s)) {
-			s = "<tab>";
-		} else if ("\t".equals(s)) {
 			s = "<tab>";
 		}
 
@@ -164,7 +139,7 @@ public final class ToExternalRecord {
 	 * Get an instance of ToExternalRecord
 	 * @return an instance of ToExternalRecord
 	 */
-	public final static ToExternalRecord getInstance() {
+	public static ToExternalRecord getInstance() {
 		if (instance == null) {
 			instance = new ToExternalRecord();
 		}

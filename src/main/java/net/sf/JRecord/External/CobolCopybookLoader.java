@@ -1,6 +1,31 @@
-/**
- * 
- */
+/*  -------------------------------------------------------------------------
+ *
+ *                Project: JRecord
+ *
+ *    Sub-Project purpose: Provide support for reading Cobol-Data files
+ *                        using a Cobol Copybook in Java.
+ *                         Support for reading Fixed Width / Binary / Csv files
+ *                        using a Xml schema.
+ *                         General Fixed Width / Csv file processing in Java.
+ *
+ *                 Author: Bruce Martin
+ *
+ *                License: LGPL 2.1 or latter
+ *
+ *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
+ *
+ *    This library is free software; you can redistribute it and/or
+ *    modify it under the terms of the GNU Lesser General Public
+ *    License as published by the Free Software Foundation; either
+ *    version 2.1 of the License, or (at your option) any later version.
+ *
+ *    This library is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ * ------------------------------------------------------------------------ */
+
 package net.sf.JRecord.External;
 
 import java.io.IOException;
@@ -26,10 +51,6 @@ implements ICopybookLoaderCobol  {
 	private static boolean available = true;
     private static boolean toCheck = true;
 
-	/**
-	 * @param useJRecordNaming
-	 * @param recBuilder
-	 */
 	public CobolCopybookLoader() {
 		super(true, new ExternalRecordBuilder(), new CobolCopybookReader());
 	}
@@ -38,7 +59,7 @@ implements ICopybookLoaderCobol  {
      * Insert a XML Dom Copybook into the Copybook DB
      *
      * @param copyBookName Copy Book file Name
-     * @param splitCopybook wether to split a copy book on a redefine / 01
+     * @param splitCopybook whether to split a copy book on a redefine / 01
      * @param dbIdx Database Index
      * @param font font name to use
      * @param binaryFormat binary format to use
@@ -66,21 +87,21 @@ implements ICopybookLoaderCobol  {
     }
 
    /**
-     * wether cb2xml is available (needed for converting a Cobol Copybook
-     * to a XML Dom representation
+     * whether cb2xml is available (needed for converting a Cobol Copybook
+     * to an XML Dom representation
      *
-     * @return wether cb2xml is available on the class path
+     * @return whether cb2xml is available on the class path
      */
-    public static final boolean isAvailable() {
+    public static boolean isAvailable() {
 
         if (toCheck) {
             try {
                 /*
-                 * try to load CobolPreprocessor to see if the cb2xml jar is present
+                 * try to load CobolPreprocessor to see if the cb2xml jar is present,
                  * I use the CobolPreprocessor because it only uses IO classes.
-                 * This aviods loading unnessary classes before need be
+                 * This avoids loading unnecessary classes before to be necessary.
                  */
-                available = ((new CobolCopybookLoader()).getClass().getClassLoader().getResource("net/sf/cb2xml/Cb2Xml.class") != null);
+                available = (CobolCopybookLoader.class.getClassLoader().getResource("net/sf/cb2xml/Cb2Xml.class") != null);
             } catch (Exception e) {
                 available = false;
             }
