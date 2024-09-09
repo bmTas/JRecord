@@ -16,28 +16,28 @@
 /*  -------------------------------------------------------------------------
  *
  *            Sub-Project: JRecord Common
- *    
- *    Sub-Project purpose: Common Low-Level Code shared between 
+ *
+ *    Sub-Project purpose: Common Low-Level Code shared between
  *                        the JRecord and Record Projects
- *    
+ *
  *                 Author: Bruce Martin
- *    
+ *
  *                License: LGPL 2.1 or latter
- *                
+ *
  *    Copyright (c) 2006, Bruce Martin / Jean-Francois Gagnon, All Rights Reserved.
- *   
+ *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
  *    License as published by the Free Software Foundation; either
  *    version 2.1 of the License, or (at your option) any later version.
- *   
+ *
  *    This library is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU Lesser General Public License for more details.
  *
  * ------------------------------------------------------------------------ */
-      
+
 package net.sf.JRecord.ByteIO;
 
 import java.io.UnsupportedEncodingException;
@@ -52,7 +52,6 @@ import net.sf.JRecord.Common.RecordException;
  *
  * @author Bruce Martin
  * @version 0.55
- *
  */
 public class ByteIOProvider {
 
@@ -60,13 +59,11 @@ public class ByteIOProvider {
     private static final int DEFAULT_RECORD_LENGTH = 80;
 
 
-
     /**
      * Gets a Record Reader Class that is appropriate for reading the
      * supplied file-structure
      *
      * @param fileStructure File Structure of the required reader
-     *
      * @return line reader
      * @deprecated for use inside JRecord/RecordEditor, use {@link ByteIOProvider#getByteReader(IBasicFileSchema)}
      */
@@ -74,19 +71,20 @@ public class ByteIOProvider {
         return getByteReader(fileStructure, DEFAULT_RECORD_LENGTH);
     }
 
-    
+
     /**
      * Get ByteReader for schema
+     *
      * @param schema File schema to get the reader for
      * @return requested byte reader
      */
     public AbstractByteReader getByteReader(IBasicFileSchema schema) {
-    	int fileStructure = schema.getFileStructure();
-		switch (fileStructure) {
-		case IFileStructureConstants.IO_TEXT_BYTE_ENTER_FONT:		
-		case IFileStructureConstants.IO_BIN_TEXT:		
-    		return new ByteTextReader(schema.getFontName());
-    	}
+        int fileStructure = schema.getFileStructure();
+        switch (fileStructure) {
+            case IFileStructureConstants.IO_TEXT_BYTE_ENTER_FONT:
+            case IFileStructureConstants.IO_BIN_TEXT:
+                return new ByteTextReader(schema.getFontName());
+        }
         return getByteReader(fileStructure, schema.getMaximumRecordLength());
     }
 
@@ -95,26 +93,34 @@ public class ByteIOProvider {
      * supplied file-structure
      *
      * @param fileStructure File Structure of the required reader
-     * @param length length (if a Fixed length Provider)
-     *
+     * @param length        length (if a Fixed length Provider)
      * @return line reader
      * @deprecated for use inside JRecord/RecordEditor, use {@link ByteIOProvider#getByteReader(IBasicFileSchema)}
      */
     public AbstractByteReader getByteReader(int fileStructure, int length) {
 
-       	switch(fileStructure) {
-       		case IFileStructureConstants.IO_FIXED_BYTE_ENTER_FONT:		
-       		case IFileStructureConstants.IO_FIXED_LENGTH:		return new FixedLengthByteReader(length);
-			case IFileStructureConstants.IO_VBS: 				return new VbsByteReader(false, true);
-			case IFileStructureConstants.IO_VB: 				return new VbByteReader(VbByteReader.MODE_NO_BLOCK_LENGTH, true);
-			case IFileStructureConstants.IO_VB_DUMP:			return new VbDumpByteReader();
-			case IFileStructureConstants.IO_VB_DUMP2:			return new VbByteReader(VbByteReader.MODE_BLOCK_LENGTH_2, true);
-			case IFileStructureConstants.IO_VB_FUJITSU:		return new FujitsuVbByteReader();
-			case IFileStructureConstants.IO_VB_GNU_COBOL:		return new VbByteReader(VbByteReader.MODE_NO_BLOCK_LENGTH, false);
-			case IFileStructureConstants.IO_TEXT_BYTE_ENTER_FONT:			
-			case IFileStructureConstants.IO_BIN_TEXT:			return new ByteTextReader();
-			case IFileStructureConstants.IO_MICROFOCUS:		return new MicroFocusByteReader();
-	    }
+        switch (fileStructure) {
+            case IFileStructureConstants.IO_FIXED_BYTE_ENTER_FONT:
+            case IFileStructureConstants.IO_FIXED_LENGTH:
+                return new FixedLengthByteReader(length);
+            case IFileStructureConstants.IO_VBS:
+                return new VbsByteReader(false, true);
+            case IFileStructureConstants.IO_VB:
+                return new VbByteReader(VbByteReader.MODE_NO_BLOCK_LENGTH, true);
+            case IFileStructureConstants.IO_VB_DUMP:
+                return new VbDumpByteReader();
+            case IFileStructureConstants.IO_VB_DUMP2:
+                return new VbByteReader(VbByteReader.MODE_BLOCK_LENGTH_2, true);
+            case IFileStructureConstants.IO_VB_FUJITSU:
+                return new FujitsuVbByteReader();
+            case IFileStructureConstants.IO_VB_GNU_COBOL:
+                return new VbByteReader(VbByteReader.MODE_NO_BLOCK_LENGTH, false);
+            case IFileStructureConstants.IO_TEXT_BYTE_ENTER_FONT:
+            case IFileStructureConstants.IO_BIN_TEXT:
+                return new ByteTextReader();
+            case IFileStructureConstants.IO_MICROFOCUS:
+                return new MicroFocusByteReader();
+        }
         return null;
     }
 
@@ -123,52 +129,56 @@ public class ByteIOProvider {
      * Gets a Record Reader Class
      *
      * @param fileStructure File Structure
-     *
      * @return record reader
      */
     public AbstractByteWriter getByteWriter(int fileStructure) {
-    	return getByteWriter(fileStructure, null);
+        return getByteWriter(fileStructure, null);
     }
 
     /**
      * Get the appropriate writer for a basic-schema
+     *
      * @param schema
      * @return requested a byte writer
      */
     public AbstractByteWriter getByteWriter(IBasicFileSchema schema) {
-    	int fileStructure = schema.getFileStructure();
+        int fileStructure = schema.getFileStructure();
         if (fileStructure == IFileStructureConstants.IO_FIXED_LENGTH) {
             return new FixedLengthByteWriter(schema.getMaximumRecordLength());
         }
-    	return getByteWriter(fileStructure, schema.getFontName());
+        return getByteWriter(fileStructure, schema.getFontName());
     }
 
     /**
      * Gets a Record Reader Class
      *
      * @param fileStructure File Structure
-     * @param characterSet character-set of the file
-     *
+     * @param characterSet  character-set of the file
      * @return record reader
      */
     @SuppressWarnings("deprecation")
-	public AbstractByteWriter getByteWriter(int fileStructure, String characterSet) {
+    public AbstractByteWriter getByteWriter(int fileStructure, String characterSet) {
 
-    	switch(fileStructure) {
-    		case IFileStructureConstants.IO_VBS:				throw new RecordException("Writing VBS files is not supported; use IO_VB");
-    		case IFileStructureConstants.IO_VB: 				return new VbByteWriter();
-    		case IFileStructureConstants.IO_VB_DUMP2:
-    		case IFileStructureConstants.IO_VB_DUMP:			return new VbDumpByteWriter();
-    		case IFileStructureConstants.IO_VB_FUJITSU:		return new FujitsuVbByteWriter();
-    		case IFileStructureConstants.IO_VB_GNU_COBOL:		return new VbByteWriter(false);
-			case IFileStructureConstants.IO_BIN_TEXT:
-				if (characterSet != null && !characterSet.isEmpty()) {
-					try {
-						return new ByteTextWriter("\n".getBytes(characterSet));
-					} catch (UnsupportedEncodingException ignored) {
-					}
-				}
-				return new ByteTextWriter();
+        switch (fileStructure) {
+            case IFileStructureConstants.IO_VBS:
+                throw new RecordException("Writing VBS files is not supported; use IO_VB");
+            case IFileStructureConstants.IO_VB:
+                return new VbByteWriter();
+            case IFileStructureConstants.IO_VB_DUMP2:
+            case IFileStructureConstants.IO_VB_DUMP:
+                return new VbDumpByteWriter();
+            case IFileStructureConstants.IO_VB_FUJITSU:
+                return new FujitsuVbByteWriter();
+            case IFileStructureConstants.IO_VB_GNU_COBOL:
+                return new VbByteWriter(false);
+            case IFileStructureConstants.IO_BIN_TEXT:
+                if (characterSet != null && !characterSet.isEmpty()) {
+                    try {
+                        return new ByteTextWriter("\n".getBytes(characterSet));
+                    } catch (UnsupportedEncodingException ignored) {
+                    }
+                }
+                return new ByteTextWriter();
         }
 
         return null;
@@ -177,6 +187,7 @@ public class ByteIOProvider {
 
     /**
      * Get an instance of LineIOProvider
+     *
      * @return a LineIOProvider
      */
     public static ByteIOProvider getInstance() {
@@ -189,6 +200,7 @@ public class ByteIOProvider {
 
     /**
      * Set the system lineIOprovider
+     *
      * @param newProvider new IO provider
      */
     public static void setInstance(ByteIOProvider newProvider) {
