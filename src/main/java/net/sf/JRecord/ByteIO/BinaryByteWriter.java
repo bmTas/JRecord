@@ -7,28 +7,28 @@
 /*  -------------------------------------------------------------------------
  *
  *            Sub-Project: JRecord Common
- *    
- *    Sub-Project purpose: Common Low-Level Code shared between 
+ *
+ *    Sub-Project purpose: Common Low-Level Code shared between
  *                        the JRecord and Record Projects
- *    
+ *
  *                 Author: Bruce Martin
- *    
+ *
  *                License: LGPL 2.1 or latter
- *                
+ *
  *    Copyright (c) 2016, Bruce Martin, All Rights Reserved.
- *   
+ *
  *    This library is free software; you can redistribute it and/or
  *    modify it under the terms of the GNU Lesser General Public
  *    License as published by the Free Software Foundation; either
  *    version 2.1 of the License, or (at your option) any later version.
- *   
+ *
  *    This library is distributed in the hope that it will be useful,
  *    but WITHOUT ANY WARRANTY; without even the implied warranty of
  *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *    GNU Lesser General Public License for more details.
  *
  * ------------------------------------------------------------------------ */
-      
+
 package net.sf.JRecord.ByteIO;
 
 import java.io.BufferedOutputStream;
@@ -38,10 +38,9 @@ import java.math.BigInteger;
 
 
 /**
- *  writes an Array of bytes as a line in a fixed line length file (i.e. all lines are exactly the same length).
+ * writes an Array of bytes as a line in a fixed line length file (i.e. all lines are exactly the same length).
  *
  * @author Bruce Martin
- *
  */
 public class BinaryByteWriter extends AbstractByteWriter {
     private OutputStream outStream = null;
@@ -63,23 +62,23 @@ public class BinaryByteWriter extends AbstractByteWriter {
     /**
      * create a binary line writer
      *
-     * @param includeRDW write RDW (record Descriptor Word) at the start
-     * of each record. The RDW consists of
-     * <ul Compact>
-     *   <li>2 byte length (big endian format)
-     *   <li>2 bytes (hex zeros)
-     * </ul>
+     * @param includeRDW     write RDW (record Descriptor Word) at the start
+     *                       of each record. The RDW consists of
+     *                       <ul Compact>
+     *                       <li>2 byte length (big endian format)
+     *                       <li>2 bytes (hex zeros)
+     *                       </ul>
      * @param addRdwToLength whether to add four bytes to RDW length
      */
     public BinaryByteWriter(final boolean includeRDW, boolean addRdwToLength, byte[] eolByte) {
         super();
         addLength = includeRDW;
         eol = eolByte;
-        rdw[2]    = 0;
-        rdw[3]    = 0;
+        rdw[2] = 0;
+        rdw[3] = 0;
 
-        if (! addRdwToLength) {
-        	rdwAdjust = 0;
+        if (!addRdwToLength) {
+            rdwAdjust = 0;
         }
     }
 
@@ -89,10 +88,10 @@ public class BinaryByteWriter extends AbstractByteWriter {
      */
     public void open(OutputStream outputStream) throws IOException {
 
-    	outStream = outputStream;
-    	if (! (outputStream instanceof BufferedOutputStream)) {
-     		outStream = new BufferedOutputStream(outputStream, 0x4000);
-    	}
+        outStream = outputStream;
+        if (!(outputStream instanceof BufferedOutputStream)) {
+            outStream = new BufferedOutputStream(outputStream, 0x4000);
+        }
     }
 
 
@@ -119,7 +118,7 @@ public class BinaryByteWriter extends AbstractByteWriter {
         outStream.write(line);
 
         if (eol != null) {
-        	outStream.write(eol);
+            outStream.write(eol);
         }
     }
 
