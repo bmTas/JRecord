@@ -39,7 +39,7 @@ import net.sf.JRecord.Common.Constants;
  */
 public class VbDetector {
 
-	public final int NOT_A_KNOWN_VB = Constants.NULL_INTEGER;
+	public static final int NOT_A_KNOWN_VB = Constants.NULL_INTEGER;
 	
 	
 }

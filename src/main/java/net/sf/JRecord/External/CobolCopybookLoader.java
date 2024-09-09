@@ -48,15 +48,12 @@ import net.sf.cb2xml.def.Cb2xmlConstants;
 public class CobolCopybookLoader extends BaseCobolItemLoader<ExternalRecord> 
 implements ICopybookLoaderCobol  {
 
-	private static boolean available = true;
-    private static boolean toCheck = true;
-
 	public CobolCopybookLoader() {
 		super(true, new ExternalRecordBuilder(), new CobolCopybookReader());
 	}
 	
 	/**
-     * Insert a XML Dom Copybook into the Copybook DB
+     * Insert an XML Dom Copybook into the Copybook DB
      *
      * @param copyBookName Copy Book file Name
      * @param splitCopybook whether to split a copy book on a redefine / 01
@@ -87,27 +84,16 @@ implements ICopybookLoaderCobol  {
     }
 
    /**
-     * whether cb2xml is available (needed for converting a Cobol Copybook
+     * Whether cb2xml is available (needed for converting a Cobol Copybook
      * to an XML Dom representation
      *
      * @return whether cb2xml is available on the class path
      */
     public static boolean isAvailable() {
-
-        if (toCheck) {
-            try {
-                /*
-                 * try to load CobolPreprocessor to see if the cb2xml jar is present,
-                 * I use the CobolPreprocessor because it only uses IO classes.
-                 * This avoids loading unnecessary classes before to be necessary.
-                 */
-                available = (CobolCopybookLoader.class.getClassLoader().getResource("net/sf/cb2xml/Cb2Xml.class") != null);
-            } catch (Exception e) {
-                available = false;
-            }
-            toCheck = false;
-        }
-        return available;
+        // Since cb2xml is not a part of the JRecord distribution because it's
+        // there is not need to check
+        // the loader is available every time.
+        return true;
     }
 
     public ExternalRecord loadCopyBook(

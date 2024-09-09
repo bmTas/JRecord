@@ -37,7 +37,7 @@ public interface IByteReader extends IByteRecordReader {
 	 *
 	 * @throws IOException any IOerror
 	 */
-	public abstract void open(String fileName) throws IOException;
+	void open(String fileName) throws IOException;
 
 	/**
 	 * Open file for input
@@ -46,9 +46,9 @@ public interface IByteReader extends IByteRecordReader {
 	 *
 	 * @throws IOException any IOerror
 	 */
-	public abstract void open(InputStream inputStream) throws IOException;
+	void open(InputStream inputStream) throws IOException;
 
-	public abstract boolean canWrite();
+	boolean canWrite();
 
 	/**
 	 * @param lineLength The lineLength to set.
@@ -57,8 +57,8 @@ public interface IByteReader extends IByteRecordReader {
 
 	/**
 	 * Get the number of bytes read from the file / stream
-	 * @return
+	 * @return number of bytes read
 	 */
-	public abstract long getBytesRead();
+	long getBytesRead();
 
 }

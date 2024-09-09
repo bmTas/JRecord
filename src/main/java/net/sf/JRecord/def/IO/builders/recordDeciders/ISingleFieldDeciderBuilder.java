@@ -3,11 +3,11 @@ package net.sf.JRecord.def.IO.builders.recordDeciders;
 public interface ISingleFieldDeciderBuilder {
 
 	/**
-	 * Wether tests should be case sensitive or not. Default is no
+	 * Whether tests should be case-sensitive or not. Default is no
 	 * 
-	 * @param caseSensistive tests are case sensitive
+	 * @param caseSensitive tests are case-sensitive
 	 * 
-	 * @return this Decider builder so more records can be defines
+	 * @return this Decider builder so more records can be defined
 	 */
 	ISingleFieldDeciderBuilder setCaseSensitive(boolean caseSensitive);
 	
@@ -17,7 +17,7 @@ public interface ISingleFieldDeciderBuilder {
 	 * @param recordTypeValue value top test against in the Data-Line 
 	 * @param recordName Name of the Corresponding Record.
 	 * 
-	 * @return this Decider builder so more records can be defines
+	 * @return this Decider builder so more records can be defined
 	 */
 	ISingleFieldDeciderBuilder addRecord(String recordTypeValue, String recordName);
 	

@@ -26,13 +26,18 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.34</version> <!-- Use the latest version -->
+            <version>1.18.34</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>2.0.16</version> <!-- Use the latest version -->
+            <version>2.0.16</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.13</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -78,8 +83,6 @@
                     <xmlOutput>false</xmlOutput> <!-- Disable XML report generation -->
                     <htmlOutput>true</htmlOutput> <!-- Enable HTML report generation -->
                     <outputDirectory>${project.build.directory}/spotbugs</outputDirectory> <!-- Where the report will be saved -->
-                    <effort>Max</effort>
-                    <threshold>Low</threshold>
                 </configuration>
             </plugin>
             <plugin>

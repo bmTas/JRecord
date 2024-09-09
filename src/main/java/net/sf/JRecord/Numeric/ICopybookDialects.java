@@ -27,42 +27,38 @@ package net.sf.JRecord.Numeric;
 
 public interface ICopybookDialects {
 
-	public static final int FMT_INTEL = 0;
-	public static final int FMT_MAINFRAME = 1;
-	public static final int FMT_FUJITSU = 2;
-	public static final int FMT_BIG_ENDIAN = 3;
-	public static final int FMT_GNU_COBOL = 4;
-	public static final int FMT_FS2000 = 5;
-	public static final int FMT_GNU_COBOL_MVS = 6;
-	public static final int FMT_GNU_COBOL_MF = 7;
-	public static final int FMT_GNU_COBOL_BE = 8;
-	public static final int FMT_FS2000_BE = 9;
-	public static final int FMT_GNU_COBOL_MVS_BE = 10;
-	public static final int FMT_OC_MICRO_FOCUS_BE = 11;
-	public static final int FMT_MICRO_FOCUS = 21;
-	public static final int FMT_MAINFRAME_COMMA_DECIMAL = 31;
-	public static final int FMT_FUJITSU_COMMA_DECIMAL = 32;
-//	public static final int FMT_MAINFRAME_SIGN_LEADING_ZONED = 25;
-	
+	int FMT_INTEL = 0;
+	int FMT_MAINFRAME = 1;
+	int FMT_FUJITSU = 2;
+	int FMT_BIG_ENDIAN = 3;
+	int FMT_GNU_COBOL = 4;
+	int FMT_FS2000 = 5;
+	int FMT_GNU_COBOL_MVS = 6;
+	int FMT_GNU_COBOL_MF = 7;
+	int FMT_GNU_COBOL_BE = 8;
+	int FMT_FS2000_BE = 9;
+	int FMT_GNU_COBOL_MVS_BE = 10;
+	int FMT_OC_MICRO_FOCUS_BE = 11;
+	int FMT_MICRO_FOCUS = 21;
+	int FMT_MAINFRAME_COMMA_DECIMAL = 31;
+	int FMT_FUJITSU_COMMA_DECIMAL = 32;
 
-	public static final int FMT_OPEN_COBOL = FMT_GNU_COBOL;
-	public static final int FMT_OPEN_COBOL_MVS = FMT_GNU_COBOL_MVS;
-	public static final int FMT_OC_MICRO_FOCUS = FMT_GNU_COBOL_MF;
-	public static final int FMT_OPEN_COBOL_BE = FMT_GNU_COBOL_BE;
-	public static final int FMT_OPEN_COBOL_MVS_BE = FMT_GNU_COBOL_MVS_BE;
 
-	public static final String FMT_INTEL_NAME = "Intel";
-	public static final String FMT_MAINFRAME_NAME = "Mainframe";
-	public static final String FMT_FUJITSU_NAME = "Fujitsu";
-	public static final String FMT_BIG_ENDIAN_NAME = "Big-Endian (Old)";
-	public static final String FMT_GNU_COBOL_NAME = "GNU Cobol Little Endian (Intel)";
-	public static final String FMT_FS2000_NAME = "GNU Cobol bs2000 Little Endian (Intel)";
-	public static final String FMT_GNU_COBOL_MVS_NAME = "GNU Cobol MVS Little Endian (Intel)";
-	public static final String FMT_GNU_COBOL_MF_NAME = "GNU Cobol Micro Focus (Intel)";
-	public static final String FMT_GNU_COBOL_BE_NAME = "GNU Cobol Big Endian";
-	public static final String FMT_FS2000_BE_NAME = "GNU Cobol bs2000 Big Endian";
-	public static final String FMT_GNU_COBOL_MVS_BE_NAME = "GNU Cobol MVS Big Endian";
-	public static final String FMT_OC_MICRO_FOCUS_BE_NAME = "GNU Cobol Micro Focus Big E";
-//	public static final String FMT_MICRO_FOCUS_NAME = "";
-	public static final String FMT_MAINFRAME_COMMA_DECIMAL_NAME = "Mainframe Decimal_Point=','";
-	public static final String FMT_FUJITSU_COMMA_DECIMAL_NAME = "Fujitsu Decimal_Point=','";}
+	int FMT_OPEN_COBOL = FMT_GNU_COBOL;
+	int FMT_OC_MICRO_FOCUS = FMT_GNU_COBOL_MF;
+	int FMT_OPEN_COBOL_MVS_BE = FMT_GNU_COBOL_MVS_BE;
+
+	String FMT_INTEL_NAME = "Intel";
+	String FMT_MAINFRAME_NAME = "Mainframe";
+	String FMT_FUJITSU_NAME = "Fujitsu";
+	String FMT_BIG_ENDIAN_NAME = "Big-Endian (Old)";
+	String FMT_GNU_COBOL_NAME = "GNU Cobol Little Endian (Intel)";
+	String FMT_FS2000_NAME = "GNU Cobol bs2000 Little Endian (Intel)";
+	String FMT_GNU_COBOL_MVS_NAME = "GNU Cobol MVS Little Endian (Intel)";
+	String FMT_GNU_COBOL_MF_NAME = "GNU Cobol Micro Focus (Intel)";
+	String FMT_GNU_COBOL_BE_NAME = "GNU Cobol Big Endian";
+	String FMT_FS2000_BE_NAME = "GNU Cobol bs2000 Big Endian";
+	String FMT_GNU_COBOL_MVS_BE_NAME = "GNU Cobol MVS Big Endian";
+	String FMT_OC_MICRO_FOCUS_BE_NAME = "GNU Cobol Micro Focus Big E";
+	String FMT_MAINFRAME_COMMA_DECIMAL_NAME = "Mainframe Decimal_Point=','";
+	String FMT_FUJITSU_COMMA_DECIMAL_NAME = "Fujitsu Decimal_Point=','";}

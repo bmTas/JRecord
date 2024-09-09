@@ -25,6 +25,8 @@
       
 package net.sf.JRecord.ByteIO;
 
+import lombok.Getter;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,11 +35,12 @@ import java.math.BigInteger;
 public class MicroFocusByteReader extends AbstractByteReader {
 
 	
-	private MicroFocusFileHeader headerRecord;
+	@Getter
+    private MicroFocusFileHeader headerRecord;
 	private BufferedInputStream instream;
 	private boolean eof = true;
 
-	private byte[] relativeAttr = new byte[2];
+	private final byte[] relativeAttr = new byte[2];
 	
 	private int lineNumber = 1;
 	byte[] len1;
@@ -48,15 +51,12 @@ public class MicroFocusByteReader extends AbstractByteReader {
 		
 		byte[] headerRec = new byte[128];
 		int ii = readBuffer(instream, headerRec);
-//		if ( ! (eof = (instream.read(headerRec) <= 0))) {
 		if ( ! (eof = (ii <= 0))) {
 			headerRecord = new MicroFocusFileHeader(headerRec);
 			if (headerRecord.getCompression() > 0 ) {
 				throw new IOException("Compression is not supported");
-//			} else if (headerRecord.isValidFile()) {
-//				throw new IOException("Microfocus File is corrupt (flag in header record)");
 			}
-			
+
 			if (headerRecord.getMaxLength() < MicroFocusFileHeader.MIN_4_BYTE_LENGTH) {
 				len1 = new byte[2];
 			} else {
@@ -80,7 +80,6 @@ public class MicroFocusByteReader extends AbstractByteReader {
 			tmp = len1[0];
 			attr = (tmp & 240) >> 4;
 			
-			//System.out.print("Initial: " + tmp + " Attr: " + attr);
 			len1[0] = (byte) (tmp & 15);
 			
 			
@@ -97,10 +96,6 @@ public class MicroFocusByteReader extends AbstractByteReader {
 				throw new IOException("Length of Record (" + bytesRead + ") < Expected (" + len + ") record number: " + lineNumber);
 			}
 			byte[] buf;
-//			System.out.println();
-//			System.out.println("Atrr " + attr + " " + readnext);
-//			System.out.println("Hex: " + Conversion.getDecimal(rec, 0, rec.length));
-//			System.out.println("Str: " + new String(rec));
 			switch (headerRecord.getFileFormat()) {
 			case  MicroFocusFileHeader.FORMAT_INDEXED:
 			case  MicroFocusFileHeader.FORMAT_SEQUENTIAL:
@@ -108,11 +103,8 @@ public class MicroFocusByteReader extends AbstractByteReader {
 				if (remainder != 0) {
 					buf = new byte[4 - remainder];
 					readBuffer(instream, buf);
-//					System.out.println("Remainder: " + Conversion.getDecimal(buf, 0, buf.length) + " " + new String(buf));
 				}
 				break;
-//			case  MicroFocusFileHeader.FORMAT_INDEXED:
-//				break;
 			case  MicroFocusFileHeader.FORMAT_RELATIVE:
 				if (len < headerRecord.getMaxLength()) {
 					readBuffer(instream, new byte[headerRecord.getMaxLength() - len]);
@@ -134,11 +126,7 @@ public class MicroFocusByteReader extends AbstractByteReader {
 	}
 
 
-	public MicroFocusFileHeader getHeaderRecord() {
-		return headerRecord;
-	}
-
-	@Override
+    @Override
 	public boolean canWrite() {
 
 		if (headerRecord == null) {

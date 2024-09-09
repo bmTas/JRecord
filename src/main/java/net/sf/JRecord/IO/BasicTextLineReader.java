@@ -55,8 +55,6 @@ public abstract class BasicTextLineReader extends AbstractLineReader {
 		reader = r;
 		inStream = inputStream;
 		setLayout(layout);
-
-		//reader.open(inputStream, font);
 	}
 
 	/**

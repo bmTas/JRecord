@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import lombok.Setter;
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
@@ -38,14 +39,12 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
     private final boolean useJRecordNaming ;
     private final IExernalRecordBuilder<XRecord> recBuilder;
     private final IReadCopybook readCopybook;
-    
-    
+
+    @Setter
     private int stackSize = Cb2xmlJrConsts.CALCULATE_THREAD_SIZE;
 
-    
-    private boolean keepFiller,
-    				dropCopybookFromFieldNames = CommonBits.isDropCopybookFromFieldNames(), 
-    				saveCb2xml;
+    @Setter
+    private boolean keepFiller, dropCopybookFromFieldNames = CommonBits.isDropCopybookFromFieldNames(), saveCb2xml;
     
     
 	public BaseCobolItemLoader(boolean useJRecordNaming, 
@@ -62,11 +61,7 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 		this.keepFiller = keepFiller;
 	}
 
-	public void setDropCopybookFromFieldNames(boolean dropCopybookFromFieldNames) {
-		this.dropCopybookFromFieldNames = dropCopybookFromFieldNames;
-	}
-
-	public void setSaveCb2xmlDocument(boolean saveCb2xml) {
+    public void setSaveCb2xmlDocument(boolean saveCb2xml) {
 		this.saveCb2xml = saveCb2xml;
 	}
 
@@ -79,14 +74,7 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 	}
 
 
-	/**
-	 * @param stackSize the stackSize to set
-	 */
-	public void setStackSize(int stackSize) {
-		this.stackSize = stackSize;
-	}
-
-	/* (non-Javadoc)
+    /* (non-Javadoc)
 	 * @see net.sf.JRecord.External.CopybookLoader#loadCopyBook(java.lang.String, int, int, java.lang.String, int, int, net.sf.JRecord.Log.AbsSSLogger)
 	 */
 	public final XRecord loadCopyBook(String copyBookFile,
@@ -115,7 +103,7 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
      * Convert a XML Dom Copybook into the XRecord
      *
      * @param copyBookFile Copy Book file Name
-     * @param splitCopybookOption wether to split a copy book on a redefine
+     * @param splitCopybookOption whether to split a copy book on a redefine
      * @param dbIdx Database Index
      * @param font font name to use
      * @param binFormat binary format to use
@@ -149,18 +137,6 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 			throws IOException {
 		
 		Copybook copybook = readCopybook.getCopybook(reader, copyBookName, binaryFormat, false, copybookFormat, stackSize);
-
-//		try {
-//			copybook = net.sf.JRecord.External.Def.Cb2Xml
-//							.getCopybook(reader, copyBookName, binaryFormat, false, copybookFormat, stackSize);
-//		} catch (ParserException e) {
-//			throw new IOException(e);
-//		} catch ( XMLStreamException e) {
-//			throw new IOException(e);
-//		} catch (LexerException e) {
-//			throw new IOException(e);
-//		}
-
 		return loadCopybook(copybook, copyBookName, splitCopybook, dbIdx, font, binaryFormat, systemId);
 	}
 
@@ -197,12 +173,12 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
         	while (list != null && list.size() == 1) {
         		IItemJrUpd itm = list.get(0);
         		String fn = itm.getFieldName();
-        		if (fn != null && fn.length() > 0 && ! "filler".equalsIgnoreCase(fn)) {
+        		if (fn != null && !fn.isEmpty() && ! "filler".equalsIgnoreCase(fn)) {
         			groups.add(fn);
         		}
 				list = itm.getChildItems();
         	}
-           	String[] groupArray = groups.toArray(new String[groups.size()]);
+           	String[] groupArray = groups.toArray(new String[0]);
         	if (list == null || list.size() < 2) {
             	ret = createSingleRecordSchema(copyBookName, groupArray, font, binaryFormat, copybookItems);
         	} else {
@@ -220,14 +196,13 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
         updateRecord(copyBookName, systemId, font, ret, STR_YES);
         
         Convert numTranslator = ConversionManager.getInstance().getConverter4code(binaryFormat) ;
-        boolean multipleRecordLengths = false,
-                binary = false;
+        boolean multipleRecordLengths = false, binary = false;
 
         if (ret.getNumberOfRecords() == 0) {
             binary = ret.isBinary();
         } else {
             int len = getRecLength(ret.getRecord(0));
-            binary = binary || ret.getRecord(0).isBinary();
+            binary = ret.getRecord(0).isBinary();
 
             for (int i = 1; i < ret.getNumberOfRecords(); i++) {
                 binary = binary || ret.getRecord(i).isBinary();
@@ -273,8 +248,6 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 	private XRecord createSingleRecordSchema(String copyBookName, String[] groupArray, String font, int binaryFormat,
 			List<? extends IItemJrUpd> copybookItems) {
 		XRecord ret = createRecord(copyBookName, font, binaryFormat);
-		
-		//updateType(fldhelper, copybookItems);
 		ret.setItems(copyBookName, groupArray, binaryFormat, copybookItems);
 		ret.updateTypeOnCobolItems();
 		return ret;
@@ -344,11 +317,9 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 		indent += "\t";
 		List<IItemJrUpd> nList = new ArrayList<IItemJrUpd>(list.size());
 		for (IItemJrUpd itm : list) {
-			//System.out.print(indent + itm.getFieldName() + " " + list.size());
 			if (itm == redefItem) {
 				nList.add(itm);
 			} else if (redef.parents.contains(itm)) {
-				//System.out.println();
 				Item newItem = new Item(parent, itm.getLevelNumber(), itm.getLevelString(), itm.getFieldName());
 				newItem.set(itm);
 				List<? extends IItemJrUpd> children = createSplitOnRedefines_processList(redefItem, newItem, redef, itm.getChildItems());
@@ -356,11 +327,9 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 					newItem.addItem((Item)ci);
 				}
 				nList.add(newItem);
-				//System.out.print(indent + itm.getFieldName() + " " + list.size());
 			} else if (! redef.redefineItems.contains(itm)) {
 				nList.add(itm);
 			}
-			//System.out.println();
 		}
 		indent = oindent;
 		
@@ -371,7 +340,7 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 			int systemId) {
 		XRecord childRec;
 		String name = fieldName; 
-		if (name == null || name.length() == 0 || "filler".equalsIgnoreCase(name)) {
+		if (name == null || name.isEmpty() || "filler".equalsIgnoreCase(name)) {
 			name = copyBookName + "_" + idx;
 		} else 			if (useJRecordNaming) {
 			name = name.trim();
@@ -420,39 +389,10 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 	   					.setCobolConversionOptions(keepFiller, dropCopybookFromFieldNames, saveCb2xml, useJRecordNaming);
 	}
 
-//	private void updateType(FieldCreatorHelper fldhelper, IItemJrUpd itm) {
-//		
-//		updateItemForType(fldhelper, itm);
-//		updateType(fldhelper, itm.getChildItems());
-//	}
-//
-//	private List<? extends IItemJrUpd> updateType(FieldCreatorHelper fldhelper, List<? extends IItemJrUpd> items) {
-//		if (items != null) { 
-//			for (IItemJrUpd itm : items) {
-//				updateItemForType(fldhelper, itm);
-//				updateType(fldhelper, itm.getChildItems());
-//			}
-//		}
-//		
-//		return items;
-//	}
-//	
-//	private void updateItemForType(FieldCreatorHelper fldhelper, IItemJrUpd item) {
-//		int typeId = Type.ftChar;
-//		List<? extends IItemJrUpd> childItems = item.getChildItems();
-//		if (childItems == null || childItems.size() == 0) {
-//			typeId = fldhelper.deriveType(
-//					item.getNumericClass().numeric, item.getUsage().getName(), item.getPicture(), 
-//					item.getSignClause().signSeparate, item.getSignClause().signPosition.getName(), 
-//					item.getJustified().isJustified); 
-//		}
-//		item.setType(typeId);
-//	}
-
 
 	/**
 	 * Class to search for Redefines and
-	 * store retrieved data in a useful for for
+	 * store retrieved data in a useful for
 	 * later processing
 	 * 
 	 * @author Bruce Martin
@@ -462,15 +402,13 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 		int level = Integer.MAX_VALUE;
 		IItemJrUpd item;
 		List<IItem> redefineItems;
-		Set<IItem> redefSet;
 		Set<IItemBase> parents;
 		
 		RedefineSearcher(List<? extends IItemJrUpd> items) {
 			search(items);
 			
 			if (item != null) {
-				redefineItems = new ArrayList<IItem>();
-				//redefineItems.add(item);
+				redefineItems = new ArrayList<>();
 				int pos = item.getPosition();
 				for (IItem itm : item.getParent().getChildItems()) {
 					if (itm.getPosition() == pos) {
@@ -478,8 +416,7 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 					} 
 				}
 				
-				redefSet = new HashSet<IItem>(redefineItems);
-				parents = new HashSet<IItemBase>();
+				parents = new HashSet<>();
 				
 				IItemBase p = item;
 				while (p.getParent()!= null) {

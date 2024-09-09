@@ -47,35 +47,21 @@ public class BinaryByteWriter extends AbstractByteWriter {
     private OutputStream outStream = null;
     private boolean addLength = false;
 
-    private byte[] rdw = new byte[4];
+    private final byte[] rdw = new byte[4];
     private byte[] eol = null;
 
     private int rdwAdjust = 4;
 
     /**
-     * create binary line writer
+     * create a binary line writer
      */
     public BinaryByteWriter() {
         super();
     }
 
 
-//    /**
-//     * create binary line writer
-//     *
-//     * @param includeRDW write RDW (record Descriptor Word) at the start
-//     * of each record. The RDW consists of
-//     * <ul Compact>
-//     *   <li>2 byte length (big endian format)
-//     *   <li>2 bytes (hex zeros)
-//     * </ul>
-//     */
-//    public FixedLengthByteWriter(final boolean includeRDW) {
-//    	this(includeRDW, true, null);
-//    }
-
     /**
-     * create binary line writer
+     * create a binary line writer
      *
      * @param includeRDW write RDW (record Descriptor Word) at the start
      * of each record. The RDW consists of
@@ -83,7 +69,7 @@ public class BinaryByteWriter extends AbstractByteWriter {
      *   <li>2 byte length (big endian format)
      *   <li>2 bytes (hex zeros)
      * </ul>
-     * @param addRdwToLength wether to add 4 bytes to RDW length
+     * @param addRdwToLength whether to add four bytes to RDW length
      */
     public BinaryByteWriter(final boolean includeRDW, boolean addRdwToLength, byte[] eolByte) {
         super();
@@ -118,10 +104,9 @@ public class BinaryByteWriter extends AbstractByteWriter {
         if (outStream == null) {
             throw new IOException(AbstractByteWriter.NOT_OPEN_MESSAGE);
         }
-        byte[] rec = line;
 
         if (addLength) {
-            byte[] bytes = (BigInteger.valueOf(rec.length + rdwAdjust)).toByteArray();
+            byte[] bytes = (BigInteger.valueOf(line.length + rdwAdjust)).toByteArray();
 
             rdw[1] = bytes[bytes.length - 1];
             rdw[0] = 0;
@@ -131,7 +116,7 @@ public class BinaryByteWriter extends AbstractByteWriter {
             outStream.write(rdw);
         }
 
-        outStream.write(rec);
+        outStream.write(line);
 
         if (eol != null) {
         	outStream.write(eol);
@@ -143,8 +128,6 @@ public class BinaryByteWriter extends AbstractByteWriter {
      * @see net.sf.JRecord.IO.AbstractLineWriter#close()
      */
     public void close() throws IOException {
-
         outStream.close();
-        outStream = null;
     }
 }

@@ -35,6 +35,7 @@
 
 package net.sf.JRecord.External;
 
+import lombok.Getter;
 import net.sf.JRecord.Details.LayoutDetail;
 
 
@@ -48,7 +49,8 @@ import net.sf.JRecord.Details.LayoutDetail;
  */
 public class ToLayoutDetail {
 
-    private static ToLayoutDetail instance = new ToLayoutDetail();
+    @Getter
+    private static final ToLayoutDetail instance = new ToLayoutDetail();
 
 	/**
 	 * convert an ExternalRecord into a LayoutDetail (internal form)
@@ -68,10 +70,4 @@ public class ToLayoutDetail {
 	}
 
 
-    /**
-     * @return Returns the instance.
-     */
-    public static ToLayoutDetail getInstance() {
-        return instance;
-    }
 }

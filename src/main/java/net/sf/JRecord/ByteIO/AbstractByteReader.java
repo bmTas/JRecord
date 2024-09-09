@@ -32,9 +32,10 @@
  */
 package net.sf.JRecord.ByteIO;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import net.sf.JRecord.Common.ISetData;
 
@@ -69,7 +70,7 @@ public abstract class AbstractByteReader implements IByteReader {
 	 */
     @Override
 	public void open(String fileName) throws IOException {
-        open(new FileInputStream(fileName));
+        open(Files.newInputStream(Paths.get(fileName)));
     }
 
 

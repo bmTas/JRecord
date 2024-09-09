@@ -95,9 +95,7 @@ public class Binary4680LineReader extends ContinuousLineReader {
 
 		recSep = layout.getRecordSep();
 
-		for (int i = 0; i < lengthsSorted.length; i++) {
-			lengthsSorted[i] = lengths[i];
-		}
+        System.arraycopy(lengths, 0, lengthsSorted, 0, lengthsSorted.length);
 
 
 		Arrays.sort(lengthsSorted);
@@ -123,18 +121,14 @@ public class Binary4680LineReader extends ContinuousLineReader {
 		byte[] buffer = tmpLine.getData();
 
 		search = true;
-//		lineNumber += 1;
-//		//System.out.print("Line " + lineNumber + " " + start);
 
 		
 		pref = tmpLine.getPreferredLayoutIdxAlt();
 		if (pref != Constants.NULL_INTEGER) {
-		    //System.out.print(" pref " + pref);
 		    rl = lengths[pref];
 		    if (isEqual(buffer, start + rl + 1)) {
 		        recLen = rl;
 		        search = false;
-		        //System.out.print("  found 1 " + recLen + " " + maxLength);
 		    }
 		}
 
@@ -144,7 +138,6 @@ public class Binary4680LineReader extends ContinuousLineReader {
 		    && isEqual(buffer, start + lengthsSorted[i] + 1)) {
 		        search = false;
 		        recLen = lengthsSorted[i];
-		        //System.out.print("  found 2 " + recLen + " " + maxLength);
 		    } else {
 		        i += 1;
 		    }
@@ -153,37 +146,33 @@ public class Binary4680LineReader extends ContinuousLineReader {
 		if (search) {
 		    recLen = maxLength;
 		    if (recSep.length > 0) {
-		        for (i = recSep.length; (i <= maxLength && recLen == maxLength); i++) {
+		        for (i = recSep.length; i <= maxLength; i++) {
 		        	if (isEqual(buffer, start + i)) {
 		        	    recLen = i - 1;
 		        	    break;
 		        	}
 		        }
 		    }
-
-		    //System.out.print("  found 3 " + recLen + " " + maxLength);
 		}
 
-		//System.out.println();
 		return recLen;
 	}
 
 
 
 	/**
-	 * compares part of rec with the record seperator string
+	 * compares part of rec with the record separator string
 	 *
 	 * @param rec record details
 	 * @param fin end of the logical record
 	 *
-	 * @return wether the record ends with the record seporator
+	 * @return whether the record ends with the record separator
 	 */
 	private boolean isEqual(final byte[] rec, final int fin) {
-		int i;
 		int st = fin - recSep.length - 1;
 		boolean ret = st >= 0;
 
-		for (i = 0; ret && (i < recSep.length); i++) {
+		for (int i = 0; ret && (i < recSep.length); i++) {
 			ret = (recSep[i] == rec[st + i]);
 		}
 

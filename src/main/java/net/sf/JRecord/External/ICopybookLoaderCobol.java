@@ -30,10 +30,4 @@ package net.sf.JRecord.External;
 
 public interface ICopybookLoaderCobol extends ICopybookLoaderStream, ISetDropCopybookName {
 
-//	public abstract ExternalRecord loadCopyBook(
-//			Reader reader, //Document copyBookXml,
-//			String copyBookName, int splitCopybook, int dbIdx, String font,
-//			int copybookFormat, int binaryFormat, int systemId, AbsSSLogger log)
-//			throws IOException;
-
 }

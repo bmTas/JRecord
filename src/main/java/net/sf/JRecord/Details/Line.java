@@ -42,6 +42,7 @@ package net.sf.JRecord.Details;
 import java.math.BigInteger;
 import java.util.Arrays;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
@@ -79,6 +80,7 @@ import net.sf.JRecord.Types.TypeNum;
  * @author Bruce Martin
  * @version 0.55
  */
+@Slf4j
 public class Line extends BasicLine implements IGetByteData {
 
 	static LineProvider defaultProvider = new DefaultLineProvider();
@@ -86,7 +88,6 @@ public class Line extends BasicLine implements IGetByteData {
 
 	byte[] data;
 
-	int preferredLayoutAlt = Constants.NULL_INTEGER;
 	private boolean newRecord   = false;
 
 
@@ -155,8 +156,9 @@ public class Line extends BasicLine implements IGetByteData {
 
 
 	/**
-	 *   This method completely replaces a lines value. It is used to determine
-	 * a records prefered record layout
+	 *   This method completely replaces a line value.
+     *   It is used to determine
+	 * a record preferred record layout
 	 *
 	 * @param rec buffer holding the record
 	 * @param start Start of the record
@@ -235,7 +237,7 @@ public class Line extends BasicLine implements IGetByteData {
 	}
 
 	/**
-	 * Get the Prefered Record Layout Index for this record
+	 * Get the Preferred Record Layout Index for this record
 	 *
 	 * @return Index of the Record Layout based on the Values
 	 */
@@ -277,11 +279,8 @@ public class Line extends BasicLine implements IGetByteData {
 			if (record == null) {
 			} else if (record.hasDependingOn()) {
 				int end = Math.max(field.calculateActualEnd(this), layout.getRecord(recordIdx).getMinumumPossibleLength());
-
-				if (field != null) {
-					ensureCapacity(end);
-				}
-			} else {
+                ensureCapacity(end);
+            } else {
 				adjustLength(recordIdx);
 			}
 		}
@@ -290,7 +289,6 @@ public class Line extends BasicLine implements IGetByteData {
 
 
 	/**
-	 * @param field
 	 * @param end
 	 */
 	public final void ensureCapacity(int end) {
@@ -333,7 +331,6 @@ public class Line extends BasicLine implements IGetByteData {
 	 * @param newSize new record size
 	 */
 	private void newRecord(int newSize) {
-//		byte[] sep = layout.getRecordSep();
 		byte[] rec = new byte[newSize];
 		int len = Math.min(rec.length, data.length);
 
@@ -344,11 +341,6 @@ public class Line extends BasicLine implements IGetByteData {
 			Arrays.fill(rec, len, rec.length, layout.getInitByte());
 		}
 		
-//		if ((layout.getLayoutType() == Constants.rtGroupOfBinaryRecords)
-//				&& sep != null && sep.length > 0) {
-//			System.arraycopy(sep, 0, rec, newSize - sep.length, sep.length);
-//		}
-
 		data = rec;
 	}
 
@@ -416,7 +408,6 @@ public class Line extends BasicLine implements IGetByteData {
     @SuppressWarnings("deprecation")
 	public Object getField(int type, IFieldDetail field) {
 
-    	//System.out.print(" ---> getField ~ 1");
         if (field.isFixedFormat()) {
             int position = field.calculateActualPosition(this);
            
@@ -441,18 +432,10 @@ public class Line extends BasicLine implements IGetByteData {
     	
         if (field.isFixedFormat()) {
             int pos = field.calculateActualPosition(this);
-//            if (pos <= 0) {
-//            	pos = field.calculateActualPosition(this);
-//            }
-            
-//            if (field.calculateActualEnd(this) == 101) {
-//            	 System.out.println("~~ " + field.calculateActualEnd(this));
-//            }
             if (pos <= 0 && value == CommonBits.NULL_VALUE) {
             	return;
             }
             ensureCapacity(pos + field.getLen() - 1);
-//            System.out.println("~~ " + field.calculateActualEnd(this));
 			data = TypeManager.getSystemTypeManager().getType(type)
 				.setField(getData(), pos, field, value);
 			
@@ -493,8 +476,6 @@ public class Line extends BasicLine implements IGetByteData {
 	}
 	 
 	public String setFieldHex(IFieldDetail field, String val) {
-	    String ret = null;
-
 	    ensureCapacity(field.calculateActualEnd(this));
 
         try {
@@ -513,10 +494,10 @@ public class Line extends BasicLine implements IGetByteData {
             }
             super.checkForOdUpdate(field);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Error saving Hex value ", e);
             throw new RecordException("Error saving Hex value: {0}", e.getMessage());
         }
-        return ret;
+        return "";
 	}
 	
 	public void setFieldToByte(IFieldDetail field, byte val) {

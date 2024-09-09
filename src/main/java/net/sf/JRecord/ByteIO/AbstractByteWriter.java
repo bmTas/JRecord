@@ -32,9 +32,10 @@
  */
 package net.sf.JRecord.ByteIO;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import net.sf.JRecord.Common.IGetData;
 
@@ -60,7 +61,7 @@ public abstract class AbstractByteWriter implements IByteRecordWriter {
      * @throws IOException any IOerror
      */
     public void open(String fileName) throws IOException {
-        open(new FileOutputStream(fileName));
+        open(Files.newOutputStream(Paths.get(fileName)));
     }
 
 

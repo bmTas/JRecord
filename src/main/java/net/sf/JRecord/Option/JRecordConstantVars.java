@@ -31,86 +31,81 @@ import net.sf.JRecord.Numeric.ICopybookDialects;
 
 /**
  * Holds JRecord Constants for use in scripting languages  
- * where it is difficult to access variables in interfaces like
- * like javascript (jjs)
+ * where it is challenging to access variables in interfaces like JavaScript (jjs)
  * 
  * @author Bruce Martin
  *
  */
-public class JRecordConstantVars {
-	
-	public static final JRecordConstantVars INSTANCE = new JRecordConstantVars();
-	
+public interface JRecordConstantVars {
 	
 	/* ----------------------------------------------------------------------
 	 * 
 	 * Cobol Dialects:
 	 */
-    public final int FMT_MAINFRAME		  = ICopybookDialects.FMT_MAINFRAME; 
-    public final int FMT_FUJITSU		  = ICopybookDialects.FMT_FUJITSU; 
-    public final int FMT_BIG_ENDIAN		  = ICopybookDialects.FMT_BIG_ENDIAN; 
-    public final int FMT_FS2000			  = ICopybookDialects.FMT_FS2000; 
+    int FMT_MAINFRAME		  = ICopybookDialects.FMT_MAINFRAME;
+    int FMT_FUJITSU		  = ICopybookDialects.FMT_FUJITSU;
+    int FMT_BIG_ENDIAN		  = ICopybookDialects.FMT_BIG_ENDIAN;
+    int FMT_FS2000			  = ICopybookDialects.FMT_FS2000;
                                          
-    public final int FMT_FS2000_BE		  = ICopybookDialects.FMT_FS2000_BE; 
-//    public final int FMT_MICRO_FOCUS			 = ICopybookDialects.FMT_MICRO_FOCUS;                                      
-    public final int FMT_MAINFRAME_COMMA_DECIMAL = ICopybookDialects.FMT_MAINFRAME_COMMA_DECIMAL;
-    public final int FMT_FUJITSU_COMMA_DECIMAL	 = ICopybookDialects.FMT_FUJITSU_COMMA_DECIMAL;
+    int FMT_FS2000_BE		  = ICopybookDialects.FMT_FS2000_BE;
+    int FMT_MAINFRAME_COMMA_DECIMAL = ICopybookDialects.FMT_MAINFRAME_COMMA_DECIMAL;
+    int FMT_FUJITSU_COMMA_DECIMAL = ICopybookDialects.FMT_FUJITSU_COMMA_DECIMAL;
        
-	public final int FMT_GNU_COBOL        = ICopybookDialects.FMT_OPEN_COBOL;
-	public final int FMT_GNU_COBOL_MVS    = ICopybookDialects.FMT_GNU_COBOL_MVS;
-	public final int FMT_GNU_COBOL_MF     = ICopybookDialects.FMT_GNU_COBOL_MF;
+	int FMT_GNU_COBOL        = ICopybookDialects.FMT_OPEN_COBOL;
+	int FMT_GNU_COBOL_MVS    = ICopybookDialects.FMT_GNU_COBOL_MVS;
+	int FMT_GNU_COBOL_MF     = ICopybookDialects.FMT_GNU_COBOL_MF;
 
-	public final int FMT_GNU_COBOL_BE     = ICopybookDialects.FMT_GNU_COBOL_BE;
-	public final int FMT_GNU_COBOL_BE_MVS = ICopybookDialects.FMT_OPEN_COBOL_MVS_BE;
-	public final int FMT_GNU_COBOL_BE_MF  = ICopybookDialects.FMT_OC_MICRO_FOCUS_BE;
+	int FMT_GNU_COBOL_BE     = ICopybookDialects.FMT_GNU_COBOL_BE;
+	int FMT_GNU_COBOL_BE_MVS = ICopybookDialects.FMT_OPEN_COBOL_MVS_BE;
+	int FMT_GNU_COBOL_BE_MF  = ICopybookDialects.FMT_OC_MICRO_FOCUS_BE;
     
 	/* -------------------------------------------------------------------------
 	 * 
 	 * Cobol Copybook split options
 	 */
-    public final int SPLIT_NONE              = ICobolSplitOptions.SPLIT_NONE;
-    public final int SPLIT_REDEFINE          = ICobolSplitOptions.SPLIT_REDEFINE;
-    public final int SPLIT_01_LEVEL			 = ICobolSplitOptions.SPLIT_01_LEVEL;
-    public final int SPLIT_HIGHEST_REPEATING = ICobolSplitOptions.SPLIT_HIGHEST_REPEATING; 
+    int SPLIT_NONE              = ICobolSplitOptions.SPLIT_NONE;
+    int SPLIT_REDEFINE          = ICobolSplitOptions.SPLIT_REDEFINE;
+    int SPLIT_01_LEVEL			 = ICobolSplitOptions.SPLIT_01_LEVEL;
+    int SPLIT_HIGHEST_REPEATING = ICobolSplitOptions.SPLIT_HIGHEST_REPEATING;
 
     /* ------------------------------------------------------------------------
      * 
      * IO Options
      */
-    public final int IO_STANDARD_TEXT_FILE	 = IFileStructureConstants.IO_STANDARD_TEXT_FILE;
+    int IO_STANDARD_TEXT_FILE	 = IFileStructureConstants.IO_STANDARD_TEXT_FILE;
 		                                           
-    public final int IO_FIXED_LENGTH_RECORDS = IFileStructureConstants.IO_FIXED_LENGTH_RECORDS;
-    public final int IO_BINARY_IBM_4680		 = IFileStructureConstants.IO_BINARY_IBM_4680;
-    public final int IO_VB					 = IFileStructureConstants.IO_VB;
-    public final int IO_VB_DUMP				 = IFileStructureConstants.IO_VB_DUMP;
-    public final int IO_VB_DUMP2			 = IFileStructureConstants.IO_VB_DUMP2;
-    public final int IO_VB_FUJITSU			 = IFileStructureConstants.IO_VB_FUJITSU;
-    public final int IO_VB_GNU_COBOL		 = IFileStructureConstants.IO_VB_GNU_COBOL;                                                                               
-    public final int IO_BIN_TEXT			 = IFileStructureConstants.IO_BIN_TEXT;
-    public final int IO_FIXED_LENGTH_CHAR	 = IFileStructureConstants.IO_FIXED_LENGTH_CHAR		        ;
+    int IO_FIXED_LENGTH_RECORDS = IFileStructureConstants.IO_FIXED_LENGTH_RECORDS;
+    int IO_BINARY_IBM_4680		 = IFileStructureConstants.IO_BINARY_IBM_4680;
+    int IO_VB					 = IFileStructureConstants.IO_VB;
+    int IO_VB_DUMP				 = IFileStructureConstants.IO_VB_DUMP;
+    int IO_VB_DUMP2			 = IFileStructureConstants.IO_VB_DUMP2;
+    int IO_VB_FUJITSU			 = IFileStructureConstants.IO_VB_FUJITSU;
+    int IO_VB_GNU_COBOL		 = IFileStructureConstants.IO_VB_GNU_COBOL;
+    int IO_BIN_TEXT			 = IFileStructureConstants.IO_BIN_TEXT;
+    int IO_FIXED_LENGTH_CHAR	 = IFileStructureConstants.IO_FIXED_LENGTH_CHAR		        ;
     @SuppressWarnings("deprecation")
-	public final int IO_VBS					 = IFileStructureConstants.IO_VBS;
+	int IO_VBS					 = IFileStructureConstants.IO_VBS;
                                                                                                
                                                                                                 
-    public final int IO_CONTINOUS_NO_LINE_MARKER = IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER;
+    int IO_CONTINOUS_NO_LINE_MARKER = IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER;
                                                                                                  
-    public final int IO_CSV				     = IFileStructureConstants.IO_CSV;
-    public final int IO_BIN_CSV				 = IFileStructureConstants.IO_BIN_CSV;
-    public final int IO_UNICODE_CSV			 = IFileStructureConstants.IO_UNICODE_CSV;
+    int IO_CSV				     = IFileStructureConstants.IO_CSV;
+    int IO_BIN_CSV				 = IFileStructureConstants.IO_BIN_CSV;
+    int IO_UNICODE_CSV			 = IFileStructureConstants.IO_UNICODE_CSV;
                                                                                         
-    public final int IO_CSV_NAME_1ST_LINE	 = IFileStructureConstants.IO_CSV_NAME_1ST_LINE		        ;
-    public final int IO_BIN_CSV_NAME_1ST_LINE= IFileStructureConstants.IO_BIN_CSV_NAME_1ST_LINE;
-    public final int IO_UNICODE_CSV_NAME_1ST_LINE = IFileStructureConstants.IO_UNICODE_CSV_NAME_1ST_LINE	        ;
+    int IO_CSV_NAME_1ST_LINE	 = IFileStructureConstants.IO_CSV_NAME_1ST_LINE		        ;
+    int IO_BIN_CSV_NAME_1ST_LINE= IFileStructureConstants.IO_BIN_CSV_NAME_1ST_LINE;
+    int IO_UNICODE_CSV_NAME_1ST_LINE = IFileStructureConstants.IO_UNICODE_CSV_NAME_1ST_LINE	        ;
                                                                                         
-    public final int IO_NAME_1ST_LINE		 = IFileStructureConstants.IO_NAME_1ST_LINE;        
-    public final int IO_BIN_NAME_1ST_LINE	 = IFileStructureConstants.IO_BIN_NAME_1ST_LINE		        ;
-    public final int IO_UNICODE_NAME_1ST_LINE= IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE;
+    int IO_NAME_1ST_LINE		 = IFileStructureConstants.IO_NAME_1ST_LINE;
+    int IO_BIN_NAME_1ST_LINE	 = IFileStructureConstants.IO_BIN_NAME_1ST_LINE		        ;
+    int IO_UNICODE_NAME_1ST_LINE= IFileStructureConstants.IO_UNICODE_NAME_1ST_LINE;
                                                                                         
-    public final int IO_STANDARD_UNICODE_TEXT_FIL = IFileStructureConstants.IO_STANDARD_UNICODE_TEXT_FILE        ;
+    int IO_STANDARD_UNICODE_TEXT_FIL = IFileStructureConstants.IO_STANDARD_UNICODE_TEXT_FILE        ;
     
-    public final int IO_UNICODE_TEXT	= IFileStructureConstants.IO_UNICODE_TEXT;
-    public final int IO_FIXED_LENGTH	= IFileStructureConstants.IO_FIXED_LENGTH;	                                      
-    public final int IO_TEXT_LINE		= IFileStructureConstants.IO_TEXT_LINE;	
+    int IO_UNICODE_TEXT	= IFileStructureConstants.IO_UNICODE_TEXT;
+    int IO_FIXED_LENGTH	= IFileStructureConstants.IO_FIXED_LENGTH;
+    int IO_TEXT_LINE		= IFileStructureConstants.IO_TEXT_LINE;
     
     
     /* ------------------------------------------------------------------------------
@@ -118,9 +113,9 @@ public class JRecordConstantVars {
      * Option to reformat Cobol names when converting to other languages
      * 
      */
-    public final int RO_LEAVE_ASIS = IReformatFieldNames.RO_LEAVE_ASIS;
-    public final int RO_MINUS_TO_UNDERSCORE = IReformatFieldNames.RO_UNDERSCORE; 
-	public final int RO_CAMEL_CASE = IReformatFieldNames.RO_CAMEL_CASE;
+    int RO_LEAVE_ASIS = IReformatFieldNames.RO_LEAVE_ASIS;
+    int RO_MINUS_TO_UNDERSCORE = IReformatFieldNames.RO_UNDERSCORE;
+	int RO_CAMEL_CASE = IReformatFieldNames.RO_CAMEL_CASE;
 
 
 }

@@ -37,7 +37,6 @@ package net.sf.JRecord.IO;
 import java.io.IOException;
 import java.io.InputStream;
 
-//import net.sf.JRecord.ByteIO.AbstractByteReader;
 import net.sf.JRecord.ByteIO.IByteRecordReader;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
@@ -57,8 +56,6 @@ import net.sf.JRecord.Details.LineProvider;
 public class LineByteRecordReaderWrapper<Reader extends IByteRecordReader> extends AbstractLineReader {
 
     Reader reader;
-    int i = 0;
-
     /**
      *  Create a LineReader from a Byte reader
      */
@@ -81,7 +78,6 @@ public class LineByteRecordReaderWrapper<Reader extends IByteRecordReader> exten
         super(provider);
 
         reader = byteReader;
-//        reader.setLineLength(pLayout.getMaximumRecordLength());
         super.setLayout(pLayout);
     }
 
@@ -91,9 +87,6 @@ public class LineByteRecordReaderWrapper<Reader extends IByteRecordReader> exten
      */
     public void open(InputStream inputStream, LayoutDetail pLayout)
             throws IOException {
-
-//        reader.setLineLength(pLayout.getMaximumRecordLength());
-//        reader.open(inputStream);
         super.setLayout(pLayout);
     }
 
@@ -102,7 +95,7 @@ public class LineByteRecordReaderWrapper<Reader extends IByteRecordReader> exten
      * @see net.sf.JRecord.IO.AbstractLineReader#read()
      */
     public AbstractLine readImplementation() throws IOException {
-        byte bytes[] = reader.read();
+        byte[] bytes = reader.read();
 
         if (bytes == null) {
             return null;

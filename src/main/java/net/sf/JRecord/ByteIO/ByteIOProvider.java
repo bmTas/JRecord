@@ -133,13 +133,13 @@ public class ByteIOProvider {
     /**
      * Get the appropriate writer for a basic-schema
      * @param schema
-     * @return requested byte writer
+     * @return requested a byte writer
      */
     public AbstractByteWriter getByteWriter(IBasicFileSchema schema) {
     	int fileStructure = schema.getFileStructure();
-		switch(fileStructure) {
-		case IFileStructureConstants.IO_FIXED_LENGTH:	return new FixedLengthByteWriter(schema.getMaximumRecordLength());
-    	}
+        if (fileStructure == IFileStructureConstants.IO_FIXED_LENGTH) {
+            return new FixedLengthByteWriter(schema.getMaximumRecordLength());
+        }
     	return getByteWriter(fileStructure, schema.getFontName());
     }
 
@@ -155,7 +155,6 @@ public class ByteIOProvider {
 	public AbstractByteWriter getByteWriter(int fileStructure, String characterSet) {
 
     	switch(fileStructure) {
-//    		case IFileStructureConstants.IO_FIXED_LENGTH:		return new BinaryByteWriter();
     		case IFileStructureConstants.IO_VBS:				throw new RecordException("Writing VBS files is not supported; use IO_VB");
     		case IFileStructureConstants.IO_VB: 				return new VbByteWriter();
     		case IFileStructureConstants.IO_VB_DUMP2:
@@ -163,14 +162,13 @@ public class ByteIOProvider {
     		case IFileStructureConstants.IO_VB_FUJITSU:		return new FujitsuVbByteWriter();
     		case IFileStructureConstants.IO_VB_GNU_COBOL:		return new VbByteWriter(false);
 			case IFileStructureConstants.IO_BIN_TEXT:
-				if (characterSet != null && characterSet.length() > 0 ) {
+				if (characterSet != null && !characterSet.isEmpty()) {
 					try {
 						return new ByteTextWriter("\n".getBytes(characterSet));
-					} catch (UnsupportedEncodingException e) {
+					} catch (UnsupportedEncodingException ignored) {
 					}
 				}
 				return new ByteTextWriter();
-//    		case (IFileStructureConstants.IO_BIN_TEXT):			return new FixedLengthByteWriter(false, false, Constants.);
         }
 
         return null;

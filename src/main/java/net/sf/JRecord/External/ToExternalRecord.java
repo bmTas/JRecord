@@ -49,7 +49,6 @@ public final class ToExternalRecord {
 	 * Convert a RecordLayout (internal format) to an ExternalRecord (interface format).
 	 * @param layout
 	 * @param copybookName
-	 * @param system
 	 * @return layout in ExternalRecord format
 	 */
 	public ExternalRecord getExternalRecord(LayoutDetail layout, String copybookName, int system) {

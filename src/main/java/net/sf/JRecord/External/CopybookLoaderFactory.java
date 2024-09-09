@@ -83,22 +83,18 @@ public class CopybookLoaderFactory {
 
 	static {
 		int idx = 2;
-//		if (CobolCopybookLoader.isAvailable()) {
-//			idx = 2;
-//		}
 		RECORD_EDITOR_XML_LOADER       = idx++;
 		COMMA_NAMES_1ST_LINE_LOADER    = idx++;
 		TAB_NAMES_1ST_LINE_LOADER      = idx++;
 		RECORD_EDITOR_COMMA_CSV_LOADER = idx++;
-		RECORD_EDITOR_TAB_CSV_LOADER   = idx++;
+		RECORD_EDITOR_TAB_CSV_LOADER   = idx;
 	}
 
 	protected static final int NUMBER_OF_LOADERS = 30;
 
-	private String[] loaderName;
-	private String[] parameterFile;
-//	private Class<? extends CopybookLoader>[] loader;
-	private CopybookLoader[] skeltonLoader;
+	private final String[] loaderName;
+	private final String[] parameterFile;
+	private final CopybookLoader[] skeltonLoader;
 
 	private int numberLoaded = 0;
 
@@ -127,7 +123,6 @@ public class CopybookLoaderFactory {
 
 		loaderName    = new String[maximumNumberOfLoaders];
 		parameterFile = new String[maximumNumberOfLoaders];
-		//loader        = new Class[maximumNumberOfLoaders];
 		skeltonLoader = new CopybookLoader[maximumNumberOfLoaders];
 
 		registerAll();
@@ -144,16 +139,6 @@ public class CopybookLoaderFactory {
 
 
 	protected final void registerStandardLoaders1() {
-//		register("cb2xml XML Copybook", XmlCopybookLoader.class, "");
-//		if (CobolCopybookLoader.isAvailable()) {
-//			register("Cobol Copybook", CobolCopybookLoader.class, "");
-//		} else {
-//	    	register("Empty - Cobol placeholder", NoCb2xml.class, "");
-//	    }
-//		recordEditorXml = numberLoaded;
-//		register("RecordEditor XML Copybook",RecordEditorXmlLoader.class, "");
-//
-		
 		register("cb2xml XML Copybook", new XmlCopybookLoader(), "");
 		if (CobolCopybookLoader.isAvailable()) {
 			register("Cobol Copybook", new CobolCopybookLoader(), "");
@@ -167,17 +152,6 @@ public class CopybookLoaderFactory {
 	}
 
 	protected final void registerStandardLoaders2() {
-
-//		csv1 = numberLoaded;
-//		register("Comma CSV (names first line)", CsvNamesFirstLineFileLoader.class, "");
-//		csv2   = numberLoaded;
-//		register("Tab CSV (names first line)", CsvNamesFirstLineFileLoader.Tab.class, "");
-//		register("RecordEditor Csv Copybook (Comma Seperator)",RecordEditorCsvLoader.Comma.class, "");
-//		register("RecordEditor Tab Copybook (Tab Seperator)",RecordEditorCsvLoader.Tab.class, "");
-//		register("DB - CSV extract Copybook", DbCsvCopybookLoader.class, "");
-//		xml1 = numberLoaded;
-//		register("XML File", XmlFileLoader.class, "");
-		
 		csv1 = numberLoaded;
 		register("Comma CSV (names first line)", new CsvNamesFirstLineFileLoader(), "");
 		csv2   = numberLoaded;
@@ -191,23 +165,21 @@ public class CopybookLoaderFactory {
 
 
 	/**
-	 * wether the loader can us the input file
+	 * whether the loader can use the input file
 	 * @param loaderId loader id to Test
-	 * @return wether it can use the input file
+	 * @return whether it can use the input file
 	 */
 	public final boolean isBasedOnInputFile(int loaderId) {
-		boolean ret = (loaderId == xml1) || isCsv(loaderId);
-		return ret;
+		return (loaderId == xml1) || isCsv(loaderId);
 	}
 
 	/**
-	 * wether the loader can us the input file
+	 * Whether the loader can use the input file
 	 * @param loaderId loader id to Test
-	 * @return wether it can use the input file
+	 * @return whether it can use the input file
 	 */
 	public final boolean isCsv(int loaderId) {
-		boolean ret = (csv1 <= loaderId) && (loaderId <= csv2);
-		return ret;
+		return (csv1 <= loaderId) && (loaderId <= csv2);
 	}
 
 	public final String getFieldDelim(int loaderId) {
@@ -222,19 +194,6 @@ public class CopybookLoaderFactory {
 		return ret;
 	}
 
-//	/**
-//	 * Register a new Copybook loader
-//	 *
-//	 * @param name Copybook loader's name
-//	 * @param loaderClass The loader class
-//	 * @param propertiesFile properties file
-//	 */
-//	public final void register(String name, Class<? extends CopybookLoader> loaderClass, String propertiesFile) {
-//
-//		loaderName[numberLoaded] = name;
-//		loader[numberLoaded] =  loaderClass;
-//		parameterFile[numberLoaded++] = propertiesFile;
-//	}
 
 	public final void register(String name, CopybookLoader exampleLoader, String propertiesFile) {
 

@@ -69,19 +69,10 @@ public final class MicroFocusFileHeader {
 		} else {
 			tmp[3] = 124;
 		}
-//
-//		for (i = 0; i < DATE_TIME.length; i++) {
-//			tmp[8 + i] = DATE_TIME[i];
-//			tmp[22 + i] = DATE_TIME[i];
-//		}
-		
+
 		tmp[37] = 62;
 		tmp[39] = (byte) org;
-		
-//		tmp[108] = 65;
-//		tmp[110] = 25;
-//		tmp[111] = -68;
-		
+
 		try {
 			Conversion.setLong(tmp, 54, 4, maxRecLength, true);
 			Conversion.setLong(tmp, 58, 4, minRecLength, true);
@@ -89,10 +80,8 @@ public final class MicroFocusFileHeader {
 			System.out.println("Error Setting Min max length in Microfocus Header");
 		}
 		
-//		if (minRecLength != maxRecLength) {
-			tmp[48] = RECORD_VARIABLE_LENGTH;
-//		}
-		
+        tmp[48] = RECORD_VARIABLE_LENGTH;
+
 		minLength = minRecLength;
 		maxLength = maxRecLength;
 		headerRec = tmp;
