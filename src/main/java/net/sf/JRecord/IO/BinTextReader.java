@@ -148,8 +148,8 @@ public class BinTextReader extends LineReaderWrapper {
      * @param line line being built
      * @param recordSep record separator
      * @param fontName font name
-     * @param delimiter field misdeliver
-     * @param rec field misdeliver as a string
+     * @param delimiter field delimiter
+     * @param rec record detail
      * @param parser Identifier of the CSV parser to use
      * @param fieldType field type
      * @param decimal number of decimal places

@@ -34,7 +34,7 @@
  *    GNU Lesser General Public License for more details.
  *
  * ------------------------------------------------------------------------ */
-
+ 
 package net.sf.JRecord.External;
 
 
