@@ -32,9 +32,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import lombok.extern.slf4j.Slf4j;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.CsvParser.BasicCsvLineParser;
@@ -49,7 +51,6 @@ import org.xml.sax.SAXException;
 /**
  * Class to load DB Table definition extract (in particular DB2). It intended for use
  * with Database CSV Extracts.
- *
  * With DB2 UDB you can use the following to create a combined copybook file for each Table:
  *
  * <pre>
@@ -64,23 +65,23 @@ import org.xml.sax.SAXException;
  * @author Bruce Martin
  *
  */
+
+@Slf4j
 public class DbCsvCopybookLoader extends BaseCopybookLoader {
 
-	private static HashMap<String, Integer> typeConv = new HashMap<String, Integer>();
+	private static final HashMap<String, Integer> typeConv = new HashMap<>();
 	static {
-		typeConv.put("CHARACTER", Integer.valueOf(Type.ftChar));
-		typeConv.put("DATE", Integer.valueOf(Type.ftChar));
-		typeConv.put("DECIMAL", Integer.valueOf(Type.ftNumLeftJustified));
-		typeConv.put("INTEGER", Integer.valueOf(Type.ftNumLeftJustified));
-		typeConv.put("SMALLINT", Integer.valueOf(Type.ftNumLeftJustified));
-		typeConv.put("TIME", Integer.valueOf(Type.ftChar));
-		typeConv.put("TIMESTAMP", Integer.valueOf(Type.ftChar));
-		typeConv.put("VARCHAR", Integer.valueOf(Type.ftChar));
+		typeConv.put("CHARACTER", Type.ftChar);
+		typeConv.put("DATE", Type.ftChar);
+		typeConv.put("DECIMAL", Type.ftNumLeftJustified);
+		typeConv.put("INTEGER", Type.ftNumLeftJustified);
+		typeConv.put("SMALLINT", Type.ftNumLeftJustified);
+		typeConv.put("TIME", Type.ftChar);
+		typeConv.put("TIMESTAMP", Type.ftChar);
+		typeConv.put("VARCHAR", Type.ftChar);
 	}
 
-	private final String delimiter = ",";
-
-	public ExternalRecord loadCopyBook(String copyBookFile,
+    public ExternalRecord loadCopyBook(String copyBookFile,
 			int splitCopybookOption, int dbIdx, String font, int copybookFormat, int binFormat,
 			int systemId, AbsSSLogger log) throws IOException, SAXException,
 			ParserConfigurationException {
@@ -90,9 +91,6 @@ public class DbCsvCopybookLoader extends BaseCopybookLoader {
 				Conversion.getCopyBookId(copyBookFile),
 				rt,
 				font);
-		//rec.setNew(true);
-
-		//loadTypes(dbIdx);
 
 		insertFields(rec, copyBookFile, dbIdx, font);
 
@@ -105,12 +103,10 @@ public class DbCsvCopybookLoader extends BaseCopybookLoader {
 
 	/**
 	 * Add fields to the copybook
-	 * @param rec copybook
 	 * @param copyBookFile copybook file
 	 */
 	@SuppressWarnings("deprecation")
-	private void insertFields(ExternalRecord parentRec, String copyBookFile,
-			int dbIdx, String font) {
+	private void insertFields(ExternalRecord parentRec, String copyBookFile, int dbIdx, String font) {
 		String s, name, typeStr, system, lastSystem, lastCopybookName, copybookName;
 		BasicCsvLineParser t = BasicCsvLineParser.getInstance();
 		String[] fields = new String[7];
@@ -123,89 +119,66 @@ public class DbCsvCopybookLoader extends BaseCopybookLoader {
 
 		lastSystem = null;
 		lastCopybookName = null;
-		BufferedReader r = null;
-		try {
-			r = new BufferedReader(new FileReader(copyBookFile));
-			while ((s = r.readLine()) != null) {
-				if (!s.trim().startsWith("#")) {
-					//t = new StringTokenizer(s, seperator);
-					for (j = 0; j < fields.length; j++) {
-						fields[j] = removeQuotes(t.getField(j, s, new CsvDefinition(delimiter, "\"")));
-						//System.out.print("\t" + fields[j]);
-					}
+        try (BufferedReader r = new BufferedReader(new FileReader(copyBookFile))) {
+            while ((s = r.readLine()) != null) {
+                if (!s.trim().startsWith("#")) {
+                    for (j = 0; j < fields.length; j++) {
+                        String delimiter = ",";
+                        fields[j] = removeQuotes(t.getField(j, s, new CsvDefinition(delimiter, "\"")));
+                    }
 
 
-					try {
-						idx = 0;
-						system = fields[idx++];
-						copybookName = fields[idx++];
-						name = fields[idx++];
-						pos  = Integer.parseInt(fields[idx++]) + 1;
-						typeStr = fields[idx++];
-						//System.out.println(fields[0] + " ! " + fields[1]);
-						len  = Integer.parseInt(fields[idx++]);
+                    try {
+                        idx = 0;
+                        system = fields[idx++];
+                        copybookName = fields[idx++];
+                        name = fields[idx++];
+                        pos = Integer.parseInt(fields[idx++]) + 1;
+                        typeStr = fields[idx++];
+                        len = Integer.parseInt(fields[idx++]);
 
-						decimal = Integer.parseInt(fields[idx++]);
+                        decimal = Integer.parseInt(fields[idx]);
 
-						type = Type.ftChar;
-						if (typeStr != null && ! "".equals(typeStr)) {
-							typeStr = typeStr.toUpperCase();
-							//System.out.print("  >" + typeStr + "<");
-							if (typeConv.containsKey(typeStr)) {
-								//System.out.print("!!! " + typeConv.get(typeStr) );
-								type = ( typeConv.get(typeStr)).intValue();
-							}
-						}
-						//System.out.println("\t Type: " + type);
+                        type = Type.ftChar;
+                        if (typeStr != null && !typeStr.isEmpty()) {
+                            typeStr = typeStr.toUpperCase();
+                            if (typeConv.containsKey(typeStr)) {
+                                type = typeConv.get(typeStr);
+                            }
+                        }
 
-						field = new ExternalField(pos, len, name, "", type,
-								decimal, 0, "", "", "", i);
+                        field = new ExternalField(pos, len, name, "", type,
+                                decimal, 0, "", "", "", i);
 
-						if (rec == null || (! system.equals(lastSystem)) || (! copybookName.equals(lastCopybookName))) {
-//							System.out.println();
-//							System.out.println("~~>" + lastSystem +">  >" + lastCopybookName + "> " + (rec == null)
-//									+ " " + (! system.equals(lastSystem))
-//									+ " " +  (! CopybookName.equals(lastCopybookName)));
-//							System.out.println("@@>" + system +">  >" + CopybookName + ">");
-							rec = ExternalRecord.getNullRecord(
-									copybookName,
-									rt,
-									font);
-							parentRec.addRecord(rec);
-							rec.setNew(true);
-							rec.setDelimiter(",");
-							rec.setListChar("Y");
-							rec.setQuote("\"");
-							rec.setRecordStyle(CsvParserManagerChar.DB_CSV_PARSER);
-							rec.setSystemName(system.trim());
+                        if (rec == null || (!Objects.equals(system, lastSystem)) || (!copybookName.equals(lastCopybookName))) {
+                            rec = ExternalRecord.getNullRecord(
+                                    copybookName,
+                                    rt,
+                                    font);
+                            parentRec.addRecord(rec);
+                            rec.setNew(true);
+                            rec.setDelimiter(",");
+                            rec.setListChar("Y");
+                            rec.setQuote("\"");
+                            rec.setRecordStyle(CsvParserManagerChar.DB_CSV_PARSER);
+                            rec.setSystemName(system.trim());
 
-							lastSystem = system;
-							lastCopybookName = copybookName;
-						}
-						rec.addRecordField(field);
-						i += 1;
-					} catch (Exception e) {
-						logMsg("Error Adding line " + inputLine
-								+ ": " + e.getMessage(), null);
-						e.printStackTrace();
-					}
-					inputLine += 1;
-				}
-			}
-		} catch (Exception e) {
-			System.out.println("Error Adding line " + inputLine
-					+ " from file " + copyBookFile
-					+ ": " + e.getMessage());
-			e.printStackTrace();
-			logMsg("Error Loading Copybook: " + e.getMessage(), e);
-		} finally {
-			try {
-			r.close();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-		}
-	}
+                            lastSystem = system;
+                            lastCopybookName = copybookName;
+                        }
+                        rec.addRecordField(field);
+                        i += 1;
+                    } catch (Exception e) {
+                        log.error("Error Adding line {} from file {} : ",  inputLine, copyBookFile, e);
+                    }
+                    inputLine += 1;
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error Adding line {} from file {} : {}",  inputLine, copyBookFile, e.getMessage(), e);
+        }
+        // TODO: handle exception
+    }
 
 	private static String removeQuotes(String s) {
 		if (s != null && s.startsWith("\"")) {
@@ -214,17 +187,5 @@ public class DbCsvCopybookLoader extends BaseCopybookLoader {
 		return s;
 	}
 
-	private static void logMsg(String msg, Exception e) {
-		System.out.println(msg);
-	}
-
-//	private static String toString(Object o) {
-//		String ret = "";
-//
-//		if (o != null) {
-//			ret = o.toString();
-//		}
-//		return ret;
-//	}
 
 }

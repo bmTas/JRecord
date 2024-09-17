@@ -33,20 +33,20 @@ public interface ISetDropCopybookName {
 	/**
 	 * @param dropCopybookFromFieldNames the dropCopybookFromFieldNames to set
 	 */
-	public abstract void setDropCopybookFromFieldNames(
+	void setDropCopybookFromFieldNames(
 			boolean dropCopybookFromFieldNames);
 
 	/**
-	 * wether to keep the source cb2xml document
+	 * Whether to keep the source cb2xml document
 	 * 
-	 * @param saveCb2xml wether to keep the source cb2xml document
+	 * @param saveCb2xml Whether to keep the source cb2xml document
 	 */
-	public abstract void setSaveCb2xmlDocument(boolean saveCb2xml);
+	void setSaveCb2xmlDocument(boolean saveCb2xml);
 
 	
-	public abstract void setKeepFillers(boolean keepFiller);
+	void setKeepFillers(boolean keepFiller);
 	
 	
-	public abstract void setStackSize(int stackSize);
+	void setStackSize(int stackSize);
 
 }

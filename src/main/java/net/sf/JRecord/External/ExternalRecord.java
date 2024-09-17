@@ -29,7 +29,6 @@
 package net.sf.JRecord.External;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -37,7 +36,6 @@ import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
-import net.sf.JRecord.Common.IFileStructureConstants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LayoutGetFieldByName;
@@ -54,7 +52,7 @@ import net.sf.JRecord.detailsBasic.IItemDetails;
 
 
 /**
- *  This class holds the interchange format of of a RecordLayout.
+ *  This class holds the interchange format of a RecordLayout.
  *  It can be<ul>
  *    <li>Read from a file (See <b>CopybookLoaderFactory</b>).
  *    <li>Written to an external file (See <b>CopybookWriterManager</b>).
@@ -93,45 +91,23 @@ import net.sf.JRecord.detailsBasic.IItemDetails;
  *       LayoutDetail layout = externalLayout.asLayoutDetail();
  * </pre>
  */
-public class ExternalRecord extends BaseExternalRecord<ExternalRecord> 
-implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
+public class ExternalRecord extends BaseExternalRecord<ExternalRecord>
+        implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 
-	//  private int recordId;
-	//  private String recordName;
-	//  private String description;
-	//  private int recordType;
-	//  private int system;
-	//  private String listChar;
-	//  private String copyBook;
-	//  private String delimiter;
-	//  private String quote;
-	//  private int posRecInd;
-	//  private String recSepList;
-	//  private byte[] recordSep;
-	//  private String fontName;
-	//  private int recordStyle;
 	
-	//  private int fileStructure;
-	
-	public static enum FieldAdjustmentOptions {
+	public enum FieldAdjustmentOptions {
 			NO_ADJUSTMENT,
 			ADJUST_BY_LENGTH,
 			CALCULATE_ADJUSTMENT
-	};
+	}
 
 	private RecordDecider recordDecider = null;
-	//private String tstFieldValue = "";
 
 
 
 
 
-	//  private ArrayList<ExternalRecord> subRecords = new ArrayList<ExternalRecord>();
-	//  private ArrayList<ExternalField> fields = new ArrayList<ExternalField>();
-	//
 	private int lastPosition = -1;
-	//  
-	//  private ArrayList<Cb2xmlDocument> cb2xmlDocuments = new ArrayList<Cb2xmlDocument>();
 
 
 	/**
@@ -213,11 +189,12 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 			adjustFieldPositions(idx, len);
 			break;
 		case CALCULATE_ADJUSTMENT:
-			Collections.sort(fields, new Comparator<ExternalField>() {
-				@Override public int compare(ExternalField o1, ExternalField o2) {
-					return Integer.compare(o1.getPos(), o2.getPos());
-				}
-			});
+			fields.sort(new Comparator<ExternalField>() {
+                @Override
+                public int compare(ExternalField o1, ExternalField o2) {
+                    return Integer.compare(o1.getPos(), o2.getPos());
+                }
+            });
 			
 			for (int i = 0; i < fields.size(); i++) {
 				if (fields.get(i).getPos() >= pos) {
@@ -335,11 +312,11 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	/**
 	 * Create a new record
 	 * @param pRecordName name of the new record
-	 * @param fontName fontname to use
+	 * @param fontName fontName to use
 	 *
 	 * @return the new record
 	 */
-	public static final ExternalRecord getNullRecord(final String pRecordName,
+	public static ExternalRecord getNullRecord(final String pRecordName,
 			final String fontName) {
 
 		return getNullRecord(pRecordName, Constants.rtRecordLayout, fontName);
@@ -350,60 +327,22 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	 * Create a new record
 	 * @param pRecordName name of the new record
 	 * @param recordType record type for the record
-	 * @param fontName fontname to use
+	 * @param fontName fontName to use
 	 *
 	 * @return the new record
 	 */
-	public static final ExternalRecord getNullRecord(final String pRecordName,
-			final int recordType,
-			final String fontName) {
+	public static ExternalRecord getNullRecord(final String pRecordName,
+                                               final int recordType,
+                                               final String fontName) {
 
 		return new ExternalRecord(-1, pRecordName, "", recordType, 0, "N",
 				"", "<Tab>", "", 0, Constants.DEFAULT_STRING, Constants.SYSTEM_EOL_BYTES, fontName, 0, -1, false);
 	}
 
 
-	//  Code for implementing IBasicSchema
-	//
-	//	/* (non-Javadoc)
-	//	 * @see net.sf.JRecord.Common.IBasicFileSchema#isBinary()
-	//	 */
-	//	//@Override
-	//	public boolean isBinary() {
-	//
-	//		for (int i = subRecords.size() - 1; i >= 0; i--) {
-	//			if (subRecords.get(i).isBinary()) {
-	//				return true;
-	//			}
-	//		}
-	//		TypeManager typeMgr = TypeManager.getInstance();
-	//		for (int i = fields.size() - 1; i >= 0; i--) {
-	//			if (typeMgr.getType(fields.get(i).getType()).isBinary()) {
-	//				return true;
-	//			}
-	//		}
-	//		return false;
-	//	}
-	//
-	//	/* (non-Javadoc)
-	//	 * @see net.sf.JRecord.Common.IBasicFileSchema#getMaximumRecordLength()
-	//	 */
-	//	//@Override
-	//	public int getMaximumRecordLength() {
-	//		int len = 0;
-	//		for (int i = subRecords.size() - 1; i >= 0; i--) {
-	//			len = Math.max(len, subRecords.get(i).getMaximumRecordLength());
-	//		}
-	//		
-	//		for (int i = fields.size() - 1; i >= 0; i--) {
-	//			len = Math.max(len, fields.get(i).getPos() + fields.get(i).getLen() - 1);
-	//		}
-	//		return len;
-	//	}
-
 
 	/**
-	 * Get a copy of all subrecords.
+	 * Get a copy of all sub-records.
 	 *
 	 * @return Sub records
 	 */
@@ -480,7 +419,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 
 	private int calcNextPos() {
 		int pos = 1;
-		if (fields.size() > 0) {
+		if (!fields.isEmpty()) {
 			ExternalField lf = fields.get(fields.size() - 1);
 			pos = Math.max(lastPosition, lf.getPos() + lf.getLen());
 		}
@@ -519,7 +458,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	}
 
 	private void setLastFieldsLength(int pos) {
-		if (fields.size() > 0) {
+		if (!fields.isEmpty()) {
 			ExternalField lf = fields.get(fields.size() - 1);
 			if (lf.getPos() >= lastPosition) {
 				lf.setLen(pos -  lf.getPos()); 
@@ -542,7 +481,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	@Override
 	public ExternalRecord addFieldByPosition(String name, int type, int pos, int length, int decimal) {
 
-		if (fields.size() > 0) {
+		if (!fields.isEmpty()) {
 			ExternalField lf = fields.get(fields.size() - 1);
 			lf.setLen(pos -  lf.getPos());
 		}
@@ -551,39 +490,19 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	}
 
 
-
-
-
-
-	//	/**
-	//	 * @return the tstFields
-	//	 */
-	//	public List<TstField> getTstFields() {
-	//		return tstFields;
-	//	}
-	//
-	//	private ArrayList<TstField> getTestField() {
-	//		if (tstFields == null) {
-	//			tstFields = new ArrayList<TstField>(5);
-	//		}
-	//		return tstFields;
-	//	}
-
-
 	/**
 	 * Convert to internal format
 	 * @return the internal LayoutDetail equivalent
 	 *
 	 */
 	public final LayoutDetail asLayoutDetail() {
-//		return ToLayoutDetail.getInstance().getLayout(this);
-	    LayoutDetail ret = null;
+	    LayoutDetail ret;
 
 	    RecordDetail[] records;
 	    String recordSepString = this.getRecSepList();
 
 	    String fontName = this.getFontName();
-	    if ((fontName == null || fontName.length() == 0) && Conversion.isMultiByte("") && isBinary()) {
+	    if ((fontName == null || fontName.isEmpty()) && Conversion.isMultiByte("") && isBinary()) {
 	    	fontName = Conversion.DEFAULT_ASCII_CHARSET;
 	    }
 	    byte[] recordSep = CommonBits.getEolBytes( this.getRecordSep(), recordSepString, fontName);
@@ -596,10 +515,6 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	        records = new RecordDetail[1];
 	        records[0] = this.toRecordDetail(charsetType, super.optimizeTypes);
 	        records[0].updateRecordSelection(this.getRecordSelection(), records[0]);
-//		    ExternalSelection recordSelection = recordDefinition.getRecordSelection();
-//		    if (recordSelection != null && recordSelection.getSize() > 0) {
-//		    	layouts[0].getRecordSelection().setRecSel((new Convert()).convert(recordSelection, layouts[0]));
-//		    }
 	        ret = genSchema(records, fontName, recordSepString, recordSep);
 	    } else {
 	        records = new RecordDetail[this.getNumberOfRecords()];
@@ -612,16 +527,10 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 		    	records[i].updateRecordSelection(
 		    			this.getRecord(i).getRecordSelection(), 
 		    			new LayoutGetFieldByName(ret,  records[i]));
-//			    ExternalSelection recordSelection = this.getRecord(i).getRecordSelection();
-//			    if (recordSelection != null && recordSelection.getSize() > 0) {
-//			    	layouts[i].getRecordSelection().setRecSel(
-//			    			(new Convert()).convert(recordSelection, new GetField(ret,  layouts[i])));
-//			    }
 		    }
 	    }
 	
 	    ret.setDelimiter(this.getDelimiter());
-	    //ret.setLineNumberOfFieldNames(recordDefinition.getLineNumberOfFieldNames());
 
 	    return ret;
 	}
@@ -630,21 +539,20 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	
 
 	/**
-	 * @param recordDefinition  Schema-Builder (External schema definitions
 	 * @param recordDefs Record Definitions
 	 * @param recordSepString Record (or line) separator (String)
 	 * @param recordSep Record Separator (bytes)
-	 * @return requested schema (Layoutdetail - internal schema format)
+	 * @return requested schema (Layout detail - internal schema format)
 	 */
 	private LayoutDetail genSchema(
-			RecordDetail[] recordDefs, String fontname, String recordSepString, byte[] recordSep) {
+			RecordDetail[] recordDefs, String fontName, String recordSepString, byte[] recordSep) {
 		return new LayoutDetail(this.getRecordName(),
 	            recordDefs,
 	            this.getDescription(),
 	            this.getRecordType(),
 	            recordSep,
 	            recordSepString,
-	            fontname,
+	            fontName,
 	            this.getRecordDecider(),
 	            this.getFileStructure(),
 	            null,
@@ -658,7 +566,6 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	 * converts an ExtendedRecord (ie used for storage of records externally)
 	 * to the format used in the record editor
 	 *
-	 * @param def record definition
 	 *
 	 * @return the same definition as used in the record editor
 	 */
@@ -684,13 +591,6 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 			Arrays.sort(fields, new Comparator<FieldDetail>() {
 				@Override public int compare(FieldDetail o1, FieldDetail o2) {
 					return Integer.compare(o1.getPos(), o2.getPos());
-//					if (o1.getPos() > o2.getPos()) {
-//						return 1;
-//					}
-//					if (o1.getPos() < o2.getPos()) {
-//						return -1;
-//					}
-//					return 0; //Integer.compare(o1.getLen(), o2.getLen());
 				}
 			});
 	    } else {
@@ -715,7 +615,7 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 		        fields[i].setDependingOnDtls(fieldRec.getDependOnDtls());
 	
 			    String s = fieldRec.getDefault();
-			    if (s != null && ! "".equals(s)) {
+			    if (s != null && !s.isEmpty()) {
 			    	fields[i].setDefaultValue(s);
 			    }
 		    }
@@ -723,15 +623,10 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 
 	    RecordDetail ret = new RecordDetail(this.getRecordName(),
 	            this.getRecordPositionOption(),
-//	    		this.getTstField(), this.getTstFieldValue(),
 	            this.getRecordType(), this.getDelimiter(), this.getQuote(),
 	            this.getFontName(), fields, itemDtls, this.getRecordStyle());
 	    ret.setParentRecordIndex(this.getParentRecord());
 	    ret.setDependingOn(this.getDependingOnDefinition());
-
-//	    if (def.getRecordSelection() != null && def.getRecordSelection().getSize() > 0) {
-//	    	ret.getRecordSelection().setRecSel((new Convert()).convert(def.getRecordSelection(), ret));
-//	    }
 
 	    if (this.isDefaultRecord()) {
 	    	ret.getRecordSelection().setDefaultRecord(true);
@@ -744,13 +639,11 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	
 	/**
 	 * Convert it the ExternalRecord Into an IOBuilder
-	 * @return
+	 * @return ISchemaIOBuilder equivalent to the ExternalRecord
 	 */
 	public final net.sf.JRecord.def.IO.builders.ISchemaIOBuilder asIOBuilder() {
 		LayoutDetail layoutDetail = this.asLayoutDetail();
-		return layoutDetail==null
-				? null
-				: net.sf.JRecord.IO.builders.SchemaIOBuilder.newSchemaIOBuilder(layoutDetail);
+		return net.sf.JRecord.IO.builders.SchemaIOBuilder.newSchemaIOBuilder(layoutDetail);
 	}
 
 
@@ -775,14 +668,17 @@ implements ICsvSchemaBuilder, IFixedWidthSchemaBuilder {
 	 * @param schemaName Name of the Csv-Schema
 	 * @param fileStructure FileStructure of the file normally IFileStructureConstants.IO_STANDARD_TEXT_FILE
 	 * @param fontName  font or encoding name
-	 * @param delimeter field delimiter or field separator (e.g. ",") 
+	 * @param delimiter field delimiter or field separator (e.g. ",")
 	 * @param quote quote character (e.g. "\"" or "'")
 	 * @return CsvSchemaBuilder
 	 */
-	public static ICsvSchemaBuilder newCsvRecord(String schemaName, int fileStructure, String fontName, String delimeter, String quote) {
-		ExternalRecord r =  new ExternalRecord(-1, schemaName, "", Constants.rtDelimited, 0, "N",
-				"", delimeter, quote, 0, Constants.DEFAULT_STRING, Constants.SYSTEM_EOL_BYTES, fontName, 0, fileStructure, false);
-
-		return r;
+	public static ICsvSchemaBuilder newCsvRecord(String schemaName,
+                                                 int fileStructure,
+                                                 String fontName,
+                                                 String delimiter,
+                                                 String quote) {
+		return  new ExternalRecord(-1, schemaName, "", Constants.rtDelimited, 0,
+                "N", "", delimiter, quote, 0, Constants.DEFAULT_STRING,
+                Constants.SYSTEM_EOL_BYTES, fontName, 0, fileStructure, false);
 	}
 }

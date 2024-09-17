@@ -34,9 +34,10 @@
 
 package net.sf.JRecord.IO;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.DefaultLineProvider;
@@ -115,7 +116,7 @@ public abstract class AbstractLineReader implements IReadLine, IGetLayout {
 	 * @param fileName file to be opened.
 	 */
 	 public void open(String fileName) throws IOException {
-		 open(fileName, (LayoutDetail) null);
+		 open(fileName, null);
 	 }
     /**
      * Open file for input
@@ -126,7 +127,7 @@ public abstract class AbstractLineReader implements IReadLine, IGetLayout {
      * @throws IOException any IOerror
      */
     public void open(String fileName, LayoutDetail pLayout) throws IOException {
-        open(new FileInputStream(fileName), pLayout);
+        open(Files.newInputStream(Paths.get(fileName)), pLayout);
 
         if (layout == null) {
             setLayout(pLayout);
@@ -138,7 +139,7 @@ public abstract class AbstractLineReader implements IReadLine, IGetLayout {
     /**
      * Open a file using an external record Definition 
      * @param inputStream input
-     * @param recordLayout recordlayout to use
+     * @param recordLayout record layout to use
      * @throws IOException any IOError that occurs
      */
     public void open(InputStream inputStream, ExternalRecord recordLayout) 

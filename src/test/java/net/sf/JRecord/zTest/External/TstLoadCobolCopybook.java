@@ -32,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import net.sf.JRecord.Common.RecordException;
@@ -104,14 +105,7 @@ public class TstLoadCobolCopybook extends JUnit3Test  {
 			assertEqualsV3i(id, fldAttrs[i][2], fld.getLen());
     	}
 
-    	
-//    	System.out.println(" ===> " + extlayoutCBL.getNumberOfRecordFields() + ", " + extlayoutCBL.getNumberOfRecords() );
-//    	for (int i = 0; i < extlayoutCBL.getNumberOfRecordFields(); i++) {
-//    		System.out.println("\t\"" + extlayoutCBL.getRecordField(i).getName() + "\",");
-//    	}
-//    	for (int i = 0; i < extlayoutCBL.getNumberOfRecordFields(); i++) {
-//    		ExternalField fld = extlayoutCBL.getRecordField(i);
-//			System.out.println("\t{" + fld.getType() + ", " + fld.getPos() + ", " + fld.getLen() + "},");
-//    	}
+        Assertions.assertTrue(CobolCopybookLoader.isAvailable());
+
 	}
 }

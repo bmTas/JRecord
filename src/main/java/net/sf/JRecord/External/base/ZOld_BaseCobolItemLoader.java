@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import lombok.Setter;
 import net.sf.JRecord.Common.CommonBits;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.Conversion;
@@ -35,11 +36,18 @@ public class ZOld_BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord
 
     private final boolean useJRecordNaming ;
     private final IExernalRecordBuilder<XRecord> recBuilder;
-    
-    
+
+
+    /**
+     * -- SETTER --
+     *
+     * @param stackSize the stackSize to set
+     */
+    @Setter
     private int stackSize = Cb2xmlJrConsts.CALCULATE_THREAD_SIZE;
 
     
+    @Setter
     private boolean keepFiller,
     				dropCopybookFromFieldNames = CommonBits.isDropCopybookFromFieldNames(), 
     				saveCb2xml;
@@ -55,23 +63,12 @@ public class ZOld_BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord
 		this.keepFiller = keepFiller;
 	}
 
-	public void setDropCopybookFromFieldNames(boolean dropCopybookFromFieldNames) {
-		this.dropCopybookFromFieldNames = dropCopybookFromFieldNames;
-	}
-
-	public void setSaveCb2xmlDocument(boolean saveCb2xml) {
+    public void setSaveCb2xmlDocument(boolean saveCb2xml) {
 		this.saveCb2xml = saveCb2xml;
 	}
 
 
-	/**
-	 * @param stackSize the stackSize to set
-	 */
-	public void setStackSize(int stackSize) {
-		this.stackSize = stackSize;
-	}
-
-	/* (non-Javadoc)
+    /* (non-Javadoc)
 	 * @see net.sf.JRecord.External.CopybookLoader#loadCopyBook(java.lang.String, int, int, java.lang.String, int, int, net.sf.JRecord.Log.AbsSSLogger)
 	 */
 	public final XRecord loadCopyBook(String copyBookFile,
@@ -100,7 +97,7 @@ public class ZOld_BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord
      * Convert a XML Dom Copybook into the XRecord
      *
      * @param copyBookFile Copy Book file Name
-     * @param splitCopybookOption wether to split a copy book on a redefine
+     * @param splitCopybookOption whether to split a copy book on a redefine
      * @param dbIdx Database Index
      * @param font font name to use
      * @param binFormat binary format to use
@@ -135,16 +132,8 @@ public class ZOld_BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord
 		
 		Copybook copybook;
 
-//		try {
-			copybook = net.sf.JRecord.External.Def.Cb2Xml
-							.getCopybook(reader, copyBookName, binaryFormat, false, copybookFormat, stackSize);
-//		} catch (ParserException e) {
-//			throw new IOException(e);
-//		} catch ( XMLStreamException e) {
-//			throw new IOException(e);
-//		} catch (LexerException e) {
-//			throw new IOException(e);
-//		}
+        copybook = net.sf.JRecord.External.Def.Cb2Xml.getCopybook(reader, copyBookName, binaryFormat,
+                false, copybookFormat, stackSize);
 
 		return loadCopybook(copybook, copyBookName, splitCopybook, dbIdx, font, binaryFormat, systemId);
 	}
@@ -182,12 +171,12 @@ public class ZOld_BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord
         	while (list != null && list.size() == 1) {
         		IItemJrUpd itm = list.get(0);
         		String fn = itm.getFieldName();
-        		if (fn != null && fn.length() > 0 && ! "filler".equalsIgnoreCase(fn)) {
+        		if (fn != null && !fn.isEmpty() && ! "filler".equalsIgnoreCase(fn)) {
         			groups.add(fn);
         		}
 				list = itm.getChildItems();
         	}
-           	String[] groupArray = groups.toArray(new String[groups.size()]);
+           	String[] groupArray = groups.toArray(new String[0]);
         	if (list == null || list.size() < 2) {
             	ret = createSingleRecordSchema(copyBookName, groupArray, font, binaryFormat, copybookItems);
         	} else {
@@ -355,7 +344,7 @@ public class ZOld_BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord
 			int systemId) {
 		XRecord childRec;
 		String name = fieldName; 
-		if (name == null || name.length() == 0 || "filler".equalsIgnoreCase(name)) {
+		if (name == null || name.isEmpty() || "filler".equalsIgnoreCase(name)) {
 			name = copyBookName + "_" + idx;
 		} else 			if (useJRecordNaming) {
 			name = name.trim();
@@ -404,39 +393,9 @@ public class ZOld_BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord
 	   					.setCobolConversionOptions(keepFiller, dropCopybookFromFieldNames, saveCb2xml, useJRecordNaming);
 	}
 
-//	private void updateType(FieldCreatorHelper fldhelper, IItemJrUpd itm) {
-//		
-//		updateItemForType(fldhelper, itm);
-//		updateType(fldhelper, itm.getChildItems());
-//	}
-//
-//	private List<? extends IItemJrUpd> updateType(FieldCreatorHelper fldhelper, List<? extends IItemJrUpd> items) {
-//		if (items != null) { 
-//			for (IItemJrUpd itm : items) {
-//				updateItemForType(fldhelper, itm);
-//				updateType(fldhelper, itm.getChildItems());
-//			}
-//		}
-//		
-//		return items;
-//	}
-//	
-//	private void updateItemForType(FieldCreatorHelper fldhelper, IItemJrUpd item) {
-//		int typeId = Type.ftChar;
-//		List<? extends IItemJrUpd> childItems = item.getChildItems();
-//		if (childItems == null || childItems.size() == 0) {
-//			typeId = fldhelper.deriveType(
-//					item.getNumericClass().numeric, item.getUsage().getName(), item.getPicture(), 
-//					item.getSignClause().signSeparate, item.getSignClause().signPosition.getName(), 
-//					item.getJustified().isJustified); 
-//		}
-//		item.setType(typeId);
-//	}
-
-
 	/**
 	 * Class to search for Redefines and
-	 * store retrieved data in a useful for for
+	 * store retrieved data in a useful for
 	 * later processing
 	 * 
 	 * @author Bruce Martin
@@ -446,15 +405,13 @@ public class ZOld_BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord
 		int level = Integer.MAX_VALUE;
 		IItemJrUpd item;
 		List<IItem> redefineItems;
-		Set<IItem> redefSet;
 		Set<IItemBase> parents;
 		
 		RedefineSearcher(List<? extends IItemJrUpd> items) {
 			search(items);
 			
 			if (item != null) {
-				redefineItems = new ArrayList<IItem>();
-				//redefineItems.add(item);
+				redefineItems = new ArrayList<>();
 				int pos = item.getPosition();
 				for (IItem itm : item.getParent().getChildItems()) {
 					if (itm.getPosition() == pos) {
@@ -462,8 +419,7 @@ public class ZOld_BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord
 					} 
 				}
 				
-				redefSet = new HashSet<IItem>(redefineItems);
-				parents = new HashSet<IItemBase>();
+				parents = new HashSet<>();
 				
 				IItemBase p = item;
 				while (p.getParent()!= null) {

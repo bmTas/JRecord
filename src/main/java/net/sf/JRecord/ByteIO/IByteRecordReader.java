@@ -8,7 +8,7 @@ import net.sf.JRecord.Common.ISetData;
 
 
 /**
- * Read a series of Byte-Array Records from what ever
+ * Read a series of Byte-Array Records from whatever
  * This is general interface that users can use to some data-store
  * e.g.<ul>
  * <li>IBM ZFile on the IBM mainframe
@@ -32,8 +32,8 @@ public interface IByteRecordReader {
 
 	/**
 	 * Read into an existing 'line'
-	 * @param line The 'line' to updated with data read from the file.
-	 * @return wether the read was succesfull (true) or eof (false)
+	 * @param line The 'line' to update with data read from the file.
+	 * @return whether the read was successful (true) or eof (false)
 	 * @throws IOException any IOError that occurs.
 	 */
 	boolean readInto(ISetData line) throws IOException;
@@ -52,10 +52,5 @@ public interface IByteRecordReader {
 	 * @throws IOException io error
 	 */
 	void close() throws IOException;
-
-//	/**
-//	 * @param lineLength The lineLength to set.
-//	 */
-//	void setLineLength(int lineLength);
 
 }

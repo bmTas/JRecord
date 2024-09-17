@@ -62,8 +62,7 @@ import net.sf.JRecord.detailsBasic.CsvCharDetails;
  */
 public class BinTextReader extends LineReaderWrapper {
 
-	private String defaultQuote  = "'";
-	private boolean readNames;
+    private final boolean readNames;
 	
 	public BinTextReader(LineProvider provider, boolean nameOn1stLine) {
 		this(provider, nameOn1stLine, new ByteTextReader());
@@ -76,7 +75,7 @@ public class BinTextReader extends LineReaderWrapper {
 	}
 
 	   /**
-     * @see net.sf.JRecord.IO.AbstractLineReader#open(java.io.InputStream, net.sf.JRecord.Details.LayoutDetail)
+     * @see AbstractLineReader#open(InputStream, LayoutDetail)
      */
     public void open(InputStream inputStream, LayoutDetail layout)
     throws IOException {
@@ -92,7 +91,7 @@ public class BinTextReader extends LineReaderWrapper {
     /**
      * create a layout
      *
-     * @param pReader file read
+     * @param line file read
      *
      * @throws IOException sny IO error that occurs
      */
@@ -106,14 +105,11 @@ public class BinTextReader extends LineReaderWrapper {
         int parser    = 0;
         int structure = IFileStructureConstants.IO_NAME_1ST_LINE;
         String param  = "";
-//        byte[] delim  = {0}; 
-//        String delimStr = "x'00'";
-//        String quote  = defaultQuote;
         String font   = "";
         byte[] recordSep = Constants.SYSTEM_EOL_BYTES;
         boolean embeddedCr = false, binCsv = false;
         CsvCharDetails delim  = CsvCharDetails.newDelimDefinition("<tab>", font);
-        //String delimStr = "x'00'";
+        String defaultQuote = "'";
         CsvCharDetails quote  = CsvCharDetails.newQuoteDefinition(defaultQuote, font);
 
 	    try {
@@ -123,7 +119,6 @@ public class BinTextReader extends LineReaderWrapper {
 	    		structure = ts;
 	    	}
 	    	delim     = suppliedLayout.getDelimiterDetails();
-	    	//delimStr = suppliedLayout.getDelimiter();
 	        rec = suppliedLayout.getRecord(0);
 	        binCsv = suppliedLayout.isBinCSV();
 	        quote     = rec.getQuoteDefinition();
@@ -136,17 +131,13 @@ public class BinTextReader extends LineReaderWrapper {
 	        font      = suppliedLayout.getFontName();
 
 	        embeddedCr =  rec.isEmbeddedNewLine();
-	    } catch (Exception e) {
+	    } catch (Exception ignored) {
         }
 	    
-	    //System.out.println(" Quote  ->" + quote + " " + (getLayout() == null));
-
 	    layout = createLayout(line, rec, binCsv,
 	    		recordSep, font,  delim, 
                 parser, fieldType, decimal, format, 
                 param, quote, structure, embeddedCr);
-	    //System.out.println(" Quote  ->");
-
 	    if (layout != null) {
 	        setLayout(layout);
 	    }
@@ -155,10 +146,10 @@ public class BinTextReader extends LineReaderWrapper {
     /**
      * create a Layout from the first line in the file
      * @param line line being built
-     * @param recordSep record seperator
+     * @param recordSep record separator
      * @param fontName font name
-     * @param delimiter field delitmiier
-     * @param delimStr field delitmiier as a string
+     * @param delimiter field delimiter
+     * @param rec record detail
      * @param parser Identifier of the CSV parser to use
      * @param fieldType field type
      * @param decimal number of decimal places
@@ -166,7 +157,7 @@ public class BinTextReader extends LineReaderWrapper {
      * @param param param to add to each field
      * @param quote Quote
      * @param structure file structure
-     * @param embeddedCr wether there is embedded Cr in the file
+     * @param embeddedCr whether there is embedded Cr in the file
      * @return Create a Layout description form a supplied line (first line of a file ?)
      * + other details
      * @throws IOException any error
@@ -181,10 +172,6 @@ public class BinTextReader extends LineReaderWrapper {
         LayoutDetail ret = null;
 
         if (line != null) {
-            //RecordDetail rec = getLayout().getRecord(0);
-        	
-        	
-            //String fontName = fontname;
             int len ;
             FieldDetail[] flds ;
             RecordDetail[] recs;
@@ -203,24 +190,6 @@ public class BinTextReader extends LineReaderWrapper {
         	List<String> fieldList;
            	fieldList = CsvParserManagerByte.getInstance().get(parser, binCsv)
 						.getFieldList(line, csvDef);
-//            if (binCsv) {
-//            	fieldList = CsvParserManagerByte.getInstance().get(parser)
-//						.getFieldList(line, csvDef);
-////	           	BinaryCsvParser csvPaser = new BinaryCsvParser(delimiter.asByte());
-////	            //String fontName = fontname;
-////	            len = csvPaser.countTokens(line);
-////	            flds = new FieldDetail[len];
-////	            recs = new RecordDetail[1];
-////	            
-////	            for (i = 0; i < len; i++) {
-////	                s = csvPaser.getValue(line, i+1, fontName);
-////	                flds[i] = createField(rec, fontName, fieldType, decimal, format, param, s);
-////	                flds[i].setPosOnly(i + 1);
-////	            }
-//            } else {
-//             	fieldList = CsvParserManagerChar.getInstance().get(parser)
-//            					.getFieldList(Conversion.toString(line, fontName), csvDef);
-//            }
             len = fieldList.size();
             flds = new FieldDetail[len];
             recs = new RecordDetail[1];
@@ -233,10 +202,6 @@ public class BinTextReader extends LineReaderWrapper {
             recs[0] =  new RecordDetail("", Constants.rtDelimited,
             		delimiter.jrDefinition(), quote.jrDefinition(), 
             		fontName, flds, parser, null, embeddedCr);
-            		
-            	//	new RecordDetail("", "", "", Constants.rtDelimited,
-            	//	delimStr, quote, fontName, flds, parser);
-
             try {
                 ret =
                     new LayoutDetail("", recs, "",

@@ -59,12 +59,6 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 	public static ExternalRecord getExternalRecord(String xml, String copyBookName) throws IOException {
 		return new RecordEditorXmlLoader().loadCopyBook(new StringReader(xml), copyBookName, 0, 0, "", 0, 0, 0, null);
 	}
-	
-//	public static ExternalRecord getExternalRecord(String xml, String name) throws Exception {
-//		ByteArrayInputStream bs = new ByteArrayInputStream(xml.getBytes());
-//
-//		return (new RecordEditorXmlLoader()).loadCopyBook(bs, name, "", null);
-//	}
 
 
 	/* (non-Javadoc)

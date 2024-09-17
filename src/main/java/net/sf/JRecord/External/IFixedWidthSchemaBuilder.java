@@ -43,7 +43,7 @@ public interface IFixedWidthSchemaBuilder extends IBasicSchemaBuilder {
 	 * 
 	 * @return This Record.
 	 */
-	public IFixedWidthSchemaBuilder addFieldByPosition(String name, int type, int pos, int length, int decimal);
+	IFixedWidthSchemaBuilder addFieldByPosition(String name, int type, int pos, int length, int decimal);
 	
 	/**
 	 * Add a field specifying the field length
@@ -57,20 +57,20 @@ public interface IFixedWidthSchemaBuilder extends IBasicSchemaBuilder {
 	 * @param decimal number of decimal places
 	 * @return this schema builder (for further updates)
 	 */
-	public IFixedWidthSchemaBuilder addFieldByLength(String name, int type, int length, int decimal);
+	IFixedWidthSchemaBuilder addFieldByLength(String name, int type, int length, int decimal);
 	
 	/**
 	 * Skip a specified number of bytes in the record.
 	 * @param numberOfBytes number of bytes to be skipped
 	 * @return this schema builder (for further updates)
 	 */
-	public IFixedWidthSchemaBuilder skipBytes(int numberOfBytes);
+	IFixedWidthSchemaBuilder skipBytes(int numberOfBytes);
 
-	public IFixedWidthSchemaBuilder addField(String name, int type, int pos, int length, int decimal);
+	IFixedWidthSchemaBuilder addField(String name, int type, int pos, int length, int decimal);
 
-	public IFixedWidthSchemaBuilder addFieldByPosition(String name, int type, int pos,
+	IFixedWidthSchemaBuilder addFieldByPosition(String name, int type, int pos,
 			int decimal);
 
-	public IFixedWidthSchemaBuilder skipFieldPosition(int pos);
+	IFixedWidthSchemaBuilder skipFieldPosition(int pos);
 	
 }
