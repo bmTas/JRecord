@@ -64,7 +64,6 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 	public static ExternalRecord getExternalRecord(String xml, String copyBookName) throws IOException {
 		return new RecordEditorXmlLoader().loadCopyBook(new StringReader(xml), copyBookName, 0, 0, "", 0, 0, 0, null);
 	}
-
 	
 
 	private final List<String> searchDirectories = new ArrayList<>();
@@ -80,6 +79,7 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 	public void removeSearchDirectory(String directoryName) {
 		searchDirectories.remove(directoryName);
 	}
+
 
 
 	/* (non-Javadoc)
