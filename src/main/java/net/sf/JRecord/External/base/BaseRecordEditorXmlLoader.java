@@ -650,7 +650,7 @@ public class BaseRecordEditorXmlLoader<XRecord extends BaseExternalRecord<XRecor
 			while (fieldIterator.hasNext()) {
 				AbstractFieldValue attr = fieldIterator.next();
 				String name = attr.getFieldDetail().getName();
-				if (name != null && ! name.isBlank()) {
+				if (name != null && ! name.isEmpty())) {
 					attributes.put(name.toUpperCase(), attr.asString());
 				}
 			}
@@ -663,7 +663,7 @@ public class BaseRecordEditorXmlLoader<XRecord extends BaseExternalRecord<XRecor
 			
 			String dialectStr = attributes.get(Constants.RE_XML_PARSE_LANGUAGE);
 			int dialectCode = ICopybookDialects.FMT_MAINFRAME;
-			if (dialectStr != null && ! dialectStr.isBlank()) {
+			if (dialectStr != null && ! dialectStr.isEmpty()) {
 				ConstantDetails dialectDtls = ConstantNames.getConstantConversions().getDialects()
 						.getConstantDetails(dialectStr);
 				if (dialectDtls != null) {
@@ -674,7 +674,7 @@ public class BaseRecordEditorXmlLoader<XRecord extends BaseExternalRecord<XRecor
 
 			String systenStr = attributes.get(Constants.RE_XML_SYSTEMNAME);
 			int sysId = systemIdentifier;
-			if (systenStr != null && ! systenStr.isBlank()) {
+			if (systenStr != null && ! systenStr.isEmpty()) {
 				try {
 					sysId = Integer.parseInt(systenStr);
 				} catch (NumberFormatException e) {

@@ -29,7 +29,7 @@
 package net.sf.JRecord.External.Item;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import net.sf.cb2xml.analysis.BaseItem;
@@ -48,7 +48,7 @@ import net.sf.cb2xml.def.IItem;
  */
 public class ItemJRec extends Item implements IItemJRecUpd {
 
-	public static List<ItemJRec> EMPTY_LIST = Collections.emptyList();
+	public static List<ItemJRec> EMPTY_LIST = Arrays.asList(new ItemJRec[] {}) ;
 	private int formatId = 0;
 	private String parameter = "", 
 			javaType; //JRecord Type Identifier
