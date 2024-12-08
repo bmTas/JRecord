@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<RECORD RECORDNAME="ams PO Download- Header" COPYBOOK="" DELIMITER="&lt;Tab&gt;" 
+        DESCRIPTION="PO Download: Header" FILESTRUCTURE="Default" STYLE="0" RECORDTYPE="RecordLayout" LIST="N" 
+	QUOTE="" RecSep="default" TESTFIELD="Record-Type" TESTVALUE="H1">
+	<FIELDS>
+		<FIELD NAME="Record-Type"     POSITION="1" LENGTH="2" TYPE="Char"/>
+		<FIELD NAME="Sequence-Number" POSITION="3" LENGTH="5" DECIMAL="3" TYPE="Num Assumed Decimal (+ve)"/>
+		<FIELD NAME="Vendor"          POSITION="8" LENGTH="10" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="PO"              POSITION="18" LENGTH="12" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="Entry-Date"      DESCRIPTION="Format YYMMDD" POSITION="30" LENGTH="6" TYPE="Char"/>
+		<FIELD NAME="beg01-code"      POSITION="44" LENGTH="2" TYPE="Char"/>
+		<FIELD NAME="beg02-code"      POSITION="46" LENGTH="2" TYPE="Char"/>
+		<FIELD NAME="Department"      POSITION="48" LENGTH="4" TYPE="Char"/>
+		<FIELD NAME="Expected-Reciept-Date" DESCRIPTION="Format YYMMDD" POSITION="52" LENGTH="6" TYPE="Char"/>
+		<FIELD NAME="Cancel-by-date"  DESCRIPTION="Format YYMMDD" POSITION="58" LENGTH="6" TYPE="Char"/>
+		<FIELD NAME="EDI-Type"        POSITION="68" LENGTH="1" TYPE="Char"/>
+		<FIELD NAME="Add-Date"        DESCRIPTION="Format YYMMDD" POSITION="69" LENGTH="6" TYPE="Char"/>
+		<FIELD NAME="Department-Name" POSITION="76" LENGTH="10" TYPE="Char"/>
+		<FIELD NAME="Prcoess-Type"    DESCRIPTION="C/N Conveyable/Non-Conveyable" POSITION="86" LENGTH="1" TYPE="Char"/>
+		<FIELD NAME="Order-Type"      POSITION="87" LENGTH="2" TYPE="Char"/>
+	</FIELDS>
+</RECORD>

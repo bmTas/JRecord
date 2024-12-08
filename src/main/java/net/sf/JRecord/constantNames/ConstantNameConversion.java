@@ -113,6 +113,11 @@ public class ConstantNameConversion implements IInterfaceDetails {
 		return Integer.toString(code);
 	}
 	
+	/**
+	 * Get the JRecord Constant as a String from the integer code
+	 * @param code code value
+	 * @return requested constant string
+	 */
 	public String getJRecordConstantName(int code) {
 		ConstantDetails cd = getConstantDetails(code);
 		if (cd != null) {

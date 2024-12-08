@@ -32,6 +32,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.ILineFieldNames;
@@ -40,6 +44,7 @@ import net.sf.JRecord.External.base.BaseRecordEditorXmlLoader;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.XmlLineReader;
 import net.sf.JRecord.Log.AbsSSLogger;
+import net.sf.JRecord.Numeric.ICopybookDialects;
 
 /**
  * Class to Load a RecordLayout (Record or Line Description)
@@ -59,6 +64,22 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 	public static ExternalRecord getExternalRecord(String xml, String copyBookName) throws IOException {
 		return new RecordEditorXmlLoader().loadCopyBook(new StringReader(xml), copyBookName, 0, 0, "", 0, 0, 0, null);
 	}
+	
+
+	private final List<String> searchDirectories = new ArrayList<>();
+	
+
+	public void addSearchDirectory(String directoryName) {
+		searchDirectories.remove(directoryName);
+		searchDirectories.add(directoryName);
+	}
+
+
+
+	public void removeSearchDirectory(String directoryName) {
+		searchDirectories.remove(directoryName);
+	}
+
 
 
 	/* (non-Javadoc)
@@ -73,14 +94,14 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
         XmlLineReader r = new XmlLineReader(true);
 		r.open(inputStream, (LayoutDetail) null);
 
-	    return loadCopybook(r, copyBookName, font, log);
+	    return loadCopybook(searchDirectories, r, copyBookName, font, log);
 	}
 	
 	public ExternalRecord loadCopyBook(InputStream is, String copyBookName) throws IOException {
 		XmlLineReader r = new XmlLineReader(true);
 		r.open(is, (LayoutDetail) null);
 
-		return loadCopybook(r, copyBookName, "", null);
+		return loadCopybook(searchDirectories, r, copyBookName, "", null);
 	}
 
 	/* (non-Javadoc)
@@ -94,8 +115,27 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 			
 		XmlLineReader reader = new XmlLineReader(true);
 		reader.open(copyBookFile);
+		
+		String parentDirectory = null;
+		if (copyBookFile != null) {
+			Path parent = Paths.get(copyBookFile).getParent();
+			parentDirectory = parent == null ? null : parent.toString();
+		}
 
-		return loadCopybook(reader, Conversion.getCopyBookId(copyBookFile), font, log);
+		List<String> searchDirs = searchDirectories;
+		if (parentDirectory != null) {
+			searchDirs = new ArrayList<>(searchDirectories);
+			String parentDir = parentDirectory.toString();
+			searchDirs.remove(parentDirectory);
+			if (searchDirs.size() == 0) {
+				searchDirs.add(parentDir);
+			} else {
+				searchDirs.add(0, parentDir);
+			}
+		}
+
+
+		return loadCopybook(searchDirs, reader, Conversion.getCopyBookId(copyBookFile), font, log);
 	}
 	
 	@Override
@@ -104,7 +144,7 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 
         XmlLineReader r = new XmlLineReader(true);
 		r.open(reader, (LayoutDetail) null);
-	    return loadCopybook(r, copyBookName, font, log);
+	    return loadCopybook(searchDirectories, r, copyBookName, font, log);
 	}
 
 	/**
@@ -115,12 +155,12 @@ public class RecordEditorXmlLoader extends BaseCopybookLoader implements ICopybo
 	 * @return
 	 * @throws IOException
 	 */
-	private ExternalRecord loadCopybook(XmlLineReader reader, String copyBookName, String font, AbsSSLogger log)
+	private ExternalRecord loadCopybook(List<String> searchDirs, XmlLineReader reader, String copyBookName, String font, AbsSSLogger log)
 			throws IOException {
 		return (new BaseRecordEditorXmlLoader<ExternalRecord>(
 								new XmlReader(reader),
 								new ExternalRecordBuilder(),
-								null
+								new ChildCopybookReader(searchDirs, font, ICopybookDialects.FMT_MAINFRAME, log)
 					)).loadCopyBook(copyBookName, font, log);
 	}
 

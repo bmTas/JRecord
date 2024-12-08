@@ -1,0 +1,19 @@
+<parse filename="amsPoDownload.cbl" dialect="Intel" SPLIT="SPLIT_01_LEVEL" FILESTRUCTURE="Text">
+	<OVERRIDES>
+		<OVERRIDE NAME="PO-Record">
+			<AND>
+				<TSTFIELD NAME="Record-Type" VALUE="H1"/>
+			</AND>
+		</OVERRIDE>
+		<OVERRIDE NAME="Product-Record">
+			<AND>
+				<TSTFIELD NAME="Record-Type" VALUE="D1"/>
+			</AND>
+		</OVERRIDE>
+		<OVERRIDE NAME="Location-Record">
+			<AND>
+				<TSTFIELD NAME="Record-Type" VALUE="S1"/>
+			</AND>
+		</OVERRIDE>
+	</OVERRIDES>
+</parse>
