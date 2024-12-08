@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<RECORD RECORDNAME="ams PO Download- Detail" COPYBOOK="" DELIMITER="&lt;Tab&gt;" 
+        DESCRIPTION="PO Download: Detail" FILESTRUCTURE="Default" STYLE="0" ECORDTYPE="RecordLayout"
+	LIST="N" QUOTE="" RecSep="default" TESTFIELD="Record-Type" TESTVALUE="D1">
+	<FIELDS>                        
+		<FIELD NAME="Record-Type"  POSITION="1" LENGTH="2" TYPE="Char"/>
+		<FIELD NAME="Pack-Qty"     POSITION="3" LENGTH="9" DECIMAL="4" TYPE="Num Assumed Decimal (+ve)"/>
+		<FIELD NAME="Pack-Cost"    POSITION="12" LENGTH="13" DECIMAL="4" TYPE="Num Assumed Decimal (+ve)"/>
+		<FIELD NAME="APN"          POSITION="25" LENGTH="13" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="Product"      POSITION="39" LENGTH="8" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="pmg-dtl-tech-key" POSITION="72" LENGTH="15" TYPE="Char"/>
+		<FIELD NAME="Case-Pack-id" POSITION="87" LENGTH="15" TYPE="Char"/>
+		<FIELD NAME="Product-Name" POSITION="102" LENGTH="50" TYPE="Char"/>
+	</FIELDS>
+</RECORD>

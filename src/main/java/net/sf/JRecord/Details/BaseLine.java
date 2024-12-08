@@ -28,6 +28,9 @@
 
 package net.sf.JRecord.Details;
 
+import java.util.Iterator;
+
+import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
 import net.sf.JRecord.Details.fieldValue.FieldValue;
@@ -119,6 +122,11 @@ public abstract class BaseLine implements AbstractLine {
 	}
 	
 	
+	@Override
+	public Iterator<AbstractFieldValue> getFieldIterator() {
+		return new FieldIterator(this, getPreferredLayoutIdx());
+	}
+
 	/**
 	 * This basically checks to see if 
 	 * @param fd

@@ -25,6 +25,27 @@
       
 package net.sf.JRecord.ExternalRecordSelection;
 
+/**
+ * An ExternalSelection is boolean expression stored as a tree i.e.
+ * 
+ *                      +--- Field Test 1
+ *                      |     
+ *        +------and----+--- Field Test 2
+ *        |             |     
+ * ---or--+             +--- Field Test 3
+ *        |                 
+ *        +-------------+--- Field Test 3
+ *        
+ * ExternalSelection has 2 extended interfaces:<ul>
+ * <li><b>IExternalSelectionGroup</b> implements boolean and/or operators.
+ * There can be multiple <i>child</i> ExternalSelection's.
+ * <li><B>IExternalSelectionField</b> which tests one field. These have no 
+ * child ExternalSelection's.
+ * </ul>
+ *     
+ * @author Bruce Martin
+ *
+ */
 public interface ExternalSelection {
 
 	public static final int TYPE_ATOM = 1;
@@ -33,9 +54,25 @@ public interface ExternalSelection {
 //	public static final int TYPE_AND_OR = 4;
 //	public static final int TYPE_OR_AND = 5;
 	
+	/**
+	 * Get the <i>Type of Selections</i><ul>
+	 * <li><b>TYPE_ATOM = 1</b> Normal Field selection (Leaf in the Tree).
+	 * <li><b>TYPE_AND = 2</b> Boolean and operator.
+	 * <li><b>TYPE_OR = 2</b> Boolean or operator.
+	 * </ul>
+	 * @return Type of Selection class.
+	 */
 	public int getType();
 	
+	/**
+	 * 
+	 * @return The number of child Selection elements (will be 0 if a field selection
+	 */
 	public int getSize();
 
+	/**
+	 * 
+	 * @return The number of leaf elements (Field Selections) under this selection elements
+	 */
 	int getElementCount();
 }

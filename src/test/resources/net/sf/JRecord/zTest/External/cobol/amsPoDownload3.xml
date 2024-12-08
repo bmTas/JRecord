@@ -1,0 +1,29 @@
+<RECORD RECORDNAME="amsPoDownload"   FILESTRUCTURE="Text" RECORDTYPE="RecordLayout" LIST="Y" >
+    <parse filename="PO-Record.cbl" dialect="Intel">
+		<OVERRIDES>
+			<OVERRIDE>
+				<AND>
+					<TSTFIELD NAME="Record-Type" VALUE="H1"/>
+				</AND>
+			</OVERRIDE>
+		</OVERRIDES>
+	</parse>
+	<parse filename="Product-Record.cbl" dialect="Intel">
+		<OVERRIDES>
+			<OVERRIDE>
+				<AND>
+					<TSTFIELD NAME="Record-Type" VALUE="D1"/>
+				</AND>
+			</OVERRIDE>
+		</OVERRIDES>
+	</parse>
+	<parse filename="Location-Record.cbl" dialect="Intel">
+		<OVERRIDES>
+			<OVERRIDE>
+				<AND>
+					<TSTFIELD NAME="Record-Type" VALUE="S1"/>
+				</AND>
+			</OVERRIDE>
+		</OVERRIDES>
+	</parse>
+</RECORD>

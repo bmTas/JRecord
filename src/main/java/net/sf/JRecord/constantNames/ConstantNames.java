@@ -218,11 +218,11 @@ public class ConstantNames {
 		public ConstantNameConversion getSplitOptions() {
 			if (splitOptions == null) {
 				splitOptions = new ConstantNameConversion(ICobolSplitOptions.class, new ConstantDetails[] {
-						createSplitOption(ICobolSplitOptions.SPLIT_NONE, "SPLIT_NONE"),
-						createSplitOption(ICobolSplitOptions.SPLIT_01_LEVEL, "SPLIT_01_LEVEL"),
-						createSplitOption(ICobolSplitOptions.SPLIT_HIGHEST_REPEATING, "SPLIT_HIGHEST_REPEATING"),
-						createSplitOption(ICobolSplitOptions.SPLIT_REDEFINE, "SPLIT_REDEFINE"),
-						createSplitOption(ICobolSplitOptions.SPLIT_TOP_LEVEL, "SPLIT_TOP_LEVEL"),
+						createSplitOption(ICobolSplitOptions.SPLIT_NONE, "SPLIT_NONE", "NONE"),
+						createSplitOption(ICobolSplitOptions.SPLIT_01_LEVEL, "SPLIT_01_LEVEL", "01"),
+						createSplitOption(ICobolSplitOptions.SPLIT_HIGHEST_REPEATING, "SPLIT_HIGHEST_REPEATING", "HIGHEST_REPEATING"),
+						createSplitOption(ICobolSplitOptions.SPLIT_REDEFINE, "SPLIT_REDEFINE", "REDEFINE"),
+						createSplitOption(ICobolSplitOptions.SPLIT_TOP_LEVEL, "SPLIT_TOP_LEVEL", "TOP_LEVEL"),
 				});
 			}
 			return splitOptions;
@@ -270,9 +270,10 @@ public class ConstantNames {
 			return new ConstantDetails(code, name, externalName, name);
 		}
 
-		private  static ConstantDetails createSplitOption(int code,String name) {
-			return new ConstantDetails(code, name, name, name);
+		private  static ConstantDetails createSplitOption(int code, String name, String altName) {
+			return new ConstantDetails(code, altName, name, name);
 		}
+
 		
 		private static ConstantDetails createTypeConstant(int code, String simpleName, String externalName, String jrecordConstant) {
 			if (len(simpleName) > 40 || len(externalName) > 40) {

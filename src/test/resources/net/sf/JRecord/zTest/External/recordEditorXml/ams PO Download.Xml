@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<RECORD RECORDNAME="ams PO Download" COPYBOOK="" DELIMITER="&lt;Tab&gt;" FILESTRUCTURE="Default" STYLE="0" 
+        RECORDTYPE="GroupOfRecords" LIST="Y" QUOTE="" RecSep="default">
+    <parse filename="ams PO Download- Header.xml"/>
+    <parse filename="ams PO Download- Detail.xml"/>
+    <parse filename="ams PO Download- Allocation.xml"/>
+</RECORD>

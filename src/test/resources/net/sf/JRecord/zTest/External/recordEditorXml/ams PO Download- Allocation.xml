@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<RECORD RECORDNAME="ams PO Download- Allocation" COPYBOOK="" DELIMITER="&lt;Tab&gt;" DESCRIPTION="Allocation Line" 
+        FILESTRUCTURE="Default" STYLE="0" RECORDTYPE="RecordLayout" LIST="N" QUOTE="" RecSep="default" 
+	TESTFIELD="Record-Type" TESTVALUE="S1">
+	<FIELDS>
+		<FIELD NAME="Record-Type"     POSITION="1" LENGTH="2" TYPE="Char"/>
+		<FIELD NAME="DC-Number (0)"     POSITION="3" LENGTH="4" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="Pack-Quantity (0)" POSITION="7" LENGTH="8" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="DC-Number (1)"     POSITION="15" LENGTH="4" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="Pack-Quantity (1)" POSITION="19" LENGTH="8" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="DC-Number (2)"     POSITION="27" LENGTH="4" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="Pack-Quantity (2)" POSITION="31" LENGTH="8" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="DC-Number (3)"     POSITION="39" LENGTH="4" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="Pack-Quantity (3)" POSITION="43" LENGTH="8" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="DC-Number (4)"     POSITION="51" LENGTH="4" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="Pack-Quantity (4)" POSITION="55" LENGTH="8" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="DC-Number (5)"     POSITION="63" LENGTH="4" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="Pack-Quantity (5)" POSITION="67" LENGTH="8" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="DC-Number (6)"     POSITION="75" LENGTH="4" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="Pack-Quantity (6)" POSITION="79" LENGTH="8" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="DC-Number (7)"     POSITION="87" LENGTH="4" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="Pack-Quantity (7)" POSITION="91" LENGTH="8" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="DC-Number (8)"     POSITION="99" LENGTH="4" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="Pack-Quantity (8)" POSITION="103" LENGTH="8" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="DC-Number (9)"    POSITION="111" LENGTH="4" TYPE="Num (Right Justified zero padded positive)"/>
+		<FIELD NAME="Pack-Quantity (9)" POSITION="115" LENGTH="8" TYPE="Num (Right Justified zero padded positive)"/>
+	</FIELDS>
+</RECORD>
+

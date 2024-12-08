@@ -1,5 +1,7 @@
 package net.sf.JRecord.Common;
 
+import java.util.Iterator;
+
 public interface ILineFieldNames extends AbstractIndexedLine {
 
 	/**
@@ -31,4 +33,5 @@ public interface ILineFieldNames extends AbstractIndexedLine {
 	     */
 	AbstractFieldValue getFieldValueIfExists(String fieldName);
 
+	Iterator<AbstractFieldValue> getFieldIterator();
 }

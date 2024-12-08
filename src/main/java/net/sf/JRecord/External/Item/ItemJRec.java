@@ -26,10 +26,10 @@
  *
  * ------------------------------------------------------------------------ */
 
-
 package net.sf.JRecord.External.Item;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sf.cb2xml.analysis.BaseItem;
@@ -39,15 +39,21 @@ import net.sf.cb2xml.def.ICondition;
 import net.sf.cb2xml.def.IItem;
 
 /**
+ * JRecords enhanced version of cb2xml's item class. This class
+ * Takes a cb2xml-Item as input and creates JRecord equivalent
+ * and copies all child items
+ * 
  * @author Bruce Martin
  *
  */
 public class ItemJRec extends Item implements IItemJRecUpd {
 
+	public static List<ItemJRec> EMPTY_LIST = Collections.emptyList();
 	private int formatId = 0;
-	private String parameter = "", javaType; //JRecord Type Identifier
+	private String parameter = "", 
+			javaType; //JRecord Type Identifier
 
-	private final List<ItemJRec> childItems = new ArrayList<>(5);
+	private final List<ItemJRec> childItems;// = EMPTY_LIST;
 
 	
 	public ItemJRec(BaseItem parentItem, IItem item) {
@@ -61,8 +67,10 @@ public class ItemJRec extends Item implements IItemJRecUpd {
 			this.parameter = itm.getParameter();
 		}
 		
-		List<? extends IItem> childItems = item.getChildItems();
-        for (IItem childItm : childItems) {
+		List<? extends IItem> sourceChildItems = item.getChildItems();
+		int numberOfChildItems = sourceChildItems.size();
+		this.childItems = numberOfChildItems == 0 ? EMPTY_LIST : new ArrayList<>(numberOfChildItems);
+		for (IItem childItm : sourceChildItems) {
             new ItemJRec(this, childItm);
         }
 		
@@ -116,7 +124,7 @@ public class ItemJRec extends Item implements IItemJRecUpd {
 	}
 
 	/**
-	 * @return the generateType
+	 * @return the equivalent Java-Type for this Cobol-field. 
 	 */
 	@Override
 	public final String getJavaType() {
@@ -124,7 +132,7 @@ public class ItemJRec extends Item implements IItemJRecUpd {
 	}
 
 	/**
-	 * @param generateType the generateType to set
+	 * @param generateType the Java type to set. 
 	 */
 	@Override
 	public final void setJavaType(String generateType) {

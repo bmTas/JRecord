@@ -1,0 +1,4 @@
+<RECORD RECORDNAME="DTAR020" COPYBOOK="DTAR020"  FONTNAME="CP037" FILESTRUCTURE="Fixed_Length" 
+ RECORDTYPE="RecordLayout" LIST="Y"  SYSTEMNAME="Mainframe">
+    <parse filename="DTAR020.cbl"  />
+</RECORD>

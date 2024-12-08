@@ -104,7 +104,14 @@ public interface Constants extends IFileStructureConstants, ISelectionOperators 
 	String RE_XML_AND_FIELDS  = "AND";
 	String RE_XML_OR_FIELDS   = "OR";
 	String RE_XML_TRUE        = "TRUE";
-	
+
+	String RE_XML_PARSE       = "PARSE";
+	String RE_XML_OVERRIDES   = "OVERRIDES";
+	String RE_XML_OVERRIDE    = "OVERRIDE";
+	String RE_XML_FILE_NAME = "FILENAME";
+
+
+	String RE_XML_PARSE_LANGUAGE  = "LANGUAGE";
 
 	String RE_XML_COPYBOOK    = "COPYBOOK";
 	String RE_XML_COBOL_ITEMS = "ITEMS";
