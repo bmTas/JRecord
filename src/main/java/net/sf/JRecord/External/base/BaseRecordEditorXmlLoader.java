@@ -650,7 +650,7 @@ public class BaseRecordEditorXmlLoader<XRecord extends BaseExternalRecord<XRecor
 			while (fieldIterator.hasNext()) {
 				AbstractFieldValue attr = fieldIterator.next();
 				String name = attr.getFieldDetail().getName();
-				if (name != null && ! name.isEmpty())) {
+				if (name != null && ! name.isEmpty()) {
 					attributes.put(name.toUpperCase(), attr.asString());
 				}
 			}
