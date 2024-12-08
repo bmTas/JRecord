@@ -26,10 +26,12 @@
  *
  * ------------------------------------------------------------------------ */
 
+
 package net.sf.JRecord.External.Item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import java.util.List;
 
 import net.sf.cb2xml.analysis.BaseItem;
@@ -55,6 +57,7 @@ public class ItemJRec extends Item implements IItemJRecUpd {
 
 	private final List<ItemJRec> childItems;// = EMPTY_LIST;
 
+
 	
 	public ItemJRec(BaseItem parentItem, IItem item) {
 		super(parentItem, item.getLevelNumber(), item.getLevelString(), item.getFieldName());
@@ -71,6 +74,7 @@ public class ItemJRec extends Item implements IItemJRecUpd {
 		int numberOfChildItems = sourceChildItems.size();
 		this.childItems = numberOfChildItems == 0 ? EMPTY_LIST : new ArrayList<>(numberOfChildItems);
 		for (IItem childItm : sourceChildItems) {
+
             new ItemJRec(this, childItm);
         }
 		
