@@ -422,7 +422,7 @@ public class TstMultiRecordCopybooks  {
 		assertEquals(field1.getPos(),        field2.getPos());
 		assertEquals(
 				TypeManager.getInstance().getShortType(field1.getType(), field1.getLen(), field2.getFontName()),       
-				field2.getType());
+				field2.getType(), "Field: " + field1.getName());
 		assertEquals(field1.getName(),       field2.getName());
 	}
 	

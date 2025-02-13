@@ -29,7 +29,6 @@ import net.sf.JRecord.Types.TypeManager;
 import net.sf.JRecord.Types.TypeManager.CharsetType;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.def.IO.builders.IFileIOBuilder;
-import net.sf.JRecord.zTest.Common.JUnit3Test;
 import net.sf.JRecord.zTest.Common.TestCommonCode;
 import net.sf.JRecord.zTest.Common.TstConstants;
 
@@ -319,7 +318,7 @@ public class TstCobolSingeRecord   {
 		createField("PIC-TEST-2", ".CompFields.some-more-items.TOP-LEVEL-ITEM.", 422, 2, 0, 0),
 		createField("PIC-TEST-3", ".CompFields.some-more-items.TOP-LEVEL-ITEM.", 424, 3, 0, 0),
 		createField("PIC-TEST-4", ".CompFields.some-more-items.TOP-LEVEL-ITEM.", 427, 1, 0, 32),
-		createField("PIC-TEST-5", ".CompFields.some-more-items.TOP-LEVEL-ITEM.", 428, 3, 1, 6),
+		createField("PIC-TEST-5", ".CompFields.some-more-items.TOP-LEVEL-ITEM.", 428, 3, 1, Type.ftNumRightJustified),
 		createField("PIC-TEST-6", ".CompFields.some-more-items.TOP-LEVEL-ITEM.", 431, 3, 2, 32),
 		createField("PIC-TEST-7", ".CompFields.some-more-items.TOP-LEVEL-ITEM.", 434, 8, 0, 0),
 		createField("VALUE-TEST-1", ".CompFields.some-more-items.TOP-LEVEL-ITEM.VALUE-TEST-GROUP.", 442, 3, 0, 0),
@@ -670,7 +669,8 @@ public class TstCobolSingeRecord   {
 			int shortType = typeMgr.getShortType(field1.getType(), field1.getLen(), field2.getFontName());
 			assertEquals(
 					shortType,       
-					field2.getType());
+					field2.getType(),
+					"Field: " + field1.getName() + " original expected type: " + field2.getType());
 		}
 		assertEquals(field1.getName(),       field2.getName());
 	}

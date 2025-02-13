@@ -2,10 +2,6 @@ package net.sf.JRecord.ByteIO;
 
 import java.io.IOException;
 
-import net.sf.JRecord.Common.ISetData;
-
-
-
 
 /**
  * Read a series of Byte-Array Records from whatever
@@ -28,15 +24,7 @@ import net.sf.JRecord.Common.ISetData;
  *
  */
 public interface IByteRecordReader {
-
-
-	/**
-	 * Read into an existing 'line'
-	 * @param line The 'line' to update with data read from the file.
-	 * @return whether the read was successful (true) or eof (false)
-	 * @throws IOException any IOError that occurs.
-	 */
-	boolean readInto(ISetData line) throws IOException;
+	
 	/**
 	 * Read one line from the input file as an array of bytes
 	 *

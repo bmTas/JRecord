@@ -34,9 +34,8 @@ public class CommonCode {
 			String signPosition) {
 		int iType = 0;
 		if (signed ||  picture.startsWith("S")) {
-			if (signSeperate) {
-				boolean actualDecimal = picture.indexOf('.') >= 0;
-				
+			boolean actualDecimal = picture.indexOf('.') >= 0;
+			if (signSeperate) {				
 				iType = Type.ftSignSeparateTrail;
 				if ("leading".equals(signPosition)) {
 					iType = Type.ftSignSeparateLead;
@@ -46,6 +45,8 @@ public class CommonCode {
 				} else if (actualDecimal) {
 					iType = Type.ftSignSepTrailActualDecimal;
 				}
+			} else if (actualDecimal) {
+				iType = Type.ftNumRightJustified;
 			} else {
 				iType = Type.ftGnuCblZonedNumeric;
 				switch (dialect) {
@@ -56,6 +57,8 @@ public class CommonCode {
 				case ICopybookDialects.FMT_FUJITSU_COMMA_DECIMAL:	iType = Type.ftFjZonedNumeric;		break;		
 				}
 			}
+		} else if (picture.indexOf('.') >= 0) {
+			iType = Type.ftNumRightJustified;
 		} else {
 			iType = Type.ftAssumedDecimalPositive;
 		}

@@ -100,7 +100,7 @@
 	            <version>3.5.2</version>
 	            <configuration>
 	                <includes>
-	                    <include>**/zTest/*/*.java</include>
+	                    <include>**/zTest/**/*.java</include>
 	                    <!--include>**/Test*.java</include-->
 	                </includes>
 	            </configuration>

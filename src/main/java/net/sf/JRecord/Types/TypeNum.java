@@ -337,6 +337,16 @@ public class TypeNum extends BaseType {
 	    		v = '0' + v;
 	    	}
 	    	val = v;
+	    	if (val.length() > field.getLen()) {
+	    		int numberToRemove = val.length() - field.getLen();
+	    		int canRemove = 0;
+	    		while (canRemove < numberToRemove && val.charAt(canRemove) == '0') {
+	    			canRemove += 1;
+	    		}
+	    		if (canRemove > 0) {
+	    			val = val.substring(canRemove);
+	    		}
+	    	}
 	    }
 	    
 	    checkCharNumLength(val, len);
@@ -463,14 +473,12 @@ public class TypeNum extends BaseType {
 	            if (val.startsWith("+")) {
 	                val = val.substring(1);
 	            }
-	            if (val.lastIndexOf('.') >= 0) {
-	            	//val = new BigDecimal(val).toString();
-	            	
-	            	val = val.substring(0, val.lastIndexOf('.'));
+	            int indexOfDot = val.lastIndexOf('.');
+				if (indexOfDot >= 0) {
+	            	val = val.substring(0, indexOfDot);
 	            }
 	            new BigInteger(val);
 	        } catch (final Exception ex) {
-	        	//ex.printStackTrace();
 	            throw new RecordException(field.getName() + " Invalid Integer :" + val + ": ~ " + ex);
 	        }
 	    } else {

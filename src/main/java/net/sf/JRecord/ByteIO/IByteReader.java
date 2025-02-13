@@ -28,6 +28,8 @@ package net.sf.JRecord.ByteIO;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.sf.JRecord.Common.ISetData;
+
 public interface IByteReader extends IByteRecordReader {
 
     /**
@@ -45,6 +47,15 @@ public interface IByteReader extends IByteRecordReader {
      * @throws IOException any IOerror
      */
     void open(InputStream inputStream) throws IOException;
+    
+	/**
+	 * Read into an existing 'line'
+	 * @param line The 'line' to update with data read from the file.
+	 * @return whether the read was successful (true) or eof (false)
+	 * @throws IOException any IOError that occurs.
+	 */
+	boolean readInto(ISetData line) throws IOException;
+
 
     boolean canWrite();
 

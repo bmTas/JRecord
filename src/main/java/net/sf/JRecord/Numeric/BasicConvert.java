@@ -173,7 +173,8 @@ import net.sf.cb2xml.def.NumericDefinition;
     	} else if (picture.indexOf('Z') >= 0
     			||  picture.indexOf('-') >= 0
     	    	||  picture.indexOf('+') >= 0
-    			||  picture.indexOf('.') >= 0) {
+    			/*||  picture.indexOf('.') >= 0*/
+    			) {
     		lType = Type.ftNumRightJustified;
     	} else {
     		lType = CommonCode.commonTypeChecks(identifier, usage, picture, signed, signSeperate, signPosition);

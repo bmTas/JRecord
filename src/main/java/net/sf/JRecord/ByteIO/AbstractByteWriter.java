@@ -71,7 +71,6 @@ public abstract class AbstractByteWriter implements IByteRecordWriter {
     public abstract void open(OutputStream outputStream)
             throws IOException;
 
-    @Override
     public void write(IGetData lineData) throws IOException {
         write(lineData.getData());
     }
