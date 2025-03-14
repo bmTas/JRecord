@@ -229,11 +229,12 @@ public class Line extends BasicLine implements IGetByteData {
 
 	public byte[] getFieldBytes(IFieldDetail field) {
 	    int len = field.getLen();
+    	int actualPosition = getFieldsPosition(field);
 	    if (field.getType() == Type.ftCharRestOfRecord) {
-	    	len = data.length - field.calculateActualPosition(this);
+			len = data.length - actualPosition;
 	    }
 
-	    return getData(field.calculateActualPosition(this), len);
+	    return getData(actualPosition, len);
 	}
 
 	/**
@@ -409,7 +410,7 @@ public class Line extends BasicLine implements IGetByteData {
 	public Object getField(int type, IFieldDetail field) {
 
         if (field.isFixedFormat()) {
-            int position = field.calculateActualPosition(this);
+            int position = getFieldsPosition(field);
            
 			return TypeManager.getSystemTypeManager().getType(type) //field.getType())
 					.getField(this.getData(), position, field);
@@ -476,14 +477,19 @@ public class Line extends BasicLine implements IGetByteData {
 	}
 	 
 	public String setFieldHex(IFieldDetail field, String val) {
-	    ensureCapacity(field.calculateActualEnd(this));
+		if (! super.isFieldInLine(field)) {
+			throwInvalidIndexInOccursDependingArray(field);
+		}
+
+	    int actualEnd = field.calculateActualEnd(this);
+		ensureCapacity(actualEnd);
 
         try {
             int i, j;
             BigInteger value = new BigInteger(val, Type.BASE_16);
             byte[] bytes = value.toByteArray();
 
-            j = field.calculateActualEnd(this) - 1;
+            j = actualEnd - 1;
             int start = field.calculateActualPosition(this) - 1;
             int en = Math.max(0, bytes.length - (val.length() + 1) / 2);
 			for (i = bytes.length - 1; i >= en && j >= start; i--) {
@@ -502,11 +508,11 @@ public class Line extends BasicLine implements IGetByteData {
 	
 	public void setFieldToByte(IFieldDetail field, byte val) {
 		
-	    ensureCapacity(field.calculateActualEnd(this));
+		int actualPosition = super.getFieldsPosition(field);
+	    int actualEnd = field.calculateActualEnd(this);
+		ensureCapacity(actualEnd);
 
-        
-        int en = field.calculateActualEnd(this);
-        for (int i = field.calculateActualPosition(this) - 1; i < en; i++) {
+        for (int i = actualPosition-1; i < actualEnd; i++) {
         	data[i] = val;
         }
         super.checkForOdUpdate(field);
@@ -517,6 +523,7 @@ public class Line extends BasicLine implements IGetByteData {
 	 */
 	public Object clone() {
 		return lineProvider.getLine(layout, data.clone());
+		
 	}
 	
 	
@@ -541,8 +548,9 @@ public class Line extends BasicLine implements IGetByteData {
 
 	@Override
 	public boolean isValid(IFieldDetail fldDef) {
-		return TypeManager.getInstance().getType(fldDef.getType())
-				.isValid(fldDef.calculateActualPosition(this), fldDef, data);
+		return  super.isFieldInLine(fldDef)
+				&& TypeManager.getInstance().getType(fldDef.getType())
+					.isValid(fldDef.calculateActualPosition(this), fldDef, data);
 	}
 
 

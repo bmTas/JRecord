@@ -30,7 +30,9 @@ package net.sf.JRecord.Details;
 
 import lombok.extern.slf4j.Slf4j;
 import net.sf.JRecord.Common.Constants;
+import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Common.IFieldDetail;
+import net.sf.JRecord.External.Def.DependingOnDtls;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.detailsSelection.RecordSelection;
 
@@ -187,6 +189,35 @@ public abstract class BasicLine extends BaseLine {
 
 	   	return getField(fld);
 	}
+	
+	protected final int getFieldsPosition(IFieldDetail field) {
+		if (! super.isFieldInLine(field)) {
+			throwInvalidIndexInOccursDependingArray(field);			
+		}
+		return field.calculateActualPosition(this);
+	}
+
+
+	protected void throwInvalidIndexInOccursDependingArray(IFieldDetail field) {
+		StringBuilder dependingOnVariables = new StringBuilder();
+		String sep = "";
+		if (field instanceof FieldDetail) {
+			DependingOnDtls dependingOnDtls = ((FieldDetail) field).getDependingOnDtls();
+			if (dependingOnDtls != null) {
+				DependingOnDtls[] tree = dependingOnDtls.getTree();
+				for (int i = 0; i < tree.length; i++){
+					dependingOnVariables.append(sep).append(tree[i].dependingOn.getVariableNameNoIndex());
+					sep = ", ";
+				}
+			}
+		}
+		throw new RuntimeException(
+				"Field: " + (field == null ? "" : field.getName())
+				+ " Index is greater than that allowed by occurs depending on field.\n"
+				+ "Use the isFieldInLine() method\n"
+				+ "or access the Occurs Depending on fields: " + dependingOnVariables);
+	}
+
 
 
     /**

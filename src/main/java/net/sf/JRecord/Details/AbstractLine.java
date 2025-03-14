@@ -298,20 +298,27 @@ public interface AbstractLine extends ILineFieldNames, IGetLayout, ISetData {
      *   <li>The record must be long enough to hold the field
      *   <li>The field value must not be hex zero's. This creates a potential problem with
      * Comp fields.
+     *   <li>If a Occurs Depending array field, the index must be less than the maximum array index
+     *   (defined by the occurs depending field).
      * </ul>  
      * 
-     * @param fld field-definition
+     * @param fieldToCheck field-definition
      * @return whether the field exists in the line
      */
-    boolean isDefined(IFieldDetail fld);
+    boolean isDefined(IFieldDetail fieldToCheck);
 
 	/**
-	 * This basically checks to see if 
-	 * @param fd field to check
+	 * This basically checks to see if the field is actually present in the line,
+	 * It returns true if<ul>
+	 * <li>Its a normal field (not an Occurs-Depending Array field)
+	 * <li>If a Occurs Depending array field, the index must be less than the maximum array index
+     *   (defined by the occurs depending field).
+     * </ul>
+	 * @param fieldToCheck field to check
 	 * @return whether this field is actual present
 	 */
 
-	boolean isFieldInLine(IFieldDetail fd);
+	boolean isFieldInLine(IFieldDetail fieldToCheck);
 	
 	/**
 	 * This does a basic field validation test. This is basically for checking Cobol Numeric 

@@ -128,9 +128,27 @@ public abstract class BaseLine implements AbstractLine {
 	}
 
 	/**
-	 * This basically checks to see if 
-	 * @param fd
-	 * @return
+	 * 
+	 * This basically checks to see if a field is occurs depending field
+	 * and the index < maximum index (as defined by the depending field)
+	 * 
+	 * 	 In Cobol <i>Occurs depending arrays</i> are variable size arrays with the array size determined by a field.
+	 * These arrays can vary in size from one line to the next. This means an an index may be valid in one line but 
+	 * not the next
+	 * 
+	 * <pre>
+	 *  Occurs Depending in Cobol:
+	 *  
+	 *       03  count           pic s99 comp.
+	 *       03  field-1 occurs 1 to 5 depending on count
+	 *                           pic xx.
+	 * <pre>
+	 * If <b>Count=2</b> the array will only have 2 elements and fields
+	 * with index's >= 2 will not exist in the array. This method checks for
+	 * index's >= count variable (for occurs depending arrays.                           
+	 * 
+	 * @param field Field to check
+	 * @return For occurs depending arrays the index must be valid, true for all other fields
 	 */
 	@Override public final boolean isFieldInLine(IFieldDetail field) {
 		if (field == null) { return false; }
@@ -140,17 +158,7 @@ public abstract class BaseLine implements AbstractLine {
 				DependingOnDtls[] tree = dependingOnDtls.getTree();
 				for (int i = 0; i < tree.length; i++){
 					dependingOnDtls = tree[i];
-//		        	if (dependingOnDtls.dependingOn == null || dependingOnDtls.dependingOn.getField() == null) {
-//		        		System.out.print('*');
-//		        	}
-		            Object v;
-					//try {
-						v = this.getField(dependingOnDtls.dependingOn.getField());
-//					} catch (Exception e) {
-//						System.out.println();
-//						e.printStackTrace();
-//						throw new RuntimeException(e);
-//					}      
+		            Object v = this.getField(dependingOnDtls.dependingOn.getField());
 		            
 		            String s;
 		            if (v == null || ((s= v.toString()).length() == 0))  {

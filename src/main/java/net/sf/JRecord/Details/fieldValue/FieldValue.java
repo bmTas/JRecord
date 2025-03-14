@@ -102,36 +102,19 @@ public class FieldValue extends BaseFieldValue implements IFieldValueUpdLine {
 		return theLine.getField(field);
 	}
 	
+	/**
+	 * This basically checks to see if the field is actually present in the line,
+	 * It returns true if<ul>
+	 * <li>Its a normal field (not an Occurs-Depending Array field)
+	 * <li>If a Occurs Depending array field, the index must be less than the maximum array index
+     *   (defined by the occurs depending field).
+     * </ul>
+	 */
 	public boolean isFieldInRecord() {
 		
 		IFieldDetail fld = getField();
 		if (fld == null) { return false; }
 		return theLine.isFieldInLine(fld);
-//		IFieldDetail fld = field;
-//		
-//		if (recordNum >= 0) {
-//			fld = theLine.getLayout().getField(recordNum, fieldNum);
-//		}
-//		
-//		boolean ret = fld != null;
-//		DependingOnDtls depOn;
-//		
-//		if (fld != null && fld instanceof FieldDetail) { 
-//			depOn = ((FieldDetail) fld).getDependingOnDtls();
-//			
-//			try {
-//				while (depOn != null) {
-//					if (depOn.index >= theLine.getFieldValue(depOn.dependingOn.getVariableName()).asInt()) {
-//						return false;
-//					}
-//					depOn = depOn.parent;
-//				}
-//			} catch (Exception e) {
-//				ret = false;
-//			}
-//		}
-//		
-//		return ret;
 	}
 
 	private IFieldDetail getField() {
@@ -283,6 +266,10 @@ public class FieldValue extends BaseFieldValue implements IFieldValueUpdLine {
 		
 		FieldDetail charField;
 		if (field.isFixedFormat()) {
+			if (! theLine.isFieldInLine(field)) {
+				throw new RuntimeException("Field: " + (field == null ? "" : field.getName())
+				+ " Index is greater than that allowed by occurs depending on field ");
+			}
 			charField = FieldDetail.newFixedWidthField(field.getName(), Type.ftChar, 
 					field.getPos(), field.getLen(), 0, field.getFontName());
 		} else {

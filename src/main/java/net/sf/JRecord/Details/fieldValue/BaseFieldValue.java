@@ -33,7 +33,6 @@ import java.math.BigInteger;
 
 import net.sf.JRecord.Common.AbstractFieldValue;
 import net.sf.JRecord.Common.IFieldDetail;
-import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.External.base.ExternalConversion;
 import net.sf.JRecord.Types.Type;

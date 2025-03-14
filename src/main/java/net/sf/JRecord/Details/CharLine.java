@@ -94,7 +94,7 @@ public class CharLine extends BasicLine implements Cloneable {
 
 			Type type = TypeManager.getSystemTypeManager().getType(typeId);
 
-            int pos =  field.calculateActualPosition(this);
+            int pos =  getFieldsPosition(field);
             
 			byte[] bytes = getData(pos, field.getLen());
 			FieldDetail tmpField = new FieldDetail(field.getFontName(), field.getDescription(),
@@ -139,7 +139,7 @@ public class CharLine extends BasicLine implements Cloneable {
 	}
 	
 	private String getFieldRawText(IFieldDetail fldDef) {
-		int start = fldDef.calculateActualPosition(this) - 1;
+		int start = getFieldsPosition(fldDef) - 1;
 		String tData = data;
 
 		int tempLen = fldDef.getLen();
@@ -223,8 +223,7 @@ public class CharLine extends BasicLine implements Cloneable {
 			&&	type instanceof BaseType && ! ((BaseType) type).isLeftJustified()) {
 				s = Conversion.padFront(s, len - s.length(), ' ');
 			} 
-			updateData(field.calculateActualPosition(this), len, s);
-			
+			updateData(getFieldsPosition(field), len, s);
 			
 			super.checkForOdUpdate(field);
 
@@ -234,7 +233,7 @@ public class CharLine extends BasicLine implements Cloneable {
 		        Type typeVal = TypeManager.getSystemTypeManager().getType(typeId);
 		        String s = typeVal.formatValueForRecord(field, value.toString());
 	
-	            data = parser.setField(field.calculateActualPosition(this) - 1,
+	            data = parser.setField(getFieldsPosition(field) - 1,
 	            				typeVal.getFieldType(),
 	            				data,
 	            				new CsvDefinition(layout.getDelimiterDetails(), field.getQuoteDefinition()), s);
@@ -244,7 +243,6 @@ public class CharLine extends BasicLine implements Cloneable {
 
 	@Override
 	public String setFieldHex(int recordIdx, int fieldIdx, String val) {
-
 		return null;
 	}
 
@@ -254,7 +252,7 @@ public class CharLine extends BasicLine implements Cloneable {
 		
 		super.checkForOdUpdate(fldDef);
 
-		updateData(fldDef.calculateActualPosition(this), fldDef.getLen(), value);
+		updateData(super.getFieldsPosition(fldDef), fldDef.getLen(), value);
 	}
 
 	private void updateData(int pos, int length, String value) {
@@ -292,7 +290,7 @@ public class CharLine extends BasicLine implements Cloneable {
 
 	@Override
 	public boolean isDefined(IFieldDetail field) {
-		if (this.data == null || data.length() <= field.getPos()) {
+		if (this.data == null || data.length() <= field.getPos() || ! super.isFieldInLine(field) ) {
 			return false;
 		}
 
@@ -316,7 +314,8 @@ public class CharLine extends BasicLine implements Cloneable {
 
 	@Override
 	public boolean isValid(IFieldDetail fldDef) {
-		return TypeManager.getInstance().getType(fldDef.getType()).isValid(fldDef, getFieldRawText(fldDef));
+		return 		super.isFieldInLine(fldDef) 
+				&& 	TypeManager.getInstance().getType(fldDef.getType()).isValid(fldDef, getFieldRawText(fldDef));
 	}
 
 }
