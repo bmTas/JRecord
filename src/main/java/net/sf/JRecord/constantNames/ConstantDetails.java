@@ -66,7 +66,7 @@ public class ConstantDetails {
 	}
 	
 	/**
-	 * @return the jrecordConstant
+	 * @return the jrecordConstant (full TypeName.ConstantName)
 	 */
 	public String getJRecordInterfaceConstant() {
 		return parentInterfaceDetails.getClassSimpleName() + '.' + jrecordConstant;

@@ -307,34 +307,72 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 		return ret;
 	}
 
-
-	String indent = "\t";
 	private List<? extends IItemJrUpd> createSplitOnRedefines_processList(
 			IItem redefItem, BaseItem parent, 
 			RedefineSearcher redef, List<? extends IItemJrUpd> list) {
 		if (list == null || list.size() == 0) { return list; }
-		String oindent = indent;
-		indent += "\t";
-		List<IItemJrUpd> nList = new ArrayList<IItemJrUpd>(list.size());
-		for (IItemJrUpd itm : list) {
-			if (itm == redefItem) {
-				nList.add(itm);
-			} else if (redef.parents.contains(itm)) {
-				Item newItem = new Item(parent, itm.getLevelNumber(), itm.getLevelString(), itm.getFieldName());
-				newItem.set(itm);
-				List<? extends IItemJrUpd> children = createSplitOnRedefines_processList(redefItem, newItem, redef, itm.getChildItems());
-				for (IItemJrUpd ci : children) {
-					newItem.addItem((Item)ci);
-				}
-				nList.add(newItem);
-			} else if (! redef.redefineItems.contains(itm)) {
-				nList.add(itm);
-			}
-		}
-		indent = oindent;
 		
-		return nList;
+		return (new RedefineCopy(redefItem, redef, list)).createSplit();
 	}
+		
+
+//	String indent = "\t";
+//	private List<? extends IItemJrUpd> createSplitOnRedefines_processList(
+//			IItem redefItem, BaseItem parent, 
+//			RedefineSearcher redef, List<? extends IItemJrUpd> list) {
+//		if (list == null || list.size() == 0) { return list; }
+//		String oindent = indent;
+//		boolean foundRedefine = false;
+//		boolean topLevel = true;
+//		boolean addTo = true;// ! "\t".equals(oindent);
+//		indent += "\t";
+//		System.out.println(indent + "||| " + redefItem.getFieldName() + " " 
+//				+ (parent instanceof Item ? ((Item) parent).getFieldName() : parent.toString())) ;
+//		List<IItemJrUpd> nList = new ArrayList<IItemJrUpd>(list.size());
+//		for (IItemJrUpd itm : list) {
+//			if (itm == redefItem) {
+//				nList.add(itm);
+//				foundRedefine = true;
+//				System.out.println(indent + "== 1 ==> " + itm.getFieldName());
+//			} else if (redef.parents.contains(itm)) {
+//				Item newItem = new Item(parent, itm.getLevelNumber(), itm.getLevelString(), itm.getFieldName());
+//				newItem.set(itm);
+//				boolean add = itm == redef.item;
+////				for (IItemJrUpd ci : itm.getChildItems()) {
+////					if (ci == redef.item) {
+////						add = false;
+////						break;
+////					}
+////				}
+//				List<? extends IItemJrUpd> children = createSplitOnRedefines_processList(redefItem, newItem, redef, itm.getChildItems());
+////				for (IItemJrUpd ci : children) {
+////					//if (ci.getChildItems().size() == 0) {
+////						newItem.addItem((Item)ci);
+////						System.out.println(indent + "  == a ==> " + newItem.getFieldName() + " " + ci.getFieldName() + " " + ci.getChildItems().size() + add);
+////					//}
+////				}
+//				nList.add(newItem);
+//				System.out.println(indent + "== 2 ==> " + itm.getFieldName() + " " + (redef.item == itm));
+//			} else if (! redef.redefineItems.contains(itm)) {
+//				if (topLevel) {
+//					nList.add(itm);
+//				}
+//				System.out.println(indent + "== 3 ==> " + itm.getFieldName());
+//			}
+//		}
+//
+//		if (foundRedefine) {
+//			for (IItemJrUpd ci : nList) {
+//				parent.addItem((Item)ci);
+//				System.out.println(indent + "  == z ==> " + (parent instanceof Item ? ((Item) parent).getFieldName() : "~~" ) + " "
+//						+ ci.getFieldName() + " " + ci.getChildItems().size());
+//			}
+//		}
+//		indent = oindent;
+//		
+//		return nList;
+//	}
+	
 
 	private XRecord createChildRecord(String copyBookName, String fieldName, int idx, String font, int binaryFormat,
 			int systemId) {
@@ -390,6 +428,72 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 	}
 
 
+	private static class RedefineCopy {
+		final IItem redefItem;
+		//BaseItem parent, 
+		final RedefineSearcher redef;
+		final List<? extends IItemJrUpd> list;
+		boolean searchingForSplit = true;
+//		Set<IItem> redefItemSet = new HashSet<>();
+		String indent = "";
+		
+		public RedefineCopy(IItem redefItem, RedefineSearcher redef, List<? extends IItemJrUpd> list) {
+			super();
+			this.redefItem = redefItem;
+			this.redef = redef;
+			this.list = list;
+//			this.redefItemSet.addAll(redef.redefineItems);
+		}
+		
+		List<? extends IItemJrUpd> createSplit() {
+			if (list == null || list.size() == 0) { return list; }
+			List<IItemJrUpd> nList = doSplit(new Copybook("", ""), list);
+			
+			return nList;
+		}
+
+		protected List<IItemJrUpd> doSplit(BaseItem parent, List<? extends IItemJrUpd> list) {
+			String oindent = indent;
+			indent += "\t";
+			List<IItemJrUpd> nList = new ArrayList<IItemJrUpd>(list.size());
+			for (IItemJrUpd itm : list) {
+				//System.out.print(indent + "** " + itm.getFieldName());
+				if (itm == redefItem) {
+					System.out.println(indent + " 1 > " + itm.getFieldName());
+					nList.add(copyItem(parent, itm));
+					searchingForSplit = false;
+				} else if (redef.parents.contains(itm)) {
+					System.out.println(indent + " 2 > " + itm.getFieldName());
+					Item newItem = new Item(parent, itm.getLevelNumber(), itm.getLevelString(), itm.getFieldName());
+					newItem.set(itm);
+					doSplit(newItem, itm.getChildItems());
+					nList.add(newItem);
+				} else if (! redef.redefineItems.contains(itm)) {
+					System.out.println(indent + " 3 > " + itm.getFieldName());
+					nList.add(copyItem(parent, itm));
+				} else {
+					System.out.println(indent + " --> " + itm.getFieldName());
+				}
+				//System.out.println();
+			}
+			
+
+			indent = oindent;
+			return nList;
+		}
+		
+		private Item copyItem(BaseItem parent, IItemJrUpd itm) {
+			Item newItem = new Item(parent, itm.getLevelNumber(), itm.getLevelString(), itm.getFieldName());
+			newItem.set(itm);
+			List<? extends IItemJrUpd> childItems = itm.getChildItems();
+			for (IItemJrUpd child : childItems) {
+				copyItem(newItem, child);
+			}
+			
+			return newItem;
+		}
+
+	}
 	/**
 	 * Class to search for Redefines and
 	 * store retrieved data in a useful for
@@ -398,7 +502,7 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 	 * @author Bruce Martin
 	 *
 	 */
-	public static class RedefineSearcher {
+	private static class RedefineSearcher {
 		int level = Integer.MAX_VALUE;
 		IItemJrUpd item;
 		List<IItem> redefineItems;
