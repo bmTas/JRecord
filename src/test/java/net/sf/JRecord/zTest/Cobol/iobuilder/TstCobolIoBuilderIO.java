@@ -54,6 +54,7 @@ import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.IO.CobolIoProvider;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
+import net.sf.JRecord.zTest.Common.CommonCodeTestCopybooksAndData;
 import net.sf.JRecord.zTest.Common.TstConstants;
 
 
@@ -88,14 +89,7 @@ public class TstCobolIoBuilderIO  {
 	};
 	
 	private static byte[] COPBOOK_BYTES
-			=("              03  DTAR020-KCODE-STORE-KEY.                        \n"
-			+ "                  05 DTAR020-KEYCODE-NO      PIC X(08).           \n"
-			+ "                  05 DTAR020-STORE-NO        PIC S9(03)   COMP-3. \n"
-			+ "              03  DTAR020-DATE               PIC S9(07)   COMP-3. \n"
-			+ "              03  DTAR020-DEPT-NO            PIC S9(03)   COMP-3. \n"
-			+ "              03  DTAR020-QTY-SOLD           PIC S9(9)    COMP-3. \n"
-			+ "              03  DTAR020-SALE-PRICE         PIC S9(9)V99 COMP-3. \n")
-			
+			= CommonCodeTestCopybooksAndData.DTAR020_COPYBOOK
 					.getBytes();
 
 	

@@ -26,7 +26,7 @@ public class RecordDeciderBuilder implements IRecordDeciderBuilder {
 	private static class SingleFieldDeciderBldr implements ISingleFieldDeciderBuilder {
 
 		final String selectionFieldName, defaultRecordName;
-		boolean caseSensitive; 
+		boolean caseSensitive=false; 
 		final boolean allowOtherKeyValues;
 		ArrayList<RecordTypeAndRecord> records = new ArrayList<RecordTypeAndRecord>();
 		

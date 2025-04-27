@@ -34,10 +34,16 @@
 
 package net.sf.JRecord.IO;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.DefaultLineProvider;
@@ -71,7 +77,7 @@ import net.sf.JRecord.External.ExternalRecord;
  * @author Bruce Martin
  *
  */
-public abstract class AbstractLineReader implements IReadLine, IGetLayout {
+public abstract class AbstractLineReader implements IReadLine, IGetLayout,  Closeable {
 
     public static final String NOT_OPEN_MESSAGE = "File has not been opened";
     
@@ -195,6 +201,22 @@ public abstract class AbstractLineReader implements IReadLine, IGetLayout {
      * @throws IOException io error
      */
     public abstract void close() throws IOException;
+    
+    /**
+     * Create a stream of records in the file/data source
+     * @return Returns a stream of records in the file
+     */
+    public Stream<AbstractLine> stream() { 
+        try {
+			return StreamSupport.stream(
+					Spliterators.spliteratorUnknownSize(
+							new ReadLineIterator(this), 
+							Spliterator.IMMUTABLE | Spliterator.NONNULL), 
+					false);
+		} catch (IOException e) {
+			throw new UncheckedIOException(e);
+		}
+    }
 
 
 
@@ -347,6 +369,5 @@ public abstract class AbstractLineReader implements IReadLine, IGetLayout {
 			}
 			return ret;
 		}
-
 	}
 }

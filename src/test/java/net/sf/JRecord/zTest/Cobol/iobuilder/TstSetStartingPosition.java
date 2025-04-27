@@ -12,19 +12,13 @@ import net.sf.JRecord.JRecordInterface1;
 import net.sf.JRecord.External.ExternalRecord;
 import net.sf.JRecord.Numeric.ICopybookDialects;
 import net.sf.JRecord.def.IO.builders.ICobolMultiCopybookIOBuilder;
+import net.sf.JRecord.zTest.Common.CommonCodeTestCopybooksAndData;
 
 public class TstSetStartingPosition  {
 
 	private static final String VARIABLE_SECTION_CBL = "ZVariableSection.cbl";
 	private static final String RECORD_A_CBL = "RecordA.cbl";
-	private static String DTAR020_COPYBOOK
-			= "              03  DTAR020-KCODE-STORE-KEY.                        \n"
-			+ "                  05 DTAR020-KEYCODE-NO      PIC X(08).           \n"
-			+ "                  05 DTAR020-STORE-NO        PIC S9(03)   COMP-3. \n"
-			+ "              03  DTAR020-DATE               PIC S9(07)   COMP-3. \n"
-			+ "              03  DTAR020-DEPT-NO            PIC S9(03)   COMP-3. \n"
-			+ "              03  DTAR020-QTY-SOLD           PIC S9(9)    COMP-3. \n"
-			+ "              03  DTAR020-SALE-PRICE         PIC S9(9)V99 COMP-3. \n";
+	private static String DTAR020_COPYBOOK = CommonCodeTestCopybooksAndData.DTAR020_COPYBOOK;
 
 	private static String RECORD_A_COPYBOOK
 			= "          01  Detail-Record-A.\n"

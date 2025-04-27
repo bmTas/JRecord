@@ -433,7 +433,7 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 		//BaseItem parent, 
 		final RedefineSearcher redef;
 		final List<? extends IItemJrUpd> list;
-		boolean searchingForSplit = true;
+//		boolean searchingForSplit = true;
 //		Set<IItem> redefItemSet = new HashSet<>();
 		String indent = "";
 		
@@ -459,17 +459,17 @@ public class BaseCobolItemLoader<XRecord extends BaseExternalRecord<XRecord>> im
 			for (IItemJrUpd itm : list) {
 				//System.out.print(indent + "** " + itm.getFieldName());
 				if (itm == redefItem) {
-					System.out.println(indent + " 1 > " + itm.getFieldName());
+					//System.out.println(indent + " 1 > " + itm.getFieldName());
 					nList.add(copyItem(parent, itm));
-					searchingForSplit = false;
+//					searchingForSplit = false;
 				} else if (redef.parents.contains(itm)) {
-					System.out.println(indent + " 2 > " + itm.getFieldName());
+					//System.out.println(indent + " 2 > " + itm.getFieldName());
 					Item newItem = new Item(parent, itm.getLevelNumber(), itm.getLevelString(), itm.getFieldName());
 					newItem.set(itm);
 					doSplit(newItem, itm.getChildItems());
 					nList.add(newItem);
 				} else if (! redef.redefineItems.contains(itm)) {
-					System.out.println(indent + " 3 > " + itm.getFieldName());
+					//System.out.println(indent + " 3 > " + itm.getFieldName());
 					nList.add(copyItem(parent, itm));
 				} else {
 					System.out.println(indent + " --> " + itm.getFieldName());

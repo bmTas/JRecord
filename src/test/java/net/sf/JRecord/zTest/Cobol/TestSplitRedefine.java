@@ -16,7 +16,6 @@ import net.sf.JRecord.Common.FieldDetail;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.RecordDetail;
 import net.sf.JRecord.External.CopybookLoader;
-import net.sf.JRecord.External.base.CobolConversionOptions;
 import net.sf.JRecord.Types.Type;
 import net.sf.JRecord.constantNames.ConstantNameConversion;
 import net.sf.JRecord.constantNames.ConstantNames;
@@ -140,7 +139,8 @@ class TestSplitRedefine {
 				+ "    </RECORDS>\n"
 				+ "</RECORD>";
 		
-		checkConversion(
+		CheckSchema check = new CheckSchema("EMPLOYEE-RECORD", EXPECTED_FIELDS);
+		check.checkConversion(
 				header
 				+ copybookDetails, 
 				expected);
@@ -215,7 +215,8 @@ class TestSplitRedefine {
 				+ "    </RECORDS>\n"
 				+ "</RECORD>";
 		
-		checkConversion(
+		CheckSchema check = new CheckSchema("EMPLOYEE-RECORD", EXPECTED_FIELDS);
+		check.checkConversion(
 				header
 				+ "  03  Emp-Header-1.\n"
 				+ copybookDetails, 
@@ -297,7 +298,8 @@ class TestSplitRedefine {
 				+ "    </RECORDS>\n"
 				+ "</RECORD>";
 		
-		checkConversion(
+		CheckSchema check = new CheckSchema("EMPLOYEE-RECORD", EXPECTED_FIELDS);
+		check.checkConversion(
 				header
 				+ "  03  Emp-Header-1.\n"
 				+ "    05  Emp-Header-11.\n"
@@ -392,7 +394,8 @@ class TestSplitRedefine {
 				+ "    </RECORDS>\n"
 				+ "</RECORD>";
 		
-		checkXml(
+		CheckSchema check = new CheckSchema("EMPLOYEE-RECORD", EXPECTED_FIELDS);
+		ICobolIOBuilder iob = check.checkXml(
 				header
 				+ "  03  Emp-Header-1.\n"
 				+ "    05  Emp-Header-11.\n"
@@ -401,69 +404,83 @@ class TestSplitRedefine {
 				+ "    05  Emp-Header-21.\n"
 				+ copybookDetails, 
 				expected);
-	}
-	
-	private void checkConversion(String copybook, String expectedXml) throws IOException, XMLStreamException, FactoryConfigurationError {
-		ICobolIOBuilder iob = checkXml(copybook, expectedXml);
+		
 		LayoutDetail layout = iob.getLayout();
-		
-		
-		//printExpectedFields(layout);
+
 		
 		for (int recNum = 0; recNum < layout.getRecordCount(); recNum++) {
 			RecordDetail record = layout.getRecord(recNum);
 
-			for (int fieldNum = 0; fieldNum < record.getFieldCount(); fieldNum++) {
-				FieldDetail field = record.getField(fieldNum);
-				FieldDetail expectedField = EXPECTED_FIELDS[recNum][fieldNum];
-				
-				assertEquals(expectedField.getName(), field.getName());
-				assertEquals(expectedField.getType(), field.getType());
-				assertEquals(expectedField.getPos(), field.getPos());
-				assertEquals(expectedField.getLen(), field.getLen());
-				assertEquals(expectedField.getDecimal(), field.getDecimal());
-				assertEquals(expectedField.getFontName(), field.getFontName());
+			for (int fieldNum = 2; fieldNum < record.getFieldCount(); fieldNum++) {
+				check.compareFields(EXPECTED_FIELDS[recNum][fieldNum-2], record.getField(fieldNum), 4);
 			}
 		}
 
 	}
-
-	protected ICobolIOBuilder checkXml(String copybook, String expectedXml)
-			throws IOException, XMLStreamException, UnsupportedEncodingException, FactoryConfigurationError {
-		ICobolIOBuilder iob = JRecordInterface1.COBOL.newIOBuilder(
-				 JRecordInterface1.COBOL.newCobolCopybookReader()
-				 		.setCopybookName("EMPLOYEE-RECORD")
-				 		.addFreeFormatCobolText(copybook))
-						.setSplitCopybook(CopybookLoader.SPLIT_REDEFINE);
-		StringWriter w = new StringWriter();
-		JRecordInterface1.SCHEMA_XML
-				.setIndentXml(true)
-				.export(w, iob.getExternalRecord());
-		assertEquals(expectedXml, w.toString());
-		return iob;
-	}
-
-	private void printExpectedFields(LayoutDetail layout) {
-		ConstantNameConversion typeNames = ConstantNames.getTypeNames();
-		for (int recNum = 0; recNum < layout.getRecordCount(); recNum++) {
-			RecordDetail record = layout.getRecord(recNum);
-
-			System.out.println("\t}, {");
-			for (int fieldNum = 0; fieldNum < record.getFieldCount(); fieldNum++) {
-				FieldDetail field = record.getField(fieldNum);
-				System.out.println(
-						"\t\tFieldDetail.newFixedWidthField("
-							+ "\"" + field.getName() + "\", "
-							+ typeNames.getConstantDetails(field.getType()).getJRecordInterfaceConstant() + ", "
-							//+ field.getType() + ", "
-							+ field.getPos() + ", "
-							+ field.getLen() + ", "
-							+ field.getDecimal() + ", "
-							+ "\"" + field.getFontName() + "\"),"
-						);
-			}
-		}
-		System.out.println("\t}");
-	}
+//	
+//	private void checkConversion(String copybook, String expectedXml) throws IOException, XMLStreamException, FactoryConfigurationError {
+//		ICobolIOBuilder iob = checkXml(copybook, expectedXml);
+//		LayoutDetail layout = iob.getLayout();
+//		
+//		
+//		//printExpectedFields(layout);
+//		
+//		for (int recNum = 0; recNum < layout.getRecordCount(); recNum++) {
+//			RecordDetail record = layout.getRecord(recNum);
+//
+//			for (int fieldNum = 0; fieldNum < record.getFieldCount(); fieldNum++) {
+//				compareFields(EXPECTED_FIELDS[recNum][fieldNum], record.getField(fieldNum), 0);
+//			}
+//		}
+//
+//	}
+//
+//	private void compareFields(FieldDetail expectedField, FieldDetail field, int diff) {
+//		assertEquals(expectedField.getName(), field.getName());
+//		assertEquals(expectedField.getType(), field.getType());
+//		assertEquals(expectedField.getPos() + diff, field.getPos());
+//		assertEquals(expectedField.getLen(), field.getLen());
+//		assertEquals(expectedField.getDecimal(), field.getDecimal());
+//		assertEquals(expectedField.getFontName(), field.getFontName());
+//	}
+//
+//	protected ICobolIOBuilder checkXml(String copybook, String expectedXml)
+//			throws IOException, XMLStreamException, UnsupportedEncodingException, FactoryConfigurationError {
+//		ICobolIOBuilder iob = JRecordInterface1.COBOL.newIOBuilder(
+//				 JRecordInterface1.COBOL.newCobolCopybookReader()
+//				 		.setCopybookName("EMPLOYEE-RECORD")
+//				 		.addFreeFormatCobolText(copybook))
+//						.setSplitCopybook(CopybookLoader.SPLIT_REDEFINE);
+//		StringWriter w = new StringWriter();
+//		JRecordInterface1.SCHEMA_XML
+//				.setIndentXml(true)
+//				.export(w, iob.getExternalRecord());
+//		assertEquals(expectedXml, w.toString());
+//		
+//		return iob;
+//	}
+//
+//	private void printExpectedFields(LayoutDetail layout) {
+//		ConstantNameConversion typeNames = ConstantNames.getTypeNames();
+//		for (int recNum = 0; recNum < layout.getRecordCount(); recNum++) {
+//			RecordDetail record = layout.getRecord(recNum);
+//
+//			System.out.println("\t}, {");
+//			for (int fieldNum = 0; fieldNum < record.getFieldCount(); fieldNum++) {
+//				FieldDetail field = record.getField(fieldNum);
+//				System.out.println(
+//						"\t\tFieldDetail.newFixedWidthField("
+//							+ "\"" + field.getName() + "\", "
+//							+ typeNames.getConstantDetails(field.getType()).getJRecordInterfaceConstant() + ", "
+//							//+ field.getType() + ", "
+//							+ field.getPos() + ", "
+//							+ field.getLen() + ", "
+//							+ field.getDecimal() + ", "
+//							+ "\"" + field.getFontName() + "\"),"
+//						);
+//			}
+//		}
+//		System.out.println("\t}");
+//	}
 
 }

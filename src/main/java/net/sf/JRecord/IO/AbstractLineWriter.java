@@ -34,6 +34,7 @@
 
 package net.sf.JRecord.IO;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -59,7 +60,7 @@ import net.sf.JRecord.Details.LayoutDetail;
  * @author Bruce Martin
  *
  */
-public abstract class AbstractLineWriter {
+public abstract class AbstractLineWriter implements Closeable {
 
     public static final String NOT_OPEN_MESSAGE = "File has not been opened";
 

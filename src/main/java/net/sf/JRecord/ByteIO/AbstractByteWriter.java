@@ -32,6 +32,7 @@
  */
 package net.sf.JRecord.ByteIO;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -46,7 +47,7 @@ import net.sf.JRecord.Common.IGetData;
  *
  * @author Bruce Martin
  */
-public abstract class AbstractByteWriter implements IByteRecordWriter {
+public abstract class AbstractByteWriter implements IByteRecordWriter, Closeable {
 
     public static final String NOT_OPEN_MESSAGE = "File has not been opened";
 

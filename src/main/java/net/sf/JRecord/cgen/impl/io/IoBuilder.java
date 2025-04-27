@@ -1,9 +1,14 @@
 package net.sf.JRecord.cgen.impl.io;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import net.sf.JRecord.ByteIO.ByteIOProvider;
 import net.sf.JRecord.Common.RecordException;
@@ -69,6 +74,7 @@ public class IoBuilder<Pojo> {
 		return new ReadLine<Pojo>(builder.newReader(filename), pojoConverter);
 	}
 	
+	
 
 	/**
 	 * Create new Reader for a stream
@@ -86,6 +92,32 @@ public class IoBuilder<Pojo> {
 		}
 		
 		return new ReadLine<Pojo>(builder.newReader(in), pojoConverter);
+	}
+	
+	/**
+	 * Create an stream (of pojo's) from the input file of Cobol data.
+	 * @param filename file name to be read and be presented as a stream
+	 * @return stream (of pojo's) for further processing
+	 * @throws IOException any error that occurs
+	 */
+	public Stream<Pojo> stream(String filename) throws IOException {
+		return stream(new FileInputStream(filename));
+    }
+
+
+
+	/**
+	 *  Create an stream (of pojo's) from the input stream.
+	 * @param in input-stream containing the Cobol-data
+	 * @return stream (of pojo's) for further processing
+	 * @throws IOException any error that occurs
+	 */
+   	public Stream<Pojo> stream(InputStream in) throws IOException {
+		return StreamSupport.stream(
+				Spliterators.spliteratorUnknownSize(
+						new PojoIterator<Pojo>(newReader(in)), 
+						Spliterator.IMMUTABLE | Spliterator.NONNULL), 
+				false);
 	}
 
 	/**
