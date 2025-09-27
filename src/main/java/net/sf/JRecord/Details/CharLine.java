@@ -189,7 +189,7 @@ public class CharLine extends BasicLine implements Cloneable {
 
 	@Override
 	public void replace(byte[] rec, int start, int len) {
-
+		data = Conversion.toString(rec, layout.getFontName());
 	}
 	
 	@Override

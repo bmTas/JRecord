@@ -43,7 +43,9 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import net.sf.JRecord.Common.Conversion;
 import net.sf.JRecord.Common.FieldDetail;
+import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
 import net.sf.JRecord.Details.LayoutDetail;
 import net.sf.JRecord.Details.LineProvider;
@@ -66,6 +68,8 @@ public class ContinuousLineReader extends AbstractLineReader {
 	//private LayoutDetail recordLayout;
 
 	private int maxSize;
+	private int lineNumber = 0;
+	long totalBytesRead=0;
 
 	private byte[] buffer;
 
@@ -118,6 +122,7 @@ public class ContinuousLineReader extends AbstractLineReader {
 
 			maxSize = java.lang.Math.max(maxSize, lengths[i]);
 		}
+		
 
 		tmpLine = getLine(new byte[maxSize]);
 
@@ -139,6 +144,7 @@ public class ContinuousLineReader extends AbstractLineReader {
         if (stream == null) {
             throw new IOException(AbstractLineReader.NOT_OPEN_MESSAGE);
         }
+        lineNumber += 1;
 
         stream.mark(maxSize);
         bytesRead = readBuffer(stream, buffer);
@@ -157,7 +163,7 @@ public class ContinuousLineReader extends AbstractLineReader {
         readBuffer(stream, rec);
         ret = getLine(rec);
 
-
+        totalBytesRead += recordSize;
         return ret;
     }
 
@@ -179,7 +185,17 @@ public class ContinuousLineReader extends AbstractLineReader {
 		RecordDetail rec = super.getLayout().getRecord(pref);
 		if (rec.hasDependingOn()) {
 			FieldDetail f =  rec.getField(rec.getFieldCount() - 1);
-			int len = rec.calculateActualPosition(tmpLine, f.getDependingOnDtls(), f.getEnd() + 1) - 1;
+			int len;
+			try {
+				len = rec.calculateActualPosition(tmpLine, f.getDependingOnDtls(), f.getEnd() + 1) - 1;
+			} catch (RecordException e) {
+				RuntimeException err = new RuntimeException(
+						e.getMessage()
+						+ "\nCurrent Line Number: " + lineNumber
+						+ "\n   Total Bytes Read: " + totalBytesRead);
+				err.setStackTrace(e.getStackTrace());
+				throw err;
+			}
 			return len;
 		}
 		return lengths[pref];

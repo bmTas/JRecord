@@ -53,7 +53,6 @@ public class CharLineProvider implements LineProvider {
 
 	@Override
 	public AbstractLine getLine(LayoutDetail recordDescription, byte[] lineBytes) {
-		// TODO Auto-generated method stub
 		return getLine(recordDescription, 
 				Conversion.toString(lineBytes, recordDescription.getFontName()));
 	}

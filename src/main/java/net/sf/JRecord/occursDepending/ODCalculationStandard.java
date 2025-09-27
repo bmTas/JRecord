@@ -141,7 +141,14 @@ public class ODCalculationStandard implements IOccursDependingPositionCalculatio
 				System.out.println();
 				throw e;
 			} catch (Exception e) {
-				throw new RecordException("Error calculation Occurs Depending On for Variable: " + dependingOnDef.getVariableName() + " msg="+ e.getMessage(), e); 
+				String lineTxt = "";
+				if (line instanceof AbstractLine) {
+					lineTxt = "\nLine: " +  ((AbstractLine) line).getFullLine();
+				}
+				throw new RecordException(
+						"Error calculation Occurs Depending On for Variable: " + dependingOnDef.getVariableName() 
+						+ lineTxt
+						+ "\nmsg="+ e.getMessage(), e); 
 			}
 		} 
 		return tmpAdj;	
