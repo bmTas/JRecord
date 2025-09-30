@@ -26,7 +26,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.34</version>
+            <version>1.18.42</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -103,6 +103,11 @@
 	                    <include>**/zTest/**/*.java</include>
 	                    <!--include>**/Test*.java</include-->
 	                </includes>
+	           <!-- options to try to improve performance
+	                could try increasing forkcount to 2 or 4
+	                <forkCount>1</forkCount>
+       	 			<reuseForks>true</reuseForks>
+				-->
 	            </configuration>
 	        </plugin>
 			<plugin>

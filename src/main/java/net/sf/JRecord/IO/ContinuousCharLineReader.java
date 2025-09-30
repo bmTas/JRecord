@@ -39,15 +39,14 @@
 
 package net.sf.JRecord.IO;
 
-import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 import net.sf.JRecord.Details.AbstractLine;
-import net.sf.JRecord.Details.CharLineProvider;
-import net.sf.JRecord.Details.DefaultLineProvider;
 import net.sf.JRecord.Details.LayoutDetail;
-import net.sf.JRecord.Details.Line;
 import net.sf.JRecord.Details.LineProvider;
 
 
@@ -58,32 +57,26 @@ import net.sf.JRecord.Details.LineProvider;
  * @author Bruce Martin
  *
  */
-public class ContinuousLineReader extends AbstractLineReader {
+public class ContinuousCharLineReader extends AbstractLineReader {
 
 
-	public static AbstractLineReader newReader(LineProvider provider) {
-		if (provider.getClass() == DefaultLineProvider.class) {
-			return new ContinuousLineReader(provider);
-		} 
-		if (provider.getClass() == CharLineProvider.class) {
-			return new ContinuousCharLineReader(provider);
-		}
-		return new DelegateReader(provider);
-	}
 	private static final int BUFFER_SIZE = 16384;
 
- 	private BufferedInputStream stream = null;
+// 	private BufferedInputStream stream = null;
+ 	private BufferedReader reader;
 	//private LayoutDetail recordLayout;
 
 	private int maxSize;
 	private int lineNumber = 0;
-	long totalBytesRead=0;
+	long totalCharactersRead=0;
 
-	private byte[] buffer;
+	private char[] buffer;
 
 	protected int[] lengths;
 	private AbstractLine tmpLine;
+	
 	private ICalculateLineLength calculateLineLength;
+
 
 	//private ArrayList lineBuffer = new ArrayList();
 
@@ -95,7 +88,7 @@ public class ContinuousLineReader extends AbstractLineReader {
 	 * This class provides record oriented reading of Binary files.
 	 * It uses a 'Line' to decide the length of each record
 	 */
-	public ContinuousLineReader() {
+	public ContinuousCharLineReader() {
 	    super();
 	}
 
@@ -107,25 +100,28 @@ public class ContinuousLineReader extends AbstractLineReader {
 	 *
 	 * @param provider line provider
 	 */
-	public ContinuousLineReader(final LineProvider provider) {
+	public ContinuousCharLineReader(final LineProvider provider) {
 	    super(provider);
 	}
+
 
 	public void setCalculateLineLength(ICalculateLineLength calculateLineLength) {
 		this.calculateLineLength = calculateLineLength;
 	}
 
+
     /**
+     * @throws UnsupportedEncodingException 
      * @see net.sf.JRecord.IO.AbstractLineReader#open(java.io.InputStream, net.sf.JRecord.Details.LayoutDetail)
      */
-    public void open(InputStream inputStream, LayoutDetail layout) {
+    public void open(InputStream inputStream, LayoutDetail layout) throws UnsupportedEncodingException {
 
         int i;
-        
-        setLayout(layout);
 
+        setLayout(layout);
+        
         if (calculateLineLength == null) {
-        	calculateLineLength = new CalculateLineLength("bytes");
+        	calculateLineLength = new CalculateLineLength("chars");
         }
 
 
@@ -138,11 +134,13 @@ public class ContinuousLineReader extends AbstractLineReader {
 
 			maxSize = java.lang.Math.max(maxSize, lengths[i]);
 		}
-        stream = new BufferedInputStream(inputStream, Math.max(BUFFER_SIZE, maxSize));
+        reader = new BufferedReader(
+        		new InputStreamReader(inputStream, layout.getFontName()), 
+        		Math.max(BUFFER_SIZE, maxSize+1));
 		
-		tmpLine = getLine(new byte[maxSize]);
+		tmpLine = getLine("");
 
-		buffer = new byte[maxSize];
+		buffer = new char[maxSize];
     }
 
 
@@ -152,35 +150,51 @@ public class ContinuousLineReader extends AbstractLineReader {
      */
     public AbstractLine readImplementation() throws IOException {
         AbstractLine ret = null;
-        int recordSize, bytesRead;
-        byte[] rec;
+        int recordSize;
 
-        if (stream == null) {
+        if (reader == null) {
             throw new IOException(AbstractLineReader.NOT_OPEN_MESSAGE);
         }
         lineNumber += 1;
 
-        stream.mark(maxSize);
-        bytesRead = readBuffer(stream, buffer);
+        reader.mark(maxSize+1);
+        int charsInBuffer = 0;
+        
+        charsInBuffer = readChars(buffer);
 
-        if (bytesRead <= 0) {
+        if (charsInBuffer <= 0) {
             return null;
         }
-        if (bytesRead < buffer.length) {
-            bytesRead += 1;
+        char[] rec = buffer;
+        if (charsInBuffer < buffer.length) {
+        	charsInBuffer += 1;
+        	rec = new char[charsInBuffer];
+        	System.arraycopy(buffer, 0, rec, 0, charsInBuffer);
         }
-        tmpLine.replace(buffer, 0, bytesRead);
-        calculateLineLength.setFilePosition(lineNumber, totalBytesRead);
-        recordSize = calculateLineLength.findLength(tmpLine, bytesRead);
-        stream.reset();
-        rec = new byte[recordSize];
+        
+        tmpLine.setData(new String(rec));
+        calculateLineLength.setFilePosition(lineNumber, totalCharactersRead);
+        recordSize = calculateLineLength.findLength(tmpLine, charsInBuffer);
+        reader.reset();
+        rec = new char[recordSize];
 
-        readBuffer(stream, rec);
-        ret = getLine(rec);
+        readChars(rec);
+        ret = getLine(new String(rec));
 
-        totalBytesRead += recordSize;
+        totalCharactersRead += recordSize;
         return ret;
     }
+
+
+	private int readChars(char[] rec) throws IOException {
+		int charsRead, charsInBuffer = 0, charsToRead = rec.length;
+		while (charsInBuffer <= charsToRead && (charsRead = reader.read(rec, charsInBuffer, charsToRead - charsInBuffer)) > 0) {
+        	charsInBuffer += charsRead;
+		}
+
+		return charsInBuffer;
+	}
+
 
 
     /**
@@ -188,42 +202,9 @@ public class ContinuousLineReader extends AbstractLineReader {
      */
     public void close() throws IOException {
 
-        stream.close();
+    	reader.close();
         buffer = null;
-        stream = null;
-    }
-
-    private static class DelegateReader extends AbstractLineReader {
-
-    	private AbstractLineReader lineReader;
-    	public DelegateReader(LineProvider provider) {
-    		super(provider);
-    	}
-
-    	@Override
-    	public void open(InputStream inputStream, LayoutDetail pLayout) throws IOException {
-    		LineProvider lineProvider = super.getLineProvider();
-			AbstractLine line = lineProvider.getLine(pLayout);
-    		
-    		if (line instanceof Line) {
-    			lineReader = new ContinuousLineReader(lineProvider);
-    		} else {
-       			lineReader = new ContinuousCharLineReader(lineProvider);
-   			
-    		}
-    		lineReader.open(inputStream, pLayout);
-    	}
-
-    	@Override
-    	public AbstractLine readImplementation() throws IOException {
-    		return lineReader.readImplementation();
-    	}
-
-    	@Override
-    	public void close() throws IOException {
-    		lineReader.close();
-    	}
-
+        reader = null;
     }
 
 }

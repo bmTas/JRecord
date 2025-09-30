@@ -294,7 +294,7 @@ public class LineIOProvider implements AbstractManager {
 		//System.out.println(" ~~ IOProvider ~ " + fileStructure + " " + IFileStructureConstants.IO_GENERIC_CSV);
 
        	switch (fileStructure) {
-    	case IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER:	return new ContinuousLineReader(lLineProvider);
+    	case IFileStructureConstants.IO_CONTINOUS_NO_LINE_MARKER:	return ContinuousLineReader.newReader(lLineProvider);
     	case IFileStructureConstants.IO_BINARY_IBM_4680:			return new Binary4680LineReader(lLineProvider);
 
 		case IFileStructureConstants.IO_FIXED_CHAR_ENTER_FONT:

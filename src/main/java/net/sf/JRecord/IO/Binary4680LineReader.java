@@ -55,7 +55,7 @@ import net.sf.JRecord.Details.LineProvider;
  * @author Bruce Martin
  *
  */
-public class Binary4680LineReader extends ContinuousLineReader {
+public class Binary4680LineReader extends ContinuousLineReader implements ICalculateLineLength {
 
 
 
@@ -69,6 +69,7 @@ public class Binary4680LineReader extends ContinuousLineReader {
 	 */
 	public Binary4680LineReader() {
 	    super();
+	    super.setCalculateLineLength(this);
 	}
 
 
@@ -81,6 +82,7 @@ public class Binary4680LineReader extends ContinuousLineReader {
 	 */
 	public Binary4680LineReader(final LineProvider provider) {
 	    super(provider);
+	    super.setCalculateLineLength(this);
 	}
 
 
@@ -106,6 +108,13 @@ public class Binary4680LineReader extends ContinuousLineReader {
  
 
 
+	@Override
+	public void setFilePosition(int lineNumber, long totalBytesRead) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	/**
 	 * work out the record length
 	 *
@@ -113,7 +122,8 @@ public class Binary4680LineReader extends ContinuousLineReader {
 	 *
 	 * @return the length of the next length
 	 */
-    protected final int findLength(AbstractLine tmpLine, int maxLength) {
+	@Override
+    public final int findLength(AbstractLine tmpLine, int maxLength) {
 		int i, rl, pref;
 		int recLen = 1;
 		int start = 0;

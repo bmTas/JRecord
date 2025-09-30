@@ -64,7 +64,7 @@ extends IOBuilderBase<IOB> implements IGetLoader  {
 
 
 	/**
-	 * Create Multicopybokk builder
+	 * Create Multicopybook builder
 	 * @param copybookName name of the copybook
 	 * @param loader copybook (schema) loader
 	 */
@@ -73,7 +73,7 @@ extends IOBuilderBase<IOB> implements IGetLoader  {
 	}
 	
 	/**
-	 * Create Multicopybokk builder
+	 * Create Multicopybook builder
 	 * @param copybookName name of the copybook
 	 * @param loader copybook (schema) loader
 	 */
