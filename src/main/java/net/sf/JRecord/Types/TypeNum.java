@@ -245,7 +245,7 @@ public class TypeNum extends BaseType {
 	
 	public final boolean isDefined(final AbstractIndexedLine line, byte[] record, IFieldDetail currField) {
 		int pos = currField.calculateActualPosition(line);
-		return record.length >= pos + currField.getLen() 
+		return record.length >= pos + currField.getLen() - 1
 			&&  ((couldBeHexZero) || (! isHexZero(record, pos, currField.getLen())));
 	}
 

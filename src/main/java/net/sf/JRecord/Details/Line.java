@@ -529,7 +529,11 @@ public class Line extends BasicLine implements IGetByteData {
 	
 	@Override
 	public boolean isDefined(IFieldDetail field) {
-		if (this.data == null || data.length <= field.getPos() || ! super.isFieldInLine(field)) {
+//		System.out.println(" ~~ " + data.length + " " + field.calculateActualPosition(this) + " ~~ "
+//				+ super.isFieldInLine(field));
+		if (this.data == null 
+		|| data.length <= field.calculateActualPosition(this)
+		|| ! super.isFieldInLine(field)) {
 			return false;
 		}
 		boolean ret = false;

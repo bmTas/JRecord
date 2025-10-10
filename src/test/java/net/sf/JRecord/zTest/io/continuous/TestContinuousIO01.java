@@ -26,7 +26,7 @@
  *
  * ------------------------------------------------------------------------ */
 
-package net.sf.JRecord.zTest.io;
+package net.sf.JRecord.zTest.io.continuous;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -57,7 +57,7 @@ import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
  * @author Bruce Martin
  *
  */
-public class TstContinuousIO01  {
+public class TestContinuousIO01  {
 	
 	private static final int DETAIL_COUNT = 15;
 	private static final String TRAILER_ID = "T";

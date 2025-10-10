@@ -26,7 +26,7 @@
  *
  * ------------------------------------------------------------------------ */
 
-package net.sf.JRecord.zTest.io;
+package net.sf.JRecord.zTest.io.continuous;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -48,7 +48,7 @@ import net.sf.JRecord.def.IO.builders.ICobolIOBuilder;
 import net.sf.JRecord.zTest.Common.JUnit3Test;
 import net.sf.JRecord.zTest.Common.TstConstants;
 
-public class TstContinuousIO02 extends JUnit3Test  {
+public class TestContinuousIO02 extends JUnit3Test  {
 
 	private String copybookName = TstConstants.COBOL_DIRECTORY + "FCUSDAT.cbl";
 	private String filename     = TstConstants.SAMPLE_DIRECTORY + "ZOS.FCUSTDAT_150.vb.bin";
