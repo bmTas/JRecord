@@ -94,6 +94,7 @@ class TestContinuousMultByteFonts {
 		while ((line = reader.read()) != null) {
 			assertEquals(expectedLines.get(index++), line.getFullLine());
 		}
+		reader.close();
 		assertEquals(expectedLines.size(), index);
 	}
 }

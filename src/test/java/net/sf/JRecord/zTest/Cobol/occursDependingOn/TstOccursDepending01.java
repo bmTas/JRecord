@@ -140,11 +140,18 @@ public class TstOccursDepending01  {
 			pos = check(line, valueFld, pos);
 			assertTrue(line.getFieldValue("sales-count (" + i + ")").isFieldInRecord());
 			assertTrue(line.getFieldValue("sales-value (" + i + ")").isFieldInRecord());
+			assertTrue(line.getFieldValue("sales-count (" + i + ")").isFieldPresent());
+			if (! line.getFieldValue("sales-value (" + i + ")")	.isFieldPresent()) {
+				assertTrue(line.getFieldValue("sales-value (" + i + ")")
+					.isFieldPresent());
+			}
 		}
 		
 		for (int i = salesCount; i < 12; i++) {
 			assertFalse(line.getFieldValue("sales-count (" + i + ")").isFieldInRecord());
 			assertFalse(line.getFieldValue("sales-value (" + i + ")").isFieldInRecord());
+			assertFalse(line.getFieldValue("sales-count (" + i + ")").isFieldPresent());
+			assertFalse(line.getFieldValue("sales-value (" + i + ")").isFieldPresent());
 		}
 
 		if (normalPos) {
@@ -158,10 +165,19 @@ public class TstOccursDepending01  {
 		for (int i = 0; i < purchaseCount; i++) {
 			pos = check(line, layout.getFieldFromName("purchase-count (" + i + ")"), pos);
 			pos = check(line, layout.getFieldFromName("purchase-value (" + i + ")"), pos);
+			assertTrue(line.getFieldValue("purchase-count (" + i + ")").isFieldInRecord());
+			assertTrue(line.getFieldValue("purchase-value (" + i + ")").isFieldInRecord());
+			if (! line.getFieldValue("purchase-count (" + i + ")").isFieldPresent()) {
+				assertTrue(line.getFieldValue("purchase-count (" + i + ")")
+						.isFieldPresent());
+			}
+			assertTrue(line.getFieldValue("purchase-value (" + i + ")").isFieldPresent());
 		}
 		for (int i = purchaseCount; i < 52; i++) {
 			assertFalse(line.getFieldValue("purchase-count (" + i + ")").isFieldInRecord());
 			assertFalse(line.getFieldValue("purchase-value (" + i + ")").isFieldInRecord());
+			assertFalse(line.getFieldValue("purchase-count (" + i + ")").isFieldPresent());
+			assertFalse(line.getFieldValue("purchase-value (" + i + ")").isFieldPresent());
 		}
 
 		pos = check(line, layout.getFieldFromName("total-purchase-count"), pos);

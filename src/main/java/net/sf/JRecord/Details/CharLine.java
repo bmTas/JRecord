@@ -290,13 +290,17 @@ public class CharLine extends BasicLine implements Cloneable {
 
 	@Override
 	public boolean isDefined(IFieldDetail field) {
-		if (this.data == null || data.length() <= field.getPos() || ! super.isFieldInLine(field) ) {
+		if (this.data == null) { return false;}
+		
+		int actualPosition = field.calculateActualPosition(this);
+		if (data.length() <= actualPosition
+		|| ! super.isFieldInLine(field) ) {
 			return false;
 		}
 
 		if (TypeManager.isNumeric(field.getType())) {
-			int e = Math.min(field.getPos() + field.getLen(), data.length());
-			for (int i = field.getPos() - 1; i < e; i++) {
+			int e = Math.min(actualPosition + field.getLen(), data.length());
+			for (int i = actualPosition - 1; i < e; i++) {
 				switch (data.charAt(i)) {
 				case ' ':
 				case 0:

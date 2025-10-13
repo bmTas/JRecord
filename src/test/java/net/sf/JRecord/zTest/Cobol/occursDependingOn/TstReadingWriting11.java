@@ -39,6 +39,7 @@ import org.junit.jupiter.api.Test;
 import net.sf.JRecord.Common.Constants;
 import net.sf.JRecord.Common.RecordException;
 import net.sf.JRecord.Details.AbstractLine;
+import net.sf.JRecord.Details.fieldValue.IFieldValue;
 import net.sf.JRecord.IO.AbstractLineReader;
 import net.sf.JRecord.IO.AbstractLineWriter;
 import net.sf.JRecord.IO.CobolIoProvider;
@@ -122,10 +123,24 @@ public class TstReadingWriting11  {
 		
 		String pref = levelCount + ", " + attrCount + " : ";
 		
-		for (int i = 0; i < levelCount; i++) {
-			assertEquals( i * 100 + attrCount, line.getFieldValue("Level (" + i + ")").asInt(), pref + i);
-			for (int j = 0; j < attrCount; j++) {
-				assertEquals( i * 10 + j, line.getFieldValue("Attr (" + i + ", " + j + ")").asInt(), pref + i + ", " + j);
+		for (int levelIndex = 0; levelIndex < levelCount; levelIndex++) {
+			assertEquals( levelIndex * 100 + attrCount, line.getFieldValue("Level (" + levelIndex + ")").asInt(), pref + levelIndex);
+			for (int attrIndex = 0; attrIndex < attrCount; attrIndex++) {
+				assertEquals( levelIndex * 10 + attrIndex, 
+						line.getFieldValue("Attr (" + levelIndex + ", " + attrIndex + ")").asInt(), 
+						pref + levelIndex + ", " + attrIndex);
+			}
+		}
+		for (int levelIndex = 0; levelIndex < 5; levelIndex++) {
+			IFieldValue fieldValueLevel = line.getFieldValue("Level (" + levelIndex + ")");
+			boolean levelPresent = levelIndex < levelCount;
+			assertEquals( levelPresent, fieldValueLevel.isFieldInRecord(), pref + levelIndex);
+			assertEquals( levelPresent, fieldValueLevel.isFieldPresent(), pref + levelIndex);
+			for (int attrIndex = 0; attrIndex < 5; attrIndex++) {
+				IFieldValue fieldValueAttr = line.getFieldValue("Attr (" + levelIndex + ", " + attrIndex + ")");
+				boolean attrPresent = levelPresent && attrIndex < attrCount;
+				assertEquals( attrPresent, fieldValueAttr.isFieldInRecord(), pref + levelIndex + ", " + attrIndex);
+				assertEquals( attrPresent, fieldValueAttr.isFieldPresent(), pref + levelIndex + ", " + attrIndex);
 			}
 		}
 
