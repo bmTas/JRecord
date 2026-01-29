@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +41,7 @@ class TestStream {
 	void testFilter1() throws IOException {
 		List<AbstractLine> filteredList = getDTAR020List().filter(
 						line -> line.getFieldValue("DTAR020-QTY-SOLD").asInt() < 0
-					).toList();
+					).collect(Collectors.toList());
 		
 		check(EXPECTED_NEGATIVE_QUANTITIES, filteredList);
 		//printList(filteredList);
@@ -51,7 +52,7 @@ class TestStream {
 	void testFilter2() throws IOException {
 		List<AbstractLine> filteredList = getDTAR020List().filter(
 						line -> line.getFieldValue("DTAR020-SALE-PRICE").asBigDecimal().compareTo(DECIMAL_10) > 0
-					).toList();
+					).collect(Collectors.toList());
 		
 		check(EXPECTED_PRICE_GREATER_THAN_10, filteredList);
 		printList(filteredList);
